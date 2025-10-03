@@ -39,11 +39,16 @@ Thumbs.db
 # Output artifacts (keep outputs/ folder but ignore its contents except .gitkeep)
 outputs/*
 !outputs/.gitkeep
+outputs/missing_names_search_report.md
+outputs/candidate_database_phase1.csv
+outputs/conference_attendance_summary.csv
+outputs/conference_texts/
 
 # Data files (keep structure but not actual data)
 data/*.csv
 data/*.xlsx
 data/*.duckdb
+data/*.pdf
 !data/.gitkeep
 !data/species_common_lookup_cleaned.csv
 !data/lookup_*.csv
@@ -96,6 +101,22 @@ docs/Expert_Recommendations_Comprehensive.md
 docs/EEA2025_Data_Panel_Comprehensive_Plan.md
 docs/EEA2025_Data_Panel_Program_Timeline_Personnel.md
 docs/PROJECT_SUMMARY.md
+docs/Task_Progress_Report_*.md
 
 # Papers per discipline folder
 papers_per_discipline/
+
+# Conference materials (large files)
+EEA History/
+
+# Submitted abstracts (potentially sensitive)
+abstracts/
+
+# Data logs and analysis reports (ephemeral)
+data/*_log.txt
+data/*_report.txt
+
+# Temporary/review files
+PROJECT_STRUCTURE.txt
+README_OLD.md
+TODO.md
