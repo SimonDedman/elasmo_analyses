@@ -1,0 +1,47 @@
+discipline,method_family,parent_technique,subtechnique,n_mentions,data_sources
+Behaviour,Behavioural Observation,Behavioural Observation,Video Analysis,4,title+abstract
+Behaviour,Behavioural Observation,Behavioural Observation,NA,2,title
+Behaviour,Cognition,Cognition,NA,4,title
+Behaviour,Sensory Biology,Sensory Biology,NA,2,title
+Behaviour,Social Networks,Social Network Analysis,NA,1,abstract
+Biology,Age & Growth,Age & Growth,Vertebral Sectioning,1,abstract
+Biology,Age & Growth,Age & Growth,NA,7,title+abstract
+Biology,Health & Disease,Health & Disease,NA,2,title
+Biology,Histology,Histology,NA,3,abstract
+Biology,Morphology,Morphology,NA,1,title
+Biology,Physiology,Physiology,NA,1,title
+Biology,Reproduction,Reproduction,Fecundity,3,abstract
+Biology,Reproduction,Reproduction,Gestation,1,abstract
+Biology,Reproduction,Reproduction,NA,6,title+abstract
+Conservation,Human Dimensions,Human Dimensions,NA,7,title
+Conservation,IUCN Assessment,IUCN Assessment,Extinction Risk Assessment,1,abstract
+Conservation,IUCN Assessment,IUCN Assessment,Red List Assessment,7,abstract
+Conservation,IUCN Assessment,IUCN Assessment,NA,10,title
+Conservation,Participatory Science,Participatory Science,Citizen Science,2,title
+Conservation,Policy,Policy Evaluation,NA,2,title
+Conservation,Tourism,Tourism,NA,2,title
+Conservation,Trade,Trade & Markets,NA,6,title
+Data Science,Bayesian Methods,Bayesian Methods,NA,1,title
+Data Science,Data Integration,Data Integration,NA,1,title
+Data Science,Machine Learning,Machine Learning,Random Forest,3,abstract
+Data Science,Machine Learning,Machine Learning,NA,7,title+abstract
+Data Science,Meta-Analysis,Meta-Analysis,NA,1,abstract
+Data Science,Time Series,Time Series,NA,1,title
+Fisheries,Bycatch,Bycatch Assessment,NA,4,title
+Fisheries,Mark-Recapture,Mark-Recapture,NA,1,title
+Genetics,Genomics,Genomics,Whole Genome Sequencing,1,abstract
+Genetics,Genomics,Genomics,NA,3,title
+Genetics,Phylogenetics,Phylogenetics,NA,1,title
+Genetics,Population Genetics,Population Genetics,Microsatellites,1,abstract
+Genetics,Population Genetics,Population Genetics,NA,2,abstract
+Genetics,eDNA,eDNA,NA,2,title
+Movement,Connectivity,Connectivity,NA,2,title
+Movement,Habitat Modeling,Habitat Modeling,NA,3,title
+Movement,MPA Design,MPA Design,NA,7,title
+Movement,Movement Modeling,Movement Modeling,NA,3,title
+Movement,Species Distribution Models,Species Distribution Model,NA,1,title
+Movement,Telemetry,Telemetry,Acoustic Telemetry,13,title+abstract
+Trophic,Diet Analysis,Diet Analysis,DNA Metabarcoding,3,abstract
+Trophic,Diet Analysis,Diet Analysis,Stomach Content Analysis,3,abstract
+Trophic,Diet Analysis,Diet Analysis,NA,3,title
+Trophic,Stable Isotopes,Stable Isotope Analysis,NA,4,abstract
