@@ -1,0 +1,101 @@
+# R & RStudio
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# R data files
+*.rda
+*.rds
+*.RData
+
+# Temporary files
+*~
+*.bak
+*.swp
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Excel temporary files
+~$*.xlsx
+~$*.xls
+
+# Backup files
+*_BKUP*.xlsx
+*_backup.*
+*.bak
+
+# Logs
+*.log
+
+# Output artifacts (keep outputs/ folder but ignore its contents except .gitkeep)
+outputs/*
+!outputs/.gitkeep
+
+# Data files (keep structure but not actual data)
+data/*.csv
+data/*.xlsx
+data/*.duckdb
+!data/.gitkeep
+!data/species_common_lookup_cleaned.csv
+!data/lookup_*.csv
+
+# SQL database files
+*.duckdb
+*.db
+*.sqlite
+
+# R package development
+*.tar.gz
+*.zip
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Documentation build artifacts
+_book/
+_bookdown_files/
+docs/_site/
+.jekyll-cache/
+
+# Sensitive information
+credentials.json
+.env
+*_SECRET*
+*_PRIVATE*
+
+# Office documents (until reviewed)
+*.docx
+*.xlsx
+!Example*.xlsx
+
+# AI request logs
+EEA_Data_Panel_AI_requests.txt
+
+# Documentation (until reviewed for sensitive data)
+docs/Expert_Recommendations_Comprehensive.md
+docs/EEA2025_Data_Panel_Comprehensive_Plan.md
+docs/EEA2025_Data_Panel_Program_Timeline_Personnel.md
+docs/PROJECT_SUMMARY.md
+
+# Papers per discipline folder
+papers_per_discipline/
