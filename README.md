@@ -53,17 +53,20 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 ```
 elasmo_analyses/
 ├── docs/                                    # Documentation
+│   ├── Candidate_Search_Protocol.md         # Web search methodology
+│   ├── Candidate_Database_Phase1_Report.md  # Phase 1 summary
 │   ├── EEA2025_Data_Panel_Comprehensive_Plan.md
-│   ├── EEA2025_Data_Panel_Program_Timeline_Personnel.md
 │   ├── Expert_Recommendations_Comprehensive.md
-│   ├── Species_Lookup_Analysis_Summary.md
-│   └── Database_Format_Decision.md
-├── scripts/                                 # R scripts for data processing
-│   ├── analyze_species_lookup.R
-│   ├── clean_species_lookup.R
-│   ├── generate_species_sql.R
-│   ├── create_data_sheet.R
-│   └── create_discipline_summary.R
+│   └── Species_Lookup_Analysis_Summary.md
+├── scripts/                                 # Data processing scripts
+│   ├── create_candidate_database_phase1.R   # Initial database creation
+│   ├── integrate_all_candidates.R           # Multi-source integration
+│   ├── integrate_conference_attendance.R    # Conference history
+│   ├── extract_conference_attendance_simple.sh  # PDF text extraction
+│   ├── extract_si2022_attendance.R          # SI2022 video parsing
+│   ├── search_abstracts_simple.sh           # Abstract name search
+│   ├── update_attendee_list_missing_names.R # Attendee list updates
+│   └── classify_unclassified.R              # Discipline assignment
 ├── sql/                                     # Database schema SQL files
 │   ├── 01_create_core_table.sql
 │   ├── 02_add_discipline_columns.sql
@@ -74,8 +77,10 @@ elasmo_analyses/
 ├── data/                                    # Data files (see .gitignore)
 │   ├── species_common_lookup_cleaned.csv
 │   └── lookup_geographic_distribution.csv
-├── outputs/                                 # Analysis outputs
-│   └── discipline_summary.csv
+├── outputs/                                 # Generated outputs (.gitignored)
+│   ├── candidate_database_phase1.csv        # Main candidate database
+│   ├── conference_attendance_summary.csv    # Historical attendance
+│   └── missing_names_search_report.md       # Abstract search findings
 ├── .gitignore                               # Git ignore rules
 ├── README.md                                # This file
 └── CONTRIBUTING.md                          # Contribution guidelines
@@ -88,22 +93,26 @@ elasmo_analyses/
 ### Completed ✅
 - [x] 8-discipline framework defined and validated
 - [x] Expert recruitment strategy developed (70+ candidates identified)
-- [x] Database schema designed (DuckDB + Arrow format)
+- [x] Candidate database created (Phase 1: 243 candidates)
+- [x] Conference attendance integrated (EEA 2013-2023, AES 2015, SI2022)
+- [x] EEA 2025 attendee list processed and integrated
+- [x] Missing attendee names resolved via abstract search (75% success rate)
 - [x] Species lookup table cleaned (1,030 species)
-- [x] SQL schema files generated (1-6 of 7)
 - [x] Program timeline finalized
-- [x] Panel team recruited (5 confirmed speakers, 8 discipline leads)
+- [x] Panel team recruited (5 confirmed speakers)
 
 ### In Progress 🔄
-- [ ] Expert recruitment for Behaviour & Trophic Ecology disciplines
-- [ ] Systematic literature review execution (Weeks 2-4)
+- [ ] Analytical techniques compilation from abstracts
+- [ ] Systematic literature review execution
 - [ ] Panel presentation materials preparation
+- [ ] Expert discipline assignments refinement
 
 ### Upcoming ⏳
+- [ ] Complete Weigmann species list integration (178 species pending)
+- [ ] Web-based candidate search for discipline gaps
 - [ ] EEA 2025 panel session (30 October 2025)
 - [ ] Post-conference database refinement
 - [ ] Public release of initial review (November 2025)
-- [ ] Automated Shark-References integration (Q1 2026)
 
 ---
 
@@ -123,6 +132,24 @@ Analysis of 106 presentations at EEA 2025 by discipline:
 | **8. Data Science & Integrative Methods** | 3 | 2 | ✓ 10 min |
 
 This distribution validates our 8-discipline framework and informs panel time allocation.
+
+### Candidate Database Status
+
+**Total Candidates**: 243 (as of 2025-10-03)
+
+**Data Sources Integrated**:
+- Final Speakers EEA 2025: 99 candidates
+- Panel team roster: 8 candidates
+- Expert recommendations: 63 candidates
+- EEA 2025 attendee list: 155 candidates
+- Conference history: 22 candidates with attendance data
+
+**Completeness**:
+- With disciplines: 95 (39%)
+- With institutions: 217 (90%)
+- With emails: 169 (70%)
+- Attending EEA 2025: 187 (77%)
+- With conference history: 22 (9%)
 
 ---
 
@@ -211,5 +238,5 @@ This project builds upon decades of elasmobranch research by thousands of scient
 
 ---
 
-*Last updated: 2025-10-02*
-*Version: 1.0*
+*Last updated: 2025-10-03*
+*Version: 1.1 - Phase 1 Candidate Database Complete*
