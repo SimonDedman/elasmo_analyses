@@ -24,18 +24,23 @@
 
 ---
 
-### Phase 2: Analytical Techniques Compilation
+### Phase 2: Analytical Techniques Compilation ✅ COMPLETE
 
 **Strategy:** Extract techniques from existing experts' work, then use to guide future searches
 
 **Method:**
-1. Review presentation titles from EEA 2025 data
-2. Extract specific analytical methods mentioned
-3. Group by discipline
-4. Identify 2-3 cutting-edge techniques per discipline
-5. Use technique list to guide web searches for additional experts
+1. ✅ Review presentation titles from EEA 2025 data (63 presentations)
+2. ✅ Extract specific analytical methods mentioned (93 techniques from titles)
+3. ✅ Search full abstracts for detailed methods (53 techniques from 112 files)
+4. ✅ Create tiered classification (33 parent + 13 subtechniques)
+5. ✅ Group by discipline (8 disciplines, 46 unique techniques)
 
-**Output:** `outputs/analytical_techniques_by_discipline.csv`
+**Output:** `outputs/analytical_techniques_by_discipline.csv` ✅
+
+**Key Findings:**
+- Most common: Acoustic Telemetry (13), IUCN Assessment (10), Machine Learning (7)
+- Combined coverage: 146 total technique mentions
+- Tiered structure: Parent techniques → Subtechniques (e.g., SDM → MaxEnt/BRT/RF)
 
 ---
 

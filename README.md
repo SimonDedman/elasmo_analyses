@@ -80,7 +80,8 @@ elasmo_analyses/
 ├── outputs/                                 # Generated outputs (.gitignored)
 │   ├── candidate_database_phase1.csv        # Main candidate database
 │   ├── conference_attendance_summary.csv    # Historical attendance
-│   └── missing_names_search_report.md       # Abstract search findings
+│   ├── analytical_techniques_by_discipline.csv  # Technique compilation
+│   └── analytical_techniques_report.md      # Technique extraction findings
 ├── .gitignore                               # Git ignore rules
 ├── README.md                                # This file
 └── CONTRIBUTING.md                          # Contribution guidelines
@@ -97,15 +98,16 @@ elasmo_analyses/
 - [x] Conference attendance integrated (EEA 2013-2023, AES 2015, SI2022)
 - [x] EEA 2025 attendee list processed and integrated
 - [x] Missing attendee names resolved via abstract search (75% success rate)
+- [x] **Analytical techniques compilation** (46 unique techniques, tiered classification)
 - [x] Species lookup table cleaned (1,030 species)
 - [x] Program timeline finalized
 - [x] Panel team recruited (5 confirmed speakers)
 
 ### In Progress 🔄
-- [ ] Analytical techniques compilation from abstracts
 - [ ] Systematic literature review execution
 - [ ] Panel presentation materials preparation
 - [ ] Expert discipline assignments refinement
+- [ ] Web-based expert search using technique keywords
 
 ### Upcoming ⏳
 - [ ] Complete Weigmann species list integration (178 species pending)
@@ -239,4 +241,4 @@ This project builds upon decades of elasmobranch research by thousands of scient
 ---
 
 *Last updated: 2025-10-03*
-*Version: 1.1 - Phase 1 Candidate Database Complete*
+*Version: 1.2 - Phase 1 Complete + Analytical Techniques Compiled*
