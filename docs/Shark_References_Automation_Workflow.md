@@ -79,15 +79,56 @@ curl -X POST "https://shark-references.com/search" \
   -d "query_fulltext=SEARCH_TERM" \
   -d "opts[]=download" \
   -d "clicked_button=export" \
-  -H "Content-Type: application/x-www-form-urlencoded"
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -o "sharkrefs_SEARCH_TERM_$(date +%Y%m%d).csv"
 ```
 
-**Parameters:** - `query_fulltext`: Search term with operators -
-`query`: Title/abstract/publication title search - `genus_described`:
-Genus filter - `species_described`: Species filter - `year_from`,
-`year_to`: Year range - `kt[]`: Time keywords (array) - `kp[]`: Place
-keywords (array) - `opts[]`: Options array (`download`, `teeth`) -
-`clicked_button`: `export` for download
+**Parameters:**
+- `query_fulltext`: Search term with operators
+- `query`: Title/abstract/publication title search
+- `genus_described`: Genus filter
+- `species_described`: Species filter
+- `year_from`, `year_to`: Year range
+- `kt[]`: Time keywords (array)
+- `kp[]`: Place keywords (array)
+- `opts[]`: Options array (`download`, `teeth`)
+- `clicked_button`: `export` for download
+
+**Algorithmic CSV Naming:**
+
+Downloaded CSVs can be named automatically using search parameters and timestamp:
+
+```bash
+# Format: sharkrefs_{search_term}_{YYYYMMDD}.csv
+# Examples:
+sharkrefs_telemetry_20251003.csv
+sharkrefs_edna_20251003.csv
+sharkrefs_acoustic+telemetry_20251003.csv
+```
+
+**Automated naming script:**
+```bash
+#!/bin/bash
+SEARCH_TERM="$1"
+OUTPUT_FILE="sharkrefs_${SEARCH_TERM}_$(date +%Y%m%d).csv"
+
+curl -s "https://shark-references.com/search" \
+  -X POST \
+  -d "query_fulltext=${SEARCH_TERM}" \
+  -d "opts[]=download" \
+  -d "clicked_button=export" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -H "Accept: text/csv" \
+  -o "${OUTPUT_FILE}"
+
+echo "Downloaded: ${OUTPUT_FILE}"
+```
+
+**Usage:**
+```bash
+./download_sharkrefs.sh "acoustic+telemetry"
+# Creates: sharkrefs_acoustic+telemetry_20251003.csv
+```
 
 #### ✅ Available: Species-Specific CSV Export
 

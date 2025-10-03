@@ -34,6 +34,7 @@ From `Example of Spreadsheet for Review.xlsx`:
 | journal | Text | Journal name | ✅ Keep as-is |
 | doi | Text | Digital object identifier | ✅ Keep as-is (UNIQUE) |
 | study_type | Category | Primary/Review/Meta-analysis | ✅ Keep as-is (ENUM) |
+| n_studies | Integer | Count of studies in review/meta-analysis | ✅ Add for review papers |
 | region | Category | Geographic location | ⚠️ **SPLIT INTO 3 SCHEMAS** |
 | superorder | Category | Taxonomic grouping | ⚠️ **BINARIZE** |
 | species | Category | Species studied | ⚠️ **BINARIZE WIDE** |
@@ -154,7 +155,14 @@ d_data_science BOOLEAN DEFAULT FALSE
 
 ``` sql
 study_type VARCHAR(20) CHECK (study_type IN ('Primary', 'Systematic Review', 'Meta-analysis'))
+n_studies INTEGER  -- For review/meta-analysis papers: count of studies reviewed/analysed
 ```
+
+**Usage:**
+
+- `n_studies = NULL` for primary research papers
+- `n_studies = <count>` for systematic reviews and meta-analyses
+- Extract from abstract text patterns: "reviewed X studies", "meta-analysis of Y papers", "included Z publications"
 
 **Automated Extraction Logic:**
 
@@ -327,9 +335,8 @@ END;
 
 **Rationale:**
 
--   Chondrichthyes has 2 superorders: **Selachimorpha** (sharks) and
-    **Batoidea** (rays/skates)
--   Papers may study both (e.g., comparative phylogenetics)
+-   Chondrichthyes has 3 superorders: **Selachimorpha** (sharks), **Batoidea** (rays/skates), and **Holocephali** (chimaeras)
+-   Papers may study multiple superorders (e.g., comparative phylogenetics)
 -   Can auto-populate from species list using lookup table
 
 **Schema:**
@@ -337,6 +344,7 @@ END;
 ``` sql
 so_selachimorpha BOOLEAN DEFAULT FALSE  -- Sharks
 so_batoidea BOOLEAN DEFAULT FALSE       -- Rays & skates
+so_holocephali BOOLEAN DEFAULT FALSE    -- Chimaeras
 ```
 
 **Auto-Population Logic:**
@@ -439,55 +447,74 @@ def extract_species_binomials(text):
 -   For 10,000 studies: 150 bytes \* 10,000 = 1.5 MB (trivial)
 -   Modern databases optimize sparse boolean columns efficiently
 
-### 2.8 analysis_approach
+### 2.8 method_families & analysis_approach
 
-**Decision:** ⚠️ **BINARIZE WIDE WITH HIERARCHICAL CATEGORIZATION**
+**Decision:** ⚠️ **3-TIER HIERARCHICAL METHOD CLASSIFICATION**
 
 **Rationale:**
 
--   Papers use multiple analytical methods
+-   Papers use multiple analytical methods across different conceptual levels
 -   Method discovery is core objective of Phase 1 review
 -   Enables method trend analysis over time
 -   Supports discipline-method cross-tabulation
+-   **3-tier structure:** method_families → parent_techniques → subtechniques
+
+**Column Order:** `method_families` columns appear **before** `analysis_approach` columns in schema
 
 **Schema:**
 
 ``` sql
--- Prefix: a_ for "analysis"
--- Examples from initial review (to be expanded)
-a_genetic_metabarcoding BOOLEAN DEFAULT FALSE
+-- TIER 1: Method Families (Prefix: mf_)
+-- Broad methodological categories
+mf_behavioural_observation BOOLEAN DEFAULT FALSE
+mf_telemetry BOOLEAN DEFAULT FALSE
+mf_genomics BOOLEAN DEFAULT FALSE
+mf_diet_analysis BOOLEAN DEFAULT FALSE
+mf_stable_isotopes BOOLEAN DEFAULT FALSE
+mf_machine_learning BOOLEAN DEFAULT FALSE
+mf_habitat_modeling BOOLEAN DEFAULT FALSE
+mf_iucn_assessment BOOLEAN DEFAULT FALSE
+-- ... (to be determined from Phase 2 review)
+
+-- TIER 2: Analysis Approach / Parent Techniques (Prefix: a_)
+-- Specific analytical methods
 a_acoustic_telemetry BOOLEAN DEFAULT FALSE
 a_satellite_tracking BOOLEAN DEFAULT FALSE
-a_stable_isotopes BOOLEAN DEFAULT FALSE
+a_genetic_metabarcoding BOOLEAN DEFAULT FALSE
+a_stable_isotope_analysis BOOLEAN DEFAULT FALSE
 a_random_forest BOOLEAN DEFAULT FALSE
 a_bayesian_modeling BOOLEAN DEFAULT FALSE
-a_generalized_additive_model BOOLEAN DEFAULT FALSE
--- ... (to be determined from Phase 1 review)
+a_species_distribution_model BOOLEAN DEFAULT FALSE
+a_red_list_assessment BOOLEAN DEFAULT FALSE
+-- ... (to be determined from Phase 2 review)
+
+-- TIER 3: Subtechniques (Prefix: st_)
+-- Implementation-level details
+st_video_analysis BOOLEAN DEFAULT FALSE
+st_vertebral_sectioning BOOLEAN DEFAULT FALSE
+st_dna_metabarcoding BOOLEAN DEFAULT FALSE
+st_stomach_content_analysis BOOLEAN DEFAULT FALSE
+st_whole_genome_sequencing BOOLEAN DEFAULT FALSE
+st_microsatellites BOOLEAN DEFAULT FALSE
+-- ... (to be determined from Phase 2 review)
 ```
 
 **Hierarchical Method Categorization:**
 
-Methods can be grouped into families for aggregation:
+Based on `outputs/method_hierarchy_table.csv`, methods are organized as:
 
-``` sql
--- Method families (views or virtual columns)
-CREATE VIEW method_families AS
-SELECT
-    study_id,
-    -- Telemetry family
-    CASE WHEN (a_acoustic_telemetry OR a_satellite_tracking OR a_pop_tags)
-         THEN TRUE ELSE FALSE END AS family_telemetry,
-
-    -- Genomic family
-    CASE WHEN (a_genetic_metabarcoding OR a_whole_genome_sequencing OR a_edna)
-         THEN TRUE ELSE FALSE END AS family_genomics,
-
-    -- Statistical modeling family
-    CASE WHEN (a_random_forest OR a_bayesian_modeling OR a_gam OR a_glm)
-         THEN TRUE ELSE FALSE END AS family_statistical_modeling
-
-FROM literature_review;
 ```
+discipline → method_family → parent_technique → subtechnique
+```
+
+**Examples:**
+- Movement → Telemetry → Acoustic Telemetry → (specific tag types)
+- Trophic → Diet Analysis → DNA Metabarcoding → (specific primers)
+- Data Science → Machine Learning → Random Forest → (specific implementations)
+
+**Note on Data Science Methods:**
+
+Data science methods (e.g., Machine Learning, Bayesian Methods, Time Series) are cross-cutting and underpin analyses across all disciplines. These will be reviewed and potentially restructured after initial classification to reflect their foundational nature.
 
 **Method Discovery Workflow:**
 
@@ -504,7 +531,90 @@ FROM literature_review;
     -   Create hierarchical groupings
     -   Generate method trend analyses
 
-### 2.9 key_findings, strengths, weaknesses
+### 2.9 Multi-Discipline, Multi-Technique Papers
+
+**Challenge:** How to represent papers that span multiple disciplines with different techniques for each discipline?
+
+**Example Problem:**
+- Paper uses eDNA (genetics discipline) AND SDM (movement discipline)
+- If we mark both `d_genetics_genomics = TRUE` and `d_movement_spatial = TRUE`, and also mark both `a_edna = TRUE` and `a_species_distribution_model = TRUE`, we lose the linkage of which technique pertains to which discipline
+
+**Option A: Duplicate Rows**
+
+Create multiple rows for the same paper, with distinct discipline-technique combinations:
+
+```csv
+study_id,paper_id,authors,year,d_genetics,d_movement,a_edna,a_sdm
+1,PAPER_001,Smith et al,2023,TRUE,FALSE,TRUE,FALSE
+2,PAPER_001,Smith et al,2023,FALSE,TRUE,FALSE,TRUE
+```
+
+**Pros:**
+- ✅ Maintains discipline-technique linkage
+- ✅ Simple to query: "genetics papers using eDNA"
+- ✅ Standard SQL operations work
+
+**Cons:**
+- ❌ Loses "one row = one paper" conceptual model
+- ❌ Inflates row count (need to COUNT DISTINCT paper_id for paper counts)
+- ❌ Duplicate metadata (authors, year, title repeated)
+
+**Option B: Sub-Tables Per Paper**
+
+Create a separate relational table for discipline-technique pairs:
+
+```sql
+-- Main table (one row per paper)
+CREATE TABLE literature_review (
+    paper_id INTEGER PRIMARY KEY,
+    authors TEXT,
+    year INTEGER,
+    ...
+);
+
+-- Discipline-technique pairs (many-to-one with papers)
+CREATE TABLE paper_disciplines_techniques (
+    id INTEGER PRIMARY KEY,
+    paper_id INTEGER REFERENCES literature_review(paper_id),
+    discipline VARCHAR(50),
+    technique VARCHAR(100)
+);
+```
+
+**Pros:**
+- ✅ Maintains "one row = one paper" in main table
+- ✅ No duplicate metadata
+- ✅ Normalized database design
+
+**Cons:**
+- ❌ Requires JOINs for most queries (slower, more complex)
+- ❌ Loses simplicity of binary column model
+- ❌ More complex for reviewers to populate
+
+**Recommendation:**
+
+Start with **Option A (duplicate rows)** for Phase 1 review because:
+1. Most papers (\~80%) likely use single discipline
+2. Simpler for reviewers to understand and populate
+3. Can migrate to Option B later if multi-discipline papers common
+4. Query complexity remains low for most analyses
+
+Add `paper_id` column to track unique papers:
+```sql
+paper_id VARCHAR(50) NOT NULL  -- Groups duplicate rows for same paper
+study_id INTEGER PRIMARY KEY   -- Unique row identifier
+```
+
+**Query pattern for paper counts:**
+```sql
+-- Count unique papers (not rows)
+SELECT COUNT(DISTINCT paper_id) FROM literature_review;
+
+-- Count discipline-technique combinations
+SELECT COUNT(*) FROM literature_review;
+```
+
+### 2.10 key_findings, strengths, weaknesses
 
 **Decision:** ❌ **REMOVE FROM PRIMARY DATABASE**
 
@@ -538,7 +648,7 @@ CREATE TABLE study_annotations (
 -   Easy to filter by annotation type or reviewer
 -   Can add structured tags later (e.g., sentiment analysis)
 
-### 2.10 shark_refs_pdf
+### 2.11 shark_refs_pdf
 
 **Decision:** ✅ **APPROVED AS FOREIGN KEY**
 
@@ -590,6 +700,7 @@ CREATE TABLE literature_review (
 
     -- Study classification
     study_type VARCHAR(20) CHECK (study_type IN ('Primary', 'Systematic Review', 'Meta-analysis')),
+    n_studies INTEGER,  -- For reviews/meta-analyses: count of studies reviewed/analysed
 
     -- External references
     shark_refs_id VARCHAR(100) UNIQUE,
@@ -650,11 +761,12 @@ ALTER TABLE literature_review ADD COLUMN sb_benguela_current BOOLEAN DEFAULT FAL
 -- ... (63 more)
 ```
 
-### 3.6 Superorders (2 binary)
+### 3.6 Superorders (3 binary)
 
 ``` sql
-ALTER TABLE literature_review ADD COLUMN so_selachimorpha BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN so_batoidea BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN so_selachimorpha BOOLEAN DEFAULT FALSE;  -- Sharks
+ALTER TABLE literature_review ADD COLUMN so_batoidea BOOLEAN DEFAULT FALSE;       -- Rays & skates
+ALTER TABLE literature_review ADD COLUMN so_holocephali BOOLEAN DEFAULT FALSE;    -- Chimaeras
 ```
 
 ### 3.7 Species (\~1,200 binary)
@@ -666,30 +778,64 @@ ALTER TABLE literature_review ADD COLUMN sp_rhincodon_typus BOOLEAN DEFAULT FALS
 -- ... (~1,197 more)
 ```
 
-### 3.8 Analysis Approaches (\~100-200 binary, TBD)
+### 3.8 Method Families (\~30-40 binary, from Phase 2)
 
 ``` sql
-ALTER TABLE literature_review ADD COLUMN a_acoustic_telemetry BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN a_satellite_tracking BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN a_stable_isotopes BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN a_genetic_metabarcoding BOOLEAN DEFAULT FALSE;
--- ... (to be determined from Phase 1 review)
+-- TIER 1: Method Families (mf_ prefix)
+ALTER TABLE literature_review ADD COLUMN mf_behavioural_observation BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN mf_telemetry BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN mf_genomics BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN mf_diet_analysis BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN mf_stable_isotopes BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN mf_machine_learning BOOLEAN DEFAULT FALSE;
+-- ... (~30-40 method families total)
 ```
 
-### 3.9 Summary Statistics
+### 3.9 Analysis Approaches / Parent Techniques (\~50-70 binary, from Phase 2)
+
+``` sql
+-- TIER 2: Analysis Approach (a_ prefix)
+ALTER TABLE literature_review ADD COLUMN a_acoustic_telemetry BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN a_satellite_tracking BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN a_stable_isotope_analysis BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN a_genetic_metabarcoding BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN a_random_forest BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN a_species_distribution_model BOOLEAN DEFAULT FALSE;
+-- ... (~50-70 parent techniques total)
+```
+
+### 3.10 Subtechniques (\~20-30 binary, from Phase 2)
+
+``` sql
+-- TIER 3: Subtechniques (st_ prefix)
+ALTER TABLE literature_review ADD COLUMN st_video_analysis BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN st_vertebral_sectioning BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN st_dna_metabarcoding BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN st_stomach_content_analysis BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN st_whole_genome_sequencing BOOLEAN DEFAULT FALSE;
+-- ... (~20-30 subtechniques total)
+```
+
+### 3.11 Summary Statistics
 
 **Total Columns:**
 
--   Core metadata: \~20 columns
+-   Core metadata: \~22 columns (includes n_studies, paper_id)
 -   Disciplines: 8 columns
 -   Author nations: 197 columns
 -   Ocean basins: 9 columns
 -   Sub-basins: 66 columns (optional)
--   Superorders: 2 columns
+-   Superorders: 3 columns (includes Holocephali for chimaeras)
 -   Species: 1,200 columns
--   Analysis approaches: 150 columns (estimated)
+-   Method families: 35 columns (estimated from Phase 2)
+-   Analysis approaches (parent techniques): 60 columns (estimated from Phase 2)
+-   Subtechniques: 25 columns (estimated from Phase 2)
 
-**TOTAL: \~1,652 columns** (or \~1,586 without sub-basins)
+**TOTAL: \~1,625 columns** (or \~1,559 without sub-basins)
+
+**Method Hierarchy Reference:** See `outputs/method_hierarchy_table.csv` for current 3-tier classification
+
+**Technique Count Documentation:** `outputs/abstracts_technique_counts.csv` counts the number of unique techniques mentioned per presentation (paper), not the total mentions across all papers
 
 ------------------------------------------------------------------------
 
