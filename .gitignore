@@ -120,9 +120,10 @@ data/*_log.txt
 data/*_report.txt
 
 # Temporary/review files
-PROJECT_STRUCTURE.txt
-README_OLD.md
 TODO.md
+
+# Backups folder
+backups/
 
 # Music share folder
 music_share/
