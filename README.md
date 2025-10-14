@@ -123,6 +123,21 @@ elasmo_analyses/
     - 3-tier method hierarchy created (method_families → parent_techniques → subtechniques)
   - [x] Panel team recruited (5 confirmed speakers)
 
+- [x] **Phase 1: Technique Database Compilation** (Complete 2025-10-13)
+  - [x] **Master techniques database created: 208 techniques** across 8 disciplines
+  - [x] Initial compilation from EEA 2025 abstracts (40 techniques)
+  - [x] Gap analysis and planned techniques added (79 techniques)
+  - [x] **Literature review expansion** (+79 techniques via systematic review)
+    - Web searches for SDM methods, stock assessment, home range analysis
+    - Domain knowledge integration (textbooks, R packages, FAO manuals)
+    - Hierarchical expansion of parent techniques
+  - [x] **Database files ready for panelist review**:
+    - `data/master_techniques.csv` (208 techniques, 12 fields)
+    - `data/Techniques DB for Panel Review.xlsx` (3 sheets, ready to edit)
+    - Complete documentation suite (5 markdown files)
+  - [x] All techniques have search queries for Shark-References automation
+  - [x] 40 techniques validated by EEA 2025 conference presentations
+
 - [x] **Database Design Updates** (2025-10-03)
   - [x] Added `n_studies` column for review/meta-analysis papers
   - [x] Updated superorders to include Holocephali (chimaeras) - 3 total
@@ -132,15 +147,21 @@ elasmo_analyses/
   - [x] Species lookup table cleaned (1,030 species; 178 pending from Weigmann)
 
 ### In Progress 🔄
-- [ ] **Phase 1: Infrastructure Setup**
+- [ ] **Phase 2: Panelist Review** (Week 1-2)
+  - [ ] Distribute technique database to 8 discipline leads
+  - [ ] Collect reviewed files with edits
+  - [ ] Validate search queries on Shark-References (sample testing)
+
+- [ ] **Phase 3: Database Finalization** (Week 3-4)
+  - [ ] Consolidate edits from all discipline leads
+  - [ ] Resolve flagged issues and conflicts
+  - [ ] Create final approved version
+  - [ ] Import to SQLite database
+
+- [ ] **Phase 4: Infrastructure Setup**
   - [ ] Database schema implementation (SQL generation)
   - [ ] Species list completion (awaiting Weigmann complete list: 178 missing)
   - [ ] Shark-References automation permission request
-
-- [ ] **Phase 2: Expert Recruitment & Materials**
-  - [ ] Panel presentation materials preparation
-  - [ ] Expert discipline assignments refinement
-  - [ ] Web-based expert search using technique keywords
 
 ### Upcoming ⏳
 - [ ] Complete Weigmann species list integration (178 species pending) - **BLOCKING I1.3**
@@ -170,34 +191,46 @@ Analysis of 106 presentations at EEA 2025 by discipline:
 
 This distribution validates our 8-discipline framework and informs panel time allocation.
 
-### Analytical Techniques Identified
+### Analytical Techniques Database
 
-**3-Tier Method Classification** (from EEA 2025 presentations):
+**Current Status: 208 Techniques Ready for Panelist Review**
 
-**Total Unique Techniques**: 46 (33 parent techniques + 13 subtechniques)
+**Compilation Sources**:
+- EEA 2025 conference presentations: 40 techniques with empirical validation
+- Shark-References planned searches: 79 techniques from literature boundaries
+- Gap analysis: 8 critical additions (histology, morphometrics, video, CKMR, etc.)
+- Literature review expansion (2025-10-13): +79 techniques via systematic review
+  - Web searches: SDM methods, stock assessment, home range analysis
+  - Domain knowledge: Standard textbook methods, R packages, FAO manuals
+  - Hierarchical expansion: Sub-techniques added to parent methods
 
-**By Discipline**:
-- **Behaviour**: 4 techniques (Behavioural Observation, Cognition, Sensory Biology, Social Networks)
-- **Biology**: 7 techniques (Age & Growth, Health, Histology, Morphology, Physiology, Reproduction)
-- **Conservation**: 7 techniques (Human Dimensions, IUCN Assessment, Participatory Science, Policy, Tourism, Trade)
-- **Data Science**: 6 techniques (Bayesian Methods, Data Integration, Machine Learning, Meta-Analysis, Time Series)
-- **Fisheries**: 2 techniques (Bycatch Assessment, Mark-Recapture)
-- **Genetics**: 4 techniques (Genomics, Phylogenetics, Population Genetics, eDNA)
-- **Movement**: 5 techniques (Connectivity, Habitat Modeling, MPA Design, Movement Modeling, Telemetry)
-- **Trophic**: 2 techniques (Diet Analysis, Stable Isotopes)
+**Total Unique Techniques**: 208 (64 parent techniques + 144 sub-techniques)
 
-**Most Mentioned**:
-- Acoustic Telemetry: 13 mentions
-- IUCN Red List Assessment: 10 mentions (7 abstracts, 10 titles)
-- MPA Design: 7 mentions
-- Machine Learning: 7 mentions
+**By Discipline (Updated 2025-10-13)**:
+- **Fisheries** (FISH): 34 techniques - Stock assessment (11), data-poor methods (7), CPUE (4), bycatch (4), ecosystem-based (3)
+- **Data Science** (DATA): 32 techniques - Machine learning (9), Bayesian (7), statistical (7), integration (7), time series (2)
+- **Movement** (MOV): 31 techniques - Habitat modeling/SDM (8), telemetry (5), movement analysis (13), spatial conservation (5)
+- **Biology** (BIO): 28 techniques - Age & growth (6), reproduction (7), morphology (4), physiology (6), health (5)
+- **Genetics** (GEN): 24 techniques - Population genetics (9), genomics (6), eDNA (4), phylogenetics (2), applied (3)
+- **Behaviour** (BEH): 20 techniques - Observation (10), sensory biology (5), social (1), cognition (4)
+- **Trophic** (TRO): 20 techniques - Diet analysis (7), food webs/community (7), foraging/energetics (6)
+- **Conservation** (CON): 19 techniques - Assessment (4), policy (4), human dimensions (6), trade/participatory (3), tourism (2)
 
-**Data Sources**:
-- Titles: 63 presentations, 93 technique mentions (77.8% coverage)
-- Abstracts: 112 files, 53 technique mentions (37.5% coverage)
-- Combined: 46 unique techniques
+**Top Techniques by EEA 2025 Mentions**:
+- IUCN Red List Assessment: 16 presentations
+- Acoustic Telemetry: 11 presentations
+- Machine Learning: 9 presentations
+- MPA Design: 7 presentations
+- Age & Growth, Reproduction: 7 presentations each
 
-See `outputs/method_hierarchy_table.csv` for complete 3-tier classification.
+**Database Files**:
+- `data/master_techniques.csv` - Main CSV file (208 rows, 12 columns)
+- `data/Techniques DB for Panel Review.xlsx` - Excel file for panelist editing
+- `docs/README_FOR_PANELISTS.md` - Instructions for panelist review
+- `docs/MASTER_TECHNIQUES_CSV_README.md` - Complete CSV documentation
+- `docs/Expansion_Summary_Report.md` - Details of literature review expansion
+
+See documentation for complete hierarchies and search queries.
 
 ### Candidate Database Status
 
@@ -304,5 +337,5 @@ This project builds upon decades of elasmobranch research by thousands of scient
 
 ---
 
-*Last updated: 2025-10-03*
-*Version: 1.2 - Phase 1 Complete + Analytical Techniques Compiled*
+*Last updated: 2025-10-13*
+*Version: 1.3 - Technique Database Expansion Complete (208 techniques)*
