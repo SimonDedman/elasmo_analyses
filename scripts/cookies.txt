@@ -1,0 +1,18 @@
+# Netscape HTTP Cookie File
+# Extracted: 2025-10-21 23:55:25
+
+# Cookies for sciencedirect.com
+.sciencedirect.com	TRUE	/	TRUE	1771089983000	EUID	8527eb1c-5a08-44a9-8232-62a2fa7c6946
+.sciencedirect.com	TRUE	/	FALSE	1786728388000	OptanonAlertBoxClosed	2025-08-14T17:26:28.811Z
+.sciencedirect.com	TRUE	/	FALSE	1791918366000	OptanonConsent	isGpcEnabled=0&datestamp=Mon+Oct+13+2025+12%3A06%3A06+GMT-0700+(Pacific+Daylight+Time)&version=202504.1.0&browserGpcFlag=1&isIABGlobal=false&hosts=&consentId=042131e1-5ab0-49da-9649-de6d483ba942&interactionCount=1&isAnonUser=1&landingPath=NotLandingPage&groups=1%3A1%2C2%3A0%2C8%3A0&intType=6&geolocation=US%3BCA&AwaitingReconsent=false
+.sciencedirect.com	TRUE	/	TRUE	1761117703911	__cf_bm	NvAzngstItWirXccgTwQlNc05UTH30tNuchxRn2cvJ0-1761115903-1.0.1.1-anmnEXWqvGhjWZhvW2CjuIAcxpovNaqQIeOPX9_iM.Tru4tNefllrE6mV_mK7QnMLKaZd.xPmokhhBgqwexog_LmtRw58_rHOKeo9qQfPuM
+.sciencedirect.com	TRUE	/	TRUE	1792650456449	cf_clearance	THm9AhqkP854qCwv52gSUeyJcWrGJj5D5c6BD8l5fGQ-1761114456-1.2.1.1-CwFAZxksipHcoj_MlTnXtUX36HWfyIBblkqvBU2rO52CVDY.SX_PpKWXX9xlDIHgsurx1Vo2kcL020ndHgcnlNLb9D2eSYFoCKWUEP2OGJfZRMaIH1kAbGiw2rRG8iuYqzthZtJ5xYNBFN84FnjM2gtrtYO0vvCTZnx6NIf_8BUbxp3eetsKrWtX2g4HKVGn4y_HgyFcvyH3dfdoqyEAe7tirkqb0vzV8uIwCMgkezw
+.sciencedirect.com	TRUE	/	TRUE	1795330304380	id_ab	AEG
+www.sciencedirect.com	FALSE	/	TRUE	1761123104380	cra-ch-clearance	99271160a833e678:62323164303438346261393033393637336130373336643037383739653233663362363835383233616632643132633165373830313231313737613831306234663062363662336134623534623936623464646132663a623634663838333539353962323334373664373538643063
+# Cookies for wiley.com
+.onlinelibrary.wiley.com	TRUE	/	TRUE	1786379959523	MACHINE_LAST_SEEN	2025-10-14T09%3A39%3A19.514-07%3A00
+.onlinelibrary.wiley.com	TRUE	/	TRUE	1786379959523	MAID	GGTr5zKpiCX31psxEDSngg==
+.onlinelibrary.wiley.com	TRUE	/	TRUE	1791995961425	cf_clearance	C_6Ws.FxMTBty5FHOnKu87tJugJfwPbn61u2jNM0K6Y-1760459961-1.2.1.1-C96Ys2fknrYuK30UrxqWtPMdxJxA9JEJmnFxd3h5yFfJPIN4k8oBwAe2snZuCUVNvr3UcndGjlfu6SRH57wqDwQ1z0kVf5cSF_t5RwXtB_L3dna_Ubfdgg.6ORdGmslr8SICQtfsUMHrxO2ohKLudCZ90jFCoZEs7WWTrp4CQs6K.B8RpS6_sCJlejtrPLiP.FyG_qltLrIMyKCQnRjC8hwmirnFXrfzzNwm8a3gSv0
+.onlinelibrary.wiley.com	TRUE	/	TRUE	1791995968009	osano_consentmanager	np71GdRigAUBm-inVLsPS0Gzk2qu4JG4-1EPgFUMmEc7s37yE-GIsBMcKTORbVlMJQUsSwKbiqUjL3n5ZilPV3x68qvj_nu4y7MOiA_4XzIv2L-AxAFqBSiBfrlvrD91UAzx2JjacVx7CeWzfdCgvcKKz5i8A52gL-qvusoZYrH-eFwNszkh03-EUWwqx0u62CR_6EDIk4zBifO_g3Xj4T-m58PGYi0wY4RfbigvFyZf73tCGu92YS5dg-FnxrJnwXs6NfutT0IXHdw0OqrRjarFSFhrATMt2koYR1xYmmwxDsy8IS0so9aw6UyHdC2fEAaq3zjlYUs=
+.onlinelibrary.wiley.com	TRUE	/	TRUE	1791995968008	osano_consentmanager_uuid	b979d991-f4cf-4db4-9105-f4e79c7fbafd
+.onlinelibrary.wiley.com	TRUE	/	TRUE	1791995968509	userRandomGroup	28
