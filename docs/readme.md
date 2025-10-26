@@ -5,6 +5,7 @@
 - `core/eea2025_data_panel_comprehensive_plan.md` - Comprehensive plan (67K)
 - `core/eea2025_data_panel_program_timeline_personnel.md` - Timeline and personnel
 - `core/implementation_summary.md` - Implementation overview
+- `core/claude_md_configuration_summary.md` - Claude Code configuration guide
 
 ## Database Documentation
 - `database/database_schema_design.md` - Complete schema documentation

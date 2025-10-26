@@ -1,0 +1,217 @@
+Our current list of discipline boundaries (Biology/Ecology, Genetics/Genomics, Spatial, Fisheries, Policy/Conservation, Statistics) is
+  based on categories presented to prospective presenters at EEA. Please review this, crossreferencing
+  against:
+  /home/simon/Dropbox/Galway/Papers/Books/Carrier.etal.2019.Emerg tech app field laboratory.pdf
+  Potential discipline categories to include might be disease/parasites, neurology (within biology), behaviour
+  (within ecology), citizen science (though this may be an approach which is applicable to multiple
+  disciplines).
+
+  Conduct web searches if necessary, to see whether this is already a solved problem, e.g. by conference
+  organisers (EEA, and American Elasmobranch Association (AES), and Sharks International); you can see previous
+  conference themes in /home/simon/Documents/Si Work/PostDoc Work/AES/ , /home/simon/Documents/Si Work/PostDoc
+  Work/EEA/2023/ .
+
+  - Identify gaps (e.g., climate change integration needed)
+  - Define inclusion boundaries for each discipline
+
+
+
+
+
+
+
+
+Per my email exchange with Jurgen I'm keen to start with Shark References (https://shark-references.com/search) as a primary search database: while it may not be as exhaustive as google scholar / web of science, it is ONLY chondrythians and therefore all hits are presumed to be in-scope for species.
+
+Please can you analyse the structure of https://shark-references.com and see if there's scope to access its database remotely, possibly via an API?
+
+Per the Shark References manual (https://www.researchgate.net/publication/395261929_Manual_Advanced_Search_wwwshark-referencescom_English_version_10) entering search terms in "Search term (Only Fulltext)" returns its results in the browser or directly as a downloadable csv file. Subsequently I'm hopeful that we can use Claude Code to algorithmically run the literature review across all the identified disciplines then analytical methods. Downloading and extracting the csv, transferring them to the database, and potentially searching each resulting paper on google scholar. Please assess our options?
+
+
+please provide R alternatives for python-only code blocks.
+
+
+
+
+The result of SharkRefs / general systematic literature reviews will be populated to a dbase. See "Example of Spreadsheet for Review.xlsx" for an initial draft.
+
+study_id: unique ID per row, index, autopopulated
+
+reviewer:allows identification for data entry / QAQC accountability
+
+discipline: will be based on the discipline boundary work covered above. I think this should be pivoted wider/binarised into multiple column, which allows the addition of columns in future, and allows for multiple entries. Column names can be prefixed "d_" to denote "discipline" e.g. for genetics: "d_genetics"
+
+study_type: Primary, Systematic Review, Meta-analysis : should be simple enough to extract by text scraping? I presume reviews and metaanalyses will announce themselves as such?
+
+region: I think this should be widened and binarised into two or three schema:
+auth_inst_nation for author's institution nation(s), so the 197 (?) world nations (again with scope to edit these columns), and
+major_basin for major ocean basin(s) in which the study was conducted ("b_"), and possible
+sub_basin ("sb_") in which the study was conducted. We'd need to review candidate schema for these - the list of world nations obviously exists somewhere, ideally in an 'official' location which is updated (wikipedia?). Major basins should be simple. Sub basins should be decently-well defined, and code should autopopulate the major basin(s) containing the sub-basins if the sub-basins are populated.
+
+superorder ("so_"): like basin and sub-basin, species will likely be populated, and we can populate superorder from that, using a lookup table.
+
+species: exhaustive lists of shark species exist; I'll find out where, possibly https://www.sharkipedia.org/. Column names probably "sp_" then scientific names e.g for white shark Carcharodon carcharias: "sp_carcharodon_carcharias"
+
+analysis_approach: this will be the list of analytical approaches we have to deduce as part of the first round review exercise, which are then keyword searches for the main round review exercise. Again I suspect these should be binarised columns with prefixes ("a_")
+
+key_findings, strengths, weaknesses: these are subjective and arguably don't deserve to be in the database.
+
+shark_refs_pdf: unique numerical ID of the specific paper in the SharkReferences database.
+
+Please review these column decisions sequentially, then consider the resulting database overall: as a very wide, sparse database, will this be a problem? Does this scenario lend itself to any specific database format? Ideally it would be something simple and common. CSV compresses terribly for sparse databases however. Possibly duckDB (https://r.duckdb.org/ & https://duckdb.org/), since it's compatible with duckplyr in R, which our community uses? (https://www.tidyverse.org/blog/2025/06/duckplyr-1-1-0/) . DuckDB supports parquet files (https://duckdb.org/docs/stable/data/parquet/overview.html) but I'm not sure what an optimal workflow would be for getting started (csv?), vs maintaining a large and scalable distributed project? parquet+duckdb?).
+
+
+
+
+
+
+
+
+mind map design via claude? canva plugin? other? R code?? Means it can be auto updated from github...
+
+For the panel presentation, once we've completed the first and second pass and have the 
+analytical approaches by discipline, and the count of papers using those approaches by 
+year, I'd like to create graphics depicting this, like a branching timeline, only with the
+ thickness of the branches changing as a function of the paper count. Presumably we can 
+achieve this in R and host it on the github, displayed on github.io?
+
+As a generality I'm also interested in Claude Code's ability to interface with (e.g.) 
+Canva and generate more design-focused graphics.
+
+
+
+
+
+
+
+> Great! The next key step is to collate and research more panel/assistants, but first 
+please can you produce a visually appealing table of the program timeline with times for 
+each segment (talk, panel, intro, etc) with panel team names and metadata: role, status, 
+e.g.
+Dr Nick Dulvy (panelist,EEA_rec)
+roles = lead, panelist, assistant, secretariat
+status = AI_rec, EEA_rec, sec_rec (by secretariat), invited, confirmed, declined
+? Thanks 
+
+
+
+
+
+
+
+
+
+Also make a separate summary table csv in /outputs folder which is a quick table by 
+discipline, oral presentation yes/no, number of relevant (other, all) talks/posters/extrs 
+posters at EEA2025 [see Final Speakers EEA 2025.xlsx]. First make a new tab in that xlsx 
+called "data" which is a row join of those 3 tabs, with "format" column populated by 
+oral_ppt, poster, add_poster. Guuske & I populated Analysis Discipline column and 
+PanelPrez. Please retain all columns across the join, then create "discipline" column, and
+ use the 8 disciplines schema to populate that column for all people here. Later if/when 
+we get attendee data we can add them as a tab and re-run the join & 
+auto-discipline-classify, then rebuild the table of group counts per discipline. This 
+table will facilitate and justify panel pool minute distribution decisions.
+
+
+
+
+
+
+
+
+timeline: we can use the 2 minutes question time after talks to inform which panel sessions are going to follow the 5 talks, since perchance having 2 more minutes could be more useful for some disciplines than others?
+
+
+
+
+
+
+Create a csv table in outputs with deeper search for candidates per discipline, subdiscipline, analytical technique.
+Columns for putative age, sex, institution, continent, country, seniority (professor, associate professor, assistant professor, postdoc, phd, masters), publication count, attending EEA? EEA attendance history, AES attendance history, SI attendance history, proposal status (i.e. already on our lists or new, sort by this), EEA_2025_status (panel, presentation, poster, attendee [create combinations with "-"; don't add attendee as a combo since it's presumed for all other statuses], source (as before, EEA_rec etc). Start the job by scraping the Final Speakers xlsx data tab, then with a web search: before you do the web search, propose your search and prioritisation scheme and I'll review it.
+
+Clean that, then autopopulate the discipline field.
+Then autopopulate the other fields from web scraping.
+name_prefix	putative_age	sex
+continent	country	seniority	publication_count_total	publication_count_first_author_5yr	h_index
+subdiscipline	analytical_techniques
+
+
+
+
+FROMHERE
+
+
+
+
+
+
+TECHNIQUES
+
+read guuske doc [SD]
+
+SR search csv results to save in a structured folderised way (search term as csv name?)
+Assess search term skill/return, from systematic review
+
+database schema:
+study_type : Primary/Review/Meta-analysis : does that cover everything, and will all papers only be 1 category [GT]
+review_n_studies: if study_type = review then count n of studies reviewed therein
+superorder: make sure it has chimaeras [SD]
+species: how to make it easy for humans to populate? [SD]
+analysis_approach: add sub approach (& sub sub?)
+
+database structure: duplicates: 1 paper with 2 disciplines and 2 techniques: if we mark the disciplines and techniques, how do we know which technique pertains to which discipline?
+> duplicate papers where n_disciplines > 1, multi rows?
+> or sub tables? but would be super inefficient?
+
+
+
+2025-10-17
+Panel: seb not panel but will help - fisheries
+[SD/C] deep dive on these 3 for fisheries panellists:
+Manuel	Dureuil
+Mišo	Pavičić
+Rachel	Winter
+Select best choice, SD & GT decide whether to ask them, or we'll do it ourselves/with Nick
+
+[SD/C] Clean & archive folder contents, reduce to just the key doc
+
+[SD/C] incorporate Alen's techniques emailed - check for already existing, review before add. "Behavioural observation" = movement techniques. "Fishing studies" already there.
+
+[SD/GT] Techniques suggestions
+Cloacal swab, trophic, diet
+trophic: my stuff, dag, TD BU
+Bioaccumulation of toxins, pollutants, LD50. BIO	Disease, Parasites, & Health	Blood Chemistry	FALSE	Health & Disease	Hematology and plasma chemistry. Tissue chemistry: health risk to organism (sick fish) & from organism (humans eating sick fish)
+
+Next steps:
+[SD/C] check & email GT: techniques list -> sharkrefs searches -> csvs -> database -> (cleaning/review: when/where, multiple places?) -> db query outputs e.g. timeline, relative abundance of techniques per discipline, etc. All leads to panel content.
+Quality check / process review: GT compare Claude vs manual, see Sammy email, ask Sammy for her results?? What do we want & how do we phrase it? Compare same query/desired output but on sharkrefs w/ Claude & db. What papers she got back: initially, then post cleaning results. Also can we see her R code? Will inform on what problems she had.
+
+
+TODO
+
+  The database schema is now ready for data entry. Potential next steps could include:
+  1. Create data import scripts to populate the database from literature sources
+  2. Add validation queries to check data quality
+  3. Create lookup/helper tables for species and geographic region metadata
+  4. Implement database views for common query patterns
+  5. Generate documentation for database usage and maintenance
+
+
+datasheet entry for humans: validation/data entry rules to avoid mess.
+
+loop GT into Emily/Sammy/Lauren process: their timeline: "skeleton structure for the paper in the next few weeks" [1 oct], loop them them in once we've done candidates & topics/subtopics/techniques process (1 week), setup zoom, discuss.
+
+SI2026: GT & SD present, short talk or session. Discuss after EEA
+
+prep panel discussion points, reduce work for panellists. Ditto Questions for Q&A. Future perspectives.
+
+
+
+
+Before conference: setup AI scanning of presentations (abstracts. and papers?) to contextualise against recent developments in the field (recent X years: can use results of lit review to seed this stage). Use to generate beforehand (or at conference when they upload presentations last minute) productive comments and questions, link to recent studies by panel and audience members/known attendees. Similarly use talks to inform lead-in introductions by the panel, from as little to knowing the paper's keywords, to having a cue-card talking point (or three, for safety) which lead to the question the next speaker is addressing.
+
+
+Maybe panel leads for non-oral-presentation disciplines could choose to throw together a few slides, maybe a lit review of highlights of recent papers, with an emphasis on attendees. Get donations from authors, or just do AI?
+
+
+16.5" wide x 11" high monitor, 19" diagonal. Or VR/AR instead. See ChatGPT
