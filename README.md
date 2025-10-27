@@ -99,7 +99,7 @@ eea_2025_data_panel/
 ###  LATEST UPDATES (2025-10-26 PM)
 
 **✅ Collaboration Network Analysis Complete**
-- [Full Report](docs/database/COLLABORATION_NETWORK_ANALYSIS_SUMMARY.md)
+- [Full Report](docs/database/collaboration_network_analysis_summary.md)
 - 18,633 authors networked, 333,809 connections
 - 479 international collaborations identified
 - Network visualizations created
@@ -111,14 +111,14 @@ eea_2025_data_panel/
 - Cross-discipline analysis
 
 **✅ Conference Abstract Analysis Complete**
-- [Complete Summary](docs/database/ABSTRACT_ANALYSIS_COMPLETE_SUMMARY.md)
+- [Complete Summary](docs/database/abstract_analysis_complete_summary.md)
 - 109 presentations analyzed and contextualized
 - Matched to recent literature (2020-2025)
 - 110 individual reviews created
 - [View All Reviews](outputs/abstract_reviews/)
 
 **✅ AI Impact Assessment Complete**
-- [50+ Page Report](docs/techniques/AI_IMPACT_ON_SHARK_RESEARCH_DISCIPLINES.md)
+- [50+ Page Report](docs/techniques/ai_impact_on_shark_research_disciplines.md)
 - Discipline-by-discipline AI analysis
 - Current adoption rates + future forecasts (2025-2030)
 - 60+ technique transformations mapped
@@ -298,21 +298,21 @@ Papers count for DATA discipline if they use ANY of 128 techniques marked as:
 ## Key Documentation
 
 ### 📊 Project Overview
-- **[PROJECT_STATUS_COMPREHENSIVE.md](docs/core/PROJECT_STATUS_COMPREHENSIVE.md)** - Complete project summary
+- **[project_status_comprehensive.md](docs/core/project_status_comprehensive.md)** - Complete project summary
 
 ### 🎤 Conference Materials (NEW!)
 - **[Panel Reports Overview](outputs/panel_reports/PANEL_REPORTS_OVERVIEW.md)** - Expert review materials
-- **[Abstract Analysis Summary](docs/database/ABSTRACT_ANALYSIS_COMPLETE_SUMMARY.md)** - 109 presentations reviewed
+- **[Abstract Analysis Summary](docs/database/abstract_analysis_complete_summary.md)** - 109 presentations reviewed
 - **[All Abstract Reviews](outputs/abstract_reviews/)** - Individual reviews
 
 ### 🤝 Network Analysis (NEW!)
-- **[Collaboration Network Summary](docs/database/COLLABORATION_NETWORK_ANALYSIS_SUMMARY.md)** - Complete network analysis
+- **[Collaboration Network Summary](docs/database/collaboration_network_analysis_summary.md)** - Complete network analysis
   - Co-authorship networks (18,633 authors)
   - Institution collaborations
   - International partnerships (479 papers)
 
 ### 🤖 AI Impact (NEW!)
-- **[AI Impact Report](docs/techniques/AI_IMPACT_ON_SHARK_RESEARCH_DISCIPLINES.md)** - 50+ page analysis
+- **[AI Impact Report](docs/techniques/ai_impact_on_shark_research_disciplines.md)** - 50+ page analysis
   - Current AI adoption by discipline
   - Future forecasts (2025-2030)
   - 60+ technique transformations
@@ -321,7 +321,7 @@ Papers count for DATA discipline if they use ANY of 128 techniques marked as:
 ### 🗄️ Database & Extraction
 - **[Database Schema Design](docs/database/database_schema_design.md)** - Complete schema
 - **[Extraction Complete Summary](docs/database/extraction_complete_summary.md)** - Extraction results
-- **[Geographic Analysis](docs/database/GEOGRAPHIC_DATA_INVESTIGATION.md)** - 73 countries mapped
+- **[Geographic Analysis](docs/database/geographic_data_investigation.md)** - 73 countries mapped
 
 ### 📈 Analysis & Visualizations
 - **Analysis CSVs:** `outputs/analysis/` (ready for visualization)

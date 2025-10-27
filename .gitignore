@@ -130,3 +130,8 @@ backups/
 
 # Music share folder
 music_share/
+
+# Archive folder (track for historical reference)
+!docs/archive/
+docs/archive/*
+!docs/archive/.gitkeep
