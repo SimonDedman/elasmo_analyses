@@ -239,7 +239,7 @@ european_data <- european_data %>%
   left_join(europe_centroids, by = c("country_mapped" = "name")) %>%
   filter(!is.na(X), !is.na(Y)) %>%
   mutate(
-    radius = sqrt(paper_count) * 0.5,  # Size based on paper count
+    radius = sqrt(paper_count) * 0.15,  # Reduced from 0.5 to prevent overlap
     label = sprintf("%s\n(n=%s)", country, comma(paper_count))
   )
 
@@ -266,7 +266,7 @@ p_europe_pies <- ggplot() +
   # Add country labels (offset to avoid overlap with pies)
   geom_text(
     data = european_data,
-    aes(x = X, y = Y + radius + 1, label = country),
+    aes(x = X, y = Y + radius + 0.5, label = country),
     size = 2.5,
     fontface = "bold",
     color = "black"
@@ -299,8 +299,8 @@ p_europe_pies <- ggplot() +
 ggsave(
   "outputs/figures/europe_map_with_country_discipline_pies.png",
   plot = p_europe_pies,
-  width = 14,
-  height = 10,
+  width = 12,
+  height = 12,
   dpi = 300,
   bg = "white"
 )
@@ -308,8 +308,8 @@ ggsave(
 ggsave(
   "outputs/figures/europe_map_with_country_discipline_pies.pdf",
   plot = p_europe_pies,
-  width = 14,
-  height = 10,
+  width = 12,
+  height = 12,
   bg = "white"
 )
 
