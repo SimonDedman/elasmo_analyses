@@ -1,0 +1,81 @@
+================================================================================
+FILENAME PARSING REPORT
+================================================================================
+
+Generated: 2025-10-26 22:40:35
+
+PARSING STATISTICS
+--------------------------------------------------------------------------------
+Total files: 4,545
+Successfully parsed: 4,517 (99.4%)
+Failed to parse: 28 (0.6%)
+
+RESEARCHER STATISTICS
+--------------------------------------------------------------------------------
+Unique first authors: 2,486
+Average papers per author: 1.8
+Median papers per author: 1
+
+PAPERS BY DECADE
+--------------------------------------------------------------------------------
+1950s: 16 papers
+1960s: 36 papers
+1970s: 60 papers
+1980s: 114 papers
+1990s: 188 papers
+2000s: 626 papers
+2010s: 2,155 papers
+2020s: 1,322 papers
+
+TOP 20 MOST PROLIFIC FIRST AUTHORS
+--------------------------------------------------------------------------------
+ 1. Chisholm                        26 papers (1991-2020, 16 years active)
+ 2. Caira                           25 papers (1993-2022, 15 years active)
+ 3. Kearn                           23 papers (1963-2016, 20 years active)
+ 4. White                           23 papers (2002-2024, 15 years active)
+ 5. Beveridge                       22 papers (1988-2014, 17 years active)
+ 6. Braccini                        18 papers (2002-2021, 13 years active)
+ 7. Weigmann                        17 papers (2012-2024, 9 years active)
+ 8. Francis                         16 papers (1992-2019, 13 years active)
+ 9. Heupel                          16 papers (1996-2019, 15 years active)
+10. Whittington                     15 papers (1986-2011, 11 years active)
+11. Ebert                           15 papers (1987-2024, 11 years active)
+12. Gallagher                       15 papers (2012-2022, 7 years active)
+13. Dippenaar                       15 papers (2006-2024, 11 years active)
+14. Smith                           14 papers (1969-2022, 12 years active)
+15. Last                            14 papers (2004-2023, 7 years active)
+16. Williams                        13 papers (1959-2013, 12 years active)
+17. Papastamatiou                   13 papers (2005-2023, 11 years active)
+18. Sims                            12 papers (1993-2015, 10 years active)
+19. Barnett                         12 papers (2009-2017, 7 years active)
+20. Meyer                           12 papers (2007-2021, 7 years active)
+
+AUTHOR FORMAT
+--------------------------------------------------------------------------------
+Papers with 'etal' (multiple authors): 4,514 (99.9%)
+Papers without 'etal' (single author): 3 (0.1%)
+
+FAILED PARSING EXAMPLES
+--------------------------------------------------------------------------------
+  Papers_shark references_2011.pdf
+  Hammerschlag et al 2011 Shark satellite tagging review.pdf
+  Jacobson and Bennett 2012 Feeding ecol among 3 spp Neotrygon.pdf
+  Martin et al_2012_Modelled distributions.pdf
+  White and Last 2012 Review of taxonomy of elasmos.pdf
+  Yokota et al 2012 Repro biol of the butterfly ray.pdf
+  NCBI.ISO.15930.-.Electronic.document.file.format.for.pr.pdf
+  Garrone.Neto.etal.2009.Ingestion.of.catfish.by.freshwater.stingray.possible.mistake.or.inexperience..pdf
+  Henderson & Dunne 1998.pdf
+  Ivory et al 2004 Age determination growth and reproduction in the lesser spotted dogfish S canicula.pdf
+  Kai.Thorson.Piner.Maunder.2017.Spat-temp var size-structured popns fishery data sfin mako Pacific.pdf
+  Ferretti et al 2010 Sharks declines in the oceans.pdf
+  Pel_860_ellis_historic.pdf
+  Henderson & Dunne 1999a.pdf
+  Henderson et al 2002c.pdf
+  VanNoord.Dorval.2017.Ocean inf distrib abund mkt sqd paralarvae S&C Cali.pdf
+  Veige.Moura.Figueiredo.2013.Spatial overlap leafscale gulper shark black scabbardfish Portugal.pdf
+  Erikkson.Clarke.2015.Chin mkt resp overexploit sharks sea cucumbers.pdf
+  Modelling-abundance-hotspots-for-data-poor-Irish-Sea-rays_2015_Ecological-Modelling.pdf
+  Tinker.et.al.2016.Dramatic incr seaotter mort GWS Cali.pdf
+  ... and 8 more
+

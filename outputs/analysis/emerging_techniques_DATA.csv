@@ -1,0 +1,10 @@
+technique_name,classification,recent_papers,paper_count,first_year,last_year
+Time Series,EMERGING,216,690,1969,2025
+Meta-Analysis,EMERGING,180,394,1998,2025
+GAM,EMERGING,85,190,1951,2025
+Machine Learning,EMERGING,68,97,2012,2025
+Cross-Validation,EMERGING,66,141,2001,2025
+Neural Networks,EMERGING,27,51,1973,2025
+Random Forest,EMERGING,24,37,2013,2025
+Deep Learning,EMERGING,15,17,2018,2025
+Computer Vision,EMERGING,11,18,1982,2024

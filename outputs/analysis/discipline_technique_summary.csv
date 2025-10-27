@@ -1,0 +1,9 @@
+primary_discipline,full_name,total_techniques,total_papers,avg_papers_per_technique,median_papers_per_technique,top_technique,top_technique_count
+GEN,Genetics,23,11163,485.3478260869565,86,STRUCTURE,7529
+DATA,Data Science,25,2469,98.76,21,Time Series,690
+FISH,Fisheries,31,2286,73.74193548387096,15,Stock Assessment,984
+BIO,Biology,11,2285,207.72727272727272,19,Parasitology,926
+TRO,Trophic Ecology,18,2029,112.72222222222223,58.5,Stable Isotope Analysis,448
+MOV,Movement,24,1849,77.04166666666667,16.5,Connectivity,1067
+CON,Conservation,9,915,101.66666666666667,12,Tourism,775
+BEH,Behaviour,10,290,29,17,Video Analysis,108

@@ -1,0 +1,2309 @@
+primary_discipline,full_name,technique_name,year,paper_count,total_mentions
+BEH,Behaviour,BORIS,1983,1,4
+BEH,Behaviour,BORIS,1989,1,2
+BEH,Behaviour,BORIS,2001,1,4
+BEH,Behaviour,BORIS,2003,1,3
+BEH,Behaviour,BORIS,2004,1,3
+BEH,Behaviour,BORIS,2007,1,3
+BEH,Behaviour,BORIS,2008,2,9
+BEH,Behaviour,BORIS,2009,2,9
+BEH,Behaviour,BORIS,2010,3,14
+BEH,Behaviour,BORIS,2011,1,4
+BEH,Behaviour,BORIS,2012,1,2
+BEH,Behaviour,BORIS,2013,3,40
+BEH,Behaviour,BORIS,2014,5,17
+BEH,Behaviour,BORIS,2015,2,14
+BEH,Behaviour,BORIS,2016,4,17
+BEH,Behaviour,BORIS,2017,1,3
+BEH,Behaviour,BORIS,2018,3,18
+BEH,Behaviour,BORIS,2019,6,48
+BEH,Behaviour,BORIS,2020,1,4
+BEH,Behaviour,BORIS,2021,4,29
+BEH,Behaviour,BORIS,2022,7,61
+BEH,Behaviour,BORIS,2023,1,3
+BEH,Behaviour,BORIS,2024,2,34
+BEH,Behaviour,BORIS,2025,2,16
+BEH,Behaviour,Behavioural Observation,2007,1,4
+BEH,Behaviour,Behavioural Observation,2010,1,3
+BEH,Behaviour,Behavioural Observation,2012,1,4
+BEH,Behaviour,Behavioural Observation,2017,1,2
+BEH,Behaviour,Behavioural Observation,2020,1,4
+BEH,Behaviour,Behavioural Observation,2023,1,6
+BEH,Behaviour,Behavioural Observation,2024,1,5
+BEH,Behaviour,Dominance hierarchy,1982,1,8
+BEH,Behaviour,Dominance hierarchy,1985,1,6
+BEH,Behaviour,Dominance hierarchy,1991,1,12
+BEH,Behaviour,Dominance hierarchy,1993,1,10
+BEH,Behaviour,Dominance hierarchy,2001,2,14
+BEH,Behaviour,Dominance hierarchy,2006,1,4
+BEH,Behaviour,Dominance hierarchy,2009,1,3
+BEH,Behaviour,Dominance hierarchy,2010,1,3
+BEH,Behaviour,Dominance hierarchy,2011,1,4
+BEH,Behaviour,Dominance hierarchy,2012,2,18
+BEH,Behaviour,Dominance hierarchy,2013,1,3
+BEH,Behaviour,Dominance hierarchy,2014,1,3
+BEH,Behaviour,Dominance hierarchy,2015,3,13
+BEH,Behaviour,Dominance hierarchy,2016,1,3
+BEH,Behaviour,Dominance hierarchy,2018,4,54
+BEH,Behaviour,Dominance hierarchy,2019,1,5
+BEH,Behaviour,Dominance hierarchy,2020,1,4
+BEH,Behaviour,Dominance hierarchy,2021,1,65
+BEH,Behaviour,Dominance hierarchy,2022,1,2
+BEH,Behaviour,Dominance hierarchy,2023,2,39
+BEH,Behaviour,Dominance hierarchy,2024,2,12
+BEH,Behaviour,Dominance hierarchy,2025,1,5
+BEH,Behaviour,Ethogram Development,2024,1,4
+BEH,Behaviour,Focal Sampling,2014,1,4
+BEH,Behaviour,Focal Sampling,2021,2,16
+BEH,Behaviour,Learning Experiments,2009,1,18
+BEH,Behaviour,Learning Experiments,2010,1,4
+BEH,Behaviour,Learning Experiments,2014,1,6
+BEH,Behaviour,Learning Experiments,2015,2,7
+BEH,Behaviour,Learning Experiments,2018,3,19
+BEH,Behaviour,Learning Experiments,2020,1,10
+BEH,Behaviour,Operant Conditioning,1960,1,4
+BEH,Behaviour,Operant Conditioning,1981,1,6
+BEH,Behaviour,Operant Conditioning,1984,1,2
+BEH,Behaviour,Operant Conditioning,1988,1,4
+BEH,Behaviour,Operant Conditioning,1993,1,15
+BEH,Behaviour,Operant Conditioning,2006,1,3
+BEH,Behaviour,Operant Conditioning,2009,1,36
+BEH,Behaviour,Operant Conditioning,2010,1,3
+BEH,Behaviour,Operant Conditioning,2011,1,7
+BEH,Behaviour,Operant Conditioning,2012,1,6
+BEH,Behaviour,Operant Conditioning,2013,3,13
+BEH,Behaviour,Operant Conditioning,2014,2,12
+BEH,Behaviour,Operant Conditioning,2015,1,8
+BEH,Behaviour,Operant Conditioning,2018,3,24
+BEH,Behaviour,Operant Conditioning,2020,1,3
+BEH,Behaviour,Operant Conditioning,2021,1,7
+BEH,Behaviour,Operant Conditioning,2022,2,13
+BEH,Behaviour,Operant Conditioning,2023,2,12
+BEH,Behaviour,Scan Sampling,2017,1,3
+BEH,Behaviour,Scan Sampling,2021,1,8
+BEH,Behaviour,Social Network Analysis,1982,1,7
+BEH,Behaviour,Social Network Analysis,2010,3,25
+BEH,Behaviour,Social Network Analysis,2012,4,51
+BEH,Behaviour,Social Network Analysis,2014,2,57
+BEH,Behaviour,Social Network Analysis,2015,2,8
+BEH,Behaviour,Social Network Analysis,2016,2,25
+BEH,Behaviour,Social Network Analysis,2017,2,24
+BEH,Behaviour,Social Network Analysis,2018,3,14
+BEH,Behaviour,Social Network Analysis,2019,4,28
+BEH,Behaviour,Social Network Analysis,2020,4,21
+BEH,Behaviour,Social Network Analysis,2021,7,119
+BEH,Behaviour,Social Network Analysis,2022,1,75
+BEH,Behaviour,Social Network Analysis,2023,4,50
+BEH,Behaviour,Social Network Analysis,2024,4,43
+BEH,Behaviour,Social Network Analysis,2025,5,37
+BEH,Behaviour,Video Analysis,1993,1,3
+BEH,Behaviour,Video Analysis,1994,1,3
+BEH,Behaviour,Video Analysis,1995,1,3
+BEH,Behaviour,Video Analysis,1997,1,8
+BEH,Behaviour,Video Analysis,2000,1,2
+BEH,Behaviour,Video Analysis,2003,2,5
+BEH,Behaviour,Video Analysis,2005,1,3
+BEH,Behaviour,Video Analysis,2007,1,4
+BEH,Behaviour,Video Analysis,2008,1,3
+BEH,Behaviour,Video Analysis,2009,3,14
+BEH,Behaviour,Video Analysis,2010,1,3
+BEH,Behaviour,Video Analysis,2011,2,7
+BEH,Behaviour,Video Analysis,2012,3,13
+BEH,Behaviour,Video Analysis,2013,3,18
+BEH,Behaviour,Video Analysis,2014,8,48
+BEH,Behaviour,Video Analysis,2015,7,28
+BEH,Behaviour,Video Analysis,2016,3,14
+BEH,Behaviour,Video Analysis,2017,5,25
+BEH,Behaviour,Video Analysis,2018,9,36
+BEH,Behaviour,Video Analysis,2019,9,103
+BEH,Behaviour,Video Analysis,2020,12,87
+BEH,Behaviour,Video Analysis,2021,7,33
+BEH,Behaviour,Video Analysis,2022,14,109
+BEH,Behaviour,Video Analysis,2023,6,34
+BEH,Behaviour,Video Analysis,2024,6,39
+BIO,Biology,Body Measurements,1954,1,6
+BIO,Biology,Body Measurements,1963,1,2
+BIO,Biology,Body Measurements,1965,1,3
+BIO,Biology,Body Measurements,1968,1,2
+BIO,Biology,Body Measurements,1972,2,5
+BIO,Biology,Body Measurements,1973,1,4
+BIO,Biology,Body Measurements,1976,1,4
+BIO,Biology,Body Measurements,1977,1,2
+BIO,Biology,Body Measurements,1978,1,3
+BIO,Biology,Body Measurements,1983,2,8
+BIO,Biology,Body Measurements,1984,1,2
+BIO,Biology,Body Measurements,1985,2,5
+BIO,Biology,Body Measurements,1986,1,2
+BIO,Biology,Body Measurements,1988,1,2
+BIO,Biology,Body Measurements,1989,1,2
+BIO,Biology,Body Measurements,1990,1,9
+BIO,Biology,Body Measurements,1991,1,3
+BIO,Biology,Body Measurements,1997,2,9
+BIO,Biology,Body Measurements,1999,1,4
+BIO,Biology,Body Measurements,2000,1,4
+BIO,Biology,Body Measurements,2001,1,4
+BIO,Biology,Body Measurements,2005,3,8
+BIO,Biology,Body Measurements,2006,1,7
+BIO,Biology,Body Measurements,2007,1,3
+BIO,Biology,Body Measurements,2008,2,6
+BIO,Biology,Body Measurements,2009,2,9
+BIO,Biology,Body Measurements,2010,3,15
+BIO,Biology,Body Measurements,2011,1,4
+BIO,Biology,Body Measurements,2012,2,11
+BIO,Biology,Body Measurements,2013,1,2
+BIO,Biology,Body Measurements,2014,1,9
+BIO,Biology,Body Measurements,2015,5,20
+BIO,Biology,Body Measurements,2016,8,25
+BIO,Biology,Body Measurements,2017,2,13
+BIO,Biology,Body Measurements,2018,4,29
+BIO,Biology,Body Measurements,2019,4,13
+BIO,Biology,Body Measurements,2020,7,37
+BIO,Biology,Body Measurements,2021,4,17
+BIO,Biology,Body Measurements,2022,6,25
+BIO,Biology,Body Measurements,2023,5,22
+BIO,Biology,Body Measurements,2024,8,32
+BIO,Biology,Body Measurements,2025,3,9
+BIO,Biology,Fecundity Estimation,2001,1,5
+BIO,Biology,Fecundity Estimation,2006,1,5
+BIO,Biology,Fecundity Estimation,2008,1,6
+BIO,Biology,Fecundity Estimation,2009,1,6
+BIO,Biology,Fecundity Estimation,2013,1,4
+BIO,Biology,Fecundity Estimation,2014,1,9
+BIO,Biology,Fecundity Estimation,2020,1,3
+BIO,Biology,Health Indices,2012,1,4
+BIO,Biology,Health Indices,2020,1,12
+BIO,Biology,Length-Frequency Analysis,1975,1,3
+BIO,Biology,Length-Frequency Analysis,1977,1,2
+BIO,Biology,Length-Frequency Analysis,1982,1,3
+BIO,Biology,Length-Frequency Analysis,1983,1,12
+BIO,Biology,Length-Frequency Analysis,1992,3,10
+BIO,Biology,Length-Frequency Analysis,1997,1,3
+BIO,Biology,Length-Frequency Analysis,1998,1,2
+BIO,Biology,Length-Frequency Analysis,2001,1,4
+BIO,Biology,Length-Frequency Analysis,2006,1,3
+BIO,Biology,Length-Frequency Analysis,2010,1,4
+BIO,Biology,Length-Frequency Analysis,2011,2,36
+BIO,Biology,Length-Frequency Analysis,2014,1,5
+BIO,Biology,Length-Frequency Analysis,2015,1,3
+BIO,Biology,Length-Frequency Analysis,2016,2,7
+BIO,Biology,Length-Frequency Analysis,2022,1,4
+BIO,Biology,Maturity Ogive,2000,1,8
+BIO,Biology,Maturity Ogive,2001,1,4
+BIO,Biology,Maturity Ogive,2002,1,3
+BIO,Biology,Maturity Ogive,2005,4,23
+BIO,Biology,Maturity Ogive,2006,3,33
+BIO,Biology,Maturity Ogive,2007,3,52
+BIO,Biology,Maturity Ogive,2008,2,5
+BIO,Biology,Maturity Ogive,2009,4,19
+BIO,Biology,Maturity Ogive,2010,2,12
+BIO,Biology,Maturity Ogive,2011,5,35
+BIO,Biology,Maturity Ogive,2012,4,32
+BIO,Biology,Maturity Ogive,2013,4,70
+BIO,Biology,Maturity Ogive,2014,3,17
+BIO,Biology,Maturity Ogive,2015,6,37
+BIO,Biology,Maturity Ogive,2016,7,50
+BIO,Biology,Maturity Ogive,2017,3,12
+BIO,Biology,Maturity Ogive,2018,4,36
+BIO,Biology,Maturity Ogive,2019,3,25
+BIO,Biology,Maturity Ogive,2020,11,84
+BIO,Biology,Maturity Ogive,2021,5,36
+BIO,Biology,Maturity Ogive,2022,2,7
+BIO,Biology,Maturity Ogive,2023,1,3
+BIO,Biology,Maturity Ogive,2024,1,8
+BIO,Biology,Metabolic Rate,1950,1,3
+BIO,Biology,Metabolic Rate,1972,1,2
+BIO,Biology,Metabolic Rate,1974,1,2
+BIO,Biology,Metabolic Rate,1975,1,2
+BIO,Biology,Metabolic Rate,1977,3,7
+BIO,Biology,Metabolic Rate,1978,2,42
+BIO,Biology,Metabolic Rate,1979,1,2
+BIO,Biology,Metabolic Rate,1980,1,2
+BIO,Biology,Metabolic Rate,1982,4,30
+BIO,Biology,Metabolic Rate,1983,1,9
+BIO,Biology,Metabolic Rate,1984,3,13
+BIO,Biology,Metabolic Rate,1985,3,17
+BIO,Biology,Metabolic Rate,1986,1,2
+BIO,Biology,Metabolic Rate,1987,2,4
+BIO,Biology,Metabolic Rate,1988,8,81
+BIO,Biology,Metabolic Rate,1989,2,7
+BIO,Biology,Metabolic Rate,1990,2,35
+BIO,Biology,Metabolic Rate,1991,1,3
+BIO,Biology,Metabolic Rate,1992,4,13
+BIO,Biology,Metabolic Rate,1993,6,31
+BIO,Biology,Metabolic Rate,1994,3,52
+BIO,Biology,Metabolic Rate,1996,2,19
+BIO,Biology,Metabolic Rate,1997,5,53
+BIO,Biology,Metabolic Rate,1998,3,28
+BIO,Biology,Metabolic Rate,1999,2,4
+BIO,Biology,Metabolic Rate,2000,4,29
+BIO,Biology,Metabolic Rate,2001,9,105
+BIO,Biology,Metabolic Rate,2002,12,100
+BIO,Biology,Metabolic Rate,2003,9,65
+BIO,Biology,Metabolic Rate,2004,8,42
+BIO,Biology,Metabolic Rate,2005,6,69
+BIO,Biology,Metabolic Rate,2006,10,53
+BIO,Biology,Metabolic Rate,2007,10,88
+BIO,Biology,Metabolic Rate,2008,9,69
+BIO,Biology,Metabolic Rate,2009,19,69
+BIO,Biology,Metabolic Rate,2010,18,92
+BIO,Biology,Metabolic Rate,2011,23,184
+BIO,Biology,Metabolic Rate,2012,31,200
+BIO,Biology,Metabolic Rate,2013,17,146
+BIO,Biology,Metabolic Rate,2014,14,72
+BIO,Biology,Metabolic Rate,2015,25,391
+BIO,Biology,Metabolic Rate,2016,23,617
+BIO,Biology,Metabolic Rate,2017,32,794
+BIO,Biology,Metabolic Rate,2018,38,436
+BIO,Biology,Metabolic Rate,2019,31,372
+BIO,Biology,Metabolic Rate,2020,36,647
+BIO,Biology,Metabolic Rate,2021,37,476
+BIO,Biology,Metabolic Rate,2022,25,281
+BIO,Biology,Metabolic Rate,2023,18,257
+BIO,Biology,Metabolic Rate,2024,15,92
+BIO,Biology,Metabolic Rate,2025,11,69
+BIO,Biology,Morphometrics,1968,1,2
+BIO,Biology,Morphometrics,1977,1,6
+BIO,Biology,Morphometrics,1980,2,5
+BIO,Biology,Morphometrics,1982,2,51
+BIO,Biology,Morphometrics,1985,1,6
+BIO,Biology,Morphometrics,1987,1,6
+BIO,Biology,Morphometrics,1989,1,3
+BIO,Biology,Morphometrics,1990,2,6
+BIO,Biology,Morphometrics,1991,3,19
+BIO,Biology,Morphometrics,1992,4,39
+BIO,Biology,Morphometrics,1993,1,3
+BIO,Biology,Morphometrics,1994,1,2
+BIO,Biology,Morphometrics,1995,1,9
+BIO,Biology,Morphometrics,1997,1,4
+BIO,Biology,Morphometrics,1998,5,27
+BIO,Biology,Morphometrics,1999,1,9
+BIO,Biology,Morphometrics,2000,4,22
+BIO,Biology,Morphometrics,2001,1,18
+BIO,Biology,Morphometrics,2002,2,11
+BIO,Biology,Morphometrics,2003,2,8
+BIO,Biology,Morphometrics,2004,6,28
+BIO,Biology,Morphometrics,2005,8,82
+BIO,Biology,Morphometrics,2006,11,105
+BIO,Biology,Morphometrics,2007,14,66
+BIO,Biology,Morphometrics,2008,10,49
+BIO,Biology,Morphometrics,2009,23,129
+BIO,Biology,Morphometrics,2010,22,196
+BIO,Biology,Morphometrics,2011,14,65
+BIO,Biology,Morphometrics,2012,34,162
+BIO,Biology,Morphometrics,2013,22,124
+BIO,Biology,Morphometrics,2014,23,202
+BIO,Biology,Morphometrics,2015,31,280
+BIO,Biology,Morphometrics,2016,31,210
+BIO,Biology,Morphometrics,2017,34,277
+BIO,Biology,Morphometrics,2018,27,164
+BIO,Biology,Morphometrics,2019,37,289
+BIO,Biology,Morphometrics,2020,41,344
+BIO,Biology,Morphometrics,2021,37,312
+BIO,Biology,Morphometrics,2022,35,267
+BIO,Biology,Morphometrics,2023,31,351
+BIO,Biology,Morphometrics,2024,29,334
+BIO,Biology,Morphometrics,2025,15,111
+BIO,Biology,Natural Mortality Estimators,2015,1,3
+BIO,Biology,Natural Mortality Estimators,2016,1,3
+BIO,Biology,Natural Mortality Estimators,2017,3,13
+BIO,Biology,Natural Mortality Estimators,2018,3,13
+BIO,Biology,Natural Mortality Estimators,2019,2,8
+BIO,Biology,Natural Mortality Estimators,2020,1,4
+BIO,Biology,Natural Mortality Estimators,2021,1,4
+BIO,Biology,Natural Mortality Estimators,2022,5,23
+BIO,Biology,Natural Mortality Estimators,2023,1,6
+BIO,Biology,Parasitology,1950,2,6
+BIO,Biology,Parasitology,1952,1,3
+BIO,Biology,Parasitology,1953,1,4
+BIO,Biology,Parasitology,1957,2,5
+BIO,Biology,Parasitology,1959,4,12
+BIO,Biology,Parasitology,1960,2,15
+BIO,Biology,Parasitology,1961,2,15
+BIO,Biology,Parasitology,1962,2,6
+BIO,Biology,Parasitology,1963,4,52
+BIO,Biology,Parasitology,1964,1,10
+BIO,Biology,Parasitology,1966,2,36
+BIO,Biology,Parasitology,1967,2,27
+BIO,Biology,Parasitology,1968,6,41
+BIO,Biology,Parasitology,1969,3,57
+BIO,Biology,Parasitology,1970,4,46
+BIO,Biology,Parasitology,1971,1,12
+BIO,Biology,Parasitology,1972,4,102
+BIO,Biology,Parasitology,1973,2,35
+BIO,Biology,Parasitology,1974,5,63
+BIO,Biology,Parasitology,1975,4,41
+BIO,Biology,Parasitology,1976,2,23
+BIO,Biology,Parasitology,1977,2,81
+BIO,Biology,Parasitology,1978,2,24
+BIO,Biology,Parasitology,1979,1,45
+BIO,Biology,Parasitology,1981,1,3
+BIO,Biology,Parasitology,1982,2,309
+BIO,Biology,Parasitology,1983,3,30
+BIO,Biology,Parasitology,1984,5,45
+BIO,Biology,Parasitology,1985,4,54
+BIO,Biology,Parasitology,1986,6,355
+BIO,Biology,Parasitology,1987,10,205
+BIO,Biology,Parasitology,1988,5,24
+BIO,Biology,Parasitology,1989,8,81
+BIO,Biology,Parasitology,1990,14,223
+BIO,Biology,Parasitology,1991,6,96
+BIO,Biology,Parasitology,1992,7,123
+BIO,Biology,Parasitology,1993,6,46
+BIO,Biology,Parasitology,1994,4,204
+BIO,Biology,Parasitology,1995,3,42
+BIO,Biology,Parasitology,1996,8,110
+BIO,Biology,Parasitology,1997,7,137
+BIO,Biology,Parasitology,1998,14,224
+BIO,Biology,Parasitology,1999,5,330
+BIO,Biology,Parasitology,2000,11,199
+BIO,Biology,Parasitology,2001,14,290
+BIO,Biology,Parasitology,2002,14,418
+BIO,Biology,Parasitology,2003,10,158
+BIO,Biology,Parasitology,2004,11,245
+BIO,Biology,Parasitology,2005,18,311
+BIO,Biology,Parasitology,2006,23,459
+BIO,Biology,Parasitology,2007,18,566
+BIO,Biology,Parasitology,2008,13,311
+BIO,Biology,Parasitology,2009,25,481
+BIO,Biology,Parasitology,2010,26,759
+BIO,Biology,Parasitology,2011,22,859
+BIO,Biology,Parasitology,2012,34,805
+BIO,Biology,Parasitology,2013,34,930
+BIO,Biology,Parasitology,2014,41,1219
+BIO,Biology,Parasitology,2015,37,575
+BIO,Biology,Parasitology,2016,56,661
+BIO,Biology,Parasitology,2017,46,976
+BIO,Biology,Parasitology,2018,48,858
+BIO,Biology,Parasitology,2019,61,809
+BIO,Biology,Parasitology,2020,51,915
+BIO,Biology,Parasitology,2021,36,523
+BIO,Biology,Parasitology,2022,34,789
+BIO,Biology,Parasitology,2023,18,486
+BIO,Biology,Parasitology,2024,30,296
+BIO,Biology,Parasitology,2025,16,131
+BIO,Biology,Reproductive observations,2007,1,3
+BIO,Biology,Reproductive observations,2012,2,6
+BIO,Biology,Reproductive observations,2013,1,5
+BIO,Biology,Reproductive observations,2016,2,9
+BIO,Biology,Reproductive observations,2019,1,4
+BIO,Biology,Reproductive observations,2020,1,4
+BIO,Biology,Reproductive observations,2022,1,3
+BIO,Biology,Telomere Analysis,2021,1,2
+CON,Conservation,Contingent Valuation,2007,1,4
+CON,Conservation,Contingent Valuation,2011,2,8
+CON,Conservation,Contingent Valuation,2014,1,26
+CON,Conservation,Contingent Valuation,2018,1,27
+CON,Conservation,Contingent Valuation,2019,2,31
+CON,Conservation,Contingent Valuation,2020,1,2
+CON,Conservation,Contingent Valuation,2023,1,3
+CON,Conservation,Education & Outreach,2009,1,2
+CON,Conservation,IUCN Red List Assessment,2006,1,3
+CON,Conservation,IUCN Red List Assessment,2007,1,20
+CON,Conservation,IUCN Red List Assessment,2009,1,4
+CON,Conservation,IUCN Red List Assessment,2010,5,25
+CON,Conservation,IUCN Red List Assessment,2011,1,2
+CON,Conservation,IUCN Red List Assessment,2012,2,10
+CON,Conservation,IUCN Red List Assessment,2013,1,3
+CON,Conservation,IUCN Red List Assessment,2015,2,7
+CON,Conservation,IUCN Red List Assessment,2016,1,4
+CON,Conservation,IUCN Red List Assessment,2017,4,30
+CON,Conservation,IUCN Red List Assessment,2018,4,18
+CON,Conservation,IUCN Red List Assessment,2019,2,11
+CON,Conservation,IUCN Red List Assessment,2020,5,53
+CON,Conservation,IUCN Red List Assessment,2021,6,35
+CON,Conservation,IUCN Red List Assessment,2023,7,59
+CON,Conservation,IUCN Red List Assessment,2024,1,3
+CON,Conservation,MPA Effectiveness,2012,1,16
+CON,Conservation,MPA Effectiveness,2016,1,18
+CON,Conservation,MPA Effectiveness,2017,3,20
+CON,Conservation,MPA Effectiveness,2021,4,19
+CON,Conservation,MPA Effectiveness,2022,1,12
+CON,Conservation,MPA Effectiveness,2023,1,4
+CON,Conservation,MPA Effectiveness,2025,1,4
+CON,Conservation,Policy Evaluation,2012,1,3
+CON,Conservation,Policy Evaluation,2017,1,3
+CON,Conservation,Policy Evaluation,2018,1,3
+CON,Conservation,Policy Evaluation,2020,1,6
+CON,Conservation,Socioeconomic Analysis,2014,1,2
+CON,Conservation,Socioeconomic Analysis,2022,1,2
+CON,Conservation,Stakeholder Engagement,2013,1,10
+CON,Conservation,Stakeholder Engagement,2015,1,3
+CON,Conservation,Stakeholder Engagement,2017,2,9
+CON,Conservation,Stakeholder Engagement,2019,3,16
+CON,Conservation,Stakeholder Engagement,2020,2,6
+CON,Conservation,Stakeholder Engagement,2022,4,26
+CON,Conservation,Stakeholder Engagement,2023,3,21
+CON,Conservation,Stakeholder Engagement,2024,1,12
+CON,Conservation,Stakeholder Engagement,2025,2,9
+CON,Conservation,Tourism,1981,1,1
+CON,Conservation,Tourism,1982,1,40
+CON,Conservation,Tourism,1990,1,1
+CON,Conservation,Tourism,1992,1,1
+CON,Conservation,Tourism,1995,2,8
+CON,Conservation,Tourism,1996,1,1
+CON,Conservation,Tourism,1997,2,66
+CON,Conservation,Tourism,1998,1,3
+CON,Conservation,Tourism,2000,2,8
+CON,Conservation,Tourism,2001,2,24
+CON,Conservation,Tourism,2002,1,2
+CON,Conservation,Tourism,2003,1,1
+CON,Conservation,Tourism,2004,2,80
+CON,Conservation,Tourism,2005,7,27
+CON,Conservation,Tourism,2006,8,34
+CON,Conservation,Tourism,2007,18,179
+CON,Conservation,Tourism,2008,8,118
+CON,Conservation,Tourism,2009,15,229
+CON,Conservation,Tourism,2010,19,804
+CON,Conservation,Tourism,2011,35,740
+CON,Conservation,Tourism,2012,36,727
+CON,Conservation,Tourism,2013,32,1202
+CON,Conservation,Tourism,2014,36,837
+CON,Conservation,Tourism,2015,40,1382
+CON,Conservation,Tourism,2016,36,740
+CON,Conservation,Tourism,2017,46,2085
+CON,Conservation,Tourism,2018,48,1921
+CON,Conservation,Tourism,2019,58,2186
+CON,Conservation,Tourism,2020,67,1504
+CON,Conservation,Tourism,2021,54,1722
+CON,Conservation,Tourism,2022,68,1666
+CON,Conservation,Tourism,2023,51,881
+CON,Conservation,Tourism,2024,43,966
+CON,Conservation,Tourism,2025,32,669
+CON,Conservation,Vulnerability Assessment,2009,1,3
+CON,Conservation,Vulnerability Assessment,2012,2,8
+CON,Conservation,Vulnerability Assessment,2013,2,22
+CON,Conservation,Vulnerability Assessment,2014,2,27
+CON,Conservation,Vulnerability Assessment,2015,2,9
+CON,Conservation,Vulnerability Assessment,2016,3,14
+CON,Conservation,Vulnerability Assessment,2017,2,6
+CON,Conservation,Vulnerability Assessment,2018,3,15
+CON,Conservation,Vulnerability Assessment,2019,4,17
+CON,Conservation,Vulnerability Assessment,2020,5,23
+CON,Conservation,Vulnerability Assessment,2021,5,94
+CON,Conservation,Vulnerability Assessment,2022,7,28
+CON,Conservation,Vulnerability Assessment,2023,4,41
+CON,Conservation,Vulnerability Assessment,2024,1,6
+CON,Conservation,Vulnerability Assessment,2025,6,32
+DATA,Data Science,ARIMA,1978,1,4
+DATA,Data Science,ARIMA,1993,1,3
+DATA,Data Science,ARIMA,1996,1,2
+DATA,Data Science,ARIMA,2000,1,1
+DATA,Data Science,ARIMA,2003,1,5
+DATA,Data Science,ARIMA,2005,1,2
+DATA,Data Science,ARIMA,2008,1,3
+DATA,Data Science,ARIMA,2012,2,11
+DATA,Data Science,ARIMA,2013,1,2
+DATA,Data Science,ARIMA,2014,1,4
+DATA,Data Science,ARIMA,2015,1,2
+DATA,Data Science,ARIMA,2016,2,7
+DATA,Data Science,ARIMA,2017,1,4
+DATA,Data Science,ARIMA,2018,1,2
+DATA,Data Science,ARIMA,2019,2,7
+DATA,Data Science,ARIMA,2020,2,4
+DATA,Data Science,ARIMA,2021,1,15
+DATA,Data Science,ARIMA,2023,3,11
+DATA,Data Science,Approximate Bayesian Computation,2012,1,5
+DATA,Data Science,Approximate Bayesian Computation,2014,1,8
+DATA,Data Science,Approximate Bayesian Computation,2015,1,5
+DATA,Data Science,Approximate Bayesian Computation,2016,2,20
+DATA,Data Science,Approximate Bayesian Computation,2017,1,5
+DATA,Data Science,Approximate Bayesian Computation,2018,1,8
+DATA,Data Science,Approximate Bayesian Computation,2019,2,17
+DATA,Data Science,Approximate Bayesian Computation,2020,2,16
+DATA,Data Science,Approximate Bayesian Computation,2022,3,25
+DATA,Data Science,Bayesian Methods,2006,2,6
+DATA,Data Science,Bayesian Methods,2008,1,6
+DATA,Data Science,Bayesian Methods,2009,1,4
+DATA,Data Science,Bayesian Methods,2011,3,16
+DATA,Data Science,Bayesian Methods,2012,1,2
+DATA,Data Science,Bayesian Methods,2013,2,5
+DATA,Data Science,Bayesian Methods,2014,2,10
+DATA,Data Science,Bayesian Methods,2015,5,19
+DATA,Data Science,Bayesian Methods,2016,2,8
+DATA,Data Science,Bayesian Methods,2017,2,8
+DATA,Data Science,Bayesian Methods,2018,1,15
+DATA,Data Science,Bayesian Methods,2019,4,19
+DATA,Data Science,Bayesian Methods,2020,5,22
+DATA,Data Science,Bayesian Methods,2021,5,20
+DATA,Data Science,Bayesian Methods,2022,3,12
+DATA,Data Science,Bayesian Methods,2023,1,12
+DATA,Data Science,Bayesian Methods,2024,3,18
+DATA,Data Science,Bayesian Methods,2025,1,4
+DATA,Data Science,Computer Vision,1982,1,8
+DATA,Data Science,Computer Vision,2012,1,8
+DATA,Data Science,Computer Vision,2014,1,4
+DATA,Data Science,Computer Vision,2016,1,2
+DATA,Data Science,Computer Vision,2017,1,36
+DATA,Data Science,Computer Vision,2018,1,4
+DATA,Data Science,Computer Vision,2019,1,6
+DATA,Data Science,Computer Vision,2020,2,5
+DATA,Data Science,Computer Vision,2021,3,30
+DATA,Data Science,Computer Vision,2022,1,24
+DATA,Data Science,Computer Vision,2024,5,49
+DATA,Data Science,Convolutional Neural Networks,2022,1,2
+DATA,Data Science,Convolutional Neural Networks,2024,2,16
+DATA,Data Science,Cross-Validation,2001,1,10
+DATA,Data Science,Cross-Validation,2002,1,6
+DATA,Data Science,Cross-Validation,2006,1,6
+DATA,Data Science,Cross-Validation,2008,1,2
+DATA,Data Science,Cross-Validation,2009,3,24
+DATA,Data Science,Cross-Validation,2010,4,12
+DATA,Data Science,Cross-Validation,2011,6,54
+DATA,Data Science,Cross-Validation,2012,5,43
+DATA,Data Science,Cross-Validation,2013,7,33
+DATA,Data Science,Cross-Validation,2014,9,45
+DATA,Data Science,Cross-Validation,2015,5,20
+DATA,Data Science,Cross-Validation,2016,10,56
+DATA,Data Science,Cross-Validation,2017,5,19
+DATA,Data Science,Cross-Validation,2018,7,60
+DATA,Data Science,Cross-Validation,2019,10,53
+DATA,Data Science,Cross-Validation,2020,20,153
+DATA,Data Science,Cross-Validation,2021,12,94
+DATA,Data Science,Cross-Validation,2022,14,121
+DATA,Data Science,Cross-Validation,2023,7,33
+DATA,Data Science,Cross-Validation,2024,7,47
+DATA,Data Science,Cross-Validation,2025,6,59
+DATA,Data Science,Data Fusion,2022,1,3
+DATA,Data Science,Data Fusion,2025,2,3
+DATA,Data Science,Data Integration,2013,1,4
+DATA,Data Science,Data Integration,2014,2,6
+DATA,Data Science,Data Integration,2016,1,3
+DATA,Data Science,Data Integration,2017,1,3
+DATA,Data Science,Data Integration,2018,1,4
+DATA,Data Science,Data Integration,2019,3,12
+DATA,Data Science,Data Integration,2020,2,6
+DATA,Data Science,Data Integration,2021,3,12
+DATA,Data Science,Data Integration,2022,4,21
+DATA,Data Science,Data Integration,2023,1,2
+DATA,Data Science,Data Integration,2024,1,2
+DATA,Data Science,Data Integration,2025,1,4
+DATA,Data Science,Deep Learning,2018,1,6
+DATA,Data Science,Deep Learning,2019,1,3
+DATA,Data Science,Deep Learning,2021,3,43
+DATA,Data Science,Deep Learning,2022,1,24
+DATA,Data Science,Deep Learning,2023,4,28
+DATA,Data Science,Deep Learning,2024,6,110
+DATA,Data Science,Deep Learning,2025,1,5
+DATA,Data Science,Ensemble Learning,2018,1,12
+DATA,Data Science,Ensemble Learning,2020,1,5
+DATA,Data Science,Ensemble Learning,2022,1,3
+DATA,Data Science,Ensemble Learning,2024,2,7
+DATA,Data Science,GAM,1951,1,4
+DATA,Data Science,GAM,1953,2,6
+DATA,Data Science,GAM,1957,1,2
+DATA,Data Science,GAM,1972,1,3
+DATA,Data Science,GAM,1974,1,2
+DATA,Data Science,GAM,1983,1,3
+DATA,Data Science,GAM,1988,1,4
+DATA,Data Science,GAM,1995,1,2
+DATA,Data Science,GAM,1999,1,150
+DATA,Data Science,GAM,2001,1,102
+DATA,Data Science,GAM,2002,1,162
+DATA,Data Science,GAM,2006,1,10
+DATA,Data Science,GAM,2007,1,24
+DATA,Data Science,GAM,2008,1,2
+DATA,Data Science,GAM,2009,4,54
+DATA,Data Science,GAM,2010,3,25
+DATA,Data Science,GAM,2011,3,17
+DATA,Data Science,GAM,2012,5,76
+DATA,Data Science,GAM,2013,12,263
+DATA,Data Science,GAM,2014,6,256
+DATA,Data Science,GAM,2015,11,122
+DATA,Data Science,GAM,2016,13,93
+DATA,Data Science,GAM,2017,12,143
+DATA,Data Science,GAM,2018,13,143
+DATA,Data Science,GAM,2019,8,123
+DATA,Data Science,GAM,2020,16,178
+DATA,Data Science,GAM,2021,14,93
+DATA,Data Science,GAM,2022,18,296
+DATA,Data Science,GAM,2023,13,192
+DATA,Data Science,GAM,2024,11,122
+DATA,Data Science,GAM,2025,13,179
+DATA,Data Science,GAMM,2009,1,12
+DATA,Data Science,GAMM,2012,2,24
+DATA,Data Science,GAMM,2013,3,88
+DATA,Data Science,GAMM,2014,2,27
+DATA,Data Science,GAMM,2015,3,35
+DATA,Data Science,GAMM,2016,5,160
+DATA,Data Science,GAMM,2017,7,88
+DATA,Data Science,GAMM,2018,12,212
+DATA,Data Science,GAMM,2019,2,24
+DATA,Data Science,GAMM,2020,11,126
+DATA,Data Science,GAMM,2021,7,109
+DATA,Data Science,GAMM,2022,11,211
+DATA,Data Science,GAMM,2023,5,45
+DATA,Data Science,GAMM,2024,7,81
+DATA,Data Science,GAMM,2025,7,135
+DATA,Data Science,GLM,1967,1,1
+DATA,Data Science,GLM,1969,2,4
+DATA,Data Science,GLM,1991,1,2
+DATA,Data Science,GLM,1992,2,5
+DATA,Data Science,GLM,1995,2,3
+DATA,Data Science,GLM,1998,2,8
+DATA,Data Science,GLM,1999,1,45
+DATA,Data Science,GLM,2000,2,69
+DATA,Data Science,GLM,2001,1,1
+DATA,Data Science,GLM,2002,3,59
+DATA,Data Science,GLM,2003,1,1
+DATA,Data Science,GLM,2005,3,17
+DATA,Data Science,GLM,2006,3,11
+DATA,Data Science,GLM,2007,8,80
+DATA,Data Science,GLM,2008,13,134
+DATA,Data Science,GLM,2009,16,160
+DATA,Data Science,GLM,2010,10,90
+DATA,Data Science,GLM,2011,25,289
+DATA,Data Science,GLM,2012,28,487
+DATA,Data Science,GLM,2013,30,513
+DATA,Data Science,GLM,2014,17,121
+DATA,Data Science,GLM,2015,25,156
+DATA,Data Science,GLM,2016,27,165
+DATA,Data Science,GLM,2017,36,315
+DATA,Data Science,GLM,2018,25,307
+DATA,Data Science,GLM,2019,29,297
+DATA,Data Science,GLM,2020,25,366
+DATA,Data Science,GLM,2021,25,191
+DATA,Data Science,GLM,2022,16,112
+DATA,Data Science,GLM,2023,12,144
+DATA,Data Science,GLM,2024,10,105
+DATA,Data Science,GLM,2025,9,60
+DATA,Data Science,Generalized Estimating Equations,2010,1,3
+DATA,Data Science,Generalized Estimating Equations,2013,1,3
+DATA,Data Science,Generalized Estimating Equations,2015,3,16
+DATA,Data Science,INLA,2008,1,4
+DATA,Data Science,INLA,2013,1,28
+DATA,Data Science,INLA,2015,1,148
+DATA,Data Science,INLA,2016,1,4
+DATA,Data Science,INLA,2018,3,22
+DATA,Data Science,INLA,2019,3,48
+DATA,Data Science,INLA,2020,1,12
+DATA,Data Science,INLA,2022,4,135
+DATA,Data Science,INLA,2023,1,9
+DATA,Data Science,INLA,2025,2,38
+DATA,Data Science,Machine Learning,2012,1,2
+DATA,Data Science,Machine Learning,2013,1,2
+DATA,Data Science,Machine Learning,2014,1,2
+DATA,Data Science,Machine Learning,2015,4,16
+DATA,Data Science,Machine Learning,2017,6,49
+DATA,Data Science,Machine Learning,2018,7,70
+DATA,Data Science,Machine Learning,2019,9,40
+DATA,Data Science,Machine Learning,2020,11,163
+DATA,Data Science,Machine Learning,2021,8,111
+DATA,Data Science,Machine Learning,2022,17,260
+DATA,Data Science,Machine Learning,2023,7,67
+DATA,Data Science,Machine Learning,2024,17,182
+DATA,Data Science,Machine Learning,2025,8,65
+DATA,Data Science,Markov Chain Monte Carlo,2006,2,5
+DATA,Data Science,Markov Chain Monte Carlo,2007,1,2
+DATA,Data Science,Markov Chain Monte Carlo,2008,1,6
+DATA,Data Science,Markov Chain Monte Carlo,2009,5,26
+DATA,Data Science,Markov Chain Monte Carlo,2010,4,16
+DATA,Data Science,Markov Chain Monte Carlo,2011,12,46
+DATA,Data Science,Markov Chain Monte Carlo,2012,9,28
+DATA,Data Science,Markov Chain Monte Carlo,2013,4,12
+DATA,Data Science,Markov Chain Monte Carlo,2014,8,27
+DATA,Data Science,Markov Chain Monte Carlo,2015,17,64
+DATA,Data Science,Markov Chain Monte Carlo,2016,9,31
+DATA,Data Science,Markov Chain Monte Carlo,2017,17,58
+DATA,Data Science,Markov Chain Monte Carlo,2018,17,53
+DATA,Data Science,Markov Chain Monte Carlo,2019,19,85
+DATA,Data Science,Markov Chain Monte Carlo,2020,15,59
+DATA,Data Science,Markov Chain Monte Carlo,2021,13,45
+DATA,Data Science,Markov Chain Monte Carlo,2022,12,54
+DATA,Data Science,Markov Chain Monte Carlo,2023,7,21
+DATA,Data Science,Markov Chain Monte Carlo,2024,10,52
+DATA,Data Science,Markov Chain Monte Carlo,2025,3,10
+DATA,Data Science,Meta-Analysis,1998,1,3
+DATA,Data Science,Meta-Analysis,2000,2,4
+DATA,Data Science,Meta-Analysis,2002,1,8
+DATA,Data Science,Meta-Analysis,2004,1,2
+DATA,Data Science,Meta-Analysis,2005,2,7
+DATA,Data Science,Meta-Analysis,2006,1,2
+DATA,Data Science,Meta-Analysis,2007,8,25
+DATA,Data Science,Meta-Analysis,2008,6,39
+DATA,Data Science,Meta-Analysis,2009,6,24
+DATA,Data Science,Meta-Analysis,2010,14,42
+DATA,Data Science,Meta-Analysis,2011,12,44
+DATA,Data Science,Meta-Analysis,2012,9,53
+DATA,Data Science,Meta-Analysis,2013,9,32
+DATA,Data Science,Meta-Analysis,2014,11,80
+DATA,Data Science,Meta-Analysis,2015,27,119
+DATA,Data Science,Meta-Analysis,2016,28,121
+DATA,Data Science,Meta-Analysis,2017,23,113
+DATA,Data Science,Meta-Analysis,2018,29,150
+DATA,Data Science,Meta-Analysis,2019,24,120
+DATA,Data Science,Meta-Analysis,2020,40,229
+DATA,Data Science,Meta-Analysis,2021,27,148
+DATA,Data Science,Meta-Analysis,2022,37,228
+DATA,Data Science,Meta-Analysis,2023,28,158
+DATA,Data Science,Meta-Analysis,2024,25,158
+DATA,Data Science,Meta-Analysis,2025,23,111
+DATA,Data Science,N-Mixture Models,2019,1,4
+DATA,Data Science,N-Mixture Models,2020,3,22
+DATA,Data Science,N-Mixture Models,2024,1,6
+DATA,Data Science,Neural Networks,1973,1,2
+DATA,Data Science,Neural Networks,1995,1,2
+DATA,Data Science,Neural Networks,2003,1,2
+DATA,Data Science,Neural Networks,2004,1,1
+DATA,Data Science,Neural Networks,2007,1,10
+DATA,Data Science,Neural Networks,2009,3,12
+DATA,Data Science,Neural Networks,2012,2,8
+DATA,Data Science,Neural Networks,2013,1,2
+DATA,Data Science,Neural Networks,2014,3,10
+DATA,Data Science,Neural Networks,2016,1,4
+DATA,Data Science,Neural Networks,2017,3,31
+DATA,Data Science,Neural Networks,2018,3,22
+DATA,Data Science,Neural Networks,2019,3,14
+DATA,Data Science,Neural Networks,2020,5,55
+DATA,Data Science,Neural Networks,2021,2,9
+DATA,Data Science,Neural Networks,2022,9,76
+DATA,Data Science,Neural Networks,2023,4,16
+DATA,Data Science,Neural Networks,2024,4,24
+DATA,Data Science,Neural Networks,2025,3,12
+DATA,Data Science,Random Forest,2013,1,2
+DATA,Data Science,Random Forest,2014,1,10
+DATA,Data Science,Random Forest,2015,1,8
+DATA,Data Science,Random Forest,2016,3,51
+DATA,Data Science,Random Forest,2017,2,62
+DATA,Data Science,Random Forest,2018,2,64
+DATA,Data Science,Random Forest,2019,3,46
+DATA,Data Science,Random Forest,2020,3,31
+DATA,Data Science,Random Forest,2021,6,65
+DATA,Data Science,Random Forest,2022,9,93
+DATA,Data Science,Random Forest,2023,2,36
+DATA,Data Science,Random Forest,2024,2,23
+DATA,Data Science,Random Forest,2025,2,22
+DATA,Data Science,SARIMA,2018,1,1
+DATA,Data Science,SARIMA,2022,1,35
+DATA,Data Science,Structural Equation Modeling,2013,1,6
+DATA,Data Science,Structural Equation Modeling,2016,1,2
+DATA,Data Science,Structural Equation Modeling,2018,1,3
+DATA,Data Science,Structural Equation Modeling,2019,1,3
+DATA,Data Science,Support Vector Machines,2018,1,6
+DATA,Data Science,Support Vector Machines,2019,1,4
+DATA,Data Science,Support Vector Machines,2022,1,4
+DATA,Data Science,Support Vector Machines,2024,3,9
+DATA,Data Science,Time Series,1969,1,2
+DATA,Data Science,Time Series,1975,2,39
+DATA,Data Science,Time Series,1978,1,44
+DATA,Data Science,Time Series,1984,1,3
+DATA,Data Science,Time Series,1987,1,8
+DATA,Data Science,Time Series,1988,1,2
+DATA,Data Science,Time Series,1991,2,4
+DATA,Data Science,Time Series,1992,2,3
+DATA,Data Science,Time Series,1995,2,5
+DATA,Data Science,Time Series,1997,3,17
+DATA,Data Science,Time Series,1998,7,19
+DATA,Data Science,Time Series,1999,2,60
+DATA,Data Science,Time Series,2000,6,27
+DATA,Data Science,Time Series,2001,8,20
+DATA,Data Science,Time Series,2002,7,21
+DATA,Data Science,Time Series,2003,2,6
+DATA,Data Science,Time Series,2004,1,3
+DATA,Data Science,Time Series,2005,8,34
+DATA,Data Science,Time Series,2006,10,69
+DATA,Data Science,Time Series,2007,11,45
+DATA,Data Science,Time Series,2008,20,250
+DATA,Data Science,Time Series,2009,25,291
+DATA,Data Science,Time Series,2010,24,207
+DATA,Data Science,Time Series,2011,24,209
+DATA,Data Science,Time Series,2012,30,346
+DATA,Data Science,Time Series,2013,39,602
+DATA,Data Science,Time Series,2014,28,285
+DATA,Data Science,Time Series,2015,42,233
+DATA,Data Science,Time Series,2016,38,609
+DATA,Data Science,Time Series,2017,42,358
+DATA,Data Science,Time Series,2018,38,364
+DATA,Data Science,Time Series,2019,46,520
+DATA,Data Science,Time Series,2020,45,431
+DATA,Data Science,Time Series,2021,48,582
+DATA,Data Science,Time Series,2022,52,1025
+DATA,Data Science,Time Series,2023,22,399
+DATA,Data Science,Time Series,2024,26,212
+DATA,Data Science,Time Series,2025,23,316
+FISH,Fisheries,AMSY,2021,1,42
+FISH,Fisheries,AMSY,2022,2,72
+FISH,Fisheries,Age-Structured Models,1997,3,16
+FISH,Fisheries,Age-Structured Models,1998,2,5
+FISH,Fisheries,Age-Structured Models,1999,1,6
+FISH,Fisheries,Age-Structured Models,2006,2,6
+FISH,Fisheries,Age-Structured Models,2008,1,3
+FISH,Fisheries,Age-Structured Models,2010,2,29
+FISH,Fisheries,Age-Structured Models,2011,1,9
+FISH,Fisheries,Age-Structured Models,2013,1,2
+FISH,Fisheries,Age-Structured Models,2014,2,4
+FISH,Fisheries,Age-Structured Models,2015,4,13
+FISH,Fisheries,Age-Structured Models,2016,4,17
+FISH,Fisheries,Age-Structured Models,2017,2,9
+FISH,Fisheries,Age-Structured Models,2018,1,6
+FISH,Fisheries,Age-Structured Models,2019,2,11
+FISH,Fisheries,Age-Structured Models,2020,2,12
+FISH,Fisheries,Age-Structured Models,2021,2,8
+FISH,Fisheries,Age-Structured Models,2022,1,5
+FISH,Fisheries,Age-Structured Models,2024,2,8
+FISH,Fisheries,Age-Structured Models,2025,2,7
+FISH,Fisheries,Bycatch Assessment,2005,1,3
+FISH,Fisheries,Bycatch Assessment,2007,1,4
+FISH,Fisheries,Bycatch Assessment,2011,1,3
+FISH,Fisheries,Bycatch Assessment,2012,2,8
+FISH,Fisheries,Bycatch Assessment,2013,1,2
+FISH,Fisheries,Bycatch Assessment,2014,1,6
+FISH,Fisheries,Bycatch Assessment,2015,1,2
+FISH,Fisheries,Bycatch Assessment,2017,1,3
+FISH,Fisheries,Bycatch Assessment,2018,3,11
+FISH,Fisheries,Bycatch Assessment,2019,1,2
+FISH,Fisheries,Bycatch Assessment,2020,1,6
+FISH,Fisheries,Bycatch Assessment,2021,1,3
+FISH,Fisheries,Bycatch Assessment,2022,3,19
+FISH,Fisheries,Bycatch Assessment,2023,4,17
+FISH,Fisheries,Bycatch Assessment,2024,1,4
+FISH,Fisheries,CPUE Standardization,2007,1,3
+FISH,Fisheries,CPUE Standardization,2011,2,16
+FISH,Fisheries,CPUE Standardization,2013,2,45
+FISH,Fisheries,CPUE Standardization,2014,1,21
+FISH,Fisheries,CPUE Standardization,2015,1,24
+FISH,Fisheries,CPUE Standardization,2016,4,26
+FISH,Fisheries,CPUE Standardization,2018,3,13
+FISH,Fisheries,CPUE Standardization,2019,3,34
+FISH,Fisheries,CPUE Standardization,2020,2,8
+FISH,Fisheries,CPUE Standardization,2021,1,76
+FISH,Fisheries,CPUE Standardization,2023,1,4
+FISH,Fisheries,Catch Curve Analysis,2005,1,3
+FISH,Fisheries,Catch Curve Analysis,2008,1,3
+FISH,Fisheries,Catch Curve Analysis,2009,1,3
+FISH,Fisheries,Catch Curve Analysis,2011,2,7
+FISH,Fisheries,Catch Curve Analysis,2015,2,10
+FISH,Fisheries,Catch Curve Analysis,2021,1,9
+FISH,Fisheries,Catch Curve Analysis,2025,1,8
+FISH,Fisheries,Catch Data Analysis,2011,1,5
+FISH,Fisheries,Catch Data Analysis,2012,1,3
+FISH,Fisheries,Catch Data Analysis,2016,1,3
+FISH,Fisheries,Catch-MSY,2017,1,8
+FISH,Fisheries,Catch-MSY,2022,1,6
+FISH,Fisheries,Close-Kin Mark-Recapture,2018,1,20
+FISH,Fisheries,Close-Kin Mark-Recapture,2020,1,20
+FISH,Fisheries,Close-Kin Mark-Recapture,2021,2,9
+FISH,Fisheries,Close-Kin Mark-Recapture,2024,2,10
+FISH,Fisheries,Close-Kin Mark-Recapture,2025,2,15
+FISH,Fisheries,Data-Poor Assessment,2011,1,4
+FISH,Fisheries,Data-Poor Assessment,2017,2,8
+FISH,Fisheries,Data-Poor Assessment,2018,1,4
+FISH,Fisheries,Data-Poor Assessment,2019,1,10
+FISH,Fisheries,Data-Poor Assessment,2020,2,6
+FISH,Fisheries,Data-Poor Assessment,2022,1,5
+FISH,Fisheries,Data-Poor Assessment,2025,2,8
+FISH,Fisheries,Delay-Difference Models,2009,1,4
+FISH,Fisheries,Delay-Difference Models,2017,1,3
+FISH,Fisheries,Depletion Methods,2006,1,4
+FISH,Fisheries,Discard Mortality,1998,1,6
+FISH,Fisheries,Discard Mortality,2003,1,4
+FISH,Fisheries,Discard Mortality,2005,2,7
+FISH,Fisheries,Discard Mortality,2007,1,40
+FISH,Fisheries,Discard Mortality,2008,4,14
+FISH,Fisheries,Discard Mortality,2009,8,70
+FISH,Fisheries,Discard Mortality,2010,8,84
+FISH,Fisheries,Discard Mortality,2011,8,68
+FISH,Fisheries,Discard Mortality,2012,17,119
+FISH,Fisheries,Discard Mortality,2013,13,237
+FISH,Fisheries,Discard Mortality,2014,8,35
+FISH,Fisheries,Discard Mortality,2015,17,246
+FISH,Fisheries,Discard Mortality,2016,10,140
+FISH,Fisheries,Discard Mortality,2017,12,133
+FISH,Fisheries,Discard Mortality,2018,13,127
+FISH,Fisheries,Discard Mortality,2019,17,141
+FISH,Fisheries,Discard Mortality,2020,15,129
+FISH,Fisheries,Discard Mortality,2021,8,51
+FISH,Fisheries,Discard Mortality,2022,11,48
+FISH,Fisheries,Discard Mortality,2023,10,63
+FISH,Fisheries,Discard Mortality,2024,7,31
+FISH,Fisheries,Discard Mortality,2025,4,28
+FISH,Fisheries,Distance Sampling,2013,3,32
+FISH,Fisheries,Distance Sampling,2014,2,11
+FISH,Fisheries,Distance Sampling,2015,2,6
+FISH,Fisheries,Distance Sampling,2019,1,3
+FISH,Fisheries,Distance Sampling,2020,1,3
+FISH,Fisheries,Distance Sampling,2022,2,31
+FISH,Fisheries,Distance Sampling,2023,2,32
+FISH,Fisheries,Distance Sampling,2025,2,11
+FISH,Fisheries,Ecosystem Models,2000,1,2
+FISH,Fisheries,Ecosystem Models,2006,1,6
+FISH,Fisheries,Ecosystem Models,2007,6,25
+FISH,Fisheries,Ecosystem Models,2008,5,51
+FISH,Fisheries,Ecosystem Models,2009,1,3
+FISH,Fisheries,Ecosystem Models,2010,5,39
+FISH,Fisheries,Ecosystem Models,2011,7,37
+FISH,Fisheries,Ecosystem Models,2012,6,42
+FISH,Fisheries,Ecosystem Models,2013,9,135
+FISH,Fisheries,Ecosystem Models,2014,8,26
+FISH,Fisheries,Ecosystem Models,2015,4,42
+FISH,Fisheries,Ecosystem Models,2016,8,31
+FISH,Fisheries,Ecosystem Models,2017,11,104
+FISH,Fisheries,Ecosystem Models,2018,8,44
+FISH,Fisheries,Ecosystem Models,2019,7,33
+FISH,Fisheries,Ecosystem Models,2020,8,35
+FISH,Fisheries,Ecosystem Models,2021,4,32
+FISH,Fisheries,Ecosystem Models,2022,5,25
+FISH,Fisheries,Ecosystem Models,2023,4,92
+FISH,Fisheries,Ecosystem Models,2024,6,29
+FISH,Fisheries,Ecosystem Models,2025,1,4
+FISH,Fisheries,Fisher Interviews,2007,1,6
+FISH,Fisheries,Fisher Interviews,2011,1,15
+FISH,Fisheries,Fisher Interviews,2014,1,24
+FISH,Fisheries,Fisher Interviews,2018,1,3
+FISH,Fisheries,Fisher Interviews,2019,1,4
+FISH,Fisheries,Fisher Interviews,2020,3,27
+FISH,Fisheries,Fisher Interviews,2021,3,28
+FISH,Fisheries,Fisher Interviews,2022,2,6
+FISH,Fisheries,Fisher Interviews,2023,1,4
+FISH,Fisheries,Fisher Interviews,2024,3,11
+FISH,Fisheries,Fisher Interviews,2025,3,15
+FISH,Fisheries,Integrated Models,2016,1,8
+FISH,Fisheries,Integrated Models,2017,1,8
+FISH,Fisheries,Integrated Models,2018,1,4
+FISH,Fisheries,Integrated Models,2020,1,3
+FISH,Fisheries,LBB,1996,1,3
+FISH,Fisheries,LBB,2008,1,8
+FISH,Fisheries,LBB,2016,1,8
+FISH,Fisheries,LBB,2017,1,90
+FISH,Fisheries,LBB,2020,1,4
+FISH,Fisheries,LBB,2021,1,3
+FISH,Fisheries,LBB,2022,3,340
+FISH,Fisheries,LBB,2025,1,6
+FISH,Fisheries,LBSPR,2019,1,8
+FISH,Fisheries,LBSPR,2021,1,42
+FISH,Fisheries,LBSPR,2022,3,587
+FISH,Fisheries,LIME,1953,1,2
+FISH,Fisheries,LIME,1954,1,3
+FISH,Fisheries,LIME,1957,1,3
+FISH,Fisheries,LIME,1961,1,3
+FISH,Fisheries,LIME,1967,1,3
+FISH,Fisheries,LIME,1969,1,3
+FISH,Fisheries,LIME,1970,1,3
+FISH,Fisheries,LIME,1973,1,2
+FISH,Fisheries,LIME,1974,1,3
+FISH,Fisheries,LIME,1975,2,9
+FISH,Fisheries,LIME,1977,1,3
+FISH,Fisheries,LIME,1979,1,3
+FISH,Fisheries,LIME,1980,2,5
+FISH,Fisheries,LIME,1982,5,21
+FISH,Fisheries,LIME,1983,4,8
+FISH,Fisheries,LIME,1985,1,3
+FISH,Fisheries,LIME,1986,1,4
+FISH,Fisheries,LIME,1988,1,3
+FISH,Fisheries,LIME,1990,3,15
+FISH,Fisheries,LIME,1991,2,5
+FISH,Fisheries,LIME,1992,2,5
+FISH,Fisheries,LIME,1993,1,2
+FISH,Fisheries,LIME,1994,1,9
+FISH,Fisheries,LIME,1995,1,3
+FISH,Fisheries,LIME,1996,1,4
+FISH,Fisheries,LIME,1997,1,4
+FISH,Fisheries,LIME,1999,1,6
+FISH,Fisheries,LIME,2001,2,7
+FISH,Fisheries,LIME,2003,1,6
+FISH,Fisheries,LIME,2004,1,3
+FISH,Fisheries,LIME,2005,3,14
+FISH,Fisheries,LIME,2006,2,6
+FISH,Fisheries,LIME,2007,1,9
+FISH,Fisheries,LIME,2008,1,6
+FISH,Fisheries,LIME,2009,2,7
+FISH,Fisheries,LIME,2011,1,3
+FISH,Fisheries,LIME,2012,2,7
+FISH,Fisheries,LIME,2013,2,10
+FISH,Fisheries,LIME,2014,5,31
+FISH,Fisheries,LIME,2015,2,8
+FISH,Fisheries,LIME,2016,5,15
+FISH,Fisheries,LIME,2017,4,14
+FISH,Fisheries,LIME,2018,7,49
+FISH,Fisheries,LIME,2019,1,3
+FISH,Fisheries,LIME,2020,6,27
+FISH,Fisheries,LIME,2021,3,9
+FISH,Fisheries,LIME,2022,2,9
+FISH,Fisheries,LIME,2023,2,20
+FISH,Fisheries,LIME,2024,4,18
+FISH,Fisheries,Length-Based Methods,1993,1,2
+FISH,Fisheries,Length-Based Methods,1998,1,3
+FISH,Fisheries,Length-Based Methods,2009,1,4
+FISH,Fisheries,Length-Based Methods,2017,1,3
+FISH,Fisheries,Length-Based Methods,2020,2,13
+FISH,Fisheries,Length-Based Methods,2022,2,43
+FISH,Fisheries,Length-Converted Catch Curves,1996,1,2
+FISH,Fisheries,Length-Converted Catch Curves,1998,1,2
+FISH,Fisheries,Length-Converted Catch Curves,2009,1,6
+FISH,Fisheries,Length-Converted Catch Curves,2011,1,4
+FISH,Fisheries,Length-Converted Catch Curves,2020,1,4
+FISH,Fisheries,Multispecies Models,1989,1,1
+FISH,Fisheries,Multispecies Models,1994,1,1
+FISH,Fisheries,Multispecies Models,2011,1,6
+FISH,Fisheries,Multispecies Models,2013,2,5
+FISH,Fisheries,Multispecies Models,2017,2,10
+FISH,Fisheries,Multispecies Models,2019,3,13
+FISH,Fisheries,Multispecies Models,2020,1,3
+FISH,Fisheries,Multispecies Models,2025,1,4
+FISH,Fisheries,Post-Release Mortality,1982,1,14
+FISH,Fisheries,Post-Release Mortality,2002,1,5
+FISH,Fisheries,Post-Release Mortality,2003,1,2
+FISH,Fisheries,Post-Release Mortality,2006,1,42
+FISH,Fisheries,Post-Release Mortality,2007,2,8
+FISH,Fisheries,Post-Release Mortality,2008,1,2
+FISH,Fisheries,Post-Release Mortality,2009,3,21
+FISH,Fisheries,Post-Release Mortality,2010,4,17
+FISH,Fisheries,Post-Release Mortality,2011,6,28
+FISH,Fisheries,Post-Release Mortality,2012,8,46
+FISH,Fisheries,Post-Release Mortality,2013,11,100
+FISH,Fisheries,Post-Release Mortality,2014,12,141
+FISH,Fisheries,Post-Release Mortality,2015,17,242
+FISH,Fisheries,Post-Release Mortality,2016,18,426
+FISH,Fisheries,Post-Release Mortality,2017,25,297
+FISH,Fisheries,Post-Release Mortality,2018,23,180
+FISH,Fisheries,Post-Release Mortality,2019,21,159
+FISH,Fisheries,Post-Release Mortality,2020,24,138
+FISH,Fisheries,Post-Release Mortality,2021,20,234
+FISH,Fisheries,Post-Release Mortality,2022,24,133
+FISH,Fisheries,Post-Release Mortality,2023,17,218
+FISH,Fisheries,Post-Release Mortality,2024,13,89
+FISH,Fisheries,Post-Release Mortality,2025,12,86
+FISH,Fisheries,Post-Release Survival,1982,1,7
+FISH,Fisheries,Post-Release Survival,1997,1,3
+FISH,Fisheries,Post-Release Survival,2003,1,15
+FISH,Fisheries,Post-Release Survival,2004,1,12
+FISH,Fisheries,Post-Release Survival,2007,2,9
+FISH,Fisheries,Post-Release Survival,2008,2,6
+FISH,Fisheries,Post-Release Survival,2009,2,5
+FISH,Fisheries,Post-Release Survival,2010,6,38
+FISH,Fisheries,Post-Release Survival,2011,5,21
+FISH,Fisheries,Post-Release Survival,2012,10,39
+FISH,Fisheries,Post-Release Survival,2013,9,70
+FISH,Fisheries,Post-Release Survival,2014,12,67
+FISH,Fisheries,Post-Release Survival,2015,15,143
+FISH,Fisheries,Post-Release Survival,2016,14,115
+FISH,Fisheries,Post-Release Survival,2017,23,231
+FISH,Fisheries,Post-Release Survival,2018,16,145
+FISH,Fisheries,Post-Release Survival,2019,23,162
+FISH,Fisheries,Post-Release Survival,2020,26,176
+FISH,Fisheries,Post-Release Survival,2021,20,151
+FISH,Fisheries,Post-Release Survival,2022,15,82
+FISH,Fisheries,Post-Release Survival,2023,15,83
+FISH,Fisheries,Post-Release Survival,2024,9,39
+FISH,Fisheries,Post-Release Survival,2025,6,70
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2009,1,3
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2010,1,5
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2015,1,3
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2016,1,9
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2019,2,7
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2021,2,10
+FISH,Fisheries,Spawning Stock Biomass per Recruit,2022,3,13
+FISH,Fisheries,Statistical Catch-at-Age,2008,1,3
+FISH,Fisheries,Statistical Catch-at-Age,2009,1,3
+FISH,Fisheries,Statistical Catch-at-Age,2010,1,8
+FISH,Fisheries,Statistical Catch-at-Age,2011,1,4
+FISH,Fisheries,Statistical Catch-at-Age,2013,2,7
+FISH,Fisheries,Statistical Catch-at-Age,2014,2,7
+FISH,Fisheries,Statistical Catch-at-Age,2015,3,42
+FISH,Fisheries,Statistical Catch-at-Age,2016,2,7
+FISH,Fisheries,Statistical Catch-at-Age,2017,1,5
+FISH,Fisheries,Statistical Catch-at-Age,2019,1,5
+FISH,Fisheries,Statistical Catch-at-Age,2020,2,8
+FISH,Fisheries,Statistical Catch-at-Age,2021,1,6
+FISH,Fisheries,Statistical Catch-at-Age,2023,1,5
+FISH,Fisheries,Statistical Catch-at-Age,2024,1,3
+FISH,Fisheries,Stock Assessment,1977,1,1
+FISH,Fisheries,Stock Assessment,1979,2,8
+FISH,Fisheries,Stock Assessment,1980,1,4
+FISH,Fisheries,Stock Assessment,1982,1,8
+FISH,Fisheries,Stock Assessment,1983,2,5
+FISH,Fisheries,Stock Assessment,1984,2,7
+FISH,Fisheries,Stock Assessment,1988,1,2
+FISH,Fisheries,Stock Assessment,1990,1,2
+FISH,Fisheries,Stock Assessment,1991,2,6
+FISH,Fisheries,Stock Assessment,1992,3,9
+FISH,Fisheries,Stock Assessment,1993,2,5
+FISH,Fisheries,Stock Assessment,1994,2,3
+FISH,Fisheries,Stock Assessment,1995,2,3
+FISH,Fisheries,Stock Assessment,1996,2,4
+FISH,Fisheries,Stock Assessment,1997,4,42
+FISH,Fisheries,Stock Assessment,1998,17,140
+FISH,Fisheries,Stock Assessment,1999,4,35
+FISH,Fisheries,Stock Assessment,2000,9,85
+FISH,Fisheries,Stock Assessment,2001,7,36
+FISH,Fisheries,Stock Assessment,2002,12,65
+FISH,Fisheries,Stock Assessment,2003,6,11
+FISH,Fisheries,Stock Assessment,2004,8,20
+FISH,Fisheries,Stock Assessment,2005,19,118
+FISH,Fisheries,Stock Assessment,2006,19,152
+FISH,Fisheries,Stock Assessment,2007,25,154
+FISH,Fisheries,Stock Assessment,2008,24,154
+FISH,Fisheries,Stock Assessment,2009,40,228
+FISH,Fisheries,Stock Assessment,2010,26,184
+FISH,Fisheries,Stock Assessment,2011,43,271
+FISH,Fisheries,Stock Assessment,2012,42,350
+FISH,Fisheries,Stock Assessment,2013,44,557
+FISH,Fisheries,Stock Assessment,2014,45,475
+FISH,Fisheries,Stock Assessment,2015,63,740
+FISH,Fisheries,Stock Assessment,2016,51,565
+FISH,Fisheries,Stock Assessment,2017,64,676
+FISH,Fisheries,Stock Assessment,2018,65,620
+FISH,Fisheries,Stock Assessment,2019,51,469
+FISH,Fisheries,Stock Assessment,2020,76,759
+FISH,Fisheries,Stock Assessment,2021,68,667
+FISH,Fisheries,Stock Assessment,2022,54,709
+FISH,Fisheries,Stock Assessment,2023,28,370
+FISH,Fisheries,Stock Assessment,2024,21,133
+FISH,Fisheries,Stock Assessment,2025,25,445
+FISH,Fisheries,Stock Synthesis,2008,1,9
+FISH,Fisheries,Stock Synthesis,2009,1,18
+FISH,Fisheries,Stock Synthesis,2013,2,50
+FISH,Fisheries,Stock Synthesis,2015,2,14
+FISH,Fisheries,Stock Synthesis,2016,3,19
+FISH,Fisheries,Stock Synthesis,2017,6,31
+FISH,Fisheries,Stock Synthesis,2018,5,59
+FISH,Fisheries,Stock Synthesis,2019,3,17
+FISH,Fisheries,Stock Synthesis,2020,3,48
+FISH,Fisheries,Stock Synthesis,2022,4,42
+FISH,Fisheries,Stock Synthesis,2023,3,12
+FISH,Fisheries,Stock Synthesis,2024,2,6
+FISH,Fisheries,Stock Synthesis,2025,1,5
+FISH,Fisheries,Surplus Production Models,2002,1,3
+FISH,Fisheries,Surplus Production Models,2006,1,12
+FISH,Fisheries,Surplus Production Models,2010,1,10
+FISH,Fisheries,Surplus Production Models,2011,1,20
+FISH,Fisheries,Surplus Production Models,2013,1,6
+FISH,Fisheries,Surplus Production Models,2014,1,5
+FISH,Fisheries,Surplus Production Models,2016,1,3
+FISH,Fisheries,Surplus Production Models,2017,2,60
+FISH,Fisheries,Surplus Production Models,2018,2,11
+FISH,Fisheries,Surplus Production Models,2020,4,31
+FISH,Fisheries,Surplus Production Models,2021,1,56
+FISH,Fisheries,Surplus Production Models,2022,4,33
+FISH,Fisheries,Surplus Production Models,2023,1,3
+FISH,Fisheries,Surplus Production Models,2025,2,7
+FISH,Fisheries,Virtual Population Analysis,2000,1,3
+FISH,Fisheries,Virtual Population Analysis,2002,1,4
+FISH,Fisheries,Virtual Population Analysis,2008,1,4
+FISH,Fisheries,Virtual Population Analysis,2009,3,21
+FISH,Fisheries,Virtual Population Analysis,2010,3,36
+FISH,Fisheries,Virtual Population Analysis,2011,1,6
+FISH,Fisheries,Virtual Population Analysis,2012,1,5
+FISH,Fisheries,Virtual Population Analysis,2013,2,11
+FISH,Fisheries,Virtual Population Analysis,2016,1,3
+FISH,Fisheries,Virtual Population Analysis,2017,1,5
+FISH,Fisheries,Virtual Population Analysis,2019,2,65
+FISH,Fisheries,Virtual Population Analysis,2022,2,8
+FISH,Fisheries,Virtual Population Analysis,2023,1,20
+FISH,Fisheries,Yield per Recruit,1979,1,12
+FISH,Fisheries,Yield per Recruit,1982,1,3
+FISH,Fisheries,Yield per Recruit,1984,3,17
+FISH,Fisheries,Yield per Recruit,1986,1,3
+FISH,Fisheries,Yield per Recruit,1987,1,2
+FISH,Fisheries,Yield per Recruit,1990,1,2
+FISH,Fisheries,Yield per Recruit,1991,1,42
+FISH,Fisheries,Yield per Recruit,1996,2,4
+FISH,Fisheries,Yield per Recruit,1997,4,55
+FISH,Fisheries,Yield per Recruit,1998,5,39
+FISH,Fisheries,Yield per Recruit,1999,2,6
+FISH,Fisheries,Yield per Recruit,2000,4,14
+FISH,Fisheries,Yield per Recruit,2001,1,3
+FISH,Fisheries,Yield per Recruit,2002,3,9
+FISH,Fisheries,Yield per Recruit,2003,1,2
+FISH,Fisheries,Yield per Recruit,2004,1,2
+FISH,Fisheries,Yield per Recruit,2005,1,3
+FISH,Fisheries,Yield per Recruit,2006,2,27
+FISH,Fisheries,Yield per Recruit,2007,3,9
+FISH,Fisheries,Yield per Recruit,2008,2,6
+FISH,Fisheries,Yield per Recruit,2009,9,89
+FISH,Fisheries,Yield per Recruit,2010,3,12
+FISH,Fisheries,Yield per Recruit,2011,1,3
+FISH,Fisheries,Yield per Recruit,2012,2,11
+FISH,Fisheries,Yield per Recruit,2014,1,4
+FISH,Fisheries,Yield per Recruit,2015,3,9
+FISH,Fisheries,Yield per Recruit,2016,3,13
+FISH,Fisheries,Yield per Recruit,2017,2,8
+FISH,Fisheries,Yield per Recruit,2018,2,7
+FISH,Fisheries,Yield per Recruit,2019,5,36
+FISH,Fisheries,Yield per Recruit,2021,3,13
+FISH,Fisheries,Yield per Recruit,2022,5,25
+FISH,Fisheries,Yield per Recruit,2023,3,18
+FISH,Fisheries,Yield per Recruit,2024,2,8
+FISH,Fisheries,Yield per Recruit,2025,2,25
+GEN,Genetics,ADMIXTURE,1967,2,6
+GEN,Genetics,ADMIXTURE,1968,1,2
+GEN,Genetics,ADMIXTURE,1970,1,2
+GEN,Genetics,ADMIXTURE,1971,1,2
+GEN,Genetics,ADMIXTURE,1977,1,2
+GEN,Genetics,ADMIXTURE,1984,1,2
+GEN,Genetics,ADMIXTURE,2000,1,2
+GEN,Genetics,ADMIXTURE,2006,2,5
+GEN,Genetics,ADMIXTURE,2007,2,8
+GEN,Genetics,ADMIXTURE,2008,1,2
+GEN,Genetics,ADMIXTURE,2009,2,24
+GEN,Genetics,ADMIXTURE,2010,3,42
+GEN,Genetics,ADMIXTURE,2011,4,16
+GEN,Genetics,ADMIXTURE,2012,3,31
+GEN,Genetics,ADMIXTURE,2013,2,5
+GEN,Genetics,ADMIXTURE,2014,4,54
+GEN,Genetics,ADMIXTURE,2015,13,83
+GEN,Genetics,ADMIXTURE,2016,4,31
+GEN,Genetics,ADMIXTURE,2017,5,77
+GEN,Genetics,ADMIXTURE,2018,10,74
+GEN,Genetics,ADMIXTURE,2019,17,193
+GEN,Genetics,ADMIXTURE,2020,13,191
+GEN,Genetics,ADMIXTURE,2021,7,33
+GEN,Genetics,ADMIXTURE,2022,8,79
+GEN,Genetics,ADMIXTURE,2023,9,101
+GEN,Genetics,ADMIXTURE,2024,8,94
+GEN,Genetics,ADMIXTURE,2025,4,37
+GEN,Genetics,Ancient DNA,2001,1,1
+GEN,Genetics,Ancient DNA,2008,1,1
+GEN,Genetics,Ancient DNA,2009,1,3
+GEN,Genetics,Ancient DNA,2011,1,1
+GEN,Genetics,Ancient DNA,2015,2,23
+GEN,Genetics,Ancient DNA,2016,3,7
+GEN,Genetics,Ancient DNA,2017,2,4
+GEN,Genetics,Ancient DNA,2018,1,4
+GEN,Genetics,Ancient DNA,2020,6,28
+GEN,Genetics,Ancient DNA,2021,2,18
+GEN,Genetics,Ancient DNA,2022,4,26
+GEN,Genetics,Ancient DNA,2024,1,2
+GEN,Genetics,Ancient DNA,2025,1,8
+GEN,Genetics,Comparative Genomics,1982,1,24
+GEN,Genetics,Comparative Genomics,2003,2,3
+GEN,Genetics,Comparative Genomics,2004,2,2
+GEN,Genetics,Comparative Genomics,2006,1,3
+GEN,Genetics,Comparative Genomics,2007,1,1
+GEN,Genetics,Comparative Genomics,2008,3,8
+GEN,Genetics,Comparative Genomics,2009,5,8
+GEN,Genetics,Comparative Genomics,2010,3,7
+GEN,Genetics,Comparative Genomics,2011,7,15
+GEN,Genetics,Comparative Genomics,2012,4,35
+GEN,Genetics,Comparative Genomics,2013,2,5
+GEN,Genetics,Comparative Genomics,2014,5,13
+GEN,Genetics,Comparative Genomics,2015,5,16
+GEN,Genetics,Comparative Genomics,2016,2,5
+GEN,Genetics,Comparative Genomics,2017,5,14
+GEN,Genetics,Comparative Genomics,2018,4,6
+GEN,Genetics,Comparative Genomics,2019,3,8
+GEN,Genetics,Comparative Genomics,2020,4,13
+GEN,Genetics,Comparative Genomics,2021,6,13
+GEN,Genetics,Comparative Genomics,2022,4,19
+GEN,Genetics,Comparative Genomics,2023,7,19
+GEN,Genetics,Comparative Genomics,2024,5,13
+GEN,Genetics,Comparative Genomics,2025,2,4
+GEN,Genetics,Conservation Genetics,1982,2,108
+GEN,Genetics,Conservation Genetics,2001,1,1
+GEN,Genetics,Conservation Genetics,2002,1,1
+GEN,Genetics,Conservation Genetics,2003,2,2
+GEN,Genetics,Conservation Genetics,2004,1,1
+GEN,Genetics,Conservation Genetics,2005,3,9
+GEN,Genetics,Conservation Genetics,2006,6,13
+GEN,Genetics,Conservation Genetics,2007,4,8
+GEN,Genetics,Conservation Genetics,2008,7,19
+GEN,Genetics,Conservation Genetics,2009,8,27
+GEN,Genetics,Conservation Genetics,2010,5,20
+GEN,Genetics,Conservation Genetics,2011,12,76
+GEN,Genetics,Conservation Genetics,2012,18,269
+GEN,Genetics,Conservation Genetics,2013,16,123
+GEN,Genetics,Conservation Genetics,2014,15,102
+GEN,Genetics,Conservation Genetics,2015,27,204
+GEN,Genetics,Conservation Genetics,2016,14,55
+GEN,Genetics,Conservation Genetics,2017,16,181
+GEN,Genetics,Conservation Genetics,2018,13,184
+GEN,Genetics,Conservation Genetics,2019,33,357
+GEN,Genetics,Conservation Genetics,2020,23,156
+GEN,Genetics,Conservation Genetics,2021,22,180
+GEN,Genetics,Conservation Genetics,2022,14,73
+GEN,Genetics,Conservation Genetics,2023,16,118
+GEN,Genetics,Conservation Genetics,2024,19,163
+GEN,Genetics,Conservation Genetics,2025,5,80
+GEN,Genetics,DAPC,2014,2,21
+GEN,Genetics,DAPC,2015,3,27
+GEN,Genetics,DAPC,2016,1,8
+GEN,Genetics,DAPC,2017,1,20
+GEN,Genetics,DAPC,2018,1,21
+GEN,Genetics,DAPC,2019,7,91
+GEN,Genetics,DAPC,2020,6,162
+GEN,Genetics,DAPC,2021,1,21
+GEN,Genetics,DAPC,2022,5,140
+GEN,Genetics,DAPC,2023,5,104
+GEN,Genetics,DAPC,2024,1,20
+GEN,Genetics,DAPC,2025,3,146
+GEN,Genetics,DNA Barcoding,1982,3,54
+GEN,Genetics,DNA Barcoding,2005,1,6
+GEN,Genetics,DNA Barcoding,2006,1,12
+GEN,Genetics,DNA Barcoding,2008,4,51
+GEN,Genetics,DNA Barcoding,2009,8,54
+GEN,Genetics,DNA Barcoding,2010,11,63
+GEN,Genetics,DNA Barcoding,2011,20,162
+GEN,Genetics,DNA Barcoding,2012,19,258
+GEN,Genetics,DNA Barcoding,2013,17,160
+GEN,Genetics,DNA Barcoding,2014,18,132
+GEN,Genetics,DNA Barcoding,2015,32,331
+GEN,Genetics,DNA Barcoding,2016,26,268
+GEN,Genetics,DNA Barcoding,2017,27,316
+GEN,Genetics,DNA Barcoding,2018,34,292
+GEN,Genetics,DNA Barcoding,2019,31,340
+GEN,Genetics,DNA Barcoding,2020,47,387
+GEN,Genetics,DNA Barcoding,2021,41,517
+GEN,Genetics,DNA Barcoding,2022,33,337
+GEN,Genetics,DNA Barcoding,2023,28,420
+GEN,Genetics,DNA Barcoding,2024,32,306
+GEN,Genetics,DNA Barcoding,2025,15,229
+GEN,Genetics,DNA Forensics,2005,1,3
+GEN,Genetics,DNA Forensics,2006,1,1
+GEN,Genetics,DNA Forensics,2008,1,1
+GEN,Genetics,DNA Forensics,2012,1,1
+GEN,Genetics,DNA Forensics,2013,1,4
+GEN,Genetics,DNA Forensics,2017,2,5
+GEN,Genetics,DNA Forensics,2019,4,9
+GEN,Genetics,DNA Forensics,2021,1,2
+GEN,Genetics,FST Analysis,2001,1,2
+GEN,Genetics,FST Analysis,2015,1,5
+GEN,Genetics,FST Analysis,2016,1,6
+GEN,Genetics,FST Analysis,2018,1,3
+GEN,Genetics,FST Analysis,2023,2,15
+GEN,Genetics,Genetic relatedness,1985,1,2
+GEN,Genetics,Genetic relatedness,2001,1,4
+GEN,Genetics,Genetic relatedness,2003,1,2
+GEN,Genetics,Genetic relatedness,2004,1,3
+GEN,Genetics,Genetic relatedness,2007,1,3
+GEN,Genetics,Genetic relatedness,2010,1,5
+GEN,Genetics,Genetic relatedness,2011,1,3
+GEN,Genetics,Genetic relatedness,2012,1,5
+GEN,Genetics,Genetic relatedness,2013,1,3
+GEN,Genetics,Genetic relatedness,2014,2,6
+GEN,Genetics,Genetic relatedness,2015,1,8
+GEN,Genetics,Genetic relatedness,2016,1,4
+GEN,Genetics,Genetic relatedness,2018,5,18
+GEN,Genetics,Genetic relatedness,2019,4,23
+GEN,Genetics,Genetic relatedness,2020,11,40
+GEN,Genetics,Genetic relatedness,2021,4,25
+GEN,Genetics,Genetic relatedness,2022,3,14
+GEN,Genetics,Genetic relatedness,2023,4,14
+GEN,Genetics,Genetic relatedness,2024,1,4
+GEN,Genetics,Genetic relatedness,2025,2,65
+GEN,Genetics,Genome Skimming,2019,1,44
+GEN,Genetics,Genome Skimming,2020,1,1
+GEN,Genetics,Genome Skimming,2021,3,13
+GEN,Genetics,Genome Skimming,2022,5,97
+GEN,Genetics,Genomics,1982,2,54
+GEN,Genetics,Genomics,1997,1,1
+GEN,Genetics,Genomics,2001,3,8
+GEN,Genetics,Genomics,2002,1,1
+GEN,Genetics,Genomics,2003,4,9
+GEN,Genetics,Genomics,2004,4,13
+GEN,Genetics,Genomics,2005,3,3
+GEN,Genetics,Genomics,2006,2,28
+GEN,Genetics,Genomics,2007,10,31
+GEN,Genetics,Genomics,2008,9,20
+GEN,Genetics,Genomics,2009,13,60
+GEN,Genetics,Genomics,2010,7,24
+GEN,Genetics,Genomics,2011,21,95
+GEN,Genetics,Genomics,2012,22,232
+GEN,Genetics,Genomics,2013,21,128
+GEN,Genetics,Genomics,2014,24,103
+GEN,Genetics,Genomics,2015,19,189
+GEN,Genetics,Genomics,2016,33,123
+GEN,Genetics,Genomics,2017,32,359
+GEN,Genetics,Genomics,2018,31,166
+GEN,Genetics,Genomics,2019,39,398
+GEN,Genetics,Genomics,2020,31,247
+GEN,Genetics,Genomics,2021,37,595
+GEN,Genetics,Genomics,2022,39,394
+GEN,Genetics,Genomics,2023,43,438
+GEN,Genetics,Genomics,2024,31,292
+GEN,Genetics,Genomics,2025,29,205
+GEN,Genetics,LAMP,1953,1,2
+GEN,Genetics,LAMP,1960,1,4
+GEN,Genetics,LAMP,1963,1,1
+GEN,Genetics,LAMP,1964,1,1
+GEN,Genetics,LAMP,1966,1,1
+GEN,Genetics,LAMP,1969,1,1
+GEN,Genetics,LAMP,1970,1,2
+GEN,Genetics,LAMP,1971,2,3
+GEN,Genetics,LAMP,1973,2,2
+GEN,Genetics,LAMP,1974,1,1
+GEN,Genetics,LAMP,1977,1,2
+GEN,Genetics,LAMP,1979,2,6
+GEN,Genetics,LAMP,1982,1,1
+GEN,Genetics,LAMP,1983,2,3
+GEN,Genetics,LAMP,1984,1,1
+GEN,Genetics,LAMP,1985,1,1
+GEN,Genetics,LAMP,1986,3,14
+GEN,Genetics,LAMP,1987,1,9
+GEN,Genetics,LAMP,1988,3,5
+GEN,Genetics,LAMP,1990,1,1
+GEN,Genetics,LAMP,1991,1,1
+GEN,Genetics,LAMP,1992,1,3
+GEN,Genetics,LAMP,1993,1,1
+GEN,Genetics,LAMP,1994,1,2
+GEN,Genetics,LAMP,1996,2,3
+GEN,Genetics,LAMP,2001,1,4
+GEN,Genetics,LAMP,2002,1,1
+GEN,Genetics,LAMP,2003,2,6
+GEN,Genetics,LAMP,2005,1,1
+GEN,Genetics,LAMP,2006,6,20
+GEN,Genetics,LAMP,2007,2,2
+GEN,Genetics,LAMP,2008,1,4
+GEN,Genetics,LAMP,2009,6,13
+GEN,Genetics,LAMP,2010,1,13
+GEN,Genetics,LAMP,2011,4,9
+GEN,Genetics,LAMP,2012,3,9
+GEN,Genetics,LAMP,2013,7,18
+GEN,Genetics,LAMP,2014,7,23
+GEN,Genetics,LAMP,2015,3,5
+GEN,Genetics,LAMP,2016,4,11
+GEN,Genetics,LAMP,2017,4,14
+GEN,Genetics,LAMP,2018,3,7
+GEN,Genetics,LAMP,2019,4,6
+GEN,Genetics,LAMP,2020,6,13
+GEN,Genetics,LAMP,2021,4,263
+GEN,Genetics,LAMP,2023,2,7
+GEN,Genetics,LAMP,2024,2,5
+GEN,Genetics,LAMP,2025,1,1
+GEN,Genetics,Metabarcoding,2016,1,42
+GEN,Genetics,Metabarcoding,2017,2,122
+GEN,Genetics,Metabarcoding,2018,2,7
+GEN,Genetics,Metabarcoding,2019,5,184
+GEN,Genetics,Metabarcoding,2020,9,316
+GEN,Genetics,Metabarcoding,2021,10,604
+GEN,Genetics,Metabarcoding,2022,17,574
+GEN,Genetics,Metabarcoding,2023,10,143
+GEN,Genetics,Metabarcoding,2024,18,336
+GEN,Genetics,Metabarcoding,2025,12,94
+GEN,Genetics,Mini-Barcoding,2019,1,13
+GEN,Genetics,Mini-Barcoding,2020,2,4
+GEN,Genetics,Mini-Barcoding,2021,2,13
+GEN,Genetics,Mini-Barcoding,2022,3,6
+GEN,Genetics,Mini-Barcoding,2023,2,5
+GEN,Genetics,Mini-Barcoding,2024,2,9
+GEN,Genetics,Phylogenetics,1982,1,32
+GEN,Genetics,Phylogenetics,1987,1,1
+GEN,Genetics,Phylogenetics,1990,1,1
+GEN,Genetics,Phylogenetics,1991,2,3
+GEN,Genetics,Phylogenetics,1992,3,8
+GEN,Genetics,Phylogenetics,1994,2,2
+GEN,Genetics,Phylogenetics,1996,2,4
+GEN,Genetics,Phylogenetics,1998,1,2
+GEN,Genetics,Phylogenetics,2000,1,3
+GEN,Genetics,Phylogenetics,2001,5,10
+GEN,Genetics,Phylogenetics,2002,2,34
+GEN,Genetics,Phylogenetics,2003,3,54
+GEN,Genetics,Phylogenetics,2004,5,60
+GEN,Genetics,Phylogenetics,2005,4,22
+GEN,Genetics,Phylogenetics,2006,3,22
+GEN,Genetics,Phylogenetics,2007,12,54
+GEN,Genetics,Phylogenetics,2008,9,26
+GEN,Genetics,Phylogenetics,2009,15,153
+GEN,Genetics,Phylogenetics,2010,25,151
+GEN,Genetics,Phylogenetics,2011,21,159
+GEN,Genetics,Phylogenetics,2012,36,368
+GEN,Genetics,Phylogenetics,2013,29,159
+GEN,Genetics,Phylogenetics,2014,27,152
+GEN,Genetics,Phylogenetics,2015,35,281
+GEN,Genetics,Phylogenetics,2016,52,210
+GEN,Genetics,Phylogenetics,2017,49,198
+GEN,Genetics,Phylogenetics,2018,41,238
+GEN,Genetics,Phylogenetics,2019,52,367
+GEN,Genetics,Phylogenetics,2020,50,301
+GEN,Genetics,Phylogenetics,2021,39,160
+GEN,Genetics,Phylogenetics,2022,37,194
+GEN,Genetics,Phylogenetics,2023,22,83
+GEN,Genetics,Phylogenetics,2024,15,90
+GEN,Genetics,Phylogenetics,2025,12,44
+GEN,Genetics,Population Genetics,1982,2,23
+GEN,Genetics,Population Genetics,1985,1,1
+GEN,Genetics,Population Genetics,1988,1,2
+GEN,Genetics,Population Genetics,1989,2,13
+GEN,Genetics,Population Genetics,1991,1,3
+GEN,Genetics,Population Genetics,1992,4,7
+GEN,Genetics,Population Genetics,1994,2,3
+GEN,Genetics,Population Genetics,1995,1,3
+GEN,Genetics,Population Genetics,1996,1,3
+GEN,Genetics,Population Genetics,1997,1,3
+GEN,Genetics,Population Genetics,1998,1,4
+GEN,Genetics,Population Genetics,2000,2,8
+GEN,Genetics,Population Genetics,2001,3,5
+GEN,Genetics,Population Genetics,2002,3,7
+GEN,Genetics,Population Genetics,2003,1,3
+GEN,Genetics,Population Genetics,2004,3,13
+GEN,Genetics,Population Genetics,2005,3,31
+GEN,Genetics,Population Genetics,2006,5,15
+GEN,Genetics,Population Genetics,2007,8,30
+GEN,Genetics,Population Genetics,2008,10,33
+GEN,Genetics,Population Genetics,2009,17,60
+GEN,Genetics,Population Genetics,2010,13,70
+GEN,Genetics,Population Genetics,2011,25,92
+GEN,Genetics,Population Genetics,2012,28,162
+GEN,Genetics,Population Genetics,2013,16,70
+GEN,Genetics,Population Genetics,2014,16,171
+GEN,Genetics,Population Genetics,2015,36,288
+GEN,Genetics,Population Genetics,2016,22,110
+GEN,Genetics,Population Genetics,2017,25,162
+GEN,Genetics,Population Genetics,2018,32,215
+GEN,Genetics,Population Genetics,2019,37,324
+GEN,Genetics,Population Genetics,2020,22,168
+GEN,Genetics,Population Genetics,2021,25,178
+GEN,Genetics,Population Genetics,2022,26,160
+GEN,Genetics,Population Genetics,2023,25,258
+GEN,Genetics,Population Genetics,2024,20,123
+GEN,Genetics,Population Genetics,2025,11,221
+GEN,Genetics,SNPs,1982,1,7
+GEN,Genetics,SNPs,2006,1,1
+GEN,Genetics,SNPs,2007,1,1
+GEN,Genetics,SNPs,2011,1,1
+GEN,Genetics,SNPs,2012,3,134
+GEN,Genetics,SNPs,2014,1,2
+GEN,Genetics,SNPs,2015,6,215
+GEN,Genetics,SNPs,2016,9,70
+GEN,Genetics,SNPs,2017,8,167
+GEN,Genetics,SNPs,2018,7,211
+GEN,Genetics,SNPs,2019,17,464
+GEN,Genetics,SNPs,2020,9,491
+GEN,Genetics,SNPs,2021,8,62
+GEN,Genetics,SNPs,2022,16,391
+GEN,Genetics,SNPs,2023,11,339
+GEN,Genetics,SNPs,2024,6,213
+GEN,Genetics,SNPs,2025,9,399
+GEN,Genetics,STRUCTURE,1950,3,46
+GEN,Genetics,STRUCTURE,1951,4,20
+GEN,Genetics,STRUCTURE,1952,7,36
+GEN,Genetics,STRUCTURE,1953,5,17
+GEN,Genetics,STRUCTURE,1955,2,12
+GEN,Genetics,STRUCTURE,1957,4,61
+GEN,Genetics,STRUCTURE,1958,3,7
+GEN,Genetics,STRUCTURE,1959,8,20
+GEN,Genetics,STRUCTURE,1960,4,154
+GEN,Genetics,STRUCTURE,1961,7,103
+GEN,Genetics,STRUCTURE,1962,8,63
+GEN,Genetics,STRUCTURE,1963,13,124
+GEN,Genetics,STRUCTURE,1964,9,40
+GEN,Genetics,STRUCTURE,1965,9,33
+GEN,Genetics,STRUCTURE,1966,19,130
+GEN,Genetics,STRUCTURE,1967,17,131
+GEN,Genetics,STRUCTURE,1968,16,154
+GEN,Genetics,STRUCTURE,1969,20,87
+GEN,Genetics,STRUCTURE,1970,20,89
+GEN,Genetics,STRUCTURE,1971,16,64
+GEN,Genetics,STRUCTURE,1972,32,151
+GEN,Genetics,STRUCTURE,1973,21,86
+GEN,Genetics,STRUCTURE,1974,30,122
+GEN,Genetics,STRUCTURE,1975,23,89
+GEN,Genetics,STRUCTURE,1976,22,105
+GEN,Genetics,STRUCTURE,1977,26,165
+GEN,Genetics,STRUCTURE,1978,36,193
+GEN,Genetics,STRUCTURE,1979,20,132
+GEN,Genetics,STRUCTURE,1980,43,335
+GEN,Genetics,STRUCTURE,1981,33,199
+GEN,Genetics,STRUCTURE,1982,33,437
+GEN,Genetics,STRUCTURE,1983,52,299
+GEN,Genetics,STRUCTURE,1984,40,217
+GEN,Genetics,STRUCTURE,1985,56,287
+GEN,Genetics,STRUCTURE,1986,44,263
+GEN,Genetics,STRUCTURE,1987,49,212
+GEN,Genetics,STRUCTURE,1988,46,387
+GEN,Genetics,STRUCTURE,1989,46,258
+GEN,Genetics,STRUCTURE,1990,58,369
+GEN,Genetics,STRUCTURE,1991,56,335
+GEN,Genetics,STRUCTURE,1992,64,524
+GEN,Genetics,STRUCTURE,1993,69,337
+GEN,Genetics,STRUCTURE,1994,50,261
+GEN,Genetics,STRUCTURE,1995,55,225
+GEN,Genetics,STRUCTURE,1996,52,357
+GEN,Genetics,STRUCTURE,1997,53,411
+GEN,Genetics,STRUCTURE,1998,76,452
+GEN,Genetics,STRUCTURE,1999,59,459
+GEN,Genetics,STRUCTURE,2000,62,569
+GEN,Genetics,STRUCTURE,2001,86,525
+GEN,Genetics,STRUCTURE,2002,105,704
+GEN,Genetics,STRUCTURE,2003,83,429
+GEN,Genetics,STRUCTURE,2004,76,509
+GEN,Genetics,STRUCTURE,2005,123,1016
+GEN,Genetics,STRUCTURE,2006,133,1366
+GEN,Genetics,STRUCTURE,2007,180,1354
+GEN,Genetics,STRUCTURE,2008,148,1315
+GEN,Genetics,STRUCTURE,2009,234,2521
+GEN,Genetics,STRUCTURE,2010,234,2145
+GEN,Genetics,STRUCTURE,2011,265,2900
+GEN,Genetics,STRUCTURE,2012,317,4800
+GEN,Genetics,STRUCTURE,2013,295,3378
+GEN,Genetics,STRUCTURE,2014,306,4229
+GEN,Genetics,STRUCTURE,2015,355,5757
+GEN,Genetics,STRUCTURE,2016,372,4089
+GEN,Genetics,STRUCTURE,2017,371,4965
+GEN,Genetics,STRUCTURE,2018,361,4990
+GEN,Genetics,STRUCTURE,2019,372,6607
+GEN,Genetics,STRUCTURE,2020,419,5946
+GEN,Genetics,STRUCTURE,2021,329,5698
+GEN,Genetics,STRUCTURE,2022,322,5238
+GEN,Genetics,STRUCTURE,2023,206,4269
+GEN,Genetics,STRUCTURE,2024,195,3545
+GEN,Genetics,STRUCTURE,2025,142,3356
+GEN,Genetics,Transcriptomics,2009,1,1
+GEN,Genetics,Transcriptomics,2010,2,6
+GEN,Genetics,Transcriptomics,2011,4,10
+GEN,Genetics,Transcriptomics,2012,1,2
+GEN,Genetics,Transcriptomics,2014,1,1
+GEN,Genetics,Transcriptomics,2015,1,4
+GEN,Genetics,Transcriptomics,2017,3,22
+GEN,Genetics,Transcriptomics,2018,4,9
+GEN,Genetics,Transcriptomics,2019,5,23
+GEN,Genetics,Transcriptomics,2020,3,10
+GEN,Genetics,Transcriptomics,2021,6,26
+GEN,Genetics,Transcriptomics,2022,4,10
+GEN,Genetics,Transcriptomics,2023,4,82
+GEN,Genetics,Transcriptomics,2024,5,9
+GEN,Genetics,Transcriptomics,2025,1,2
+GEN,Genetics,Whole Genome Sequencing,2004,1,1
+GEN,Genetics,Whole Genome Sequencing,2008,2,2
+GEN,Genetics,Whole Genome Sequencing,2015,2,4
+GEN,Genetics,Whole Genome Sequencing,2018,2,5
+GEN,Genetics,Whole Genome Sequencing,2019,1,4
+GEN,Genetics,Whole Genome Sequencing,2020,3,10
+GEN,Genetics,Whole Genome Sequencing,2021,4,11
+GEN,Genetics,Whole Genome Sequencing,2022,2,18
+GEN,Genetics,Whole Genome Sequencing,2023,1,6
+GEN,Genetics,Whole Genome Sequencing,2024,1,1
+GEN,Genetics,Whole Genome Sequencing,2025,2,13
+GEN,Genetics,eDNA,1965,1,1
+GEN,Genetics,eDNA,1987,1,1
+GEN,Genetics,eDNA,1989,1,4
+GEN,Genetics,eDNA,1991,1,3
+GEN,Genetics,eDNA,1994,1,2
+GEN,Genetics,eDNA,1995,1,1
+GEN,Genetics,eDNA,1996,2,4
+GEN,Genetics,eDNA,1998,1,2
+GEN,Genetics,eDNA,2002,1,3
+GEN,Genetics,eDNA,2010,1,3
+GEN,Genetics,eDNA,2014,1,6
+GEN,Genetics,eDNA,2016,3,534
+GEN,Genetics,eDNA,2017,7,317
+GEN,Genetics,eDNA,2018,2,4
+GEN,Genetics,eDNA,2019,13,531
+GEN,Genetics,eDNA,2020,8,683
+GEN,Genetics,eDNA,2021,12,1563
+GEN,Genetics,eDNA,2022,15,819
+GEN,Genetics,eDNA,2023,10,297
+GEN,Genetics,eDNA,2024,16,740
+GEN,Genetics,eDNA,2025,12,393
+GEN,Genetics,eDNA Metabarcoding,2016,1,15
+GEN,Genetics,eDNA Metabarcoding,2017,1,52
+GEN,Genetics,eDNA Metabarcoding,2019,3,27
+GEN,Genetics,eDNA Metabarcoding,2020,3,96
+GEN,Genetics,eDNA Metabarcoding,2021,4,182
+GEN,Genetics,eDNA Metabarcoding,2022,6,189
+GEN,Genetics,eDNA Metabarcoding,2023,5,42
+GEN,Genetics,eDNA Metabarcoding,2024,7,118
+GEN,Genetics,eDNA Metabarcoding,2025,4,36
+GEN,Genetics,mtDNA,1996,1,18
+GEN,Genetics,mtDNA,1997,1,1
+GEN,Genetics,mtDNA,1998,1,46
+GEN,Genetics,mtDNA,2000,1,3
+GEN,Genetics,mtDNA,2001,2,8
+GEN,Genetics,mtDNA,2002,1,9
+GEN,Genetics,mtDNA,2003,3,30
+GEN,Genetics,mtDNA,2004,3,30
+GEN,Genetics,mtDNA,2005,5,54
+GEN,Genetics,mtDNA,2006,7,88
+GEN,Genetics,mtDNA,2007,10,135
+GEN,Genetics,mtDNA,2008,14,160
+GEN,Genetics,mtDNA,2009,13,364
+GEN,Genetics,mtDNA,2010,18,293
+GEN,Genetics,mtDNA,2011,22,637
+GEN,Genetics,mtDNA,2012,22,988
+GEN,Genetics,mtDNA,2013,19,192
+GEN,Genetics,mtDNA,2014,17,513
+GEN,Genetics,mtDNA,2015,32,1337
+GEN,Genetics,mtDNA,2016,34,624
+GEN,Genetics,mtDNA,2017,20,440
+GEN,Genetics,mtDNA,2018,22,920
+GEN,Genetics,mtDNA,2019,35,1016
+GEN,Genetics,mtDNA,2020,27,361
+GEN,Genetics,mtDNA,2021,24,565
+GEN,Genetics,mtDNA,2022,28,431
+GEN,Genetics,mtDNA,2023,12,226
+GEN,Genetics,mtDNA,2024,22,333
+GEN,Genetics,mtDNA,2025,11,159
+MOV,Movement,AKDE,2022,1,8
+MOV,Movement,AKDE,2025,1,10
+MOV,Movement,Brownian Bridge,2014,1,30
+MOV,Movement,Brownian Bridge,2018,1,5
+MOV,Movement,Brownian Bridge,2020,3,31
+MOV,Movement,Brownian Bridge,2021,3,33
+MOV,Movement,Brownian Bridge,2022,5,56
+MOV,Movement,Brownian Bridge,2023,2,20
+MOV,Movement,Brownian Bridge,2024,3,69
+MOV,Movement,Brownian Bridge,2025,1,24
+MOV,Movement,Brownian Bridge Movement Model,2014,1,18
+MOV,Movement,Brownian Bridge Movement Model,2018,1,5
+MOV,Movement,Brownian Bridge Movement Model,2020,1,5
+MOV,Movement,Brownian Bridge Movement Model,2022,4,27
+MOV,Movement,Brownian Bridge Movement Model,2023,1,5
+MOV,Movement,Brownian Bridge Movement Model,2024,2,18
+MOV,Movement,Brownian Bridge Movement Model,2025,1,12
+MOV,Movement,Connectivity,1980,1,1
+MOV,Movement,Connectivity,1982,3,61
+MOV,Movement,Connectivity,1983,3,5
+MOV,Movement,Connectivity,1984,1,10
+MOV,Movement,Connectivity,1985,1,2
+MOV,Movement,Connectivity,1987,1,2
+MOV,Movement,Connectivity,1988,3,8
+MOV,Movement,Connectivity,1990,1,4
+MOV,Movement,Connectivity,1991,2,8
+MOV,Movement,Connectivity,1992,1,2
+MOV,Movement,Connectivity,1993,2,4
+MOV,Movement,Connectivity,1994,2,10
+MOV,Movement,Connectivity,1995,1,2
+MOV,Movement,Connectivity,1996,3,23
+MOV,Movement,Connectivity,1997,1,1
+MOV,Movement,Connectivity,1998,1,2
+MOV,Movement,Connectivity,1999,1,6
+MOV,Movement,Connectivity,2001,2,4
+MOV,Movement,Connectivity,2003,1,10
+MOV,Movement,Connectivity,2005,2,6
+MOV,Movement,Connectivity,2006,6,23
+MOV,Movement,Connectivity,2007,9,45
+MOV,Movement,Connectivity,2008,10,42
+MOV,Movement,Connectivity,2009,16,89
+MOV,Movement,Connectivity,2010,23,209
+MOV,Movement,Connectivity,2011,34,236
+MOV,Movement,Connectivity,2012,31,440
+MOV,Movement,Connectivity,2013,33,293
+MOV,Movement,Connectivity,2014,44,698
+MOV,Movement,Connectivity,2015,57,833
+MOV,Movement,Connectivity,2016,47,433
+MOV,Movement,Connectivity,2017,70,567
+MOV,Movement,Connectivity,2018,73,1057
+MOV,Movement,Connectivity,2019,86,1049
+MOV,Movement,Connectivity,2020,107,1121
+MOV,Movement,Connectivity,2021,91,1034
+MOV,Movement,Connectivity,2022,113,1275
+MOV,Movement,Connectivity,2023,70,1193
+MOV,Movement,Connectivity,2024,67,915
+MOV,Movement,Connectivity,2025,47,817
+MOV,Movement,Critical Habitat,1998,1,3
+MOV,Movement,Critical Habitat,2001,1,4
+MOV,Movement,Critical Habitat,2004,1,3
+MOV,Movement,Critical Habitat,2005,2,10
+MOV,Movement,Critical Habitat,2006,2,25
+MOV,Movement,Critical Habitat,2007,2,14
+MOV,Movement,Critical Habitat,2008,4,12
+MOV,Movement,Critical Habitat,2009,5,15
+MOV,Movement,Critical Habitat,2010,7,64
+MOV,Movement,Critical Habitat,2011,10,60
+MOV,Movement,Critical Habitat,2012,11,50
+MOV,Movement,Critical Habitat,2013,11,143
+MOV,Movement,Critical Habitat,2014,9,92
+MOV,Movement,Critical Habitat,2015,17,70
+MOV,Movement,Critical Habitat,2016,10,66
+MOV,Movement,Critical Habitat,2017,14,103
+MOV,Movement,Critical Habitat,2018,11,115
+MOV,Movement,Critical Habitat,2019,18,133
+MOV,Movement,Critical Habitat,2020,20,111
+MOV,Movement,Critical Habitat,2021,22,131
+MOV,Movement,Critical Habitat,2022,24,106
+MOV,Movement,Critical Habitat,2023,12,48
+MOV,Movement,Critical Habitat,2024,16,82
+MOV,Movement,Critical Habitat,2025,8,63
+MOV,Movement,Ensemble Models,2016,1,2
+MOV,Movement,Ensemble Models,2022,5,25
+MOV,Movement,Ensemble Models,2024,2,15
+MOV,Movement,Habitat Modeling,1982,1,8
+MOV,Movement,Habitat Modeling,2012,1,8
+MOV,Movement,Habitat Modeling,2013,2,14
+MOV,Movement,Habitat Modeling,2014,2,22
+MOV,Movement,Habitat Modeling,2015,3,9
+MOV,Movement,Habitat Modeling,2016,1,8
+MOV,Movement,Habitat Modeling,2017,4,15
+MOV,Movement,Habitat Modeling,2018,1,8
+MOV,Movement,Habitat Modeling,2019,3,15
+MOV,Movement,Habitat Modeling,2020,3,28
+MOV,Movement,Habitat Modeling,2021,1,4
+MOV,Movement,Habitat Modeling,2022,6,31
+MOV,Movement,Habitat Modeling,2025,1,4
+MOV,Movement,Hidden Markov Models,2011,1,3
+MOV,Movement,Hidden Markov Models,2015,1,3
+MOV,Movement,Hidden Markov Models,2016,3,62
+MOV,Movement,Hidden Markov Models,2017,1,3
+MOV,Movement,Hidden Markov Models,2018,4,50
+MOV,Movement,Hidden Markov Models,2019,4,20
+MOV,Movement,Hidden Markov Models,2020,2,45
+MOV,Movement,Hidden Markov Models,2021,2,44
+MOV,Movement,Hidden Markov Models,2022,11,169
+MOV,Movement,Hidden Markov Models,2023,3,50
+MOV,Movement,Hidden Markov Models,2024,2,8
+MOV,Movement,Hidden Markov Models,2025,1,5
+MOV,Movement,Home Range Analysis,2003,2,4
+MOV,Movement,Home Range Analysis,2005,1,4
+MOV,Movement,Home Range Analysis,2010,1,1
+MOV,Movement,Home Range Analysis,2013,1,3
+MOV,Movement,Home Range Analysis,2014,3,11
+MOV,Movement,Home Range Analysis,2015,1,2
+MOV,Movement,Home Range Analysis,2016,2,8
+MOV,Movement,Home Range Analysis,2020,1,4
+MOV,Movement,Home Range Analysis,2021,1,5
+MOV,Movement,Home Range Analysis,2022,1,4
+MOV,Movement,Joint Species Distribution Model,2017,1,4
+MOV,Movement,Joint Species Distribution Model,2022,1,3
+MOV,Movement,Kernel Density Estimation,2012,2,6
+MOV,Movement,Kernel Density Estimation,2013,2,9
+MOV,Movement,Kernel Density Estimation,2015,4,33
+MOV,Movement,Kernel Density Estimation,2017,3,29
+MOV,Movement,Kernel Density Estimation,2018,4,28
+MOV,Movement,Kernel Density Estimation,2019,2,12
+MOV,Movement,Kernel Density Estimation,2020,3,36
+MOV,Movement,Kernel Density Estimation,2021,7,29
+MOV,Movement,Kernel Density Estimation,2022,4,24
+MOV,Movement,Kernel Density Estimation,2023,2,6
+MOV,Movement,Kernel Density Estimation,2024,4,17
+MOV,Movement,Kernel Density Estimation,2025,6,30
+MOV,Movement,MPA Design,2005,1,2
+MOV,Movement,MPA Design,2006,1,3
+MOV,Movement,MPA Design,2009,1,4
+MOV,Movement,MPA Design,2012,2,14
+MOV,Movement,MPA Design,2013,1,3
+MOV,Movement,MPA Design,2015,4,17
+MOV,Movement,MPA Design,2016,1,12
+MOV,Movement,MPA Design,2017,3,29
+MOV,Movement,MPA Design,2018,1,3
+MOV,Movement,MPA Design,2019,2,8
+MOV,Movement,MPA Design,2020,4,15
+MOV,Movement,MPA Design,2021,5,21
+MOV,Movement,MPA Design,2022,3,61
+MOV,Movement,MPA Design,2023,3,13
+MOV,Movement,MPA Design,2024,1,5
+MOV,Movement,Marxan,2010,1,4
+MOV,Movement,Marxan,2012,2,8
+MOV,Movement,Marxan,2015,2,48
+MOV,Movement,Marxan,2017,4,28
+MOV,Movement,Marxan,2019,1,104
+MOV,Movement,Marxan,2020,2,97
+MOV,Movement,Marxan,2022,2,105
+MOV,Movement,MaxEnt,2012,3,145
+MOV,Movement,MaxEnt,2013,1,12
+MOV,Movement,MaxEnt,2014,2,52
+MOV,Movement,MaxEnt,2015,4,100
+MOV,Movement,MaxEnt,2017,4,98
+MOV,Movement,MaxEnt,2019,1,4
+MOV,Movement,MaxEnt,2020,15,441
+MOV,Movement,MaxEnt,2021,3,168
+MOV,Movement,MaxEnt,2022,6,155
+MOV,Movement,MaxEnt,2023,2,44
+MOV,Movement,MaxEnt,2024,2,32
+MOV,Movement,MaxEnt,2025,3,88
+MOV,Movement,Mean-position algorithm,2008,1,3
+MOV,Movement,Mean-position algorithm,2011,1,2
+MOV,Movement,Mean-position algorithm,2013,1,3
+MOV,Movement,Mean-position algorithm,2017,1,3
+MOV,Movement,Minimum Convex Polygon,2002,1,12
+MOV,Movement,Minimum Convex Polygon,2003,1,2
+MOV,Movement,Minimum Convex Polygon,2004,1,4
+MOV,Movement,Minimum Convex Polygon,2005,4,37
+MOV,Movement,Minimum Convex Polygon,2007,2,6
+MOV,Movement,Minimum Convex Polygon,2008,1,6
+MOV,Movement,Minimum Convex Polygon,2009,1,4
+MOV,Movement,Minimum Convex Polygon,2010,1,3
+MOV,Movement,Minimum Convex Polygon,2011,2,8
+MOV,Movement,Minimum Convex Polygon,2012,2,22
+MOV,Movement,Minimum Convex Polygon,2013,2,6
+MOV,Movement,Minimum Convex Polygon,2014,1,3
+MOV,Movement,Minimum Convex Polygon,2015,1,12
+MOV,Movement,Minimum Convex Polygon,2016,3,13
+MOV,Movement,Minimum Convex Polygon,2017,2,11
+MOV,Movement,Minimum Convex Polygon,2018,3,16
+MOV,Movement,Minimum Convex Polygon,2019,1,4
+MOV,Movement,Minimum Convex Polygon,2020,2,13
+MOV,Movement,Minimum Convex Polygon,2021,1,4
+MOV,Movement,Minimum Convex Polygon,2022,2,8
+MOV,Movement,Movement Modeling,2016,2,8
+MOV,Movement,Movement Modeling,2017,2,10
+MOV,Movement,Movement Modeling,2018,1,4
+MOV,Movement,Movement Modeling,2019,1,4
+MOV,Movement,Movement Modeling,2020,1,3
+MOV,Movement,Movement Modeling,2025,2,10
+MOV,Movement,Network Analysis,1982,1,28
+MOV,Movement,Network Analysis,2007,1,16
+MOV,Movement,Network Analysis,2008,2,10
+MOV,Movement,Network Analysis,2009,1,6
+MOV,Movement,Network Analysis,2010,3,51
+MOV,Movement,Network Analysis,2011,2,7
+MOV,Movement,Network Analysis,2012,4,118
+MOV,Movement,Network Analysis,2013,1,36
+MOV,Movement,Network Analysis,2014,3,98
+MOV,Movement,Network Analysis,2015,8,155
+MOV,Movement,Network Analysis,2016,6,94
+MOV,Movement,Network Analysis,2017,10,102
+MOV,Movement,Network Analysis,2018,19,119
+MOV,Movement,Network Analysis,2019,17,197
+MOV,Movement,Network Analysis,2020,14,78
+MOV,Movement,Network Analysis,2021,17,233
+MOV,Movement,Network Analysis,2022,8,120
+MOV,Movement,Network Analysis,2023,21,210
+MOV,Movement,Network Analysis,2024,12,173
+MOV,Movement,Network Analysis,2025,10,60
+MOV,Movement,Refined shortest paths,2022,1,4
+MOV,Movement,Refined shortest paths,2024,1,4
+MOV,Movement,Residence Indices,2016,1,32
+MOV,Movement,Residence Indices,2017,1,9
+MOV,Movement,Residence Indices,2022,1,3
+MOV,Movement,Resource Selection Functions,2021,1,9
+MOV,Movement,Resource Selection Functions,2022,2,14
+MOV,Movement,Resource Selection Functions,2024,1,4
+MOV,Movement,Spatial Prioritization,2017,1,12
+MOV,Movement,Spatial Prioritization,2019,1,8
+MOV,Movement,Spatial Prioritization,2020,1,12
+MOV,Movement,Spatial Prioritization,2022,2,19
+MOV,Movement,Species Distribution Model,2009,1,4
+MOV,Movement,Species Distribution Model,2015,2,6
+MOV,Movement,Species Distribution Model,2016,1,4
+MOV,Movement,Species Distribution Model,2017,2,8
+MOV,Movement,Species Distribution Model,2020,3,15
+MOV,Movement,Species Distribution Model,2021,2,12
+MOV,Movement,Species Distribution Model,2022,8,48
+MOV,Movement,Species Distribution Model,2023,2,15
+MOV,Movement,Species Distribution Model,2024,1,3
+MOV,Movement,Species Distribution Model,2025,4,25
+MOV,Movement,State-Space Models,2008,1,4
+MOV,Movement,State-Space Models,2009,2,8
+MOV,Movement,State-Space Models,2010,1,4
+MOV,Movement,State-Space Models,2011,2,11
+MOV,Movement,State-Space Models,2012,1,4
+MOV,Movement,State-Space Models,2013,3,19
+MOV,Movement,State-Space Models,2014,3,16
+MOV,Movement,State-Space Models,2015,3,17
+MOV,Movement,State-Space Models,2016,2,8
+MOV,Movement,State-Space Models,2017,3,24
+MOV,Movement,State-Space Models,2018,3,11
+MOV,Movement,State-Space Models,2019,6,40
+MOV,Movement,State-Space Models,2020,2,12
+MOV,Movement,State-Space Models,2021,2,12
+MOV,Movement,State-Space Models,2022,1,4
+MOV,Movement,State-Space Models,2023,1,4
+MOV,Movement,State-Space Models,2024,1,4
+MOV,Movement,State-Space Models,2025,4,23
+TRO,Trophic Ecology,DNA Metabarcoding,2016,1,15
+TRO,Trophic Ecology,DNA Metabarcoding,2017,2,34
+TRO,Trophic Ecology,DNA Metabarcoding,2018,1,2
+TRO,Trophic Ecology,DNA Metabarcoding,2019,2,80
+TRO,Trophic Ecology,DNA Metabarcoding,2020,5,54
+TRO,Trophic Ecology,DNA Metabarcoding,2021,6,89
+TRO,Trophic Ecology,DNA Metabarcoding,2022,6,74
+TRO,Trophic Ecology,DNA Metabarcoding,2023,5,32
+TRO,Trophic Ecology,DNA Metabarcoding,2024,11,78
+TRO,Trophic Ecology,DNA Metabarcoding,2025,5,21
+TRO,Trophic Ecology,Diet Analysis,1980,1,8
+TRO,Trophic Ecology,Diet Analysis,1990,1,3
+TRO,Trophic Ecology,Diet Analysis,1992,1,3
+TRO,Trophic Ecology,Diet Analysis,1997,2,9
+TRO,Trophic Ecology,Diet Analysis,2000,2,6
+TRO,Trophic Ecology,Diet Analysis,2002,4,13
+TRO,Trophic Ecology,Diet Analysis,2003,1,3
+TRO,Trophic Ecology,Diet Analysis,2004,2,5
+TRO,Trophic Ecology,Diet Analysis,2005,2,6
+TRO,Trophic Ecology,Diet Analysis,2006,1,14
+TRO,Trophic Ecology,Diet Analysis,2007,6,26
+TRO,Trophic Ecology,Diet Analysis,2008,1,3
+TRO,Trophic Ecology,Diet Analysis,2009,5,18
+TRO,Trophic Ecology,Diet Analysis,2010,7,19
+TRO,Trophic Ecology,Diet Analysis,2011,5,24
+TRO,Trophic Ecology,Diet Analysis,2012,9,50
+TRO,Trophic Ecology,Diet Analysis,2013,13,59
+TRO,Trophic Ecology,Diet Analysis,2014,5,26
+TRO,Trophic Ecology,Diet Analysis,2015,5,16
+TRO,Trophic Ecology,Diet Analysis,2016,4,26
+TRO,Trophic Ecology,Diet Analysis,2017,10,40
+TRO,Trophic Ecology,Diet Analysis,2018,10,44
+TRO,Trophic Ecology,Diet Analysis,2019,8,27
+TRO,Trophic Ecology,Diet Analysis,2020,7,26
+TRO,Trophic Ecology,Diet Analysis,2021,8,42
+TRO,Trophic Ecology,Diet Analysis,2022,5,18
+TRO,Trophic Ecology,Diet Analysis,2023,5,17
+TRO,Trophic Ecology,Diet Analysis,2024,3,12
+TRO,Trophic Ecology,Diet Analysis,2025,1,4
+TRO,Trophic Ecology,Dynamic Energy Budget,2017,1,12
+TRO,Trophic Ecology,Dynamic Energy Budget,2019,1,4
+TRO,Trophic Ecology,Dynamic Energy Budget,2020,3,17
+TRO,Trophic Ecology,Dynamic Energy Budget,2022,1,4
+TRO,Trophic Ecology,Ecosystem Roles,2004,1,6
+TRO,Trophic Ecology,Ecosystem Roles,2009,1,20
+TRO,Trophic Ecology,Ecosystem Roles,2012,1,6
+TRO,Trophic Ecology,Ecosystem Roles,2013,1,3
+TRO,Trophic Ecology,Ecosystem Roles,2017,1,3
+TRO,Trophic Ecology,Ecosystem Roles,2021,1,3
+TRO,Trophic Ecology,Ecosystem Roles,2022,1,4
+TRO,Trophic Ecology,Ecosystem Roles,2023,1,5
+TRO,Trophic Ecology,Ecosystem Roles,2024,1,4
+TRO,Trophic Ecology,Energy Flow,1980,1,3
+TRO,Trophic Ecology,Energy Flow,1987,1,4
+TRO,Trophic Ecology,Energy Flow,1990,1,9
+TRO,Trophic Ecology,Energy Flow,1994,1,3
+TRO,Trophic Ecology,Energy Flow,1996,1,3
+TRO,Trophic Ecology,Energy Flow,2002,1,4
+TRO,Trophic Ecology,Energy Flow,2006,1,2
+TRO,Trophic Ecology,Energy Flow,2007,2,13
+TRO,Trophic Ecology,Energy Flow,2010,1,3
+TRO,Trophic Ecology,Energy Flow,2011,3,13
+TRO,Trophic Ecology,Energy Flow,2012,3,18
+TRO,Trophic Ecology,Energy Flow,2013,2,9
+TRO,Trophic Ecology,Energy Flow,2014,5,24
+TRO,Trophic Ecology,Energy Flow,2015,2,7
+TRO,Trophic Ecology,Energy Flow,2016,3,14
+TRO,Trophic Ecology,Energy Flow,2017,4,32
+TRO,Trophic Ecology,Energy Flow,2018,3,21
+TRO,Trophic Ecology,Energy Flow,2019,3,9
+TRO,Trophic Ecology,Energy Flow,2020,3,13
+TRO,Trophic Ecology,Energy Flow,2021,2,12
+TRO,Trophic Ecology,Energy Flow,2022,5,32
+TRO,Trophic Ecology,Energy Flow,2023,5,23
+TRO,Trophic Ecology,Energy Flow,2024,4,22
+TRO,Trophic Ecology,Energy Flow,2025,4,16
+TRO,Trophic Ecology,Fatty Acid Analysis,1973,1,3
+TRO,Trophic Ecology,Fatty Acid Analysis,1982,1,14
+TRO,Trophic Ecology,Fatty Acid Analysis,1984,1,1
+TRO,Trophic Ecology,Fatty Acid Analysis,1991,1,2
+TRO,Trophic Ecology,Fatty Acid Analysis,1997,1,4
+TRO,Trophic Ecology,Fatty Acid Analysis,2000,1,1
+TRO,Trophic Ecology,Fatty Acid Analysis,2003,1,2
+TRO,Trophic Ecology,Fatty Acid Analysis,2004,2,3
+TRO,Trophic Ecology,Fatty Acid Analysis,2007,1,2
+TRO,Trophic Ecology,Fatty Acid Analysis,2011,1,3
+TRO,Trophic Ecology,Fatty Acid Analysis,2012,4,8
+TRO,Trophic Ecology,Fatty Acid Analysis,2013,3,14
+TRO,Trophic Ecology,Fatty Acid Analysis,2014,4,12
+TRO,Trophic Ecology,Fatty Acid Analysis,2015,1,9
+TRO,Trophic Ecology,Fatty Acid Analysis,2016,4,12
+TRO,Trophic Ecology,Fatty Acid Analysis,2017,1,2
+TRO,Trophic Ecology,Fatty Acid Analysis,2018,4,23
+TRO,Trophic Ecology,Fatty Acid Analysis,2019,5,24
+TRO,Trophic Ecology,Fatty Acid Analysis,2020,3,17
+TRO,Trophic Ecology,Fatty Acid Analysis,2021,7,40
+TRO,Trophic Ecology,Fatty Acid Analysis,2022,2,20
+TRO,Trophic Ecology,Fatty Acid Analysis,2023,4,12
+TRO,Trophic Ecology,Fatty Acid Analysis,2024,2,28
+TRO,Trophic Ecology,Fatty Acid Analysis,2025,1,5
+TRO,Trophic Ecology,Food Web Models,2007,1,3
+TRO,Trophic Ecology,Food Web Models,2008,2,11
+TRO,Trophic Ecology,Food Web Models,2010,1,6
+TRO,Trophic Ecology,Food Web Models,2011,2,11
+TRO,Trophic Ecology,Food Web Models,2012,3,19
+TRO,Trophic Ecology,Food Web Models,2013,8,55
+TRO,Trophic Ecology,Food Web Models,2014,6,55
+TRO,Trophic Ecology,Food Web Models,2015,6,22
+TRO,Trophic Ecology,Food Web Models,2016,5,30
+TRO,Trophic Ecology,Food Web Models,2017,6,36
+TRO,Trophic Ecology,Food Web Models,2018,9,35
+TRO,Trophic Ecology,Food Web Models,2019,6,26
+TRO,Trophic Ecology,Food Web Models,2020,8,37
+TRO,Trophic Ecology,Food Web Models,2021,5,57
+TRO,Trophic Ecology,Food Web Models,2022,5,20
+TRO,Trophic Ecology,Food Web Models,2023,5,19
+TRO,Trophic Ecology,Food Web Models,2024,2,6
+TRO,Trophic Ecology,Foraging Behavior,1982,1,7
+TRO,Trophic Ecology,Foraging Behavior,1993,1,5
+TRO,Trophic Ecology,Foraging Behavior,1996,2,4
+TRO,Trophic Ecology,Foraging Behavior,2001,4,12
+TRO,Trophic Ecology,Foraging Behavior,2002,4,9
+TRO,Trophic Ecology,Foraging Behavior,2003,1,4
+TRO,Trophic Ecology,Foraging Behavior,2004,1,1
+TRO,Trophic Ecology,Foraging Behavior,2005,3,7
+TRO,Trophic Ecology,Foraging Behavior,2006,8,18
+TRO,Trophic Ecology,Foraging Behavior,2007,9,53
+TRO,Trophic Ecology,Foraging Behavior,2008,6,16
+TRO,Trophic Ecology,Foraging Behavior,2009,3,19
+TRO,Trophic Ecology,Foraging Behavior,2010,8,53
+TRO,Trophic Ecology,Foraging Behavior,2011,16,84
+TRO,Trophic Ecology,Foraging Behavior,2012,14,67
+TRO,Trophic Ecology,Foraging Behavior,2013,11,76
+TRO,Trophic Ecology,Foraging Behavior,2014,19,62
+TRO,Trophic Ecology,Foraging Behavior,2015,16,56
+TRO,Trophic Ecology,Foraging Behavior,2016,16,85
+TRO,Trophic Ecology,Foraging Behavior,2017,26,125
+TRO,Trophic Ecology,Foraging Behavior,2018,14,73
+TRO,Trophic Ecology,Foraging Behavior,2019,26,202
+TRO,Trophic Ecology,Foraging Behavior,2020,26,127
+TRO,Trophic Ecology,Foraging Behavior,2021,26,164
+TRO,Trophic Ecology,Foraging Behavior,2022,36,275
+TRO,Trophic Ecology,Foraging Behavior,2023,12,61
+TRO,Trophic Ecology,Foraging Behavior,2024,15,68
+TRO,Trophic Ecology,Foraging Behavior,2025,20,140
+TRO,Trophic Ecology,IsoSpace,2020,1,4
+TRO,Trophic Ecology,IsoSpace,2024,2,12
+TRO,Trophic Ecology,NMDS,2004,1,9
+TRO,Trophic Ecology,NMDS,2006,2,5
+TRO,Trophic Ecology,NMDS,2008,2,45
+TRO,Trophic Ecology,NMDS,2009,5,63
+TRO,Trophic Ecology,NMDS,2010,5,31
+TRO,Trophic Ecology,NMDS,2011,5,82
+TRO,Trophic Ecology,NMDS,2012,10,170
+TRO,Trophic Ecology,NMDS,2013,3,27
+TRO,Trophic Ecology,NMDS,2014,5,62
+TRO,Trophic Ecology,NMDS,2015,5,84
+TRO,Trophic Ecology,NMDS,2016,6,100
+TRO,Trophic Ecology,NMDS,2017,7,143
+TRO,Trophic Ecology,NMDS,2018,6,61
+TRO,Trophic Ecology,NMDS,2019,10,115
+TRO,Trophic Ecology,NMDS,2020,13,227
+TRO,Trophic Ecology,NMDS,2021,10,136
+TRO,Trophic Ecology,NMDS,2022,12,157
+TRO,Trophic Ecology,NMDS,2023,5,106
+TRO,Trophic Ecology,NMDS,2024,14,305
+TRO,Trophic Ecology,NMDS,2025,8,167
+TRO,Trophic Ecology,Niche Partitioning,1982,1,8
+TRO,Trophic Ecology,Niche Partitioning,1999,1,2
+TRO,Trophic Ecology,Niche Partitioning,2005,2,16
+TRO,Trophic Ecology,Niche Partitioning,2006,1,2
+TRO,Trophic Ecology,Niche Partitioning,2007,2,11
+TRO,Trophic Ecology,Niche Partitioning,2008,1,4
+TRO,Trophic Ecology,Niche Partitioning,2009,4,21
+TRO,Trophic Ecology,Niche Partitioning,2010,3,10
+TRO,Trophic Ecology,Niche Partitioning,2011,9,46
+TRO,Trophic Ecology,Niche Partitioning,2012,4,18
+TRO,Trophic Ecology,Niche Partitioning,2013,5,32
+TRO,Trophic Ecology,Niche Partitioning,2014,5,26
+TRO,Trophic Ecology,Niche Partitioning,2015,6,24
+TRO,Trophic Ecology,Niche Partitioning,2016,2,9
+TRO,Trophic Ecology,Niche Partitioning,2017,13,65
+TRO,Trophic Ecology,Niche Partitioning,2018,5,23
+TRO,Trophic Ecology,Niche Partitioning,2019,19,116
+TRO,Trophic Ecology,Niche Partitioning,2020,8,43
+TRO,Trophic Ecology,Niche Partitioning,2021,10,50
+TRO,Trophic Ecology,Niche Partitioning,2022,13,89
+TRO,Trophic Ecology,Niche Partitioning,2023,7,46
+TRO,Trophic Ecology,Niche Partitioning,2024,15,202
+TRO,Trophic Ecology,Niche Partitioning,2025,7,142
+TRO,Trophic Ecology,Optimal Foraging Theory,1993,1,3
+TRO,Trophic Ecology,Optimal Foraging Theory,2003,1,4
+TRO,Trophic Ecology,Optimal Foraging Theory,2006,1,4
+TRO,Trophic Ecology,Optimal Foraging Theory,2007,1,2
+TRO,Trophic Ecology,Optimal Foraging Theory,2008,1,9
+TRO,Trophic Ecology,Optimal Foraging Theory,2009,7,22
+TRO,Trophic Ecology,Optimal Foraging Theory,2010,4,17
+TRO,Trophic Ecology,Optimal Foraging Theory,2011,4,14
+TRO,Trophic Ecology,Optimal Foraging Theory,2012,1,3
+TRO,Trophic Ecology,Optimal Foraging Theory,2013,1,1
+TRO,Trophic Ecology,Optimal Foraging Theory,2014,2,9
+TRO,Trophic Ecology,Optimal Foraging Theory,2015,6,18
+TRO,Trophic Ecology,Optimal Foraging Theory,2017,2,8
+TRO,Trophic Ecology,Optimal Foraging Theory,2018,2,9
+TRO,Trophic Ecology,Optimal Foraging Theory,2019,3,14
+TRO,Trophic Ecology,Optimal Foraging Theory,2021,4,17
+TRO,Trophic Ecology,Optimal Foraging Theory,2022,4,19
+TRO,Trophic Ecology,Optimal Foraging Theory,2023,2,17
+TRO,Trophic Ecology,Optimal Foraging Theory,2024,3,12
+TRO,Trophic Ecology,Optimal Foraging Theory,2025,1,4
+TRO,Trophic Ecology,Prey Selection,1985,1,3
+TRO,Trophic Ecology,Prey Selection,1986,1,9
+TRO,Trophic Ecology,Prey Selection,1987,1,4
+TRO,Trophic Ecology,Prey Selection,1989,1,2
+TRO,Trophic Ecology,Prey Selection,1991,1,3
+TRO,Trophic Ecology,Prey Selection,1993,1,10
+TRO,Trophic Ecology,Prey Selection,1996,1,3
+TRO,Trophic Ecology,Prey Selection,1998,1,2
+TRO,Trophic Ecology,Prey Selection,2000,1,18
+TRO,Trophic Ecology,Prey Selection,2001,1,3
+TRO,Trophic Ecology,Prey Selection,2003,4,19
+TRO,Trophic Ecology,Prey Selection,2004,2,5
+TRO,Trophic Ecology,Prey Selection,2005,2,7
+TRO,Trophic Ecology,Prey Selection,2006,2,14
+TRO,Trophic Ecology,Prey Selection,2007,4,12
+TRO,Trophic Ecology,Prey Selection,2008,5,57
+TRO,Trophic Ecology,Prey Selection,2009,9,33
+TRO,Trophic Ecology,Prey Selection,2010,7,23
+TRO,Trophic Ecology,Prey Selection,2011,10,58
+TRO,Trophic Ecology,Prey Selection,2012,11,45
+TRO,Trophic Ecology,Prey Selection,2013,9,29
+TRO,Trophic Ecology,Prey Selection,2014,7,30
+TRO,Trophic Ecology,Prey Selection,2015,9,89
+TRO,Trophic Ecology,Prey Selection,2016,4,17
+TRO,Trophic Ecology,Prey Selection,2017,8,33
+TRO,Trophic Ecology,Prey Selection,2018,9,35
+TRO,Trophic Ecology,Prey Selection,2019,11,91
+TRO,Trophic Ecology,Prey Selection,2020,9,50
+TRO,Trophic Ecology,Prey Selection,2021,9,32
+TRO,Trophic Ecology,Prey Selection,2022,8,32
+TRO,Trophic Ecology,Prey Selection,2023,3,13
+TRO,Trophic Ecology,Prey Selection,2024,2,8
+TRO,Trophic Ecology,Prey Selection,2025,2,8
+TRO,Trophic Ecology,SIAR,2010,1,6
+TRO,Trophic Ecology,SIAR,2011,1,27
+TRO,Trophic Ecology,SIAR,2012,4,54
+TRO,Trophic Ecology,SIAR,2013,2,36
+TRO,Trophic Ecology,SIAR,2014,4,84
+TRO,Trophic Ecology,SIAR,2015,5,28
+TRO,Trophic Ecology,SIAR,2016,3,13
+TRO,Trophic Ecology,SIAR,2017,8,76
+TRO,Trophic Ecology,SIAR,2018,6,113
+TRO,Trophic Ecology,SIAR,2019,7,33
+TRO,Trophic Ecology,SIAR,2020,6,44
+TRO,Trophic Ecology,SIAR,2022,1,8
+TRO,Trophic Ecology,SIAR,2024,2,12
+TRO,Trophic Ecology,Stable Isotope Analysis,1982,2,36
+TRO,Trophic Ecology,Stable Isotope Analysis,2003,1,9
+TRO,Trophic Ecology,Stable Isotope Analysis,2004,1,4
+TRO,Trophic Ecology,Stable Isotope Analysis,2005,3,40
+TRO,Trophic Ecology,Stable Isotope Analysis,2006,1,4
+TRO,Trophic Ecology,Stable Isotope Analysis,2007,2,4
+TRO,Trophic Ecology,Stable Isotope Analysis,2008,2,13
+TRO,Trophic Ecology,Stable Isotope Analysis,2009,4,14
+TRO,Trophic Ecology,Stable Isotope Analysis,2010,7,48
+TRO,Trophic Ecology,Stable Isotope Analysis,2011,19,241
+TRO,Trophic Ecology,Stable Isotope Analysis,2012,25,484
+TRO,Trophic Ecology,Stable Isotope Analysis,2013,20,168
+TRO,Trophic Ecology,Stable Isotope Analysis,2014,26,267
+TRO,Trophic Ecology,Stable Isotope Analysis,2015,32,298
+TRO,Trophic Ecology,Stable Isotope Analysis,2016,30,299
+TRO,Trophic Ecology,Stable Isotope Analysis,2017,31,606
+TRO,Trophic Ecology,Stable Isotope Analysis,2018,32,398
+TRO,Trophic Ecology,Stable Isotope Analysis,2019,41,425
+TRO,Trophic Ecology,Stable Isotope Analysis,2020,45,601
+TRO,Trophic Ecology,Stable Isotope Analysis,2021,28,260
+TRO,Trophic Ecology,Stable Isotope Analysis,2022,29,225
+TRO,Trophic Ecology,Stable Isotope Analysis,2023,19,257
+TRO,Trophic Ecology,Stable Isotope Analysis,2024,25,556
+TRO,Trophic Ecology,Stable Isotope Analysis,2025,23,347
+TRO,Trophic Ecology,Stomach Content Analysis,1967,1,2
+TRO,Trophic Ecology,Stomach Content Analysis,1977,1,18
+TRO,Trophic Ecology,Stomach Content Analysis,1978,1,2
+TRO,Trophic Ecology,Stomach Content Analysis,1982,1,16
+TRO,Trophic Ecology,Stomach Content Analysis,1983,1,4
+TRO,Trophic Ecology,Stomach Content Analysis,1984,1,3
+TRO,Trophic Ecology,Stomach Content Analysis,1987,1,1
+TRO,Trophic Ecology,Stomach Content Analysis,1990,1,6
+TRO,Trophic Ecology,Stomach Content Analysis,1991,1,2
+TRO,Trophic Ecology,Stomach Content Analysis,1992,2,4
+TRO,Trophic Ecology,Stomach Content Analysis,1993,1,1
+TRO,Trophic Ecology,Stomach Content Analysis,1994,1,1
+TRO,Trophic Ecology,Stomach Content Analysis,1996,1,1
+TRO,Trophic Ecology,Stomach Content Analysis,1997,2,6
+TRO,Trophic Ecology,Stomach Content Analysis,1998,1,1
+TRO,Trophic Ecology,Stomach Content Analysis,1999,1,2
+TRO,Trophic Ecology,Stomach Content Analysis,2000,1,1
+TRO,Trophic Ecology,Stomach Content Analysis,2001,2,9
+TRO,Trophic Ecology,Stomach Content Analysis,2002,1,2
+TRO,Trophic Ecology,Stomach Content Analysis,2003,1,2
+TRO,Trophic Ecology,Stomach Content Analysis,2004,2,3
+TRO,Trophic Ecology,Stomach Content Analysis,2005,4,42
+TRO,Trophic Ecology,Stomach Content Analysis,2006,2,19
+TRO,Trophic Ecology,Stomach Content Analysis,2007,6,27
+TRO,Trophic Ecology,Stomach Content Analysis,2008,3,20
+TRO,Trophic Ecology,Stomach Content Analysis,2009,3,13
+TRO,Trophic Ecology,Stomach Content Analysis,2010,10,41
+TRO,Trophic Ecology,Stomach Content Analysis,2011,12,142
+TRO,Trophic Ecology,Stomach Content Analysis,2012,18,137
+TRO,Trophic Ecology,Stomach Content Analysis,2013,22,115
+TRO,Trophic Ecology,Stomach Content Analysis,2014,16,112
+TRO,Trophic Ecology,Stomach Content Analysis,2015,13,80
+TRO,Trophic Ecology,Stomach Content Analysis,2016,13,100
+TRO,Trophic Ecology,Stomach Content Analysis,2017,24,187
+TRO,Trophic Ecology,Stomach Content Analysis,2018,17,121
+TRO,Trophic Ecology,Stomach Content Analysis,2019,18,121
+TRO,Trophic Ecology,Stomach Content Analysis,2020,26,237
+TRO,Trophic Ecology,Stomach Content Analysis,2021,24,179
+TRO,Trophic Ecology,Stomach Content Analysis,2022,15,79
+TRO,Trophic Ecology,Stomach Content Analysis,2023,11,99
+TRO,Trophic Ecology,Stomach Content Analysis,2024,14,118
+TRO,Trophic Ecology,Stomach Content Analysis,2025,6,32
+TRO,Trophic Ecology,Trophic Level Estimation,2011,1,3
+TRO,Trophic Ecology,Trophic Level Estimation,2017,1,6
+TRO,Trophic Ecology,Trophic Level Estimation,2018,2,8
+TRO,Trophic Ecology,Trophic Level Estimation,2019,1,4
+TRO,Trophic Ecology,Trophic Level Estimation,2020,1,4
+TRO,Trophic Ecology,Trophic Position Calculation,2019,1,3
+TRO,Trophic Ecology,Trophic Position Calculation,2022,1,9
