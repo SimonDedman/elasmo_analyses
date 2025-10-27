@@ -1,7 +1,7 @@
 country,paper_count,author_count,country_mapped
-USA,749,1075,United States of America
+USA,774,1114,United States of America
 Australia,656,842,Australia
-UK,276,338,United Kingdom
+UK,293,352,United Kingdom
 Canada,234,283,Canada
 Italy,114,213,Italy
 Germany,90,103,Germany
@@ -15,9 +15,7 @@ India,44,66,India
 New Zealand,44,50,New Zealand
 Brazil,38,46,Brazil
 Mexico,34,34,Mexico
-United States,27,52,United States of America
 Singapore,21,26,Singapore
-United Kingdom,18,19,United Kingdom
 Philippines,16,20,Philippines
 Malaysia,15,27,Malaysia
 Indonesia,14,17,Indonesia
