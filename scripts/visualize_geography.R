@@ -76,6 +76,14 @@ paper_countries <- paper_authors %>%
 
 cat(sprintf("Paper-country linkages: %s\n", comma(nrow(paper_countries))))
 
+# Standardize country names BEFORE aggregation
+paper_countries <- paper_countries %>%
+  mutate(country = case_when(
+    country == "United States" ~ "USA",
+    country == "United Kingdom" ~ "UK",
+    TRUE ~ country
+  ))
+
 # Aggregate: Papers per country
 papers_per_country <- paper_countries %>%
   group_by(country) %>%
@@ -138,8 +146,34 @@ world_data <- world %>%
 
 cat("\n=== CREATING VISUALIZATION 1: World Map (Papers per Country) ===\n")
 
+# Calculate centroids for country labels (only for countries with data)
+world_data_with_papers <- world_data %>%
+  filter(!is.na(paper_count))
+
+# Get point-on-surface (better than centroid for irregular shapes)
+# This ensures the label point is actually inside the country
+world_label_points <- world_data_with_papers %>%
+  st_point_on_surface() %>%
+  mutate(
+    label = sprintf("%s\n(n=%s)", name, comma(paper_count))
+  )
+
+# Determine which countries to label (all countries with ≥10 papers)
+world_centroids_labeled <- world_label_points %>%
+  filter(paper_count >= 10)
+
+cat(sprintf("Labeling %d countries with ≥10 papers\n", nrow(world_centroids_labeled)))
+
 p1 <- ggplot(world_data) +
   geom_sf(aes(fill = paper_count), color = "white", size = 0.1) +
+  geom_sf_text(
+    data = world_centroids_labeled,
+    aes(label = label),
+    size = 2.5,
+    color = "black",
+    fontface = "bold",
+    check_overlap = TRUE
+  ) +
   scale_fill_viridis(
     option = "plasma",
     name = "Papers",
@@ -152,7 +186,7 @@ p1 <- ggplot(world_data) +
     title = "Global Distribution of Shark Research",
     subtitle = sprintf("Based on %s author affiliations across %d countries",
                       comma(nrow(paper_countries)), nrow(papers_per_country)),
-    caption = "EEA 2025 Data Panel | Log scale"
+    caption = "EEA 2025 Data Panel | Log scale | Countries with ≥10 papers labeled"
   ) +
   theme_minimal(base_size = 12) +
   theme(

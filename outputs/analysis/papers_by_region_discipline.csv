@@ -1,0 +1,49 @@
+region,disciplines,count
+Africa,BEH,8
+Africa,BIO,49
+Africa,CON,15
+Africa,DATA,86
+Africa,FISH,12
+Africa,GEN,65
+Africa,MOV,22
+Africa,TRO,16
+Asia,BEH,7
+Asia,BIO,114
+Asia,CON,40
+Asia,DATA,277
+Asia,FISH,66
+Asia,GEN,224
+Asia,MOV,63
+Asia,TRO,50
+Europe,BEH,56
+Europe,BIO,260
+Europe,CON,97
+Europe,DATA,696
+Europe,FISH,207
+Europe,GEN,560
+Europe,MOV,216
+Europe,TRO,162
+N. America,BEH,60
+N. America,BIO,447
+N. America,CON,122
+N. America,DATA,1044
+N. America,FISH,335
+N. America,GEN,770
+N. America,MOV,273
+N. America,TRO,267
+Oceania,BEH,69
+Oceania,BIO,282
+Oceania,CON,139
+Oceania,DATA,700
+Oceania,FISH,206
+Oceania,GEN,563
+Oceania,MOV,240
+Oceania,TRO,170
+S. America,BEH,6
+S. America,BIO,22
+S. America,CON,9
+S. America,DATA,52
+S. America,FISH,15
+S. America,GEN,44
+S. America,MOV,17
+S. America,TRO,14
