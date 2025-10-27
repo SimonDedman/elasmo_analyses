@@ -2,7 +2,7 @@
 PHASE 2: AUTHOR & AFFILIATION EXTRACTION REPORT
 ================================================================================
 
-Generated: 2025-10-26 22:52:10
+Generated: 2025-10-26 23:12:03
 
 PROCESSING STATISTICS
 --------------------------------------------------------------------------------
@@ -21,18 +21,18 @@ Average authors per paper: 12.9
 INSTITUTION STATISTICS
 --------------------------------------------------------------------------------
 Unique affiliations extracted: 12,105
-Affiliations with country identified: 4,700 (38.8%)
-Unique countries: 25
+Affiliations with country identified: 5,483 (45.3%)
+Unique countries: 73
 
 TOP 10 COUNTRIES BY AFFILIATION COUNT
 --------------------------------------------------------------------------------
 USA                            1385 affiliations
-Australia                      1193 affiliations
-UK                              379 affiliations
-Canada                          334 affiliations
-Italy                           227 affiliations
-China                           160 affiliations
-Japan                           139 affiliations
-South Africa                    115 affiliations
-Portugal                        108 affiliations
-Germany                         107 affiliations
+Australia                      1158 affiliations
+UK                              387 affiliations
+Canada                          339 affiliations
+Italy                           231 affiliations
+China                           158 affiliations
+Japan                           137 affiliations
+Taiwan                          128 affiliations
+South Africa                    113 affiliations
+Portugal                        110 affiliations
