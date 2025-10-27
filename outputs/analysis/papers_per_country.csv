@@ -1,24 +1,72 @@
 country,paper_count,author_count,country_mapped
 USA,774,1114,United States of America
-Australia,656,842,Australia
-UK,293,352,United Kingdom
-Canada,234,283,Canada
-Italy,114,213,Italy
-Germany,90,103,Germany
-Japan,90,131,Japan
-South Africa,86,104,South Africa
-Portugal,75,103,Portugal
-China,71,141,China
-France,68,82,France
-Spain,55,66,Spain
+Australia,644,823,Australia
+UK,298,357,United Kingdom
+Canada,236,285,Canada
+Italy,117,216,Italy
+Germany,90,105,Germany
+Japan,89,130,Japan
+South Africa,84,102,South Africa
+Portugal,77,105,Portugal
+France,71,87,France
+China,70,139,China
+Spain,55,65,Spain
+Taiwan,48,105,Taiwan
 India,44,66,India
-New Zealand,44,50,New Zealand
-Brazil,38,46,Brazil
+New Zealand,43,49,New Zealand
+Panama,43,47,Panama
+Norway,42,48,Norway
+Brazil,39,47,Brazil
+Ireland,35,46,Ireland
 Mexico,34,34,Mexico
+Greece,33,41,Greece
+Sweden,32,35,Sweden
+Netherlands,26,38,Netherlands
+Turkey,25,33,Turkey
+Austria,22,19,Austria
 Singapore,21,26,Singapore
+Switzerland,20,20,Switzerland
+Belgium,18,23,Belgium
+Denmark,18,22,Denmark
 Philippines,16,20,Philippines
 Malaysia,15,27,Malaysia
 Indonesia,14,17,Indonesia
+Israel,14,22,Israel
+Bangladesh,12,21,Bangladesh
+Mozambique,12,10,Mozambique
+Oman,12,13,Oman
 Chile,11,13,Chile
-Thailand,6,9,Thailand
-Argentina,3,3,Argentina
+Croatia,11,13,Croatia
+Finland,11,8,Finland
+Poland,10,16,Poland
+Colombia,9,10,Colombia
+Czech Republic,9,13,Czech Republic
+Ecuador,9,13,Ecuador
+Egypt,9,11,Egypt
+Iceland,9,9,Iceland
+Korea,8,20,Korea
+Saudi Arabia,8,9,Saudi Arabia
+Cyprus,7,11,Cyprus
+Malta,7,8,Malta
+Thailand,7,10,Thailand
+UAE,7,8,UAE
+Slovenia,6,7,Slovenia
+Qatar,5,7,Qatar
+Argentina,4,4,Argentina
+Bulgaria,4,4,Bulgaria
+Peru,4,4,Peru
+Venezuela,4,4,Venezuela
+Fiji,3,3,Fiji
+Kenya,3,6,Kenya
+Costa Rica,2,3,Costa Rica
+Jordan,2,2,Jordan
+Lebanon,2,2,Lebanon
+Monaco,2,1,Monaco
+Seychelles,2,2,Seychelles
+Tanzania,2,2,Tanzania
+Belize,1,1,Belize
+Cambodia,1,1,Cambodia
+Hungary,1,1,Hungary
+Palau,1,1,Palau
+Romania,1,1,Romania
+Slovakia,1,1,Slovakia

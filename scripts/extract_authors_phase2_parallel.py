@@ -190,16 +190,36 @@ def extract_names_from_line(line: str) -> List[str]:
 
 def extract_country_from_affiliation(affiliation: str) -> Optional[str]:
     """Extract country name from affiliation string."""
-    # Common countries in shark research
+    # Comprehensive list of countries (prioritize longer/more specific names first)
     countries = [
-        'USA', 'United States', 'Australia', 'UK', 'United Kingdom',
-        'Canada', 'South Africa', 'New Zealand', 'Brazil', 'Mexico',
-        'Japan', 'China', 'France', 'Spain', 'Italy', 'Germany',
-        'Portugal', 'Argentina', 'Chile', 'India', 'Indonesia',
-        'Philippines', 'Malaysia', 'Thailand', 'Singapore'
+        # Americas
+        'USA', 'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina',
+        'Chile', 'Peru', 'Colombia', 'Ecuador', 'Venezuela', 'Costa Rica',
+        'Panama', 'Belize', 'Honduras', 'Guatemala', 'Nicaragua',
+        # Europe
+        'UK', 'United Kingdom', 'Ireland', 'France', 'Germany', 'Italy',
+        'Spain', 'Portugal', 'Netherlands', 'Belgium', 'Switzerland',
+        'Austria', 'Denmark', 'Sweden', 'Norway', 'Finland', 'Iceland',
+        'Greece', 'Poland', 'Czech Republic', 'Hungary', 'Romania',
+        'Bulgaria', 'Croatia', 'Serbia', 'Slovenia', 'Slovakia',
+        'Estonia', 'Latvia', 'Lithuania', 'Ukraine', 'Belarus',
+        'Turkey', 'Cyprus', 'Malta', 'Luxembourg', 'Monaco',
+        # Asia-Pacific
+        'Australia', 'New Zealand', 'Japan', 'China', 'South Korea', 'Korea',
+        'India', 'Indonesia', 'Philippines', 'Malaysia', 'Thailand',
+        'Singapore', 'Vietnam', 'Taiwan', 'Hong Kong', 'Pakistan',
+        'Bangladesh', 'Sri Lanka', 'Myanmar', 'Cambodia', 'Laos',
+        # Africa & Middle East
+        'South Africa', 'Egypt', 'Kenya', 'Tanzania', 'Mozambique',
+        'Madagascar', 'Mauritius', 'Seychelles', 'Israel', 'UAE',
+        'Saudi Arabia', 'Oman', 'Qatar', 'Jordan', 'Lebanon',
+        # Oceania
+        'Fiji', 'Papua New Guinea', 'Samoa', 'Tonga', 'Palau'
     ]
 
     affiliation_lower = affiliation.lower()
+
+    # Check for exact country name matches (longer names first to avoid partial matches)
     for country in countries:
         if country.lower() in affiliation_lower:
             return country
