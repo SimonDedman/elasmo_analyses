@@ -299,8 +299,8 @@ p_europe_pies <- ggplot() +
 ggsave(
   "outputs/figures/europe_map_with_country_discipline_pies.png",
   plot = p_europe_pies,
-  width = 12,
-  height = 12,
+  width = 14,
+  height = 10,
   dpi = 300,
   bg = "white"
 )
@@ -308,8 +308,8 @@ ggsave(
 ggsave(
   "outputs/figures/europe_map_with_country_discipline_pies.pdf",
   plot = p_europe_pies,
-  width = 12,
-  height = 12,
+  width = 14,
+  height = 10,
   bg = "white"
 )
 
