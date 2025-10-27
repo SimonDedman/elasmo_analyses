@@ -1,0 +1,11 @@
+technique_name,classification,recent_papers,paper_count,first_year,last_year
+STRUCTURE,EMERGING,1613,7529,1950,2025
+Genomics,EMERGING,210,511,1982,2025
+Population Genetics,EMERGING,129,451,1982,2025
+Metabarcoding,EMERGING,76,86,2016,2025
+eDNA,EMERGING,73,110,1965,2025
+ADMIXTURE,EMERGING,49,129,1967,2025
+eDNA Metabarcoding,EMERGING,29,34,2016,2025
+Genetic relatedness,EMERGING,25,47,1985,2025
+Mini-Barcoding,EMERGING,11,12,2019,2024
+Genome Skimming,EMERGING,9,10,2019,2022

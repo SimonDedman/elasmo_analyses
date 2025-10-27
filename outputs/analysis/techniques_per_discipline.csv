@@ -1,0 +1,152 @@
+primary_discipline,technique_name,paper_count,total_mentions,years_active,first_year,last_year,full_name
+BEH,Video Analysis,108,645,25,1993,2024,Behaviour
+BEH,BORIS,56,361,24,1983,2025,Behaviour
+BEH,Social Network Analysis,48,584,15,1982,2025,Behaviour
+BEH,Dominance hierarchy,31,290,22,1982,2025,Behaviour
+BEH,Operant Conditioning,25,178,18,1960,2023,Behaviour
+BEH,Learning Experiments,9,64,6,2009,2020,Behaviour
+BEH,Behavioural Observation,7,28,7,2007,2024,Behaviour
+BEH,Focal Sampling,3,20,2,2014,2021,Behaviour
+BEH,Scan Sampling,2,11,2,2017,2021,Behaviour
+BEH,Ethogram Development,1,4,1,2024,2024,Behaviour
+BIO,Parasitology,926,18431,69,1950,2025,Biology
+BIO,Morphometrics,572,4403,42,1968,2025,Biology
+BIO,Metabolic Rate,553,6278,51,1950,2025,Biology
+BIO,Body Measurements,98,401,42,1954,2025,Biology
+BIO,Maturity Ogive,80,611,23,2000,2024,Biology
+BIO,Length-Frequency Analysis,19,101,15,1975,2022,Biology
+BIO,Natural Mortality Estimators,18,77,9,2015,2023,Biology
+BIO,Reproductive observations,9,34,7,2007,2022,Biology
+BIO,Fecundity Estimation,7,38,7,2001,2020,Biology
+BIO,Health Indices,2,16,2,2012,2020,Biology
+BIO,Telomere Analysis,1,2,1,2021,2021,Biology
+CON,Tourism,775,20855,34,1981,2025,Conservation
+CON,Vulnerability Assessment,49,345,15,2009,2025,Conservation
+CON,IUCN Red List Assessment,44,287,16,2006,2024,Conservation
+CON,Stakeholder Engagement,19,112,9,2013,2025,Conservation
+CON,MPA Effectiveness,12,93,7,2012,2025,Conservation
+CON,Contingent Valuation,9,101,7,2007,2023,Conservation
+CON,Policy Evaluation,4,15,4,2012,2020,Conservation
+CON,Socioeconomic Analysis,2,4,2,2014,2022,Conservation
+CON,Education & Outreach,1,2,1,2009,2009,Conservation
+DATA,Time Series,690,7670,38,1969,2025,Data Science
+DATA,GLM,410,4318,32,1967,2025,Data Science
+DATA,Meta-Analysis,394,2020,25,1998,2025,Data Science
+DATA,GAM,190,2851,31,1951,2025,Data Science
+DATA,Markov Chain Monte Carlo,185,700,20,2006,2025,Data Science
+DATA,Cross-Validation,141,950,21,2001,2025,Data Science
+DATA,Machine Learning,97,1029,13,2012,2025,Data Science
+DATA,GAMM,85,1377,15,2009,2025,Data Science
+DATA,Neural Networks,51,312,19,1973,2025,Data Science
+DATA,Bayesian Methods,44,206,18,2006,2025,Data Science
+DATA,Random Forest,37,513,13,2013,2025,Data Science
+DATA,ARIMA,24,89,18,1978,2023,Data Science
+DATA,Data Integration,21,79,12,2013,2025,Data Science
+DATA,Computer Vision,18,176,11,1982,2024,Data Science
+DATA,INLA,18,448,10,2008,2025,Data Science
+DATA,Deep Learning,17,219,7,2018,2025,Data Science
+DATA,Approximate Bayesian Computation,14,109,9,2012,2022,Data Science
+DATA,Support Vector Machines,6,23,4,2018,2024,Data Science
+DATA,Ensemble Learning,5,27,4,2018,2024,Data Science
+DATA,Generalized Estimating Equations,5,22,3,2010,2015,Data Science
+DATA,N-Mixture Models,5,32,3,2019,2024,Data Science
+DATA,Structural Equation Modeling,4,14,4,2013,2019,Data Science
+DATA,Convolutional Neural Networks,3,18,2,2022,2024,Data Science
+DATA,Data Fusion,3,6,2,2022,2025,Data Science
+DATA,SARIMA,2,36,2,2018,2022,Data Science
+FISH,Stock Assessment,984,9297,43,1977,2025,Fisheries
+FISH,Post-Release Mortality,265,2628,23,1982,2025,Fisheries
+FISH,Post-Release Survival,234,1689,23,1982,2025,Fisheries
+FISH,Discard Mortality,195,1821,22,1998,2025,Fisheries
+FISH,Ecosystem Models,115,837,21,2000,2025,Fisheries
+FISH,LIME,99,418,49,1953,2024,Fisheries
+FISH,Yield per Recruit,86,541,35,1979,2025,Fisheries
+FISH,Age-Structured Models,37,176,19,1997,2025,Fisheries
+FISH,Stock Synthesis,36,330,13,2008,2025,Fisheries
+FISH,Bycatch Assessment,23,93,15,2005,2024,Fisheries
+FISH,Surplus Production Models,23,260,14,2002,2025,Fisheries
+FISH,CPUE Standardization,21,270,11,2007,2023,Fisheries
+FISH,Fisher Interviews,20,143,11,2007,2025,Fisheries
+FISH,Statistical Catch-at-Age,20,113,14,2008,2024,Fisheries
+FISH,Virtual Population Analysis,20,191,13,2000,2023,Fisheries
+FISH,Distance Sampling,15,129,8,2013,2025,Fisheries
+FISH,Multispecies Models,12,43,8,1989,2025,Fisheries
+FISH,Spawning Stock Biomass per Recruit,11,50,7,2009,2022,Fisheries
+FISH,Data-Poor Assessment,10,45,7,2011,2025,Fisheries
+FISH,LBB,10,462,8,1996,2025,Fisheries
+FISH,Catch Curve Analysis,9,43,7,2005,2025,Fisheries
+FISH,Close-Kin Mark-Recapture,8,74,5,2018,2025,Fisheries
+FISH,Length-Based Methods,8,68,6,1993,2022,Fisheries
+FISH,LBSPR,5,637,3,2019,2022,Fisheries
+FISH,Length-Converted Catch Curves,5,18,5,1996,2020,Fisheries
+FISH,Integrated Models,4,23,4,2016,2020,Fisheries
+FISH,AMSY,3,114,2,2021,2022,Fisheries
+FISH,Catch Data Analysis,3,11,3,2011,2016,Fisheries
+FISH,Catch-MSY,2,14,2,2017,2022,Fisheries
+FISH,Delay-Difference Models,2,7,2,2009,2017,Fisheries
+FISH,Depletion Methods,1,4,1,2006,2006,Fisheries
+GEN,STRUCTURE,7529,91278,74,1950,2025,Genetics
+GEN,Phylogenetics,614,3646,34,1982,2025,Genetics
+GEN,Genomics,511,4216,27,1982,2025,Genetics
+GEN,Population Genetics,451,3042,37,1982,2025,Genetics
+GEN,DNA Barcoding,448,4695,21,1982,2025,Genetics
+GEN,mtDNA,427,9981,29,1996,2025,Genetics
+GEN,Conservation Genetics,303,2530,26,1982,2025,Genetics
+GEN,ADMIXTURE,129,1198,27,1967,2025,Genetics
+GEN,SNPs,114,3168,17,1982,2025,Genetics
+GEN,eDNA,110,5911,21,1965,2025,Genetics
+GEN,LAMP,109,526,48,1953,2025,Genetics
+GEN,Metabarcoding,86,2422,10,2016,2025,Genetics
+GEN,Comparative Genomics,83,254,23,1982,2025,Genetics
+GEN,Genetic relatedness,47,251,20,1985,2025,Genetics
+GEN,Transcriptomics,45,217,15,2009,2025,Genetics
+GEN,DAPC,36,781,12,2014,2025,Genetics
+GEN,eDNA Metabarcoding,34,757,9,2016,2025,Genetics
+GEN,Ancient DNA,26,126,13,2001,2025,Genetics
+GEN,Whole Genome Sequencing,21,75,11,2004,2025,Genetics
+GEN,DNA Forensics,12,26,8,2005,2021,Genetics
+GEN,Mini-Barcoding,12,50,6,2019,2024,Genetics
+GEN,Genome Skimming,10,155,4,2019,2022,Genetics
+GEN,FST Analysis,6,31,5,2001,2023,Genetics
+MOV,Connectivity,1067,12540,40,1980,2025,Movement
+MOV,Critical Habitat,238,1523,24,1998,2025,Movement
+MOV,Network Analysis,160,1911,20,1982,2025,Movement
+MOV,MaxEnt,46,1339,12,2012,2025,Movement
+MOV,Kernel Density Estimation,43,259,12,2012,2025,Movement
+MOV,State-Space Models,41,225,18,2008,2025,Movement
+MOV,Hidden Markov Models,35,462,12,2011,2025,Movement
+MOV,Minimum Convex Polygon,34,194,20,2002,2022,Movement
+MOV,MPA Design,33,210,15,2005,2024,Movement
+MOV,Habitat Modeling,29,174,13,1982,2025,Movement
+MOV,Species Distribution Model,26,140,10,2009,2025,Movement
+MOV,Brownian Bridge,19,268,8,2014,2025,Movement
+MOV,Home Range Analysis,14,46,10,2003,2022,Movement
+MOV,Marxan,14,394,7,2010,2022,Movement
+MOV,Brownian Bridge Movement Model,11,90,7,2014,2025,Movement
+MOV,Movement Modeling,9,39,6,2016,2025,Movement
+MOV,Ensemble Models,8,42,3,2016,2024,Movement
+MOV,Spatial Prioritization,5,51,4,2017,2022,Movement
+MOV,Mean-position algorithm,4,11,4,2008,2017,Movement
+MOV,Resource Selection Functions,4,27,3,2021,2024,Movement
+MOV,Residence Indices,3,44,3,2016,2022,Movement
+MOV,AKDE,2,18,2,2022,2025,Movement
+MOV,Joint Species Distribution Model,2,7,2,2017,2022,Movement
+MOV,Refined shortest paths,2,8,2,2022,2024,Movement
+TRO,Stable Isotope Analysis,448,5604,24,1982,2025,Trophic Ecology
+TRO,Foraging Behavior,344,1873,28,1982,2025,Trophic Ecology
+TRO,Stomach Content Analysis,302,2108,42,1967,2025,Trophic Ecology
+TRO,Prey Selection,156,797,33,1985,2025,Trophic Ecology
+TRO,Niche Partitioning,143,1005,23,1982,2025,Trophic Ecology
+TRO,Diet Analysis,134,567,29,1980,2025,Trophic Ecology
+TRO,NMDS,134,2095,20,2004,2025,Trophic Ecology
+TRO,Food Web Models,80,448,17,2007,2024,Trophic Ecology
+TRO,Energy Flow,61,309,24,1980,2025,Trophic Ecology
+TRO,Fatty Acid Analysis,56,261,24,1973,2025,Trophic Ecology
+TRO,Optimal Foraging Theory,51,206,20,1993,2025,Trophic Ecology
+TRO,SIAR,50,534,13,2010,2024,Trophic Ecology
+TRO,DNA Metabarcoding,44,479,10,2016,2025,Trophic Ecology
+TRO,Ecosystem Roles,9,54,9,2004,2024,Trophic Ecology
+TRO,Dynamic Energy Budget,6,37,4,2017,2022,Trophic Ecology
+TRO,Trophic Level Estimation,6,25,5,2011,2020,Trophic Ecology
+TRO,IsoSpace,3,16,2,2020,2024,Trophic Ecology
+TRO,Trophic Position Calculation,2,12,2,2019,2022,Trophic Ecology

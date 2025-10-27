@@ -1,0 +1,25 @@
+primary_discipline,full_name,classification,technique_count,total_papers
+BEH,Behaviour,EMERGING,1,108
+BEH,Behaviour,NEW,1,1
+BEH,Behaviour,RARE,2,5
+BEH,Behaviour,STABLE,6,176
+BIO,Biology,EMERGING,4,2149
+BIO,Biology,RARE,2,3
+BIO,Biology,STABLE,5,133
+CON,Conservation,EMERGING,2,819
+CON,Conservation,RARE,3,7
+CON,Conservation,STABLE,4,89
+DATA,Data Science,EMERGING,9,1635
+DATA,Data Science,RARE,4,12
+DATA,Data Science,STABLE,12,822
+FISH,Fisheries,EMERGING,4,1280
+FISH,Fisheries,RARE,6,15
+FISH,Fisheries,STABLE,21,991
+GEN,Genetics,EMERGING,10,8919
+GEN,Genetics,STABLE,13,2244
+MOV,Movement,EMERGING,7,1564
+MOV,Movement,RARE,6,17
+MOV,Movement,STABLE,11,268
+TRO,Trophic Ecology,EMERGING,5,967
+TRO,Trophic Ecology,RARE,2,5
+TRO,Trophic Ecology,STABLE,11,1057
