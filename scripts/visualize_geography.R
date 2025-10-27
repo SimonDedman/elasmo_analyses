@@ -158,21 +158,44 @@ world_label_points <- world_data_with_papers %>%
     label = sprintf("%s\n(n=%s)", name, comma(paper_count))
   )
 
-# Determine which countries to label (all countries with ≥10 papers)
+# Determine which countries to label (all countries with ≥10 papers OR specific small countries)
 world_centroids_labeled <- world_label_points %>%
-  filter(paper_count >= 10)
+  filter(paper_count >= 10 | name %in% c("Chile", "Argentina"))
 
-cat(sprintf("Labeling %d countries with ≥10 papers\n", nrow(world_centroids_labeled)))
+# Extract coordinates for custom nudging
+label_coords <- world_centroids_labeled %>%
+  st_coordinates() %>%
+  as_tibble() %>%
+  bind_cols(world_centroids_labeled %>% st_drop_geometry())
+
+# Add custom nudging for specific countries
+label_coords <- label_coords %>%
+  mutate(
+    nudge_x = case_when(
+      name == "Chile" ~ -8,          # Move Chile label left (off country, into Pacific)
+      name == "Argentina" ~ 8,       # Move Argentina label right (off country, into Atlantic)
+      name == "Portugal" ~ -2,       # Move Portugal slightly left
+      name == "France" ~ 0,          # Keep France centered
+      name == "Germany" ~ 1,         # Move Germany slightly right
+      TRUE ~ 0
+    ),
+    nudge_y = case_when(
+      name == "France" ~ 1,          # Move France slightly up to avoid overlap
+      name == "Portugal" ~ -1,       # Move Portugal slightly down
+      TRUE ~ 0
+    )
+  )
+
+cat(sprintf("Labeling %d countries (≥10 papers or specially selected)\n", nrow(label_coords)))
 
 p1 <- ggplot(world_data) +
   geom_sf(aes(fill = paper_count), color = "white", size = 0.1) +
-  geom_sf_text(
-    data = world_centroids_labeled,
-    aes(label = label),
+  geom_text(
+    data = label_coords,
+    aes(x = X + nudge_x, y = Y + nudge_y, label = label),
     size = 2.5,
     color = "black",
-    fontface = "bold",
-    check_overlap = TRUE
+    fontface = "bold"
   ) +
   scale_fill_viridis(
     option = "plasma",
@@ -220,6 +243,91 @@ ggsave(
 )
 
 cat("✓ Saved: world_map_papers_by_country.png + .pdf\n")
+
+# ============================================================================
+# VISUALIZATION 1B: EUROPEAN ZOOMED MAP
+# ============================================================================
+
+cat("\n=== CREATING VISUALIZATION 1B: European Zoomed Map ===\n")
+
+# Filter for European countries
+european_countries <- c(
+  "United Kingdom", "France", "Germany", "Italy", "Spain", "Portugal",
+  "Netherlands", "Belgium", "Switzerland", "Austria", "Denmark", "Sweden",
+  "Norway", "Finland", "Poland", "Czech Republic", "Greece", "Ireland",
+  "Iceland", "Romania", "Bulgaria", "Hungary", "Croatia", "Serbia",
+  "Slovakia", "Slovenia", "Estonia", "Latvia", "Lithuania", "Albania",
+  "Bosnia and Herzegovina", "North Macedonia", "Montenegro", "Moldova",
+  "Ukraine", "Belarus"
+)
+
+# Filter world data for Europe
+europe_data <- world_data %>%
+  filter(name %in% european_countries)
+
+# Filter label data for European countries with papers
+europe_label_coords <- label_coords %>%
+  filter(name %in% european_countries)
+
+cat(sprintf("European countries with data: %d\n", nrow(europe_label_coords)))
+
+# Create European map with tighter zoom
+p1b <- ggplot(europe_data) +
+  geom_sf(aes(fill = paper_count), color = "white", size = 0.2) +
+  geom_text(
+    data = europe_label_coords,
+    aes(x = X + nudge_x, y = Y + nudge_y, label = label),
+    size = 3,
+    color = "black",
+    fontface = "bold"
+  ) +
+  scale_fill_viridis(
+    option = "plasma",
+    name = "Papers",
+    labels = comma,
+    trans = "log10",
+    breaks = c(1, 10, 100, 1000),
+    na.value = "grey90"
+  ) +
+  coord_sf(xlim = c(-12, 30), ylim = c(35, 72)) +  # Zoom to Europe
+  labs(
+    title = "European Distribution of Shark Research",
+    subtitle = sprintf("European countries with geographic data (n=%d)",
+                      nrow(europe_label_coords)),
+    caption = "EEA 2025 Data Panel | Log scale"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA),
+    panel.grid = element_line(color = "grey95"),
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 11, hjust = 0.5, color = "grey40"),
+    plot.caption = element_text(size = 9, color = "grey50", margin = margin(t = 10)),
+    legend.position = "right",
+    plot.margin = margin(t = 10, r = 10, b = 10, l = 10)
+  )
+
+ggsave(
+  "outputs/figures/europe_map_papers_by_country.png",
+  plot = p1b,
+  width = 14,
+  height = 10,
+  dpi = 300,
+  bg = "white"
+)
+
+ggsave(
+  "outputs/figures/europe_map_papers_by_country.pdf",
+  plot = p1b,
+  width = 14,
+  height = 10,
+  bg = "white"
+)
+
+cat("✓ Saved: europe_map_papers_by_country.png + .pdf\n")
 
 # ============================================================================
 # VISUALIZATION 2: TOP 20 COUNTRIES BAR CHART
@@ -398,6 +506,7 @@ cat(paste0(strrep("=", 80), "\n\n"))
 
 cat("VISUALIZATIONS CREATED:\n")
 cat("  1. world_map_papers_by_country.png + .pdf\n")
+cat("  1b. europe_map_papers_by_country.png + .pdf\n")
 cat("  2. top20_countries_bar_chart.png + .pdf\n")
 cat("  3. disciplines_by_country_top10.png + .pdf\n")
 

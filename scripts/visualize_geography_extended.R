@@ -65,6 +65,14 @@ paper_countries <- paper_authors %>%
   select(paper_id, author_name, country) %>%
   distinct()
 
+# Standardize country names BEFORE any analysis (consolidate USA/UK variants)
+paper_countries <- paper_countries %>%
+  mutate(country = case_when(
+    country == "United States" ~ "USA",
+    country == "United Kingdom" ~ "UK",
+    TRUE ~ country
+  ))
+
 # Link with disciplines
 paper_countries_disciplines <- paper_countries %>%
   inner_join(discipline_data, by = "paper_id") %>%
