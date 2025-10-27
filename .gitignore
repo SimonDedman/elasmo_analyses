@@ -42,6 +42,7 @@ outputs/*
 !outputs/.gitkeep
 !outputs/*_report.md
 !outputs/panel_reports/
+!outputs/abstract_reviews/
 outputs/candidate_database_phase1.csv
 outputs/conference_attendance_summary.csv
 outputs/analytical_techniques_by_discipline.csv
