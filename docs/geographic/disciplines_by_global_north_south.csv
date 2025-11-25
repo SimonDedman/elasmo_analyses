@@ -1,0 +1,9 @@
+discipline_code,discipline_name,global_north_papers,global_south_papers,total_papers,global_north_pct,global_south_pct,north_bias,south_bias
+BEH,Behaviour & Sensory Ecology,136,7,143,95.1,4.9,5.7,-5.7
+BIO,"Biology, Life History, & Health",958,95,1053,91.0,9.0,1.6,-1.6
+CON,Conservation Policy & Human Dimensions,404,68,472,85.6,14.4,-3.8,3.8
+DATA,Data Science & Integrative Methods,2124,240,2364,89.8,10.2,0.4,-0.4
+FISH,"Fisheries, Stock Assessment, & Management",768,93,861,89.2,10.8,-0.2,0.2
+GEN,"Genetics, Genomics, & eDNA",3813,480,4293,88.8,11.2,-0.6,0.6
+MOV,"Movement, Space Use, & Habitat Modeling",694,71,765,90.7,9.3,1.3,-1.3
+TRO,Trophic & Community Ecology,576,71,647,89.0,11.0,-0.4,0.4
