@@ -43,6 +43,7 @@ outputs/*
 !outputs/*_report.md
 !outputs/panel_reports/
 !outputs/abstract_reviews/
+!outputs/figures/*.png
 outputs/candidate_database_phase1.csv
 outputs/conference_attendance_summary.csv
 outputs/analytical_techniques_by_discipline.csv
@@ -129,9 +130,6 @@ TODO.md
 
 # Backups folder
 backups/
-
-# Music share folder
-music_share/
 
 # Archive folder (track for historical reference)
 !docs/archive/
