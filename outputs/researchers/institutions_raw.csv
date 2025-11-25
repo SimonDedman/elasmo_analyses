@@ -103,6 +103,7 @@ institution_name,country
 "* Corresponding author at: Hopkins Marine Station, Stanford University, Pacific Grove, CA, USA.",USA
 "* Corresponding author at: Institute of Environment, Department of Biological Sciences, Florida International University, North Miami, FL, United States.",United States
 "* Corresponding author at: Institute of Parasitology, Biology Centre, Czech Academy of Sciences, C ˇ esk´e Budˇejovice 370 05, Czech Republic.",Czech Republic
+"* Corresponding author at: Research Centre for Oceanography, Indonesian Institute of Sciences (LIPI), Jalan Pasir Putih I No.1 Ancol, Jakarta, 14430, Indonesia.",Indonesia
 "* Corresponding author at: Savannah River Ecology Laboratory Savannah River Site, Building 737-A Aiken, SC 29802, USA.",USA
 "* Corresponding author at: Shanghai Ocean University, 999 Huchenghuan Road, Shanghai 201306, China.",China
 "* Corresponding author. Centre for Ecology and Conservation, College of Life and Environmental Sciences, University of Exeter, Penryn, Cornwall, TR10 9FE,",
@@ -136,6 +137,7 @@ institution_name,country
 "* Correspondingauthor:Address:ResearchInstituteforClimateChangeandSustainability,SchoolofEarthandEnvironmentalSciences,",
 * Correspondingauthorpresentaddress:LaboratoryforEcologicalRiskAssess-,
 "* DavidA.Ebert 3 ResearchAssociate,SouthAfricanInstituteforAquaticBiodiversity,",
+"* DavidA.Ebert 4 Branch:FisheriesManagement,DepartmentofEnvironment,",
 "* Department of Biology, University of Massachusetts Dartmouth,",
 "* Department of Zoology, College of Biological Science, University of Guelph, Guelph, Ontario, Canada NlG 2W1",Canada
 "* Evan E. Byrnes 4 Oceanographic Research Institute, Marine Parade, PO",
@@ -427,6 +429,7 @@ institution_name,country
 "1 Centre for Ecological Genomics and Wildlife Conservation, tion of acoustic and satellite tracking as well as conventional",
 "1 Centre for Ecology and Conservation, University of Exeter, 6 Hatherly Laboratories, College of Life and Environmental",
 "1 Centre for Environment, Fisheries & Aquaculture Science (Cefas), Pakefield Road, Lowestoft NR33",
+"1 Centre for Environment, Fisheries and Aquaculture Science (CEFAS), Pakefield Road,",
 "1 Centre for Marine Science and Innovation, School the sources and basal processes supporting food webs and",
 "1 Centre for Marine, Fisheries and Aquaculture Sciences, 2014), raising concerns about their conservation status (Baje",
 "1 Centre for Research into Ecological and Environmental are also prevalent across trophic levels, from the diel verti-",
@@ -469,6 +472,7 @@ institution_name,country
 "1 DepartamentofBiology,FacultyofMarineandEnvironmentalSciences,InstitutoUniversitariode",
 "1 Department of Aquatic Bioscience, Graduate School fibrosis transmembrane conductance regulator (CFTR),",
 "1 Department of Aquatic Zoology, Western Australian Museum, Locked Bag 49, Welshpool DC,",Australia
+"1 Department of Biodiversity, University of Limpopo, and Narváez 2016) with no reports of copepods. This low",
 "1 Department of Biological Sciences, 132 Long Hall, Clemson University,",
 "1 Department of Biological Sciences, DePaul University, 2325",
 "1 Department of Biological Sciences, Florida Atlantic and then calculate a novel return vector back to the original",
@@ -535,6 +539,7 @@ institution_name,country
 "1 DepartmentofAnimalEcologyandSystematics,JustusLiebigUniversityGiessen,Heinrich-Buff-Ring26-32,",
 "1 DepartmentofAnimalHealthandAnatomy,VeterinaryFaculty,UniversitatAutònomadeBarcelona,",
 "1 DepartmentofAnimalProductionandHealth,VeterinaryPublicHealthandFoodScienceandTechnology,",
+"1 DepartmentofAnimalSciencesandAquaticEcology,UniversityofGhent,9000Ghent,Belgium;",Belgium
 "1 DepartmentofAquaticAnimalHealthandDiseases,Iranian",
 "1 DepartmentofBiodiversity,UniversityofLimpopo,PrivateBag Theaimofthecurrentpaperistoprovideafullredescrip-",
 "1 DepartmentofBiological,GeologicalandEnvironmentalSciences,UniversityofBologna,",
@@ -579,6 +584,7 @@ institution_name,country
 "1 DepartmentofMarineBiologyandAquaculture,MarineBiologyEducationandResearchCenter,",
 "1 DepartmentofMarinePharmacology,CollegeofFoodScienceandTechnology,ShanghaiOceanUniversity,",
 "1 DepartmentofMarineSciences,UniversityofSouthAlabama, quantified;however,thistypeofanalysishaslimitations.For",
+"1 DepartmentofMarineSciences,UniversityoftheAegean, callyimplementedinmarineprotectedareas,wherefisheries",
 "1 DepartmentofOceanStudiesandMarineBiology,Pondicherry",
 "1 DepartmentofPalaeontology,FacultyofEarthSciences,GeographyandAstronomy,UniversityofVienna,",
 "1 DepartmentofPalaeontology,UniversityofVienna,Josef-Holaubek-Platz2(UZAII),1090Vienna,Austria;",Austria
@@ -589,6 +595,7 @@ institution_name,country
 "1 DepartmentofVeterinarySciences,UniversityofMessina,98168Messina,Italy;gdebenedetto@unime.it",Italy
 "1 DepartmentofZoology,MaulanaAzadCollege,Kolkata, 10% formalin for storage, after proper flattening and",
 "1 DepartmentofZoology,Nature-BasedSolutionsInitiative,UniversityofOxford,Oxford,UnitedKingdom,",
+"1 Division of Commercial Fisheries, Alaska Department of Fish and Game, (WNP) and from the Gulf of Alaska to Baja California,",
 "1 ELGO-Demeter,FisheriesResearchInstitute,NeaPeramos, Pauly 2019) and SeaLifeBase (Palomares and Pauly 2019).",
 "1 Elasmo-Lab,ElasmobranchResearchLaboratory,22609Hamburg,Germany",Germany
 "1 Elasmo-Lab,ElasmobranchResearchLaboratory,Georg-Bonne-Str.",
@@ -599,6 +606,7 @@ institution_name,country
 "1 EvolutionaryEcologyGroup,DepartmentofZoology,UniversityofCambridge,DowningStreet,",
 "1 EvolutionaryMorphologyResearchGroup,DepartmentofPalaeontology,FacultyofEarthSciences,",
 "1 Faculty of Environmental Earth Science, Hokkaido University, N10W5, Kita-ku, Sapporo, Hokkaido 060-0810, Japan",Japan
+"1 Faculty of Marine Science and Technology, Department Turkish Liras (approx. 500 Euros) is levied on violators",
 "1 FacultyofAgriculturalSciences,FederalUniversityofAmazonas–UFAM,Manaus69067-005,Brazil;",Brazil
 "1 FacultyofFisheries,FiratUniversity,Elazig23119,Turkey",Turkey
 "1 FacultyofLifeSciences,AlbrechtDanielThaer-Institut, Sydney,NSW2006,Australia",Australia
@@ -715,11 +723,13 @@ institution_name,country
 "1 PSL Research University: EPHE-UPVD-CNRS, USR 3278 CRIOBE, Université de",
 "1 Pacific Shark Research Center, Moss Landing Marine Laboratories, Moss Landing, USA",USA
 "1 PacificSharkResearchCenter,MossLandingMarineLaboratories,",
+"1 PacificSharkResearchCenter,MossLandingMarineLaboratories, Grahamstown,SouthAfrica",
 "1 PacificSharkResearchCenter,MossLandingMarineLaboratories, Kochi,Kerala682018,India",India
 "1 PacificSharkResearchCenter,MossLandingMarineLaboratories, et al. 2001), with published accounts of mammals (Wright",
 "1 Paleontological Institute and Museum, University of Zurich, 8006 Zurich, Switzerland. 2 Smithsonian Tropical Research Institute, PO Box 2072,",Switzerland
 "1 PontchartrainInstituteforEnvironmental Sciences,DepartmentofEarthandEnvironmentalSciences,",
 "1 PowerEngineeringDepartment,JadavpurUniversity,",
+"1 Predator and Conservation Ecology Lab, Biological Sciences Department, Florida",
 "1 Present Address: Hellenic Centre for Marine Research (HCMR), P.O. Box 2214,",
 "1 Present address: Biology Department, St. Ambrose University, Davenport, IA",
 "1 Present address: Grice Marine Laboratory, College of Charleston, 205 Fort",
@@ -752,6 +762,7 @@ institution_name,country
 "1 School of Biological Sciences, Monash University, sub-lethal outcomes (Renshaw et al. 2012). A recent global",
 "1 School of Biological Sciences, The Oceans Graduate School, 7 South African Institute for Aquatic Biodiversity (SAIAB),",South Africa
 "1 School of Biological Sciences, The University of Auckland, Auckland 1142, New Zealand.",New Zealand
+"1 School of Biological Sciences, The University of Queensland, Brisbane, includes or entirely relies on DNA-evidence (e.g. [1]).",
 "1 School of Biological Sciences, The University of Western",
 "1 School of Biological Sciences, The University of Western 6 Ocean Graduate School, IOMRC, The University of Western",
 "1 School of Biological Sciences, University of Auckland, larly in marine species (Bohonak 1999; Bradbury et al.",
@@ -939,6 +950,8 @@ institution_name,country
 "1BedfordInstituteofOceanography,FisheriesandOceansCanada,Dartmouth,NS,Canada,2Institut",Canada
 "1Behavioral Ecology and Physiology Program, Mote Marine Laboratory, 1600 Ken",
 "1BeneathTheWaves,POBox126Herndon,VA,USA.2DepartmentofBiology,CarletonUniversity,1125ColonelByDrive,Ottawa,ON,Canada.3RedSea",USA
+"1BeneaththeWaves,Herndon,VA,UnitedStates,2RedSeaResearchCenterandComputationalBiosciencesResearch",
+"1BeneaththeWaves,Herndon,VA,UnitedStates,2SchoolofMarineandAtmosphericSciences,StonyBrookUniversity,",
 "1BiminiBiologicalFieldStationFoundation,SouthBimini,Bahamas,2SchoolforMarineScienceand",
 "1BiologicalSciences,EarthtoOceanResearchGroup,SimonFraserUniversity,Burnaby,BC,Canada,V5A1S6;",Canada
 "1BiologyDepartment, Vassar College, Poughkeepsie, NewYork 12604",
@@ -1022,10 +1035,12 @@ institution_name,country
 "1Department of Anatomy and Cell Biology, South Bend Center for Medical",
 "1Department of Biological Science, Florida International University, Florida, USA. 2Faculty of Aerospace Engineering,",USA
 "1Department of Biological Science, Florida State University, Tallahassee, Florida 32306; E-mail: naschliman@bio.fsu.edu. Send reprint",
+"1Department of Biological Sciences,",
 "1Department of Biological Sciences, California State University, Long Beach, 1250 Bellflower Blvd, Long",
 "1Department of Biological Sciences, Earth to Ocean Research Group, Simon Fraser University, Burnaby, British Columbia, Canada. 2College of Science and Engineering, James Cook University,",Canada
 "1Department of Biological Sciences, Faculty of Science, University of Kurdistan, Sanandaj, Iran.",
 "1Department of Biological Sciences, Florida Atlantic University, Boca Raton, Florida 33431, USA",USA
+"1Department of Biological Sciences, Macquarie University, Sydney, NSW 2109",
 "1Department of Biological Sciences, Marine Science Program, University of South Carolina, Columbia, SC 29208. E-mail",
 "1Department of Biological Sciences, Simon Fraser University, Burnaby, British Columbia, Canada. 2Scimitar Scientific, Whitehorse, Yukon, Canada. 3Biology",Canada
 "1Department of Biological Sciences, The University of Southern Mississippi, Hattiesburg, Mississippi 39406, USA",USA
@@ -1280,6 +1295,7 @@ institution_name,country
 "1FisheriesResearchInstitute,Hellenic",
 "1Fisheriesand OceansCanada, GulfFisheries Centre, PO Box5030, Moncton,NB,E1C 9B6,Canada;and",Canada
 "1Fisheriesand OceansCanada. Gulf FisheriesCentre.Moncton, NB E1C9B6, Canada",Canada
+"1FisheriesandAquaticSciencesGraduateProgram,SchoolofForestResourcesandConservation,UniversityofFlorida,",
 "1FisheriesandOceansCanada,GulfFisheriesCentre,P.O.Box5030,343UniversityAvenue,",Canada
 "1Fishery College, Zhejiang Ocean University, Zhoushan, China, 2Zhejiang Marine Fisheries Research Institute,",China
 "1Fishing and Fisheries Research Centre, School of Earth and Environmental Sciences, James Cook University, Townsville,",
@@ -1408,6 +1424,7 @@ institution_name,country
 "1Laboratório de Fisiologia Animal e Comportamento, Research Center on Animal Welfare - RECAW, Departamento de Fisiologia, Instituto",
 "1LaboratórioMarítimodaGuia,MarineandEnvironmentalSciencesCentre(MARE),FaculdadedeCiências,Universidadede",
 "1LargeMarineVertebratesResearchInstitutePhilippines,Jagna,Bohol,Philippines",Philippines
+"1Leibniz- Institute of Freshwater Ecology and Inland Fisheries (IGB), Berlin, Germany; 2Faculty of Life Sciences, Albrecht Daniel Thaer- Institute of Agricultural",Germany
 "1Leigh Marine Laboratory, University of Auckland, PO Box 349, Warkworth 0941, New Zealand",New Zealand
 "1Leonard and Jayne Abess Center for Ecosystem Science and Policy, University of Miami, Coral Gables, FL 33146, USA",USA
 "1Leonard and Jayne Abess Center for Ecosystem Science and Policy, University of Miami, PO Box 248203, Coral Gables,",
@@ -1459,7 +1476,9 @@ institution_name,country
 "1MarineParasitologyLaboratory,SchoolofEarthandEnvironmentalSciences,TheUniversityofAdelaide,NorthTerrace,",
 "1MarineResearchLaboratories,TasmanianAquacultureandFisheriesInstitute,UniversityofTasmania,Hobart,Tasmania,Australia,2CSIROMarineandAtmospheric",Australia
 "1MarineScienceProgram,DepartmentofBiologicalSciences,SchooloftheEnvironment,ArtsandSociety,FloridaInternationalUniversity,NorthMiami,FL,USA",USA
+"1MarineScienceResearchInstitute,DepartmentofBiology&MarineScience,JacksonvilleUniversity,Jacksonville,FL,",
 "1MarineScotlandScience,MarineLaboratory,",
+"1MarineSpatialEcologyLab,SchoolofBiologicalSciences&AustralianResearchCouncilCentreofExcellenceforCoralReef",Australia
 "1MarineZoologyUnit,CavanillesInstituteofBiodiversityandEvolutionaryBiologyUniversityofValencia,València,Spain and",Spain
 "1MarineandEnvironmentalSciencesCentre(MARE),DepartmentofOceanographyandFisheries,UniversityoftheAzores,",
 "1MaxPlanckInstituteofColloidsandInterfaces,DepartmentofBiomaterials,14476Potsdam,Germany.2BCUBE-CenterforMolecularBioengineering,",Germany
@@ -1482,6 +1501,7 @@ institution_name,country
 "1NSW Department of Primary Industries, Port Stephens Fisheries Institute, Locked Bag 1, Nelson Bay, NSW 2315, Australia",Australia
 "1National Institute of Aquatic Resources, Technical University of Denmark, Vejlsøvej 39, 8600 Silkeborg,",Denmark
 "1National Institute of Oceanography and Fisheries, NIOF, Cairo, Egypt",Egypt
+1National Institute of Water and,
 "1National Marine Fisheries Service (NMFS), Northeast Fisheries Science Center, NOAA, 28 Tarzwell Drive, Narragansett,",
 "1National Marine Fisheries Service, Southeast Fisheries Science Center, Mississippi Laboratories, 3209 Frederic Street, Pascagoula,",
 "1National Marine Fisheries Service, Southeast Fisheries Science Center, Mississippi Laboratories, Pascagoula Laboratory, Pasca-",
@@ -1498,6 +1518,7 @@ institution_name,country
 "1NationalInstituteofPolarResearch,Tachikawa,Tokyo,Japan.2DepartmentofPolarScience,TheGraduateUniversityforAdvancedStudies,SOKENDAI,",Japan
 "1NationalInstituteofPolarResearch,Tachikawa,Tokyo190-8518,Japan.",Japan
 "1NationalInstituteofPolarResearch,Tachikawa,Tokyo190-8518,Japan;2SchoolofBiological,EarthandEnvironmental",Japan
+"1NationalInstituteofWaterandAtmosphericResearch(NIWA),Wellington,NewZealand,2DepartmentofConservation,",
 "1NationalInstituteofWaterandAtmosphericResearch(NIWA),Wellington,NewZealand.2DepartmentofFishandWildlifeConservation,VirginiaPolytechnicInstituteandStateUniversity,",
 "1NationalMarineScienceCentre,MarineEcologyResearchCentre,SchoolofEnvironment,ScienceandEngineering,SouthernCrossUniversity,PO",
 "1NationalMarineScienceCentre,SouthernCrossUniversity,CoffsHarbour,NSW,Australia,2CommonwealthScientific",Australia
@@ -1514,6 +1535,7 @@ institution_name,country
 "1OceanSciencesInstitute(Okeanos),UniversityoftheAzores,Horta,Portugal,2InstituteofMarineResearch(IMAR),Horta,",Portugal
 "1OceanandEarthScience,UniversityofSouthampton,Southampton,UnitedKingdom",
 "1Oceanographic Center, Guy Harvey Research Institute, Nova Southeastern University, 8000 North Ocean",
+"1OceanographicResearchInstitute,Durban,",
 "1OceanographicResearchInstitute,Durban,SouthAfrica",
 "1Oceans Department, Stanford University, Pacific Grove 93950, USA. 2Hawaiʻi Institute of Marine Biology,",USA
 "1Oceans Graduate School and the UWA Oceans Institute, The University of Western Australia, Perth, WA, 6009,",Australia
@@ -1596,6 +1618,7 @@ institution_name,country
 "1School of Interdisciplinary Arts and Sciences, University of Washington, Bothell, Washington",
 "1School of Life and Environmental Sciences, Deakin University, 221 Burwood Highway, Burwood, Victoria 3125, Australia",Australia
 "1School of Life and Environmental Sciences, The University of Sydney, Sydney, NSW 2006, Australia. 2Department",Australia
+"1School of Marine Science and Policy, University of Delaware, Lewes, DE, USA. 2Department of Civil and",USA
 "1School of Marine and Atmospheric Sciences, Stony Brook University, Stony Brook, NY 11790, USA",USA
 "1School of Marine and Atmospheric Sciences, Stony Brook University, Stony Brook, NY 11794, USA. 2New York",USA
 "1School of Natural and Environmental Sciences, Newcastle University, Newcastle upon Tyne NE1 7RU, UK",UK
@@ -1648,6 +1671,7 @@ institution_name,country
 "1SmithsonianTropicalResearchInstitute,Balboa,RepublicofPanama",Panama
 "1SmithsonianTropicalResearchInstitute,Box",
 "1SmithsonianTropicalResearchInstitute,Panama,Panama,2SchoolfortheEnvironment,UniversityofMassachusetts,",Panama
+"1SmithsonianTropicalResearchInstitute,PanamaCity,Panama,2U.S.GeologicalSurvey,WetlandandAquaticResearch",Panama
 "1South Carolina Department of Natural Resources, Marine Resources Research Institute, Charleston, SC 29412, USA",USA
 "1SouthAfricanNationalParks,CapeResearchCentre,CapeTown8000,South White sharks (Carcharodon carcharias) are apex pre-",
 "1SouthCarolinaDepartmentofNaturalResources,MarineResourcesResearchInstitute,217FortJohnsonRoad,Charleston,SC29412,USA",USA
@@ -1740,6 +1764,7 @@ institution_name,country
 "2 CenterofNaturalHistory,UniversityofHamburg,",
 "2 CenterofNaturalHistory,UniversityofHamburg, Schroeder, 1948, synonymized with Bathyraja Ishiyama,",
 2 Centre d’Océanologie de Marseille,
+"2 Centre for Ecology and Conservation, School of Biosciences, University of Exeter.",
 2 Centre for Environment Fisheries and Aquaculture Science increases physiological stress levels which may result in,
 "2 Centre for Sustainable Tropical Fisheries and Aquaculture coastal species is widely known, our understanding of niche",
 "2 CentreforEnvironment,FisheriesandAquacultureScience,PakefieldRoad,",
@@ -1831,10 +1856,12 @@ institution_name,country
 "2 DepartmentofDermatology,TaichungVeteransGeneralHospital,Taichung40705,Taiwan",Taiwan
 "2 DepartmentofEcologyandEvolutionaryBiologyandBiodiversityInstitute,UniversityofKansas,Lawrence,KS,USA",USA
 "2 DepartmentofEconomicSciencesandMathematicalMethods,UniversityofBariAldoMoro,Bari,Italy",Italy
+"2 DepartmentofFisheries,WetlandsandWildlifeManagement,BahirDarUniversity,P.O.Box5501,",
 "2 DepartmentofFisheriesGeneticsandBreeding,HabiganjAgriculturalUniversity,Habiganj3300,Bangladesh;",Bangladesh
 "2 DepartmentofFisheriesProductionandManagement,NationalKaohsiungUniversityofScienceand",
 "2 DepartmentofFisheriesandOceansCanada,NorthwestAtlanticFisheriesCentre,P.O.Box5667,",Canada
 "2 DepartmentofIchthyology,CaliforniaAcademyofSciences,55 known worldwide, five are reported to occur in the",
+"2 DepartmentofIntegrativeBiology,UniversityofGuelph,Guelph,ONN1G2W1,Canada;",Canada
 "2 DepartmentofLifeandEnvironmentalSciences,UniversityofCagliari,09126Cagliari,Italy;",Italy
 "2 DepartmentofLifeandEnvironmentalSciences,UniversityofCagliari,09126Cagliari,Italy;rcannas@unica.it",Italy
 "2 DepartmentofMarineBiology,Microbiologyand",
@@ -1877,10 +1904,12 @@ institution_name,country
 "2 GeorgeChenSharkResearchCenter,NationalTaiwanOceanUniversity,Keelung20224,Taiwan;",Taiwan
 "2 GeorgeChenSharkResearchCenter,NationalTaiwanOceanUniversity,Keelung202301,Taiwan",Taiwan
 "2 GeorgeWashington University Medical Center,Department ofPathology,Washington, DC,USA",USA
+"2 Graduate School of Natural and Applied Sciences, However, the information on the survival rates is extremely",
 "2 GraduateSchoolofFisheriesScienceandEnvironmentalStudies,NagasakiUniversity,",
 "2 GraduateSchoolofNaturalandAppliedSciences,FiratUniversity,Elazig23119,Turkey",Turkey
 "2 GuangdongProvincialKeyLaboratoryofFisheryEcologyEnvironment,Guangzhou510300,China",China
 "2 Hamra Avenue, Adelaide, South Australia 5165, Australia, †School of Biological Sciences,",Australia
+"2 HatherleyLaboratories,UniversityofExeter,CollegeofLifeandEnvironmentalSciences,Exeter,UK",UK
 "2 HawaiiInstituteofMarineBiology,UniversityofHawaiiatManoa,POBox1346,CoconutIsland,Kaneohe,HI96744,USA",USA
 "2 Hellenic Centre for Marine Research, Box 2214, 5.33 million years ago (Garcia-Castellanos et al. 2009). A",
 "2 Hollings Marine Lab, Medical University of South Carolina, central coast of Alaska in the eastern North Pacific Ocean.",
@@ -1933,6 +1962,7 @@ institution_name,country
 "2 MorphophysiologyLaboratory,FederalInstituteofEducation,ScienceandTechnologyofAmazonas–IFAM,",
 "2 MoteMarineLaboratory,1600KenThompsonPkwy,Sarasota,FL34236,USA;kbhull@mote.org",USA
 "2 NBFC,NationalBiodiversityFutureCenter,PiazzaMarina61,90133Palermo,Italy",Italy
+2 NOAA Northeast Fisheries Science Center,
 "2 NSW Department of Primary Industries, National Marine 6 College of Science and Engineering, James Cook University,",
 "2 NSWDepartmentofPrimaryIndustries,NationalMarineScienceCentre,CoffsHarbour,NSW2450,Australia",Australia
 "2 National Marine Science Centre, Southern Cross University, annual global harvest is 1,440,000 tonnes or between ~63",
@@ -2002,6 +2032,7 @@ institution_name,country
 "2 South China Sea Fisheries Research Institute, Chinese Academy of Fisheries Sciences, Guangzhou, China",China
 "2 South-east AquaticResearch InstituteandTennessee Aquarium, Chattanooga,TN, USA",USA
 "2 SouthAfricanInstituteforAquaticBiodiversity,",
+"2 SouthAfricanInstituteforAquaticBiodiversity, 6 Elasmo-Lab,ElasmobranchResearchLaboratory,Georg-Bonne-Str.",
 "2 SouthAfricanInstituteforAquaticBiodiversity,PrivateBag1015, et al. 1996)], amphibians (López and Ghirardi 2011; Toledo",
 "2 SouthAfricanInstituteforAquaticBiodiversity,SomersetStreet, them into Bspecies groups^: S. acanthias, S. megalops, and",
 "2 SouthChinaSeaFisheriesResearchInstitute,ChineseAcademyofFisherySciences,Guangzhou510300,China;",China
@@ -2132,6 +2163,8 @@ institution_name,country
 "2ChesapeakeBiologicalLaboratory,UniversityofMarylandCenterforEnvironmentalSciences,Solomons,",
 "2College of Animal Science, South China Agricultural University, 510640 Guangzhou, China. E-mail:sunyuan@scau.edu.cn",China
 "2College of Life Science, Hebei Normal University, 050016Shijiazhuang, HebeiProvince, P. R. China",China
+"2College of Science and Engineering, Flinders University, GPO Box 2100, Adelaide, South Australia",Australia
+"2College of Science and Engineering, which often select for varied phenotypes. This intraspecific variation is often over-",
 "2CollegeofBusiness,LawandGovernance,",
 "2CollegeofEducation,FloridaAtlantic Theolfactoryrosettesofelasmobranchsvaryinshapeandstructureamongspecies,",
 "2CollegeofPhysicalSciences,UniversityofAberdeen,Aberdeen,AB92UE,UK;e-mail:g.walkden@abdn.ac.uk",UK
@@ -2206,6 +2239,7 @@ institution_name,country
 "2Department ofEcology andEvolutionary Biology,University ofColorado,Boulder,Colorado80309",
 "2Department ofPhysical Sciences, Tarleton State University,",
 "2Department ofZoology, Christian-Albrechts-Universita€t, Christian-Albrechts-Platz 4,24118Kiel, Germany",Germany
+2DepartmentodeOceanografíayMedio,
 "2Departmentof Biology, Dalhousie University, Halifax,NS B3H4J1,Canada",Canada
 "2Departmentof Biology. Dalhousie University. Halifax,NS B3H4J1,Canada",Canada
 "2Departmentof Zoologyand Entomology, University ofthe Free State, PO Box 339, Bloemfontein, 9300, South",
@@ -2477,9 +2511,11 @@ institution_name,country
 "2Research Associate, South African Institute for Aquatic Biodiversity, Private Bag 1015, Grahamstown, 6140, South Africa",South Africa
 "2Research Institute for the Environment and Livelihoods, Charles Darwin University, Casuarina, NT, 0909, AUSTRALIA.",Australia
 "2ResearchDepartment,AsociaciónOndine, ofthespeciesaroundtheBalearicIslands(GSA05)andthesecondrecordfromofftheSpanish",
+"2ResearchDivision,SouthAfricanInstitutefor 1. The white-spotted wedgefish (Rhynchobatus djiddensis) is a Critically Endangered",
 2ResearchInstitutefortheEnvironmentand Theshark-likeraysofthefamilyRhinidae(wedgefishes)aregloballythreatenedwith,
 "2ResearchInstitutefortheEnvironmentandLivelihoods,SchooloftheEnvironment,CharlesDarwinUniversity,Darwin,NT,Australia",Australia
 "2Riverside Technologies Inc., Southeast Fisheries Science Center, Mississippi Laboratories, 3209 Frederic Street, Pascagoula, Missis-",
+"2Riverside Technology, Inc. for NOAA, National Marine Fisheries Service, Southeast Fisheries Science Center, Panama City,",Panama
 "2Riverside Technology, Inc., National Marine Fisheries Service, Southeast Fisheries Science Center—Mississippi Laboratory,",
 "2Rosenstiel School of Marine and Atmospheric Sciences, University of Miami, 4600 Rickenbacker Causeway, Miami,",
 "2SOKENDAI(TheGraduateUniversityforAdvancedStudies),Tachikawa, (GoldmanandAnderson,1999;Huveneersetal.,2013;Jewelletal.,",
@@ -2635,6 +2671,8 @@ institution_name,country
 "3 Department ofPathobiology, CollegeofVeterinary Medicine, Oklahoma StateUniversity, Stillwater,OK, USA",USA
 "3 Department ofPathobiology, The University ofConnecticut, Storrs, CT,USA",USA
 "3 DepartmentOceanographyandFisheries,FacultyofScienceandTechnology,UniversityoftheAzores,",
+"3 DepartmentofAgriculture,ForestryandFisheries(DAFF),BranchFisheriesManagement,",
+"3 DepartmentofBiological,GeologicalandEnvironmentalSciences,UniversityofCatania,95124Catania,Italy",Italy
 "3 DepartmentofBiologicalSciences,CaliforniaStateUniversityLongBeach,1250BellflowerBlvd.,LongBeach,CA90840,USA",USA
 "3 DepartmentofBiologicalSciences,MacquarieUniversity,MacquariePark,Sydney,NSW2109,Australia;",Australia
 "3 DepartmentofBiologicalSciences,MacquarieUniversity,Sydney,NSW2109,Australia;",Australia
@@ -2649,6 +2687,7 @@ institution_name,country
 "3 DepartmentofEconomicsandLaw,UniversityofMacerata,62100Macerata,Italy",Italy
 "3 DepartmentofEconomicsandLaw,UniversityofMacerata,62100Macerata,Italy;",Italy
 "3 DepartmentofFisheriesandOceansCanada,501UniversityCrescent,Winnipeg,MBR3T2N6,Canada;",Canada
+"3 DepartmentofIchthyology,CaliforniaAcademyofSciences,San 7 CenterofNaturalHistory,UniversityofHamburg,",
 "3 DepartmentofIchthyologyandHydrobiology,TomskStateUniversity,634050Tomsk,Russia",
 "3 DepartmentofLifeSciences,NaturalHistoryMuseum,Cromwell Boeger and Kritsky (1989), hexabothriids are one of",
 "3 DepartmentofLifeSciences,NaturalHistoryMuseum,Cromwell detailed ultrastructural studies on the female egg-forming",
@@ -2662,12 +2701,14 @@ institution_name,country
 "3 DepartmentofScience,Universityof‘Rome3’,VialeGuglielmoMarconi,00146Rome,Italy;",Italy
 "3 DepartmentofTourism,FacultyofSocialScienceEducation,UniversitasPendidikanIndonesia,",Indonesia
 "3 DepartmentofVertebratePaleontology,CincinnatiMuseumCenter,Cincinnati,OH45203,USA;",USA
+"3 DepartmentofZoologicalSciences,AddisAbabaUniversity,P.O.Box1176,1000AddisAbaba,Ethiopia;",
 "3 DepartmentofZoology,EdmonsonHall,UniversityofHawaiiatManoa,Honolulu,Hawaii98822,USA",USA
 "3 DepartmentofZoology,UniversityofCambridge,Cambridge,UK",UK
 "3 DivisionofFisheriesEcologyandAquaticResources,ResearchInstituteforAquacultureNo.2,",
 "3 Elasmo-Lab, Elasmobranch Research Laboratory, Georg-Bonne-Str. 83, 22609 Hamburg, Germany",Germany
 "3 Environment and Sustainability Unit, University of Exeter,",
 "3 Faculty of Biology Medicine and Health, University",
+"3 Faculty of Marine Science and Technology, Department nus depurator biomass increased due to the absence of their",
 "3 FacultyofHumanandSocialSciences,UniversityofAlgarve,CampusdeGambelas,8005-139Faro,Portugal",Portugal
 "3 FacultyofNaturalSciencesandMathematics,UniversityofMaribor,SI-2000Maribor,Slovenia",Slovenia
 "3 FamilyMedicineClinicandResearchInstituteofConvergenceofBiomedicalScienceandTechnology,",
@@ -2730,6 +2771,7 @@ institution_name,country
 "3 MillenniumInstituteof Oceanography(IMO), Universidadde Concepción, P.O.Box160-C,Concepción, Chile",Chile
 "3 Molecular Ecology and Evolution Programme, Department of Genetics, University of Pretoria, Pretoria, South Africa",South Africa
 "3 MorrisKahnMarineResearchStation,UniversityofHaifa,Haifa3498838,Israel",Israel
+3 NOAA Northeast Fisheries Science Center,
 "3 NSW Department of Primary Industries, Fisheries The importance of elasmobranchs to many fisheries has",
 "3 NSWDepartmentofPrimaryIndustries,FisheriesResearch,NationalMarineScienceCentre,",
 "3 NSWDepartmentofPrimaryIndustries,Wollongbar,NSW2477,Australia",Australia
@@ -2741,6 +2783,7 @@ institution_name,country
 "3 NewZealandDepartmentofConservation, (true seals, fur seals, sea lions, and walruses), are recov-",
 "3 Okeanos Research Centre of the University of the Azores,",
 "3 PSL Research University, EPHE-UPVD-CNRS, USR 3278 (Jackson et al. 2011; Parnell et al. 2013; Blonder et al. 2014).",
+3 Pacific Islands Fisheries Science Center,
 "3 Pacific Shark Research Center, Moss Landing Marine Laboratories, 8272 Moss Landing Rd., Moss Landing, CA",
 "3 PacificSharkResearchCenter,MossLandingMarineLaboratories,",
 "3 PhiladelphiaCollegeofOsteopathicMedicine,Philadelphia,PA19103,USA;kerincl@pcom.edu",USA
@@ -2750,6 +2793,7 @@ institution_name,country
 3 Present Address: School of Natural salinity crisis in isolated areas with riverine input (Pérès,
 "3 Presentaddress:FloridaAtlanticUniversity,",
 "3 Presentaddress:SimonFraserUniversity,8888UniversityDrive, 1995),plants(Smith1977;Kumarietal.2009),invertebrates",
+"3 Pritzker Laboratory for Molecular Systematics and Evolution, Field Museum of Natural",
 "3 Queensland University of Technology, Max Planck",
 "3 RadboudUniversity,Houtlaan4,6525,XZ superfamilies,especiallytheEutetrarhynchoideaGuiart,1927",
 "3 Research Associate, Department of Ichthyology, California Academy of Sciences, San Francisco, USA",USA
@@ -2818,6 +2862,8 @@ institution_name,country
 "331 Fort Johnson Road, 29412, Charleston, SC, USA. 6Florida Museum of Natural History, University of Florida,",USA
 "34DepartmentofIchthyologyandHydrobiology,TomskStateUniversity,Tomsk,Russia.35CoordenaçãodoCursodeEngenhariadePesca,UniversidadeFederaldoMaranhão–UFMACampus",
 "36 species of elasmobranchs inhabiting Mexican LWR were selected for this study. In the laboratory,",
+3ARC Centre of Excellence for Coral Reef,
+"3ARC Centre of Excellence for Coral Reef Studies, James Cook University, Townsville, QLD 4811,",
 "3ARC Centre of Excellence for Coral Reef Studies, James Cook University, Townsville, QLD 4811, Australia",Australia
 "3ARC Centre of Excellence for Coral Reef Studies, James Cook University, Townsville, Queensland 4811, Australia",Australia
 3ARC Centre of Excellence for Environmental,
@@ -2855,6 +2901,7 @@ institution_name,country
 3CentreforSustainableTropicalFisheriesand,
 "3CentreofAdvancedStudyinGeology,",
 "3Changing OceanResearch Unit,Institute for theOceans andFisheries, UniversityofBritish Columbia,",
+"3Charlotte Harbor Field Laboratory, Fish and Wildlife Research Institute,",
 "3Coastal Fisheries Division, Texas Parks and Wildlife Department, Rockport, TX 78382, USA",USA
 "3Coastal and Estuary Ecosystem Ecology Laboratory, School of Marine and Tropical Biology, James Cook University,",
 "3College of Science and Engineering, James Cook University, Townsville, QLD 4814, Australia",Australia
@@ -2917,12 +2964,15 @@ institution_name,country
 "3DepartmentofBiology,CollegeofCharleston,HollingsMarineLaboratory,331FortJohnsonRoad,Charleston,SC29412,USA",USA
 "3DepartmentofBiology,UniversityofKonstanz,ZoologyandEvolutionaryBiology,Konstanz,",
 "3DepartmentofBiology,UniversityofNewMexico,Albuquerque,NM,USA",USA
+"3DepartmentofBiologyandEnvironmentalScience,LinnaeusUniversity,Kalmar,Sweden",Sweden
 "3DepartmentofConservation,Bledisloe ened Species Categories and Criteria. Across 32 families, 103 species were",
 "3DepartmentofConservationBiology,",
+"3DepartmentofEnvironment,Forestryand",
 3DepartmentofEnvironmentalBiologyand,
 "3DepartmentofEnvironmentalBiologyandFisheriesScience,NationalTaiwanOceanUniversity,Taiwan",Taiwan
 3DepartmentofEnvironmentalScienceand,
 "3DepartmentofEnvironmentalandNaturalResources,Plant",
+"3DepartmentofEnvironmentandAgriculture,CurtinUniversity,Perth,WesternAustralia,Australia",Australia
 "3DepartmentofEstuarine&DeltaSystems,RoyalNetherlandsInstituteforSeaResearch(NIOZ),",Netherlands
 3DepartmentofFishandWildlife,
 "3DepartmentofForestry,Fisheries and theEnvironment, Oceansand CoastsBranch,2 EastPier Road,",
@@ -2994,6 +3044,7 @@ institution_name,country
 "3InstituteofBiologicalScience,FacultyofScience,UniversitiMalaya,KualaLumpur,Malaysia",Malaysia
 "3InstituteofMarineResearch(IMR),",
 "3InstituteofMarineResearch/Havforskningsinstituttet,Bergen,Norway",Norway
+"3InstituteofMarineScience,Universityof",
 "3InstituteofOceanographyandFisheries,Split,Croatia",Croatia
 "3InstituteofZoology,ZoologicalSocietyof",
 "3Integrated Marine Observing System (IMOS), University of Tasmania, Hobart, TAS 7004, Australia",Australia
@@ -3058,6 +3109,7 @@ institution_name,country
 "3Pacific Shark Research Center, Moss Landing Marine Laboratories, Moss Landing, CA 95039, USA",USA
 "3Pacific Shark Research Center, Moss Landing Marine Laboratories, Moss Landing, CA 95039, USA.",USA
 "3Pacific Shark Research Center, Moss Landing Marine Laboratories, Moss Landing, California, USA",USA
+"3Pacific Shark Research Center, Moss and interest in fisheries (which some notable exceptions). Here, we synthesize and",
 "3PacificSharkResearchCenter,MossLandingMarineLaboratories,8272MossLandingRoad,MossLanding,CA95039,USA,",USA
 "3PaleontologicalInstituteandMuseum,UniversityofZürich,Ch-8006Zürich,Switzerland,〈catalina.pimientohernandez@pim.uzh.ch〉",Switzerland
 "3Pelagic Fisheries Research Program, University of Hawaii, Marine Science Building 312, Honolulu, Hawaii 96822, USA",USA
@@ -3157,6 +3209,7 @@ institution_name,country
 "4 AnimalCareDepartment,AquariumoftheBay,SanFrancisco,CA94133,USA;",USA
 "4 Aquaculture and Fisheries Group, Wageningen University, viewpoint on marine ecosystems, by assembling various",
 "4 Aquatic Technology Laboratories, Agricultural Technology Research Institute, Taiwan, China",China
+"4 Australian Institute of Marine Science, PMB No 3, Townsville, Qld 4810 Australia.",Australia
 "4 BGIEducationCenter,UniversityofChineseAcademyofSciences,Shenzhen518083,China",China
 "4 Bamfield Marine Sciences Centre, Bamfield, BC V0R 1B0, Simpson and Ogden 1932). A subset of marine elasmo-",
 "4 Biodiversity Program, Taiwan International Graduate Program, Academia Sinica and National Taiwan Normal University, Taipei, Taiwan",Taiwan
@@ -3198,6 +3251,7 @@ institution_name,country
 "4 DepartmentofBiologicalSciences,IndianaUniversitySouth",India
 "4 DepartmentofBiologicalSciences,MacquarieUniversity,Sydney,NSW2109,Australia",Australia
 "4 DepartmentofBiologicalandEnvironmentalSciencesandTechnologies,DiSTeBA,UniversityofSalento,",
+"4 DepartmentofBiology,BahirDarUniversity,P.O.Box79,6000BahirDar,Ethiopia;wassie74@gmail.com",
 "4 DepartmentofBiology,EcologyandEarthSciencesDIBEST,UniversityofCalabria,87027Rende,Italy",Italy
 "4 DepartmentofBiology,EcologyandEarthSciencesDIBEST,UniversityofCalabria,87027Rende,Italy;",Italy
 "4 DepartmentofBiology,FacultyofSciences,UniversityofGuilan, Trypanobatoida Olson, Caira, Jensen, Overstreet, Palm &",
@@ -3209,6 +3263,7 @@ institution_name,country
 "4 DepartmentofGeology,UniversityofOtago,Dunedin9016,NewZealand",
 "4 DepartmentofIchthyology,CaliforniaAcademyofSciences,SanFrancisco,CA94118,USA",USA
 "4 DepartmentofIchthyology,DagestanStateUniversity,367000Makhachkala,Russia",
+"4 DepartmentofIchthyologyandFisheriesScience(DIFS),RhodesUniversity,Grahamstown6139,SouthAfrica",
 "4 DepartmentofIntegrativeBiologyandBiodiversityInstituteofOntario,UniversityofGuelph,",
 "4 DepartmentofLifeSciences,NaturalHistoryMuseum,Cromwell Tinsley 1973; Brennan and Ramasamy 1996; Kearn 2004;",
 "4 DepartmentofMathematicsandStatistics,MacquarieUniversity,",
@@ -3370,8 +3425,10 @@ institution_name,country
 "4Department ofMarineScience andFisheries, College of",
 "4DepartmentofBiodiversity,FacultyofMathematics,NaturalSciencesandInformationTechnologies,UniversityofPrimorska,Koper,Slovenia",Slovenia
 "4DepartmentofBiologicalSciences, UniversityofRhode Island, Kingston,RI 02881,USA",USA
+"4DepartmentofBiologicalSciences,Clemson explored, for the first time, the population genetics of L. nasus at a regional",
 "4DepartmentofBiologicalSciences,Florida",
 "4DepartmentofBiologicalSciences,Macquarie resource use and any associated ontogenetic patterns. The results indicated large",
+"4DepartmentofBiologicalSciences,University gone major population declines. However, there remains a need for species",
 "4DepartmentofBiology,EcologyandEarthScience(DiBEST),UniversityofCalabria,ArcavacatadiRende,",
 "4DepartmentofBiology,UniversityofMassachusettsAmherst,Amherst,MA,USA",USA
 "4DepartmentofBiology,UniversityofVictoria,Victoria,BCV8W2Y2BritishColumbia,Canada",Canada
@@ -3456,6 +3513,7 @@ institution_name,country
 "4MauritanianInstituteofOceanographicResearchandFisheries,Nouadhibou,Mauritania",
 "4MovementofLifeInitiative,SmithsonianConservationBiologyInstitute,1500RemountRoad,FrontRoyal,Virginia22630USA",USA
 "4NOAA Southwest Fisheries Science Center, Environmental Research Division, Monterey, California",
+"4NOAA, National Marine Fisheries Service, Southeast Fisheries Science Center, Panama City, Florida 32408, USA",USA
 "4NSW Department of Primary Industries, National Marine Science Centre, Coffs Harbour, NSW 2450, Australia",Australia
 "4NSWDepartmentofPrimaryIndustries, itudes across the Indian Ocean, the Indo-Pacific region, and the western Pacific",India
 "4NSWDepartmentofPrimaryIndustries,NationalMarineScienceCentre,CoffsHarbour,NSW2450,Australia",Australia
@@ -3495,6 +3553,7 @@ institution_name,country
 "4School of Mathematics and Physics, The branchs is often lacking, because elasmobranchs are usually non- target species, often",
 "4SchoolofBiologicalSciences(Zoology),TheUniversityofAberdeen,Aberdeen,Scotland,UK",UK
 "4SchoolofBiologicalandMarineSciences,UniversityofPlymouth,DrakeCircus,Plymouth,Devon,PL48AA,UK",UK
+"4SchoolofLifeSciences,UniversityofTechnologySydney,Sydney,NewSouthWales,Australia",Australia
 "4SchoolofMarineScienceandEngineering,UniversityofPlymouth,DrakeCircus,Plymouth,DevonPL48AA,UK",UK
 "4SchoolofMarineSciences,Universityof",
 "4SchoolofMarineandAtmosphericSciences,StonyBrookUniversity,StonyBrook,NY11790,USA",USA
@@ -3503,6 +3562,7 @@ institution_name,country
 "4Shark Research and Conservation Program, Cape Eleuthera Institute, Eleuthera, The Bahamas",
 "4Singapore Centre for Environmental Life Sciences Engineering, Nanyang Technological University, Singapore,",Singapore
 "4SmithsonianTropicalResearchInstitute,CenterforTropicalPaleoecologyandArchaeology,Box2072,Panama,RepublicofPanama",Panama
+4South African Institute for Aquatic the IUCN Red List of Threatened Species Categories and Criteria. Ghost sharks have,South Africa
 "4South Australian Research and Development Institute, PO Box 120, Henley Beach, South Australia 5022, Australia",Australia
 "4South Carolina Department of Natural Resources, Marine Resources Division, 217 Fort Johnson Road, Post Office Box 12559,",
 "4South Carolina Department of Natural Resources, Marine Resources Research Institute, Charleston, South Carolina, USA",USA
@@ -3548,14 +3608,17 @@ institution_name,country
 "5 Department of Earth, Ocean, and Environment, University of South Carolina",
 "5 Department of Marine Science,",
 "5 Department of Marine Sciences, Charles Darwin Research of extinction due to overfishing and other anthropogenic",
+"5 DepartmentIchthyologyandFisheriesSciences,RhodesUniversity,",
 "5 DepartmentofBiochemistry,InstituteforProteinDesign,UniversityofWashington,Seattle,WA98195,USA;",USA
 "5 DepartmentofBiologicalSciences,FloridaAtlanticUniversity,BocaRaton,FL33431,USA;kajiura@fau.edu",USA
 "5 DepartmentofBiologicalSciences,FloridaInternationalUniversity,Miami,FL,USA",USA
 "5 DepartmentofBiology,CollegeofCharleston,Charleston,SC",
 "5 DepartmentofBiology,DalhousieUniversity,1355OxfordSt,P.O.Box15000,Halifax,NSB3H4R2,Canada",Canada
 "5 DepartmentofBiology,UniversityofYork,York,UK group-livingspecies,socialinteractionsareafundamentalpart",UK
+"5 DepartmentofBiomedical,DentalandMorphologicalandFunctionalImaging,UniversityofMessina,",
 "5 DepartmentofChemistryandChemicalEngineering,OvidiusUniversityofConstanta,",
 "5 DepartmentofEnvironmentalSciences,Zoology,UniversityofBasel,Vesalgasse1,4051Basel,Switzerland",Switzerland
+"5 DepartmentofIntegrativeBiology,CentreforBiodiversityGenomics,UniversityofGuelph,",
 "5 DepartmentofMarineSciences,UniversityoftheAegean,81100Mytilene,Greece;",Greece
 "5 DepartmentofPhysicalSciences,Earth,andEnvironment,UniversityofSiena,53100Siena,Italy",Italy
 "5 DepartmentofPhysicalSciences,EarthandEnvironment,UniversityofSiena,53100Siena,Italy",Italy
@@ -3674,6 +3737,7 @@ institution_name,country
 "5Faculty for Natural Sciences and Mathematics and Faculty of Arts, University of Maribor,",
 "5Fisheries NSW, Department of Primary Industries, Sydney Institute of Marine Science, Mosman, New South Wales 2088,",
 "5Fisheries Resource Division, Southwest Fisheries Science Center, NOAA Fisheries, La Jolla, California 92037, USA",USA
+"5Fisheries and Aquatic Sciences Program, University of Florida, 7922 NW 71st Street, Gainesville, Florida 32653, USA",USA
 "5Florida Atlantic University, Harbor Branch Oceanographic Institute, Fort Pierce, Florida, U.S.A., 34949.",
 "5Florida State University Coastal and Marine Laboratory, St. Teresa, Florida 32358, USA",USA
 "5FloridaAtlanticUniversity,HarborBranchOceanographicInstitute,FortPierce,Florida,USA",USA
@@ -3700,6 +3764,7 @@ institution_name,country
 "5Marine Laboratory, MarineScotland—Science, Aberdeen AB119DB, UK",UK
 "5Marine Region, California Department of Fish and Wildlife, 20 Lower Ragsdale Drive, Suite 100, Monterey, CA 93940, USA",USA
 "5Marine Scotland Science, Marine Laboratory, Aberdeen AB11 9DB, UK",UK
+"5MarineScienceProgram,DepartmentofBiodiversity,ConservationandAttractions,Perth,WesternAustralia,Australia",Australia
 "5MarineandEstuarineEcologyUnit,Schoolof",
 "5MieUniversity,Tsu,Mie,Japan",Japan
 "5Moss Landing Marine Laboratories, Pacific Shark Research Center, Moss Landing, California",
@@ -3746,6 +3811,7 @@ institution_name,country
 "5SchoolofLifeSciences,UniversityofKwaZulu-Natal,Durban,SouthAfrica",
 "5SchoolofMathematicsandStatistics,",
 5SchoolofNaturalandEnvironmental,
+"5SchooloftheEnvironment,UniversityofToronto,Toronto,ON,Canada,6ProyectoMantaPacificMexico,Bahíade",Canada
 "5ScienceandResearchCenter,InstituteforBiodiversityStudies,UniversityofPrimorska,Koper,Slovenia",Slovenia
 "5Senckenberg Biodiversity and Climate Research Centre; Senckenberg Gesellschaft für Naturforschung; Frankfurt/ M., Germany",Germany
 "5Sharks and Rays Conservation Research Program, Mote Marine Laboratory & Aquarium, 1600 Ken Thompson Parkway, Sarasota,",
@@ -3787,6 +3853,7 @@ institution_name,country
 "6 DepartmentofMarineandCoastalScience,RutgersUniversity,NewBrunswick,NJ08901,USA",USA
 "6 DepartmentofMolecularandCellularPharmacology,MillerSchoolofMedicine,UniversityofMiami,",
 "6 DepartmentofPharmaceuticalandComputerPhysics,FacultyofPharmacy,CarolDavilaUniversityof",
+"6 DepartmentofVeterinarySciences,UniversityofMessina,VialeDell’annunziata,98168Messina,Italy",Italy
 "6 Environmental Economics Knowledge Center, NOVA-SBE, imposed by fishing activities, their ability to adapt to such",
 "6 Fisheries and Aquatic Science Program, School of Forest Resources and Conservation,",
 "6 FloridaMuseumofNaturalHistory,DickinsonHall,1659MuseumRoad,UniversityofFlorida,",
@@ -3863,6 +3930,7 @@ institution_name,country
 "6FacultyofBiosciencesandAquaculture, Atlanticthereislittleworkongeneflowwithintheregion,whichiscurrentlymanaged",
 "6Fish Ecology and Conservation Physiology Laboratory, Ottawa-Carleton Institute of Biology and Institute of Environmental",
 "6Fish and Wildlife Research Institute, Florida Fish and Wildlife Conservation Commission, Charlotte Harbor Field",
+"6Fish and Wildlife Research Institute, Florida Fish and Wildlife Conservation Commission, St. Petersburg, Florida 33701, USA",USA
 "6FisheriesDepartmentofMalaysia,Putrajaya, elasmobranchstosupportconservationandfisheriesmanagementdecisions.",Malaysia
 "6Florida Museum of Natural History, 1659 Museum Road, University of Florida, Gainesville, FL 32611 USA.",USA
 "6Herndon Solutions Group, LLC, NASA Environmental and Medical Contract, NEM-022 Kennedy Space Center, FL 32899, USA",USA
@@ -3881,6 +3949,7 @@ institution_name,country
 "6National Park Service, South Florida Natural Resource Center, Homestead, Florida 33034, USA",USA
 "6NorwegianPolarInstitute,N-9296Tromsø,Norway,7AustralianInstituteofMarineScience,PMB3TownsvilleMC,Townsville",Norway
 "6PflegerInstitute ofEnvironmental Research, Oceanside, California 92054",
+6Research Institute for the Environment,
 "6Rosenstiel School of Marine Science,",
 "6Rosenstiel School of Marine and Atmospheric Sciences, University of Miami, Miami, FL, USA",USA
 6RosenstielSchoolofMarineandAtmospheric WildlifeConservationCommission(FWC)wereanalysedusingthelensofactor–,
@@ -3895,6 +3964,7 @@ institution_name,country
 "6SchoolofBiologicalSciences,Universityof thecoast.Commercial,recreationalandcharterboatfishersprovidedthemajorityof",
 "6SchoolofBiomedicalSciences,TheUniversityofQueensland,StLucia,QLD,Australia",Australia
 "6SchoolofEnvironmentalandForestSciences,UniversityofWashington,Seattle,WA,USA",USA
+"6SchoolofLifeSciences,Universityof datafromcompetitiveshoreanglingandsharknetstoinvestigatethesizecompo-",
 "6SchoolofMarineScienceandTechnology, oughrevisionofmuseumcollections.Therecordspresentedhereexpandthespecies'",
 "6SchoolofMathematicsandPhysics,TheUniversityofQueensland,StLucia,Queensland,Australia",Australia
 "6Section for Ecosystem based Marine Management, National Institute of Aquatic Resources (DTU-Aqua),",
@@ -3903,6 +3973,7 @@ institution_name,country
 "6Smithsonian Tropical Research Institute, PO Box 0843-03092, Panamá City, Panamá",
 6SouthAfricanInstituteforAquatic site fidelity with 76% of sharks recaptured within 50km of the original tagging,
 "6TerrestrialEcosystemResearchNetwork,TheUniversityofQueensland,StLucia,QLD4072,Australia",Australia
+"6TheAustralianInstituteofMarineScience,Crawley,WesternAustralia,Australia",Australia
 "6University of Hawaii, Joint Institute for Marine and Atmospheric Research, Honolulu, USA",USA
 "6UniversityofQueensland,Brisbane,Qld, ing, and the socio-political implications of human encounters with some dangerous",
 "6Virginia Institute of Marine Science, College of William and Mary, Route 1208, Greate Road, Gloucester",
@@ -3993,6 +4064,7 @@ institution_name,country
 "7School of Biological Sciences, University of Nebraska, Lincoln",
 "7SchoolofMarineandAtmosphericScience&InstituteforOceanConservationScience,StonyBrookUniversity,StonyBrook,NewYork,USA",USA
 "7Sharks Studies Center (C.S.S.), Massa Marittima, Italy",Italy
+"7South Florida Regional Laboratory, Fish and Wildlife Research Institute,",
 7SouthCarolinaDepartmentofNatural mortalityremainamajorconcerntothespeciespopulationrecovery.Thisexamined,
 "8 Bolin Centre for Climate Research, Stockholm University, Stockholm, Sweden",Sweden
 "8 CentreforApplicationsinNaturalResourceMathematics,SchoolofMathematicsandPhysics,The",
@@ -4039,6 +4111,7 @@ institution_name,country
 "8EarthtoOceanResearchGroup,Department",
 "8FloridaInternationalUniversity,Miami,FL,",
 "8HawaiiInstitute ofMarineBiology, UniversityofHawaii atManoa, Kaneohe, HI,USA",USA
+"8Herndon Solutions Group, LLC, NASA Environmental and Medical Contract, Kennedy Space Center, Florida 32899, USA",USA
 "8ICAR-Central Marine Fisheries Research Institute, Kochi, Kerala, India",India
 "8Marine Science and Fisheries Centre (Biodiversity Project), PO Box 467, PC 100 Muscat, Sultanate of Oman",Oman
 "8Museum of Zoology and Comparative Anatomy of Modena, University of Modena and Reggio Emilia, Modena, Italy",Italy
@@ -4281,6 +4354,7 @@ Aid in Sportfish Restoration; University,
 "AlaskaFisheriesScienceCenter,NationalOceanicand densities inthePugetSoundfoodweb.Asgeneralists,",
 "AlaskaPacificUniversity,UnitedStates strati ed - random design",
 "Alastair Varley Harry, Centre for Sustainable",
+"AlastairMartinMitriBaylis, UnitedStates,9RedSeaResearchCenterandComputationalBiosciencesResearchCenter,KingAbdullahUniversityof",
 "Alduy, 66860 Perpignan Cedex, France. 2Institute for Biodiversity and Ecosystem Dynamics, University of",France
 "AlexanderIvanov[aoi@ai1205.spb.edu],DepartmentofPalaeontology,St.PetersburgUniversity,16Liniya29,199178",
 "Alexandria,Egypt,7DipartimentodiScienzedellavitaedell’ambiente,UniversityofCagliari,",Egypt
@@ -4293,6 +4367,7 @@ All use subject to University of Chicago Press Terms and Conditions (http://www.
 "Alma Mater Studiorum University of Bologna,",
 "Amherst, MA, 01003, U.S.A., †Organismic and Evolutionary Biology Program, University of",
 "Amherst, Massachusetts 01002 and Department of Zoology,",
+"Amherst,MA,UnitedStates,7RosenstielSchoolofMarineandAtmosphericScience,UniversityofMiami,Miami,FL,",
 "Ana Ver(cid:1)ıssimo, Research Center in Biodiversity and Genetic Resources, CIBIO – University of",
 "Analysis, Department of Infectious Disease",
 "Analysis, University of Western Australia, Crawley, WA 6009, Australia. 5Norwegian Polar Institute, Fram Centre, N-",Australia
@@ -4380,6 +4455,7 @@ Association (MBA) in Plymouth and the Centre for common skate Dipturus batis fro
 "Auburn University, Auburn, Alabama 36849, USA",USA
 Auckland Mail Centre,
 "Auckland, Auckland, New Zealand, ||School of Life Sciences, La Trobe University, Melbourne, Australia",Australia
+"Auckland,NewZealand,3NationalInstituteofWaterandAtmosphericResearch(NIWA),Hamilton,NewZealand,4Fisheries",
 "Australia , ‡Centre for Sustainable Tropical Fisheries & Aquaculture, College of Marine and",Australia
 "Australia 7 Marine Data Technology Hub, James Cook University,",Australia
 "Australia Bielefeld University, Universitätsstraße 25, 33615 Bielefeld,",Australia
@@ -4431,6 +4507,7 @@ AustralianInstituteofMarineScience,Australia
 AustralianInstituteofMarineScience (individuals/100hooks/hour)werecoupledwithasuiteofpotentiallypredictivevariables:,Australia
 AustralianInstituteofMarineScience Clupeidae decreased in juvenile sharks larger than 893 mm Fork Length (FL) (∼1 year,Australia
 "AustralianInstituteofMarineScience Jean-NoëlDruon1*,StevenCampana2,FredericVandeperre3,4,Fa´bioH.V.Hazin5,",Australia
+"AustralianInstituteofMarineScience mobulidrays,aresubjectedtoexploitationandoverfishingincertainpartsoftheworld.",Australia
 "AustralianInstituteofMarineScience movements are influenced by factors such as ocean currents, thermobiological",Australia
 AustralianInstituteofMarineScience published in the last 10 years) identified ten SRS-derived environmental variables that,Australia
 AustralianInstituteofMarineScience residencyofjuvenilereefmantarays(Mobulaalfredi)atarecentlydiscoverednurserysitein,Australia
@@ -4668,6 +4745,7 @@ Blanchard 1896; this species was transferred to Limnotrache- Fisheries Research 
 "BrendanD.Shea 1DepartmentofFishandWildlifeConservation,VirginiaTech,Blacksburg,VA,UnitedStates,2Beneath",
 "Brisbane, Qld 4072, Australia, ∗∗School of Biological Sciences, The University of",Australia
 "Bristol), Julian C. Partridge (University of Bristol), David W. Sims tunas,billfish,andsunfish.",
+"Brittany Finucci, National Institute of Water Mauritania), the East China Sea, New Zealand and off the northwest coast of South",New Zealand
 "BrittanyFinucci,NationalInstituteofWater",
 "BrittanyFinucci,ResearchInstituteforthe",
 Broek 1979; Davey 1980; Black 1982). Shark gills are bags. In the laboratory each sample was thawed and dissected into five,
@@ -4776,6 +4854,7 @@ CambridgeUniversityPress The first fish tapeworm – larvae of trypanorhynchs (n
 CambridgeUniversityPressonbehalfof,
 "CambridgeUniversityPressonbehalfof (Guerrero and Arana, 2009; Céspedes et al., 2016).",
 "CambridgeUniversityPressonbehalfof Over the previous millennia, humans have dramatically transformed ecosystems and pushed",
+"CambridgeUniversityPressonbehalfof edly, the swimming performance of Greenland sharks was limited by cold waters (∼2°C)",
 CambridgeUniversityPressonbehalfof in deep waters along the edge of the continental shelf of Morocco and Western Sahara,
 "CambridgeUniversityPressonbehalfof ontogenetic shifts in habitat, such as the shift from nursery areas to adult grounds (Castro,",
 "CambridgeUniversityPressonbehalfof skate (Dipturus batis)) (Fowler and Laffoley, 1993; Pinnion et al., 2007; Lewis et al., 2008).",
@@ -4845,6 +4924,8 @@ Center(SOSF-DRC)andFloridaInternational,
 "Center,AcademiaSinica,TAIWAN coast,withtheMusandamregionofOmanasecondaryareaofinterest.AtAlShaheen,",USA
 "Center,ETHZürich,Zürich,Switzerland,5ResearchandConservationDepartment,Georgia",Switzerland
 "Center,FloridaInternational",
+"Center,Gainesville,FL,UnitedStates,3CoibaScientificStation(COIBAAIP),CityofKnowledge,PanamaCity,Panama",Panama
+"Center,KingAbdullahUniversityofScienceandTechnology,Thuwal,SaudiArabia,3DepartmentofFishandWildlife",
 "Center,LaJolla,California",
 "Center,NationalMarineFisheriesService,",
 "Center,NationalMarineFisheriesService,National Q Temperaturecoefficient = (enzyme",
@@ -5085,6 +5166,7 @@ Computedtomography placedcenterofmass.Raysthatswimintherajiformmodehadacircularo
 Conclusions: From this data we conclude that (1) center of carpet shark biodiversity has shifted during the last 100,
 "Connecticut,Storrs,CT06269-3043,USA: 2DepartmentofAnimalBiology,",USA
 "Connecticut06269-3043,USA;2DepartmentofEcology&EvolutionaryBiology,BiodiversityInstitute,Universityof",USA
+"Connor R. Gervais, Department of Biological",
 "Conrad W. Speed, Australian Institute an increase in sharks was associated with a change in structure of the mesopredatory",Australia
 "Conservation Biology Division, Northwest Fisheries Science Center, National Marine Fisheries Service,",
 "Conservation Biology Institute (SI), elasmobranch using",
@@ -5095,6 +5177,7 @@ Conclusions: From this data we conclude that (1) center of carpet shark biodiver
 "Conservation, College of Life and Environmental Sciences, University of Exeter, Penryn Campus, Penryn, UK. 5Joint Research Centre (JRC), European Commission, Ispra, Italy. 6Department of",UK
 "Conservation, University of Massachusetts, present unique management challenges as fish migrate across international bounda-",
 "Conservation, University of the Western Cape, Bellville, Cape Town, South Africa. 4South African Institute for",South Africa
+"Conservation,VirginiaTech,Blacksburg,VA,UnitedStates,4TrinityCollegeDublin,Dublin,Ireland",Ireland
 "ConservationBiology,TexasA&MUniversity,CollegeStation,TX,UnitedStates",
 "ConservationBiologyResearchGroup,DepartmentofBiology,UniversityofMalta,MSD2080Msida,Malta;",Malta
 "ConservationBiologyResearchGroup,DepartmentofBiology,UniversityofMalta,MsidaMSD2080,Malta",Malta
@@ -5287,6 +5370,7 @@ DEPARTMENT OF,
 "DePaul University, Chicago, Illinois, USA",USA
 "Deakin University, Queenscliff, VIC, Australia",Australia
 "DeakinUniversity,Australia",Australia
+"DeakinUniversity,Australia Keywords:bio-logging,camera,360,shark,telemetry,monitoring",Australia
 "Decisions, The School of Biological identification of critical habitat, linkages between these habitats and threat- mitigation",
 "DeflorioM,RomanovEV,JungA, BarcelonaZoo,Barcelona,Spain,27DepartmentofBiological,GeologicalandEnvironmentalSciences,Laboratoryof",Spain
 "Delaware Biotechnology Institute, University of Delaware, Circle, Myrtle Beach, SC 29577, USA",USA
@@ -5330,6 +5414,7 @@ Department of Biological Sciences at Western Illinois,
 "Department of Biological Sciences, Marine Science Program,",
 "Department of Biological Sciences, Philadelphia College of Pharmacy and Science, 600 South 43rd Street,",
 "Department of Biological Sciences, Private Bag X3, University of Cape Town, Rondebosch,",
+"Department of Biological Sciences, Simon",
 "Department of Biological Sciences, SimonFroser(Jniversity, Burnaby,B.C.V5A l56",
 "Department of Biological Sciences, University of Alabama,",
 "Department of Biological Sciences, University of Calgary, Canada",Canada
@@ -5424,6 +5509,7 @@ Department of Life Sciences,
 "Department of Marine Biology and Ecology, Rosenstiel School of Atmospheric Science, University of Miami,",
 "Department of Marine Biology, University of Liverpool, Port Erin, Isle of Man, U.K.",
 "Department of Marine Ecosystems and Society, Rosenstiel School of Atmospheric Science, University of Miami,",
+"Department of Marine Science and Limnology, Çanakkale scarce. Demirel et al. (2020) state that the Black Sea stocks",
 "Department of Marine Science and Limnology, Çanakkale the conversion of length into weight, and weight into length",
 "Department of Marine and Environmental Science, Hampton sory modalities (Bleckmann and Hofmann 1999; Hodgson",
 "Department of Marine research and Conservation, Charles",
@@ -5572,6 +5658,7 @@ DepartmentofBiol-,
 "DepartmentofBiologicalSciences,MacquarieUniversity, encountered in the species evolutionary past (Kawecki",
 "DepartmentofBiologicalSciences,MacquarieUniversity, results likely have important implications for behavioural",
 "DepartmentofBiologicalSciences,MacquarieUniversity,NorthRyde,",
+"DepartmentofBiologicalSciences,MacquarieUniversity,Sydney,NSW,Australia",Australia
 "DepartmentofBiologicalSciences,NovaSoutheastern SchoolofLifeandEnvironmentalSciences,Centrefor",
 "DepartmentofBiologicalSciences,SalveReginaUniversity,",
 "DepartmentofBiologicalSciences,Simon",
@@ -5929,7 +6016,9 @@ Ecuador. 3Universidad San Francisco de Quito (USFQ) and UNC-Chapel Hill Galapago
 "Editedby: 6CooperativeInstituteforMarineEcosystemsandClimate,UniversityofCalifornia,SantaCruz,SantaCruz,CA,",
 "Editedby: RegionalGovernmentofMadeira,Funchal,Portugal,6GlobalOceanInstitute,WorldMaritimeUniversity,Malmo,Sweden,",Portugal
 "Editedby: SantaBarbara,SantaBarbara,CA,UnitedStates,4BrenSchoolofEnvironmentalScienceandManagement,University",
+"Editedby: SchoolofBiologicalSciences,MonashUniversity,Clayton,VIC,Australia",Australia
 "Editedby: Sciences,TheUniversityofAuckland,Auckland,NewZealand,6DepartmentofStatistics,TheUniversityofAuckland,",
+"Editedby: UnitedStates,8DanielP.HaertherCenterforConservationandResearch,JohnG.SheddAquarium,Chicago,IL,",
 "Editedby: andEnvironmentalSciencesCentre,ESTMPolytechnicInstituteofLeiria,Peniche,Portugal,3MuseuDosTubarões,",Portugal
 "EditedbyCharlesF.Stevens,SalkInstituteforBiologicalStudies,LaJolla,CA,andapprovedJune4,2010(receivedforreviewFebruary23,2010)",
 "EditedbyJamesH.Brown,UniversityofNewMexico,Albuquerque,NM,andapprovedMarch31,2015(receivedforreviewJanuary8,2015)",Mexico
@@ -5995,6 +6084,8 @@ EnsenadaCenterforScientific,
 "Environment, The University of Massachusetts Boston, Boston, MA 02125, USA. 3ARC Centre of Excellence for",USA
 "Environment,MacquarieUniversity,Sydney,NSW2109,Australia, extinction risk is very high unless the population",Australia
 EnvironmentInstituteandSchoolofEarthand Keywords,
+"Environmental Affairs, University of Washington, Seattle, USA. *email: carlisle@udel.edu",USA
+"Environmental Engineering, Stanford University, Palo Alto, CA, USA. 3Department of Life and Environmental",USA
 "Environmental Modelling, University of St. Andrews,The Observatory,Buchanan Gardens,St. Andrews, Scotland, UK",UK
 "Environmental Research, The University of Queensland, St Lucia QLD 4072, Australia,",Australia
 "Environmental Science and Management, University of California, Santa Barbara, Santa Barbara, CA, USA; 6Scripps Institution of Oceanography, University",USA
@@ -6108,6 +6199,7 @@ FederalInstituteofEsp´ıritoSanto individuals: Implications for,
 "FederalUniversityofParaná,Brazil",Brazil
 "FederalUniversityofParaná,Brazil are consistent with mesocosm experiments and support the influence of changing",Brazil
 "FederalUniversityofParaná,Brazil maturity(DW50,952.0mmvs.764.2mm;Age50,6.0yearsvs.3.5years).Bothmales",Brazil
+"FederalUniversityofParaná,Brazil water-basedrecreationalactivities.",Brazil
 "Fellowships at the Marine Biological Laboratory, and by a grant",
 Female scalloped hammerhead sharks move offshore at a smaller size than do males to form schools,
 "FernandesT,AustinTand University,Edinburgh,UnitedKingdom,5ReefEnvironmentalEducationFoundation(REEF),KeyLargo,",
@@ -6149,6 +6241,7 @@ Fisheries Department (http://www.fao.org/fi/ipa/,
 "Fisheries ScienceCenter,2725Montlake Blvd.East, Seattle, productivity led to the identification of three regions",
 "Fisheries and Aquaculture Centre, Institute for Marine",
 "Fisheries and Illinois Aquaculture Center, Southern Illinois University",
+"Fisheries and Ocean Sciences, University of Alaska Fairbanks, Fairbanks, AK, USA; 5Saving the blue, Cooper City, FL, USA and 6Integrative Biology, University",USA
 "Fisheries and Oceans Canada, 501 University Crescent, contributing a potential tool for climate-change vulner-",Canada
 "Fisheries andOceans Canada, GulfFisheries Centre,PO Box",Canada
 "Fisheries for Scotland, Marine Laboratory, Victoria median papilla of the inner ring (Fig. 5). The double",
@@ -6195,9 +6288,11 @@ Fishes were collected from the fishing centres of the,
 "FishingandFisheriesResearchCentre,SchoolofEarthandEnvironmentalSciences,JamesCookUniversity,Townsville,Queensland,Australia",Australia
 Flag) was oV the southern tip of Komodo Island in an area tected areas centered around aggregation sites could help,
 "Flaminio9,00196Rome,Italy.4DepartmentofIntegrativeMarineEcology(EMI),StazioneZoologicaAntonDohrn–NationalInstituteofMarineBiology,Ecology",Italy
+"Flinders University, Adelaide, SA, Australia",Australia
 "Flinders University, Australia",Australia
 "Flinders University, Australia including a large number of residential juveniles, to evaluate reproductive dispersal in light",Australia
 "Flinders University, Sturt Road, Adelaide, South Australia 5043, Australia, ‡Graduate School",Australia
+Flinders University; Macquarie University,
 "FlindersUniversity,Adelaide,SA,Australia",Australia
 "FlindersUniversity,Australia",Australia
 "FlindersUniversity,Australia MalcolmP.Francis20,HumbertoHazin34andPauloTravassos35",Australia
@@ -6207,6 +6302,7 @@ Florida Atlantic University,
 Florida International University,
 Florida International University Marbec,
 "Florida International University,",
+"Florida International University, 3000 NE 151 Street, MSB 350, North Miami, FL, 33181,",
 "Florida International University, 3000 NE 151st St, Miami, 2007).",
 "Florida International University, Biscayne Bay Campus MSB,",
 "Florida International University, North Miami, FL 33181,",
@@ -6220,6 +6316,7 @@ Florida International University Marbec,
 FloridaAtlanticUniversity;FloridaAtlantic,
 "FloridaInstituteofTechnology, returned; they remained in the nursery under a wide",
 "FloridaInstituteofTechnology,Melbourne,",
+"FloridaInternationalUniversity,",
 "FloridaInternationalUniversity, Uppertrophiclevelpredatorsdramaticallyimpactedbyfisheriesincludethelarge-bodied",
 "FloridaInternationalUniversity, Wetookadvantageoftheirattractiontothissitetoexaminetheirsocialbehaviorduring",
 "FloridaInternationalUniversity, habitat and diet, we argue that these U-shaped dives are likely to be a strategy for",
@@ -6254,6 +6351,7 @@ FloridaAtlanticUniversity;FloridaAtlantic,
 "Francisco State University, 1600 Holloway Ave, San Francisco, CA, USA. 9James Cook University, Townsville, QLD,",USA
 "FranciscoLeitão, Crawley,WA,Australia,2MarineFuturesLaboratory,SchoolofBiologicalSciences,Universityof",Australia
 "Frankfurt,FrankfurtamMain,Germany.3DepartmentofEnvironmentalScience,WilliamPatersonUniversity,Wayne,NJ,USA.4DepartmentofLifeand",USA
+"Fraser University, Burnaby, BC, Canada unresolved taxonomic issues, occurrence in the deep oceans, and their low value",Canada
 "Fraser University, Burnaby, British Columbia, V5A 1S6, Canada. 4center for Microscopy characterisation and",Canada
 "FraserUniversity,8888UniversityDrive,",
 "FraserUniversity,Burnaby,British",
@@ -6304,6 +6402,8 @@ GEOMARHelmholtzCentreforOcean,
 "GTexasParksandWildlifeDepartment,CoastalFisheriesDivision,RockportMarineScience",
 "Gabriele Larocca Conte [glaroccaconte@ucmerced.edu], Environmental System, University of California Merced,",
 "Gainesville, FL 32611, U.S.A. and ‡Department of Biological Sciences, California State",
+"Gainesville,FL,UnitedStates,2FloridaProgramforSharkResearch,FloridaMuseumofNaturalHistory,UniversityofFlorida,",
+"Gainesville,FL,UnitedStates,3DepartmentofOceanographyandCoastalSciences,LouisianaStateUniversity,Baton",
 "GalapagosScienceCenter,AlsacioNorth´ıaAv.V´ıaPlayaMann,PuertoBaquerizoMoreno,",
 "Galaṕ agos, Ecuador. 3Marine Data Technology Hub, James Cook University, Townsville, Queensland, Australia. 4Biopixel Oceans Foundation, Cairns,Queensland, Australia.",Ecuador
 "Galápagos,PuertoAyora,Ecuador,3GalapagosScienceCenter,UniversidadSanFranciscodeQuito,IslaSanCristobal,",Ecuador
@@ -6397,6 +6497,7 @@ Halaelurus quagga landed at Muttom landing centre,
 "HarrietL.Allen,DepartmentofEnvironment",
 "HarryButlerInstitute,MurdochUniversity,",
 "HarryButlerInstitute,MurdochUniversity, frequencyweremeasuredinastaticrespirometerwithuntaggedanimalsandanimalsequipped",
+"HarteResearchInstituteforGulfofMexicoStudies,TexasA&MUniversity–CorpusChristi,CorpusChristi,TX,UnitedStates",Mexico
 "Harvard University, 26 Oxford Street, Cambridge,",
 "Harvard University, Cambridge, MA 02138, USA",USA
 "Harvard University, Cambridge, MA 02138, USA of white sharks across life stages, particularly of YOYs and",USA
@@ -6450,6 +6551,7 @@ Hokkaido University Collection of Scholarly and Academic Papers : HUSCAP,
 "HollingsMarineLaboratory,CollegeofCharleston,Charleston,SC,USA",USA
 "Holloway,UniversityofLondon,Egham,SurreyTW200EX,UK,h.falcon-lang@es.rhul.ac.uk;3IllinoisStateGeologicalSurvey,Champaign,Illinois61820,USA,",USA
 Holotype. Institute of Vertebrate Paleontology and Paleoanthropology racids such as Romundina in the parallel lateral margins of the skull roof,
+"Honolulu, HI, USA. 8Monterey Bay Aquarium, Monterey, CA, USA. 9Present address: School of Marine and",USA
 "Honorary Research Associate, School of Animal Biology,",
 "Hopkins Marine Station, Stanford University,",
 "Hopkins Marine Station, Stanford University, Pacific grove, est effect on consumption rates estimated from bioenerget-",
@@ -6564,6 +6666,7 @@ Institute of Marine Biological Resources and Inland,
 "Institute of Zoology, Rhenish Friedrich-Wilhelm University, Poppelsdorfer Schloss, Meckenheimer Allee 169, D-53115 Bonn, Germany",Germany
 "Institute ofMarine Science,College ofWilliam and Mary, POBox 1346, GloucesterPoint, VA23062-1346, USA,‡Southern",USA
 "Institute(MO96),Crawley,WesternAustralia6009,Australia",Australia
+"Institute(SI),UnitedStates",
 "Institute,Charleston,SC,USA",USA
 "Institute, Academy of Sciences, St. Petersburg, become paratypes and are deposited in the same",
 "Institute, Agricultural Research Education and Extension Organization, Bandar Abbas, Iran",
@@ -6605,6 +6708,7 @@ Institute of Marine Biological Resources and Inland,
 "Institute,POBoxEL-26029,Eleuthera,TheBahamas Southampton,HighfieldCampus,SouthamptonSO171BJ,UK",UK
 "Institute,TaylorsBeachRoad,TaylorsBeach,",
 "Institute,UNITEDSTATES relationtonestingbeachesofgreenseaturtles(Cheloniamydas),aseasonallyabundant",
+"Institute,UnitedStates",
 "Institute,WV25112-1000,USA",USA
 "Institute,Washington,DC20013,USA. nearthesurface(Gill,1905).Gudger(1941a)notedthatinaddi-",USA
 "InstituteResearchOrganisation,Hobart,TAS7001,Australia ature, heart rate, orstress hormone secretion) or behaviour",Australia
@@ -6681,6 +6785,7 @@ Interdisciplinary Centre for Conservation,
 "International University, 3000 NE 151 St, North Miami, an unusual feeding mode that facilitates the removal of a",
 "International University, 3000 NE 151st Street, North Miami, sequences for terrestrial and marine ecosystems (SoulÉ et al.",
 "International University, 3000 NE 151st system structure and function. Such ecological insights are critical for predicting the",
+"International University, Miami, Florida, U.S.A.",
 "InternationalUniversity,NorthMiami, aggregatearoundoilplatforms,lessisknownabouttheirabilitytoaggregatepelagic",
 "InternationalUniversity,NorthMiami,FL",
 "Interuniversity Institute of Eilat, H. Steinitz Marine Biology Laboratory, P.O. Box 469,",
@@ -6691,6 +6796,7 @@ Introduction preferred temperature (Fry 1947). Laboratory,
 "IoannisGiovos, Merced,Merced,CA,UnitedStates,7CollegeofScienceandEngineering,FlindersUniversity,Adelaide,SA,Australia",Australia
 "Irish Basking Shark Group, Inch Island, Co. Donegal, Sciences Building, Western University, London,",
 "IschemiaResearchUnit,SchoolofPhysiotherapyandExerciseScience,GriffithUniversity,Queensland,Australia;3Heart",Australia
+"IskenderunTechnicalUniversity,",
 "IslamicAzad University, Bandar-e-Abbas branch, Bandar-e-Abbas,Iran",
 Island Research Station of The University of at a rate of about 1 s-’ consisting of transverse waves,
 "Islands Fisheries Science Center NOAA-IRC, 1845 Wasp Blvd. Bldg 176,",
@@ -6715,6 +6821,7 @@ ItalianNationalResearchCouncil-InstituteofMarine,
 "J. Riter · B. Young Center for Wound Healing Research, Daemen University,",
 "J. Vardon James Cook University, Bldg 34 James Cook Drive,",
 "J.A.Musick.VirginiaInstituteofMarineScience,P.O.Box1346,GloucesterPoint,VA23062,USA.",USA
+"J.AntonioBaeza,DepartmentofBiological",
 "J.D. Morgan1 and G.K. Iwama. Department of Animal Science, University of British Columbia, Vancouver, BC V6T 124, Canada.",Canada
 "J.E.Simon.BedfordInstituteofOceanography,FisheriesandOceansCanada,P.O.Box1006,Dartmouth,NSB2Y4A2,Canada.",Canada
 J.Fernandez-Carvalho(cid:2)R.Coelho NationalResearchInstituteofFarSeasFisheries,
@@ -6967,6 +7074,7 @@ London School of Hygiene and Tropical Medicine,
 "LondonSW154JD,UK.4TrinityCollegeDublin,Dublin2,Ireland.5Fisheriesand",UK
 "LorenMcClenachan,DepartmentofBiology,",
 "LorienC.Pichegru,Universityof",
+Louisiana State University,
 LouisianaUniversitiesMarine individual. Social network analysis revealed a non-random social network centered on,
 "LoweCG(2024)Self-reportedprevious Humanities,SocialSciences,andtheArts,HarveyMuddCollege,Claremont,CA,UnitedStates,",
 "Lowestoft Laboratory, Pakefield Road, Lowestoft, Suffolk, NR33 0HT, UK",UK
@@ -6997,6 +7105,7 @@ MARE– Marine and Environmental Sciences Centre/ARNET nutrient and energy trans
 "MaREI, The SFI Research Centre for Energy, Climate",
 Macquarie University connected oceanographic regions within the GC and in the BCP. We used genetic,
 "Macquarie University, Sydney), and from Nevada and adja−",
+"Macquarie University, Sydney, NSW,",
 "Macquarie University,Sydney,2109NSW,Australia",Australia
 "Macquarie University,Sydney,NSW2109, Australia",Australia
 "MacquarieUniversity,Australia",Australia
@@ -7027,6 +7136,7 @@ Mailing Address: Department of Animal Ecology & Systematics,
 ManipalCollegeofMedicalSciences generate interest in determining the species of shark,
 "Manitoba,Winnipeg,Manitoba,CanadaR3T2N2.3DepartmentofOcean Locomotion,metabolismandbuoyancy",Canada
 "Manoa,Honolulu,HI96744,USA,2Schoolof",USA
+"MantaTrust,Dorchester,UnitedKingdom,4DepartmentofStatisticalSciences,UniversityofToronto,Toronto,ON,Canada,",Canada
 "Manual, Cold Spring Harbor Laboratory Press, 2001, 3rd edn.",
 Manuscript accepted 12 April 2019. and meat have resulted in ~25% of Northeast Fisheries Science Center,
 Many previous studies have examined aggregation 1984) described diurnal schooling behavior in scalloped,
@@ -7111,6 +7221,7 @@ Marine Sciences，Shanghai Ocean University，Shanghai 201306，China; 2National
 "MarineandFreshwaterResearchCentre,Galway-MayoInstitute BiologyDepartment,CollegeofScience,UnitedArabEmirates",
 "MarineandFreshwaterResearchInstitute, been observed at same but few locations in Icelandic waters over 23years. For",Iceland
 "MarquetteUniversity,UnitedStates Pristis pectinata",
+"Mart University, Çanakkale, Turkey ues, and the caught individuals are thrown back into the sea.",Turkey
 "Martin Qvarnström [martin.qvarnstrom@ebc.uu.se], Department of Organismal Biol-",
 "Martin-Luther-King-Platz3,20146Hamburg,Germany 6 IchtyoConsult,6bisrueduCentre,91430,Igny,France",France
 "Mary, P.O. Box 1346, Gloucester Pt., VA 23062, U.S.A., and †Department of Biology,",
@@ -7182,6 +7293,7 @@ Middle Tennessee State University,
 "Mississauga, ON, L5L 1C6, Canada. 3earth to Ocean Research Group, Department of Biological Sciences, Simon",Canada
 "Mississippi State University, Coastal Research Northeastern University, Boston, MA 02115, USA",USA
 "Mississippi State University, Mississippi State, Starkville,",
+"MississippiStateUniversity,",
 "MississippiStateUniversity, and risk mitigation planning. We used data derived from a combination of satellite tag",
 "MississippiStateUniversity,UnitedStates S.",
 "Modelling Services Pty Ltd and Marine Spatial Ecology Lab, University of Queensland, Brisbane, Australia. 4Office",Australia
@@ -7192,6 +7304,7 @@ Modification of predator behaviour via ocean warming has been assessed by labora
 "MolecularEcologyLab,CollegeofScienceandEngineering,FlindersUniversity,Adelaide,SA,Australia",Australia
 "MolecularEcologyLaboratory,DepartmentofBiologicalSciences,MacquarieUniversity,Sydney,NSW2109,Australia",Australia
 "MolecularFisheriesLaboratory,QueenslandDepartment",
+"MonashUniversity,Australia Knowledge about top predators’ trophic ecology is crucial for defining their role",Australia
 "MonashUniversity,Australia PaulA.Butcher4,5†andGabrielE.Machovsky-Capuska1,6†",Australia
 "MonashUniversity,Clayton,VIC,Australia,9NationalInstituteofWaterandAtmosphericResearch,Wellington,",Australia
 "MonashUniversity,Clayton,Victoria,Australia",Australia
@@ -7299,6 +7412,7 @@ National Institute of Water and,
 "National Institute of Water and Atmospheric Research Limited, 301 Evans Bay Parade,",
 "National Institute of Water and Atmospheric Research Ltd., 301 Evans Bay Parade, Greta Point, Wellington, New Zealand",New Zealand
 "National Marine Fisheries Service, Northeast Fisheries Center, Narragansett Laboratory,",
+"National Marine Fisheries Service, Panama City Laboratory, Panama City Beach, Florida 32408, USA",USA
 "National Marine Fisheries Service, Southeast Fisheries Science Center, 3500 Delwood Beach",
 "National Marine Fisheries Service, Southeast Fisheries Science Center, Mississippi Laboratories, P.O. Drawer 1207, Pascagoula, MS 39567, USA",USA
 "National Marine Fisheries ServiceAukeBay Laboratory,11305Glacier Highway,",UK
@@ -7347,6 +7461,7 @@ NationalResearchInstituteofFarSeas,
 "NelsonMandelaMetropolitanUniversity,POBox77000,PortElizabeth6031,SouthAfrica.",
 "NelsonMandelaUniversity,PortElizabeth, (N = 73) and two mitochondrial genes, nicotinamide adenine dehydrogenase subunit",
 "NephrologySection,Dept.ofMedicine,367CedarSt.,YaleUniv.Schoolof",
+"NereaLezama-Ochoa,InstituteEnvironmental simulate potential changes in its status under 45 hypothetical conservation and",
 "Netherlands Institute for Sea Research, P.O. Box 59, it can be questioned if these population increases represent",Netherlands
 "Netherlands, ‡School of Marine Science and Technology, University of Massachusetts",Netherlands
 "Netherlands. 5Coastal Resource Management Group, Scottish Oceans Institute, University of St. Andrews,",Netherlands
@@ -7364,6 +7479,7 @@ New South Wales Department of Primary,
 "New York University, New York, New caught as bycatch, representing the majority of megafauna bycatch in tuna fisheries.",
 New Zealand College of Psychiatrists 2018,New Zealand
 "New Zealand. 7Department of Animal and Plant Sciences, University of Sheffield, quality (= r) with habitat availability with varying levels of fishing. When fishing",New Zealand
+NewSouthWalesDepartment,
 "NewSouthWalesDepartmentofPrimaryIndustries,PortStephensFisheriesInstitute,TaylorsBeach,NSW,Australia",Australia
 "NewZealand,10DepartmentofConservation,Dunedin,NewZealand",
 "NewZealand;cDepartmentofAnimalEcology,EvolutionaryBiologyCentre,UppsalaUniversity,75236Uppsala,Sweden;dSchoolofBiomedicalSciences,",Sweden
@@ -7389,6 +7505,7 @@ North Carolina Aquariums and Center for Marine,
 "North-West University, J.S. van der Merwe building (E6), 11 Hoffman Street, Potchefstroom, 2531, South Africa. Phone: +27 (18) 299 2367; E-mail:",South Africa
 "North-WestUniversity,SouthAfrica",
 "NorthCarolinaStateUniversity,",
+"NorthMiami,FL,UnitedStates,4DepartmentofBiology,CarletonUniversity,Ottawa,ON,Canada,5PerryInstituteforMarine",Canada
 "NorthTerrace,Adelaide5000,SA,Australia Sciences,UniversityofAdelaide,",Australia
 "Northcutt, '82; Koester, '83). Contribution No. 1304 from the Virginia Institute of Marine",
 "Northeast Fisheries Science Center, 28 Tarzwell Drive, Narragansett, RI 02882, USA. 7Virginia Institute of Marine",USA
@@ -7429,6 +7546,7 @@ Number:NE/L002469/1;Universityof,
 "Ocean Research Institute, University of Tokyo",
 "Ocean Research Unit, Institute for the Oceans and Fisheries, University of British Columbia, AERL, 2202 Main Mall,",
 "Ocean Sciences,Cardiff University,Cardiff, Wales CF10 3XQ,UK,**Institute ofIntegrativeand Comparative Biology,",UK
+"Ocean Solutions, Stanford University, Monterey, CA, USA. 7Department of Oceanography, University of Hawaii,",USA
 "Ocean Springs, MS, United States, 7 Coastal and Marine Laboratory, Florida State University, St Teresa, FL, United States,",United States
 "Ocean University, Keelung, Taiwan. decline for bigeye threshers. Sensitivity testing indicated that the model is robust to",Taiwan
 "OceanEcosystems,UniversityofGroningen,Kerklaan30, Keywords Local and stimulus enhancement (cid:2) Group",
@@ -7471,6 +7589,7 @@ OceansInstituteandCentreforEnvironmentalEconomics Tourism is arguably the world�
 "On, canada. 7Oceans Graduate School and The Oceans Institute, The University of Western Australia, Crawley, WA,",Canada
 One benefit of increased research attention in the deep-sea is the The Monterey Bay Aquarium Research Institute (MBARI) began,
 "Onsekiz Mart University, Çanakkale, Turkey in stock assessment models, as well as the estimation of",Turkey
+"Onsekiz Mart University, Çanakkale, Turkey of R. clavata were highly disrupted and its prey Liocarci-",Turkey
 "Ontario,University ofGuelph,579GordonStreet, Guelph,Ontario N1G2W1 Canada",Canada
 "Oregon Graduate Center, 19600 N.W. Walker Rd, Beaverton, OR 97005, U.S.A.",
 "Oregon State University, Dept. of Fisheries and Wildlife, 104 Nash Hall, Corvallis, OR 97339–1086, United States",United States
@@ -7647,6 +7766,7 @@ PublishedbyOxfordUniversityPressonbehalfoftheInternationalCouncilfortheExplorati
 "QLD 4810, Australia. 8Australian Research Council Centre of Excellence for Coral Reef Studies, James Cook University,",Australia
 "Qingdao,Shandong266071,China.2LaboratoryforMarineFisheriesScienceandFoodProductionProcesses,QingdaoMarineScienceandTechnology",China
 "Qld 4072, Australia and ‡‡Environmental Decisions Group, School of Biological Sciences,",Australia
+"QueenMaryUniversityofLondon, detailed information on habitat use, diving behavior, and swimming speed, as well",
 "Queenscliff 3225, Australia and §Department of Zoology, The University of Melbourne,",Australia
 "Queensland Centre, Kelvin Grove, QLD, Australia",Australia
 "Queensland Department of Primary Industries and Fisheries, Cairns, Queensland 4811, Australia",Australia
@@ -7780,6 +7900,7 @@ Regional Activity Centre For Specially Protected Areas,
 "ResearchInstitute,Balboa,Panama.E-mail:catalina.pimientohernandez@pim.uzh.ch",Panama
 "ResearchInstitute,CharlotteHarborFieldLaboratory,PortCharlotte,Florida,UnitedStatesofAmerica",
 "ResearchInstitute,FalklandIslands",
+"ResearchInstitute,FalklandIslands populations, including 17 shark sanctuaries which fully protect sharks throughout",
 "ResearchInstitute,Mombasa,Kenya.",Kenya
 "ResearchInstitute,MosselBay,SouthAfrica,4SouthAfricanInstituteforAquaticBiodiversity(SAIAB),",
 "ResearchInstitute,NovaSoutheasternUniversity,DaniaBeach,FL,UnitedStates,9MontereyBayAquarium,Monterey,CA,",
@@ -7789,6 +7910,7 @@ Regional Activity Centre For Specially Protected Areas,
 "ResearchInstitute.Kochi,India. describes the hammerhead shark fishery in India during 2007–2018 and",India
 "ResearchInstitutePhilippines,Cagulada mizeanypotentialdetrimentaleffectsonthetargetspeciesandhabitat.",Philippines
 "ResearchInstituteforAgriculture,FisheriesandFood,Ostend,Belgium",Belgium
+"ResearchInstituteforGlobalChange(RIGC),JapanAgencyforMarine-EarthScienceandTechnology(JAMSTEC),",Japan
 ResearchInstitutefortheEnvironmentandLiv- angling. The identification of a decayed shark specimen using a DNA barcoding-like,
 "ResearchInstitutefortheEnvironmentandLivelihoods,Charles AustralianInstituteofMarineScience,UWAOceanSciences",Australia
 "ResearchInstituteofEnvironmentandLivelihood,",
@@ -7816,16 +7938,19 @@ ResearchInstituteofFisheriesandOceanography,
 "ResourcesandSecurity,Universityof andshortfallinmanagementoftheseiconicspeciesrequireworldwidefisheries",
 "RessourcesLanguedocRoussillon,IFREMER,AvenueJeanMonnet,CS30171,34203Se`teCedex,France,3FisheriesLaboratory,",France
 "Review 1CentreforEcologyandConservation,UniversityofExeter,Cornwall,UK;2MarineTargetsandIndicators,Natural",UK
+"Reviewedby: 1DepartmentofBiologicalOceanography,CenterforScientificResearchandHigherEducationofEnsenada(CICESE),",
 "Reviewedby: InstituteforAquaticBiodiversity,Grahamstown,SouthAfrica,10DepartmentofAnthropology,UniversityofCalifornia,Davis,",
 "Reviewedby: Watch,Washington,DC,UnitedStates,9ZoologicalSocietyofLondon,London,UnitedKingdom,10CentreforEcology",
 "Reviewedby: andRestoration,MinistryofNaturalResources,Xiamen,China,3FujianProvincialKeyLaboratoryofMarineEcologicalConservation",China
 "Reviewers:B.W.B.,UniversityofHawaii;C.J.D.,UniversitéClaudeBernardLyon1;and",
 "Reykjavík, Iceland, ¶Fram Centre, Norwegian Polar Institute, Hjalmar Johansens gt. 14",Iceland
 "RhodesUniversity,SouthAfrica",
+"RhodesUniversity,SouthAfrica annual variation in timing of movement phases, is largely unknown in the western",
 "RichardGrainger InstituteofMarineScience,Mosman,NSW,Australia,4NewSouthWalesDepartmentofPrimaryIndustries,Fisheries,",Australia
 "RichardKindong,CollegeofMarineSciences, from63to97cmformalesand78–99cmforfemales.Thesizeat50%ofmaturity",
 "RiodeJaneiroAquariumResearchCenter,IMAM-",
 "RiodeJaneiroStateUniversity,Brazil most pressing symptoms of change in the ocean. In a standardized comparative",Brazil
+"Riverside Technology, Inc., for the National Marine Fisheries Service, Panama City Laboratory, Panama City Beach,",Panama
 "Road, Exeter EX4 4PS, UK. 2Environment and Sustainability Institute, University of Exeter, Penryn Campus,",UK
 "RobHarcourt, UnitedStates,7FisheriesEcologyDivision,NOAASouthwestFisheriesScienceCenter,SantaCruz,CA,UnitedStates,",
 "RobLeslie,DepartmentofAgriculture,ForestryandFisheries,FisheriesManagement,PrivateBag",
@@ -7842,6 +7967,7 @@ RosenstielSchoolofMarineandAtmospheric,
 "RosenstielSchoolofMarineandAtmosphericScience,University",
 "RosenstielSchoolofMarineandAtmosphericSciences,",
 "Ross G. Dwyer, Franklin Eco-Laboratory, The Methods: Satellite telemetry was used to remotely track the long- term movements of",
+"Rouge,LA,UnitedStates,4DepartmentofBiology,UniversityofFlorida,Gainesville,FL,UnitedStates",
 "Royal Veterinary College, University of London, Camden, K. M. O’Sullivan",
 "RoyerM,GarciaD,DicksonK,WengKC, 3DepartmentofBiologicalScience,CaliforniaStateUniversityFullerton,Fullerton,CA,UnitedStates,",
 "RuaProf. Dr. FredericoMachado, Horta, Azores,Portugal, †IMAR-Institute ofMarine Research, DepartmentofOceanography",Portugal
@@ -7855,6 +7981,7 @@ RosenstielSchoolofMarineandAtmospheric,
 "RussellBradford, MandelaUniversity,Gqeberha,SouthAfrica,8DepartmentofForestry,FisheriesandtheEnvironment,OceansandCoasts,",
 "RussianFederalResearchInstituteofFisheriesandOceanography(TINRO),Vladivostok,Russia.39SchoolofBioSciences,TheUniversityofMelbourne,Parkville,Victoria,Australia.40Schoolof",Australia
 "Ryan Daly, D’Arros Research Centre, Main conclusions: This study demonstrates how spatial information can be used to",
+"RyanDaly,OceanographicResearchInstitute, 1981to2017.Individualscapturedinthenetshadasexratioof1.8:1femalesto",
 "RyanJ.Nevatte,DepartmentofBiological",
 "S, Kotze D, Creel S. 2022 Loss of an apex 1DepartmentofEnvironmentalScience andPolicy, RosenstielSchool ofMarineand Atmospheric Science,",
 "S. Alfonso Thünen Institute of Baltic Sea Fisheries, Alter Hafen Süd",
@@ -8090,9 +8217,11 @@ SchoolofNaturalSciences–QuantitativeMarine,
 "Science,UniversityofMiami,Miami,FL,USA",USA
 "Science,UniversityofMiami,Miami,FL33149,USA.",USA
 "Science,UniversityofTasmania,Hobart, patterns and evolution of dispersal across numerous",
+"Science,Waitsfield,VT,UnitedStates,6DepartmentofEnvironmentalConservation,UniversityofMassachusettsAmherst,",
 "ScienceCenter,JamesJ.HowardMarineSciences",
 "ScienceCenter,MississippiLaboratories,3209Frederic",
 "ScienceCenter,MississippiLaboratories,3209FredericStreet,Pascagoula,Mississippi",
+"ScienceCenter,Monterey,CA,USA",USA
 "ScienceCenter,NationalMarineFisheries",
 "ScienceDepartment,PalmerTrinitySchool,Miami,",
 "ScienceFoundation(NSF-OCE97-12793)andDepartmentofEducation,StateofFlorida(FLORIDA8749703000001).T.L.G.wassupportedbyaLeverhulmeTrust",
@@ -8126,6 +8255,7 @@ SchoolofNaturalSciences–QuantitativeMarine,
 "Sciences, James Cook University, Townsville, Qld 4811, Australia, †Centre for Sustainable",Australia
 "Sciences, Macquarie University, North Ryde,",
 "Sciences, Macquarie University, North Ryde, NSW, 2109, Australia. 7Oceans Research Institute, Mossel Bay, 6500,",Australia
+"Sciences, Macquarie University, Sydney,",
 "Sciences, Ohio University College of Osteopathic Medicine, Athens,",
 "Sciences, Oregon State University, Corvallis, Oregon, USA | 3Marine Mammal Institute, Oregon State University, Newport, Oregon, USA | 4Australian",USA
 "Sciences, School of Mathematical & Natural Sea). The total length (L) and total weight (W) of the female and male guitarfish ranged",
@@ -8137,6 +8267,7 @@ SchoolofNaturalSciences–QuantitativeMarine,
 "Sciences, The University of Queensland, St Lucia, QLD 4072, Australia, ¶Sydney Institute of",Australia
 "Sciences, Universiti Malaya, 50603 Kuala Lumpur, Malaysia. 3Guangxi Key Laboratory of Forest Ecology and",Malaysia
 "Sciences, University of Bologna, Bologna, Italy",Italy
+"Sciences, University of California Merced, Merced, CA, USA. 4Southern Shark Ecology Group, College of Science",USA
 "Sciences, University of California, Merced, CA, USA. 17Howard Hughes Medical Institute, Chevy Chase, MD, USA. 18Department of Organismal Biology and Anatomy, University of Chicago,",USA
 "Sciences, University of Exeter, Exeter EX4 4PS, UK",UK
 "Sciences, University of Exeter, University of Exeter, Exeter, their sensory capabilities, avoidance of their own preda-",
@@ -8148,6 +8279,7 @@ SchoolofNaturalSciences–QuantitativeMarine,
 "Sciences, University of Queensland. St Lucia, Queensland.",
 "Sciences, University of Rhode Island, Mozambique similarly expanded neighbouring protected area boundaries. Tiger",Mozambique
 "Sciences, University of the Aegean, Lesvos Island, Greece",Greece
+"Sciences,132LongHall,ClemsonUniversity, SHbutnotamongpopulationsintheSH.",
 "Sciences,AlmaMaterStudiorumUniversityofBologna,Fano,Italy",Italy
 "Sciences,ArizonaStateUniversity,Glendale,AZ,UnitedStates,4PortugueseInstitutefortheOceanandAtmosphere(IPMA,",
 "Sciences,ArizonaStateUniversity,Tempe,AZ,",
@@ -8217,6 +8349,7 @@ SchoolofNaturalSciences–QuantitativeMarine,
 "Service,NortheastFisheriesScienceCenterNarragansettLaboratory,28TarzwellDrive,",
 "Service,SoutheastFisheriesScienceCenter,3500DelwoodBeach oftheseinHexanchus(Castro2010).Typifiedbytheirlarge",
 "Services, Freshwater Laboratory, Faskally, Pitlochry, Perthshire PH16 5LB, U.K.;",
+"Sewanee:TheUniversityoftheSouth,",
 Sexing was not part of laboratory procedure during all,
 "Seychelles,3DepartmentofEnvironment,UniversityofYork,Heslington,York,YO105DD,UK",UK
 "Seychelles,4AustralianInstituteofMarine productive waters and select sites closer to continents than the open ocean.",Australia
@@ -8254,6 +8387,7 @@ ShitFunChew(NanyangTechnologicalUniversity),
 "SimonFraserUniversity,Burnaby,British",
 "SimonFraserUniversity,Burnaby,V5A1S6,Canada.",Canada
 "SimonFraserUniversity,Canada Bangladesh",Canada
+"SimonaAlessandraCeriani, Ensenada,Mexico,2DepartmentofBiologicalSciences,CaliforniaStateUniversity,LongBeach,CA,UnitedStates,",Mexico
 "Simpfendorfer is now at the Fishing and Fisheries Research Centre, School of Earth and Environmental Sciences, James",
 "SimsDW,NavarroJ,CermeñoP, Southampton,UniversityofSouthampton,Southampton,UnitedKingdom,25InstitutdeCièncieselMar(ICM),Consejo",
 "Since 1942, the genus has been reported only by In the laboratory, the fixed material was washed",
@@ -8386,6 +8520,7 @@ StateUniversityofNorthernRio,
 "StewartJDandCrollDA(2024)Identifying theEnvironment,DukeUniversity,Durham,NC,UnitedStates,4ConservationInternationalAotearoa,",UK
 "Stirling Highway, Perth, WA 6009, Australia. 4Marine Science Program, Department of Biodiversity, Conservation",Australia
 "StockCenter,DepartmentofChemistryandBiochemistry,TexasStateUniversity,SanMarcos,TX78666,USA.5Max-PlanckInstituteofMolecularCellBiology",USA
+"StonyBrook,NY,UnitedStates,3DepartmentofBiologicalSciences,InstituteofEnvironment,FloridaInternationalUniversity,",
 "StonyBrook,NY11794(Chapman);theCenterforSharkResearch,MoteMarineLaboratory,Sarasota,FL(Simpfendorfer",
 "StonyBrookUniversity,StonyBrook,NY, ucts such as dried fins. We grouped published mitochondrial control region",
 "StonyBrookUniversity,StonyBrook,NewYork11794,USA.",USA
@@ -8395,11 +8530,13 @@ StateUniversityofNorthernRio,
 "Studies and College of Science and Engineering, James Cook University, Townsville, QLD, Australia. *email:",Australia
 "Studies),Tachikawa,Tokyo190-8518,Japan;cAlaskaDepartmentofFishandGame,Homer,AK99603;dMarineScienceInstitute,UniversityofCalifornia,",Japan
 "Studies, Ashoka University, Sonipat 131 029, India; Dipani Sutaria is with the 9 Aranya Farms, Shilaj, Ahmedabad 382 115, India; Merwyn Fer-",India
+"Studies, James Cook University, Townsville, environmental change. We reared Port Jackson shark (Heterodontus portusjacksoni)",
 "Studies, Rosenstiel School for Marine and Atmospheric Science, University acteristics of many sharks (e.g., late maturation and low",
 "Studies, University of Tasmania, Launceston, Mawsonascaris is described. The most distinct characteristic features were observed",
 "Studies,CaliforniaStateUniversity–LongBeach,LongBeach,CA,UnitedStates,3Departmentof",
 "Studies,SchoolofEconomics,DevelopmentandTourism,NelsonMandelaUniversity,Gqeberha,SouthAfrica,",
 "Studies,TexasA&MUniversity-CorpusChristi,CorpusChristi,TX,UnitedStates,5SchoolofMarineScienceandPolicy,",
+"Studies,TheUniversityofQueensland,Brisbane,Queensland,Australia",Australia
 "Studies,UniversityofDelhi,Delhi,India",India
 "Studies,UniversityofTasmania,Hobart,",
 "Studies,UniversityofZurich,ZurichCH-8057,",
@@ -8428,6 +8565,7 @@ Supervisor (Stockholm University): Michael Tedengren,
 "Switzerland,4DepartmentofZoology,UniversityofCambridge,Cambridge,UnitedKingdom",Switzerland
 "Sydney Institute of Marine Science, 19 Chowder Bay",
 "Sydney Institute of Marine Science, Mosman, NSW, Australia. 4School of Biological, Earth and Environmental",Australia
+"SydneyInstituteofMarineScience, the effects of tourism over these highly social animals remains unknown. Manta rays",
 "Syme (University of Calgary), Jeanine Donley (Miracosta College), population dynamics and indicates climate warming may further",
 "Systems, University of British Columbia, Vancouver, British Columbia, Canada, V6T 1Z4, 3School of Biological Sciences,",Canada
 "SystemsinEngineeringandScience,Lisbon,Portugal,3MARICE-MarineAcademicResearchinIceland.DepartmentofLifeandHealthsciences,UniversityofIceland,",Portugal
@@ -8755,6 +8893,7 @@ UNIVERSITY OF KANSAS,
 "UnitedKingdom,UnitedKingdom 1InstituteofZoology,ZoologicalSocietyofLondon,London,UnitedKingdom,2LancasterEnvironmentCentre,Lancaster",
 "UnitedStates 1DepartmentofBiologicalandEnvironmentalScience,UniversityofGothenburg,",
 "UnitedStates Biomaterials,MaxPlanckInstituteofColloidsandInterfaces,Potsdam,Germany,3NaturalHistory",Germany
+"UnitedStates,2CenterforSharkResearch,MoteMarineLaboratory,Sarasota,FL,UnitedStates,3IntegrativeBiology,",
 "UnitedStates,3CentreforTaxonomyandMorphology,ZoologicalMuseum,LeibnizInstitutefortheAnalysisofBiodiversity",
 "UnitedStates,4FisheriesResourcesDivision,SouthwestFisheriesScienceCenter,NationalMarineFisheriesService",
 "UnitedStates,5DepartmentofEcologyandConservationBiology,TexasA&MUniversity,CollegeStation,TX,UnitedStates",
@@ -9034,6 +9173,7 @@ University of Virginia,
 "University,Canakkale,Turkey.(VisitingResearcherHaroldW.ManterLaboratoryofParasitology,W-529NebraskaHallDivisionof",Turkey
 "University,Chiayi60083,Taiwan",Taiwan
 "University,Clayton,Victoria,Australia commonly displayed (30+ wild caught individuals) is the Critically Endangered",Australia
+"University,Clemson,SouthCarolina (south-eastPacificOcean)andglobalscale.",
 "University,DaniaBeach,FL,USA",USA
 "University,DaniaBeach,Florida33004,U.S.A.,and(cid:2)InstitutoNacionaldelaPesca,Centro",
 "University,Darwin,NT0909,Australia.",Australia
@@ -9166,6 +9306,8 @@ UniversityStableIsotopeLaboratory.,
 "UniversityofAthens,Panepistimiopolis,Ilisia,15784Athens,Greece.",Greece
 "UniversityofAuckland,Warkworth0941,NewZealand",
 "UniversityofBarcelona,Spain",Spain
+"UniversityofBarcelona,Spain Forest (RF) models] to determine the drivers of basking shark distribution, predict",Spain
+"UniversityofBarcelona,Spain tools for the conservation of biodiversity and mitigation of climate impacts. Among",Spain
 "UniversityofBariAldoMoro,Italy",Italy
 "UniversityofBariAldoMoro,Italy longlineconflictareasandmitigationpracticesformanagement.Thedatawereobtained",Italy
 "UniversityofBariAldoMoro,ViaE.Orabona spring–summer and autumn–winter seasons, between 2010 and 2014. Differ-",
@@ -9190,6 +9332,7 @@ UniversityStableIsotopeLaboratory.,
 "UniversityofCalcutta,Kolkata,India Chilloscyllium griseum. On further study the collected",India
 "UniversityofCalifornia, SantaBarbara, CA 93106,USA",USA
 "UniversityofCalifornia,Davis,",
+"UniversityofCalifornia,Davis, better understand the species’ regional ecology. Here, we used bootstrapped Habitat",
 "UniversityofCalifornia,Davis,CA95616,USA",USA
 "UniversityofCalifornia,Davis,CA95616,USA exemplifiedbyareadjustmentintoleranceendpoints,",USA
 "UniversityofCalifornia,Irvine,",
@@ -9255,6 +9398,7 @@ UniversityofGuamMarine (T,
 "UniversityofHartford,200BloomfieldAvenue,WestHartford,CT (81 cm disc width) was captured by spear gun off",
 "UniversityofHartford,200BloomfieldAvenue,WestHartford,CT sachusetts, USA. These fish were collected with",USA
 "UniversityofHawaii,1000PopeRoad,Honolulu,",
+"UniversityofHawaii,UnitedStates withanenhancedcapacitytomapseafloor.",
 "UniversityofHawaiiatManoa,Honolulu,HI96822,USA",USA
 "UniversityofHawaiiatManoa,UnitedStates",
 UniversityofHawai‘i,
@@ -9271,6 +9415,7 @@ UniversityofHawai‘i,
 "UniversityofLancaster,",
 "UniversityofLeeds, Leeds LS29JT,UK,††FieldMuseum, PritzkerLaboratory for MolecularSystematics andEvolution, 1400",UK
 "UniversityofLisbon,Portugal",Portugal
+"UniversityofLosAndes,Colombia to those reported in other studies. Our sequences, in particular haplotypes PTY1 and",Colombia
 "UniversityofManitoba,Canada",Canada
 "UniversityofManitoba,Winnipeg,MB,Canada,7MarineBiology,CollegeofScienceandEngineering,JamesCook",Canada
 "UniversityofMarche,Ancona,Italy,12NationalBiodiversityFutureCenter(NBFC),Palermo,Italy",Italy
@@ -9379,7 +9524,10 @@ UniversityofUtahHealth,
 "UniversityofWashington,UnitedStates",
 "UniversityofWestFlorida,11000UniversityParkway,",
 "UniversityofWesternAustralia,",Australia
+"UniversityofWesternAustralia, 1LaboratóriodeEcologiaPesqueira,DepartamentodeEngenhariadePescaeAquicultura,UniversidadeFederal",Australia
+"UniversityofWesternAustralia, Archipelago and Banderas Bay in the Pacific. Caribbean manta rays (M. cf. birostris)",Australia
 "UniversityofWesternAustralia, Bycatch on pelagic tuna longlines has contributed to population declines in several",Australia
+"UniversityofWesternAustralia, Keywords:lunarillumination,moonphase,sharkattack,beachsafety,sharkbehavior",Australia
 "UniversityofWesternAustralia,35StirlingHighway, them as they really are — indolent, awkward,",Australia
 "UniversityofWesternAustralia,35StirlingHighway,Crawley,",Australia
 "UniversityofWesternAustralia,Australia",Australia
@@ -9390,6 +9538,7 @@ UniversityofUtahHealth,
 "UniversityofWindsor,401SunsetAvenue,",
 "UniversityofWindsor,401SunsetAvenue, are likely not applicable to their study species.",
 "UniversityofWindsor,401SunsetAvenue,Windsor,Ontario,N9B3P4,Canada,3CardiffUniversity,SchoolofBiosciences,",Canada
+"UniversityofWindsor,Windsor,ON,Canada,4SchoolofAquaticandFisheriesSciences,UniversityofWashington,Seattle,",Canada
 "UniversityofWisconsin,2015LindenDrive, different between the two time points (initial median total WBC count=18,920",
 "UniversityofWollongong,",
 "UniversityofYork,York,UnitedKingdom",
@@ -9399,6 +9548,7 @@ UniversityofUtahHealth,
 "UniversityoftheAzores,9901-862Horta,Portugal sionregulation(EC)No1881/2006of19December2006sets",Portugal
 "UniversityoftheAzores,Horta,Portugal",Portugal
 "UniversityoftheAzores,Portugal",Portugal
+"UniversityoftheSunshineCoast,",
 "UniversityoftheWestIndies,St.Augustine,TrinidadandTobago,3 DepartmentofMathematicsand",
 "UniversityoftheWesternCape,",
 "UniversityoftheWesternCape,CapeTown,SouthAfrica Christison 2010, 2017). Although their relative nov-",
@@ -9458,6 +9608,7 @@ Virginia Institute of Marine Science (VIMS) longline survey is a callyexpresseda
 "WA 6151, Australia. 8Institut of Environment, Department of Biological Sciences, Florida International University,",Australia
 "WA, 6009, Australia. 6Australian Research Council Centre of Excellence for Coral Reef Studies, James Cook University,",Australia
 "WA, Australia. 4 OSSARI - Ocean Sciences and Solutions Applied Research Institute, Neom, Saudi Arabia. 5School",Australia
+"WA,UnitedStates,5BiologyDepartment,WoodsHoleOceanographicInstitution,WoodsHole,MA,UnitedStates,",
 "WEan, W. W., AND C. M. BREDEa, JB. 1922. A 2 Present Address: School of Oceanography, Ore-",
 "WadsworthCenter,NewYorkStateDepartmentofHealthand",
 WageningenInstituteforMarineResearchandEcological,
@@ -9595,6 +9746,7 @@ Xtra—showed the greatest agreement with reference laboratory methods when,
 "a Molecular Breeding and Biodiversity Group, Department of Genetics, Stellenbosch",
 "a Monogenean Research Laboratory, Parasitology Section, The South Australian Museum,",Australia
 "a National Institute of Water & Atmospheric Research Ltd, P.O.Box",
+"a New College of Florida, Division of Natural Sciences, 5800 Bayshore Road, Sarasota, Florida",
 "a Pacific Shark Research Center, Moss Landing Marine Laboratories, Moss Landing, California, USA",USA
 "a Pacific Shark Research Center, Moss Landing Marine Laboratories, Moss Landing, USA",USA
 "a Riverside Technology Inc., National Marine Fisheries Service, Panama City Laboratory, Panama",Panama
@@ -9790,6 +9942,7 @@ a à concentrer les efforts de conservation sur le maintien du potentiel reprodu
 "aFish Ecology and Conservation Physiology Laboratory, Department of Biology and Institute of Environmental Science, Carleton University,",
 "aFishMuseum,ZoologyDepartment,UniversityofBritishColumbia,Vancouver,Canada",Canada
 "aFishery Resource Analysis and Monitoring Division, Northwest Fisheries Science Center, National Marine Fisheries Service, National Oceanic and",
+"aFishery Resource Analysis and Monitoring Division, Northwest Fisheries Science Center, National Marine Fisheries Service, National Oceanic and Atmospheric",
 "aFishery Resource Analysis and Monitoring Division, Northwest Fisheries Science Center, National Marine Fisheries Service, National Oceanic and Atmospheric Administration, 2725",
 "aFishingandFisheriesResearchCentre,SchoolofEarthandEnvironmentalSciences,JamesCookUniversity,Townsville,Queensland4811,Australia",Australia
 "aFloridaInternationalUniversity,SchoolofEnvironment,ArtsandSociety,MarineSciencesProgram,3000NE151st,NorthMiami,FL33181,USA",USA
@@ -9908,6 +10061,8 @@ a à concentrer les efforts de conservation sur le maintien du potentiel reprodu
 "aPresentaddress:BiocurrentsResearchCenter,MarineBiologyLaboratory,7MBLStreet,",
 "aProgramofFisheriesandAquaticSciences,SchoolofForestResourcesandConservation,UniversityofFlorida,FL32653,USA",USA
 "aRed Sea Research Center, King Abdullah University of Science and Technology, 23955-6900 Thuwal, Saudi Arabia",Saudi Arabia
+"aResearch Centre for Oceanography, Indonesian Institute of Sciences (LIPI), Jalan Pasir Putih I",Indonesia
+"aResearch Centre for Oceanography, Indonesian Institute of Sciences (LIPI), Jalan Pasir Putih I No.1 Ancol, Jakarta, 14430, Indonesia",Indonesia
 "aResearch Institute for the Environment and Livelihoods, Charles Darwin University, Darwin, Northern Territory 0909, Australia",Australia
 "aResearchCenterforGeneticMedicine,Children'sNationalMedicalCenter,DepartmentofIntegrativeSystemsBiology,TheGeorgeWashingtonUniversitySchoolofMedicine&HealthSciences,",
 "aResearchInstitutefortheEnvironmentandLivelihoods,CharlesDarwinUniversity,Darwin,NorthernTerritory0909,Australia",Australia
@@ -9928,6 +10083,7 @@ a à concentrer les efforts de conservation sur le maintien du potentiel reprodu
 "aSchool of Geography, Geology and Environment, University of Leicester, Leicester LE1 7RH, UK",UK
 "aSchool of Life and Environmental Sciences, Centre for Integrative Ecology, Deakin University, 75",
 "aSchool of Medical Sciences, Faculty of Biology, Medicine and Health, University of Manchester,",
+"aSchool of Molecular and Life Sciences, Curtin University, Perth, WA 6845, Australia",Australia
 "aSchoolforEnvironmentalResearch,CharlesDarwinUniversity,Darwin,NorthernTerritory0909,Australia",Australia
 "aSchoolforMarineScienceandTechnology,UniversityofMassachusettsDartmouth,706SouthRodneyFrenchBoulevard,NewBedford,MA02744,USA",USA
 "aSchoolforMarineScienceandTechnology,UniversityofMassachusettsDartmouth,NewBedford,MA02740,USA",USA
@@ -10025,6 +10181,7 @@ allmi) dominate the pelagic fish biomass Pacific. The center of abundance appear
 also is known from off New Zealand (Garrick 1961). Museum of the University of Bergen (catalogue,New Zealand
 alsobedownloadedfromtheCenterforOpen,
 "amination of papers published since 1933 and the specimens syntypes are deposited at The Department of Zoology, National",
+an R package that greatly simplifies its School of Ocean and Earth Science and Technology,
 an increase in laboratory studies of metabolic rates used to measure activity or energy expenditure of,
 "analysesarealreadyfindingsupportfor Sigel,E.M.,Der,J.P.,Pittermann,J.,etal. UniversityofMaryland,CollegePark,MD,",
 "and (4) crushing, (5) grinding and (6) clutching– Island, Department of Biological Sciences, 100 Flagg Rd Kingston,",
@@ -10055,6 +10212,7 @@ and Canada were observed for all life 1 Anderson Cabot Center for Ocean Life 5 I
 "and Development, Faculty of Medicine, University of Geneva, Geneva, Switzerland. 24These authors contributed equally: Ferdinand Marlétaz, Elisa de la Calle-Mustienes, Rafael D. Acemel,",Switzerland
 "and Ecology of Aquatic Ecosystems, Faculty of Sciences it the second largest genus after Myxobolus Bütschli, 1882",
 "and Engineering, Flinders University, Adelaide, SA 5001, Australia. 7Molecular Fisheries Laboratory, School of",Australia
+"and Engineering, Flinders University, Adelaide, SA, Australia. 5Georgia Aquarium, Atlanta, GA, USA. 6Center for",USA
 "and Engineering, James Cook University,",
 "and Engineering, James Cook University, Numerous studies have now demonstrated that the most common method of ageing",
 "and Engineering, James Cook University, Townsville 4811,",
@@ -10070,9 +10228,11 @@ and Canada were observed for all life 1 Anderson Cabot Center for Ocean Life 5 I
 "and Fisheries, Udayana University, Kampus Bukit Jimbaran,",UK
 "and Fisheries,Universityofthe Azores,RuaProf. Dr. FredericoMachado, Horta, Azores, Portugal,‡Institute ofMarine",Portugal
 "and Henle, by Miss T. M. Aal, Department of Parasitology, A'in",
+"and Horticultural Sciences, Humboldt- Universität zu Berlin, Berlin, Germany; 3Bimini Biological Field Station Foundation, South Bimini, Bahamas; 4College of",Germany
 "and Information Technologies, University of Primorska, Glagoljaška 8, 6000, Koper, Slovenia",Slovenia
 "and Inland Waters, Hellenic Centre for",
 "and Interdisciplinary Center for Neural Computation, received, in contrast, little attention, although play behavior",
+"and Livelihoods, Charles Darwin University,",
 "and Paleoanthropology, Chinese Academy of Sciences (CAS), Beijing, China. 3School of Geography, Earth and Environmental Sciences, University of Birmingham, Birmingham, UK. 4CAS",UK
 "and Policy, University of Miami, Coral Gables, FL 33146, (Awruch 2013). Sex hormones, including androgens, proges-",
 "and Process Engineering, Queensland University of Technology, Brisbane City QLD 4000, Brisbane, Australia.",Australia
@@ -10082,6 +10242,7 @@ and Canada were observed for all life 1 Anderson Cabot Center for Ocean Life 5 I
 "and Virginia Institute of Marine Science, Route 1208, Greate Road, Gloucester Point, VA",
 "and Wildlife Conservation Commission, Fish and Wildlife Research Institute, 1220 Prospect",
 "and Zane); Department of Biological, Geological & Environmental Sciences (BiGeA), School of Sciences, University of",
+and longevity. This approach was origi- 1 Department of Oceanography and Coastal Sciences,
 "and make inferences about evolution. The internal & Cell Biology, South Bend Center for Medical Education, Indiana",India
 "and of Threlfall(1969). Williams (1966) also mentioned a new the laboratory. Specimens were stained with Mayer's acid carmine,",
 and school sharks (Galeorhinus galeus),
@@ -10285,6 +10446,7 @@ b Laboratory of Living Resources and Marine Environment,
 "bDepartment of Ocean Engineering and Marine Sciences, Florida Institute of Technology, 150 W University Blvd, Melbourne, Florida 32901, USA",USA
 "bDepartment of Oceanography, Shahjalal University of Science and Technology, Sylhet, 3114, Bangladesh",Bangladesh
 "bDepartment of Silviculture and Forest Management, Kwame Nkrumah University of Science and Technology, Kumasi, Ghana",
+"bDepartment of Sociology, University of Cambridge, Downing Street, Cambridge CB2 3EJ, United Kingdom",United Kingdom
 "bDepartmentodeZoologia–IB,UniversidadedeSãoPaulo,CidadeUniversitária,05508–090SãoPaulo,SP,Brazil",Brazil
 "bDepartmentof OrganismicandEvolutionary Biology, HarvardUniversity, 26Oxford Street,Cambridge, MA 02138,USA",USA
 "bDepartmentofAgriculture,ForestryandFisheries,FisheriesResearch,RoggeBay,SouthAfrica",
@@ -10372,6 +10534,7 @@ b Laboratory of Living Resources and Marine Environment,
 "bGroupofRecyclingandValorisationofWasteMaterials(REVAL),MarineResearchInstitute(IIM-CSIC),r/EduardoCabello,6,Vigo36208,Galicia,Spain",Spain
 "bGulfFisheriesCentre,FisheriesandOceansCanada,Moncton,NBE1C9B6,Canada",Canada
 "bHawai'iInstituteofMarineBiology,UniversityofHawai'iatMānoa,P.O.Box1346,Kaneohe,Hawai'i,UnitedStates",
+"bHawaii Institute of Marine Biology, Univ. of Hawaii, Kaneohe, HI, USA",USA
 bHawaiiPacificUniversity,
 "bHawaiiPacificUniversity,Honolulu,USA",USA
 "bHawai’iInstituteofMarineBiology,P.O.Box1346,Kaneohe,HI96744,USA",USA
@@ -10489,6 +10652,8 @@ bKazan Federal University,
 "bSavannah River Ecology Laboratory, University of Georgia, Aiken, SC 29802, USA",USA
 "bSavannahRiverEcologyLaboratory,UniversityofGeorgia,Aiken,SC29802,USA",USA
 "bSa~oPauloStateUniversity,IlhaSolteira,FacultyofEngineering,DepartmentofBiologyandZootechny,NeotropicalIchthyologyLaboratoryeLINEO,",
+"bSchool of Biological Sciences, The University of Queensland, Brisbane, Qld, 4072, Australia",Australia
+"bSchool of Biological Sciences, The University of Queensland, St Lucia, Queensland 4072,",
 "bSchool of Earth and Geographical Sciences, The University of Western Australia, 35 Stirling Highway, Crawley 6009, Western Australia, Australia",Australia
 "bSchool of Marine Sciences, University of Maine, Orono, ME 04469, USA",USA
 "bSchool of Marine and Atmospheric Sciences, Stony Brook University, Stony Brook, New York 11794-5000 USA",USA
@@ -10525,6 +10690,7 @@ bKazan Federal University,
 "bSouthwestFisheriesScienceCentre,NationalOceanicandAtmosphericAdministration,SanDiego,CA,8901,USA",USA
 "bSydneyInstituteofMarineScience,19ChowderBayRoad,Mosman,NSW,Australia",Australia
 "bTechnicalUniversityofDenmark,DanishInstituteforFisheriesResearch,DepartmentofMarineEcologyandAquaculture,",Denmark
+"bThe UWA Oceans Institute (M470), The University of Western Australia, 35 Stirling Highway, Perth, WA 6009, Australia",Australia
 "bTheCollegeofWilliamandMary,SchoolofMarineScience,VirginiaInstituteofMarineScience,P.O.Box1346,",
 "bTheFloridaAquariumCenterforConservation,701ChannelsideDr.,Tampa,FL33602,USA",USA
 "bTheNature Conservancy, 93CentreDrive,Newmarket, CB8 8AW, UK",UK
@@ -10615,6 +10781,7 @@ cBorissiak Palaeontological Institute of the Russian Academy of Sciences,
 "cBranch:OceansandCoasts,DepartmentofEnvironmentalAffairs,PrivateBagX4390,CapeTown8000,SouthAfrica",
 "cCSIROOceans&Atmosphere,IndianOceanMarineResearchCentre,Crawley,WA6009,Australia",Australia
 "cCaliforniaDepartmentofFishandGame,MossLanding,CA,USA",USA
+"cCambridge Social Decision-Making Lab, Department of Psychology, University of Cambridge, Downing Street, Cambridge CB2 3EB, United Kingdom",United Kingdom
 "cCenterforBiochemicalandBiophysicalSciencesandMedicine,DepartmentofPathology,HarvardMedicalSchool,Boston,MA,USA",USA
 "cCenterforSharkResearch,MoteMarineLaboratory,1600KenThompsonParkway,Sarasota,FL34236,USA",USA
 "cCenterforSharkResearch,MoteMarineLaboratory,1600KenThompsonPkwy.,Sarasota,FL34236,UnitedStates",
@@ -10730,6 +10897,7 @@ cEcologicalModelingServicesandUniversityofQueensland,
 "cInstituteofMarineScience,UniversityofCaliforniaSantaCruz,SantaCruzCA,95064,USA",USA
 "cInstituteofMarineSciences,UniversityofCalifornia,SantaCruz,CA,95060,USA",USA
 "cInstituto Mediterra´neo de Estudios Avanzados (CSIC-UiB), Department of Ecology and Marine Resources, Miquel Marqu´es 21, 07190, Esporles, Balearic Islands, Spain",Spain
+"cJoint Institute for Marine and Atmospheric Research, University of Hawaii, Honolulu, HI, USA",USA
 "cKagawaSchoolofPharmaceuticalSciences,TokushimaBunriUniversity,Sanuki,Kagawa769-2193,Japan",UK
 "cKey Laboratory of Food Safety Risk Assessment, National Health Commission of the People’s Republic of China, China National Center for Food Safety Risk Assessment",China
 "cKey Laboratory of Sustainable Exploitation of Oceanic Fisheries Resources, Ministry of Education, Shanghai, China",China
@@ -10738,6 +10906,7 @@ cEcologicalModelingServicesandUniversityofQueensland,
 "cLeonardandJayneAbessCenterforEcosystemScienceandPolicy,UniversityofMiami,CoralGables,FL33146,USA",USA
 "cMQMarine,MacquarieUniversity,Sydney,NSW2109,Australia",Australia
 "cMantaRay&WhaleSharkResearchCenter,TofoBeach,Inhambane,Mozambique",Mozambique
+"cMarine Science Program, Biodiversity and Conservation Science, Department of Biodiversity, Conservation and Attractions, Kensington, WA 6151, Australia",Australia
 "cMarinePredatorResearchGroup,DepartmentofBiologicalSciences,MacquarieUniversity,NorthRyde,NewSouthWales2109,Australia",Australia
 "cMossLandingMarineLaboratories,PacificSharkResearchCenter,8272MossLandingRoad,MossLanding,CA95039,UnitedStates",
 "cMote Marine Laboratory, 1600 Ken Thompson Pkwy, Sarasota, FL 34236, USA",USA
@@ -10773,6 +10942,8 @@ cEcologicalModelingServicesandUniversityofQueensland,
 "cRosenstielSchoolofMarineandAtmosphericSciences,UniversityofMiami,Miami,FL33149,U.S.A.",
 "cSchool Biological Sciences, Monash University, Wellington Road, Clayton, Victoria, 3800 Australia",Australia
 "cSchool of Biological, Earth & Environmental Sciences (BEES), University College Cork, Distillery Fields, North Mall, Cork, Ireland",Ireland
+"cSchool of Biomedical Sciences, The University of Queensland, Brisbane, Qld, 4072, Australia",Australia
+"cSchool of Biomedical Sciences, The University of Queensland, St Lucia, Queensland 4072,",
 "cSchool of Business and Tourism. Southern Cross University, PO Box 157, Lismore, NSW, 2480, Australia",Australia
 "cSchool of Earth, Atmosphere and Environment, Faculty of Science, Monash University, Australia",Australia
 "cSchool of Natural Sciences, University of Tasmania, Hobart, Tasmania, Australia",Australia
@@ -10882,6 +11053,7 @@ d'anneaux sur les centres vertebraux colores au nitrate d'argent. Notre inteprkt
 "dBiologicalLaboratory,FacultyofEducation,WakayamaUniversity,Sakaedani930,Wakayama640-8510,Japan",Japan
 "dBiologicalSciencesDepartment&MarineResearchInstitute,UniversityofCapeTown,PrivateBag,Rondebosch,7701,SouthAfrica",
 "dCenter for Ecology and Conservation, School of Biosciences, University of Exeter, Cornwall Campus, Penryn, Cornwall TR10 9EZ, United Kingdom",United Kingdom
+"dCenter for Macroecology, Evolution and Climate, Globe Institute, University of Copenhagen, 2100, Denmark",Denmark
 "dCenter for Tropical Paleoecology and Archeology, Smithsonian Tropical Research Institute, AA 0843-03092 Balboa, Ancon, Panama",Panama
 "dCenterforMarineScience,UniversityofNorthCarolinaWilmington,601SouthCollegeRoad,Wilmington,NC28403-5928,USA",USA
 "dCentre de Recerca Ecol�ogica i Aplicacions Forestals (CREAF), Cerdanyola del Vall�es, 08193, Spain",Spain
@@ -10999,6 +11171,7 @@ d'anneaux sur les centres vertebraux colores au nitrate d'argent. Notre inteprkt
 "dSydneyInstituteofMarineScience,Building22,ChowderBayRoad,Mosman,NewSouthWales2088,Australia",Australia
 "dSydneyInstituteofMarineScience,Mosman,NSW2088,Australia",Australia
 "dThe Environment Institute and School of Earth and Environmental Sciences, The University of Adelaide, Adelaide, South Australia 5005, Australia",Australia
+"dThe School of Biological Sciences, The University of Western Australia, 35 Stirling Highway, Crawley, WA 6009, Australia",Australia
 "dTokai University, 3-20-1 Orido, Shizuoka Shimizu-ku, Shizuoka 424-8610, Japan",Japan
 "dUniversity of California Santa Cruz, Santa Cruz CA, USA",USA
 "dUniversity of the Ryukyus, 1 Senbaru, Nishihara, Okinawa, 903-0213, Japan",UK
@@ -11062,6 +11235,7 @@ during the months of July and August at the Laboratory of the Marine Biological 
 "eBiologyCentreofCzechAcademyofSciences,InstituteofParasitology,Brani(cid:1)sovska(cid:3)31,37005,C (cid:1) esk(cid:3)eBud(cid:1)ejovice,CzechRepublic",
 "eCenter for Shark Research, Mote Marine Laboratory, 1600 Ken Thompson Parkway, Sarasota, FL 34236 USA",USA
 "eCetaceanEcology,BehaviourandEvolutionLab,SchoolofBiologicalSciences,FlindersUniversity,Adelaide,SouthAustralia5042,Australia",Australia
+"eCollege of Science and Engineering, James Cook University, Townsville 4810, Queensland, Australia",Australia
 "eDepartment of Biological Sciences, Simon Fraser University, Burnaby, BC V5A 1S6, Canada",Canada
 "eDepartment of Zoology, Natural History Museum, Cromwell Road, London, SW7 5BD,",
 "eDepartmentOfSchoolofLifeSciences,UniversityofKwaZulu-Natal,Pietermaritzburg,SouthAfrica",
@@ -11089,6 +11263,7 @@ during the months of July and August at the Laboratory of the Marine Biological 
 "eHabitatandEcosystemProcessResearchprogram,AlaskaFisheriesScienceCenter,NationalMarineFisheriesService,NOAA,7600SandPointWayNE,Seattle,WA",
 "eHavforskningsinstituttet(InstituteofMarineResearch,IMR),Tromsø,Norway",Norway
 "eInstitute for Experimental Pathology at Keldur, University of Iceland, Reykjavík, Iceland",Iceland
+"eInstitute for Marine and Antarctic Studies, University of Tasmania, Hobart, TAS 7001, Australia",Australia
 "eInstituteforMarineandAntarcticStudies,UniversityofTasmania,Hobart7001,Australia",Australia
 "eInstituteofEnvironment,DepartmentofBiologicalSciences,FloridaInternationalUniversity,NorthMiami,FL,U.S.A.",
 "eIntegrated Fisheries Lab, Dalhousie University, Halifax, NS B3H 4R2, Canada",Canada
@@ -11132,6 +11307,7 @@ during the months of July and August at the Laboratory of the Marine Biological 
 "eUniversit(cid:2)edelaR(cid:2)eunion,DepartmentofGeography,15AvenueRen(cid:2)eCassin,Saint-Denis,97400,LaR(cid:2)eunion,France",France
 "eUniversity of Vermont, Department of Biology, 120A Marsh Life Science Building, 109 Carrican Drive, Burlington, VT 05405-0086, United States",United States
 "eUniversityofBrest,CNRS,IRD,Ifremer,LEMAR,F-29280Plouzane,France",France
+"eUpper Andaman Sea Fisheries Research and Development Centre, Phuket, Thailand",UK
 "eWesternCapeDepartmentofAgriculture,VeterinaryServices,PrivateBagX1,Elsenberg,7607,SouthAfrica",
 earlier targeted commercial fishery (Greenland Institute of,
 "ecologicalrolesinmarinesystems,butlaboratorybasedcontrolledfeedingexperimentsareimpractical.By",
@@ -11165,6 +11341,7 @@ eries Science Center Spring and Fall Scientific Trawl,
 "fBamfieldMarineSciencesCentre,Bamfield,BCV0R1B0,Canada",Canada
 "fCentreforSustainableTropicalFisheriesandAquaculture&CollegeofScienceandEngineering,JamesCookUniversity,Townsville,Queensland4811,Australia",Australia
 "fComparativeGenomicsLaboratory,InstituteofMolecularandCellBiology,A⁄STAR(AgencyforScience,TechnologyandResearch),Biopolis,Singapore138673,Singapore",Singapore
+"fConservation Science Group, Department of Zoology, University of Cambridge, Downing Street, Cambridge CB2 3EJ, United Kingdom",United Kingdom
 "fDepartment of Biological Sciences, Macquarie University, Sydney, NSW, Australia",Australia
 "fDepartment of Biology, University of Padova, Viale G. Colombo 3, 35131 Padova, Italy",Italy
 "fDepartment of Fisheries and Aquaculture Technology, Technological Educational Institute of Western Greece, Mesolongi, Greece",Greece
@@ -11197,6 +11374,7 @@ eries Science Center Spring and Fall Scientific Trawl,
 "fTheEnvironmentInstituteandSchoolofEarthandEnvironmentalSciences,UniversityofAdelaide,Adelaide,SouthAustralia5005,Australia",Australia
 "fUniversit(cid:2)edelaR(cid:2)eunion,DepartmentofBiology,UMR9220-Entropie,15AvenueRen(cid:2)eCassin,Saint-Denis,97400,LaR(cid:2)eunion,France",France
 "fWater Research Group, Unit for Environmental Sciences and Management, North-West University, Potchefstroom, South Africa",South Africa
+"fWestern Australian Fisheries and Marine Research Laboratories, Department of Primary Industries and Regional Development, Government of Western Australia, P.O.",Australia
 factorsusinggeneralizedadditivemodelsandNortheastFisheriesScienceCenterbottomtrawlsurveydata.Significantnonlin-,
 feeders (preying on schooling fishes and planktonic,
 females and females with candled 1 Northeast Fisheries Science Center,
@@ -11239,6 +11417,7 @@ fromtheUniversityofCambridgeIsaacNewtonTrust[14.23z].,
 "gEnvironmentalResearchDivision,SouthwestFisheriesScienceCenter,NationalOceanicandAtmosphericAdministration,Monterey,CA93940;hOceanand",
 "gFishEcologyandConservationPhysiologyLaboratory,DepartmentofBiologyandInstituteofEnvironmentalScience,CarletonUniversity,Ottawa,ON,K1S5B6,Canada",Canada
 "gInstitute of Environment, Department of Biological Sciences, Florida International University, North Miami, FL, USA",USA
+"gSchool of Life and Environmental Sciences, Centre for Integrative Ecology, Deakin University, Warrnambool 3280, Australia",Australia
 "gSouthAustralianResearchandDevelopmentInstitute,P.O.Box120,HenleyBeach,SouthAustralia5022,Australia",Australia
 "gTheEnvironmentInstituteandSchoolofBiologicalSciences,TheUniversityofAdelaide,Adelaide,SouthAustralia,Australia",Australia
 "gUOG Sea Grant and Marine Laboratory, University of Guam, Mangilao, Guam, USA",USA
@@ -11258,8 +11437,10 @@ graduate program at Coastal Carolina University and Essex County Turtle Back Zoo
 "graphic Laboratory, Bedford Institute sf Oceanography, P.8. Box",
 "graphiccurrents,providingthenecessarybiophysicalconditions ther,nationallegislationwasinstitutedin1999(EPBCAct)to",
 "growing centres of human population, industry, and tourism. However, we lack baseline data",
+"grunts, and sharks and, here, present 2 Joint Institute for Marine and Atmospheric Research",
 guidestheirfinalstrikeduringpreycapture.Weusedlaboratoryexperimentstotestthehypothesisthatweakelectricstimuligeneratedbya,
 "h Marine Scotland Science, Marine Laboratory, 375 Victoria Road, Aberdeen AB11 9DB, United",
+"hAustralian Institute of Marine Science, IOMRC (MO96) UWA, 35 Stirling Highway, Perth, WA 6009, Australia",Australia
 "hCenter for Fisheries Research, Agency for Marine Research and Human Resources, Ministry of Marine Affairs and Fisheries, Jakarta, 14430, Indonesia",Indonesia
 "hCollege of Science and Engineering, Flinders University, Adelaide, SA, Australia",Australia
 "hDepartment of Biology, University of Victoria, Victoria, British Columbia, Canada",Canada
@@ -11299,6 +11480,7 @@ human and veterinary laboratory medicine has advanced to to evaluate the random 
 "iDepartamentodeBiologia,FaculdadedeCiências,UniversidadedoPorto,4169-007Porto,Portugal;andjCentreforBiologicalSciences,HighfieldCampus,",Portugal
 "iDepartmentofConservation,PrivateBag68908,Newton,Auckland1145,NewZealand",
 "iEndangered Marine Species Research Unit, Borneo Marine Research Institute, Universiti Malaysia Sabah, Kota Kinabalu, Sabah, Malaysia",Malaysia
+"iFisheries Research, NSW Department of Primary Industries, 32 Marina Drive, Coffs Harbour, NSW 2450, Australia",Australia
 "iLeonardandJayneAbessCenterforEcosystemScienceandPolicy,UniversityofMiami,CoralGables,FL33146,USA",USA
 "iMarineBiologicalAssociationoftheUnitedKingdom,TheLaboratory,CitadelHill,Plymouth,UnitedKingdom",
 "iNationalCenterforWildlife,Riyadh,SaudiArabia",
@@ -11308,7 +11490,9 @@ human and veterinary laboratory medicine has advanced to to evaluate the random 
 "icology(Entox),TheUniversityofQueensland,39KesselsRoad,CoopersPlains,QLD",
 "iestodatehavecentredonmarinemammals,particularlycetaceans,inwhichasuite",
 impact of marine habitats on body size and other physiological sequencingreadshavebeenuploadedtotheNationalCenterforBiotechnologyInfor-,
+"implementation. Further, we tested this University of Hawaii at Manoa",
 improved management measures are required to ensure dance of elasmobranchs caught in the Centre for,
+"in Peru have a comparable impact to large-scale industrial fisheries [10, manta ray catches recorded by the Marine Institute of Peru, finding",Peru
 in basking shark sightings and school size over time. We then generated species,
 "in temperate and tropical latitudes. However, the Atlantic Ocean appears to be the center of distribution of Rajella",
 in the centre of each bothridium. There is a distinct cephalic peduncle with spiniform blade-like microtriches,
@@ -11339,6 +11523,7 @@ is in a very confused state. Much of this confusion has centred around a,
 isotope analysis． LI Yun-kai1，2，3* ，GAO Xiao-di1，WANG Lin-yu1，FANG Lin1 ( 1College of,
 itsregionalcentreofabundanceextendsalongtheeasterncoast mainlyinnear-shorewaters.Theirproximitycloseinshorefor,
 ity of which will be centered at or near the coasts,
+"jAustralian Institute of Marine Science, PMB No 3, Townsville,QLD 4810 Australia",Australia
 "jCollegeofScienceandEngineering,FlindersUniversity,Adelaide,5042SA,Australia",Australia
 "jEnvironmentalProtectionDepartment,SaudiAramco,Dhahran,SaudiArabia",
 "jSchool of Biological Science, University of Auckland, Auckland 1010, New Zealand",New Zealand
@@ -11350,11 +11535,13 @@ juveniles are easily maintained in laboratory or in thematic tanks showed to the
 "jywang@shou.edu.cn LaboratoryforMarineScienceandTechnology,Qingdao,China",China
 "k MRI, Marine Research Institute Iceland, Skúlagata 4, 121 Reykjavík, Iceland",Iceland
 "kDepartmentofEcology,Evolution,andMarineBiology,UniversityofCalifornia,SantaBarbara",
+"kFisheries Research, NSW Department of Primary Industries, Port Stephens Fisheries Institute, NSW 2316, Australia",Australia
 "kNewSouthWalesDepartmentofPrimaryIndustries,NationalMarineScienceCentre,CoffsHarbour,2450NSW,Australia",Australia
 "kVirginia Institute ofMarine Science,Greate Road,Gloucester Point,VA23062,USA",USA
 "kaobrien@vims.edu 1VirginiaInstituteofMarineScience,William&Mary,GloucesterPoint,VA,UnitedStates,2Panama",Panama
 "l""2Department of Biology, University of Massachusetts Dartmouth, North Dartmouth, MA 02747, USA",USA
 "lCentreof MarineStudies, University of Split,Livanjska 5, 21000Split,Croatia",Croatia
+"lCollege of Science and Engineering, Flinders University, Adelaide SA 5042, Australia",Australia
 "lLaboratoryofBiodiversityandEvolutionaryGenomics,UniversityofLeuven,B-3000Leuven,Belgium",Belgium
 lTethysResearchInstitute,
 laboratory and field data suggest that young lemon sharks can convert food to new tissue as,
@@ -11393,6 +11580,7 @@ levésauchalutdefondduNortheastFisheriesScienceCenter.Desrelationsnonlinéairess
 "long-liferemoteunderwatervideocameras Lobamba,Eswatini,4MarineBiology&EcologyResearchCentre,SchoolofBiological&Marine",
 "lopods, especially Argonauta spp. Universidad Nacional Agraria la Molina 5 Center for Ecology and Conservation",
 lowestduring winter. from the Fisheries Research and Management Center of the,
+"mFisheries Research, NSW Department of Primary Industries, 4 Woollamia Rd, Huskisson, NSW 2540, Australia",Australia
 "mLaboratoryforCytogeneticsandGenomeResearch,CenterforHumanGenetics,GenomicsCore,KULeuven,3000Leuven,Belgium",Belgium
 "madedamriyasa@unud.ac.id 4 Medical Biology and Electron Microscopy Centre, University",
 "maintainincaptivity,makingthemextremelydifficulttostudyinthelaboratory,andthuscanonlybestudiedin",

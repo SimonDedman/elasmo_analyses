@@ -98,12 +98,10 @@ def process_single_pdf(pdf_path):
                     'mention_count': len(matches)
                 })
 
-        if not found:
-            return None
-
-        # Calculate disciplines
+        # Calculate disciplines even if no techniques found
+        # (we want to log ALL papers, including those with zero techniques)
         disciplines = {}
-        for tech in found:
+        for tech in found if found else []:
             disc = tech['discipline']
             if disc not in disciplines:
                 disciplines[disc] = {'count': 0, 'type': 'primary'}
@@ -140,8 +138,16 @@ def write_results_to_db(results, dry_run=False):
         paper_id = result['paper_id']
         year = result['year']
 
-        # Write techniques
-        for tech in result['techniques']:
+        # Log the extraction (even if zero techniques)
+        cursor.execute(
+            """INSERT OR REPLACE INTO extraction_log
+               (paper_id, status, techniques_found, extraction_date)
+               VALUES (?, 'success', ?, ?)""",
+            (paper_id, len(result.get('techniques', [])), datetime.now().isoformat())
+        )
+
+        # Write techniques (if any)
+        for tech in result.get('techniques', []):
             cursor.execute(
                 """INSERT OR REPLACE INTO paper_techniques
                    (paper_id, technique_name, primary_discipline, mention_count, extraction_date)
@@ -150,22 +156,14 @@ def write_results_to_db(results, dry_run=False):
                  tech['mention_count'], datetime.now().isoformat())
             )
 
-        # Write disciplines
-        for disc, info in result['disciplines'].items():
+        # Write disciplines (if any)
+        for disc, info in result.get('disciplines', {}).items():
             cursor.execute(
                 """INSERT OR REPLACE INTO paper_disciplines
                    (paper_id, year, discipline_code, assignment_type, technique_count)
                    VALUES (?, ?, ?, ?, ?)""",
                 (paper_id, year, disc, info['type'], info['count'])
             )
-
-        # Log success
-        cursor.execute(
-            """INSERT OR REPLACE INTO extraction_log
-               (paper_id, status, techniques_found, extraction_date)
-               VALUES (?, 'success', ?, ?)""",
-            (paper_id, len(result['techniques']), datetime.now().isoformat())
-        )
 
     conn.commit()
     conn.close()
