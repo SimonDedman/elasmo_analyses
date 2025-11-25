@@ -2,37 +2,37 @@
 PHASE 2: AUTHOR & AFFILIATION EXTRACTION REPORT
 ================================================================================
 
-Generated: 2025-10-26 23:12:03
+Generated: 2025-11-24 14:16:12
 
 PROCESSING STATISTICS
 --------------------------------------------------------------------------------
-Papers attempted: 4,517
-Successfully parsed: 4,479 (99.2%)
+Papers attempted: 4,576
+Successfully parsed: 4,538 (99.2%)
 Failed to parse: 0
 Extraction failed: 18
 PDFs not found: 20
 
 AUTHOR STATISTICS
 --------------------------------------------------------------------------------
-Unique authors extracted: 18,851
-Paper-author linkages: 57,914
-Average authors per paper: 12.9
+Unique authors extracted: 19,104
+Paper-author linkages: 58,953
+Average authors per paper: 13.0
 
 INSTITUTION STATISTICS
 --------------------------------------------------------------------------------
-Unique affiliations extracted: 12,105
-Affiliations with country identified: 5,483 (45.3%)
+Unique affiliations extracted: 12,293
+Affiliations with country identified: 5,570 (45.3%)
 Unique countries: 73
 
 TOP 10 COUNTRIES BY AFFILIATION COUNT
 --------------------------------------------------------------------------------
-USA                            1385 affiliations
-Australia                      1158 affiliations
-UK                              387 affiliations
-Canada                          339 affiliations
-Italy                           231 affiliations
+USA                            1401 affiliations
+Australia                      1191 affiliations
+UK                              389 affiliations
+Canada                          345 affiliations
+Italy                           233 affiliations
 China                           158 affiliations
-Japan                           137 affiliations
+Japan                           138 affiliations
 Taiwan                          128 affiliations
-South Africa                    113 affiliations
-Portugal                        110 affiliations
+South Africa                    114 affiliations
+Germany                         111 affiliations
