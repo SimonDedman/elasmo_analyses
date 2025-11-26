@@ -90,6 +90,26 @@ world_centroids <- world_data %>%
 world_data <- world_data %>%
   bind_cols(world_centroids)
 
+# Manual centroid adjustments for countries with overseas territories or awkward shapes
+# France centroid is pulled SW by French Guiana - move to metropolitan France
+world_data <- world_data %>%
+  mutate(
+    lon = case_when(
+      name == "France" ~ 2.5,  # Metropolitan France longitude
+      name == "United States of America" ~ -98,  # Continental US (exclude Alaska pull)
+      name == "Norway" ~ 10,  # Mainland Norway
+      name == "Netherlands" ~ 5.5,  # Netherlands proper
+      TRUE ~ lon
+    ),
+    lat = case_when(
+      name == "France" ~ 46.5,  # Metropolitan France latitude
+      name == "United States of America" ~ 39,  # Continental US
+      name == "Norway" ~ 62,  # Mainland Norway
+      name == "Netherlands" ~ 52.5,  # Netherlands proper
+      TRUE ~ lat
+    )
+  )
+
 # Create short label names and determine if label should be direct or repelled
 world_data <- world_data %>%
   mutate(
@@ -133,7 +153,7 @@ p_world <- ggplot(data = world_data) +
   geom_text(
     data = world_labels_direct,
     aes(x = lon, y = lat, label = label),
-    size = 2.5,
+    size = 3.0,
     fontface = "bold",
     color = "white",
     lineheight = 0.8
@@ -141,7 +161,7 @@ p_world <- ggplot(data = world_data) +
   geom_text(
     data = world_labels_direct,
     aes(x = lon, y = lat, label = label),
-    size = 2.4,
+    size = 2.5,
     fontface = "bold",
     color = "black",
     lineheight = 0.8
@@ -154,7 +174,7 @@ p_world <- ggplot(data = world_data) +
     fontface = "bold",
     color = "black",
     bg.color = "white",
-    bg.r = 0.15,
+    bg.r = 0.25,
     box.padding = 0.5,
     point.padding = 0.3,
     segment.color = "grey40",
@@ -223,7 +243,7 @@ p_europe <- ggplot(data = world_data) +
   geom_text(
     data = europe_labels_direct,
     aes(x = lon, y = lat, label = label),
-    size = 3,
+    size = 3.5,
     fontface = "bold",
     color = "white",
     lineheight = 0.8
@@ -231,7 +251,7 @@ p_europe <- ggplot(data = world_data) +
   geom_text(
     data = europe_labels_direct,
     aes(x = lon, y = lat, label = label),
-    size = 2.9,
+    size = 3.0,
     fontface = "bold",
     color = "black",
     lineheight = 0.8
@@ -244,7 +264,7 @@ p_europe <- ggplot(data = world_data) +
     fontface = "bold",
     color = "black",
     bg.color = "white",
-    bg.r = 0.15,
+    bg.r = 0.25,
     box.padding = 0.4,
     point.padding = 0.2,
     segment.color = "grey40",
@@ -326,7 +346,7 @@ p_regional <- ggplot(data = world_data) +
   geom_text(
     data = regional_labels_direct,
     aes(x = lon, y = lat, label = label),
-    size = 2.5,
+    size = 3.0,
     fontface = "bold",
     color = "white",
     lineheight = 0.8
@@ -334,7 +354,7 @@ p_regional <- ggplot(data = world_data) +
   geom_text(
     data = regional_labels_direct,
     aes(x = lon, y = lat, label = label),
-    size = 2.4,
+    size = 2.5,
     fontface = "bold",
     color = "black",
     lineheight = 0.8
@@ -347,7 +367,7 @@ p_regional <- ggplot(data = world_data) +
     fontface = "bold",
     color = "black",
     bg.color = "white",
-    bg.r = 0.15,
+    bg.r = 0.25,
     box.padding = 0.4,
     point.padding = 0.2,
     segment.color = "grey40",
