@@ -9,6 +9,7 @@ library(rnaturalearthdata)
 library(RSQLite)
 library(dplyr)
 library(ggrepel)
+library(shadowtext)
 
 # Connect to database
 conn <- dbConnect(SQLite(), "database/technique_taxonomy.db")
@@ -57,7 +58,8 @@ country_short_names <- c(
 # Large countries where labels should be placed directly at centroid (no repel)
 large_countries <- c(
   "United States of America", "Canada", "Brazil", "Australia", "China",
-  "Russia", "India", "Argentina", "Mexico", "Indonesia", "South Africa",
+
+"Russia", "India", "Argentina", "Mexico", "Indonesia", "South Africa",
   "Japan", "France", "Spain", "Germany", "Italy", "United Kingdom",
   "Sweden", "Norway", "Finland", "Poland", "Turkey", "Iran (Islamic Republic of)",
   "Saudi Arabia", "Egypt", "Algeria", "Libya", "Peru", "Chile", "Colombia",
@@ -90,22 +92,130 @@ world_centroids <- world_data %>%
 world_data <- world_data %>%
   bind_cols(world_centroids)
 
-# Manual centroid adjustments for countries with overseas territories or awkward shapes
-# France centroid is pulled SW by French Guiana - move to metropolitan France
+# Manual centroid adjustments for countries with overseas territories, awkward shapes,
+# or to prevent label overlaps
 world_data <- world_data %>%
   mutate(
     lon = case_when(
-      name == "France" ~ 2.5,  # Metropolitan France longitude
-      name == "United States of America" ~ -98,  # Continental US (exclude Alaska pull)
-      name == "Norway" ~ 10,  # Mainland Norway
-      name == "Netherlands" ~ 5.5,  # Netherlands proper
+      # Countries with overseas territories pulling centroid off
+      name == "France" ~ 2.5,
+      name == "United States of America" ~ -98,
+      name == "Norway" ~ 8,  # Shift west to avoid Sweden overlap
+      name == "Netherlands" ~ 5.5,
+
+      # South America - Chile/Argentina overlap
+      name == "Chile" ~ -75,  # Shift west (coast)
+      name == "Argentina" ~ -64,  # Shift east (inland)
+
+      # Southeast Asia - Singapore/Malaysia overlap
+      name == "Singapore" ~ 107,  # Shift east into sea
+      name == "Malaysia" ~ 102,  # Keep Malaysia centered
+
+      # Middle East - Jordan/Saudi Arabia overlap
+      name == "Jordan" ~ 38,  # Shift east
+      name == "Saudi Arabia" ~ 45,  # Keep Saudi centered
+
+      # Europe - Ireland/UK overlap
+      name == "Ireland" ~ -9,  # Shift west into Atlantic
+      name == "United Kingdom" ~ -1,  # Shift east
+
+      # Europe - Switzerland/Portugal/Spain overlaps
+      name == "Switzerland" ~ 8.5,  # Keep centered
+      name == "Portugal" ~ -9,  # Shift west into Atlantic
+
+      # Europe - Czech Republic/Poland overlap
+      name == "Czechia" ~ 15.5,
+      name == "Poland" ~ 19.5,  # Shift east
+
+      # Europe - Austria/France overlap (Austria label drifting west)
+      name == "Austria" ~ 14,  # Keep Austria east
+
+      # South America - Ecuador/Colombia overlap
+      name == "Ecuador" ~ -81,  # Shift west into Pacific
+      name == "Colombia" ~ -73,  # Shift east
+
+      # Southeast Asia - Hong Kong/Thailand overlap
+      name == "Hong Kong" ~ 117,  # Shift east into sea
+      name == "Thailand" ~ 101,  # Keep Thailand centered
+
+      # Middle East - Israel/Egypt overlap
+      name == "Israel" ~ 36,  # Shift east
+      name == "Egypt" ~ 30,  # Keep Egypt west
+
+      # Europe - Turkey/Cyprus overlap
+      name == "Turkey" ~ 33,  # Shift Turkey east
+      name == "Cyprus" ~ 33.5,  # Keep Cyprus, will adjust lat
+
+      # Europe - Slovenia/Italy overlap
+      name == "Slovenia" ~ 15,  # Shift east
+      name == "Italy" ~ 12,  # Keep Italy west
+
+      # Europe - Croatia/Bulgaria overlap
+      name == "Croatia" ~ 16,  # Keep Croatia west
+      name == "Bulgaria" ~ 25.5,  # Keep Bulgaria east
+
+      # Europe - Denmark/Norway/Sweden overlaps
+      name == "Denmark" ~ 10,  # Shift east
+      name == "Sweden" ~ 16,  # Shift east
+
       TRUE ~ lon
     ),
     lat = case_when(
-      name == "France" ~ 46.5,  # Metropolitan France latitude
-      name == "United States of America" ~ 39,  # Continental US
-      name == "Norway" ~ 62,  # Mainland Norway
-      name == "Netherlands" ~ 52.5,  # Netherlands proper
+      # Countries with overseas territories
+      name == "France" ~ 46.5,
+      name == "United States of America" ~ 39,
+      name == "Norway" ~ 64,  # Shift north
+      name == "Netherlands" ~ 52.5,
+
+      # South America
+      name == "Chile" ~ -35,
+      name == "Argentina" ~ -35,
+
+      # Southeast Asia
+      name == "Singapore" ~ 0,  # Shift south
+      name == "Malaysia" ~ 4,
+
+      # Middle East
+      name == "Jordan" ~ 31,
+      name == "Saudi Arabia" ~ 24,  # Shift south
+
+      # Europe - Ireland/UK
+      name == "Ireland" ~ 53.5,
+      name == "United Kingdom" ~ 54,
+
+      # Europe - various
+      name == "Switzerland" ~ 46.8,
+      name == "Portugal" ~ 39.5,
+      name == "Czechia" ~ 49.8,
+      name == "Poland" ~ 52,
+      name == "Austria" ~ 47.5,
+
+      # South America
+      name == "Ecuador" ~ -1.5,
+      name == "Colombia" ~ 4,
+
+      # Southeast Asia
+      name == "Hong Kong" ~ 22,
+      name == "Thailand" ~ 15,
+
+      # Middle East
+      name == "Israel" ~ 31.5,
+      name == "Egypt" ~ 27,
+
+      # Europe - Turkey/Cyprus
+      name == "Turkey" ~ 39,
+      name == "Cyprus" ~ 34,  # Shift south
+
+      # Europe - Slovenia/Italy/Croatia/Bulgaria
+      name == "Slovenia" ~ 46,
+      name == "Italy" ~ 43,
+      name == "Croatia" ~ 45,
+      name == "Bulgaria" ~ 43,
+
+      # Scandinavia
+      name == "Denmark" ~ 56,
+      name == "Sweden" ~ 62,
+
       TRUE ~ lat
     )
   )
@@ -130,12 +240,13 @@ cat("Countries matched:", matched, "\n")
 cat("\nGenerating world map...\n")
 
 # Split labels: large countries get direct labels, small get repelled
+# Include ALL countries with papers (papers > 0)
 world_labels_direct <- world_data %>%
-  filter(papers >= 30 & is_large) %>%
+  filter(papers > 0 & is_large) %>%
   st_drop_geometry()
 
 world_labels_repel <- world_data %>%
-  filter(papers >= 30 & !is_large) %>%
+  filter(papers > 0 & !is_large) %>%
   st_drop_geometry()
 
 p_world <- ggplot(data = world_data) +
@@ -149,39 +260,33 @@ p_world <- ggplot(data = world_data) +
     option = "plasma",
     na.value = "grey85"
   ) +
-  # Direct labels for large countries (white outline for readability)
-  geom_text(
-    data = world_labels_direct,
-    aes(x = lon, y = lat, label = label),
-    size = 3.0,
-    fontface = "bold",
-    color = "white",
-    lineheight = 0.8
-  ) +
-  geom_text(
+  # Direct labels for large countries using shadowtext
+  geom_shadowtext(
     data = world_labels_direct,
     aes(x = lon, y = lat, label = label),
     size = 2.5,
     fontface = "bold",
     color = "black",
+    bg.color = "white",
+    bg.r = 0.15,
     lineheight = 0.8
   ) +
   # Repelled labels for small/crowded countries
   geom_text_repel(
     data = world_labels_repel,
     aes(x = lon, y = lat, label = label),
-    size = 2.5,
+    size = 2.3,
     fontface = "bold",
     color = "black",
     bg.color = "white",
-    bg.r = 0.25,
-    box.padding = 0.5,
-    point.padding = 0.3,
+    bg.r = 0.15,
+    box.padding = 0.3,
+    point.padding = 0.1,
     segment.color = "grey40",
-    segment.size = 0.4,
+    segment.size = 0.3,
     min.segment.length = 0,
-    max.overlaps = 30,
-    force = 3,
+    max.overlaps = 100,
+    force = 2,
     lineheight = 0.8
   ) +
   labs(
@@ -212,7 +317,7 @@ europe_large <- c("France", "Spain", "Germany", "Italy", "United Kingdom",
                   "Sweden", "Norway", "Finland", "Poland", "Turkey", "Romania",
                   "Ukraine", "Ireland", "Portugal", "Greece", "Bulgaria")
 
-# Filter European countries for labels
+# Filter European countries for labels - ALL with papers
 europe_labels_direct <- world_data %>%
   filter(lon >= europe_bbox["xmin"] & lon <= europe_bbox["xmax"] &
          lat >= europe_bbox["ymin"] & lat <= europe_bbox["ymax"] &
@@ -239,21 +344,15 @@ p_europe <- ggplot(data = world_data) +
     option = "plasma",
     na.value = "grey85"
   ) +
-  # Direct labels for large European countries (white outline)
-  geom_text(
-    data = europe_labels_direct,
-    aes(x = lon, y = lat, label = label),
-    size = 3.5,
-    fontface = "bold",
-    color = "white",
-    lineheight = 0.8
-  ) +
-  geom_text(
+  # Direct labels for large European countries using shadowtext
+  geom_shadowtext(
     data = europe_labels_direct,
     aes(x = lon, y = lat, label = label),
     size = 3.0,
     fontface = "bold",
     color = "black",
+    bg.color = "white",
+    bg.r = 0.15,
     lineheight = 0.8
   ) +
   # Repelled labels for small European countries
@@ -264,14 +363,14 @@ p_europe <- ggplot(data = world_data) +
     fontface = "bold",
     color = "black",
     bg.color = "white",
-    bg.r = 0.25,
-    box.padding = 0.4,
-    point.padding = 0.2,
+    bg.r = 0.15,
+    box.padding = 0.3,
+    point.padding = 0.1,
     segment.color = "grey40",
-    segment.size = 0.4,
+    segment.size = 0.3,
     min.segment.length = 0,
-    max.overlaps = 50,
-    force = 4,
+    max.overlaps = 100,
+    force = 3,
     lineheight = 0.8
   ) +
   labs(
@@ -326,13 +425,13 @@ world_data$papers_bin <- cut(world_data$papers,
 bin_colors <- c("0" = "grey85", "1-10" = "#FFFFB2", "11-50" = "#FECC5C", "51-100" = "#FD8D3C",
                 "101-250" = "#F03B20", "251-500" = "#BD0026", "501-1000" = "#800026", ">1000" = "#4A0014")
 
-# Labels for regional map - split into direct and repelled
+# Labels for regional map - ALL countries with papers
 regional_labels_direct <- world_data %>%
-  filter(papers >= 20 & is_large) %>%
+  filter(papers > 0 & is_large) %>%
   st_drop_geometry()
 
 regional_labels_repel <- world_data %>%
-  filter(papers >= 20 & !is_large) %>%
+  filter(papers > 0 & !is_large) %>%
   st_drop_geometry()
 
 p_regional <- ggplot(data = world_data) +
@@ -342,39 +441,33 @@ p_regional <- ggplot(data = world_data) +
     values = bin_colors,
     na.value = "grey85"
   ) +
-  # Direct labels for large countries (white outline for readability)
-  geom_text(
-    data = regional_labels_direct,
-    aes(x = lon, y = lat, label = label),
-    size = 3.0,
-    fontface = "bold",
-    color = "white",
-    lineheight = 0.8
-  ) +
-  geom_text(
+  # Direct labels for large countries using shadowtext
+  geom_shadowtext(
     data = regional_labels_direct,
     aes(x = lon, y = lat, label = label),
     size = 2.5,
     fontface = "bold",
     color = "black",
+    bg.color = "white",
+    bg.r = 0.15,
     lineheight = 0.8
   ) +
   # Repelled labels for small countries
   geom_text_repel(
     data = regional_labels_repel,
     aes(x = lon, y = lat, label = label),
-    size = 2.5,
+    size = 2.3,
     fontface = "bold",
     color = "black",
     bg.color = "white",
-    bg.r = 0.25,
-    box.padding = 0.4,
-    point.padding = 0.2,
+    bg.r = 0.15,
+    box.padding = 0.3,
+    point.padding = 0.1,
     segment.color = "grey40",
-    segment.size = 0.4,
+    segment.size = 0.3,
     min.segment.length = 0,
-    max.overlaps = 35,
-    force = 3,
+    max.overlaps = 100,
+    force = 2,
     lineheight = 0.8
   ) +
   labs(
