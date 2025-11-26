@@ -54,6 +54,18 @@ country_short_names <- c(
   "Saudi Arabia" = "Saudi Ar."
 )
 
+# Large countries where labels should be placed directly at centroid (no repel)
+large_countries <- c(
+  "United States of America", "Canada", "Brazil", "Australia", "China",
+  "Russia", "India", "Argentina", "Mexico", "Indonesia", "South Africa",
+  "Japan", "France", "Spain", "Germany", "Italy", "United Kingdom",
+  "Sweden", "Norway", "Finland", "Poland", "Turkey", "Iran (Islamic Republic of)",
+  "Saudi Arabia", "Egypt", "Algeria", "Libya", "Peru", "Chile", "Colombia",
+  "Venezuela", "New Zealand", "Philippines", "Thailand", "Malaysia", "Vietnam",
+  "Pakistan", "Bangladesh", "Myanmar", "Kazakhstan", "Mongolia", "Ukraine",
+  "Ireland", "Portugal", "Greece", "Romania", "Bulgaria"
+)
+
 # Apply mapping
 papers_df$country_mapped <- papers_df$country
 for (old_name in names(country_mapping)) {
@@ -78,13 +90,14 @@ world_centroids <- world_data %>%
 world_data <- world_data %>%
   bind_cols(world_centroids)
 
-# Create short label names
+# Create short label names and determine if label should be direct or repelled
 world_data <- world_data %>%
   mutate(
     short_name = ifelse(name %in% names(country_short_names),
                         country_short_names[name],
                         name),
-    label = ifelse(papers > 0, paste0(short_name, "\n", papers), NA)
+    label = ifelse(papers > 0, paste0(short_name, "\n", papers), NA),
+    is_large = name %in% large_countries
   )
 
 # Check matches
@@ -96,9 +109,13 @@ cat("Countries matched:", matched, "\n")
 # ============================================
 cat("\nGenerating world map...\n")
 
-# Filter for labels (only countries with papers, top countries for readability)
-world_labels <- world_data %>%
-  filter(papers >= 30) %>%  # Only label countries with 30+ papers for world map
+# Split labels: large countries get direct labels, small get repelled
+world_labels_direct <- world_data %>%
+  filter(papers >= 30 & is_large) %>%
+  st_drop_geometry()
+
+world_labels_repel <- world_data %>%
+  filter(papers >= 30 & !is_large) %>%
   st_drop_geometry()
 
 p_world <- ggplot(data = world_data) +
@@ -112,18 +129,40 @@ p_world <- ggplot(data = world_data) +
     option = "plasma",
     na.value = "grey85"
   ) +
-  geom_text_repel(
-    data = world_labels,
+  # Direct labels for large countries (white outline for readability)
+  geom_text(
+    data = world_labels_direct,
     aes(x = lon, y = lat, label = label),
     size = 2.5,
     fontface = "bold",
-    box.padding = 0.3,
-    point.padding = 0.2,
-    segment.color = "grey50",
-    segment.size = 0.3,
-    min.segment.length = 0.2,
+    color = "white",
+    lineheight = 0.8
+  ) +
+  geom_text(
+    data = world_labels_direct,
+    aes(x = lon, y = lat, label = label),
+    size = 2.4,
+    fontface = "bold",
+    color = "black",
+    lineheight = 0.8
+  ) +
+  # Repelled labels for small/crowded countries
+  geom_text_repel(
+    data = world_labels_repel,
+    aes(x = lon, y = lat, label = label),
+    size = 2.5,
+    fontface = "bold",
+    color = "black",
+    bg.color = "white",
+    bg.r = 0.15,
+    box.padding = 0.5,
+    point.padding = 0.3,
+    segment.color = "grey40",
+    segment.size = 0.4,
+    min.segment.length = 0,
     max.overlaps = 30,
-    force = 2
+    force = 3,
+    lineheight = 0.8
   ) +
   labs(
     title = "Shark Research Papers by Author Country (1950-2025)",
@@ -148,11 +187,22 @@ cat("\nGenerating Europe map...\n")
 
 europe_bbox <- c(xmin = -12, xmax = 40, ymin = 35, ymax = 72)
 
+# European countries where labels fit inside
+europe_large <- c("France", "Spain", "Germany", "Italy", "United Kingdom",
+                  "Sweden", "Norway", "Finland", "Poland", "Turkey", "Romania",
+                  "Ukraine", "Ireland", "Portugal", "Greece", "Bulgaria")
+
 # Filter European countries for labels
-europe_labels <- world_data %>%
+europe_labels_direct <- world_data %>%
   filter(lon >= europe_bbox["xmin"] & lon <= europe_bbox["xmax"] &
          lat >= europe_bbox["ymin"] & lat <= europe_bbox["ymax"] &
-         papers > 0) %>%
+         papers > 0 & name %in% europe_large) %>%
+  st_drop_geometry()
+
+europe_labels_repel <- world_data %>%
+  filter(lon >= europe_bbox["xmin"] & lon <= europe_bbox["xmax"] &
+         lat >= europe_bbox["ymin"] & lat <= europe_bbox["ymax"] &
+         papers > 0 & !(name %in% europe_large)) %>%
   st_drop_geometry()
 
 p_europe <- ggplot(data = world_data) +
@@ -169,18 +219,40 @@ p_europe <- ggplot(data = world_data) +
     option = "plasma",
     na.value = "grey85"
   ) +
-  geom_text_repel(
-    data = europe_labels,
+  # Direct labels for large European countries (white outline)
+  geom_text(
+    data = europe_labels_direct,
     aes(x = lon, y = lat, label = label),
     size = 3,
     fontface = "bold",
+    color = "white",
+    lineheight = 0.8
+  ) +
+  geom_text(
+    data = europe_labels_direct,
+    aes(x = lon, y = lat, label = label),
+    size = 2.9,
+    fontface = "bold",
+    color = "black",
+    lineheight = 0.8
+  ) +
+  # Repelled labels for small European countries
+  geom_text_repel(
+    data = europe_labels_repel,
+    aes(x = lon, y = lat, label = label),
+    size = 2.8,
+    fontface = "bold",
+    color = "black",
+    bg.color = "white",
+    bg.r = 0.15,
     box.padding = 0.4,
-    point.padding = 0.3,
-    segment.color = "grey50",
-    segment.size = 0.3,
-    min.segment.length = 0.1,
+    point.padding = 0.2,
+    segment.color = "grey40",
+    segment.size = 0.4,
+    min.segment.length = 0,
     max.overlaps = 50,
-    force = 3
+    force = 4,
+    lineheight = 0.8
   ) +
   labs(
     title = "Shark Research Papers by Author Country - Europe",
@@ -234,9 +306,13 @@ world_data$papers_bin <- cut(world_data$papers,
 bin_colors <- c("0" = "grey85", "1-10" = "#FFFFB2", "11-50" = "#FECC5C", "51-100" = "#FD8D3C",
                 "101-250" = "#F03B20", "251-500" = "#BD0026", "501-1000" = "#800026", ">1000" = "#4A0014")
 
-# Labels for regional map (show more countries)
-regional_labels <- world_data %>%
-  filter(papers >= 20) %>%
+# Labels for regional map - split into direct and repelled
+regional_labels_direct <- world_data %>%
+  filter(papers >= 20 & is_large) %>%
+  st_drop_geometry()
+
+regional_labels_repel <- world_data %>%
+  filter(papers >= 20 & !is_large) %>%
   st_drop_geometry()
 
 p_regional <- ggplot(data = world_data) +
@@ -246,18 +322,40 @@ p_regional <- ggplot(data = world_data) +
     values = bin_colors,
     na.value = "grey85"
   ) +
-  geom_text_repel(
-    data = regional_labels,
+  # Direct labels for large countries (white outline for readability)
+  geom_text(
+    data = regional_labels_direct,
     aes(x = lon, y = lat, label = label),
     size = 2.5,
     fontface = "bold",
-    box.padding = 0.3,
+    color = "white",
+    lineheight = 0.8
+  ) +
+  geom_text(
+    data = regional_labels_direct,
+    aes(x = lon, y = lat, label = label),
+    size = 2.4,
+    fontface = "bold",
+    color = "black",
+    lineheight = 0.8
+  ) +
+  # Repelled labels for small countries
+  geom_text_repel(
+    data = regional_labels_repel,
+    aes(x = lon, y = lat, label = label),
+    size = 2.5,
+    fontface = "bold",
+    color = "black",
+    bg.color = "white",
+    bg.r = 0.15,
+    box.padding = 0.4,
     point.padding = 0.2,
-    segment.color = "grey50",
-    segment.size = 0.3,
-    min.segment.length = 0.2,
+    segment.color = "grey40",
+    segment.size = 0.4,
+    min.segment.length = 0,
     max.overlaps = 35,
-    force = 2
+    force = 3,
+    lineheight = 0.8
   ) +
   labs(
     title = "Global Distribution of Shark Research Papers",
