@@ -8,6 +8,7 @@ library(rnaturalearth)
 library(rnaturalearthdata)
 library(RSQLite)
 library(dplyr)
+library(ggrepel)
 
 # Connect to database
 conn <- dbConnect(SQLite(), "database/technique_taxonomy.db")
@@ -39,6 +40,20 @@ country_mapping <- c(
   "UAE" = "United Arab Emirates"
 )
 
+# Reverse mapping for labels (to show short names)
+country_short_names <- c(
+  "United States of America" = "USA",
+  "United Kingdom" = "UK",
+  "Russian Federation" = "Russia",
+  "Republic of Korea" = "S. Korea",
+  "Iran (Islamic Republic of)" = "Iran",
+  "Czechia" = "Czech Rep.",
+  "United Arab Emirates" = "UAE",
+  "New Zealand" = "NZ",
+  "South Africa" = "S. Africa",
+  "Saudi Arabia" = "Saudi Ar."
+)
+
 # Apply mapping
 papers_df$country_mapped <- papers_df$country
 for (old_name in names(country_mapping)) {
@@ -48,10 +63,32 @@ for (old_name in names(country_mapping)) {
 # Join with world map
 world_data <- world %>%
   left_join(papers_df, by = c("name" = "country_mapped")) %>%
-  mutate(papers = ifelse(is.na(papers), 0, papers))
+  mutate(
+    papers = ifelse(is.na(papers), 0, papers),
+    has_papers = papers > 0
+  )
+
+# Get centroids for labels
+world_centroids <- world_data %>%
+  st_centroid() %>%
+  st_coordinates() %>%
+  as.data.frame() %>%
+  rename(lon = X, lat = Y)
+
+world_data <- world_data %>%
+  bind_cols(world_centroids)
+
+# Create short label names
+world_data <- world_data %>%
+  mutate(
+    short_name = ifelse(name %in% names(country_short_names),
+                        country_short_names[name],
+                        name),
+    label = ifelse(papers > 0, paste0(short_name, "\n", papers), NA)
+  )
 
 # Check matches
-matched <- sum(!is.na(world_data$papers) & world_data$papers > 0)
+matched <- sum(world_data$papers > 0)
 cat("Countries matched:", matched, "\n")
 
 # ============================================
@@ -59,19 +96,38 @@ cat("Countries matched:", matched, "\n")
 # ============================================
 cat("\nGenerating world map...\n")
 
+# Filter for labels (only countries with papers, top countries for readability)
+world_labels <- world_data %>%
+  filter(papers >= 30) %>%  # Only label countries with 30+ papers for world map
+  st_drop_geometry()
+
 p_world <- ggplot(data = world_data) +
-  geom_sf(aes(fill = papers), color = "white", size = 0.1) +
+  geom_sf(aes(fill = ifelse(has_papers, papers, NA)), color = "white", size = 0.1) +
+  geom_sf(data = world_data %>% filter(!has_papers), fill = "grey85", color = "white", size = 0.1) +
   scale_fill_viridis_c(
     name = "Papers",
     trans = "log1p",
-    breaks = c(0, 10, 50, 100, 500, 1000, 2000),
-    labels = c("0", "10", "50", "100", "500", "1000", "2000"),
+    breaks = c(1, 10, 50, 100, 500, 1000, 2000),
+    labels = c("1", "10", "50", "100", "500", "1000", "2000"),
     option = "plasma",
-    na.value = "grey90"
+    na.value = "grey85"
+  ) +
+  geom_text_repel(
+    data = world_labels,
+    aes(x = lon, y = lat, label = label),
+    size = 2.5,
+    fontface = "bold",
+    box.padding = 0.3,
+    point.padding = 0.2,
+    segment.color = "grey50",
+    segment.size = 0.3,
+    min.segment.length = 0.2,
+    max.overlaps = 30,
+    force = 2
   ) +
   labs(
     title = "Shark Research Papers by Author Country (1950-2025)",
-    subtitle = paste0("Total: ", format(sum(papers_df$papers), big.mark=","), " papers from ", nrow(papers_df), " countries"),
+    subtitle = paste0("Total: ", format(sum(papers_df$papers), big.mark=","), " papers from ", nrow(papers_df), " countries | Grey = no papers"),
     caption = "Source: shark-references.com database (n = 6,183 papers with author country data)"
   ) +
   theme_minimal() +
@@ -82,7 +138,7 @@ p_world <- ggplot(data = world_data) +
     legend.key.width = unit(2, "cm")
   )
 
-ggsave("outputs/figures/world_map_papers_by_country.png", p_world, width = 14, height = 8, dpi = 150)
+ggsave("outputs/figures/world_map_papers_by_country.png", p_world, width = 16, height = 10, dpi = 150)
 cat("Saved: outputs/figures/world_map_papers_by_country.png\n")
 
 # ============================================
@@ -90,24 +146,45 @@ cat("Saved: outputs/figures/world_map_papers_by_country.png\n")
 # ============================================
 cat("\nGenerating Europe map...\n")
 
-europe_bbox <- c(xmin = -25, xmax = 45, ymin = 35, ymax = 72)
+europe_bbox <- c(xmin = -12, xmax = 40, ymin = 35, ymax = 72)
+
+# Filter European countries for labels
+europe_labels <- world_data %>%
+  filter(lon >= europe_bbox["xmin"] & lon <= europe_bbox["xmax"] &
+         lat >= europe_bbox["ymin"] & lat <= europe_bbox["ymax"] &
+         papers > 0) %>%
+  st_drop_geometry()
 
 p_europe <- ggplot(data = world_data) +
-  geom_sf(aes(fill = papers), color = "white", size = 0.2) +
+  geom_sf(aes(fill = ifelse(has_papers, papers, NA)), color = "white", size = 0.2) +
+  geom_sf(data = world_data %>% filter(!has_papers), fill = "grey85", color = "white", size = 0.2) +
   coord_sf(xlim = c(europe_bbox["xmin"], europe_bbox["xmax"]),
            ylim = c(europe_bbox["ymin"], europe_bbox["ymax"]),
            expand = FALSE) +
   scale_fill_viridis_c(
     name = "Papers",
     trans = "log1p",
-    breaks = c(0, 10, 50, 100, 200, 500, 700),
-    labels = c("0", "10", "50", "100", "200", "500", "700"),
+    breaks = c(1, 10, 50, 100, 200, 500, 700),
+    labels = c("1", "10", "50", "100", "200", "500", "700"),
     option = "plasma",
-    na.value = "grey90"
+    na.value = "grey85"
+  ) +
+  geom_text_repel(
+    data = europe_labels,
+    aes(x = lon, y = lat, label = label),
+    size = 3,
+    fontface = "bold",
+    box.padding = 0.4,
+    point.padding = 0.3,
+    segment.color = "grey50",
+    segment.size = 0.3,
+    min.segment.length = 0.1,
+    max.overlaps = 50,
+    force = 3
   ) +
   labs(
     title = "Shark Research Papers by Author Country - Europe",
-    subtitle = "European institutions leading shark research",
+    subtitle = "European institutions leading shark research | Grey = no papers",
     caption = "Source: shark-references.com database"
   ) +
   theme_minimal() +
@@ -117,7 +194,7 @@ p_europe <- ggplot(data = world_data) +
     legend.position = "right"
   )
 
-ggsave("outputs/figures/europe_map_papers_by_country.png", p_europe, width = 12, height = 8, dpi = 150)
+ggsave("outputs/figures/europe_map_papers_by_country.png", p_europe, width = 14, height = 10, dpi = 150)
 cat("Saved: outputs/figures/europe_map_papers_by_country.png\n")
 
 # ============================================
@@ -148,24 +225,46 @@ region_summary <- papers_df %>%
 cat("\nRegion summary:\n")
 print(region_summary)
 
-# Create bins for better visualization
+# Create bins for better visualization - separate 0 from others
 world_data$papers_bin <- cut(world_data$papers,
-                              breaks = c(-1, 0, 10, 50, 100, 250, 500, 1000, 2500),
+                              breaks = c(-Inf, 0, 10, 50, 100, 250, 500, 1000, Inf),
                               labels = c("0", "1-10", "11-50", "51-100", "101-250", "251-500", "501-1000", ">1000"))
+
+# Custom color palette with grey for 0
+bin_colors <- c("0" = "grey85", "1-10" = "#FFFFB2", "11-50" = "#FECC5C", "51-100" = "#FD8D3C",
+                "101-250" = "#F03B20", "251-500" = "#BD0026", "501-1000" = "#800026", ">1000" = "#4A0014")
+
+# Labels for regional map (show more countries)
+regional_labels <- world_data %>%
+  filter(papers >= 20) %>%
+  st_drop_geometry()
 
 p_regional <- ggplot(data = world_data) +
   geom_sf(aes(fill = papers_bin), color = "white", size = 0.1) +
-  scale_fill_brewer(
+  scale_fill_manual(
     name = "Papers",
-    palette = "YlOrRd",
-    na.value = "grey90"
+    values = bin_colors,
+    na.value = "grey85"
+  ) +
+  geom_text_repel(
+    data = regional_labels,
+    aes(x = lon, y = lat, label = label),
+    size = 2.5,
+    fontface = "bold",
+    box.padding = 0.3,
+    point.padding = 0.2,
+    segment.color = "grey50",
+    segment.size = 0.3,
+    min.segment.length = 0.2,
+    max.overlaps = 35,
+    force = 2
   ) +
   labs(
     title = "Global Distribution of Shark Research Papers",
     subtitle = paste0("Global North: ", region_summary$papers[region_summary$region == "Global North"],
                      " papers (", region_summary$pct[region_summary$region == "Global North"], "%) | ",
                      "Global South: ", region_summary$papers[region_summary$region == "Global South"],
-                     " papers (", region_summary$pct[region_summary$region == "Global South"], "%)"),
+                     " papers (", region_summary$pct[region_summary$region == "Global South"], "%) | Grey = no papers"),
     caption = "Source: shark-references.com database (n = 6,183 papers)"
   ) +
   theme_minimal() +
@@ -175,7 +274,7 @@ p_regional <- ggplot(data = world_data) +
     legend.position = "bottom"
   )
 
-ggsave("outputs/figures/regional_map_papers_by_country.png", p_regional, width = 14, height = 8, dpi = 150)
+ggsave("outputs/figures/regional_map_papers_by_country.png", p_regional, width = 16, height = 10, dpi = 150)
 cat("Saved: outputs/figures/regional_map_papers_by_country.png\n")
 
 cat("\nAll maps generated successfully!\n")
