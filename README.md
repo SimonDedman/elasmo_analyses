@@ -294,7 +294,7 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 
 **Collaborators:**
 - David Ruiz Garcia
-- Elena Fernández García
+- Elena Fernández Corredor
 - Jürgen Pollerspöck & Nico Straube ([Shark-References](https://shark-references.com/))
 
 ---
