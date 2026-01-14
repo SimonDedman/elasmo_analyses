@@ -10,6 +10,7 @@ docs/
 ├── core/               # Core project documentation
 ├── database/           # Database and paper acquisition docs
 ├── geographic/         # Geographic analysis (Phase 3-4)
+├── LLM/                # LLM integration & conversational AI (NEW!)
 ├── species/            # Species database documentation
 ├── technical/          # Technical implementation docs
 └── techniques/         # Technique taxonomy documentation
@@ -58,6 +59,14 @@ docs/
 - `ocr_processing_guide.md` - OCR processing
 - `duplicate_removal_final_guide.md` - Duplicate handling
 
+## LLM Integration (`LLM/`) - NEW!
+- `llm_integration_roadmap.md` - LLM integration overview and roadmap
+- `notebooklm_alternatives_summary.md` - Comprehensive comparison of:
+  - Google NotebookLM limitations
+  - Open-source alternatives (AnythingLLM, PrivateGPT, Open WebUI)
+  - Custom RAG pipeline recommendations
+  - Hardware requirements for 13,000+ PDFs
+
 ## Candidate Documentation (`candidates/`)
 - `candidate_database_phase1_report.md` - Phase 1 results
 - `candidate_search_protocol.md` - Search methodology
@@ -93,4 +102,4 @@ Contains 30+ historical documents including:
 
 ---
 
-*Last updated: November 25, 2024*
+*Last updated: January 2026*

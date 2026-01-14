@@ -8,11 +8,12 @@
 
 ## Overview
 
-This repository contains materials for the **"New Frontiers in Elasmobranch Data Analysis"** panel session at the European Elasmobranch Association (EEA) Conference 2025 in Rotterdam, Netherlands.
+This repository contains materials for the **"New Frontiers in Elasmobranch Data Analysis"** project, initially presented at the European Elasmobranch Association (EEA) Conference 2025 in Rotterdam, Netherlands.
 
-**Session Details:**
+**Project Status:** Post-conference development phase (January 2026)
+
+**Original Session (EEA 2025):**
 - **Date:** Thursday, 30 October 2025
-- **Time:** 11:15 AM - 12:50 PM
 - **Format:** 45 minutes of discipline panel reviews + 50 minutes of oral presentations
 - **Organizers:** Dr. Simon Dedman & Dr. Guuske Tiktak
 
@@ -22,7 +23,7 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 
 ### Primary Objectives
 1. **Comprehensive Review:** Systematically document current analytical techniques across 8 major elasmobranch research disciplines
-2. **Empirical Analysis:** Extract and analyze techniques from 12,381 shark science PDFs spanning 75 years (1950-2025)
+2. **Empirical Analysis:** Extract and analyze techniques from ~13,000 shark science PDFs spanning 75+ years (1950-2026)
 3. **Expert Evaluation:** Assess strengths, weaknesses, and suitability of different approaches through specialist insight
 4. **Temporal Mapping:** Identify historical trends, current methods, declining approaches, and emerging frontiers
 5. **Knowledge Transfer:** Create accessible overviews valuable to both practitioners and non-specialists
@@ -31,7 +32,8 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 ### Long-Term Vision
 - Create a **living database** updated annually at EEA and AES conferences
 - Develop **automated trend analysis** using the Shark-References database
-- Build **sustainable infrastructure** for ongoing knowledge curation
+- Build **conversational AI interface** for querying the knowledge base (see [LLM Integration](#llm-integration))
+- Integrate with **Sharkipedia**, **Megamove**, and other elasmobranch databases
 - Establish **community-driven** annual updates
 
 ---
@@ -52,98 +54,109 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 ## Repository Structure
 
 ```
-eea_2025_data_panel/
+elasmo_analyses/
 ├── docs/                                        # Documentation
 │   ├── database/                                # Database & extraction documentation
-│   │   ├── extraction_progress_report.md        # ⭐ PEER REVIEW DOCUMENT
-│   │   ├── extraction_guide.md                  # Extraction methodology
+│   │   ├── extraction_progress_report.md        # Peer review document
 │   │   ├── extraction_complete_summary.md       # Technical summary
 │   │   ├── database_schema_design.md            # Schema documentation
 │   │   └── pdf_acquisition_complete_summary.md  # PDF corpus details
+│   ├── LLM/                                     # LLM integration (NEW!)
+│   │   ├── llm_integration_roadmap.md           # LLM roadmap
+│   │   └── notebooklm_alternatives_summary.md   # Platform comparison
 │   ├── candidates/                              # Panelist recruitment
+│   ├── geographic/                              # Geographic analysis
 │   ├── species/                                 # Species database
 │   ├── techniques/                              # Technique classification
 │   ├── technical/                               # Technical guides
 │   └── readme.md                                # Docs index
 ├── scripts/                                     # Data processing scripts
-│   ├── extract_techniques_parallel.py           # ⭐ Fast parallel extraction
-│   ├── extract_full_parallel.py                 # Full extraction with researchers
-│   ├── build_analysis_tables.py                 # ⭐ Generate analysis CSVs
+│   ├── extract_techniques_parallel.py           # Fast parallel extraction
+│   ├── build_analysis_tables.py                 # Generate analysis CSVs
 │   └── [Additional scripts for PDF acquisition, OCR, etc.]
 ├── database/                                    # SQLite databases
-│   └── technique_taxonomy.db                    # ⭐ Main extraction database
+│   └── technique_taxonomy.db                    # Main extraction database
 ├── outputs/                                     # Generated outputs
-│   └── analysis/                                # ⭐ Analysis CSV files
-│       ├── discipline_trends_by_year.csv        # Discipline trends 1950-2025
-│       ├── technique_trends_by_year.csv         # Technique adoption over time
-│       ├── data_science_segmentation.csv        # DATA cross-cutting analysis
-│       ├── top_techniques.csv                   # 151 techniques ranked
-│       ├── discipline_cooccurrence_matrix.csv   # Discipline overlap
-│       ├── summary_statistics.csv               # Overall stats
-│       └── discipline_summary.csv               # Discipline totals
+│   ├── analysis/                                # Analysis CSV files
+│   │   ├── discipline_trends_by_year.csv        # Discipline trends 1950-2025
+│   │   ├── technique_trends_by_year.csv         # Technique adoption over time
+│   │   ├── top_techniques.csv                   # 151 techniques ranked
+│   │   └── summary_statistics.csv               # Overall stats
+│   ├── figures/                                 # Publication-ready visualizations
+│   ├── panel_reports/                           # Expert panel materials
+│   └── abstract_reviews/                        # Conference abstract reviews
 ├── data/                                        # Input data files
-│   ├── Techniques DB for Panel Review_UPDATED.xlsx  # ⭐ 182 reviewed techniques
-│   ├── master_techniques.csv                    # Original 208 techniques
-│   └── [Species lookups, geographic data]
 ├── .gitignore                                   # Git ignore rules
 ├── README.md                                    # This file
 └── CONTRIBUTING.md                              # Contribution guidelines
 ```
 
-**⭐ = Key files for review and analysis**
+---
+
+## Current Status (January 2026)
+
+### Latest Updates
+
+**✅ EEA 2025 Conference Complete** (October 2025)
+- Panel session delivered successfully
+- Expert feedback incorporated
+- Community interest in living database confirmed
+
+**✅ PDF Corpus Expansion Ongoing**
+- Current: ~13,000 papers (1950-2026)
+- Adding 2026 publications from Shark-References
+- Target: Complete coverage through 2026
+
+**🔄 LLM Integration In Progress** (NEW!)
+- Evaluating local RAG solutions for conversational interface
+- See [docs/LLM/](docs/LLM/) for platform comparison
+- Goal: "Talk to" the shark science knowledge base
+
+### Completed Phases
+
+- [x] **Phase 1: PDF Technique Extraction** (2025-10-26)
+  - 12,381 PDFs processed
+  - 9,503 papers with techniques (76.5% coverage)
+  - 151 unique techniques identified
+  - 23,307 technique mentions
+
+- [x] **Phase 2: Analysis & Conference Materials** (2025-10-26)
+  - Collaboration networks (18,633 authors)
+  - Geographic analysis (73 countries)
+  - AI impact assessment
+  - 25+ publication-ready visualizations
+
+- [x] **Phase 3: EEA 2025 Conference** (2025-10-30)
+  - Panel session delivered
+  - Expert reviews collected
+  - Community feedback incorporated
+
+### In Progress
+
+- [ ] **Phase 4: Corpus Expansion** (2026 Q1)
+  - Adding 2026 publications
+  - Expanding metadata (species, ocean basin, habitat)
+  - Database integration with Sharkipedia/Megamove
+
+- [ ] **Phase 5: LLM Integration** (2026 Q1-Q2)
+  - Build conversational interface
+  - Enable natural language queries
+  - Add metadata filtering
+
+- [ ] **Phase 6: Manuscript & Public Release** (2026)
+  - Methods paper
+  - Interactive web dashboard
+  - Public database release
 
 ---
 
-## Current Status (October 2025)
+## Key Results
 
-###  LATEST UPDATES (2025-10-26 PM)
-
-**✅ Collaboration Network Analysis Complete**
-- [Full Report](docs/database/collaboration_network_analysis_summary.md)
-- 18,633 authors networked, 333,809 connections
-- 479 international collaborations identified
-- Network visualizations created
-
-**✅ Panel Reports Complete**
-- [Overview Document](outputs/panel_reports/PANEL_REPORTS_OVERVIEW.md)
-- Comprehensive materials for expert review
-- Discussion questions per discipline
-- Cross-discipline analysis
-
-**✅ Conference Abstract Analysis Complete**
-- [Complete Summary](docs/database/abstract_analysis_complete_summary.md)
-- 109 presentations analyzed and contextualized
-- Matched to recent literature (2020-2025)
-- 110 individual reviews created
-- [View All Reviews](outputs/abstract_reviews/)
-
-**✅ AI Impact Assessment Complete**
-- [50+ Page Report](docs/techniques/ai_impact_on_shark_research_disciplines.md)
-- Discipline-by-discipline AI analysis
-- Current adoption rates + future forecasts (2025-2030)
-- 60+ technique transformations mapped
-- Training & funding recommendations
-
-**✅ All Visualizations Complete**
-- Geographic maps (world + Europe, with pie charts)
-- Per-discipline maps (8 disciplines)
-- Technique frequency charts (8 disciplines)
-- Collaboration network graphs
-- All publication-ready (PNG + PDF)
-
-### ✅ Phase 1: PDF Technique Extraction - COMPLETE (2025-10-26)
+### PDF Technique Extraction
 
 **Corpus:** 12,381 shark science PDFs (1950-2025)
-**Extracted:** 9,503 papers with techniques (76.5% coverage)
-**Techniques found:** 151 unique techniques (83% of 182 searched)
-**Total mentions:** 23,307 technique occurrences
-
-**Key Results:**
-- **Genetics dominates** - 85% of papers use genetic techniques
-- **Data Science pervasive** - 48% of papers use data science techniques
-- **Cross-cutting DATA** - 70.5% of DATA papers integrate with other disciplines
-- **STRUCTURE software** - Found in 80% of papers (7,535 papers)
-- **Average:** 2.5 techniques per paper
+**Coverage:** 9,503 papers with techniques (76.5%)
+**Techniques:** 151 unique methods identified
 
 **Discipline Distribution:**
 | Discipline | Papers | % of Corpus |
@@ -157,179 +170,60 @@ eea_2025_data_panel/
 | CON (Conservation) | 858 | 9.1% |
 | BEH (Behavior) | 265 | 2.8% |
 
-**For detailed review:** See [`docs/database/extraction_progress_report.md`](docs/database/extraction_progress_report.md)
-
-**Analysis outputs:** See `outputs/analysis/*.csv` (7 files ready for visualization)
-
----
-
-### ✅ Completed Phases
-
-- [x] **Phase 0: Planning & Documentation** (Complete)
-  - [x] 8-discipline framework defined and validated
-  - [x] Database schema designed
-  - [x] Program timeline finalized
-
-- [x] **Phase 0.5: Conference Materials** (Complete 2025-10-03)
-  - [x] Expert recruitment (243 candidates identified)
-  - [x] Conference attendance integrated (EEA 2013-2023, AES 2015, SI2022)
-  - [x] EEA 2025 attendee list processed (151 unique attendees)
-  - [x] Analytical techniques extracted from presentations (46 unique)
-  - [x] Panel team recruited (5 confirmed speakers)
-
-- [x] **Phase 1: Technique Database Compilation** (Complete 2025-10-13)
-  - [x] Master techniques database created: 208 techniques
-  - [x] Literature review expansion completed
-  - [x] Database files ready for panelist review
-  - [x] All techniques have search queries for Shark-References automation
-
-- [x] **Phase 1.5: PDF Corpus Acquisition** (Complete 2025-10-25)
-  - [x] 12,381 PDFs acquired and organized by year
-  - [x] 631 duplicates removed
-  - [x] OCR processing completed for scanned papers
-  - [x] Metadata extraction and organization
-
-- [x] **Phase 2: PDF Technique Extraction** (Complete 2025-10-26)
-  - [x] Parallel extraction across 11 CPU cores
-  - [x] 9,503 papers successfully processed
-  - [x] 151 techniques identified in corpus
-  - [x] Cross-cutting DATA discipline logic implemented
-  - [x] Analysis tables generated (discipline trends, technique trends)
-  - [x] Peer review documentation created
+**Key Findings:**
+- **Genetics dominates** - 85% of papers use genetic techniques
+- **Data Science pervasive** - 48% use statistical/ML methods
+- **Cross-cutting DATA** - 70.5% of DATA papers integrate with other disciplines
+- **STRUCTURE software** - Most common tool (7,535 papers, 80%)
 
 ---
 
-### ✅ Phase 2.5: Analysis & Conference Materials - COMPLETE (2025-10-26)
+## LLM Integration
 
-- [x] **Collaboration Network Analysis**
-  - [x] Co-authorship networks (18,633 authors)
-  - [x] Institution collaborations (2,570 multi-institutional papers)
-  - [x] International partnerships (479 papers, 196 country pairs)
-  - [x] Network visualizations created
+We are developing a conversational AI interface to enable researchers to query the knowledge base naturally:
 
-- [x] **Expert Panel Materials**
-  - [x] Panel reports with discussion questions
-  - [x] Cross-discipline analysis
-  - [x] DATA penetration assessment
-  - [x] Emerging technique identification
+> "What techniques are used for age determination in deep-sea sharks?"
+> "Which countries have published most on acoustic telemetry since 2015?"
+> "Show me papers combining eDNA and stable isotope analysis"
 
-- [x] **Conference Abstract Review**
-  - [x] 109 presentations analyzed
-  - [x] Recent literature context (2020-2025)
-  - [x] Attendee expertise matching (151 attendees)
-  - [x] Discussion questions generated
+### Approach
 
-- [x] **AI Impact Assessment**
-  - [x] Discipline-by-discipline analysis
-  - [x] Technique transformation forecasts
-  - [x] Training recommendations
-  - [x] Timeline projections (2025-2030)
+**Recommended stack for 13,000+ PDFs:**
+- **Vector Database:** Qdrant (open-source, scalable)
+- **Embeddings:** nomic-embed-text (local, free)
+- **LLM:** Ollama with Llama 3.1 or Qwen2.5 (local, private)
+- **Interface:** Open WebUI or custom Gradio app
 
-- [x] **Geographic Analysis**
-  - [x] 73 countries mapped
-  - [x] Regional breakdowns
-  - [x] Per-discipline distributions
-  - [x] Collaboration patterns
+**Why not Google NotebookLM?**
+- Limited to 50-300 sources per notebook
+- Cannot query across notebooks
+- Not suitable for corpus-scale analysis
 
-### 🔄 Optional Enhancements (Can be done remotely)
-
-- [ ] **Phase 3 Options:**
-  - [ ] Option C: Enhanced Country Extraction (spaCy NER)
-  - [ ] Option A: Institution Normalization
-  - [ ] Option B: ORCID Integration
-
----
-
-### ⏳ Upcoming
-
-- [ ] **Phase 5: EEA 2025 Conference** (29-31 October 2025, Marseille)
-  - [ ] Present findings to elasmobranch community
-  - [ ] Panel discussions using prepared materials
-  - [ ] Collect feedback and validation
-  - [ ] Identify additional techniques and gaps
-
-- [ ] **Phase 6: Manuscript Preparation** (November 2025)
-  - Data ready: All analyses complete
-  - Figures ready: 25+ publication-quality visualizations
-  - Documentation ready: Comprehensive methods/results
-  - Ready for writing
-
-- [ ] **Phase 7: Public Release** (December 2025)
-  - [ ] Finalize database and documentation
-  - [ ] Create interactive dashboards (optional)
-  - [ ] Publish methodology and findings
-  - [ ] Release code and data repositories
-
----
-
-## Data Extraction Methodology
-
-### Technique Matching
-- **Pattern matching:** Case-insensitive regex with word boundaries
-- **Search space:** 182 techniques (priority 1 & 2 from reviewed database)
-- **Tool:** `pdftotext` for text extraction
-- **Context:** 100 characters captured around each mention
-- **Performance:** 25-30 PDFs/second using 11 CPU cores
-
-### Cross-Cutting DATA Logic
-Papers count for DATA discipline if they use ANY of 128 techniques marked as:
-- Primary discipline = DATA (28 techniques)
-- statistical_model = TRUE
-- analytical_algorithm = TRUE
-- inference_framework = TRUE
-
-**Result:** 70.5% of DATA papers are cross-cutting (using data techniques in other disciplines)
-
-### Quality Controls
-✅ **Implemented:**
-- PDF timeout (10s) to skip corrupted files
-- Text length limit (500KB) to skip scanned books
-- Duplicate detection and removal
-- Resume capability (skip already-processed papers)
-- Batch database writes for data integrity
-
-⚠️ **Limitations:**
-- Filename-based author extraction only
-- No species linkage yet (detected but not analyzed)
-- Researcher network incomplete (schema issues to be fixed)
+See [docs/LLM/notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternatives_summary.md) for full comparison.
 
 ---
 
 ## Key Documentation
 
-### 📊 Project Overview
-- **[project_status_comprehensive.md](docs/core/project_status_comprehensive.md)** - Complete project summary
+### Project Overview
+- **[docs/readme.md](docs/readme.md)** - Documentation index
+- **[docs/core/project_status_comprehensive.md](docs/core/project_status_comprehensive.md)** - Complete project summary
 
-### 🎤 Conference Materials (NEW!)
-- **[Panel Reports Overview](outputs/panel_reports/PANEL_REPORTS_OVERVIEW.md)** - Expert review materials
-- **[Abstract Analysis Summary](docs/database/abstract_analysis_complete_summary.md)** - 109 presentations reviewed
-- **[All Abstract Reviews](outputs/abstract_reviews/)** - Individual reviews
+### Database & Extraction
+- **[docs/database/database_schema_design.md](docs/database/database_schema_design.md)** - Schema documentation
+- **[docs/database/extraction_complete_summary.md](docs/database/extraction_complete_summary.md)** - Extraction results
 
-### 🤝 Network Analysis (NEW!)
-- **[Collaboration Network Summary](docs/database/collaboration_network_analysis_summary.md)** - Complete network analysis
-  - Co-authorship networks (18,633 authors)
-  - Institution collaborations
-  - International partnerships (479 papers)
+### LLM Integration (NEW!)
+- **[docs/LLM/llm_integration_roadmap.md](docs/LLM/llm_integration_roadmap.md)** - LLM roadmap
+- **[docs/LLM/notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternatives_summary.md)** - Platform comparison
 
-### 🤖 AI Impact (NEW!)
-- **[AI Impact Report](docs/techniques/ai_impact_on_shark_research_disciplines.md)** - 50+ page analysis
-  - Current AI adoption by discipline
-  - Future forecasts (2025-2030)
-  - 60+ technique transformations
-  - Training & funding recommendations
+### Conference Materials
+- **[outputs/panel_reports/](outputs/panel_reports/)** - Expert panel materials
+- **[outputs/abstract_reviews/](outputs/abstract_reviews/)** - 109 presentation reviews
 
-### 🗄️ Database & Extraction
-- **[Database Schema Design](docs/database/database_schema_design.md)** - Complete schema
-- **[Extraction Complete Summary](docs/database/extraction_complete_summary.md)** - Extraction results
-- **[Geographic Analysis](docs/database/geographic_data_investigation.md)** - 73 countries mapped
-
-### 📈 Analysis & Visualizations
-- **Analysis CSVs:** `outputs/analysis/` (ready for visualization)
-- **Figures:** `outputs/figures/` (25+ publication-ready visualizations)
-  - Geographic maps (world + Europe)
-  - Per-discipline maps (8 disciplines)
-  - Technique frequency charts
-  - Collaboration networks
+### Analysis & Visualizations
+- **[outputs/analysis/](outputs/analysis/)** - CSV analysis files
+- **[outputs/figures/](outputs/figures/)** - Publication-ready figures
 
 ---
 
@@ -353,38 +247,9 @@ LIMIT 10;
 # View discipline trends
 head outputs/analysis/discipline_trends_by_year.csv
 
-# View technique trends
-head outputs/analysis/technique_trends_by_year.csv
-
-# View DATA segmentation
-head outputs/analysis/data_science_segmentation.csv
+# View technique rankings
+head outputs/analysis/top_techniques.csv
 ```
-
-### Run Analysis Builder
-```bash
-# Regenerate analysis tables
-./venv/bin/python scripts/build_analysis_tables.py
-```
-
----
-
-## EEA 2025 Conference Distribution
-
-Analysis of 106 presentations at EEA 2025 by discipline validates our 8-discipline framework.
-
-### Top Techniques by Conference Mentions
-- IUCN Red List Assessment: 16 presentations
-- Acoustic Telemetry: 11 presentations
-- Machine Learning: 9 presentations
-- MPA Design: 7 presentations
-- Age & Growth, Reproduction: 7 presentations each
-
-### Top Techniques by Literature Corpus
-- STRUCTURE (genetic analysis software): 7,535 papers
-- Connectivity (population/genetic): 1,068 papers
-- Stock Assessment: 984 papers
-- Parasitology: 927 papers
-- Tourism: 777 papers
 
 ---
 
@@ -392,11 +257,11 @@ Analysis of 106 presentations at EEA 2025 by discipline validates our 8-discipli
 
 We welcome contributions from the elasmobranch research community!
 
-**Current review needs:**
-1. **Validate extraction results** - Check for false positives (esp. STRUCTURE)
-2. **Identify missing techniques** - Review 31 techniques not found in corpus
-3. **Assess bias** - Evaluate discipline representation and completeness
-4. **Suggest improvements** - Alternative technique names, search queries
+**Current needs:**
+1. **Validate extraction results** - Check for false positives
+2. **Identify missing techniques** - Review 31 techniques not found
+3. **Suggest improvements** - Alternative technique names, search queries
+4. **Test LLM prototypes** - Help evaluate conversational interfaces
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -423,24 +288,26 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 
 ## Contact
 
-**Panel Leaders:**
+**Project Leads:**
 - Dr. Simon Dedman - simondedman@gmail.com - [GitHub](https://github.com/SimonDedman)
 - Dr. Guuske Tiktak
 
-**External Collaborators:**
-- Jürgen Pollerspöck & Nico Straube - [Shark-References Database](https://shark-references.com/)
+**Collaborators:**
+- David Ruiz Garcia
+- Elena Fernández García
+- Jürgen Pollerspöck & Nico Straube ([Shark-References](https://shark-references.com/))
 
 ---
 
 ## Acknowledgments
 
 This project builds upon:
-- **12,381 shark science papers** by thousands of researchers worldwide (1950-2025)
+- **~13,000 shark science papers** by thousands of researchers worldwide (1950-2026)
 - **Shark-References database** - Comprehensive elasmobranch literature repository
 - **EEA and AES conferences** - Decades of community knowledge sharing
 - **Panel experts and contributors** - Discipline-specific insights and validation
 
 ---
 
-*Last updated: 2025-10-26*
-*Version: 2.0 - PDF Technique Extraction Complete (9,503 papers analyzed)*
+*Last updated: 2026-01-14*
+*Version: 2.1 - Post-EEA 2025, LLM integration phase*
