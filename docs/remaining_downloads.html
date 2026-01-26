@@ -100,7 +100,14 @@
         if (!text) return '';
         return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
-    
+
+    // Custom sort order for OA status: gold > green > hybrid > bronze > unknown > closed
+    var oaOrder = {'gold': 1, 'green': 2, 'hybrid': 3, 'bronze': 4, 'unknown': 5, 'closed': 6};
+    $.fn.dataTable.ext.type.order['oa-status-pre'] = function(d) {
+        var text = $('<div>').html(d).text().trim().toLowerCase();
+        return oaOrder[text] || 99;
+    };
+
     $(document).ready(function() {
         $.getJSON('papers_data.json', function(data) {
             var tableData = data.map(function(r) {
@@ -131,20 +138,35 @@
                 pageLength: 50,
                 lengthMenu: [[25, 50, 100, 250, -1], [25, 50, 100, 250, "All"]],
                 order: [[6, 'asc'], [3, 'desc']],
+                columnDefs: [{ type: 'oa-status', targets: 5 }],
                 dom: 'Blfrtip',
                 buttons: [{ extend: 'csv', text: '📥 Export CSV', filename: 'remaining_papers_' + new Date().toISOString().slice(0,10) }],
                 initComplete: function() {
+                    var oaSortOrder = ['gold', 'green', 'hybrid', 'bronze', 'unknown', 'closed'];
                     this.api().columns([3, 5, 6, 7]).every(function() {
                         var column = this;
+                        var colIdx = column.index();
                         var select = $('<select><option value="">All</option></select>')
                             .appendTo($(column.footer()).empty())
                             .on('change', function() {
                                 var val = $.fn.dataTable.util.escapeRegex($(this).val());
                                 column.search(val ? '^' + val + '$' : '', true, false).draw();
                             });
-                        column.data().unique().sort().each(function(d) {
+                        var values = [];
+                        column.data().unique().each(function(d) {
                             var text = $('<div>').html(d).text().trim();
-                            if (text) select.append('<option value="' + text + '">' + text + '</option>');
+                            if (text) values.push(text);
+                        });
+                        // Custom sort for OA status column (index 5)
+                        if (colIdx === 5) {
+                            values.sort(function(a, b) {
+                                return oaSortOrder.indexOf(a.toLowerCase()) - oaSortOrder.indexOf(b.toLowerCase());
+                            });
+                        } else {
+                            values.sort();
+                        }
+                        values.forEach(function(text) {
+                            select.append('<option value="' + text + '">' + text + '</option>');
                         });
                     });
                     var jCol = this.api().column(4);
