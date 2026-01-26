@@ -134,6 +134,7 @@ elasmo_analyses/
 ### In Progress
 
 - [ ] **Phase 4: Corpus Expansion** (2026 Q1)
+  - [**Remaining Papers to Download**](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html) - Interactive list of 3,765 papers still needed
   - Adding 2026 publications
   - Expanding metadata (species, ocean basin, habitat)
   - Database integration with Sharkipedia/Megamove
@@ -309,5 +310,5 @@ This project builds upon:
 
 ---
 
-*Last updated: 2026-01-14*
+*Last updated: 2026-01-26*
 *Version: 2.1 - Post-EEA 2025, LLM integration phase*
