@@ -143,6 +143,7 @@ elasmo_analyses/
   - Build conversational interface
   - Enable natural language queries
   - Add metadata filtering
+  - Quality control: predatory publishers, paper mills, species misidentification, anecdotal evidence
 
 - [ ] **Phase 6: Manuscript & Public Release** (2026)
   - Methods paper
