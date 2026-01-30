@@ -299,6 +299,77 @@ dbGetQuery(con, "
 9. **Species format:** Use lowercase `genus_species` format for `sp_*` columns
 10. **Geographic hierarchy:** Sub-basins auto-populate parent basin columns
 
+## PDF Library & Paper Acquisition
+
+### Storage Location
+**Main PDF library:** `/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/`
+
+Papers are organized in **year folders** (e.g., `SharkPapers/2021/`, `SharkPapers/2023/`).
+
+### Naming Convention
+Standard format: `{literature_id}.0_{DOI_escaped}.pdf`
+
+**DOI escaping rules:**
+- Replace `/` with `_`
+- Replace `.` with `_`
+
+**Examples:**
+- `29615.0_10_1002_aqc_3553.pdf` (DOI: 10.1002/aqc.3553)
+- `31921.0_10_1007_s12686-023-01306-6.pdf` (DOI: 10.1007/s12686-023-01306-6)
+
+**Papers without DOI:** Use `{literature_id}.0_{Author}_{Year}.pdf`
+- Example: `15031.0_Smith_2001.pdf`
+
+### Remaining Downloads Tracking
+
+**CSV file (internal use):**
+`/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/remaining_downloads_for_web.csv`
+
+**Web interface files (GitHub Pages):**
+- HTML: `docs/remaining_downloads.html`
+- Data: `docs/papers_data.json`
+
+**GitHub Pages URL:** https://simondedman.github.io/elasmo_analyses/remaining_downloads.html
+
+**Repository:** https://github.com/SimonDedman/elasmo_analyses
+
+### Adding Papers from Contributors
+
+When contributors provide papers:
+
+1. **Check tracking files** in `database/others_libraries/{contributor}/`
+2. **Match to database** using DOI or author/title/year
+3. **Rename** using `{literature_id}.0_{DOI_escaped}.pdf` format
+4. **Copy** to appropriate year folder in `SharkPapers/{year}/`
+5. **Update** `outputs/remaining_downloads_for_web.csv` (remove acquired papers)
+6. **Update** `docs/papers_data.json` (remove acquired papers)
+7. **Update** statistics in `docs/remaining_downloads.html`
+8. **Commit and push** to update GitHub Pages
+
+### R Code for Processing Contributor Papers
+
+```r
+library(dplyr)
+library(jsonlite)
+
+# Read remaining downloads
+remaining <- read.csv("outputs/remaining_downloads_for_web.csv")
+
+# Find paper by DOI
+paper_info <- remaining %>% filter(doi == "10.xxxx/example")
+# Returns: literature_id, year, authors, title, doi
+
+# Create new filename
+doi_escaped <- gsub("\\.", "_", gsub("/", "_", paper_info$doi))
+new_filename <- paste0(paper_info$literature_id, ".0_", doi_escaped, ".pdf")
+dest_path <- file.path("path/to/SharkPapers", paper_info$year, new_filename)
+
+# Update JSON for web
+json_data <- fromJSON("docs/papers_data.json")
+json_data <- json_data[json_data$doi != "10.xxxx/example", ]
+write_json(json_data, "docs/papers_data.json", pretty = FALSE)
+```
+
 ## Quick Commands for Common Tasks
 
 ```bash
@@ -353,5 +424,5 @@ When creating new documentation:
 
 ---
 
-*Last updated: 2025-10-24*
+*Last updated: 2026-01-29*
 *This file helps Claude Code provide faster, more accurate assistance by front-loading common context.*
