@@ -172,6 +172,7 @@ def main():
     parser = argparse.ArgumentParser(description="Download open access PDFs via Unpaywall API")
     parser.add_argument('--test', action='store_true', help="Test mode: 10 DOIs only")
     parser.add_argument('--email', type=str, help="Your email for Unpaywall API")
+    parser.add_argument('--input', type=str, help="Custom input CSV file with DOIs")
     args = parser.parse_args()
 
     # Update email if provided
@@ -196,13 +197,14 @@ def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     (BASE_DIR / "logs").mkdir(exist_ok=True)
 
-    # Load newly discovered DOIs
-    if not INPUT_FILE.exists():
-        print(f"❌ Input file not found: {INPUT_FILE}")
+    # Load DOIs from input file
+    input_file = Path(args.input) if args.input else INPUT_FILE
+    if not input_file.exists():
+        print(f"❌ Input file not found: {input_file}")
         return
 
-    df = pd.read_csv(INPUT_FILE)
-    print(f"📊 Loaded {len(df):,} newly discovered DOIs")
+    df = pd.read_csv(input_file)
+    print(f"📊 Loaded {len(df):,} DOIs from {input_file.name}")
 
     # Apply test mode
     if args.test:

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Paper Download Manager{% endblock %} - EEA Data Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2c5282;
+            --accent-teal: #319795;
+            --bg-light: #f7fafc;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-teal));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .stat-card .label {
+            color: #718096;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .paper-card {
+            border-left: 4px solid var(--accent-teal);
+            margin-bottom: 1rem;
+        }
+
+        .paper-card.downloaded {
+            border-left-color: #38a169;
+            opacity: 0.7;
+        }
+
+        .paper-card.unavailable {
+            border-left-color: #e53e3e;
+            opacity: 0.6;
+        }
+
+        .paper-title {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .paper-meta {
+            color: #718096;
+            font-size: 0.875rem;
+        }
+
+        .badge-priority-1 { background-color: #e53e3e; }
+        .badge-priority-2 { background-color: #dd6b20; }
+        .badge-priority-3 { background-color: #d69e2e; }
+        .badge-priority-4 { background-color: #38a169; }
+
+        .download-btn {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+
+        .status-btn {
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .status-btn:hover {
+            opacity: 1;
+        }
+
+        .filter-sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .progress-bar-striped {
+            background-image: linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%, transparent);
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1050;
+        }
+
+        .clickable-row {
+            cursor: pointer;
+        }
+
+        .clickable-row:hover {
+            background-color: #f8f9fa;
+        }
+
+        .btn-link-custom {
+            padding: 0.15rem 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        kbd {
+            background-color: #edf2f7;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="bi bi-file-earmark-pdf me-2"></i>
+                Paper Download Manager
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">
+                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'papers_list' %}active{% endif %}" href="{{ url_for('papers_list') }}">
+                            <i class="bi bi-list-ul me-1"></i> Papers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'statistics' %}active{% endif %}" href="{{ url_for('statistics') }}">
+                            <i class="bi bi-bar-chart me-1"></i> Statistics
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-download me-1"></i> Export
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('export_batch', format='html') }}">
+                                <i class="bi bi-file-earmark-code me-2"></i>HTML Batch (Top 100)
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('export_batch', format='csv') }}">
+                                <i class="bi bi-filetype-csv me-2"></i>CSV Export
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="{{ url_for('reload_data') }}" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-arrow-clockwise me-1"></i> Reload Data
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ messages[0] }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toast notification helper
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+            container.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+            toast.addEventListener('hidden.bs.toast', () => toast.remove());
+        }
+
+        // Update paper status
+        async function updateStatus(paperId, status, source = '', notes = '') {
+            try {
+                const response = await fetch('/api/update_status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ paper_id: paperId, status, source, notes })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    showToast(`Status updated to: ${status}`);
+                    // Update UI
+                    const row = document.querySelector(`[data-paper-id="${paperId}"]`);
+                    if (row) {
+                        row.classList.remove('downloaded', 'unavailable', 'pending');
+                        row.classList.add(status);
+                    }
+                } else {
+                    showToast('Error updating status', 'error');
+                }
+            } catch (error) {
+                showToast('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            if (e.key === 'p') {
+                window.location.href = '/papers';
+            } else if (e.key === 'd') {
+                window.location.href = '/';
+            } else if (e.key === 's') {
+                window.location.href = '/stats';
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

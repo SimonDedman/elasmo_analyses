@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block title %}Batch Download{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-0"><i class="bi bi-download me-2"></i>Batch Download</h2>
+        <p class="text-muted">{{ papers|length }} papers ready for download</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card p-4">
+            <h5 class="mb-3">Instructions</h5>
+            <ol>
+                <li>Click on a <strong>Sci-Hub</strong> link to open the download page</li>
+                <li>Download the PDF</li>
+                <li>Click the <span class="badge bg-success">Downloaded</span> button to mark it complete</li>
+                <li>Or click <span class="badge bg-danger">Unavailable</span> if the paper cannot be found</li>
+            </ol>
+            <p class="mb-0">
+                <strong>Tip:</strong> Open multiple Sci-Hub links in new tabs (Ctrl+Click) to download several papers at once.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <button class="btn btn-primary me-2" onclick="openAllScihub()">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Open All in Sci-Hub (10 at a time)
+                </button>
+                <button class="btn btn-outline-secondary" onclick="markAllDownloaded()">
+                    <i class="bi bi-check-all me-1"></i> Mark All Downloaded
+                </button>
+            </div>
+            <div>
+                <a href="{{ url_for('export_batch', format='csv') }}" class="btn btn-outline-primary">
+                    <i class="bi bi-filetype-csv me-1"></i> Export as CSV
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% for paper in papers %}
+    <div class="col-md-6 mb-3">
+        <div class="card paper-card h-100" data-paper-id="{{ paper.id }}" id="paper-{{ paper.id }}">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge bg-secondary">{{ paper.year }}</span>
+                    <span class="status-indicator"></span>
+                </div>
+                <h6 class="card-title">{{ paper.title[:80] }}{% if paper.title|length > 80 %}...{% endif %}</h6>
+                <p class="card-text small text-muted mb-2">
+                    {{ paper.authors[:50] }}{% if paper.authors|length > 50 %}...{% endif %}
+                </p>
+                {% if paper.doi %}
+                <code class="small d-block mb-3">{{ paper.doi }}</code>
+                {% endif %}
+
+                <div class="d-flex flex-wrap gap-1 mb-3">
+                    {% if paper.doi %}
+                    <a href="https://sci-hub.se/{{ paper.doi }}" target="_blank" class="btn btn-primary btn-sm scihub-link" data-doi="{{ paper.doi }}">
+                        <i class="bi bi-download me-1"></i>Sci-Hub
+                    </a>
+                    <a href="https://doi.org/{{ paper.doi }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-link-45deg me-1"></i>DOI
+                    </a>
+                    {% endif %}
+                    <a href="https://scholar.google.com/scholar?q={{ paper.title[:50]|urlencode }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-search me-1"></i>Scholar
+                    </a>
+                </div>
+
+                <div class="btn-group w-100">
+                    <button class="btn btn-success btn-sm" onclick="markStatus({{ paper.id }}, 'downloaded')">
+                        <i class="bi bi-check"></i> Downloaded
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="markStatus({{ paper.id }}, 'unavailable')">
+                        <i class="bi bi-x"></i> Unavailable
+                    </button>
+                    <button class="btn btn-warning btn-sm" onclick="markStatus({{ paper.id }}, 'skipped')">
+                        <i class="bi bi-skip-forward"></i> Skip
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not papers %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle me-2"></i>
+    No papers pending download with DOI. Try adjusting the filters or check the papers list.
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let scihubLinks = [];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.scihub-link').forEach(link => {
+            scihubLinks.push(link.href);
+        });
+    });
+
+    async function markStatus(paperId, status) {
+        try {
+            const response = await fetch('/api/update_status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paper_id: paperId, status: status })
+            });
+            const data = await response.json();
+            if (data.success) {
+                const card = document.getElementById('paper-' + paperId);
+                card.classList.add(status);
+                card.style.opacity = '0.5';
+                showToast(`Marked as ${status}`);
+            }
+        } catch (error) {
+            showToast('Error: ' + error.message, 'error');
+        }
+    }
+
+    function openAllScihub() {
+        // Open 10 at a time to avoid browser blocking
+        const batchSize = 10;
+        const links = document.querySelectorAll('.scihub-link');
+        let opened = 0;
+
+        links.forEach((link, index) => {
+            const card = link.closest('.card');
+            if (!card.classList.contains('downloaded') && !card.classList.contains('unavailable')) {
+                if (opened < batchSize) {
+                    window.open(link.href, '_blank');
+                    opened++;
+                }
+            }
+        });
+
+        if (opened > 0) {
+            showToast(`Opened ${opened} Sci-Hub links. Download PDFs, then mark them as downloaded.`);
+        } else {
+            showToast('No more papers to open', 'info');
+        }
+    }
+
+    async function markAllDownloaded() {
+        const cards = document.querySelectorAll('.paper-card:not(.downloaded):not(.unavailable)');
+        const paperIds = Array.from(cards).map(card => parseInt(card.dataset.paperId));
+
+        if (paperIds.length === 0) {
+            showToast('No papers to mark', 'info');
+            return;
+        }
+
+        if (!confirm(`Mark ${paperIds.length} papers as downloaded?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/batch_update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ paper_ids: paperIds, status: 'downloaded' })
+            });
+            const data = await response.json();
+            if (data.success) {
+                cards.forEach(card => {
+                    card.classList.add('downloaded');
+                    card.style.opacity = '0.5';
+                });
+                showToast(`Marked ${data.updated} papers as downloaded`);
+            }
+        } catch (error) {
+            showToast('Error: ' + error.message, 'error');
+        }
+    }
+</script>
+{% endblock %}

@@ -383,6 +383,8 @@ def main():
                        help="Test mode - sample 10 papers from different years")
     parser.add_argument('--resume', action='store_true',
                        help="Resume from previous run (skip already processed)")
+    parser.add_argument('--input', type=str,
+                       help="Custom input CSV file with DOIs (must have 'doi' column)")
     args = parser.parse_args()
 
     # Select mirror
@@ -418,8 +420,21 @@ def main():
     # Load database
     print(f"\n📖 Loading database...")
 
+    # Check for custom input file first
+    if args.input:
+        input_path = Path(args.input)
+        if not input_path.exists():
+            print(f"❌ Input file not found: {input_path}")
+            return
+        papers_to_try = pd.read_csv(input_path)
+        print(f"✅ Loaded {len(papers_to_try):,} papers from {input_path.name}")
+
+        # Ensure required columns
+        if 'doi' not in papers_to_try.columns:
+            print("❌ Input file must have 'doi' column")
+            return
     # Load original Sci-Hub log to get papers that need retrying
-    if SCIHUB_LOG_ORIGINAL.exists():
+    elif SCIHUB_LOG_ORIGINAL.exists():
         original_log = pd.read_csv(SCIHUB_LOG_ORIGINAL)
         failed_papers = original_log[
             (original_log['status'] == 'error') |
