@@ -132,6 +132,8 @@ def create_proper_filename(authors, year, title):
 
     if not year or pd.isna(year):
         year = "unknown"
+    else:
+        year = int(year)
 
     filename = f"{first_author}.etal.{year}.{safe_title}.pdf"
     return filename

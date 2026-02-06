@@ -230,7 +230,9 @@ def get_pdf_filename(authors, title, year):
     # Sanitize the abbreviated title for filename
     safe_title = sanitize_filename(abbreviated_title, max_length=60)
 
-    return f"{author_part}.{year}.{safe_title}.pdf"
+    # Ensure year is int to avoid "2019.0" float artifacts
+    year_int = int(year) if pd.notna(year) and year else 0
+    return f"{author_part}.{year_int}.{safe_title}.pdf"
 
 def is_valid_pdf_url(url):
     """Check if URL looks like a valid PDF link."""
@@ -379,8 +381,9 @@ def download_paper(row, output_dir, existing_files, rate_limit_delay):
     authors = row['authors']
     year = row['year']
 
-    # Create year subfolder
-    year_dir = output_dir / str(year)
+    # Create year subfolder (int conversion prevents "2019.0" float folders)
+    year_int = int(year) if pd.notna(year) and year else 0
+    year_dir = output_dir / str(year_int)
     year_dir.mkdir(parents=True, exist_ok=True)
 
     # Generate filename

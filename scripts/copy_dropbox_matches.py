@@ -41,7 +41,7 @@ for idx, row in tqdm(matches_df.iterrows(), total=len(matches_df), desc="Copying
     year = row['year'] if pd.notna(row['year']) else 'unknown_year'
 
     # Create destination path
-    dest_dir = OUTPUT_DIR / str(year)
+    dest_dir = OUTPUT_DIR / str(int(year))
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest_file = dest_dir / source.name
 

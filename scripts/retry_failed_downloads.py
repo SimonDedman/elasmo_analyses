@@ -186,7 +186,7 @@ def retry_failed_downloads(statuses_to_retry, cookie_file=None, max_papers=None,
     for idx, row in tqdm(retry_df.iterrows(), total=len(retry_df), desc="Retrying"):
         # Get output path
         year = row['year']
-        year_dir = OUTPUT_DIR / str(year)
+        year_dir = OUTPUT_DIR / str(int(year))
         year_dir.mkdir(parents=True, exist_ok=True)
 
         filename = get_pdf_filename(row['authors'], row['title'], year)
