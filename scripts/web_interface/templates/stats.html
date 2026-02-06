@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Download Statistics</h2>
+        <p class="text-muted">Detailed breakdown of paper acquisition progress</p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- By Year -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-calendar3 me-2"></i>Progress by Year</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-sm table-hover">
+                        <thead class="sticky-top bg-white">
+                            <tr>
+                                <th>Year</th>
+                                <th class="text-end">Total</th>
+                                <th class="text-end">Downloaded</th>
+                                <th class="text-end">Unavail.</th>
+                                <th>Progress</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in by_year %}
+                            {% set pct = (row[2] / row[1] * 100) if row[1] > 0 else 0 %}
+                            <tr>
+                                <td><a href="{{ url_for('papers_list', year=row[0]) }}">{{ row[0] }}</a></td>
+                                <td class="text-end">{{ row[1] }}</td>
+                                <td class="text-end text-success">{{ row[2] }}</td>
+                                <td class="text-end text-danger">{{ row[3] }}</td>
+                                <td style="width: 120px;">
+                                    <div class="progress" style="height: 18px;">
+                                        <div class="progress-bar bg-success" style="width: {{ pct }}%">
+                                            {{ "%.0f"|format(pct) }}%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- By Priority -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-flag me-2"></i>Progress by Priority</h5>
+            </div>
+            <div class="card-body">
+                {% set priority_names = {1: 'Recent with DOI', 2: '2000s with DOI', 3: 'Key Journals', 4: 'No DOI'} %}
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th class="text-end">Total</th>
+                            <th class="text-end">Downloaded</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in by_priority %}
+                        {% set pct = (row[2] / row[1] * 100) if row[1] > 0 else 0 %}
+                        <tr>
+                            <td>
+                                <span class="badge badge-priority-{{ row[0] }} me-2">P{{ row[0] }}</span>
+                                {{ priority_names.get(row[0], 'Other') }}
+                            </td>
+                            <td class="text-end">{{ "{:,}".format(row[1]) }}</td>
+                            <td class="text-end text-success">{{ "{:,}".format(row[2]) }}</td>
+                            <td style="width: 150px;">
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-success" style="width: {{ pct }}%">
+                                        {{ "%.1f"|format(pct) }}%
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="mt-4">
+                    <h6>Priority Descriptions</h6>
+                    <ul class="small text-muted">
+                        <li><strong>P1:</strong> Recent papers (2020+) with DOI - highest value for current research</li>
+                        <li><strong>P2:</strong> 2000s papers with DOI - important for trend analysis</li>
+                        <li><strong>P3:</strong> Key journals regardless of year</li>
+                        <li><strong>P4:</strong> Papers without DOI - require manual search</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Top Journals -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Top Journals (Pending)</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-sm table-hover">
+                        <thead class="sticky-top bg-white">
+                            <tr>
+                                <th>Journal</th>
+                                <th class="text-end">Pending</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in top_journals %}
+                            <tr>
+                                <td title="{{ row[0] }}">{{ row[0][:50] }}{% if row[0]|length > 50 %}...{% endif %}</td>
+                                <td class="text-end"><span class="badge bg-warning">{{ row[1] }}</span></td>
+                                <td>
+                                    <a href="{{ url_for('papers_list', journal=row[0][:30], status='pending') }}" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="col-lg-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                {% if recent %}
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-sm">
+                        <thead class="sticky-top bg-white">
+                            <tr>
+                                <th>Paper</th>
+                                <th>Status</th>
+                                <th>When</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in recent %}
+                            <tr>
+                                <td>
+                                    <small title="{{ row[0] }}">{{ row[0][:40] }}{% if row[0]|length > 40 %}...{% endif %}</small>
+                                    <br><span class="badge bg-secondary">{{ row[1] }}</span>
+                                </td>
+                                <td>
+                                    {% if row[2] == 'downloaded' %}
+                                    <span class="badge bg-success">Downloaded</span>
+                                    {% elif row[2] == 'unavailable' %}
+                                    <span class="badge bg-danger">Unavailable</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">{{ row[2] }}</span>
+                                    {% endif %}
+                                </td>
+                                <td><small class="text-muted">{{ row[3] }}</small></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+                    <p class="mt-2">No recent activity. Start downloading papers to see activity here.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats Summary -->
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="mb-3">Summary</h5>
+                <div class="row text-center">
+                    {% set total_papers = by_priority|sum(attribute='1') %}
+                    {% set total_downloaded = by_priority|sum(attribute='2') %}
+                    <div class="col-md-3">
+                        <h3>{{ "{:,}".format(total_papers) }}</h3>
+                        <p class="text-muted mb-0">Total Papers in System</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="text-success">{{ "{:,}".format(total_downloaded) }}</h3>
+                        <p class="text-muted mb-0">Successfully Downloaded</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="text-warning">{{ "{:,}".format(total_papers - total_downloaded) }}</h3>
+                        <p class="text-muted mb-0">Remaining to Download</p>
+                    </div>
+                    <div class="col-md-3">
+                        {% set completion_pct = (total_downloaded / total_papers * 100) if total_papers > 0 else 0 %}
+                        <h3>{{ "%.1f"|format(completion_pct) }}%</h3>
+                        <p class="text-muted mb-0">Completion Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -2,486 +2,995 @@
 """
 download_researchgate.py
 
-Download available PDFs from ResearchGate using authenticated session.
+Download PDFs from ResearchGate for papers that couldn't be obtained elsewhere.
 
-Strategy:
-1. Login to ResearchGate with user credentials
-2. Search for papers by title + authors
-3. Download PDFs that are publicly available (not requiring author request)
-4. Respectful rate limiting to avoid account suspension
+This script:
+1. Queries the database for papers marked as 'unavailable'
+2. Uses undetected_chromedriver to bypass bot detection
+3. Searches ResearchGate for each paper by title
+4. Downloads publicly available PDFs (not requiring author request)
+5. Saves to /media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/{YEAR}/
+6. Updates database with download status
+
+Usage:
+    # Download all unavailable papers (using environment variables - avoids bash escaping issues)
+    export RG_USERNAME='your@email.com'
+    export RG_PASSWORD='yourp@ss!word'
+    ./venv/bin/python scripts/download_researchgate.py
+
+    # Or use command line (single quotes avoid bash ! expansion)
+    ./venv/bin/python scripts/download_researchgate.py --username 'EMAIL' --password 'PASS'
+
+    # Test mode (5 papers)
+    ./venv/bin/python scripts/download_researchgate.py --test 5
+
+    # Skip login prompt (use existing session)
+    ./venv/bin/python scripts/download_researchgate.py --skip-login
 
 Author: Simon Dedman / Claude
-Date: 2025-11-19
+Date: 2026-01-06
 """
 
-import pandas as pd
-import requests
-from pathlib import Path
-from datetime import datetime
-import time
-from tqdm import tqdm
+import argparse
 import logging
+import os
 import re
-from bs4 import BeautifulSoup
+import shutil
+import sqlite3
+import time
+import unicodedata
+from datetime import datetime
+from difflib import SequenceMatcher
+from pathlib import Path
+from typing import Optional, Tuple
 from urllib.parse import quote_plus, urljoin
-import random
+
+try:
+    import undetected_chromedriver as uc
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.common.exceptions import TimeoutException, WebDriverException
+    SELENIUM_AVAILABLE = True
+except ImportError:
+    SELENIUM_AVAILABLE = False
+    print("ERROR: Selenium not installed. Run: pip install selenium undetected-chromedriver")
+    exit(1)
 
 # ============================================================================
 # CONFIGURATION
 # ============================================================================
 
 BASE_DIR = Path(__file__).parent.parent
-PAPERS_FILE = BASE_DIR / "outputs/papers_without_dois.csv"
-OUTPUT_DIR = BASE_DIR / "outputs/SharkPapers"
-LOG_FILE = BASE_DIR / "logs/researchgate_download_log.csv"
+DATABASE = BASE_DIR / "database/download_tracker.db"
+SHARKPAPERS = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers")
+LOG_DIR = BASE_DIR / "logs"
+COOKIE_DIR = BASE_DIR / "browser_data"
 
-# ResearchGate configuration
+# Current browser download directory
+BROWSER_DOWNLOAD_DIR: Optional[Path] = None
+
+# ResearchGate URLs
 RG_BASE_URL = "https://www.researchgate.net"
 RG_LOGIN_URL = f"{RG_BASE_URL}/login"
 RG_SEARCH_URL = f"{RG_BASE_URL}/search/publication"
 
-USER_AGENTS = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
-]
+# Request settings
+DELAY_BETWEEN_PAPERS = 2.5  # Longer delay for ResearchGate (be respectful)
+PAGE_LOAD_TIMEOUT = 30
+DOWNLOAD_WAIT_TIMEOUT = 20
+SEARCH_WAIT_TIMEOUT = 10
 
-# Rate limiting (IMPORTANT: Be respectful to avoid account suspension)
-MIN_DELAY = 2.0  # Minimum delay between requests
-MAX_DELAY = 5.0  # Maximum delay (randomized)
-REQUEST_TIMEOUT = 20
-MAX_RETRIES = 2
-
-# PDF download settings
+# PDF validation
 MAX_PDF_SIZE_MB = 50
 MIN_PDF_SIZE_KB = 10
 
-# Logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(message)s',
-    handlers=[
-        logging.FileHandler(BASE_DIR / "logs/researchgate.log"),
-        logging.StreamHandler()
-    ]
-)
 
 # ============================================================================
-# RESEARCHGATE AUTHENTICATION
+# HELPERS
 # ============================================================================
 
-def login_to_researchgate(email: str, password: str, session: requests.Session) -> bool:
+
+def setup_logging(timestamp: str) -> logging.Logger:
+    """Configure logging to file and console."""
+    LOG_DIR.mkdir(exist_ok=True)
+    log_file = LOG_DIR / f"researchgate_download_{timestamp}.log"
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler(),
+        ],
+    )
+    logger = logging.getLogger(__name__)
+    logger.info(f"Log file: {log_file}")
+    return logger
+
+
+def clean_for_filename(text: str) -> str:
+    """Clean text for use in filename."""
+    if not text:
+        return ""
+    text = unicodedata.normalize("NFKD", text)
+    text = re.sub(r"[^\w\s-]", "", text)
+    words = text.split()[:8]
+    return " ".join(words)
+
+
+def get_first_author(authors_str: str) -> str:
+    """Extract first author's last name."""
+    if not authors_str:
+        return "Unknown"
+    authors = str(authors_str)
+    for sep in [" & ", ";", ",", " and "]:
+        if sep in authors:
+            first = authors.split(sep)[0].strip()
+            break
+    else:
+        first = authors.strip()
+    parts = first.replace(",", " ").split()
+    return parts[0] if parts else "Unknown"
+
+
+def has_multiple_authors(authors_str: str) -> bool:
+    """Check if there are multiple authors."""
+    if not authors_str:
+        return False
+    return any(sep in str(authors_str) for sep in [" & ", ";", " and ", ", "])
+
+
+def normalize_title(title: str) -> str:
+    """Normalize title for comparison - lowercase, remove punctuation, collapse whitespace."""
+    if not title:
+        return ""
+    # Remove punctuation and normalize
+    title = unicodedata.normalize("NFKD", title.lower())
+    title = re.sub(r'[^\w\s]', ' ', title)
+    title = re.sub(r'\s+', ' ', title).strip()
+    return title
+
+
+def title_similarity(title1: str, title2: str) -> float:
+    """
+    Calculate similarity between two titles.
+    Returns a score between 0.0 and 1.0.
+    """
+    norm1 = normalize_title(title1)
+    norm2 = normalize_title(title2)
+
+    if not norm1 or not norm2:
+        return 0.0
+
+    # Use SequenceMatcher for fuzzy matching
+    return SequenceMatcher(None, norm1, norm2).ratio()
+
+
+def generate_filename(authors: str, title: str, year: int) -> str:
+    """Generate standardized filename: FirstAuthor.etal.YEAR.Title words.pdf"""
+    author = get_first_author(authors)
+    title_clean = clean_for_filename(title)
+    if has_multiple_authors(authors):
+        return f"{author}.etal.{int(year)}.{title_clean}.pdf"
+    return f"{author}.{int(year)}.{title_clean}.pdf"
+
+
+# ============================================================================
+# DATABASE FUNCTIONS
+# ============================================================================
+
+
+def get_unavailable_papers(limit: Optional[int] = None) -> list[tuple]:
+    """
+    Get papers marked as unavailable (couldn't be downloaded from publishers).
+
+    Returns list of tuples: (id, doi, title, authors, year)
+    """
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+
+    query = """
+        SELECT p.id, p.doi, p.title, p.authors, p.year
+        FROM papers p
+        JOIN download_status ds ON p.id = ds.paper_id
+        WHERE ds.status = 'unavailable'
+        AND p.id NOT IN (
+            SELECT paper_id FROM download_status WHERE status = 'downloaded'
+        )
+        ORDER BY p.year DESC
+    """
+
+    if limit:
+        query += f" LIMIT {limit}"
+
+    cur.execute(query)
+    papers = cur.fetchall()
+    conn.close()
+    return papers
+
+
+def update_status(paper_id: int, status: str, source: str, notes: str = "") -> None:
+    """Update download status in database (prevents duplicates)."""
+    conn = sqlite3.connect(DATABASE)
+    cur = conn.cursor()
+
+    # Delete any existing records for this paper first (prevents duplicates)
+    cur.execute("DELETE FROM download_status WHERE paper_id = ?", (paper_id,))
+
+    # Insert new record
+    cur.execute("""
+        INSERT INTO download_status (paper_id, status, source, download_date, notes)
+        VALUES (?, ?, ?, datetime('now'), ?)
+    """, (paper_id, status, source, notes))
+
+    conn.commit()
+    conn.close()
+
+
+# ============================================================================
+# BROWSER FUNCTIONS
+# ============================================================================
+
+
+def setup_browser(logger: logging.Logger, headless: bool = False) -> Optional[uc.Chrome]:
+    """
+    Set up Chrome browser with persistent profile for cookie storage.
+
+    Uses undetected_chromedriver to avoid ResearchGate bot detection.
+    """
+    try:
+        profile_dir = COOKIE_DIR / "chrome_profile_researchgate"
+        profile_dir.mkdir(parents=True, exist_ok=True)
+
+        options = uc.ChromeOptions()
+
+        if headless:
+            options.add_argument("--headless=new")
+
+        options.add_argument(f"--user-data-dir={profile_dir}")
+        options.add_argument("--profile-directory=ResearchGate")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--window-size=1400,900")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_argument("--remote-debugging-port=0")
+
+        # Create temp download directory
+        temp_download_dir = COOKIE_DIR / "downloads_researchgate"
+        temp_download_dir.mkdir(parents=True, exist_ok=True)
+
+        # Download preferences
+        prefs = {
+            "download.default_directory": str(temp_download_dir),
+            "download.prompt_for_download": False,
+            "download.directory_upgrade": True,
+            "safebrowsing.enabled": True,
+            "plugins.always_open_pdf_externally": True,
+            "plugins.always_open_pdf_internally": False,
+            "profile.default_content_settings.popups": 0,
+            "download.extensions_to_open": "",
+            "profile.default_content_setting_values.automatic_downloads": 1,
+        }
+        options.add_experimental_option("prefs", prefs)
+        options.add_argument("--disable-pdf-viewer")
+
+        logger.info("Starting Chrome for ResearchGate...")
+        driver = uc.Chrome(options=options, version_main=None)
+        driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
+
+        # Set global download directory
+        global BROWSER_DOWNLOAD_DIR
+        BROWSER_DOWNLOAD_DIR = temp_download_dir
+
+        logger.info("Browser initialized successfully")
+        return driver
+
+    except Exception as e:
+        logger.error(f"Failed to initialize browser: {e}")
+        return None
+
+
+def login_to_researchgate(driver: uc.Chrome, username: str, password: str, logger: logging.Logger) -> bool:
     """
     Login to ResearchGate and maintain session.
 
-    Returns True if login successful, False otherwise.
+    Returns True if login successful.
     """
     try:
-        # Get login page to extract CSRF token
-        headers = {
-            'User-Agent': random.choice(USER_AGENTS),
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-        }
+        logger.info("Navigating to ResearchGate login page...")
+        driver.get(RG_LOGIN_URL)
+        time.sleep(3)
 
-        response = session.get(RG_LOGIN_URL, headers=headers, timeout=REQUEST_TIMEOUT)
+        # Find login form fields
+        try:
+            email_field = driver.find_element(By.NAME, "login")
+            password_field = driver.find_element(By.NAME, "password")
 
-        if response.status_code != 200:
-            logging.error(f"Failed to access login page: {response.status_code}")
-            return False
+            # Enter credentials
+            email_field.clear()
+            email_field.send_keys(username)
+            time.sleep(0.5)
 
-        soup = BeautifulSoup(response.content, 'html.parser')
+            password_field.clear()
+            password_field.send_keys(password)
+            time.sleep(0.5)
 
-        # Extract CSRF token (ResearchGate uses various token names)
-        csrf_token = None
-        for name in ['authenticity_token', 'csrf_token', '_csrf']:
-            token_input = soup.find('input', {'name': name})
-            if token_input:
-                csrf_token = token_input.get('value')
-                break
+            # Find and click login button
+            login_button = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
+            login_button.click()
 
-        if not csrf_token:
-            logging.warning("Could not find CSRF token, attempting login without it")
+            time.sleep(5)  # Wait for login to complete
 
-        # Prepare login data
-        login_data = {
-            'login': email,
-            'password': password,
-        }
+            # Check if login successful
+            page_source = driver.page_source.lower()
+            current_url = driver.current_url.lower()
 
-        if csrf_token:
-            login_data['authenticity_token'] = csrf_token
+            # Signs of successful login
+            if "login" not in current_url and ("profile" in page_source or "logout" in page_source):
+                logger.info("Successfully logged in to ResearchGate")
+                return True
+            else:
+                logger.error("Login may have failed - please check manually")
+                return False
 
-        # Submit login
-        login_headers = headers.copy()
-        login_headers['Referer'] = RG_LOGIN_URL
-        login_headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        except Exception as e:
+            logger.error(f"Error finding login form: {e}")
+            logger.info("Please complete login manually in the browser window")
+            input("Press Enter when login is complete...")
 
-        response = session.post(
-            RG_LOGIN_URL,
-            data=login_data,
-            headers=login_headers,
-            timeout=REQUEST_TIMEOUT,
-            allow_redirects=True
-        )
-
-        # Check if login successful
-        if 'login' in response.url.lower():
-            logging.error("Login failed - still on login page")
-            return False
-
-        # Verify we're logged in by checking for user profile link
-        if 'profile' in response.text.lower() or 'logout' in response.text.lower():
-            logging.info("✅ Successfully logged in to ResearchGate")
-            return True
-        else:
-            logging.error("Login status unclear - may have failed")
+            # Check login status after manual login
+            page_source = driver.page_source.lower()
+            if "profile" in page_source or "logout" in page_source:
+                logger.info("Login appears successful")
+                return True
             return False
 
     except Exception as e:
-        logging.error(f"Login error: {e}")
+        logger.error(f"Login error: {e}")
         return False
 
 
-# ============================================================================
-# RESEARCHGATE SEARCH AND DOWNLOAD
-# ============================================================================
-
-def search_researchgate(title: str, authors: str, session: requests.Session) -> list:
+def search_researchgate(
+    driver: uc.Chrome,
+    title: str,
+    logger: logging.Logger,
+    authors: str = None,
+    min_similarity: float = 0.70,
+) -> Tuple[Optional[str], float]:
     """
-    Search ResearchGate for a paper.
+    Search ResearchGate for a paper using author + title strategy.
 
-    Returns list of dicts with:
-    - publication_url: Link to paper page
-    - pdf_url: Direct PDF link (if available)
-    - title: Matched title
-    - availability: 'public', 'request', 'unavailable'
+    Strategy:
+    1. First try: Lead author surname + first few title words
+    2. Second try: Title-only search (first 80 chars)
+    3. Verify results by title similarity matching
+
+    Returns:
+        Tuple of (publication_url, similarity_score) or (None, 0.0) if not found.
     """
-    try:
-        # Clean and build search query
-        clean_title = re.sub(r'[^\w\s-]', '', title).strip()
-        query = clean_title[:100]  # Limit query length
+    # Get lead author surname for search
+    lead_author = get_first_author(authors) if authors else ""
 
-        params = {
-            'q': query,
-            'type': 'publication'
-        }
+    # Clean title - keep key words
+    clean_title = re.sub(r'[^\w\s-]', ' ', title).strip()
+    title_words = clean_title.split()[:8]  # First 8 words
+    title_query = ' '.join(title_words)
 
-        headers = {
-            'User-Agent': random.choice(USER_AGENTS),
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': RG_BASE_URL,
-        }
+    # Search strategies to try
+    search_queries = []
 
-        response = session.get(
-            RG_SEARCH_URL,
-            params=params,
-            headers=headers,
-            timeout=REQUEST_TIMEOUT
-        )
+    # Strategy 1: Author + title words (most specific)
+    if lead_author and lead_author != "Unknown":
+        search_queries.append(f"{lead_author} {title_query}")
 
-        if response.status_code != 200:
-            logging.warning(f"ResearchGate search returned {response.status_code}")
-            return []
+    # Strategy 2: Title only (first 80 chars)
+    search_queries.append(clean_title[:80])
 
-        soup = BeautifulSoup(response.content, 'html.parser')
+    # Strategy 3: Just first few significant title words
+    if len(title_words) > 3:
+        search_queries.append(' '.join(title_words[:5]))
 
-        results = []
+    best_match_url = None
+    best_similarity = 0.0
 
-        # Find publication items in search results
-        # ResearchGate structure: div.nova-legacy-o-stack__item containing publication info
-        for item in soup.find_all('div', class_=re.compile(r'publication-item|nova-legacy-o-stack__item')):
+    for query in search_queries:
+        try:
+            search_url = f"{RG_SEARCH_URL}?q={quote_plus(query)}"
+            logger.debug(f"Trying search: {query[:50]}...")
 
-            # Extract publication link
-            pub_link = item.find('a', href=re.compile(r'/publication/\d+'))
-            if not pub_link:
-                continue
+            driver.get(search_url)
+            time.sleep(SEARCH_WAIT_TIMEOUT)
 
-            pub_url = urljoin(RG_BASE_URL, pub_link['href'])
-            matched_title = pub_link.get_text(strip=True)
+            # Updated CSS selectors for current ResearchGate (2025/2026)
+            # ResearchGate frequently changes their CSS classes
+            selectors = [
+                # Current selectors (as of 2026)
+                "a[href*='/publication/'][class*='nova']",
+                "div[class*='search-result'] a[href*='/publication/']",
+                "div[class*='PublicationItem'] a[href*='/publication/']",
+                # Generic fallbacks
+                "a[href*='/publication/']",
+                # Legacy selectors
+                "div.nova-legacy-e-link-color--theme a[href*='/publication/']",
+                "div.nova-legacy-o-stack__item a[href*='/publication/']",
+                "div.nova-v-publication-item a[href*='/publication/']",
+            ]
 
-            # Check for PDF availability
-            # Look for "Download full-text PDF" button
-            pdf_button = item.find('a', text=re.compile(r'Download|PDF', re.I))
+            found_publications = []
 
-            if pdf_button and 'request' not in pdf_button.get_text().lower():
-                # PDF is publicly available
-                pdf_url = urljoin(RG_BASE_URL, pdf_button.get('href', ''))
-                availability = 'public'
-            elif 'request' in item.get_text().lower():
-                availability = 'request'
-                pdf_url = None
-            else:
-                availability = 'unavailable'
-                pdf_url = None
+            for selector in selectors:
+                try:
+                    elements = driver.find_elements(By.CSS_SELECTOR, selector)
+                    for elem in elements[:10]:  # Check first 10 results
+                        try:
+                            pub_url = elem.get_attribute("href")
+                            if pub_url and "/publication/" in pub_url:
+                                # Try to get the title text from the element or parent
+                                result_title = elem.text.strip()
+                                if not result_title:
+                                    # Try parent element
+                                    parent = elem.find_element(By.XPATH, "./..")
+                                    result_title = parent.text.strip()
 
-            results.append({
-                'publication_url': pub_url,
-                'pdf_url': pdf_url,
-                'matched_title': matched_title,
-                'availability': availability
-            })
+                                if result_title and pub_url not in [p[0] for p in found_publications]:
+                                    found_publications.append((pub_url, result_title))
+                        except Exception:
+                            continue
+                except Exception:
+                    continue
 
-            # Only return top 3 results
-            if len(results) >= 3:
+            # Score each found publication by title similarity
+            for pub_url, result_title in found_publications:
+                sim = title_similarity(title, result_title)
+                logger.debug(f"  Result: {result_title[:50]}... (similarity: {sim:.2f})")
+
+                if sim > best_similarity:
+                    best_similarity = sim
+                    best_match_url = pub_url
+
+            # If we found a good match, stop searching
+            if best_similarity >= min_similarity:
+                logger.debug(f"Found good match (similarity: {best_similarity:.2f})")
                 break
 
-        return results
+        except Exception as e:
+            logger.debug(f"Search error for query '{query[:30]}...': {e}")
+            continue
 
-    except Exception as e:
-        logging.error(f"Error searching ResearchGate: {e}")
-        return []
+    if best_match_url and best_similarity >= min_similarity:
+        logger.debug(f"Best match: {best_match_url} (similarity: {best_similarity:.2f})")
+        return best_match_url, best_similarity
+    elif best_match_url:
+        logger.debug(f"Low similarity match ({best_similarity:.2f}) - skipping: {best_match_url}")
+        return None, best_similarity
+    else:
+        logger.debug("No publication found in search results")
+        return None, 0.0
 
 
-def download_pdf_from_researchgate(pdf_url: str, literature_id: str, title: str, session: requests.Session) -> dict:
-    """Download PDF from ResearchGate."""
+def search_only_researchgate(
+    driver: uc.Chrome,
+    paper: tuple,
+    logger: logging.Logger,
+    stats: dict,
+    results: list,
+) -> dict:
+    """
+    Search ResearchGate for a paper without downloading.
 
-    # Construct filename
-    safe_title = re.sub(r'[^\w\s-]', '', title)[:50].strip().replace(' ', '_')
-    final_filename = f"{literature_id}_{safe_title}_RG.pdf"
-    final_path = OUTPUT_DIR / final_filename
+    Returns dict with search results for CSV output.
+    """
+    paper_id, doi, title, authors, year = paper
 
-    # Check if already exists
-    if final_path.exists():
-        return {
-            'status': 'already_exists',
-            'filename': final_filename,
-            'size_bytes': final_path.stat().st_size
-        }
+    result = {
+        "paper_id": paper_id,
+        "doi": doi,
+        "title": title[:100] if title else "",
+        "authors": authors[:50] if authors else "",
+        "year": year,
+        "found": False,
+        "has_pdf": False,
+        "requires_request": False,
+        "url": "",
+        "similarity": 0.0,
+    }
+
+    lead_author = get_first_author(authors) if authors else "Unknown"
+    logger.info(f"  Searching: {lead_author} - {title[:50]}...")
 
     try:
-        logging.debug(f"Downloading from: {pdf_url}")
+        # Search for paper using author + title strategy
+        pub_url, similarity = search_researchgate(driver, title, logger, authors=authors)
 
-        headers = {
-            'User-Agent': random.choice(USER_AGENTS),
-            'Referer': RG_BASE_URL,
-        }
+        if not pub_url:
+            logger.info(f"    NOT FOUND (best similarity: {similarity:.2f})")
+            stats["not_found"] += 1
+            result["similarity"] = similarity
+            results.append(result)
+            return result
 
-        # Stream download
-        response = session.get(pdf_url, headers=headers, timeout=REQUEST_TIMEOUT, stream=True)
+        result["found"] = True
+        result["url"] = pub_url
+        result["similarity"] = similarity
+        stats["found"] += 1
 
-        # Check content type
-        content_type = response.headers.get('Content-Type', '')
+        # Navigate to publication page to check PDF availability
+        driver.get(pub_url)
+        time.sleep(3)
 
-        if 'application/pdf' not in content_type and 'pdf' not in pdf_url.lower():
-            logging.debug(f"Not a PDF: {content_type}")
-            return {'status': 'not_pdf', 'content_type': content_type}
+        page_source = driver.page_source.lower()
 
-        # Check file size
-        content_length = response.headers.get('Content-Length')
-        if content_length:
-            size_mb = int(content_length) / (1024 * 1024)
-            if size_mb > MAX_PDF_SIZE_MB:
-                logging.warning(f"PDF too large: {size_mb:.1f} MB")
-                return {'status': 'too_large', 'size_mb': size_mb}
+        # Check for public PDF
+        if "download full-text" in page_source or "download pdf" in page_source:
+            result["has_pdf"] = True
+            stats["has_pdf"] += 1
+            logger.info(f"    FOUND (sim={similarity:.2f}) - PDF AVAILABLE: {pub_url[:60]}")
+        elif "request full-text" in page_source:
+            result["requires_request"] = True
+            stats["requires_request"] += 1
+            logger.info(f"    FOUND (sim={similarity:.2f}) - Requires request: {pub_url[:60]}")
+        else:
+            logger.info(f"    FOUND (sim={similarity:.2f}) - No PDF detected: {pub_url[:60]}")
 
-        # Download PDF
-        with open(final_path, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
+        results.append(result)
+        return result
 
-        file_size = final_path.stat().st_size
-
-        # Verify it's a real PDF
-        if file_size < MIN_PDF_SIZE_KB * 1024:
-            final_path.unlink()
-            return {'status': 'too_small', 'size_bytes': file_size}
-
-        with open(final_path, 'rb') as f:
-            if f.read(4) != b'%PDF':
-                final_path.unlink()
-                return {'status': 'invalid_pdf'}
-
-        logging.info(f"Downloaded: {final_filename} ({file_size:,} bytes)")
-
-        return {
-            'status': 'success',
-            'filename': final_filename,
-            'size_bytes': file_size,
-            'download_url': pdf_url
-        }
-
-    except requests.exceptions.Timeout:
-        return {'status': 'timeout'}
     except Exception as e:
-        logging.error(f"Download error: {e}")
-        return {'status': 'error', 'error_message': str(e)}
+        logger.error(f"    ERROR: {e}")
+        stats["errors"] += 1
+        results.append(result)
+        return result
+
+
+def download_from_researchgate(
+    driver: uc.Chrome,
+    paper: tuple,
+    logger: logging.Logger,
+    stats: dict,
+    temp_dir: Path,
+) -> bool:
+    """
+    Download a paper from ResearchGate.
+
+    Strategy:
+    1. Search ResearchGate for the paper by title
+    2. Navigate to publication page
+    3. Look for public PDF download (not "Request full-text")
+    4. Download and verify PDF
+    """
+    paper_id, doi, title, authors, year = paper
+
+    # Determine output path
+    year_val = int(year) if year else 0
+    year_dir = SHARKPAPERS / str(year_val) if year_val else SHARKPAPERS / "unknown_year"
+    year_dir.mkdir(parents=True, exist_ok=True)
+
+    filename = generate_filename(authors, title, year_val)
+    output_path = year_dir / filename
+
+    # Check if already exists
+    if output_path.exists() and output_path.stat().st_size > 10240:
+        logger.info(f"  EXISTS: {filename}")
+        update_status(paper_id, "downloaded", "researchgate-exists")
+        stats["existed"] += 1
+        return True
+
+    # Check for similar files
+    title_prefix = (title or "")[:20].lower()
+    for existing_pdf in year_dir.glob("*.pdf"):
+        if title_prefix and title_prefix in existing_pdf.name.lower():
+            if existing_pdf.stat().st_size > 10240:
+                logger.info(f"  EXISTS (similar): {existing_pdf.name[:60]}")
+                update_status(paper_id, "downloaded", "researchgate-exists-similar")
+                stats["existed"] += 1
+                return True
+
+    lead_author = get_first_author(authors) if authors else "Unknown"
+    logger.info(f"  Searching ResearchGate for: {lead_author} - {title[:50]}...")
+
+    # Clear temp directories
+    for f in temp_dir.glob("*.pdf"):
+        try:
+            f.unlink()
+        except:
+            pass
+    clear_browser_downloads(logger)
+
+    try:
+        # Search for paper using author + title strategy
+        pub_url, similarity = search_researchgate(driver, title, logger, authors=authors)
+
+        if not pub_url:
+            logger.warning(f"  NOT FOUND on ResearchGate (best similarity: {similarity:.2f})")
+            update_status(paper_id, "unavailable", "researchgate", f"Not found (sim={similarity:.2f})")
+            stats["not_found"] += 1
+            return False
+
+        # Navigate to publication page
+        logger.info(f"  Found publication (similarity: {similarity:.2f}), checking for PDF...")
+        driver.get(pub_url)
+        time.sleep(5)
+
+        # Look for PDF download options
+        pdf_downloaded = False
+
+        # Common ResearchGate PDF download patterns
+        pdf_selectors = [
+            "a.research-detail-header-section__button[href*='Download']",
+            "a[href*='download'][href*='pdf']",
+            "button[data-testid='download-full-text']",
+            "div.research-detail-middle-section__action a",
+            "a.nova-legacy-c-button-group__item",
+        ]
+
+        # Also look for text-based download links
+        try:
+            all_links = driver.find_elements(By.TAG_NAME, "a")
+            for elem in all_links:
+                text = (elem.text or "").strip().upper()
+                # Look for "Download" but NOT "Request"
+                if "DOWNLOAD" in text and "REQUEST" not in text and "FULL" in text:
+                    href = elem.get_attribute("href")
+                    logger.info(f"  Found download link: {text}")
+
+                    # Check if this is a direct PDF link or requires clicking
+                    if href and "pdf" in href.lower():
+                        driver.get(href)
+                    else:
+                        elem.click()
+
+                    time.sleep(3)
+                    pdf_downloaded = wait_for_download(temp_dir, logger)
+                    if not pdf_downloaded:
+                        pdf_downloaded = check_browser_downloads(output_path, logger, timeout=5)
+                    if pdf_downloaded:
+                        break
+        except Exception as e:
+            logger.debug(f"Text-based search failed: {e}")
+
+        # Try CSS selectors
+        if not pdf_downloaded:
+            for selector in pdf_selectors:
+                try:
+                    elements = driver.find_elements(By.CSS_SELECTOR, selector)
+                    for elem in elements:
+                        try:
+                            elem.click()
+                            time.sleep(3)
+                            pdf_downloaded = wait_for_download(temp_dir, logger)
+                            if not pdf_downloaded:
+                                pdf_downloaded = check_browser_downloads(output_path, logger, timeout=5)
+                            if pdf_downloaded:
+                                break
+                        except:
+                            continue
+                except:
+                    continue
+
+                if pdf_downloaded:
+                    break
+
+        # Check if we got a "Request full-text" instead of download
+        page_source = driver.page_source.lower()
+        if "request full-text" in page_source and not pdf_downloaded:
+            logger.warning(f"  REQUIRES REQUEST: PDF not publicly available")
+            update_status(paper_id, "unavailable", "researchgate", "Requires author request")
+            stats["requires_request"] += 1
+            return False
+
+        # Process downloaded file
+        if pdf_downloaded:
+            pdf_files = list(temp_dir.glob("*.pdf"))
+            if pdf_files:
+                downloaded_file = pdf_files[0]
+                file_size = downloaded_file.stat().st_size
+
+                if file_size > MIN_PDF_SIZE_KB * 1024:
+                    # Verify it's a real PDF
+                    with open(downloaded_file, "rb") as f:
+                        if f.read(4) == b"%PDF":
+                            # Move to final location
+                            downloaded_file.rename(output_path)
+                            logger.info(f"  SUCCESS: {filename} ({file_size:,} bytes)")
+                            update_status(paper_id, "downloaded", "researchgate")
+                            stats["downloaded"] += 1
+                            return True
+
+                    # Invalid PDF
+                    downloaded_file.unlink()
+                    logger.warning(f"  FAIL: Invalid PDF format")
+                else:
+                    downloaded_file.unlink()
+                    logger.warning(f"  FAIL: PDF too small ({file_size} bytes)")
+
+        # Failed
+        logger.warning(f"  FAIL: Could not download PDF from ResearchGate")
+        update_status(paper_id, "unavailable", "researchgate", "No public PDF found")
+        stats["failed"] += 1
+        return False
+
+    except Exception as e:
+        logger.error(f"  ERROR: {e}")
+        stats["failed"] += 1
+        return False
+
+
+def wait_for_download(temp_dir: Path, logger: logging.Logger, timeout: int = DOWNLOAD_WAIT_TIMEOUT) -> bool:
+    """Wait for a PDF file to appear in temp directory."""
+    start = time.time()
+
+    while time.time() - start < timeout:
+        pdf_files = list(temp_dir.glob("*.pdf"))
+        partial_files = list(temp_dir.glob("*.crdownload"))
+
+        if pdf_files and not partial_files:
+            return True
+
+        if partial_files:
+            time.sleep(1)
+            continue
+
+        time.sleep(0.5)
+
+    return False
+
+
+def check_browser_downloads(output_path: Path, logger: logging.Logger, timeout: int = 10) -> bool:
+    """
+    Check the browser's download directory for auto-downloaded PDFs.
+    Move any new PDF to the output path.
+    """
+    if BROWSER_DOWNLOAD_DIR is None or not BROWSER_DOWNLOAD_DIR.exists():
+        return False
+    browser_download_dir = BROWSER_DOWNLOAD_DIR
+
+    start = time.time()
+    while time.time() - start < timeout:
+        partial_files = list(browser_download_dir.glob("*.crdownload"))
+        if partial_files:
+            time.sleep(0.5)
+            continue
+
+        pdf_files = sorted(browser_download_dir.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
+        if pdf_files:
+            newest_pdf = pdf_files[0]
+            with open(newest_pdf, "rb") as f:
+                if f.read(4) == b"%PDF":
+                    output_path.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(newest_pdf), str(output_path))
+                    logger.info(f"    Auto-downloaded PDF moved to: {output_path.name}")
+                    return True
+            newest_pdf.unlink()
+
+        time.sleep(0.5)
+
+    return False
+
+
+def clear_browser_downloads(logger: logging.Logger) -> None:
+    """Clear any existing PDFs from browser download directory."""
+    if BROWSER_DOWNLOAD_DIR is None or not BROWSER_DOWNLOAD_DIR.exists():
+        return
+    browser_download_dir = BROWSER_DOWNLOAD_DIR
+    if browser_download_dir.exists():
+        for pdf in browser_download_dir.glob("*.pdf"):
+            try:
+                pdf.unlink()
+            except Exception:
+                pass
+        for partial in browser_download_dir.glob("*.crdownload"):
+            try:
+                partial.unlink()
+            except Exception:
+                pass
 
 
 # ============================================================================
 # MAIN
 # ============================================================================
 
-def main():
-    import argparse
 
-    parser = argparse.ArgumentParser(description="Download PDFs from ResearchGate")
-    parser.add_argument('--username', type=str, required=True, help="ResearchGate email/username")
-    parser.add_argument('--password', type=str, required=True, help="ResearchGate password")
-    parser.add_argument('--test', action='store_true', help="Test mode: 20 papers only")
-    parser.add_argument('--max-papers', type=int, help="Maximum papers to process")
+def main():
+    parser = argparse.ArgumentParser(
+        description="Download PDFs from ResearchGate for papers marked as unavailable",
+        epilog="Credentials can also be set via RG_USERNAME and RG_PASSWORD environment variables."
+    )
+    parser.add_argument(
+        "--username",
+        type=str,
+        default=os.environ.get("RG_USERNAME"),
+        help="ResearchGate email/username (or set RG_USERNAME env var)",
+    )
+    parser.add_argument(
+        "--password",
+        type=str,
+        default=os.environ.get("RG_PASSWORD"),
+        help="ResearchGate password (or set RG_PASSWORD env var)",
+    )
+    parser.add_argument(
+        "--test",
+        type=int,
+        metavar="N",
+        help="Test mode: process only N papers",
+    )
+    parser.add_argument(
+        "--skip-login",
+        action="store_true",
+        help="Skip login prompt (use existing session cookies)",
+    )
+    parser.add_argument(
+        "--headless",
+        action="store_true",
+        help="Run in headless mode (not recommended for login)",
+    )
+    parser.add_argument(
+        "--search-only",
+        action="store_true",
+        help="Search ResearchGate and report findings without downloading",
+    )
     args = parser.parse_args()
 
-    print("=" * 80)
-    print("RESEARCHGATE PDF DOWNLOADER")
-    print("=" * 80)
-    print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"Username: {args.username}")
-    print("")
-    print("⚠️  Using authenticated session - be respectful to avoid account suspension")
-    print(f"   Delay between requests: {MIN_DELAY}-{MAX_DELAY} seconds")
-    print("")
-
-    # Create output directory
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    (BASE_DIR / "logs").mkdir(exist_ok=True)
-
-    # Create session and login
-    session = requests.Session()
-
-    print("🔐 Logging in to ResearchGate...")
-    if not login_to_researchgate(args.username, args.password, session):
-        print("❌ Login failed. Please check your credentials.")
+    # Validate credentials (not needed for search-only mode)
+    if not args.search_only and not args.skip_login and (not args.username or not args.password):
+        print("ERROR: --username and --password required (or set RG_USERNAME/RG_PASSWORD env vars)")
+        print("       Alternatively, use --skip-login if you have an existing session")
+        print("       Or use --search-only to just search without downloading")
         return
 
-    print("✅ Login successful!\n")
-
-    # Load papers database
-    if not PAPERS_FILE.exists():
-        print(f"❌ Papers file not found: {PAPERS_FILE}")
+    # Warn about headless mode (doesn't apply to search-only)
+    if args.headless and not args.skip_login and not args.search_only:
+        print("WARNING: Headless mode requires --skip-login (can't do interactive login)")
+        print("         Use visible mode for initial login, then headless with --skip-login")
         return
 
-    df = pd.read_csv(PAPERS_FILE)
-    print(f"📊 Loaded {len(df):,} papers without DOIs")
+    # Setup
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    logger = setup_logging(timestamp)
 
-    # Apply limits
-    if args.test:
-        df = df.head(20)
-        print(f"🧪 Test mode: processing {len(df)} papers")
-    elif args.max_papers:
-        df = df.head(args.max_papers)
+    logger.info("=" * 70)
+    logger.info("RESEARCHGATE PDF DOWNLOADER")
+    logger.info("=" * 70)
+    logger.info(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"Database: {DATABASE}")
+    logger.info(f"Output: {SHARKPAPERS}")
 
-    # Load existing results
-    existing_results = []
-    if LOG_FILE.exists():
-        existing_df = pd.read_csv(LOG_FILE)
-        existing_ids = set(existing_df['literature_id'].astype(str))
-        df = df[~df['literature_id'].astype(str).isin(existing_ids)]
-        print(f"✅ Skipping {len(existing_ids):,} already processed")
-        print(f"📊 Remaining: {len(df):,}")
-        existing_results = existing_df.to_dict('records')
+    # Get unavailable papers
+    papers = get_unavailable_papers(limit=args.test)
 
-    if len(df) == 0:
-        print("\n✅ All papers already processed!")
+    if not papers:
+        logger.info("No unavailable papers to search for on ResearchGate!")
         return
 
-    print("\n" + "=" * 80)
-    print(f"SEARCHING RESEARCHGATE FOR {len(df):,} PAPERS")
-    print("=" * 80)
-    print("")
+    logger.info(f"\nFound {len(papers)} papers marked as unavailable")
 
-    results = existing_results.copy()
-    papers_found = 0
-    pdfs_available = 0
-    pdfs_downloaded = 0
+    # Initialize browser
+    logger.info("\nInitializing browser...")
+    driver = setup_browser(logger, headless=args.headless)
 
-    for idx, row in tqdm(df.iterrows(), total=len(df), desc="Processing"):
-        literature_id = row['literature_id']
-        title = row.get('title', '')
-        authors = row.get('authors', '')
+    if driver is None:
+        logger.error("Failed to initialize browser")
+        return
 
-        if not title or pd.isna(title):
-            continue
+    # Create temp directory
+    temp_dir = SHARKPAPERS / ".temp_researchgate"
+    temp_dir.mkdir(exist_ok=True)
 
-        result = {
-            'literature_id': literature_id,
-            'title': title,
-            'authors': authors,
-            'timestamp': datetime.now().isoformat()
+    # Statistics - different stats for search-only vs download mode
+    if args.search_only:
+        stats = {
+            "found": 0,
+            "not_found": 0,
+            "has_pdf": 0,
+            "requires_request": 0,
+            "errors": 0,
+        }
+        search_results = []
+    else:
+        stats = {
+            "downloaded": 0,
+            "failed": 0,
+            "existed": 0,
+            "not_found": 0,
+            "requires_request": 0,
         }
 
-        # Search ResearchGate
-        search_results = search_researchgate(title, authors, session)
+    try:
+        # Login to ResearchGate (skip for search-only mode)
+        if args.search_only:
+            logger.info("Search-only mode - no login required")
+        elif not args.skip_login:
+            print("\n" + "=" * 70)
+            print("RESEARCHGATE LOGIN")
+            print("=" * 70)
+            print("\nLogging in to ResearchGate...")
+            print("Be respectful with requests to avoid account suspension!")
+            print("=" * 70)
 
-        result['papers_found'] = len(search_results)
-
-        if search_results:
-            papers_found += 1
-
-            # Try to download from first publicly available result
-            for search_result in search_results:
-                result['matched_title'] = search_result['matched_title']
-                result['publication_url'] = search_result['publication_url']
-                result['availability'] = search_result['availability']
-
-                if search_result['availability'] == 'public' and search_result['pdf_url']:
-                    pdfs_available += 1
-
-                    download_result = download_pdf_from_researchgate(
-                        search_result['pdf_url'],
-                        str(literature_id),
-                        title,
-                        session
-                    )
-
-                    if download_result.get('status') == 'success':
-                        result.update(download_result)
-                        pdfs_downloaded += 1
-                        break
-                elif search_result['availability'] == 'request':
-                    result['status'] = 'requires_author_request'
-                    break
-            else:
-                # No public PDFs found
-                if not result.get('status'):
-                    result['status'] = 'found_but_no_public_pdf'
+            success = login_to_researchgate(driver, args.username, args.password, logger)
+            if not success:
+                logger.warning("Login may have failed, but proceeding anyway...")
         else:
-            result['status'] = 'not_found_on_researchgate'
+            logger.info("Skipping login (using existing session)")
 
-        results.append(result)
+        # Process papers
+        logger.info(f"\n{'=' * 70}")
+        if args.search_only:
+            logger.info(f"SEARCH-ONLY: Checking ResearchGate for {len(papers)} papers")
+        else:
+            logger.info(f"SEARCHING RESEARCHGATE FOR {len(papers)} PAPERS")
+        logger.info(f"{'=' * 70}\n")
 
-        # Respectful rate limiting
-        delay = random.uniform(MIN_DELAY, MAX_DELAY)
-        time.sleep(delay)
+        for i, paper in enumerate(papers, 1):
+            logger.info(f"[{i}/{len(papers)}] Processing paper...")
 
-        # Save progress every 10 papers
-        if len(results) % 10 == 0:
-            results_df = pd.DataFrame(results)
-            results_df.to_csv(LOG_FILE, index=False)
-            logging.info(f"Progress saved: {len(results)} papers processed, {pdfs_downloaded} PDFs downloaded")
+            if args.search_only:
+                search_only_researchgate(driver, paper, logger, stats, search_results)
+            else:
+                download_from_researchgate(driver, paper, logger, stats, temp_dir)
 
-    # Final save
-    results_df = pd.DataFrame(results)
-    results_df.to_csv(LOG_FILE, index=False)
+            # Rate limiting (be respectful to ResearchGate)
+            time.sleep(DELAY_BETWEEN_PAPERS)
 
-    # Summary
-    print("\n" + "=" * 80)
-    print("RESEARCHGATE DOWNLOAD SUMMARY")
-    print("=" * 80)
+            # Progress report
+            if i % 50 == 0:
+                if args.search_only:
+                    logger.info(f"Progress: {i}/{len(papers)} - {stats['found']} found, {stats['has_pdf']} with PDF")
+                else:
+                    logger.info(f"Progress: {i}/{len(papers)} - {stats['downloaded']} OK, {stats['failed']} fail")
 
-    total_processed = len(results_df)
-    pdfs_success = len(results_df[results_df['status'] == 'success'])
-    pdfs_already = len(results_df[results_df['status'] == 'already_exists'])
-    total_pdfs = pdfs_success + pdfs_already
+    finally:
+        # Cleanup
+        try:
+            driver.quit()
+            logger.info("Browser closed")
+        except:
+            pass
 
-    print(f"\n📊 Papers processed: {total_processed:,}")
-    print(f"🔍 Papers found on RG: {papers_found:,} ({papers_found/total_processed*100:.1f}%)")
-    print(f"📂 Public PDFs available: {pdfs_available:,}")
-    print(f"📥 New PDFs downloaded: {pdfs_success:,}")
-    print(f"📄 Already existed: {pdfs_already:,}")
-    print(f"📊 Total PDFs obtained: {total_pdfs:,}")
+        # Remove temp directory contents
+        for f in temp_dir.glob("*"):
+            try:
+                f.unlink()
+            except:
+                pass
 
-    if pdfs_available > 0:
-        print(f"📈 Download success rate (when public PDF available): {total_pdfs/pdfs_available*100:.1f}%")
+    # Summary and output
+    logger.info("\n" + "=" * 70)
+    if args.search_only:
+        logger.info("RESEARCHGATE SEARCH SUMMARY")
+        logger.info("=" * 70)
+        logger.info(f"Total searched: {len(papers)}")
+        logger.info(f"Found on ResearchGate: {stats['found']}")
+        logger.info(f"  - With public PDF: {stats['has_pdf']}")
+        logger.info(f"  - Requires request: {stats['requires_request']}")
+        logger.info(f"Not found: {stats['not_found']}")
+        logger.info(f"Errors: {stats['errors']}")
 
-    print(f"\nBreakdown by status:")
-    for status, group in results_df.groupby('status'):
-        print(f"  {status:40s}: {len(group):>5,}")
+        # Save results to CSV
+        import csv
+        csv_path = BASE_DIR / "outputs" / f"researchgate_search_{timestamp}.csv"
+        csv_path.parent.mkdir(exist_ok=True)
+        with open(csv_path, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=["paper_id", "doi", "title", "authors", "year", "found", "has_pdf", "requires_request", "url", "similarity"])
+            writer.writeheader()
+            writer.writerows(search_results)
+        logger.info(f"\nResults saved to: {csv_path}")
 
-    print(f"\n📂 PDFs saved to: {OUTPUT_DIR}")
-    print(f"📄 Log file: {LOG_FILE}")
-    print("=" * 80)
+        # Summary of downloadable papers
+        downloadable = [r for r in search_results if r["has_pdf"]]
+        if downloadable:
+            logger.info(f"\n{len(downloadable)} papers have public PDFs available for download!")
+    else:
+        logger.info("RESEARCHGATE DOWNLOAD SUMMARY")
+        logger.info("=" * 70)
+        logger.info(f"Downloaded: {stats['downloaded']}")
+        logger.info(f"Already existed: {stats['existed']}")
+        logger.info(f"Not found: {stats['not_found']}")
+        logger.info(f"Requires request: {stats['requires_request']}")
+        logger.info(f"Failed: {stats['failed']}")
+        logger.info(f"Output: {SHARKPAPERS}")
+    logger.info("=" * 70)
 
 
 if __name__ == "__main__":

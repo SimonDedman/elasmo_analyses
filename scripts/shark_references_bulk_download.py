@@ -234,13 +234,13 @@ class BulkDownloader:
             logging.error(f"  ❌ Error downloading {year}: {e}")
             return all_papers
 
-    def download_all_papers_by_year(self, query="", year_start=2025, year_end=1950, resume_year=None):
+    def download_all_papers_by_year(self, query="", year_start=2026, year_end=1950, resume_year=None):
         """
         Download all papers year-by-year, newest first
 
         Args:
             query: Search query (empty or "*" for all)
-            year_start: Start year (default 2025, newest)
+            year_start: Start year (default 2026, newest)
             year_end: End year (default 1950, oldest)
             resume_year: Year to resume from (if interrupted)
 
@@ -256,138 +256,60 @@ class BulkDownloader:
         logging.info(f"{'='*80}\n")
 
         all_papers = []
-        page = start_page
-        total_pages = None
-        total_items = None
+        years_completed = []
+
+        # Determine starting year
+        start_year = resume_year if resume_year else year_start
 
         try:
-            while True:
-                data_with_page = data.copy()
-                data_with_page['page'] = page
+            for year in range(start_year, year_end - 1, -1):
+                # Download all papers for this year
+                year_papers = self.download_by_year(year, query)
+                all_papers.extend(year_papers)
+                years_completed.append(year)
 
-                # Try request with retries
-                max_retries = 3
-                response = None
+                # Save year file
+                if year_papers:
+                    year_file = OUTPUT_DIR / "by_year" / f"year_{year}.csv"
+                    year_file.parent.mkdir(exist_ok=True, parents=True)
+                    self.save_to_csv(year_papers, year_file)
 
-                for attempt in range(max_retries):
-                    try:
-                        timeout = 60 * (attempt + 1)
-                        response = self.session.post(
-                            self.base_url,
-                            data=data_with_page,
-                            timeout=timeout
-                        )
-                        response.raise_for_status()
-                        break
-                    except requests.exceptions.Timeout:
-                        if attempt < max_retries - 1:
-                            logging.warning(f"  Timeout on page {page}, retry {attempt+1}/{max_retries}")
-                            time.sleep(5)
-                        else:
-                            raise
-
-                if response is None:
-                    raise Exception(f"Failed to fetch page {page}")
-
-                # Parse JSON
-                json_data = response.json()
-
-                # Get metadata on first page
-                if page == start_page:
-                    total_items = int(json_data.get('itemCount', 0))
-                    total_pages = int(json_data.get('pageCount', 0))
-
-                    logging.info(f"Database contains: {total_items:,} papers")
-                    logging.info(f"Total pages: {total_pages:,}")
-                    logging.info(f"Estimated time: {(total_pages * self.delay) / 3600:.1f} hours\n")
-
-                # Parse results HTML
-                results_html = json_data.get('results', '')
-                if not results_html or results_html.strip() == '':
-                    logging.info(f"No more results at page {page}")
-                    break
-
-                soup = BeautifulSoup(results_html, 'html.parser')
-                entries = soup.find_all('div', class_='list-entry')
-
-                if not entries:
-                    logging.info(f"No entries found on page {page}")
-                    break
-
-                # Parse each entry
-                for entry in entries:
-                    # Extract full text
-                    full_text = entry.get_text(separator=' ', strip=True)
-
-                    # Extract authors
-                    authors_span = entry.find('span', class_='lit-authors')
-                    authors = authors_span.get_text(strip=True) if authors_span else ''
-
-                    # Extract citation
-                    list_text_div = entry.find('div', class_='list-text')
-                    if list_text_div:
-                        list_text_clone = BeautifulSoup(str(list_text_div), 'html.parser')
-                        authors_in_clone = list_text_clone.find('span', class_='lit-authors')
-                        if authors_in_clone:
-                            authors_in_clone.extract()
-                        citation = list_text_clone.get_text(separator=' ', strip=True)
-                    else:
-                        citation = ''
-
-                    # Extract DOI
-                    doi_link = entry.find('a', href=lambda x: x and 'doi.org' in x)
-                    doi = doi_link.get_text(strip=True) if doi_link else ''
-
-                    # Extract findspot (journal)
-                    findspot_span = entry.find('span', class_='lit-findspot')
-                    findspot = findspot_span.get_text(strip=True) if findspot_span else ''
-
-                    all_papers.append({
-                        'authors': authors,
-                        'citation': citation,
-                        'findspot': findspot,
-                        'doi': doi,
-                        'full_text': full_text
-                    })
-
-                # Progress logging
-                logging.info(f"Page {page+1}/{total_pages} complete - "
-                           f"{len(entries)} entries - "
-                           f"Total papers: {len(all_papers):,}/{total_items:,} "
-                           f"({100*len(all_papers)/total_items:.1f}%)")
-
-                # Save checkpoint every 100 pages
-                if (page + 1) % 100 == 0:
-                    self.save_checkpoint(page, all_papers)
-                    logging.info(f"  ✓ Checkpoint saved at page {page+1}")
-
-                # Check if done
-                page += 1
-                if total_pages and page >= total_pages:
-                    logging.info(f"\n✓ Reached last page ({total_pages})")
-                    break
-
-                # Polite delay
-                time.sleep(self.delay)
+                # Save checkpoint every 5 years
+                if len(years_completed) % 5 == 0:
+                    self.save_year_checkpoint(year, all_papers)
+                    logging.info(f"  ✓ Checkpoint saved at year {year}")
 
             logging.info(f"\n{'='*80}")
             logging.info(f"DOWNLOAD COMPLETE")
+            logging.info(f"Years processed: {len(years_completed)}")
             logging.info(f"Total papers downloaded: {len(all_papers):,}")
             logging.info(f"{'='*80}\n")
 
             return all_papers
 
         except KeyboardInterrupt:
-            logging.warning(f"\n⚠️  Download interrupted by user at page {page}")
+            current_year = years_completed[-1] if years_completed else start_year
+            logging.warning(f"\n⚠️  Download interrupted by user at year {current_year}")
             logging.info(f"Papers collected so far: {len(all_papers):,}")
-            self.save_checkpoint(page, all_papers)
+            self.save_year_checkpoint(current_year, all_papers)
             return all_papers
 
         except Exception as e:
-            logging.error(f"\n❌ Error at page {page}: {e}")
+            current_year = years_completed[-1] if years_completed else start_year
+            logging.error(f"\n❌ Error at year {current_year}: {e}")
             logging.info(f"Papers collected before error: {len(all_papers):,}")
-            self.save_checkpoint(page, all_papers)
+            self.save_year_checkpoint(current_year, all_papers)
             return all_papers
+
+    def save_year_checkpoint(self, year, papers):
+        """Save progress checkpoint with year"""
+        with open(CHECKPOINT_FILE, 'w') as f:
+            f.write(f"{year}\n{len(papers)}")
+
+        # Save partial CSV
+        if papers:
+            checkpoint_csv = OUTPUT_DIR / f"checkpoint_year{year}.csv"
+            self.save_to_csv(papers, checkpoint_csv)
 
     def save_checkpoint(self, page, papers):
         """Save progress checkpoint"""
@@ -419,6 +341,27 @@ class BulkDownloader:
                 logging.warning(f"Could not load checkpoint: {e}")
 
         return 0, []
+
+    def load_year_checkpoint(self):
+        """Load year-based checkpoint if exists"""
+        if CHECKPOINT_FILE.exists():
+            try:
+                with open(CHECKPOINT_FILE, 'r') as f:
+                    lines = f.readlines()
+                    year = int(lines[0].strip())
+                    count = int(lines[1].strip())
+
+                # Load checkpoint CSV
+                checkpoint_csv = OUTPUT_DIR / f"checkpoint_year{year}.csv"
+                if checkpoint_csv.exists():
+                    df = pd.read_csv(checkpoint_csv)
+                    papers = df.to_dict('records')
+                    logging.info(f"✓ Loaded checkpoint: year {year}, {count:,} papers")
+                    return year - 1, papers  # Return next year to process
+            except Exception as e:
+                logging.warning(f"Could not load year checkpoint: {e}")
+
+        return None, []
 
     def save_to_csv(self, papers, filepath=None):
         """Save papers to CSV"""
@@ -585,21 +528,20 @@ Examples:
 
     if args.download or args.all:
         # Download mode
-        start_page = 0
-        existing_papers = []
+        resume_year = None
 
         if args.resume:
-            start_page, existing_papers = downloader.load_checkpoint()
-            logging.info(f"Resuming from page {start_page} with {len(existing_papers):,} papers")
+            resume_year, existing_papers = downloader.load_year_checkpoint()
+            if resume_year:
+                logging.info(f"Resuming from year {resume_year} with {len(existing_papers):,} papers")
 
-        # Download
-        new_papers = downloader.download_all_papers(
+        # Download year by year
+        all_papers = downloader.download_all_papers_by_year(
             query=args.query,
-            start_page=start_page
+            year_start=2026,
+            year_end=1950,
+            resume_year=resume_year
         )
-
-        # Combine with existing if resuming
-        all_papers = existing_papers + new_papers
 
         # Save final result
         downloader.save_to_csv(all_papers, BULK_CSV)

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}{{ paper.title[:50] }}...{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('papers_list') }}">Papers</a></li>
+                <li class="breadcrumb-item active">Detail</li>
+            </ol>
+        </nav>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <span class="badge badge-priority-{{ paper.priority_group }} me-2">Priority {{ paper.priority_group }}</span>
+                        {% if paper.download_status == 'downloaded' %}
+                        <span class="badge bg-success"><i class="bi bi-check-circle"></i> Downloaded</span>
+                        {% elif paper.download_status == 'unavailable' %}
+                        <span class="badge bg-danger"><i class="bi bi-x-circle"></i> Unavailable</span>
+                        {% elif paper.download_status == 'skipped' %}
+                        <span class="badge bg-warning"><i class="bi bi-skip-forward"></i> Skipped</span>
+                        {% else %}
+                        <span class="badge bg-secondary"><i class="bi bi-clock"></i> Pending</span>
+                        {% endif %}
+                    </div>
+                    <span class="badge bg-info">{{ paper.year or 'Year unknown' }}</span>
+                </div>
+
+                <h3 class="card-title mb-3">{{ paper.title }}</h3>
+
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">Authors</h6>
+                    <p>{{ paper.authors }}</p>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">Journal</h6>
+                        <p>{{ paper.journal }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-muted mb-2">Volume/Issue/Pages</h6>
+                        <p>
+                            {% if paper.volume %}Vol. {{ paper.volume }}{% endif %}
+                            {% if paper.issue %}({{ paper.issue }}){% endif %}
+                            {% if paper.pages %}: {{ paper.pages }}{% endif %}
+                            {% if not paper.volume and not paper.issue and not paper.pages %}-{% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                {% if paper.doi %}
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">DOI</h6>
+                    <code class="d-block p-2 bg-light rounded">{{ paper.doi }}</code>
+                </div>
+                {% endif %}
+
+                {% if paper.citation %}
+                <div class="mb-4">
+                    <h6 class="text-muted mb-2">Full Citation</h6>
+                    <p class="text-muted small">{{ paper.citation }}</p>
+                </div>
+                {% endif %}
+
+                {% if paper.existing_pdf %}
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle me-2"></i>
+                    <strong>PDF Found!</strong> This paper appears to already be downloaded:
+                    <br><code class="small">{{ paper.existing_pdf }}</code>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Download Links Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-download me-2"></i>Download Links</h5>
+            </div>
+            <div class="card-body">
+                {% for link in paper.links %}
+                <a href="{{ link.url }}" target="_blank" class="btn btn-outline-primary w-100 mb-2">
+                    {% if link.icon == 'download' %}
+                    <i class="bi bi-download me-2"></i>
+                    {% elif link.icon == 'search' %}
+                    <i class="bi bi-search me-2"></i>
+                    {% elif link.icon == 'unlock' %}
+                    <i class="bi bi-unlock me-2"></i>
+                    {% else %}
+                    <i class="bi bi-link-45deg me-2"></i>
+                    {% endif %}
+                    {{ link.name }}
+                </a>
+                {% endfor %}
+                {% if not paper.links %}
+                <p class="text-muted">No download links available (missing DOI)</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Status Update Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-pencil me-2"></i>Update Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-success" onclick="updateAndRefresh({{ paper.id }}, 'downloaded')">
+                        <i class="bi bi-check-circle me-2"></i>Mark as Downloaded
+                    </button>
+                    <button class="btn btn-danger" onclick="updateAndRefresh({{ paper.id }}, 'unavailable')">
+                        <i class="bi bi-x-circle me-2"></i>Mark as Unavailable
+                    </button>
+                    <button class="btn btn-warning" onclick="updateAndRefresh({{ paper.id }}, 'skipped')">
+                        <i class="bi bi-skip-forward me-2"></i>Skip This Paper
+                    </button>
+                    <button class="btn btn-secondary" onclick="updateAndRefresh({{ paper.id }}, 'pending')">
+                        <i class="bi bi-clock me-2"></i>Reset to Pending
+                    </button>
+                </div>
+
+                {% if paper.attempts %}
+                <hr>
+                <p class="small text-muted mb-1">
+                    <strong>Attempts:</strong> {{ paper.attempts }}
+                </p>
+                {% endif %}
+                {% if paper.last_attempt %}
+                <p class="small text-muted mb-1">
+                    <strong>Last attempt:</strong> {{ paper.last_attempt }}
+                </p>
+                {% endif %}
+                {% if paper.status_notes %}
+                <p class="small text-muted mb-0">
+                    <strong>Notes:</strong> {{ paper.status_notes }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Add Notes Card -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Add Notes</h5>
+            </div>
+            <div class="card-body">
+                <textarea id="noteInput" class="form-control mb-2" rows="3" placeholder="Add notes about this paper...">{{ paper.status_notes or '' }}</textarea>
+                <button class="btn btn-outline-primary w-100" onclick="saveNotes({{ paper.id }})">
+                    <i class="bi bi-save me-2"></i>Save Notes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    async function updateAndRefresh(paperId, status) {
+        await updateStatus(paperId, status);
+        setTimeout(() => location.reload(), 500);
+    }
+
+    async function saveNotes(paperId) {
+        const notes = document.getElementById('noteInput').value;
+        try {
+            const response = await fetch('/api/update_status', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paper_id: paperId,
+                    status: '{{ paper.download_status }}',
+                    notes: notes
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                showToast('Notes saved');
+            } else {
+                showToast('Error saving notes', 'error');
+            }
+        } catch (error) {
+            showToast('Error: ' + error.message, 'error');
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+
+{% block title %}Papers{% endblock %}
+
+{% block extra_css %}
+<style>
+    .paper-row {
+        transition: all 0.2s;
+    }
+    .paper-row:hover {
+        background-color: #f8f9fa !important;
+    }
+    .paper-row.selected {
+        background-color: #e3f2fd !important;
+    }
+    .link-btn {
+        padding: 2px 8px;
+        font-size: 0.7rem;
+        margin-right: 3px;
+    }
+    .filter-form label {
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 10;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Filter Sidebar -->
+    <div class="col-md-3 mb-4">
+        <div class="filter-sidebar sticky-top" style="top: 20px;">
+            <h5 class="mb-3"><i class="bi bi-funnel me-2"></i>Filters</h5>
+            <form method="get" class="filter-form">
+                <div class="mb-3">
+                    <label class="form-label">Search</label>
+                    <input type="text" name="search" class="form-control form-control-sm"
+                           value="{{ current_filters.search or '' }}" placeholder="Title, author, journal...">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Year</label>
+                    <select name="year" class="form-select form-select-sm">
+                        <option value="">All years</option>
+                        {% for y in years %}
+                        <option value="{{ y }}" {% if current_filters.year == y %}selected{% endif %}>{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Priority</label>
+                    <select name="priority" class="form-select form-select-sm">
+                        <option value="">All priorities</option>
+                        <option value="1" {% if current_filters.priority == 1 %}selected{% endif %}>P1 - Recent with DOI</option>
+                        <option value="2" {% if current_filters.priority == 2 %}selected{% endif %}>P2 - 2000s with DOI</option>
+                        <option value="3" {% if current_filters.priority == 3 %}selected{% endif %}>P3 - Key Journals</option>
+                        <option value="4" {% if current_filters.priority == 4 %}selected{% endif %}>P4 - No DOI</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select form-select-sm">
+                        <option value="">All statuses</option>
+                        <option value="pending" {% if current_filters.status == 'pending' %}selected{% endif %}>Pending</option>
+                        <option value="downloaded" {% if current_filters.status == 'downloaded' %}selected{% endif %}>Downloaded</option>
+                        <option value="unavailable" {% if current_filters.status == 'unavailable' %}selected{% endif %}>Unavailable</option>
+                        <option value="skipped" {% if current_filters.status == 'skipped' %}selected{% endif %}>Skipped</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Has DOI</label>
+                    <select name="has_doi" class="form-select form-select-sm">
+                        <option value="">Any</option>
+                        <option value="yes" {% if current_filters.has_doi == 'yes' %}selected{% endif %}>Yes - Has DOI</option>
+                        <option value="no" {% if current_filters.has_doi == 'no' %}selected{% endif %}>No - Missing DOI</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Per Page</label>
+                    <select name="per_page" class="form-select form-select-sm">
+                        <option value="25" {% if per_page == 25 %}selected{% endif %}>25</option>
+                        <option value="50" {% if per_page == 50 %}selected{% endif %}>50</option>
+                        <option value="100" {% if per_page == 100 %}selected{% endif %}>100</option>
+                        <option value="200" {% if per_page == 200 %}selected{% endif %}>200</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-2">
+                    <i class="bi bi-search me-1"></i> Apply Filters
+                </button>
+                <a href="{{ url_for('papers_list') }}" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-x-circle me-1"></i> Clear Filters
+                </a>
+            </form>
+
+            <!-- Bulk Actions -->
+            <hr>
+            <h6 class="mb-2">Bulk Actions</h6>
+            <div class="btn-group-vertical w-100" id="bulkActions">
+                <button class="btn btn-sm btn-outline-success" onclick="bulkUpdateSelected('downloaded')">
+                    <i class="bi bi-check-circle me-1"></i> Mark Downloaded
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="bulkUpdateSelected('unavailable')">
+                    <i class="bi bi-x-circle me-1"></i> Mark Unavailable
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="bulkUpdateSelected('skipped')">
+                    <i class="bi bi-skip-forward me-1"></i> Mark Skipped
+                </button>
+            </div>
+            <small class="text-muted d-block mt-2">Select papers with checkbox, then apply action</small>
+        </div>
+    </div>
+
+    <!-- Papers List -->
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">
+                <i class="bi bi-journals me-2"></i>
+                Papers <span class="badge bg-secondary">{{ "{:,}".format(total) }}</span>
+            </h5>
+            <div>
+                <button class="btn btn-sm btn-outline-primary" onclick="selectAll()">
+                    <i class="bi bi-check-all"></i> Select All
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="deselectAll()">
+                    <i class="bi bi-x"></i> Deselect
+                </button>
+            </div>
+        </div>
+
+        {% if papers %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="sticky-header">
+                    <tr>
+                        <th style="width: 30px;">
+                            <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)">
+                        </th>
+                        <th>Paper</th>
+                        <th style="width: 80px;">Year</th>
+                        <th style="width: 100px;">Status</th>
+                        <th style="width: 200px;">Download Links</th>
+                        <th style="width: 120px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for paper in papers %}
+                    <tr class="paper-row {{ paper.download_status }}" data-paper-id="{{ paper.id }}">
+                        <td>
+                            <input type="checkbox" class="paper-checkbox" value="{{ paper.id }}">
+                        </td>
+                        <td>
+                            <div class="paper-title">
+                                <a href="{{ url_for('paper_detail', paper_id=paper.id) }}" class="text-decoration-none">
+                                    {{ paper.title[:100] }}{% if paper.title|length > 100 %}...{% endif %}
+                                </a>
+                            </div>
+                            <div class="paper-meta">
+                                <span title="{{ paper.authors }}">{{ paper.authors[:60] }}{% if paper.authors|length > 60 %}...{% endif %}</span>
+                                <br>
+                                <em>{{ paper.journal[:50] }}{% if paper.journal|length > 50 %}...{% endif %}</em>
+                                {% if paper.doi %}
+                                <br><code class="small">{{ paper.doi }}</code>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">{{ paper.year or '?' }}</span>
+                            <br>
+                            <span class="badge badge-priority-{{ paper.priority_group }} mt-1">P{{ paper.priority_group }}</span>
+                        </td>
+                        <td>
+                            {% if paper.download_status == 'downloaded' %}
+                            <span class="badge bg-success"><i class="bi bi-check-circle"></i> Downloaded</span>
+                            {% elif paper.download_status == 'unavailable' %}
+                            <span class="badge bg-danger"><i class="bi bi-x-circle"></i> Unavailable</span>
+                            {% elif paper.download_status == 'skipped' %}
+                            <span class="badge bg-warning"><i class="bi bi-skip-forward"></i> Skipped</span>
+                            {% else %}
+                            <span class="badge bg-secondary"><i class="bi bi-clock"></i> Pending</span>
+                            {% endif %}
+                            {% if paper.attempts %}
+                            <br><small class="text-muted">{{ paper.attempts }} attempts</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% for link in paper.links %}
+                            <a href="{{ link.url }}" target="_blank" class="btn btn-outline-primary link-btn" title="{{ link.name }}">
+                                {% if link.icon == 'download' %}
+                                <i class="bi bi-download"></i>
+                                {% elif link.icon == 'search' %}
+                                <i class="bi bi-search"></i>
+                                {% elif link.icon == 'unlock' %}
+                                <i class="bi bi-unlock"></i>
+                                {% else %}
+                                <i class="bi bi-link-45deg"></i>
+                                {% endif %}
+                                {{ link.name }}
+                            </a>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-success status-btn" onclick="updateStatus({{ paper.id }}, 'downloaded')" title="Mark as Downloaded">
+                                    <i class="bi bi-check"></i>
+                                </button>
+                                <button class="btn btn-danger status-btn" onclick="updateStatus({{ paper.id }}, 'unavailable')" title="Mark as Unavailable">
+                                    <i class="bi bi-x"></i>
+                                </button>
+                                <button class="btn btn-warning status-btn" onclick="updateStatus({{ paper.id }}, 'skipped')" title="Skip">
+                                    <i class="bi bi-skip-forward"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if page > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page - 1 }}&{{ request.query_string.decode().replace('page=' + page|string, '') }}">
+                        <i class="bi bi-chevron-left"></i> Previous
+                    </a>
+                </li>
+                {% endif %}
+
+                {% set start_page = [1, page - 2]|max %}
+                {% set end_page = [total_pages, page + 2]|min %}
+
+                {% if start_page > 1 %}
+                <li class="page-item"><a class="page-link" href="?page=1&{{ request.query_string.decode() }}">1</a></li>
+                {% if start_page > 2 %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+                {% endif %}
+
+                {% for p in range(start_page, end_page + 1) %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <a class="page-link" href="?page={{ p }}&{{ request.query_string.decode().replace('page=' + page|string, '') }}">{{ p }}</a>
+                </li>
+                {% endfor %}
+
+                {% if end_page < total_pages %}
+                {% if end_page < total_pages - 1 %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="?page={{ total_pages }}&{{ request.query_string.decode() }}">{{ total_pages }}</a></li>
+                {% endif %}
+
+                {% if page < total_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page + 1 }}&{{ request.query_string.decode().replace('page=' + page|string, '') }}">
+                        Next <i class="bi bi-chevron-right"></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="text-center text-muted small">
+                Showing {{ (page - 1) * per_page + 1 }} - {{ [page * per_page, total]|min }} of {{ "{:,}".format(total) }} papers
+            </div>
+        </nav>
+
+        {% else %}
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle me-2"></i>
+            No papers found with the current filters.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let selectedPapers = new Set();
+
+    function toggleSelectAll(checkbox) {
+        const checkboxes = document.querySelectorAll('.paper-checkbox');
+        checkboxes.forEach(cb => {
+            cb.checked = checkbox.checked;
+            const row = cb.closest('tr');
+            if (checkbox.checked) {
+                selectedPapers.add(parseInt(cb.value));
+                row.classList.add('selected');
+            } else {
+                selectedPapers.delete(parseInt(cb.value));
+                row.classList.remove('selected');
+            }
+        });
+    }
+
+    function selectAll() {
+        document.getElementById('selectAllCheckbox').checked = true;
+        toggleSelectAll(document.getElementById('selectAllCheckbox'));
+    }
+
+    function deselectAll() {
+        document.getElementById('selectAllCheckbox').checked = false;
+        toggleSelectAll(document.getElementById('selectAllCheckbox'));
+    }
+
+    // Handle individual checkbox changes
+    document.querySelectorAll('.paper-checkbox').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const row = this.closest('tr');
+            if (this.checked) {
+                selectedPapers.add(parseInt(this.value));
+                row.classList.add('selected');
+            } else {
+                selectedPapers.delete(parseInt(this.value));
+                row.classList.remove('selected');
+            }
+        });
+    });
+
+    async function bulkUpdateSelected(status) {
+        if (selectedPapers.size === 0) {
+            showToast('No papers selected', 'error');
+            return;
+        }
+
+        if (!confirm(`Mark ${selectedPapers.size} papers as ${status}?`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/batch_update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paper_ids: Array.from(selectedPapers),
+                    status: status
+                })
+            });
+            const data = await response.json();
+            if (data.success) {
+                showToast(`Updated ${data.updated} papers to ${status}`);
+                // Refresh page after a moment
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                showToast('Error updating papers', 'error');
+            }
+        } catch (error) {
+            showToast('Error: ' + error.message, 'error');
+        }
+    }
+
+    // Open link in new tab when clicking on DOI link button
+    document.querySelectorAll('.link-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // Prevent row click
+            e.stopPropagation();
+        });
+    });
+</script>
+{% endblock %}

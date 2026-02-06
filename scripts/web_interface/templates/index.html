@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="mb-0"><i class="bi bi-speedometer2 me-2"></i>Download Dashboard</h2>
+        <p class="text-muted">Track your paper acquisition progress</p>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="number">{{ "{:,}".format(total_papers) }}</div>
+            <div class="label">Total Papers</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="number text-success">{{ "{:,}".format(downloaded) }}</div>
+            <div class="label">Downloaded</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="number text-warning">{{ "{:,}".format(pending) }}</div>
+            <div class="label">Pending</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="number text-danger">{{ "{:,}".format(unavailable) }}</div>
+            <div class="label">Unavailable</div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Bar -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card p-4">
+            <h5 class="mb-3">Overall Progress</h5>
+            {% set progress_pct = (downloaded / total_papers * 100) if total_papers > 0 else 0 %}
+            <div class="progress" style="height: 30px;">
+                <div class="progress-bar bg-success" style="width: {{ progress_pct }}%">
+                    {{ "%.1f"|format(progress_pct) }}% Complete
+                </div>
+                {% set unavail_pct = (unavailable / total_papers * 100) if total_papers > 0 else 0 %}
+                <div class="progress-bar bg-danger" style="width: {{ unavail_pct }}%">
+                    {{ "%.1f"|format(unavail_pct) }}%
+                </div>
+            </div>
+            <div class="mt-2 text-muted small">
+                <span class="me-3"><i class="bi bi-circle-fill text-success"></i> Downloaded</span>
+                <span class="me-3"><i class="bi bi-circle-fill text-danger"></i> Unavailable</span>
+                <span><i class="bi bi-circle-fill text-secondary"></i> Pending</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Papers by Year -->
+    <div class="col-md-6 mb-4">
+        <div class="card p-4">
+            <h5 class="mb-3"><i class="bi bi-calendar3 me-2"></i>Papers by Year (Recent)</h5>
+            <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                <table class="table table-sm table-hover">
+                    <thead class="sticky-top bg-white">
+                        <tr>
+                            <th>Year</th>
+                            <th class="text-end">Papers</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in year_dist %}
+                        <tr class="clickable-row" onclick="window.location='/papers?year={{ row[0] }}'">
+                            <td><strong>{{ row[0] }}</strong></td>
+                            <td class="text-end">{{ row[1] }}</td>
+                            <td class="text-end">
+                                <a href="{{ url_for('papers_list', year=row[0]) }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Papers by Priority -->
+    <div class="col-md-6 mb-4">
+        <div class="card p-4">
+            <h5 class="mb-3"><i class="bi bi-flag me-2"></i>Papers by Priority Group</h5>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Description</th>
+                        <th class="text-end">Papers</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set priority_names = {1: 'Recent with DOI', 2: '2000s with DOI', 3: 'Key Journals', 4: 'No DOI'} %}
+                    {% for row in priority_dist %}
+                    <tr class="clickable-row" onclick="window.location='/papers?priority={{ row[0] }}'">
+                        <td>
+                            <span class="badge badge-priority-{{ row[0] }}">P{{ row[0] }}</span>
+                        </td>
+                        <td>{{ priority_names.get(row[0], 'Other') }}</td>
+                        <td class="text-end"><strong>{{ "{:,}".format(row[1]) }}</strong></td>
+                        <td class="text-end">
+                            <a href="{{ url_for('papers_list', priority=row[0]) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card p-4">
+            <h5 class="mb-3"><i class="bi bi-lightning me-2"></i>Quick Actions</h5>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <a href="{{ url_for('papers_list', status='pending', has_doi='yes') }}" class="btn btn-primary btn-lg w-100">
+                        <i class="bi bi-play-fill me-2"></i>
+                        Start Downloading (with DOI)
+                    </a>
+                    <small class="text-muted d-block mt-1">Papers with DOI that haven't been downloaded</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{{ url_for('export_batch', format='html', limit=50) }}" class="btn btn-success btn-lg w-100">
+                        <i class="bi bi-download me-2"></i>
+                        Export Batch (50 papers)
+                    </a>
+                    <small class="text-muted d-block mt-1">Generate HTML with download links</small>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <a href="{{ url_for('papers_list', priority=1) }}" class="btn btn-warning btn-lg w-100">
+                        <i class="bi bi-star-fill me-2"></i>
+                        High Priority Papers
+                    </a>
+                    <small class="text-muted d-block mt-1">Recent papers with DOI (most valuable)</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Keyboard shortcuts help -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card p-3 bg-light">
+            <h6 class="mb-2"><i class="bi bi-keyboard me-2"></i>Keyboard Shortcuts</h6>
+            <span class="me-3"><kbd>D</kbd> Dashboard</span>
+            <span class="me-3"><kbd>P</kbd> Papers</span>
+            <span><kbd>S</kbd> Statistics</span>
+        </div>
+    </div>
+</div>
+{% endblock %}
