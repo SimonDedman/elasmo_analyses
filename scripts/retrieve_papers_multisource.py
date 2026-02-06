@@ -332,7 +332,7 @@ def retrieve_paper(row, methods=['unpaywall', 'semantic_scholar', 'crossref', 'd
             if result and result.get('pdf_url'):
                 # Try to download
                 filename = get_pdf_filename(authors, year, title, lit_id)
-                output_path = OUTPUT_DIR / str(year) / filename
+                output_path = OUTPUT_DIR / str(int(year)) / filename
                 output_path.parent.mkdir(parents=True, exist_ok=True)
 
                 if download_pdf(result['pdf_url'], output_path):

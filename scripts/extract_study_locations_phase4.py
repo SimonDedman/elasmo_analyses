@@ -138,7 +138,7 @@ def find_pdf_path(paper_id: str) -> Optional[Path]:
         if pdf_path.exists():
             return pdf_path
 
-        pdf_path = PDF_BASE / f"{year}.0" / paper_id
+        pdf_path = PDF_BASE / str(int(year)) / paper_id
         if pdf_path.exists():
             return pdf_path
 

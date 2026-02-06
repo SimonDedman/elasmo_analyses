@@ -81,7 +81,7 @@ def find_pdf_path(paper_id: str, pdf_dirs: List[Path]) -> Optional[Path]:
                 return pdf_path
 
             # Try with .0 suffix (some years have this)
-            pdf_path = base_dir / f"{year}.0" / paper_id
+            pdf_path = base_dir / str(int(year)) / paper_id
             if pdf_path.exists():
                 return pdf_path
 

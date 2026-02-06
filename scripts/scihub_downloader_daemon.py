@@ -129,7 +129,7 @@ class SciHubDownloader:
     def create_filename(self, authors, year, title):
         """Create Author.Year.Title.pdf filename."""
         author = self.extract_first_author(authors)
-        year_str = str(year) if year else "Unknown"
+        year_str = str(int(year)) if year else "Unknown"
         title_clean = self.clean_filename(title, max_length=60)
 
         # Handle multiple authors
@@ -141,7 +141,7 @@ class SciHubDownloader:
     def get_year_folder(self, year):
         """Get folder for year."""
         if year:
-            year_folder = pdf_base / str(year)
+            year_folder = pdf_base / str(int(year))
         else:
             year_folder = pdf_base / "unknown_year"
 

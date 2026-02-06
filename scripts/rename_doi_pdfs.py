@@ -87,7 +87,7 @@ def extract_first_author(authors):
 def create_new_filename(row):
     """Create Author.Year.Title.pdf filename from metadata."""
     author = extract_first_author(row['authors'])
-    year = str(row['year']) if pd.notna(row['year']) else "Unknown"
+    year = str(int(row['year'])) if pd.notna(row['year']) else "Unknown"
     title = clean_filename(row['title'], max_length=60)
 
     # Handle multiple authors
