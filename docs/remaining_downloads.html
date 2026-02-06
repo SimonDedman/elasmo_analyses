@@ -48,10 +48,10 @@
         <p class="subtitle">Papers that still need to be acquired for the systematic review</p>
         
         <div class="stats">
-            <div class="stat-box"><div class="stat-number">2,959</div><div class="stat-label">Total Remaining</div></div>
-            <div class="stat-box"><div class="stat-number">2,067</div><div class="stat-label">Priority 1 (Recent)</div></div>
-            <div class="stat-box"><div class="stat-number">1,151</div><div class="stat-label">Open Access Available</div></div>
-            <div class="stat-box"><div class="stat-number">1,808</div><div class="stat-label">Closed Access</div></div>
+            <div class="stat-box"><div class="stat-number" id="stat-total">...</div><div class="stat-label">Total Remaining</div></div>
+            <div class="stat-box"><div class="stat-number" id="stat-priority1">...</div><div class="stat-label">Priority 1 (Recent)</div></div>
+            <div class="stat-box"><div class="stat-number" id="stat-oa">...</div><div class="stat-label">Open Access Available</div></div>
+            <div class="stat-box"><div class="stat-number" id="stat-closed">...</div><div class="stat-label">Closed Access</div></div>
         </div>
         
         <div class="instructions">
@@ -110,6 +110,17 @@
 
     $(document).ready(function() {
         $.getJSON('papers_data.json', function(data) {
+            // Compute stats dynamically from data
+            var total = data.length;
+            var priority1 = data.filter(function(r) { return r.priority === 1; }).length;
+            var oaStatuses = ['gold','green','hybrid','bronze'];
+            var oaAvailable = data.filter(function(r) { return oaStatuses.indexOf(r.oa_status) >= 0; }).length;
+            var closed = total - oaAvailable;
+            $('#stat-total').text(total.toLocaleString());
+            $('#stat-priority1').text(priority1.toLocaleString());
+            $('#stat-oa').text(oaAvailable.toLocaleString());
+            $('#stat-closed').text(closed.toLocaleString());
+
             var tableData = data.map(function(r) {
                 var doiLink = r.doi ? '<a href="https://doi.org/' + encodeURIComponent(r.doi) + '" target="_blank" class="doi-link">' + escapeHtml(r.doi) + '</a>' : '';
                 var oaClass = ['gold','green','hybrid','bronze','closed'].includes(r.oa_status) ? 'oa-' + r.oa_status : 'oa-unknown';
