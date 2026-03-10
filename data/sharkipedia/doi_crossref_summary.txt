@@ -1,0 +1,21 @@
+Sharkipedia vs EEA Literature Database: Cross-Reference Summary
+=================================================================
+
+Sharkipedia references:              273
+  - with extractable DOI:              6
+  - with extractable title:          264
+
+EEA database papers:               30523
+  - unique DOIs:                   16366
+
+Overlap (in both databases):         201  (73.6% of Sharkipedia)
+  - matched by DOI:                    6
+  - matched by title + year:         195
+  - matched by title only:             0
+
+Sharkipedia-only (not in EEA):        72  (26.4% of Sharkipedia)
+
+Output files:
+  Overlap:          doi_crossref_overlap.csv
+  Sharkipedia-only: doi_crossref_sharkipedia_only.csv
+  This summary:     doi_crossref_summary.txt

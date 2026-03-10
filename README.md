@@ -10,12 +10,14 @@
 
 This repository contains materials for the **"New Frontiers in Elasmobranch Data Analysis"** project, initially presented at the European Elasmobranch Association (EEA) Conference 2025 in Rotterdam, Netherlands.
 
-**Project Status:** Post-conference development phase (January 2026)
+**Project Status:** Post-conference development phase (March 2026) — External integrations & schema design
 
 **Original Session (EEA 2025):**
 - **Date:** Thursday, 30 October 2025
 - **Format:** 45 minutes of discipline panel reviews + 50 minutes of oral presentations
 - **Organizers:** Dr. Simon Dedman & Dr. Guuske Tiktak
+
+**Current Scale:** ~30,500 papers | ~14,940 PDFs acquired | 2,559 remaining | 151 techniques | 8 disciplines
 
 ---
 
@@ -23,7 +25,7 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 
 ### Primary Objectives
 1. **Comprehensive Review:** Systematically document current analytical techniques across 8 major elasmobranch research disciplines
-2. **Empirical Analysis:** Extract and analyze techniques from ~13,000 shark science PDFs spanning 75+ years (1950-2026)
+2. **Empirical Analysis:** Extract and analyse techniques from ~30,500 elasmobranch papers spanning 75+ years (1950-2026)
 3. **Expert Evaluation:** Assess strengths, weaknesses, and suitability of different approaches through specialist insight
 4. **Temporal Mapping:** Identify historical trends, current methods, declining approaches, and emerging frontiers
 5. **Knowledge Transfer:** Create accessible overviews valuable to both practitioners and non-specialists
@@ -33,7 +35,8 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 - Create a **living database** updated annually at EEA and AES conferences
 - Develop **automated trend analysis** using the Shark-References database
 - Build **conversational AI interface** for querying the knowledge base (see [LLM Integration](#llm-integration))
-- Integrate with **Sharkipedia**, **Megamove**, and other elasmobranch databases
+- Integrate with **Sharkipedia**, **MegaMove**, **Altmetric/Dimensions**, and other elasmobranch databases
+- Add **ecosystem, pressure, gear, and impact** metadata columns for rich cross-cutting analyses
 - Establish **community-driven** annual updates
 
 ---
@@ -56,36 +59,35 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 ```
 elasmo_analyses/
 ├── docs/                                        # Documentation
+│   ├── core/                                    # Project status & planning
 │   ├── database/                                # Database & extraction documentation
-│   │   ├── extraction_progress_report.md        # Peer review document
-│   │   ├── extraction_complete_summary.md       # Technical summary
-│   │   ├── database_schema_design.md            # Schema documentation
-│   │   └── pdf_acquisition_complete_summary.md  # PDF corpus details
-│   ├── LLM/                                     # LLM integration (NEW!)
-│   │   ├── llm_integration_roadmap.md           # LLM roadmap
-│   │   └── notebooklm_alternatives_summary.md   # Platform comparison
+│   ├── integrations/                            # External database integration analyses
+│   │   ├── sharkipedia_integration.md           # Sharkipedia API & data overlap
+│   │   ├── megamove_integration.md              # MegaMove/GSMP tracking data
+│   │   ├── altmetric_integration.md             # Altmetric scoring & social impact
+│   │   └── altmetric_grants_datasets.md         # Dimensions grants & datasets
+│   ├── schema_proposals/                        # Proposed new column categories
+│   │   ├── ecosystem_component_proposal.md      # eco_* columns (habitat, depth, realm)
+│   │   ├── pressure_proposal.md                 # pr_* columns (fishing, climate, pollution)
+│   │   ├── gear_proposal.md                     # gear_* columns (gear type, mitigation)
+│   │   └── impact_proposal.md                   # imp_* columns (mortality, abundance, etc.)
+│   ├── LLM/                                     # LLM integration
 │   ├── candidates/                              # Panelist recruitment
 │   ├── geographic/                              # Geographic analysis
 │   ├── species/                                 # Species database
 │   ├── techniques/                              # Technique classification
-│   ├── technical/                               # Technical guides
-│   └── readme.md                                # Docs index
+│   └── technical/                               # Technical guides
 ├── scripts/                                     # Data processing scripts
-│   ├── extract_techniques_parallel.py           # Fast parallel extraction
-│   ├── build_analysis_tables.py                 # Generate analysis CSVs
-│   └── [Additional scripts for PDF acquisition, OCR, etc.]
-├── database/                                    # SQLite databases
-│   └── technique_taxonomy.db                    # Main extraction database
+├── database/                                    # SQLite/DuckDB databases
+│   └── technique_taxonomy.db                    # Technique extraction database
 ├── outputs/                                     # Generated outputs
 │   ├── analysis/                                # Analysis CSV files
-│   │   ├── discipline_trends_by_year.csv        # Discipline trends 1950-2025
-│   │   ├── technique_trends_by_year.csv         # Technique adoption over time
-│   │   ├── top_techniques.csv                   # 151 techniques ranked
-│   │   └── summary_statistics.csv               # Overall stats
-│   ├── figures/                                 # Publication-ready visualizations
-│   ├── panel_reports/                           # Expert panel materials
-│   └── abstract_reviews/                        # Conference abstract reviews
-├── data/                                        # Input data files
+│   ├── figures/                                 # Publication-ready visualisations
+│   ├── literature_review.duckdb                 # Main analytical database
+│   └── remaining_downloads_for_web.csv          # Papers still needed
+├── data/                                        # Input & integration data
+│   ├── sharkipedia/                             # Sharkipedia API & Zenodo data
+│   └── journal_quality/                         # SCImago journal matching
 ├── .gitignore                                   # Git ignore rules
 ├── README.md                                    # This file
 └── CONTRIBUTING.md                              # Contribution guidelines
@@ -93,24 +95,23 @@ elasmo_analyses/
 
 ---
 
-## Current Status (January 2026)
+## Current Status (March 2026)
 
 ### Latest Updates
 
-**✅ EEA 2025 Conference Complete** (October 2025)
-- Panel session delivered successfully
-- Expert feedback incorporated
-- Community interest in living database confirmed
+**✅ External Integrations Assessed** (March 2026)
+- Sharkipedia: 90% species overlap, API pull complete (1,288 species, 8,494 trait measurements)
+- MegaMove: Assessed as closed; GSMP GitHub repos and Movebank API as alternatives
+- Altmetric/Dimensions: SRAD application submitted (awaiting approval)
 
-**✅ PDF Corpus Expansion Ongoing**
-- Current: ~13,000 papers (1950-2026)
-- Adding 2026 publications from Shark-References
-- Target: Complete coverage through 2026
+**✅ Schema Proposals Drafted** (March 2026)
+- 4 new column categories proposed: [Ecosystem](docs/schema_proposals/ecosystem_component_proposal.md), [Pressure](docs/schema_proposals/pressure_proposal.md), [Gear](docs/schema_proposals/gear_proposal.md), [Impact](docs/schema_proposals/impact_proposal.md)
+- Score-based extraction strategy with false-positive mitigation
+- Ready for team discussion
 
-**🔄 LLM Integration In Progress** (NEW!)
-- Evaluating local RAG solutions for conversational interface
-- See [docs/LLM/](docs/LLM/) for platform comparison
-- Goal: "Talk to" the shark science knowledge base
+**✅ Journal Quality Matching** (March 2026)
+- SCImago journal data matched: 1,558 journals covering 64.7% of papers
+- Theses, book chapters, and grey literature identified and categorised separately
 
 ### Completed Phases
 
@@ -124,7 +125,7 @@ elasmo_analyses/
   - Collaboration networks (18,633 authors)
   - Geographic analysis (73 countries)
   - AI impact assessment
-  - 25+ publication-ready visualizations
+  - 25+ publication-ready visualisations
 
 - [x] **Phase 3: EEA 2025 Conference** (2025-10-30)
   - Panel session delivered
@@ -134,18 +135,22 @@ elasmo_analyses/
 ### In Progress
 
 - [ ] **Phase 4: Corpus Expansion** (2026 Q1)
-  - [**Remaining Papers to Download**](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html) - Interactive list of 3,765 papers still needed
-  - Adding 2026 publications
-  - Expanding metadata (species, ocean basin, habitat)
-  - Database integration with Sharkipedia/Megamove
+  - [**Remaining Papers to Download**](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html) — 2,559 papers remaining
+  - PDF deduplication complete (removed 4,780 duplicates, freed ~13.5 GB)
+  - Awaiting Shark-References NAS upload from Jürgen
+  - ~14,940 unique PDFs acquired to date
 
 - [ ] **Phase 5: LLM Integration** (2026 Q1-Q2)
-  - Build conversational interface
-  - Enable natural language queries
-  - Add metadata filtering
-  - Quality control: predatory publishers, paper mills, species misidentification, anecdotal evidence
+  - Stack: Qdrant + nomic-embed-text + Ollama
+  - Build conversational interface for querying corpus
+  - Quality control: predatory publishers, paper mills, species misidentification
 
-- [ ] **Phase 6: Manuscript & Public Release** (2026)
+- [ ] **Phase 6: External Integrations & Schema** (2026 Q1-Q2)
+  - Sharkipedia species/trait/trend data integration
+  - Altmetric/Dimensions social impact and grant data (pending SRAD approval)
+  - New metadata columns: ecosystem, pressure, gear, impact ([schema proposals](docs/schema_proposals/))
+
+- [ ] **Phase 7: Manuscript & Public Release** (2026)
   - Methods paper
   - Interactive web dashboard
   - Public database release
@@ -154,11 +159,20 @@ elasmo_analyses/
 
 ## Key Results
 
-### PDF Technique Extraction
+### Database Scale
 
-**Corpus:** 12,381 shark science PDFs (1950-2025)
+| Metric | Value |
+|--------|-------|
+| Papers in database | ~30,500 |
+| PDFs acquired | ~14,940 unique |
+| Remaining to acquire | 2,559 |
+| Techniques identified | 151 |
+| Disciplines | 8 |
+| Species columns | 1,308 |
+
+### PDF Technique Extraction (from initial 12,381 PDFs)
+
 **Coverage:** 9,503 papers with techniques (76.5%)
-**Techniques:** 151 unique methods identified
 
 **Discipline Distribution:**
 | Discipline | Papers | % of Corpus |
@@ -170,13 +184,51 @@ elasmo_analyses/
 | MOV (Movement) | 1,442 | 15.3% |
 | TRO (Trophic) | 1,318 | 14.0% |
 | CON (Conservation) | 858 | 9.1% |
-| BEH (Behavior) | 265 | 2.8% |
+| BEH (Behaviour) | 265 | 2.8% |
 
-**Key Findings:**
-- **Genetics dominates** - 85% of papers use genetic techniques
-- **Data Science pervasive** - 48% use statistical/ML methods
-- **Cross-cutting DATA** - 70.5% of DATA papers integrate with other disciplines
-- **STRUCTURE software** - Most common tool (7,535 papers, 80%)
+### External Integration Overlap
+
+| Source | Overlap with our DB |
+|--------|-------------------|
+| Sharkipedia species | 1,177/1,308 (90%) |
+| Sharkipedia DOIs | 201/273 (74%) |
+| Sharkipedia traits | 163 species with data |
+| SCImago journals | 1,558 matched (64.7% of papers) |
+
+---
+
+## External Integrations
+
+### Sharkipedia
+- **Status:** API pull complete (1,288 species, 8,494 trait measurements, 828 trends)
+- **Species overlap:** 90% (1,177 of our 1,308 species found in Sharkipedia)
+- **Value:** Trait data (length, age, litter size) enriches our literature database
+- See [docs/integrations/sharkipedia_integration.md](docs/integrations/sharkipedia_integration.md)
+
+### MegaMove / GSMP
+- **Status:** Assessed — data portal closed, no public API
+- **Alternative:** GSMP GitHub repos and Movebank REST API for shark tracking data
+- See [docs/integrations/megamove_integration.md](docs/integrations/megamove_integration.md)
+
+### Altmetric / Dimensions
+- **Status:** SRAD application submitted (March 2026, 30 business day review)
+- **Value:** Social impact scores, grant linkage, dataset discovery for ~30,500 DOIs
+- See [docs/integrations/altmetric_integration.md](docs/integrations/altmetric_integration.md)
+
+---
+
+## Schema Proposals
+
+Four new column categories have been proposed to enrich the database beyond techniques and species. Each uses binary columns with keyword + context matching, and includes false-positive mitigation strategies.
+
+| Category | Prefix | Columns | Proposal |
+|----------|--------|---------|----------|
+| Ecosystem Component | `eco_` | Realm, zone/habitat, depth | [ecosystem_component_proposal.md](docs/schema_proposals/ecosystem_component_proposal.md) |
+| Pressure / Threat | `pr_` | Fishing types, climate, pollution | [pressure_proposal.md](docs/schema_proposals/pressure_proposal.md) |
+| Fishing Gear | `gear_` | Gear families, modifiers, mitigation | [gear_proposal.md](docs/schema_proposals/gear_proposal.md) |
+| Impact / Response | `imp_` | Mortality, abundance, stress, etc. | [impact_proposal.md](docs/schema_proposals/impact_proposal.md) |
+
+These are drafts for team discussion — see [Issue #2](https://github.com/SimonDedman/elasmo_analyses/issues/2) for the ongoing column design conversation.
 
 ---
 
@@ -190,18 +242,13 @@ We are developing a conversational AI interface to enable researchers to query t
 
 ### Approach
 
-**Recommended stack for 13,000+ PDFs:**
+**Stack for 30,500+ papers:**
 - **Vector Database:** Qdrant (open-source, scalable)
 - **Embeddings:** nomic-embed-text (local, free)
 - **LLM:** Ollama with Llama 3.1 or Qwen2.5 (local, private)
 - **Interface:** Open WebUI or custom Gradio app
 
-**Why not Google NotebookLM?**
-- Limited to 50-300 sources per notebook
-- Cannot query across notebooks
-- Not suitable for corpus-scale analysis
-
-See [docs/LLM/notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternatives_summary.md) for full comparison.
+See [docs/LLM/notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternatives_summary.md) for platform comparison.
 
 ---
 
@@ -215,7 +262,15 @@ See [docs/LLM/notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternativ
 - **[docs/database/database_schema_design.md](docs/database/database_schema_design.md)** - Schema documentation
 - **[docs/database/extraction_complete_summary.md](docs/database/extraction_complete_summary.md)** - Extraction results
 
-### LLM Integration (NEW!)
+### External Integrations
+- **[docs/integrations/sharkipedia_integration.md](docs/integrations/sharkipedia_integration.md)** - Sharkipedia API & data overlap
+- **[docs/integrations/megamove_integration.md](docs/integrations/megamove_integration.md)** - MegaMove/GSMP tracking data
+- **[docs/integrations/altmetric_integration.md](docs/integrations/altmetric_integration.md)** - Altmetric & Dimensions
+
+### Schema Proposals
+- **[docs/schema_proposals/](docs/schema_proposals/)** - Ecosystem, pressure, gear, impact column proposals
+
+### LLM Integration
 - **[docs/LLM/llm_integration_roadmap.md](docs/LLM/llm_integration_roadmap.md)** - LLM roadmap
 - **[docs/LLM/notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternatives_summary.md)** - Platform comparison
 
@@ -295,8 +350,9 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 - Dr. Guuske Tiktak
 
 **Collaborators:**
-- David Ruiz Garcia
-- Elena Fernández Corredor
+- David Ruiz Garcia — Mediterranean fisheries; schema proposals ([Issue #2](https://github.com/SimonDedman/elasmo_analyses/issues/2))
+- David Schiffman — Citation/social media analysis; Altmetric integration
+- Elena Fernández Corredor — Mediterranean trophic literature review
 - Jürgen Pollerspöck & Nico Straube ([Shark-References](https://shark-references.com/))
 
 ---
@@ -304,12 +360,13 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 ## Acknowledgments
 
 This project builds upon:
-- **~13,000 shark science papers** by thousands of researchers worldwide (1950-2026)
-- **Shark-References database** - Comprehensive elasmobranch literature repository
-- **EEA and AES conferences** - Decades of community knowledge sharing
-- **Panel experts and contributors** - Discipline-specific insights and validation
+- **~30,500 elasmobranch papers** by thousands of researchers worldwide (1950-2026)
+- **[Shark-References](https://shark-references.com/)** — Comprehensive elasmobranch literature repository
+- **[Sharkipedia](https://sharkipedia.org/)** — Trait and trend data for elasmobranch species
+- **EEA and AES conferences** — Decades of community knowledge sharing
+- **Panel experts and contributors** — Discipline-specific insights and validation
 
 ---
 
-*Last updated: 2026-01-26*
-*Version: 2.1 - Post-EEA 2025, LLM integration phase*
+*Last updated: 2026-03-10*
+*Version: 3.0 — External integrations & schema design phase*

@@ -4,8 +4,8 @@
 
 This document provides a complete overview of the EEA 2025 Data Panel project, including current status, completed work, available tools, and next steps.
 
-**Last Updated**: 2025-10-26
-**Project Status**: ✅ Core analyses complete, ready for manuscript preparation
+**Last Updated**: 2026-03-10
+**Project Status**: External integrations & schema design phase
 
 ---
 
@@ -26,9 +26,10 @@ This document provides a complete overview of the EEA 2025 Data Panel project, i
 ## Project Summary
 
 ### Purpose
-Comprehensive review of shark research techniques and trends, covering:
-- **208 analytical techniques** across 8 disciplines
-- **4,543 papers** collected and analyzed
+Comprehensive review of elasmobranch research techniques and trends, covering:
+- **~30,500 papers** in database (~14,940 PDFs acquired, 2,559 remaining)
+- **151 unique techniques** across 8 disciplines
+- **1,308 species** binarised as wide columns
 - **73 countries** with identified research activity
 - **18,851 unique authors** from 12,105 institutions
 
@@ -50,10 +51,24 @@ Comprehensive review of shark research techniques and trends, covering:
 - Temporal trends (where publication years available)
 - Cross-discipline comparisons
 
-#### Phase 4: Manuscript Preparation 🔄
-- Visualizations complete
-- Statistics compiled
-- Ready for writing
+#### Phase 4: Corpus Expansion 🔄 (2026 Q1)
+- ~14,940 unique PDFs acquired (after deduplication)
+- 2,559 papers remaining to download
+- Awaiting Shark-References NAS upload from Jürgen
+
+#### Phase 5: LLM Integration 🔄 (2026 Q1-Q2)
+- Stack: Qdrant + nomic-embed-text + Ollama
+- Conversational interface for querying corpus
+
+#### Phase 6: External Integrations & Schema 🔄 (2026 Q1-Q2)
+- Sharkipedia: API pull complete (1,288 species, 8,494 traits)
+- Altmetric/Dimensions: SRAD application submitted
+- Schema proposals: ecosystem, pressure, gear, impact columns drafted
+
+#### Phase 7: Manuscript & Public Release
+- Methods paper
+- Interactive web dashboard
+- Public database release
 
 ---
 
@@ -674,12 +689,24 @@ docs/
 
 ### Recent Major Changes
 
+**2026-03-10:**
+- ✅ Schema proposals drafted: ecosystem (eco_), pressure (pr_), gear (gear_), impact (imp_)
+- ✅ Sharkipedia API pull: 1,288 species, 8,494 traits, 828 trends
+- ✅ MegaMove integration assessed (closed data; GSMP/Movebank alternatives)
+- ✅ Altmetric SRAD application submitted
+- ✅ SCImago journal quality matching: 1,558 journals, 64.7% paper coverage
+- ✅ Species matching: 90% overlap with Sharkipedia
+- ✅ DOI cross-reference: 74% Sharkipedia refs in our DB
+
+**2026-02-09:**
+- ✅ PDF deduplication: removed 4,780 duplicates, freed ~13.5 GB
+- ✅ Remaining downloads reduced to 2,559
+
 **2025-10-26:**
 - ✅ Expanded country extraction: 25 → 73 countries
-- ✅ Added European map visualizations
+- ✅ Added European map visualisations
 - ✅ Created discipline pie chart maps
 - ✅ Generated technique stacked bar charts
-- ✅ Fixed geographic labeling issues
 - ✅ Completed comprehensive documentation
 
 **2025-10-25:**

@@ -1,0 +1,28 @@
+Species Matching: EEA Database vs Sharkipedia
+==================================================
+
+EEA database species:            1308
+Sharkipedia species:             1310
+
+Matched (in both):               1177  (90.0% of EEA)
+EEA only (no Sharkipedia):        131  (10.0% of EEA)
+Sharkipedia only (no EEA):        133  (10.2% of Sharkipedia)
+
+Among matched species:
+  With trait data:                163  (13.8%)
+  With trend data:                159  (13.5%)
+  Total trait records:           3558
+  Total trend records:            712
+
+Trait classes available for matched species:
+  Length                           160 species
+  Reproduction                      91 species
+  Relationships                     77 species
+  Growth                            42 species
+  Age                               32 species
+  Demography                         8 species
+
+Output files:
+  species_match_both.csv             (1177 rows)
+  species_match_eea_only.csv         (131 rows)
+  species_match_sharkipedia_only.csv (133 rows)
