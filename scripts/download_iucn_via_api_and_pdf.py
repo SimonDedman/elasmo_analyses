@@ -30,8 +30,9 @@ INPUT_FILE = BASE_DIR / "outputs/iucn_species_cleaned.csv"
 OUTPUT_DIR = BASE_DIR / "outputs/SharkPapers"
 LOG_FILE = BASE_DIR / "logs/iucn_api_pdf_download_log.csv"
 
-# IUCN API
-IUCN_API_KEY = "u1kqr4aah4uyK8nMD8bRVjq4e69sDcE2o6oW"
+# IUCN API (from environment variable)
+import os
+IUCN_API_KEY = os.environ.get("IUCN_API_KEY", "")
 IUCN_API_BASE = "https://apiv3.iucnredlist.org/api/v3"
 
 # Rate limiting

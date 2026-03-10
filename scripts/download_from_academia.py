@@ -36,9 +36,10 @@ BASE_DIR = Path(__file__).parent.parent
 DATABASE_PARQUET = BASE_DIR / "outputs/literature_review.parquet"
 ACADEMIA_LOG = BASE_DIR / "logs/academia_download_log.csv"
 
-# Academia.edu credentials
-ACADEMIA_EMAIL = "simondedman@gmail.com"
-ACADEMIA_PASSWORD = "9WQ#baLNWIdJ3N3&ROf$yidscN0Oh#Ajo*N!D0KL2nSN!uEgAs"
+# Academia.edu credentials (from environment variables)
+import os
+ACADEMIA_EMAIL = os.environ.get("ACADEMIA_EMAIL", "")
+ACADEMIA_PASSWORD = os.environ.get("ACADEMIA_PASSWORD", "")
 
 # Rate limiting (be respectful!)
 DELAY_BETWEEN_REQUESTS = 3.0  # seconds

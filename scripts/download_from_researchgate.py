@@ -36,9 +36,10 @@ BASE_DIR = Path(__file__).parent.parent
 DATABASE_PARQUET = BASE_DIR / "outputs/literature_review.parquet"
 RG_LOG = BASE_DIR / "logs/researchgate_download_log.csv"
 
-# ResearchGate credentials
-RG_EMAIL = "simon.dedman@research.gmit.ie"
-RG_PASSWORD = "h5Ea^N$7V9&^FixL1VbgLbm!K8Mab^"
+# ResearchGate credentials (from environment variables)
+import os
+RG_EMAIL = os.environ.get("RG_EMAIL", "")
+RG_PASSWORD = os.environ.get("RG_PASSWORD", "")
 
 # Rate limiting (be respectful!)
 DELAY_BETWEEN_REQUESTS = 3.0  # seconds
