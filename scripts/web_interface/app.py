@@ -27,7 +27,7 @@ DB_PATH = BASE_DIR / "database" / "download_tracker.db"
 app = Flask(__name__,
             template_folder='templates',
             static_folder='static')
-app.config['SECRET_KEY'] = 'eea-data-panel-2025'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', os.urandom(24).hex())
 
 
 def get_db():
