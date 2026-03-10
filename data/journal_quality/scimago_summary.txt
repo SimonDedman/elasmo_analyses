@@ -1,0 +1,85 @@
+SCImago Journal Matching Summary
+============================================================
+
+Total unique journals in database:     4,835
+Book chapters (filtered out):          560 (2,394 papers)
+Theses / dissertations (filtered out): 116 (263 papers)
+Grey literature (filtered out):        29 (104 papers)
+
+Matched to SCImago:                    1,558 (37.7%)
+  - Exact matches:                     1,262
+  - Alias matches:                     17
+  - Substring matches:                 23
+  - Fuzzy matches (>=0.85):            256
+Unmatched (excl. filtered):            2,572 (62.3%)
+
+Total papers in database:              30,440
+Papers with matched journals:          19,709 (64.7%)
+Papers with unmatched journals:        7,970 (26.2%)
+Papers in book chapters:               2,394 (7.9%)
+Papers in theses:                      263 (0.9%)
+Papers in grey literature:             104 (0.3%)
+
+SJR Score (matched journals)
+------------------------------------------------------------
+  Mean:   0.853
+  Median: 0.610
+
+Quartile Distribution (matched journals)
+------------------------------------------------------------
+         -:      9 journals  (    35 papers)
+        Q1:    642 journals  ( 9,272 papers)
+        Q2:    439 journals  ( 5,932 papers)
+        Q3:    285 journals  ( 3,103 papers)
+        Q4:    183 journals  ( 1,367 papers)
+
+Open Access Distribution (matched journals)
+------------------------------------------------------------
+            No:  1,002 journals
+           Yes:    556 journals
+
+Top 20 Matched Journals (by paper count)
+------------------------------------------------------------
+    867   Q2  SJR   0.641  Journal of Fish Biology
+    464   Q2  SJR   0.508  Environmental Biology of Fishes
+    349   Q2  SJR   0.515  Marine and Freshwater Research
+    344   Q1  SJR   0.834  Fisheries Research
+    335   Q1  SJR   0.803  PLoS ONE
+    330   Q1  SJR   0.804  Marine Ecology Progress Series
+    280   Q1  SJR   0.587  Copeia  [via alias]
+    267   Q2  SJR   0.480  Zootaxa
+    264   Q1  SJR   0.651  Journal of Vertebrate Paleontology
+    258   Q1  SJR   0.677  Marine Biology
+    250   Q1  SJR   0.931  Frontiers in Marine Science
+    246   Q3  SJR   0.355  Journal of the Marine Biological Association of the United Kingdom
+    221   Q1  SJR   0.931  Journal of Experimental Biology
+    217   Q3  SJR   0.397  Journal of Parasitology
+    210   Q1  SJR   0.618  Comparative Biochemistry and Physiology – Part A  [via alias]
+    197   Q3  SJR   0.302  Fishery Bulletin
+    182   Q1  SJR   0.569  General and Comparative Endocrinology
+    181   Q1  SJR   0.874  Scientific Reports
+    179   Q3  SJR   0.364  Systematic Parasitology
+    176   Q1  SJR   1.402  Marine Pollution Bulletin
+
+Top 20 Unmatched Journals (by paper count)
+------------------------------------------------------------
+   1084  IUCN  -> Icon (0.750)
+    663  American Elasmobranch Society  -> American Behavioral Scientist (0.690)
+    168  Report of Japanese Society for Elasmobranch Studies  -> Journal of Japanese Dental Society of Anesthesiology (0.583)
+    143  World Congress of Herpetology  -> World Journal of Hepatology (0.750)
+    128  Marine Fisheries Information Service  -> Marine Fisheries Review (0.746)
+     79  Biologia Marina Mediterranea  -> Archaeologia Maritima Mediterranea (0.806)
+     63  CSIRO Marine and Atmospheric Research Paper  -> Ocean-Land-Atmosphere Research (0.657)
+     57  New Mexico Museum of Natural History and Science  -> Bulletin of the American Museum of Natural History (0.673)
+     56  Transactions of the Kansas Academy of Science  -> Annals of the New York Academy of Sciences (0.736)
+     46  Het Zeepaard  -> Health Affairs (0.538)
+     42  Arquivos de Ciências do Mar  -> Archivos de Neurociencias (0.692)
+     35  ICES CM Documents  -> Studia et Documenta (0.611)
+     34  Journal of the Fisheries Research Board of Canada  -> Journal of the Operations Research Society of China (0.740)
+     31  Bulletin de l'Institut Royal des Sciences Naturelles de Belgique  -> Bulletin de la Societe Royale des Sciences de Liege (0.719)
+     30  Rivista di Parassitologia  -> Rivista di Archeologia (0.808)
+     30  Palaeontographica  -> Cartographica (0.733)
+     30  Florida Scientist  -> Florida Entomologist (0.757)
+     29  Ichthyolith Issues  -> Oncology Issues (0.606)
+     27  Arbeitskreis Paläontologie Hannover  -> Acta Palaeontologica Romaniae (0.594)
+     27  Physiological and Biochemical Zoology  -> Physiological Entomology (0.721)

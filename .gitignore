@@ -131,6 +131,14 @@ TODO.md
 # Backups folder
 backups/
 
+# Sharkipedia raw API cache (33MB of JSON; processed CSVs are tracked instead)
+data/sharkipedia/api_pull/raw_pages/
+data/sharkipedia/api_pull/raw_species/
+data/sharkipedia/api_pull/species_all.json
+
+# SCImago source data (large, must be downloaded manually from scimagojr.com)
+data/journal_quality/scimagojr.csv
+
 # Archive folder (track for historical reference)
 !docs/archive/
 docs/archive/*

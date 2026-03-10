@@ -1,0 +1,320 @@
+Sharkipedia ↔ EEA Technique Taxonomy Mapping Summary
+=======================================================
+
+Input counts:
+  Sharkipedia unique methods : 20
+  Sharkipedia unique models  : 12
+  Total Sharkipedia items    : 32
+  EEA techniques (SQLite)    : 151
+  EEA techniques (DuckDB cols): 215
+  EEA techniques (merged)    : 274
+
+Match results (Sharkipedia → EEA):
+  Exact matches  : 0
+  Fuzzy matches  : 9  (threshold ≥ 0.6)
+  No match       : 23
+  Coverage       : 9/32 (28%)
+
+Matched Sharkipedia items:
+  Captive observation                           → Reproductive observations                 (fuzzy, 0.773)
+  Histological observation                      → Behavioural Observation                   (fuzzy, 0.723)
+  Length-Frequency                              → Length Frequency Analysis                 (fuzzy, 0.78)
+  Macroscopic observation                       → Drone Observation                         (fuzzy, 0.7)
+  Mark-Recapture                                → Close Kin Mark Recapture                  (fuzzy, 0.737)
+  Spines                                        → SNPs                                      (fuzzy, 0.6)
+  Vertebrae                                     → Vertebral Sectioning                      (fuzzy, 0.621)
+  Length-Length                                 → Length Based Methods                      (fuzzy, 0.606)
+  Observational                                 → Drone Observation                         (fuzzy, 0.733)
+
+Unmatched Sharkipedia items (no EEA equivalent):
+  Back calculated
+  Derived
+  Directly observed
+  Empirical
+  Free + Embryo
+  L95 (95th percentile of size distribution observed)
+  Largest embryo
+  Macroscopic dissection
+  Max observed size
+  Modeled
+  Proportion gravid females
+  Smallest free swimming individual
+  Vertebrae - Spine - Tooth Plate
+  Back calculated
+  Directly from growth curves
+  Fabens
+  Generation length calculation
+  Gomp ML
+  Length-Weight
+  Logistic
+  Other
+  VBFG2 ML
+  VBFG3 ML
+
+EEA techniques with no Sharkipedia match (266 of 274):
+  ADMIXTURE
+  AKDE
+  AMSY
+  ARIMA
+  Accelerometry
+  Acoustic Telemetry
+  Admixture
+  Age & Growth
+  Age Structured Models
+  Age-Structured Models
+  Akde
+  Ancient DNA
+  Ancient Dna
+  Animal Borne Cameras
+  Approximate Bayesian Computation
+  Archival Tags
+  Arima
+  BORIS
+  Bayesian Methods
+  Bayesian Network Analysis
+  Blood Chemistry
+  Body Measurements
+  Bomb Radiocarbon Dating
+  Boosted Regression Trees
+  Boosted Regression Trees Sdm
+  Boris
+  Brownian Bridge
+  Brownian Bridge Movement Model
+  Bycatch Assessment
+  CPUE Standardization
+  Captive Breeding
+  Catch Curve Analysis
+  Catch Data Analysis
+  Catch Msy
+  Catch-MSY
+  Citizen Science
+  Close-Kin Mark-Recapture
+  Co Management
+  Cognition
+  Cognitive Testing
+  Comparative Genomics
+  Computer Vision
+  Connectivity
+  Conservation Genetics
+  Contingent Valuation
+  Convolutional Neural Networks
+  Cpue Standardization
+  Critical Habitat
+  Cross Validation
+  Cross-Validation
+  Ct Imaging
+  DAPC
+  DNA Barcoding
+  DNA Forensics
+  DNA Metabarcoding
+  Dapc
+  Data Fusion
+  Data Integration
+  Data Poor Assessment
+  Data-Poor Assessment
+  Ddpcr Edna
+  Deep Learning
+  Delay Difference Models
+  Delay-Difference Models
+  Depletion Methods
+  Diet Analysis
+  Discard Mortality
+  Distance Sampling
+  Dna Barcoding
+  Dna Forensics
+  Dna Metabarcoding
+  Dominance Hierarchy
+  Dominance hierarchy
+  Dynamic Energy Budget
+  Ecosystem Models
+  Ecosystem Roles
+  Edna
+  Edna Metabarcoding
+  Education & Outreach
+  Electroreception
+  Energy Flow
+  Ensemble Learning
+  Ensemble Models
+  Ethogram Development
+  Extinction Risk Models
+  FST Analysis
+  Fatty Acid Analysis
+  Fecundity Estimation
+  Fin Trade Analysis
+  Fisher Interviews
+  Focal Sampling
+  Food Web Models
+  Foraging Behavior
+  Fst Analysis
+  GAM
+  GAMM
+  GLM
+  Gam Cpue Standardization
+  Gam Sdm
+  Gamm
+  Generalized Estimating Equations
+  Genetic Relatedness
+  Genetic relatedness
+  Genome Assembly
+  Genome Skimming
+  Genomics
+  Glm Cpue Standardization
+  Glm Sdm
+  Glm/Gam
+  Growth Curve Modeling
+  Habitat Modeling
+  Health & Disease
+  Health Indices
+  Hidden Markov Models
+  Hierarchical Models
+  Home Range Analysis
+  Human Dimensions
+  INLA
+  IUCN Red List Assessment
+  Inla
+  Integrated Models
+  IsoSpace
+  Isospace
+  Iucn Criteria Application
+  Iucn Red List Assessment
+  Joint Species Distribution Model
+  Kernel Density Estimation
+  LAMP
+  LBB
+  LBSPR
+  LIME
+  Lamp
+  Lbspr
+  Learning Experiments
+  Legislation Analysis
+  Length-Based Methods
+  Length-Converted Catch Curves
+  Length-Frequency Analysis
+  Life History Invariant Methods
+  Lime
+  MPA Design
+  MPA Effectiveness
+  Machine Learning
+  Magnetoreception
+  Markov Chain Monte Carlo
+  Marxan
+  Maturity Ogive
+  MaxEnt
+  Maxent
+  Mean-position algorithm
+  Meta Analysis
+  Meta-Analysis
+  Metabarcoding
+  Metabolic Rate
+  Microsatellites
+  Mini Barcoding
+  Mini-Barcoding
+  Minimum Convex Polygon
+  Morphology
+  Morphometrics
+  Movement Modeling
+  Mpa Design
+  Mpa Effectiveness
+  Mtdna
+  Multi Species Models
+  Multispecies Models
+  N Mixture Models
+  N-Mixture Models
+  NMDS
+  Natural Mortality Estimators
+  Network Analysis
+  Network Analysis Food Web
+  Network Analysis Spatial
+  Neural Network Sdm
+  Neural Networks
+  Niche Partitioning
+  Nirs Ageing
+  Nmds
+  Observer Coverage Analysis
+  Olfaction
+  Operant Conditioning
+  Optimal Foraging Theory
+  Osmoregulation
+  Parasitology
+  Pca Genetics
+  Permanova
+  Photo Id
+  Phylogenetics
+  Physiology
+  Policy Evaluation
+  Policy Impact Evaluation
+  Population Genetics
+  Post Release Mortality
+  Post Release Survival
+  Post-Release Mortality
+  Post-Release Survival
+  Predation Behavior
+  Prey Selection
+  Qpcr Edna
+  Rad Seq
+  Random Forest
+  Random Forest Cpue
+  Random Forest Sdm
+  Rapid Dna Technology
+  Refined shortest paths
+  Reproduction
+  Reproductive Endocrinology
+  Reproductive Histology
+  Reproductive Observations
+  Residence Indices
+  Residence Time Analysis
+  Resource Selection Functions
+  Respirometry
+  Rna Seq
+  SARIMA
+  SIAR
+  STRUCTURE
+  Sarima
+  Satellite Tracking
+  Scan Sampling
+  Sensory Biology
+  Siar
+  Snps
+  Social Network Analysis
+  Socioeconomic Analysis
+  Spatial Prioritization
+  Spawning Stock Biomass Per Recruit
+  Spawning Stock Biomass per Recruit
+  Species Distribution Model
+  Stable Isotope Analysis
+  Stakeholder Engagement
+  State Space Models
+  State-Space Models
+  Statistical Catch At Age
+  Statistical Catch-at-Age
+  Step Selection Functions
+  Stock Assessment
+  Stock Synthesis
+  Stomach Content Analysis
+  Stress Physiology
+  Structural Equation Modeling
+  Structure
+  Support Vector Machines
+  Surplus Production Models
+  Telomere Analysis
+  Thermal Biology
+  Time Series
+  Tourism
+  Tourism Impact Assessment
+  Trade & Markets
+  Transcriptomics
+  Trophic Level Estimation
+  Trophic Position Calculation
+  Ultrasound
+  Video Analysis
+  Virtual Population Analysis
+  Vision
+  Vps Positioning
+  Vulnerability Assessment
+  Whole Genome Sequencing
+  Whole Genome Sequencing Field
+  Yield Per Recruit
+  Yield per Recruit
+  eDNA
+  eDNA Metabarcoding
+  mtDNA
