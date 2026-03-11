@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Schema Extraction Logic</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Schema Extraction Logic</h1>
+</header>
+<h1 id="schema-extraction-logic">Schema Extraction Logic</h1>
+<p><em>Technical documentation for
+<code>scripts/extract_schema_columns.py</code></em></p>
+<p><em>Last updated: 2026-03-10</em></p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>Single-pass extraction pipeline that processes ~30,500 elasmobranch
+papers, extracting ecosystem, pressure, gear, and impact metadata using
+keyword matching with context-aware scoring. Produces binary columns
+(0/1) plus a separate evidence table for team validation.</p>
+<p><strong>Key principle:</strong> Every classification decision is
+traceable. The evidence table records which terms matched, which anchors
+fired, and a context snippet — so the team can audit and refine without
+re-running the full pipeline.</p>
+<hr />
+<h2 id="architecture">Architecture</h2>
+<pre><code>literature_review.parquet          SharkPapers/YYYY/*.pdf
+        │                                    │
+        ▼                                    ▼
+   ┌─────────┐                        ┌──────────────┐
+   │ Paper    │───── author+year ────▶│ PDF Index     │
+   │ metadata │      lookup           │ (normalised)  │
+   └─────────┘                        └──────────────┘
+        │                                    │
+        ▼                                    ▼
+   ┌──────────────────────────────────────────────┐
+   │              process_paper()                  │
+   │  1. Resolve PDF → extract text (pdftotext)   │
+   │  2. Strip non-body sections                   │
+   │  3. Match all 4 schemas simultaneously        │
+   │  4. Extract depth, target species, direction  │
+   │  5. Record evidence for every match           │
+   └──────────────────────────────────────────────┘
+        │                    │
+        ▼                    ▼
+  literature_review     schema_extraction
+  _enriched.parquet     _evidence.csv
+  (~85 new columns)     (~250K rows)</code></pre>
+<h3 id="files">Files</h3>
+<table>
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>outputs/literature_review.parquet</code></td>
+<td>Input: ~30,500 papers × 1,546 columns</td>
+</tr>
+<tr class="even">
+<td><code>outputs/literature_review_enriched.parquet</code></td>
+<td>Output: original + ~85 new columns</td>
+</tr>
+<tr class="odd">
+<td><code>outputs/schema_extraction_evidence.csv</code></td>
+<td>Evidence: one row per (paper, column) match</td>
+</tr>
+<tr class="even">
+<td><code>outputs/.schema_extraction_progress.json</code></td>
+<td>Checkpoint for resume capability</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="pdf-matching-strategy">PDF Matching Strategy</h2>
+<h3 id="primary-author-year-lookup">Primary: Author-year lookup</h3>
+<ol type="1">
+<li>Build index from <code>SharkPapers/YYYY/*.pdf</code> directory
+structure</li>
+<li>Extract first author surname from parquet <code>authors</code>
+field</li>
+<li><strong>Normalise names</strong> — critical for matching across
+inconsistent transliterations:
+<ul>
+<li>NFD decomposition strips accents: “Araújo” → “araujo”</li>
+<li>Remove hyphens: “Abd-Elhameed” → “abdelhameed”</li>
+<li>Remove apostrophes: “O’Brien” → “obrien”</li>
+<li>Lowercase, strip spaces</li>
+</ul></li>
+<li>Look up <code>(normalised_surname, year_int)</code> in index</li>
+</ol>
+<h3 id="collision-disambiguation">Collision disambiguation</h3>
+<p>~13.7% of (author, year) keys map to multiple PDFs. Resolved by
+<strong>title-word matching</strong>:</p>
+<ul>
+<li>Extract content words from the parquet title (stop words
+removed)</li>
+<li>Extract content words from each candidate PDF filename</li>
+<li>Pick the candidate with the most overlapping words</li>
+<li>Fall back to first candidate if no title available</li>
+</ul>
+<h3 id="match-rates-validated-on-200-paper-sample-20152022">Match rates
+(validated on 200-paper sample, 2015–2022)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>Count</th>
+<th>Percentage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PDF + title/abstract</td>
+<td>161</td>
+<td>80.5%</td>
+</tr>
+<tr class="even">
+<td>Title/abstract only</td>
+<td>39</td>
+<td>19.5%</td>
+</tr>
+</tbody>
+</table>
+<p>The 80.5% rate reflects actual PDF availability for these years.
+Overall PDF coverage across the full corpus is 48.7%
+(14,876/30,553).</p>
+<h3 id="planned-doi-based-lookup">Planned: DOI-based lookup</h3>
+<p>99.9% of papers have DOIs. A DOI-primary lookup will be added to
+match against legacy <code>{literature_id}.0_{DOI_escaped}.pdf</code>
+filenames, which should push match rates close to the 48.7% ceiling for
+all years.</p>
+<hr />
+<h2 id="text-extraction-cleaning">Text Extraction &amp; Cleaning</h2>
+<h3 id="pdf-to-text">PDF to text</h3>
+<ul>
+<li><code>pdftotext</code> subprocess with 10-second timeout</li>
+<li>500 KB text cap (truncates very large documents)</li>
+<li>Falls back to title + abstract if PDF extraction fails</li>
+</ul>
+<h3 id="section-stripping-false-positive-mitigation">Section stripping
+(false-positive mitigation)</h3>
+<p><strong>This is the single most important quality step.</strong>
+Without it, author names in headers, journal titles in references, and
+institution names in affiliations all inflate false-positive rates
+significantly.</p>
+<p><strong>Sections removed:</strong></p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 44%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Section</th>
+<th>What it catches</th>
+<th>Detection</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Front matter</strong> (before Abstract)</td>
+<td>Author names (“Rivera” → eco_freshwater), journal metadata, editor
+names, affiliations</td>
+<td>First line matching <code>ABSTRACT</code>, <code>Abstract</code>,
+<code>INTRODUCTION</code>, <code>Introduction</code>,
+<code>SUMMARY</code>, <code>Summary</code></td>
+</tr>
+<tr class="even">
+<td><strong>References</strong> (and everything after)</td>
+<td>Journal titles (“Marine Pollution Bulletin” →
+pr_pollution_chemical), geographic places in cited titles, author
+surnames</td>
+<td>Standalone line: <code>REFERENCES</code>, <code>Bibliography</code>,
+<code>LITERATURE CITED</code>, <code>WORKS CITED</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Acknowledgements block</strong></td>
+<td>Funder names (“Marine Conservation Society” → eco_marine),
+institution names</td>
+<td>Standalone line: <code>ACKNOWLEDGEMENTS</code>,
+<code>FUNDING</code>, <code>AUTHOR CONTRIBUTIONS</code>,
+<code>DATA AVAILABILITY</code>, <code>CONFLICT OF INTEREST</code> — only
+if in last 30% of text</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Measured impact</strong> (200-paper sample, before → after
+stripping):</p>
+<ul>
+<li><code>pr_pollution_chemical</code>: 3–8 percentage point
+reduction</li>
+<li><code>eco_freshwater</code>: ~4 pp reduction (author name “Rivera”
+eliminated)</li>
+<li>Most columns: 2–5 pp reduction in false positives</li>
+<li>No meaningful reduction in true positives (body text
+unaffected)</li>
+</ul>
+<hr />
+<h2 id="keyword-matching-engine">Keyword Matching Engine</h2>
+<h3 id="term-types">Term types</h3>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 22%" />
+<col style="width: 25%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Syntax</th>
+<th>Example</th>
+<th>Compiles to</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Plain keyword</td>
+<td><code>marine</code></td>
+<td>Whole-word match</td>
+<td><code>\bmarine\b</code></td>
+</tr>
+<tr class="even">
+<td>Wildcard</td>
+<td><code>fish*</code></td>
+<td>Prefix match</td>
+<td><code>\bfish\w*</code></td>
+</tr>
+<tr class="odd">
+<td>Phrase</td>
+<td><code>coral reef</code></td>
+<td>Adjacent words</td>
+<td><code>\bcoral\ reef\b</code></td>
+</tr>
+<tr class="even">
+<td>AND logic</td>
+<td><code>(acidification AND pH)</code></td>
+<td>Both present anywhere</td>
+<td>Two separate regex checks</td>
+</tr>
+<tr class="odd">
+<td>Raw regex</td>
+<td><code>Ne\b</code></td>
+<td>Pass-through</td>
+<td><code>Ne\b</code> (effective population size)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schema-categories">Schema categories</h3>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 27%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Prefix</th>
+<th>Columns</th>
+<th>Matching mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ecosystem</td>
+<td><code>eco_</code></td>
+<td>20</td>
+<td>Simple binary</td>
+<td>Any term match → 1</td>
+</tr>
+<tr class="even">
+<td>Pressure</td>
+<td><code>pr_</code></td>
+<td>23</td>
+<td>Simple binary</td>
+<td>Any term match → 1</td>
+</tr>
+<tr class="odd">
+<td>Gear</td>
+<td><code>gear_</code></td>
+<td>18</td>
+<td>Simple binary</td>
+<td>Any term match → 1</td>
+</tr>
+<tr class="even">
+<td>Impact</td>
+<td><code>imp_</code></td>
+<td>17</td>
+<td>Score-based + anchors</td>
+<td>Requires confidence threshold</td>
+</tr>
+</tbody>
+</table>
+<h3 id="score-based-matching-impact-columns">Score-based matching
+(impact columns)</h3>
+<p>Impact terms are often ambiguous in isolation (“abundance” appears in
+many non-impact contexts). The scoring system requires co-occurrence of
+multiple signals:</p>
+<ol type="1">
+<li>Count matching <strong>terms</strong> (e.g., “abundance”,
+“population size”)</li>
+<li>Count matching <strong>anchors</strong> (e.g., “population”,
+“decline”, “trend”)</li>
+<li><strong>Score</strong> = terms fired + anchors fired</li>
+</ol>
+<p><strong>Decision rules:</strong></p>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 26%" />
+<col style="width: 36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Condition</th>
+<th>Binary</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Anchors defined, none fire</td>
+<td>0</td>
+<td>Ambiguous term without supporting context</td>
+</tr>
+<tr class="even">
+<td>Score ≥ 2</td>
+<td>1</td>
+<td>Confident: multiple co-occurring signals</td>
+</tr>
+<tr class="odd">
+<td>Score = 1</td>
+<td>0</td>
+<td>Insufficient evidence (recorded for review)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Worked example — <code>imp_abundance</code>:</strong></p>
+<ul>
+<li><strong>Terms:</strong> “abundance”, “population size”, “population
+decline”, “population trend”</li>
+<li><strong>Anchors:</strong> “population”, “decline”, “increase”,
+“change”, “trend”, “status”</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 24%" />
+<col style="width: 28%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scenario</th>
+<th>Terms fired</th>
+<th>Anchors fired</th>
+<th>Score</th>
+<th>Binary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Paper mentions only “abundance”</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Paper mentions “abundance” + “population” + “decline”</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Paper mentions “population decline” + “population trend”</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>In all cases, the evidence table records the matched terms and
+anchors, enabling review of borderline (score=1) cases.</p>
+<hr />
+<h2 id="false-positive-mitigations">False-Positive Mitigations</h2>
+<table>
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 22%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problem identified</th>
+<th>Root cause</th>
+<th>Solution applied</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Author “Rivera” → <code>eco_freshwater</code></td>
+<td>Standalone “river” matched surnames</td>
+<td>Removed “river”; use compounds: “river shark”, “river system”,
+“riverine”</td>
+</tr>
+<tr class="even">
+<td>“surface area” → <code>eco_epipelagic</code></td>
+<td>Standalone “surface” too broad</td>
+<td>Changed to “surface waters”, “surface layer”</td>
+</tr>
+<tr class="odd">
+<td>“Marine Pollution Bulletin” in refs →
+<code>pr_pollution_chemical</code></td>
+<td>Journal titles in reference lists</td>
+<td>Section stripping removes references before matching</td>
+</tr>
+<tr class="even">
+<td>“abundance” in any ecology context → <code>imp_abundance</code></td>
+<td>Common ecological term</td>
+<td>Require anchor co-occurrence (“population”, “decline”, “trend”)</td>
+</tr>
+<tr class="odd">
+<td>Parasitology papers → <code>pr_disease</code></td>
+<td>“parasite”, “infection” are disease terms</td>
+<td><strong>No change needed</strong> — parasitology IS disease/health
+research</td>
+</tr>
+<tr class="even">
+<td>“MPA” in address → <code>gear_mit_time_area</code></td>
+<td>Institutional abbreviations</td>
+<td>Section stripping removes front matter/affiliations</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="evidence-table">Evidence Table</h2>
+<h3 id="purpose">Purpose</h3>
+<p>Enables team validation of extraction results without doubling the
+column count in the main database. Each row records <em>why</em> a paper
+matched a particular column, providing an audit trail for every
+classification decision.</p>
+<h3 id="structure">Structure</h3>
+<table>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 22%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>literature_id</code></td>
+<td>string</td>
+<td>Links to main database</td>
+</tr>
+<tr class="even">
+<td><code>column</code></td>
+<td>string</td>
+<td>Schema column name (e.g., <code>eco_marine</code>,
+<code>imp_abundance</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>binary</code></td>
+<td>int</td>
+<td>Final 0/1 classification</td>
+</tr>
+<tr class="even">
+<td><code>score</code></td>
+<td>int</td>
+<td>Term + anchor count</td>
+</tr>
+<tr class="odd">
+<td><code>matched_terms</code></td>
+<td>string</td>
+<td>Semicolon-separated list of search terms that fired</td>
+</tr>
+<tr class="even">
+<td><code>matched_anchors</code></td>
+<td>string</td>
+<td>Semicolon-separated list of anchor terms that fired (impact
+only)</td>
+</tr>
+<tr class="odd">
+<td><code>context</code></td>
+<td>string</td>
+<td>~160-character text snippet around first match</td>
+</tr>
+</tbody>
+</table>
+<h3 id="which-columns-need-evidence">Which columns need evidence</h3>
+<ul>
+<li><strong>eco_, pr_, gear_, imp_</strong> — all produce evidence
+(ambiguous terms, potential false positives)</li>
+<li><strong>Species columns (sp_)</strong> — do NOT need evidence
+(unambiguous binomial name matches)</li>
+<li><strong>Discipline columns (d_)</strong> — already exist, not
+extracted here</li>
+</ul>
+<h3 id="scale">Scale</h3>
+<ul>
+<li>~8 evidence rows per paper on average</li>
+<li>~250,000 rows at full corpus scale</li>
+<li>Manageable in R/dplyr, Excel, or any data tool</li>
+</ul>
+<h3 id="validation-workflow">Validation workflow</h3>
+<ol type="1">
+<li>Load evidence CSV into R or Excel</li>
+<li>Filter to a specific column (e.g.,
+<code>pr_pollution_chemical</code>)</li>
+<li>Review <code>context</code> snippets — quickly spot false
+positives</li>
+<li>Sort by <code>score</code> to find borderline cases (score=1,
+binary=0)</li>
+<li>Discuss with team; adjust terms, thresholds, or anchors in schema
+definitions</li>
+<li>Re-run extraction (<code>--resume</code> skips unchanged
+papers)</li>
+</ol>
+<hr />
+<h2 id="additional-extracted-metadata">Additional Extracted
+Metadata</h2>
+<h3 id="depth-extraction">Depth extraction</h3>
+<p>Regex-based extraction of depth ranges mentioned in the text:</p>
+<ul>
+<li><strong>Range patterns:</strong> “0–200 m”, “depths of 150 m to 300
+m”</li>
+<li><strong>Single values:</strong> “depth of 500 m”, “&gt;200 m”</li>
+<li><strong>Output:</strong> <code>depth_range</code> (text),
+<code>depth_min_m</code> (float), <code>depth_max_m</code> (float)</li>
+</ul>
+<h3 id="ecosystem-guesses">Ecosystem guesses</h3>
+<p>Hierarchical best-guess columns derived from binary results:</p>
+<table>
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 30%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Level</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>eco_1_guess</code></td>
+<td>Realm</td>
+<td>marine, freshwater, brackish/estuarine</td>
+</tr>
+<tr class="even">
+<td><code>eco_2_guess</code></td>
+<td>Zone</td>
+<td>pelagic, coastal, demersal/benthic, reef, deep-water, intertidal,
+mangrove, seagrass, kelp, polar, riverine, nursery, pupping</td>
+</tr>
+<tr class="odd">
+<td><code>eco_3_guess</code></td>
+<td>Depth zone</td>
+<td>epipelagic, mesopelagic, bathypelagic, abyssal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gear-target-species">Gear target species</h3>
+<p>Regex extraction of target species/groups from gear context (e.g.,
+“tuna longline” → “tuna”).</p>
+<h3 id="impact-direction-and-quantification">Impact direction and
+quantification</h3>
+<table>
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 22%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>imp_direction</code></td>
+<td>text</td>
+<td>Sentiment of negative vs positive cues: “negative”, “positive”,
+“mixed”, “not stated”</td>
+</tr>
+<tr class="even">
+<td><code>imp_quantified</code></td>
+<td>boolean</td>
+<td>Whether paper provides quantitative measures (%, p-values, CIs)</td>
+</tr>
+<tr class="odd">
+<td><code>imp_confidence</code></td>
+<td>JSON</td>
+<td>Per-column scores for transparency (e.g.,
+<code>{"imp_abundance": 3}</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="runtime-performance">Runtime &amp; Performance</h2>
+<h3 id="processing-model">Processing model</h3>
+<ul>
+<li><strong>Single-pass:</strong> each paper’s PDF extracted once, all 4
+schemas matched simultaneously</li>
+<li><strong>Multiprocessing:</strong> <code>Pool</code> with
+<code>imap_unordered</code> for parallel paper processing</li>
+<li><strong>Checkpointing:</strong> progress saved every 500 papers
+(configurable) for resume capability</li>
+</ul>
+<h3 id="benchmarks">Benchmarks</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Configuration</th>
+<th>Time</th>
+<th>Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>200 papers, 1 worker</td>
+<td>52 seconds</td>
+<td>3.8 papers/sec</td>
+</tr>
+<tr class="even">
+<td>30,500 papers, 11 workers (est.)</td>
+<td>25–40 minutes</td>
+<td>~15 papers/sec</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Bottleneck:</strong> PDF text extraction (pdftotext I/O), not
+regex matching.</p>
+<hr />
+<h2 id="usage">Usage</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dry run: process 200 papers, print results, write nothing</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/extract_schema_columns.py <span class="at">--dry-run</span> 200</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Custom input file (e.g., test sample)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/extract_schema_columns.py <span class="at">--input</span> /tmp/test_sample.parquet <span class="at">--dry-run</span> 200</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Full run with 11 workers</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/extract_schema_columns.py <span class="at">--workers</span> 11</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Resume interrupted run</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> scripts/extract_schema_columns.py <span class="at">--workers</span> 11 <span class="at">--resume</span></span></code></pre></div>
+<hr />
+<h2 id="initial-validation-results">Initial Validation Results</h2>
+<p><em>200-paper dry run, 2015–2022 sample</em></p>
+<h3 id="hit-rates">Hit rates</h3>
+<p><strong>Ecosystem (eco_):</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Hits</th>
+<th>Rate</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>eco_marine</td>
+<td>166</td>
+<td>83.0%</td>
+<td>Expected — elasmobranch papers</td>
+</tr>
+<tr class="even">
+<td>eco_coastal</td>
+<td>102</td>
+<td>51.0%</td>
+<td>Reasonable — many nearshore studies</td>
+</tr>
+<tr class="odd">
+<td>eco_pelagic</td>
+<td>81</td>
+<td>40.5%</td>
+<td>Open-ocean species well-represented</td>
+</tr>
+<tr class="even">
+<td>eco_freshwater</td>
+<td>56</td>
+<td>28.0%</td>
+<td>Includes estuarine (post cleanup)</td>
+</tr>
+<tr class="odd">
+<td>eco_demersal</td>
+<td>58</td>
+<td>29.0%</td>
+<td>Benthic species common</td>
+</tr>
+<tr class="even">
+<td>eco_deepwater</td>
+<td>24</td>
+<td>12.0%</td>
+<td>Deep-sea elasmobranchs</td>
+</tr>
+<tr class="odd">
+<td>eco_nursery</td>
+<td>18</td>
+<td>9.0%</td>
+<td>Nursery habitat studies</td>
+</tr>
+<tr class="even">
+<td>eco_polar</td>
+<td>16</td>
+<td>8.0%</td>
+<td>Arctic/Antarctic studies</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pressure (pr_):</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Hits</th>
+<th>Rate</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pr_fishing_commercial</td>
+<td>59</td>
+<td>29.5%</td>
+<td>Major threat — expected</td>
+</tr>
+<tr class="even">
+<td>pr_bycatch</td>
+<td>57</td>
+<td>28.5%</td>
+<td>Major threat — expected</td>
+</tr>
+<tr class="odd">
+<td>pr_fishing_recreational</td>
+<td>44</td>
+<td>22.0%</td>
+<td>Game fishing well-studied</td>
+</tr>
+<tr class="even">
+<td>pr_disease</td>
+<td>29</td>
+<td>14.5%</td>
+<td>Parasitology + health studies</td>
+</tr>
+<tr class="odd">
+<td>pr_pollution_chemical</td>
+<td>22</td>
+<td>11.0%</td>
+<td>Contaminant studies</td>
+</tr>
+<tr class="even">
+<td>pr_climate_change</td>
+<td>19</td>
+<td>9.5%</td>
+<td>Growing field</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gear (gear_):</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Hits</th>
+<th>Rate</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gear_trawl</td>
+<td>30</td>
+<td>15.0%</td>
+<td>Common survey/fishery gear</td>
+</tr>
+<tr class="even">
+<td>gear_longline</td>
+<td>25</td>
+<td>12.5%</td>
+<td>Major pelagic gear</td>
+</tr>
+<tr class="odd">
+<td>gear_artisanal</td>
+<td>25</td>
+<td>12.5%</td>
+<td>Small-scale fisheries</td>
+</tr>
+<tr class="even">
+<td>gear_gillnet</td>
+<td>18</td>
+<td>9.0%</td>
+<td>Common coastal gear</td>
+</tr>
+<tr class="odd">
+<td>gear_survey</td>
+<td>18</td>
+<td>9.0%</td>
+<td>Research vessels, BRUVs, ROV</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact (imp_):</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Hits</th>
+<th>Rate</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>imp_abundance</td>
+<td>75</td>
+<td>37.5%</td>
+<td>Score-based, requires anchors</td>
+</tr>
+<tr class="even">
+<td>imp_genetic</td>
+<td>14</td>
+<td>7.0%</td>
+<td>Population genetics studies</td>
+</tr>
+<tr class="odd">
+<td>imp_cpue</td>
+<td>6</td>
+<td>3.0%</td>
+<td>Fisheries-focused papers</td>
+</tr>
+<tr class="even">
+<td>imp_mortality</td>
+<td>5</td>
+<td>2.5%</td>
+<td>Direct mortality studies</td>
+</tr>
+</tbody>
+</table>
+<h3 id="evidence-quality">Evidence quality</h3>
+<ul>
+<li><strong>1,621 evidence rows</strong> across 184/200 papers and 74
+columns</li>
+<li>Context snippets manually validated — genuine matches confirmed</li>
+<li>Borderline cases (binary=0, terms matched) appropriately
+conservative</li>
+</ul>
+<hr />
+<h2 id="design-decisions-log">Design Decisions Log</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 40%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Decision</th>
+<th>Rationale</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Separate evidence CSV (not extra parquet columns)</td>
+<td>Keeps main database clean; ~250K rows manageable separately</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="even">
+<td>Score threshold ≥ 2 for impact columns</td>
+<td>Single-term matches too noisy; two co-occurring signals provide
+reasonable confidence</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="odd">
+<td>Section stripping before matching</td>
+<td>Reduces false positives 2–8 pp across all schemas</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="even">
+<td>30% threshold for acknowledgements stripping</td>
+<td>Prevents stripping body paragraphs that merely mention
+“acknowledgement”</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="odd">
+<td>Author-year PDF matching with normalisation</td>
+<td>Handles accent/hyphen variation across transliteration
+conventions</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="even">
+<td>Title-word disambiguation for collisions</td>
+<td>13.7% of (author, year) keys have multiple PDFs</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="odd">
+<td>No evidence for species columns</td>
+<td>Binomial name matches are unambiguous</td>
+<td>2026-03-10</td>
+</tr>
+<tr class="even">
+<td>Wildcards expand with <code>\b</code> prefix</td>
+<td>Prevents “fish*” matching “selfish” or “starfish”</td>
+<td>2026-03-10</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
