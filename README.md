@@ -104,10 +104,11 @@ elasmo_analyses/
 - MegaMove: Assessed as closed; GSMP GitHub repos and Movebank API as alternatives
 - Altmetric/Dimensions: SRAD application submitted (awaiting approval)
 
-**✅ Schema Proposals Drafted** (March 2026)
-- 4 new column categories proposed: [Ecosystem](docs/schema_proposals/ecosystem_component_proposal.md), [Pressure](docs/schema_proposals/pressure_proposal.md), [Gear](docs/schema_proposals/gear_proposal.md), [Impact](docs/schema_proposals/impact_proposal.md)
-- Score-based extraction strategy with false-positive mitigation
-- Ready for team discussion
+**✅ Schema Extraction Pipeline Built** (March 2026)
+- 4 new column categories: [Ecosystem](docs/schema_proposals/ecosystem_component_proposal.md), [Pressure](docs/schema_proposals/pressure_proposal.md), [Gear](docs/schema_proposals/gear_proposal.md), [Impact](docs/schema_proposals/impact_proposal.md)
+- Automated extraction from PDFs with score-based matching and false-positive mitigation
+- Evidence table for team validation (matched terms, anchors, context snippets)
+- Full pipeline documentation: [Extraction Logic](docs/schema_proposals/extraction_logic.md)
 
 **✅ Journal Quality Matching** (March 2026)
 - SCImago journal data matched: 1,558 journals covering 64.7% of papers
@@ -227,8 +228,9 @@ Four new column categories have been proposed to enrich the database beyond tech
 | Pressure / Threat | `pr_` | Fishing types, climate, pollution | [pressure_proposal.md](docs/schema_proposals/pressure_proposal.md) |
 | Fishing Gear | `gear_` | Gear families, modifiers, mitigation | [gear_proposal.md](docs/schema_proposals/gear_proposal.md) |
 | Impact / Response | `imp_` | Mortality, abundance, stress, etc. | [impact_proposal.md](docs/schema_proposals/impact_proposal.md) |
+| **Extraction Logic** | — | Pipeline documentation, validation, evidence table | [extraction_logic.md](docs/schema_proposals/extraction_logic.md) |
 
-These are drafts for team discussion — see [Issue #2](https://github.com/SimonDedman/elasmo_analyses/issues/2) for the ongoing column design conversation.
+Automated extraction pipeline running against full corpus — see [Issue #2](https://github.com/SimonDedman/elasmo_analyses/issues/2) for the ongoing column design conversation and validation updates.
 
 ---
 
