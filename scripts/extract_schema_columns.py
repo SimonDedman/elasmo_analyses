@@ -1018,6 +1018,11 @@ def main() -> None:
     # ---- Summarise results ----
     results_df = pd.DataFrame(results)
 
+    # Save intermediate results before the merge step (insurance against OOM)
+    intermediate_path = PROJECT_BASE / "outputs/.schema_extraction_results.parquet"
+    results_df.to_parquet(intermediate_path, index=False)
+    logger.info("Intermediate results saved: %s (%d rows)", intermediate_path, len(results_df))
+
     # Count statistics
     pdf_count = results_df["_pdf_found"].sum()
     logger.info(
@@ -1075,28 +1080,44 @@ def main() -> None:
     # Drop internal column before merge
     results_df = results_df.drop(columns=["_pdf_found"], errors="ignore")
 
-    # Merge with original dataframe
-    # Ensure literature_id types match
+    # Merge with original dataframe.
+    # Cannot use literature_id as index (2,327 rows have empty/NaN IDs).
+    # Instead, build a dict lookup and assign column-by-column to avoid
+    # pd.merge allocating a huge intermediate array (62 GiB on 30K × 1546).
     df["literature_id"] = df["literature_id"].astype(str)
     results_df["literature_id"] = results_df["literature_id"].astype(str)
 
-    # Drop any pre-existing schema columns from original to avoid conflicts
     new_cols = [c for c in results_df.columns if c != "literature_id"]
+
+    # Drop any pre-existing schema columns from original to avoid conflicts
     df = df.drop(columns=[c for c in new_cols if c in df.columns], errors="ignore")
 
-    enriched = df.merge(results_df, on="literature_id", how="left")
+    # Build lookup: literature_id -> first matching result row index
+    # (handles duplicates by taking first match)
+    results_lookup: dict[str, int] = {}
+    for i, lit_id in enumerate(results_df["literature_id"]):
+        if lit_id not in results_lookup:
+            results_lookup[lit_id] = i
+
+    # Map each row in df to its result row
+    result_indices = [results_lookup.get(str(lid), -1) for lid in df["literature_id"]]
+
+    # Assign new columns one at a time (memory-efficient)
+    for col_name in new_cols:
+        col_values = results_df[col_name].values
+        df[col_name] = [col_values[i] if i >= 0 else None for i in result_indices]
 
     # Fill NaN for binary columns (papers not processed)
     for col_name in binary_cols:
-        if col_name in enriched.columns:
-            enriched[col_name] = enriched[col_name].fillna(0).astype(int)
+        if col_name in df.columns:
+            df[col_name] = df[col_name].fillna(0).astype(int)
 
     logger.info("Writing enriched parquet: %s", OUTPUT_PARQUET)
-    enriched.to_parquet(OUTPUT_PARQUET, index=False)
+    df.to_parquet(OUTPUT_PARQUET, index=False)
     logger.info(
         "Done. Output has %d rows and %d columns (%d new).",
-        len(enriched),
-        len(enriched.columns),
+        len(df),
+        len(df.columns),
         len(new_cols),
     )
 
