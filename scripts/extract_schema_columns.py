@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Extract ecosystem, pressure, gear, and impact metadata from elasmobranch papers.
+Extract ecosystem, pressure, gear, impact, and discipline metadata from elasmobranch papers.
 
 Single-pass extraction: for each paper, extracts text from PDF (or falls back to
 title + abstract), then searches for all four schema categories simultaneously.
@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import math
 import re
 import subprocess
 import sys
@@ -60,12 +61,22 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BinaryColumn:
-    """A single binary (0/1) column produced by keyword matching."""
+    """A single binary (0/1) column produced by keyword matching.
+
+    Attributes:
+        name: Column name (e.g. "eco_marine").
+        terms: Search terms (keywords, phrases, wildcards, raw regex).
+        anchors: Co-occurrence anchors (impact columns). When set, at least
+            one anchor must fire for binary=1.
+        threshold: Minimum total mention count (summed across all terms)
+            required for binary=1.  Higher values filter out passing mentions.
+            Default 2 means a single mention is insufficient.
+    """
 
     name: str
     terms: list[str]
     anchors: list[str] | None = None
-    use_scoring: bool = False  # impact-style scoring
+    threshold: int = 2  # default: require ≥2 total mentions
 
 
 @dataclass
@@ -79,102 +90,188 @@ class SchemaCategory:
 # ---- Ecosystem schema ----------------------------------------------------
 
 ECO = SchemaCategory(prefix="eco_", columns=[
-    BinaryColumn("eco_marine", ["marine", "ocean", "sea", "saltwater"]),
-    BinaryColumn("eco_freshwater", ["freshwater", "freshwater river", "river shark", "river system", "riverine", "lake", "estuarine", "estuarin*", "brackish"]),
-    BinaryColumn("eco_brackish", ["estuar*", "brackish", "lagoon", "mangrove"]),
-    BinaryColumn("eco_pelagic", ["pelagic", "open ocean", "oceanic", "offshore", "epipelagic", "mesopelagic", "bathypelagic"]),
-    BinaryColumn("eco_coastal", ["coastal", "neritic", "inshore", "nearshore", "continental shelf"]),
-    BinaryColumn("eco_demersal", ["demersal", "benthic", "bottom-dwelling", "epibenthic", "benthopelagic"]),
-    BinaryColumn("eco_reef", ["coral reef", "reef-associated", "rocky reef"]),
-    BinaryColumn("eco_deepwater", ["deep-sea", "deep-water", "abyssal", "hadal", "bathyal", "seamount"]),
-    BinaryColumn("eco_intertidal", ["intertidal", "tide pool", "littoral"]),
-    BinaryColumn("eco_mangrove", ["mangrove"]),
-    BinaryColumn("eco_seagrass", ["seagrass", "eelgrass", "Posidonia", "Zostera", "Thalassia"]),
-    BinaryColumn("eco_kelp", ["kelp forest", "kelp bed", "macroalgal"]),
-    BinaryColumn("eco_polar", ["polar", "arctic", "antarctic", "ice-edge", "sea ice"]),
-    BinaryColumn("eco_riverine", ["river shark", "freshwater stingray", "bull shark river"]),
-    BinaryColumn("eco_nursery", ["nursery habitat", "nursery ground", "nursery area", "essential fish habitat", "juvenile habitat"]),
-    BinaryColumn("eco_pupping", ["pupping ground", "pupping area", "parturition site", "birthing ground"]),
-    BinaryColumn("eco_epipelagic", ["epipelagic", "surface waters", "surface layer", "photic zone"]),
-    BinaryColumn("eco_mesopelagic", ["mesopelagic", "twilight zone"]),
-    BinaryColumn("eco_bathypelagic", ["bathypelagic", "deep scattering layer"]),
-    BinaryColumn("eco_abyssal", ["abyssal", "hadal"]),
+    # Generic terms — high threshold (very common in elasmobranch lit)
+    BinaryColumn("eco_marine", ["marine", "ocean", "sea", "saltwater"], threshold=3),
+    BinaryColumn("eco_freshwater", ["freshwater", "freshwater river", "river shark", "river system", "riverine", "lake", "estuarine", "estuarin*", "brackish"], threshold=3),
+    BinaryColumn("eco_brackish", ["estuar*", "brackish", "lagoon", "mangrove"], threshold=2),
+    BinaryColumn("eco_pelagic", ["pelagic", "open ocean", "oceanic", "offshore", "epipelagic", "mesopelagic", "bathypelagic"], threshold=2),
+    BinaryColumn("eco_coastal", ["coastal", "neritic", "inshore", "nearshore", "continental shelf"], threshold=3),
+    BinaryColumn("eco_demersal", ["demersal", "benthic", "bottom-dwelling", "epibenthic", "benthopelagic"], threshold=2),
+    # Specific habitat terms — lower threshold
+    BinaryColumn("eco_reef", ["coral reef", "reef-associated", "rocky reef"], threshold=1),
+    BinaryColumn("eco_deepwater", ["deep-sea", "deep-water", "abyssal", "hadal", "bathyal", "seamount"], threshold=2),
+    BinaryColumn("eco_intertidal", ["intertidal", "tide pool", "littoral"], threshold=1),
+    BinaryColumn("eco_mangrove", ["mangrove"], threshold=2),
+    BinaryColumn("eco_seagrass", ["seagrass", "eelgrass", "Posidonia", "Zostera", "Thalassia"], threshold=1),
+    BinaryColumn("eco_kelp", ["kelp forest", "kelp bed", "macroalgal"], threshold=1),
+    BinaryColumn("eco_polar", ["polar", "arctic", "antarctic", "ice-edge", "sea ice"], threshold=2),
+    BinaryColumn("eco_riverine", ["river shark", "freshwater stingray", "bull shark river"], threshold=1),
+    BinaryColumn("eco_nursery", ["nursery habitat", "nursery ground", "nursery area", "essential fish habitat", "juvenile habitat"], threshold=1),
+    BinaryColumn("eco_pupping", ["pupping ground", "pupping area", "parturition site", "birthing ground"], threshold=1),
+    BinaryColumn("eco_epipelagic", ["epipelagic", "surface waters", "surface layer", "photic zone"], threshold=2),
+    BinaryColumn("eco_mesopelagic", ["mesopelagic", "twilight zone"], threshold=1),
+    BinaryColumn("eco_bathypelagic", ["bathypelagic", "deep scattering layer"], threshold=1),
+    BinaryColumn("eco_abyssal", ["abyssal", "hadal"], threshold=1),
 ])
 
 # ---- Pressure schema ------------------------------------------------------
 
 PR = SchemaCategory(prefix="pr_", columns=[
-    BinaryColumn("pr_fishing_commercial", ["commercial fish*", "industrial fish*", "fishing pressure", "fishing mortality", "exploitation"]),
-    BinaryColumn("pr_fishing_artisanal", ["artisanal", "small-scale fish*", "subsistence fish*", "traditional fish*"]),
-    BinaryColumn("pr_fishing_recreational", ["recreational fish*", "sport fish*", "game fish*", "catch-and-release", "angl*"]),
-    BinaryColumn("pr_fishing_iuu", ["illegal fish*", "unreported", "unregulated", "IUU", "poach*"]),
-    BinaryColumn("pr_bycatch", ["bycatch", "by-catch", "incidental capture", "non-target", "discards"]),
-    BinaryColumn("pr_shark_finning", ["shark fin*", "finning", "fin trade"]),
-    BinaryColumn("pr_targeted_fishing", ["targeted shark fish*", "directed shark fish*", "shark fish*"]),
-    BinaryColumn("pr_climate_change", ["climate change", "global warming", "ocean warming"]),
-    BinaryColumn("pr_ocean_acidification", ["ocean acidification", "(acidification AND pH)", "(acidification AND pCO2)"]),
-    BinaryColumn("pr_hypoxia", ["hypoxia", "deoxygenation", "oxygen minimum zone", "OMZ"]),
-    BinaryColumn("pr_pollution_chemical", ["pollut*", "contaminant*", "heavy metal*", "mercury", "PCB", "PFAS", "pesticide*"]),
-    BinaryColumn("pr_pollution_plastic", ["plastic pollution", "microplastic*", "macroplastic*", "plastic ingestion", "plastic debris"]),
-    BinaryColumn("pr_pollution_noise", ["noise pollution", "anthropogenic noise", "shipping noise", "sonar", "acoustic disturbance"]),
-    BinaryColumn("pr_habitat_loss", ["habitat loss", "habitat degradation", "coastal development", "dredg*", "mangrove loss"]),
-    BinaryColumn("pr_shipping", ["ship strike", "vessel strike", "maritime traffic"]),
-    BinaryColumn("pr_tourism", ["dive tourism", "ecotourism", "shark tourism", "provisioning", "shark feed*", "cage div*"]),
-    BinaryColumn("pr_depredation", ["depredation", "depredating", "bait loss", "catch damage"]),
-    BinaryColumn("pr_aquaculture", ["aquaculture", "fish farm*", "mariculture"]),
-    BinaryColumn("pr_invasive", ["invasive species", "non-native species", "alien species"]),
-    BinaryColumn("pr_disease", ["disease", "pathogen", "parasite", "epizootic", "infection"]),
-    BinaryColumn("pr_light", ["light pollution", "artificial light", "ALAN"]),
-    BinaryColumn("pr_electromagnetic", ["electromagnetic field", "EMF", "submarine cable", "electroreception interference"]),
-    BinaryColumn("pr_cumulative", ["cumulative impact", "multiple stressor*", "synergistic", "additive effect"]),
+    # Generic fishing terms — high threshold (mentioned in passing constantly)
+    BinaryColumn("pr_fishing_commercial", ["commercial fish*", "industrial fish*", "fishing pressure", "fishing mortality", "exploitation"], threshold=3),
+    BinaryColumn("pr_fishing_artisanal", ["artisanal", "small-scale fish*", "subsistence fish*", "traditional fish*"], threshold=2),
+    BinaryColumn("pr_fishing_recreational", ["recreational fish*", "sport fish*", "game fish*", "catch-and-release", "angl*"], threshold=2),
+    BinaryColumn("pr_fishing_iuu", ["illegal fish*", "unreported", "unregulated", "IUU", "poach*"], threshold=2),
+    BinaryColumn("pr_bycatch", ["bycatch", "by-catch", "incidental capture", "non-target", "discards"], threshold=2),
+    BinaryColumn("pr_shark_finning", ["shark fin*", "finning", "fin trade"], threshold=1),
+    BinaryColumn("pr_targeted_fishing", ["targeted shark fish*", "directed shark fish*", "shark fish*"], threshold=2),
+    # Environmental pressures — moderate threshold (threat-list problem)
+    BinaryColumn("pr_climate_change", ["climate change", "global warming", "ocean warming"], threshold=3),
+    BinaryColumn("pr_ocean_acidification", ["ocean acidification", "(acidification AND pH)", "(acidification AND pCO2)"], threshold=1),
+    BinaryColumn("pr_hypoxia", ["hypoxia", "deoxygenation", "oxygen minimum zone", "OMZ"], threshold=1),
+    BinaryColumn("pr_pollution_chemical", ["pollut*", "contaminant*", "heavy metal*", "mercury", "PCB", "PFAS", "pesticide*"], threshold=3),
+    BinaryColumn("pr_pollution_plastic", ["plastic pollution", "microplastic*", "macroplastic*", "plastic ingestion", "plastic debris"], threshold=1),
+    BinaryColumn("pr_pollution_noise", ["noise pollution", "anthropogenic noise", "shipping noise", "sonar", "acoustic disturbance"], threshold=1),
+    BinaryColumn("pr_habitat_loss", ["habitat loss", "habitat degradation", "coastal development", "dredg*", "mangrove loss"], threshold=2),
+    BinaryColumn("pr_shipping", ["ship strike", "vessel strike", "maritime traffic"], threshold=1),
+    # Very specific terms — low threshold
+    BinaryColumn("pr_tourism", ["dive tourism", "ecotourism", "shark tourism", "provisioning", "shark feed*", "cage div*"], threshold=1),
+    BinaryColumn("pr_depredation", ["depredation", "depredating", "bait loss", "catch damage"], threshold=1),
+    BinaryColumn("pr_aquaculture", ["aquaculture", "fish farm*", "mariculture"], threshold=1),
+    BinaryColumn("pr_invasive", ["invasive species", "non-native species", "alien species"], threshold=1),
+    BinaryColumn("pr_disease", ["disease", "pathogen", "parasite", "epizootic", "infection"], threshold=3),
+    BinaryColumn("pr_light", ["light pollution", "artificial light", "ALAN"], threshold=1),
+    BinaryColumn("pr_electromagnetic", ["electromagnetic field", "EMF", "submarine cable", "electroreception interference"], threshold=1),
+    BinaryColumn("pr_cumulative", ["cumulative impact", "multiple stressor*", "synergistic", "additive effect"], threshold=2),
 ])
 
 # ---- Gear schema ----------------------------------------------------------
 
 GEAR = SchemaCategory(prefix="gear_", columns=[
-    BinaryColumn("gear_longline", ["longline", "long-line", "pelagic longline", "demersal longline", "bottom longline"]),
-    BinaryColumn("gear_gillnet", ["gillnet", "gill net", "trammel net", "entangling net", "drift net", "driftnet"]),
-    BinaryColumn("gear_trawl", ["trawl", "bottom trawl", "demersal trawl", "pelagic trawl", "otter trawl", "beam trawl", "shrimp trawl"]),
-    BinaryColumn("gear_purse_seine", ["purse seine", "purse-seine", "ring net"]),
-    BinaryColumn("gear_seine", ["beach seine", "Danish seine", "seine net"]),
-    BinaryColumn("gear_hook_line", ["hook and line", "handline", "rod and reel", "trolling", "jigging", "pole and line"]),
-    BinaryColumn("gear_trap", ["trap", "pot", "fish trap", "drumline", "SMART drumline"]),
-    BinaryColumn("gear_net_other", ["cast net", "lift net", "scoop net", "fyke net", "pound net", "weir"]),
-    BinaryColumn("gear_harpoon", ["harpoon", "spearfish*", "spear gun"]),
-    BinaryColumn("gear_survey", ["research vessel", "survey trawl", "BRUVs", "longline survey", "fishery-independent survey", "drone survey", "UAV survey", "ROV", "submersible"]),
-    BinaryColumn("gear_pelagic", ["pelagic longline", "pelagic trawl", "midwater trawl"]),
-    BinaryColumn("gear_demersal", ["demersal longline", "bottom trawl", "demersal trawl", "bottom longline"]),
-    BinaryColumn("gear_artisanal", ["artisanal", "traditional gear", "small-scale", "hand-operated"]),
-    BinaryColumn("gear_mit_circle_hook", ["circle hook", "non-offset hook"]),
-    BinaryColumn("gear_mit_brd", ["bycatch reduction device", "BRD", "turtle excluder", "TED"]),
-    BinaryColumn("gear_mit_deterrent", ["shark deterrent", "SharkGuard", "shark guard", "electropositive", "Rare Earth", "EPM", "LED deterrent", "magnetic deterrent"]),
-    BinaryColumn("gear_mit_time_area", ["time-area closure", "spatial closure", "fishing closure", "seasonal closure", "MPA"]),
-    BinaryColumn("gear_mit_handling", ["safe release", "handling practice*", "live release", "post-release mortality", "PRM"]),
+    # Gear types — moderate threshold (often mentioned in methods of unrelated papers)
+    BinaryColumn("gear_longline", ["longline", "long-line", "pelagic longline", "demersal longline", "bottom longline"], threshold=2),
+    BinaryColumn("gear_gillnet", ["gillnet", "gill net", "trammel net", "entangling net", "drift net", "driftnet"], threshold=2),
+    BinaryColumn("gear_trawl", ["trawl", "bottom trawl", "demersal trawl", "pelagic trawl", "otter trawl", "beam trawl", "shrimp trawl"], threshold=2),
+    BinaryColumn("gear_purse_seine", ["purse seine", "purse-seine", "ring net"], threshold=1),
+    BinaryColumn("gear_seine", ["beach seine", "Danish seine", "seine net"], threshold=1),
+    BinaryColumn("gear_hook_line", ["hook and line", "handline", "rod and reel", "trolling", "jigging", "pole and line"], threshold=2),
+    BinaryColumn("gear_trap", ["trap", "pot", "fish trap", "drumline", "SMART drumline"], threshold=2),
+    BinaryColumn("gear_net_other", ["cast net", "lift net", "scoop net", "fyke net", "pound net", "weir"], threshold=1),
+    BinaryColumn("gear_harpoon", ["harpoon", "spearfish*", "spear gun"], threshold=1),
+    BinaryColumn("gear_survey", ["research vessel", "survey trawl", "BRUVs", "longline survey", "fishery-independent survey", "drone survey", "UAV survey", "ROV", "submersible"], threshold=2),
+    BinaryColumn("gear_pelagic", ["pelagic longline", "pelagic trawl", "midwater trawl"], threshold=1),
+    BinaryColumn("gear_demersal", ["demersal longline", "bottom trawl", "demersal trawl", "bottom longline"], threshold=1),
+    BinaryColumn("gear_artisanal", ["artisanal", "traditional gear", "small-scale", "hand-operated"], threshold=2),
+    # Mitigation — specific terms, low threshold
+    BinaryColumn("gear_mit_circle_hook", ["circle hook", "non-offset hook"], threshold=1),
+    BinaryColumn("gear_mit_brd", ["bycatch reduction device", "BRD", "turtle excluder", "TED"], threshold=1),
+    BinaryColumn("gear_mit_deterrent", ["shark deterrent", "SharkGuard", "shark guard", "electropositive", "Rare Earth", "EPM", "LED deterrent", "magnetic deterrent"], threshold=1),
+    BinaryColumn("gear_mit_time_area", ["time-area closure", "spatial closure", "fishing closure", "seasonal closure", "MPA"], threshold=2),
+    BinaryColumn("gear_mit_handling", ["safe release", "handling practice*", "live release", "post-release mortality", "PRM"], threshold=1),
 ])
 
 # ---- Impact schema (with scoring/anchors) ---------------------------------
 
 IMP = SchemaCategory(prefix="imp_", columns=[
-    BinaryColumn("imp_mortality", ["mortality", "survival rate", "lethality", "dead on arrival", "DOA", "at-vessel mortality", "AVM"], use_scoring=True),
-    BinaryColumn("imp_post_release", ["post-release mortality", "PRM", "delayed mortality", "post-capture survival"], use_scoring=True),
-    BinaryColumn("imp_abundance", ["abundance", "population size", "population decline", "population trend"], anchors=["population", "decline", "increase", "change", "trend", "status"], use_scoring=True),
-    BinaryColumn("imp_cpue", ["CPUE", "catch per unit effort", "catch rate"], use_scoring=True),
-    BinaryColumn("imp_biomass", ["biomass", "standing stock", "spawning stock biomass", "SSB"], use_scoring=True),
-    BinaryColumn("imp_distribution", ["distribution shift", "range shift", "range contraction", "habitat shift"], use_scoring=True),
-    BinaryColumn("imp_behaviour_change", ["behavioural change", "behavioral change", "avoidance behaviour", "flight response", "habituation"], anchors=["change", "response"], use_scoring=True),
-    BinaryColumn("imp_physiology_stress", ["cortisol", "lactate", "blood chemistry", "acid-base", "reflex impairment", "RAMP", "physiological stress"], use_scoring=True),
-    BinaryColumn("imp_injury", ["injury", "hooking injury", "scarring", "body condition index"], use_scoring=True),
-    BinaryColumn("imp_reproduction", ["reproductive output", "fecundity change", "reproductive failure"], use_scoring=True),
-    BinaryColumn("imp_growth", ["growth rate change", "stunting", "condition factor change"], anchors=["change", "impact"], use_scoring=True),
-    BinaryColumn("imp_genetic", ["genetic diversity", "effective population size", r"Ne\b", "bottleneck", "inbreeding"], use_scoring=True),
-    BinaryColumn("imp_trophic", ["trophic level change", "dietary shift", "prey depletion", "mesopredator release"], use_scoring=True),
-    BinaryColumn("imp_habitat_quality", ["habitat quality", "habitat suitability", "degradation index"], use_scoring=True),
-    BinaryColumn("imp_contamination", ["contaminant load", "bioaccumulation", "biomagnification", "tissue concentration"], use_scoring=True),
-    BinaryColumn("imp_economic", ["economic value", "fishery value", "tourism revenue", "willingness to pay", "WTP"], use_scoring=True),
-    BinaryColumn("imp_social", ["livelihood", "food security", "human dimension", "attitude", "perception"], use_scoring=True),
+    # Impact columns use anchors for co-occurrence AND frequency thresholds
+    BinaryColumn("imp_mortality", ["mortality", "survival rate", "lethality", "dead on arrival", "DOA", "at-vessel mortality", "AVM"], threshold=2),
+    BinaryColumn("imp_post_release", ["post-release mortality", "PRM", "delayed mortality", "post-capture survival"], threshold=1),
+    BinaryColumn("imp_abundance", ["abundance", "population size", "population decline", "population trend"], anchors=["population", "decline", "increase", "change", "trend", "status"], threshold=2),
+    BinaryColumn("imp_cpue", ["CPUE", "catch per unit effort", "catch rate"], threshold=1),
+    BinaryColumn("imp_biomass", ["biomass", "standing stock", "spawning stock biomass", "SSB"], threshold=2),
+    BinaryColumn("imp_distribution", ["distribution shift", "range shift", "range contraction", "habitat shift"], threshold=1),
+    BinaryColumn("imp_behaviour_change", ["behavioural change", "behavioral change", "avoidance behaviour", "flight response", "habituation"], anchors=["change", "response"], threshold=2),
+    BinaryColumn("imp_physiology_stress", ["cortisol", "lactate", "blood chemistry", "acid-base", "reflex impairment", "RAMP", "physiological stress"], threshold=1),
+    BinaryColumn("imp_injury", ["injury", "hooking injury", "scarring", "body condition index"], threshold=2),
+    BinaryColumn("imp_reproduction", ["reproductive output", "fecundity change", "reproductive failure"], threshold=1),
+    BinaryColumn("imp_growth", ["growth rate change", "stunting", "condition factor change"], anchors=["change", "impact"], threshold=2),
+    BinaryColumn("imp_genetic", ["genetic diversity", "effective population size", r"Ne\b", "bottleneck", "inbreeding"], threshold=2),
+    BinaryColumn("imp_trophic", ["trophic level change", "dietary shift", "prey depletion", "mesopredator release"], threshold=1),
+    BinaryColumn("imp_habitat_quality", ["habitat quality", "habitat suitability", "degradation index"], threshold=2),
+    BinaryColumn("imp_contamination", ["contaminant load", "bioaccumulation", "biomagnification", "tissue concentration"], threshold=1),
+    BinaryColumn("imp_economic", ["economic value", "fishery value", "tourism revenue", "willingness to pay", "WTP"], threshold=1),
+    BinaryColumn("imp_social", ["livelihood", "food security", "human dimension", "attitude", "perception"], threshold=3),
 ])
 
-ALL_SCHEMAS = [ECO, PR, GEAR, IMP]
+# ---- Discipline schema (research area classification) --------------------
+
+DISC = SchemaCategory(prefix="d_", columns=[
+    # Broad disciplines — higher threshold (terms appear in passing)
+    BinaryColumn("d_biology", ["life history", "age and growth", "growth rate", "longevity", "maturity", "length-at-maturity", "length-weight", "vertebral band"], threshold=2),
+    BinaryColumn("d_behaviour", ["behavio*", "behavioral ecology", "predator-prey", "diel vertical migration", "activity pattern", "social behavio*", "agonistic", "refuging"], threshold=3),
+    BinaryColumn("d_trophic", ["trophic", "diet", "feeding ecology", "stomach content*", "prey composition", "stable isotope", "fatty acid", "food web"], threshold=2),
+    BinaryColumn("d_genetics", ["genetic*", "genomic*", "eDNA", "environmental DNA", "microsatellite", "mitochondrial", "phylogenet*", "haplotype", "SNP", "RADseq", "population genetics"], threshold=2),
+    BinaryColumn("d_movement", ["movement", "telemetry", "satellite tag*", "acoustic tag*", "archival tag*", "home range", "migration", "habitat use", "space use", "tracking"], threshold=3),
+    BinaryColumn("d_fisheries", ["stock assessment", "fisheries management", "catch data", "fishing mortality", "maximum sustainable yield", "MSY", "fishery-dependent", "fishery-independent"], threshold=2),
+    BinaryColumn("d_conservation", ["conservation", "endangered", "CITES", "IUCN", "Red List", "protected area", "marine protected area", "recovery plan", "conservation status"], threshold=3),
+    BinaryColumn("d_data_science", ["machine learning", "deep learning", "neural network", "random forest", "Bayesian", "meta-analysis", "systematic review", "simulation model"], threshold=2),
+    # Finer-grained disciplines — lower threshold (specific terms)
+    BinaryColumn("d_husbandry", ["aquarium", "captive", "husbandry", "captive breeding", "ex situ", "tank-held", "aquaria"], threshold=2),
+    BinaryColumn("d_paleontology", ["fossil", "paleontol*", "palaeontol*", "Cretaceous", "Jurassic", "Miocene", "Pliocene", "Eocene", "Oligocene", "Cenozoic", "Mesozoic", "Devonian", "Carboniferous"], threshold=1),
+    BinaryColumn("d_taxonomy", ["taxonom*", "new species", "sp. nov.", "new genus", "morphometric*", "meristic*", "dichotomous key", "identification key", "redescription", "synonymy", "type specimen"], threshold=1),
+    BinaryColumn("d_physiology", ["physiolog*", "metaboli*", "oxygen consumption", "ventilation rate", "blood gas", "haematocrit", "hematocrit", "osmoregulat*", "thermoregulat*", "bioenergetic*"], threshold=2),
+    BinaryColumn("d_reproductive", ["reproductive biology", "fecundity", "gestation", "embryo*", "uterine", "ovipar*", "vivipar*", "mating", "parturition", "neonat*", "litter size", "reproductive cycle"], threshold=2),
+    BinaryColumn("d_biomechanics", ["biomechani*", "functional morphology", "locomot*", "kinematics", "bite force", "jaw mechanics", "hydrodynamic*", "swimming performance"], threshold=1),
+    BinaryColumn("d_sensory", ["electrorecept*", "ampullae of Lorenzini", "lateral line", "mechanosens*", "olfact*", "chemosens*", "visual acuity", "magnetorecept*"], threshold=1),
+    BinaryColumn("d_ecotourism", ["ecotourism", "dive tourism", "shark tourism", "shark watching", "whale shark tourism", "shark encounter", "provisioning"], threshold=1),
+    BinaryColumn("d_human_dimensions", ["human dimension*", "social science", "stakeholder", "perception", "attitude*", "willingness to pay", "WTP", "shark bite", "shark attack", "shark repellent"], threshold=2),
+    BinaryColumn("d_immunology", ["immun*", "antibod*", "complement system", "innate immun*", "adaptive immun*", "leukocyte", "lymphocyte"], threshold=2),
+    BinaryColumn("d_toxicology", ["toxicolog*", "contaminant*", "bioaccumulation", "biomagnification", "heavy metal*", "mercury", "methylmercury", "tissue concentration"], threshold=2),
+])
+
+# ---- Ocean basin schema (study geography) ---------------------------------
+
+BASIN = SchemaCategory(prefix="b_", columns=[
+    BinaryColumn("b_north_atlantic", [
+        "North Atlantic", "Northwest Atlantic", "Northeast Atlantic",
+        "NW Atlantic", "NE Atlantic", "North Sea", "Bay of Biscay",
+        "Celtic Sea", "Norwegian Sea", "Barents Sea", "Baltic Sea",
+        "Gulf of Mexico", "Sargasso Sea", "Azores",
+    ], threshold=2),
+    BinaryColumn("b_south_atlantic", [
+        "South Atlantic", "Southwest Atlantic", "Southeast Atlantic",
+        "SW Atlantic", "SE Atlantic", "Benguela", "Patagoni*",
+        "South Africa*", "Namibia*", "Brazilian coast",
+    ], threshold=2),
+    BinaryColumn("b_north_pacific", [
+        "North Pacific", "Northwest Pacific", "Northeast Pacific",
+        "NW Pacific", "NE Pacific", "Bering Sea", "Sea of Japan",
+        "East China Sea", "South China Sea", "Yellow Sea",
+        "California Current", "Kuroshio", "Sea of Okhotsk",
+        "Gulf of Alaska", "Hawaiian",
+    ], threshold=2),
+    BinaryColumn("b_south_pacific", [
+        "South Pacific", "Southwest Pacific", "Southeast Pacific",
+        "SW Pacific", "SE Pacific", "Coral Sea", "Tasman Sea",
+        "Great Barrier Reef", "New Zealand*", "Fiji*",
+        "French Polynesia", "Humboldt Current",
+    ], threshold=2),
+    BinaryColumn("b_indian_ocean", [
+        "Indian Ocean", "Bay of Bengal", "Arabian Sea",
+        "Mozambique Channel", "Red Sea", "Persian Gulf",
+        "Andaman Sea", "Madagascar", "Maldives", "Seychelles",
+        "Western Indian Ocean", "Eastern Indian Ocean",
+    ], threshold=2),
+    BinaryColumn("b_southern_ocean", [
+        "Southern Ocean", "Antarctic", "sub-Antarctic",
+        "Kerguelen", "South Georgia", "Patagonian shelf",
+    ], threshold=1),
+    BinaryColumn("b_arctic_ocean", [
+        "Arctic Ocean", "Arctic", "Greenland Sea",
+        "Beaufort Sea", "Chukchi Sea", "Canadian Arctic",
+    ], threshold=2),
+    BinaryColumn("b_mediterranean", [
+        "Mediterranean", "Adriatic", "Aegean", "Tyrrhenian",
+        "Ionian Sea", "Ligurian Sea", "Alboran Sea",
+        "Strait of Gibraltar", "Strait of Sicily",
+    ], threshold=1),
+    BinaryColumn("b_caribbean", [
+        "Caribbean", "Gulf of Mexico", "Bahamas", "Belize",
+        "Mesoamerican Reef", "Antilles", "West Indies",
+    ], threshold=2),
+])
+
+ALL_SCHEMAS = [ECO, PR, GEAR, IMP, DISC, BASIN]
 
 
 # ---------------------------------------------------------------------------
@@ -195,8 +292,9 @@ def _term_to_regex(term: str) -> re.Pattern[str]:
         return None  # sentinel
 
     # If term already contains a regex word-boundary marker, compile as-is
+    # Case-sensitive: raw regex terms have intentional casing (e.g. Ne\b)
     if r"\b" in term:
-        return re.compile(term, re.IGNORECASE)
+        return re.compile(term)
 
     # Wildcard expansion: fish* -> \bfish\w*
     if "*" in term:
@@ -242,7 +340,7 @@ class CompiledColumn:
     name: str
     terms: list[CompiledTerm]
     anchors: list[re.Pattern[str]] | None
-    use_scoring: bool
+    threshold: int
 
 
 def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
@@ -260,7 +358,7 @@ def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
             name=col.name,
             terms=c_terms,
             anchors=c_anchors,
-            use_scoring=col.use_scoring,
+            threshold=col.threshold,
         ))
     return compiled
 
@@ -578,9 +676,10 @@ _REF_HEADER_RE = re.compile(
 )
 
 # Abstract header: marks the start of useful content.
+# Matches both standalone headers ("Abstract\n") and inline ("Abstract: text..." / "ABSTRACT. text...")
 _ABSTRACT_RE = re.compile(
     r"^[\s]*(ABSTRACT|Abstract|SUMMARY|Summary|INTRODUCTION|Introduction)"
-    r"[\s]*$",
+    r"[\s]*[:.]*",
     re.MULTILINE,
 )
 
@@ -688,9 +787,10 @@ class MatchResult:
     """Result of matching a single column against text."""
 
     binary: int                    # 0 or 1
-    score: int                     # co-occurrence score (impact columns)
-    matched_terms: list[str]       # which search terms fired
-    matched_anchors: list[str]     # which anchor terms fired (impact only)
+    total_freq: int                # total mention count across all terms
+    term_count: int                # number of distinct terms that fired
+    matched_terms: list[str]       # which search terms fired (with frequency)
+    matched_anchors: list[str]     # which anchor terms fired
     sample_context: str | None     # short text snippet around first match
 
 
@@ -705,55 +805,75 @@ def _extract_context(text: str, pattern: re.Pattern[str], window: int = 80) -> s
     return f"...{snippet}..."
 
 
-def _match_column(text: str, col: CompiledColumn) -> MatchResult:
-    """Match a single column's terms against text.
+def _count_matches(pattern: re.Pattern[str], text: str) -> int:
+    """Count non-overlapping occurrences of a pattern in text."""
+    return len(pattern.findall(text))
 
-    Returns a MatchResult with the binary decision, score, which terms
-    and anchors fired, and a sample context snippet for validation.
+
+def _match_column(text: str, col: CompiledColumn) -> MatchResult:
+    """Match a single column's terms against text using frequency counting.
+
+    Every term is counted (not just detected), and the total mention count
+    across all terms is compared to the column's threshold to decide
+    binary classification.  For columns with anchors, at least one anchor
+    must also fire.
+
+    Returns a MatchResult with frequencies, binary decision, and evidence.
     """
-    fired_terms: list[str] = []
+    fired_terms: list[tuple[str, int]] = []  # (term_raw, frequency)
     first_regex: re.Pattern[str] | None = None
+    total_freq = 0
 
     for ct in col.terms:
         if ct.and_parts is not None:
-            if ct.and_parts[0].search(text) and ct.and_parts[1].search(text):
-                fired_terms.append(ct.raw)
+            # AND logic: both parts must be present; count = min of the two
+            c1 = _count_matches(ct.and_parts[0], text)
+            c2 = _count_matches(ct.and_parts[1], text)
+            if c1 > 0 and c2 > 0:
+                freq = min(c1, c2)
+                fired_terms.append((ct.raw, freq))
+                total_freq += freq
                 if first_regex is None:
                     first_regex = ct.and_parts[0]
         elif ct.regex is not None:
-            if ct.regex.search(text):
-                fired_terms.append(ct.raw)
+            freq = _count_matches(ct.regex, text)
+            if freq > 0:
+                fired_terms.append((ct.raw, freq))
+                total_freq += freq
                 if first_regex is None:
                     first_regex = ct.regex
 
     if not fired_terms:
-        return MatchResult(binary=0, score=0, matched_terms=[], matched_anchors=[], sample_context=None)
+        return MatchResult(binary=0, total_freq=0, term_count=0,
+                           matched_terms=[], matched_anchors=[],
+                           sample_context=None)
+
+    term_count = len(fired_terms)
+    # Format matched_terms with frequency: "marine(12); ocean(5)"
+    matched_terms_str = [f"{t}({f})" for t, f in fired_terms]
 
     # Context snippet from the first matching term
     context = _extract_context(text, first_regex, window=80) if first_regex else None
 
-    # Anchor matching (impact columns)
+    # Anchor matching
     fired_anchors: list[str] = []
     if col.anchors:
         for anc in col.anchors:
             if anc.search(text):
                 fired_anchors.append(anc.pattern.replace(r"\b", "").replace("\\", ""))
 
-    if col.use_scoring:
-        score = len(fired_terms) + len(fired_anchors)
-        if col.anchors:
-            if not fired_anchors:
-                return MatchResult(0, len(fired_terms), fired_terms, fired_anchors, context)
-            if score >= 2:
-                return MatchResult(1, score, fired_terms, fired_anchors, context)
-            return MatchResult(0, score, fired_terms, fired_anchors, context)
-        else:
-            if score >= 2:
-                return MatchResult(1, score, fired_terms, fired_anchors, context)
-            return MatchResult(0, score, fired_terms, fired_anchors, context)
+    # Binary decision: threshold on total frequency, plus anchor gate
+    if col.anchors and not fired_anchors:
+        # Anchors defined but none fired — reject regardless of frequency
+        binary = 0
+    elif total_freq >= col.threshold:
+        binary = 1
     else:
-        # Simple binary: any match = 1
-        return MatchResult(1, len(fired_terms), fired_terms, fired_anchors, context)
+        binary = 0
+
+    return MatchResult(binary=binary, total_freq=total_freq,
+                       term_count=term_count, matched_terms=matched_terms_str,
+                       matched_anchors=fired_anchors, sample_context=context)
 
 
 def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
@@ -773,6 +893,13 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
     authors = row_dict.get("authors")
     year_raw = row_dict.get("year")
     doi = row_dict.get("doi") or ""
+
+    # Fallback identifier for orphan rows (no literature_id)
+    if lit_id is None or (isinstance(lit_id, float) and math.isnan(lit_id)):
+        # Use DOI if available, else row index
+        lit_id_for_evidence = doi if doi else f"orphan_{row_dict.get('_row_idx', 'unknown')}"
+    else:
+        lit_id_for_evidence = lit_id
 
     # Safe year handling (float bug)
     year: int | None = None
@@ -794,16 +921,11 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
                     text_parts.append(extracted)
                     pdf_found = True
 
-    # Always include title + abstract as fallback / supplement
-    if title:
-        text_parts.append(title)
-    if abstract:
-        text_parts.append(abstract)
-
+    # Only use PDF text — skip papers without PDFs
     full_text = "\n".join(text_parts)
 
     if not full_text.strip():
-        # Nothing to search -- return empty result
+        # No PDF text available — return empty result (no title/abstract fallback)
         result: dict[str, Any] = {"literature_id": lit_id, "_pdf_found": False, "_evidence": []}
         for _, compiled_cols in _COMPILED_SCHEMAS:
             for col in compiled_cols:
@@ -827,15 +949,18 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
         for col in compiled_cols:
             mr = _match_column(full_text, col)
             result[col.name] = mr.binary
-            if col.use_scoring and mr.score > 0:
-                imp_scores[col.name] = mr.score
+            if mr.total_freq > 0:
+                imp_scores[col.name] = mr.total_freq
             # Record evidence for any column that had matches (even if binary=0)
             if mr.matched_terms:
                 evidence_rows.append({
-                    "literature_id": lit_id,
+                    "literature_id": lit_id_for_evidence,
+                    "title": title[:200] if title else "",
                     "column": col.name,
                     "binary": mr.binary,
-                    "score": mr.score,
+                    "total_freq": mr.total_freq,
+                    "term_count": mr.term_count,
+                    "threshold": col.threshold,
                     "matched_terms": "; ".join(mr.matched_terms),
                     "matched_anchors": "; ".join(mr.matched_anchors) if mr.matched_anchors else "",
                     "context": mr.sample_context or "",
@@ -903,7 +1028,7 @@ def save_processed_ids(resume_file: Path, ids: set[str]) -> None:
 def main() -> None:
     """Run the schema extraction pipeline."""
     parser = argparse.ArgumentParser(
-        description="Extract ecosystem, pressure, gear, and impact metadata from elasmobranch papers."
+        description="Extract ecosystem, pressure, gear, impact, and discipline metadata from elasmobranch papers."
     )
     parser.add_argument(
         "--dry-run",
@@ -962,6 +1087,9 @@ def main() -> None:
     # Columns we need from the parquet for matching
     needed_cols = ["literature_id", "title", "abstract", "authors", "year", "doi"]
     rows = df[needed_cols].to_dict("records")
+    # Tag each row with its dataframe index for orphan identification
+    for i, row in enumerate(rows):
+        row["_row_idx"] = i
 
     # Resume: skip already-processed
     processed_ids: set[str] = set()
@@ -1026,7 +1154,7 @@ def main() -> None:
     # Count statistics
     pdf_count = results_df["_pdf_found"].sum()
     logger.info(
-        "Text sources: %d from PDF + title/abstract, %d from title/abstract only.",
+        "Text sources: %d with PDF text, %d skipped (no PDF).",
         pdf_count,
         len(results_df) - pdf_count,
     )

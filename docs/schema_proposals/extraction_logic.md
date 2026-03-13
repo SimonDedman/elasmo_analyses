@@ -2,13 +2,13 @@
 
 *Technical documentation for `scripts/extract_schema_columns.py`*
 
-*Last updated: 2026-03-10*
+*Last updated: 2026-03-12*
 
 ---
 
 ## Overview
 
-Single-pass extraction pipeline that processes ~30,500 elasmobranch papers, extracting ecosystem, pressure, gear, and impact metadata using keyword matching with context-aware scoring. Produces binary columns (0/1) plus a separate evidence table for team validation.
+Single-pass extraction pipeline that processes ~30,500 elasmobranch papers, extracting ecosystem, pressure, gear, impact, discipline, and ocean basin metadata using frequency-based keyword matching with per-column thresholds. Produces binary columns (0/1) plus a separate evidence table for team validation.
 
 **Key principle:** Every classification decision is traceable. The evidence table records which terms matched, which anchors fired, and a context snippet — so the team can audit and refine without re-running the full pipeline.
 
@@ -38,7 +38,7 @@ literature_review.parquet          SharkPapers/YYYY/*.pdf
         ▼                    ▼
   literature_review     schema_extraction
   _enriched.parquet     _evidence.csv
-  (~85 new columns)     (~250K rows)
+  (~120 new columns)    (~350K rows)
 ```
 
 ### Files
@@ -46,7 +46,7 @@ literature_review.parquet          SharkPapers/YYYY/*.pdf
 | File | Purpose |
 |------|---------|
 | `outputs/literature_review.parquet` | Input: ~30,500 papers × 1,546 columns |
-| `outputs/literature_review_enriched.parquet` | Output: original + ~85 new columns |
+| `outputs/literature_review_enriched.parquet` | Output: original + ~120 new columns (106 binary + metadata) |
 | `outputs/schema_extraction_evidence.csv` | Evidence: one row per (paper, column) match |
 | `outputs/.schema_extraction_progress.json` | Checkpoint for resume capability |
 
@@ -134,37 +134,50 @@ The 80.5% rate reflects actual PDF availability for these years. Overall PDF cov
 
 | Category | Prefix | Columns | Matching mode | Description |
 |----------|--------|---------|---------------|-------------|
-| Ecosystem | `eco_` | 20 | Simple binary | Any term match → 1 |
-| Pressure | `pr_` | 23 | Simple binary | Any term match → 1 |
-| Gear | `gear_` | 18 | Simple binary | Any term match → 1 |
-| Impact | `imp_` | 17 | Score-based + anchors | Requires confidence threshold |
+| Ecosystem | `eco_` | 20 | Frequency-based | Habitat/environment classification |
+| Pressure | `pr_` | 23 | Frequency-based | Threats and stressors |
+| Gear | `gear_` | 18 | Frequency-based | Fishing gear and mitigation |
+| Impact | `imp_` | 17 | Frequency + anchors | Population/ecological impacts |
+| Discipline | `d_` | 19 | Frequency-based | Research area classification |
+| Ocean basin | `b_` | 9 | Frequency-based | Study geography |
 
-### Score-based matching (impact columns)
+All categories now use **universal frequency-based scoring** with per-column configurable thresholds (see below).
 
-Impact terms are often ambiguous in isolation ("abundance" appears in many non-impact contexts). The scoring system requires co-occurrence of multiple signals:
+### Universal frequency-based scoring
 
-1. Count matching **terms** (e.g., "abundance", "population size")
-2. Count matching **anchors** (e.g., "population", "decline", "trend")
-3. **Score** = terms fired + anchors fired
+All schema categories use `findall()` frequency counting rather than simple presence/absence. Each column has a configurable **threshold** — the minimum total mention count (summed across all matching terms) required for binary=1.
+
+**Rationale:** A single mention of "marine" in a freshwater stingray paper should not trigger `eco_marine=1`. Generic terms (marine, fishing, behaviour) get higher thresholds (3+); specific terms (depredation, coral reef, ampullae of Lorenzini) get threshold=1.
 
 **Decision rules:**
 
 | Condition | Binary | Rationale |
 |-----------|--------|-----------|
-| Anchors defined, none fire | 0 | Ambiguous term without supporting context |
-| Score ≥ 2 | 1 | Confident: multiple co-occurring signals |
-| Score = 1 | 0 | Insufficient evidence (recorded for review) |
+| total_freq < threshold | 0 | Insufficient mentions — likely passing reference |
+| total_freq ≥ threshold, no anchors defined | 1 | Confident: enough co-occurring mentions |
+| total_freq ≥ threshold, anchors defined, none fire | 0 | Ambiguous term without supporting context |
+| total_freq ≥ threshold, anchors defined, ≥1 fires | 1 | Confident: frequency + context confirmed |
 
-**Worked example — `imp_abundance`:**
+**Evidence table records** `total_freq`, `term_count`, and `threshold` for every match, enabling sensitivity analysis to tune thresholds after the initial run.
+
+**Worked example — `eco_marine` (threshold=3):**
+
+| Scenario | Mentions | Binary | Rationale |
+|----------|----------|--------|-----------|
+| "marine" appears once in intro context | 1 | 0 | Below threshold |
+| "marine" ×2 + "ocean" ×1 | 3 | 1 | Meets threshold |
+| "marine" ×5 + "sea" ×3 + "ocean" ×2 | 10 | 1 | Central topic |
+
+**Worked example — `imp_abundance` (threshold=2, with anchors):**
 
 - **Terms:** "abundance", "population size", "population decline", "population trend"
 - **Anchors:** "population", "decline", "increase", "change", "trend", "status"
 
-| Scenario | Terms fired | Anchors fired | Score | Binary |
-|----------|-------------|---------------|-------|--------|
-| Paper mentions only "abundance" | 1 | 0 | 1 | 0 |
-| Paper mentions "abundance" + "population" + "decline" | 1 | 2 | 3 | 1 |
-| Paper mentions "population decline" + "population trend" | 2 | 3 | 5 | 1 |
+| Scenario | total_freq | Anchors fired | Binary | Rationale |
+|----------|-----------|---------------|--------|-----------|
+| "abundance" ×1 | 1 | 0 | 0 | Below threshold + no anchors |
+| "abundance" ×3 | 3 | 0 | 0 | Meets threshold but no anchor context |
+| "abundance" ×2 + "population" + "decline" | 2 | 2 | 1 | Meets threshold + anchors confirm |
 
 In all cases, the evidence table records the matched terms and anchors, enabling review of borderline (score=1) cases.
 
@@ -180,6 +193,9 @@ In all cases, the evidence table records the matched terms and anchors, enabling
 | "abundance" in any ecology context → `imp_abundance` | Common ecological term | Require anchor co-occurrence ("population", "decline", "trend") |
 | Parasitology papers → `pr_disease` | "parasite", "infection" are disease terms | **No change needed** — parasitology IS disease/health research |
 | "MPA" in address → `gear_mit_time_area` | Institutional abbreviations | Section stripping removes front matter/affiliations |
+| "marine" once in freshwater paper → `eco_marine` | Single mention sufficient under old binary matching | Universal frequency thresholds: `eco_marine` requires ≥3 mentions |
+| `Ne\b` matching "determine" → `imp_genetic` | Raw regex compiled case-insensitive | Raw regex terms (containing `\b`) now compiled case-sensitive |
+| Inline "Abstract:" not stripped (MDPI, Frontiers) | Regex required standalone line | Updated regex accepts inline `Abstract:` / `ABSTRACT.` formats |
 
 ---
 
@@ -193,11 +209,14 @@ Enables team validation of extraction results without doubling the column count 
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `literature_id` | string | Links to main database |
+| `literature_id` | string | Links to main database (DOI or `orphan_<idx>` for orphan rows) |
+| `title` | string | Paper title (first 200 chars) for quick identification |
 | `column` | string | Schema column name (e.g., `eco_marine`, `imp_abundance`) |
 | `binary` | int | Final 0/1 classification |
-| `score` | int | Term + anchor count |
-| `matched_terms` | string | Semicolon-separated list of search terms that fired |
+| `total_freq` | int | Total mention count across all matching terms |
+| `term_count` | int | Number of distinct terms that fired |
+| `threshold` | int | Column's configured threshold for binary=1 |
+| `matched_terms` | string | Semicolon-separated, with frequency: `"marine(5); ocean(18)"` |
 | `matched_anchors` | string | Semicolon-separated list of anchor terms that fired (impact only) |
 | `context` | string | ~160-character text snippet around first match |
 
@@ -205,7 +224,8 @@ Enables team validation of extraction results without doubling the column count 
 
 - **eco_, pr_, gear_, imp_** — all produce evidence (ambiguous terms, potential false positives)
 - **Species columns (sp_)** — do NOT need evidence (unambiguous binomial name matches)
-- **Discipline columns (d_)** — already exist, not extracted here
+- **Discipline columns (d_)** — produce evidence (same frequency-based scoring)
+- **Ocean basin columns (b_)** — produce evidence (geographic terms can appear in references)
 
 ### Scale
 
@@ -262,7 +282,7 @@ Regex extraction of target species/groups from gear context (e.g., "tuna longlin
 
 ### Processing model
 
-- **Single-pass:** each paper's PDF extracted once, all 4 schemas matched simultaneously
+- **Single-pass:** each paper's PDF extracted once, all 6 schemas matched simultaneously
 - **Multiprocessing:** `Pool` with `imap_unordered` for parallel paper processing
 - **Checkpointing:** progress saved every 500 papers (configurable) for resume capability
 
@@ -297,7 +317,9 @@ python3 scripts/extract_schema_columns.py --workers 11 --resume
 
 ## Initial Validation Results
 
-*200-paper dry run, 2015–2022 sample*
+*200-paper dry run, 2015–2022 sample (pre-frequency-threshold, simple binary matching)*
+
+**Note:** These rates predate the switch to frequency-based scoring. Expected reductions with thresholds: eco_marine 83%→~47%, pr_fishing_commercial 29.5%→~8.5%. Full updated rates pending next extraction run.
 
 ### Hit rates
 
@@ -364,3 +386,9 @@ python3 scripts/extract_schema_columns.py --workers 11 --resume
 | Title-word disambiguation for collisions | 13.7% of (author, year) keys have multiple PDFs | 2026-03-10 |
 | No evidence for species columns | Binomial name matches are unambiguous | 2026-03-10 |
 | Wildcards expand with `\b` prefix | Prevents "fish*" matching "selfish" or "starfish" | 2026-03-10 |
+| Universal frequency-based scoring for all schemas | Single-mention false positives (e.g. "marine" once in freshwater paper); per-column thresholds tuneable | 2026-03-12 |
+| PDF-only extraction (no title/abstract fallback) | Title/abstract too short for reliable frequency scoring; papers without PDFs get all zeros | 2026-03-12 |
+| Raw regex case-sensitive compilation | `Ne\b` was matching "ne" in "determine" with IGNORECASE | 2026-03-12 |
+| Inline Abstract regex fix | MDPI/Frontiers use `Abstract:` inline, not standalone line; improved coverage 53%→74% | 2026-03-12 |
+| Discipline columns (d_) added | 19 research area columns, enabling Schiffman et al. 2020 comparison and cross-validation | 2026-03-12 |
+| Ocean basin columns (b_) added | 9 basins, complements existing geographic extraction pipeline (author country, study location) | 2026-03-12 |
