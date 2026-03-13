@@ -716,15 +716,30 @@ CREATE TABLE literature_review (
 ### 3.2 Discipline Columns (8 binary)
 
 ``` sql
-ALTER TABLE literature_review ADD COLUMN d_biology_health BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN d_behaviour_sensory BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN d_trophic_ecology BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN d_genetics_genomics BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN d_movement_spatial BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN d_fisheries_management BOOLEAN DEFAULT FALSE;
-ALTER TABLE literature_review ADD COLUMN d_conservation_policy BOOLEAN DEFAULT FALSE;
+-- 8 broad disciplines (original schema)
+ALTER TABLE literature_review ADD COLUMN d_biology BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_behaviour BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_trophic BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_genetics BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_movement BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_fisheries BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_conservation BOOLEAN DEFAULT FALSE;
 ALTER TABLE literature_review ADD COLUMN d_data_science BOOLEAN DEFAULT FALSE;
+-- 11 finer-grained disciplines (added 2026-03-12)
+ALTER TABLE literature_review ADD COLUMN d_husbandry BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_paleontology BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_taxonomy BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_physiology BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_reproductive BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_biomechanics BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_sensory BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_ecotourism BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_human_dimensions BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_immunology BOOLEAN DEFAULT FALSE;
+ALTER TABLE literature_review ADD COLUMN d_toxicology BOOLEAN DEFAULT FALSE;
 ```
+
+**Note:** All 19 discipline columns are now auto-populated by `extract_schema_columns.py` using frequency-based keyword matching from PDF text. The 8 broad disciplines map to the original EEA classification; the 11 finer-grained disciplines were added to enable comparison with Schiffman et al. 2020 and to capture research areas not covered by the original 8.
 
 ### 3.3 Author Institution Nations (\~197 binary)
 
@@ -821,17 +836,21 @@ ALTER TABLE literature_review ADD COLUMN st_whole_genome_sequencing BOOLEAN DEFA
 **Total Columns:**
 
 -   Core metadata: \~22 columns (includes n_studies, paper_id)
--   Disciplines: 8 columns
--   Author nations: 197 columns
--   Ocean basins: 9 columns
--   Sub-basins: 66 columns (optional)
+-   Disciplines: 19 columns (8 broad + 11 finer-grained)
+-   Ecosystem: 20 columns (eco\_)
+-   Pressure: 23 columns (pr\_)
+-   Gear: 18 columns (gear\_)
+-   Impact: 17 columns (imp\_)
+-   Author nations: 197 columns (auth\_)
+-   Ocean basins: 9 columns (b\_)
+-   Sub-basins: 66 columns (optional, sb\_)
 -   Superorders: 3 columns (includes Holocephali for chimaeras)
--   Species: 1,200 columns
+-   Species: 1,200 columns (sp\_)
 -   Method families: 35 columns (estimated from Phase 2)
 -   Analysis approaches (parent techniques): 60 columns (estimated from Phase 2)
 -   Subtechniques: 25 columns (estimated from Phase 2)
 
-**TOTAL: \~1,625 columns** (or \~1,559 without sub-basins)
+**TOTAL: \~1,714 columns** (or \~1,648 without sub-basins)
 
 **Method Hierarchy Reference:** See `outputs/method_hierarchy_table.csv` for current 3-tier classification
 
