@@ -774,10 +774,8 @@ def init_worker(pdf_index: dict[tuple[str, int], list[Path]]) -> None:
     """Initialise global state for each worker process."""
     global _COMPILED_SCHEMAS, _PDF_INDEX
     _COMPILED_SCHEMAS = [
-        ("eco", compile_schema(ECO)),
-        ("pr", compile_schema(PR)),
-        ("gear", compile_schema(GEAR)),
-        ("imp", compile_schema(IMP)),
+        (schema.prefix.rstrip("_"), compile_schema(schema))
+        for schema in ALL_SCHEMAS
     ]
     _PDF_INDEX = pdf_index
 
