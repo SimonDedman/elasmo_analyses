@@ -18,8 +18,6 @@
         table.dataTable { font-size: 13px; }
         table.dataTable thead th { background-color: #34495e; color: white; }
         table.dataTable tbody tr:hover { background-color: #ebf5fb !important; }
-        table.dataTable tfoot th { padding: 8px; }
-        table.dataTable tfoot select, table.dataTable tfoot input { width: 100%; padding: 4px; font-size: 12px; }
         .oa-gold { background: #f1c40f; color: #000; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
         .oa-green { background: #27ae60; color: #fff; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
         .oa-hybrid { background: #3498db; color: #fff; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
@@ -30,8 +28,6 @@
         .priority-2 { color: #e67e22; }
         .priority-3 { color: #f39c12; }
         .priority-4 { color: #95a5a6; }
-        .status-unavailable { color: #e74c3c; }
-        .status-failed { color: #c0392b; font-weight: bold; }
         a.doi-link { color: #2980b9; text-decoration: none; }
         a.doi-link:hover { text-decoration: underline; }
         .instructions { background: #e8f6f3; border-left: 4px solid #1abc9c; padding: 15px; margin-bottom: 20px; }
@@ -40,7 +36,6 @@
         .legend-items { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
         .updated { color: #95a5a6; font-size: 12px; margin-top: 20px; }
         #loading { text-align: center; padding: 40px; font-size: 18px; color: #7f8c8d; }
-        /* Click-tracking styles */
         tr.clicked-row { opacity: 0.4; }
         tr.clicked-row td { text-decoration: line-through; color: #aaa !important; }
         .btn-clicked { background: #27ae60; color: white; border: none; padding: 3px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; }
@@ -48,9 +43,17 @@
         .btn-clicked:hover { background: #229954; }
         .btn-unclicked:hover { background: #2980b9; }
         #user-bar { background: #2c3e50; color: white; padding: 10px 20px; margin: -20px -20px 20px -20px; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: center; }
-        #user-bar select, #user-bar input { padding: 5px 10px; border-radius: 4px; border: 1px solid #546e7a; font-size: 14px; }
+        #user-bar select { padding: 5px 10px; border-radius: 4px; border: 1px solid #546e7a; font-size: 14px; }
         .sync-status { font-size: 12px; color: #95a5a6; }
-        .hide-clicked-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #2c3e50; margin-bottom: 15px; }
+        .hide-clicked-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #2c3e50; }
+        /* Filter bar */
+        .filter-bar { background: #eaf2f8; border: 1px solid #d4e6f1; border-radius: 6px; padding: 15px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
+        .filter-group { display: flex; flex-direction: column; gap: 4px; }
+        .filter-group label { font-size: 12px; font-weight: bold; color: #2c3e50; text-transform: uppercase; }
+        .filter-group select { padding: 6px 10px; border-radius: 4px; border: 1px solid #bdc3c7; font-size: 13px; min-width: 120px; }
+        #filterJournal { min-width: 350px; }
+        .filter-group .btn-clear { background: #e74c3c; color: white; border: none; padding: 7px 14px; border-radius: 4px; font-size: 12px; cursor: pointer; }
+        .filter-group .btn-clear:hover { background: #c0392b; }
     </style>
 </head>
 <body>
@@ -69,7 +72,7 @@
                 </select>
             </div>
             <div>
-                <span class="sync-status" id="syncStatus">Click tracking: local only (Google Sheet not configured)</span>
+                <span class="sync-status" id="syncStatus">Connecting...</span>
             </div>
         </div>
 
@@ -87,12 +90,40 @@
             <strong>Instructions:</strong>
             <ol style="margin: 10px 0 0 0; padding-left: 20px;">
                 <li><strong>Select your name</strong> above so clicks are attributed to you</li>
-                <li><strong>Filter by journal</strong> using the footer filter to work through one journal at a time</li>
+                <li><strong>Filter by journal</strong> using the dropdown below to work through one journal at a time</li>
                 <li>Click the <strong>DOI link</strong> to open the paper (opens in new tab)</li>
                 <li>Click <strong>"Mark clicked"</strong> after you have downloaded or attempted the PDF</li>
                 <li>Clicked papers are greyed out and shared with the team via Google Sheet</li>
                 <li><strong>Note:</strong> The master list is only updated after PDFs are ingested on Simon's machine</li>
             </ol>
+        </div>
+
+        <div class="filter-bar" id="filterBar" style="display:none;">
+            <div class="filter-group">
+                <label>Journal</label>
+                <select id="filterJournal"><option value="">All journals</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Year</label>
+                <select id="filterYear"><option value="">All years</option></select>
+            </div>
+            <div class="filter-group">
+                <label>OA Status</label>
+                <select id="filterOA"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Priority</label>
+                <select id="filterPriority"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
+                <label>&nbsp;</label>
+                <button class="btn-clear" onclick="clearAllFilters()">Clear filters</button>
+            </div>
+            <div class="filter-group hide-clicked-toggle" style="margin-left: auto;">
+                <label style="font-size: 13px; text-transform: none; font-weight: normal;">
+                    <input type="checkbox" id="hideClicked"> Hide clicked papers
+                </label>
+            </div>
         </div>
 
         <div class="legend">
@@ -105,21 +136,12 @@
                 <span><span class="oa-closed">closed</span> Paywalled</span>
                 <span><span class="oa-unknown">unknown</span> Unknown</span>
             </div>
-            <div style="margin-top: 10px; font-size: 12px; color: #7f8c8d;">
-                <strong>Priority:</strong> 1 = Recent+DOI, 2 = 2000s+DOI, 3 = Key journals, 4 = No DOI
-            </div>
-        </div>
-
-        <div class="hide-clicked-toggle">
-            <label><input type="checkbox" id="hideClicked"> Hide clicked papers</label>
-            <span style="color: #95a5a6;">(greyed out rows will be hidden from view)</span>
         </div>
 
         <div id="loading">Loading papers data...</div>
 
         <table id="papersTable" class="display" style="width:100%; display:none;">
             <thead><tr><th>DOI</th><th>Title</th><th>Authors</th><th>Year</th><th>Journal</th><th>OA Status</th><th>Priority</th><th>Action</th></tr></thead>
-            <tfoot><tr><th></th><th></th><th></th><th>Year</th><th>Journal</th><th>OA</th><th>Pri</th><th></th></tr></tfoot>
             <tbody></tbody>
         </table>
 
@@ -132,33 +154,25 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
-    // =========================================================================
-    // CONFIGURATION
-    // =========================================================================
-
-    // Google Apps Script Web App URL — replace with your deployed URL
-    // See SETUP_GOOGLE_SHEET.md for instructions
     var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
 
-    // =========================================================================
-    // Click tracking state
-    // =========================================================================
-
-    var clickedDois = {};  // { doi: { by: 'Simon', at: '2026-03-17T10:00:00Z' } }
-    var paperData = [];    // raw JSON data
+    var clickedDois = {};
+    var paperData = [];
     var dataTable = null;
 
     function escapeHtml(text) {
         if (!text) return '';
-        return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    function escapeAttr(text) {
+        if (!text) return '';
+        return String(text).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
     }
 
     // =========================================================================
-    // Google Sheet sync (or localStorage fallback)
+    // Google Sheet sync
     // =========================================================================
-
     function loadClickedState() {
-        // Try Google Sheet first, fall back to localStorage
         if (GOOGLE_SHEET_URL) {
             $('#syncStatus').text('Syncing with team...');
             $.getJSON(GOOGLE_SHEET_URL + '?action=getAll', function(response) {
@@ -167,7 +181,7 @@
                     response.data.forEach(function(row) {
                         clickedDois[row.doi] = { by: row.by, at: row.at };
                     });
-                    $('#syncStatus').text('Synced with team (' + Object.keys(clickedDois).length + ' clicked)');
+                    $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)');
                 }
                 applyClickedState();
             }).fail(function() {
@@ -180,213 +194,190 @@
             applyClickedState();
         }
     }
-
     function loadLocalState() {
-        try {
-            var stored = localStorage.getItem('eea_clicked_dois');
-            if (stored) clickedDois = JSON.parse(stored);
-        } catch(e) {}
+        try { var s = localStorage.getItem('eea_clicked_dois'); if (s) clickedDois = JSON.parse(s); } catch(e) {}
     }
-
     function saveLocalState() {
-        try {
-            localStorage.setItem('eea_clicked_dois', JSON.stringify(clickedDois));
-        } catch(e) {}
+        try { localStorage.setItem('eea_clicked_dois', JSON.stringify(clickedDois)); } catch(e) {}
     }
-
     function markClicked(doi, title) {
         var user = $('#userName').val() || 'Anonymous';
         var now = new Date().toISOString();
         clickedDois[doi] = { by: user, at: now };
         saveLocalState();
         applyClickedState();
-
-        // Sync to Google Sheet
         if (GOOGLE_SHEET_URL) {
-            $.post(GOOGLE_SHEET_URL, JSON.stringify({
-                action: 'markClicked',
-                doi: doi,
-                title: title,
-                by: user,
-                at: now
-            }), function() {
-                $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)');
-            }, 'json').fail(function() {
-                $('#syncStatus').text('Sync failed (saved locally)');
-            });
+            $.post(GOOGLE_SHEET_URL, JSON.stringify({ action:'markClicked', doi:doi, title:title, by:user, at:now }),
+                function() { $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)'); }, 'json')
+             .fail(function() { $('#syncStatus').text('Sync failed (saved locally)'); });
         }
     }
-
     function unmarkClicked(doi) {
         delete clickedDois[doi];
         saveLocalState();
         applyClickedState();
-
         if (GOOGLE_SHEET_URL) {
-            $.post(GOOGLE_SHEET_URL, JSON.stringify({
-                action: 'unmark',
-                doi: doi
-            }), function() {
-                $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)');
-            }, 'json');
+            $.post(GOOGLE_SHEET_URL, JSON.stringify({ action:'unmark', doi:doi }),
+                function() { $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)'); }, 'json');
         }
     }
-
     function applyClickedState() {
         if (!dataTable) return;
-        var count = Object.keys(clickedDois).length;
-        $('#stat-clicked').text(count.toLocaleString());
-
-        // Update each row
+        $('#stat-clicked').text(Object.keys(clickedDois).length.toLocaleString());
         dataTable.rows().every(function() {
-            var rowData = this.data();
-            var doi = $(rowData[0]).text() || '';  // extract DOI text from HTML
+            var d = this.data();
+            var doi = $(d[0]).text() || '';
             var node = this.node();
-
             if (clickedDois[doi]) {
                 $(node).addClass('clicked-row');
-                // Update action button
                 var info = clickedDois[doi];
-                rowData[7] = '<button class="btn-clicked" onclick="unmarkClicked(\'' + escapeAttr(doi) + '\')" title="Clicked by ' + escapeHtml(info.by) + ' at ' + info.at + '">Undo</button>';
+                d[7] = '<button class="btn-clicked" onclick="unmarkClicked(\'' + escapeAttr(doi) + '\')" title="By ' + escapeHtml(info.by) + ' at ' + info.at + '">Undo</button>';
             } else {
                 $(node).removeClass('clicked-row');
-                var title = rowData[1] || '';
-                rowData[7] = '<button class="btn-unclicked" onclick="markClicked(\'' + escapeAttr(doi) + '\', \'' + escapeAttr(title) + '\')">Mark clicked</button>';
+                d[7] = '<button class="btn-unclicked" onclick="markClicked(\'' + escapeAttr(doi) + '\',\'' + escapeAttr(d[1]) + '\')">Mark clicked</button>';
             }
-            this.data(rowData);
+            this.data(d);
         });
-
-        // Apply hide filter if checked
         applyHideFilter();
     }
 
-    function escapeAttr(text) {
-        if (!text) return '';
-        return text.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    }
-
+    // =========================================================================
+    // Filters
+    // =========================================================================
+    var hideFilterFn = null;
     function applyHideFilter() {
+        // Remove old filter
+        if (hideFilterFn) {
+            var idx = $.fn.dataTable.ext.search.indexOf(hideFilterFn);
+            if (idx >= 0) $.fn.dataTable.ext.search.splice(idx, 1);
+            hideFilterFn = null;
+        }
         if ($('#hideClicked').is(':checked')) {
-            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-                var row = dataTable.row(dataIndex).node();
-                return !$(row).hasClass('clicked-row');
-            });
-        } else {
-            $.fn.dataTable.ext.search = $.fn.dataTable.ext.search.filter(function(fn) {
-                return false;  // clear custom filters
-            });
+            hideFilterFn = function(settings, data, dataIndex) {
+                return !$(dataTable.row(dataIndex).node()).hasClass('clicked-row');
+            };
+            $.fn.dataTable.ext.search.push(hideFilterFn);
         }
         dataTable.draw();
     }
+    function clearAllFilters() {
+        $('#filterJournal').val('').trigger('change');
+        $('#filterYear').val('').trigger('change');
+        $('#filterOA').val('').trigger('change');
+        $('#filterPriority').val('').trigger('change');
+    }
 
     // =========================================================================
-    // Custom sort order for OA status
+    // OA sort
     // =========================================================================
-
-    var oaOrder = {'gold': 1, 'green': 2, 'hybrid': 3, 'bronze': 4, 'unknown': 5, 'closed': 6};
+    var oaOrder = {'gold':1,'green':2,'hybrid':3,'bronze':4,'unknown':5,'closed':6};
     $.fn.dataTable.ext.type.order['oa-status-pre'] = function(d) {
-        var text = $('<div>').html(d).text().trim().toLowerCase();
-        return oaOrder[text] || 99;
+        return oaOrder[$('<div>').html(d).text().trim().toLowerCase()] || 99;
     };
 
     // =========================================================================
-    // Initialise
+    // Init
     // =========================================================================
-
     $(document).ready(function() {
-        // Load saved username
         var savedUser = localStorage.getItem('eea_username');
         if (savedUser) $('#userName').val(savedUser);
-        $('#userName').on('change', function() {
-            localStorage.setItem('eea_username', $(this).val());
-        });
-
-        // Hide-clicked toggle
-        $('#hideClicked').on('change', function() {
-            applyHideFilter();
-        });
+        $('#userName').on('change', function() { localStorage.setItem('eea_username', $(this).val()); });
+        $('#hideClicked').on('change', function() { applyHideFilter(); });
 
         $.getJSON('papers_data.json', function(data) {
             paperData = data;
             var total = data.length;
-            var oaStatuses = ['gold','green','hybrid','bronze'];
-            var oaAvailable = data.filter(function(r) { return oaStatuses.indexOf(r.oa_status) >= 0; }).length;
-            var closed = total - oaAvailable;
+            var oaOpen = ['gold','green','hybrid','bronze'];
+            var oaAvail = data.filter(function(r){ return oaOpen.indexOf(r.oa_status)>=0; }).length;
             $('#stat-total').text(total.toLocaleString());
-            $('#stat-oa').text(oaAvailable.toLocaleString());
-            $('#stat-closed').text(closed.toLocaleString());
+            $('#stat-oa').text(oaAvail.toLocaleString());
+            $('#stat-closed').text((total - oaAvail).toLocaleString());
 
+            // Build journal counts for dropdown (use journal_clean, fall back to journal)
+            var journalCounts = {};
+            data.forEach(function(r) {
+                var j = (r.journal_clean || r.journal || 'Unknown').trim();
+                journalCounts[j] = (journalCounts[j] || 0) + 1;
+            });
+            // Sort by count descending
+            var journalsSorted = Object.keys(journalCounts).sort(function(a,b){ return journalCounts[b] - journalCounts[a]; });
+            journalsSorted.forEach(function(j) {
+                $('#filterJournal').append('<option value="' + escapeHtml(j) + '">' + escapeHtml(j) + ' (' + journalCounts[j] + ')</option>');
+            });
+
+            // Year dropdown with counts
+            var yearCounts = {};
+            data.forEach(function(r) { var y = r.year || 'Unknown'; yearCounts[y] = (yearCounts[y]||0)+1; });
+            Object.keys(yearCounts).sort(function(a,b){return b-a;}).forEach(function(y) {
+                $('#filterYear').append('<option value="' + y + '">' + y + ' (' + yearCounts[y] + ')</option>');
+            });
+
+            // OA dropdown with counts
+            var oaCounts = {};
+            data.forEach(function(r) { var o = r.oa_status||'unknown'; oaCounts[o]=(oaCounts[o]||0)+1; });
+            ['gold','green','hybrid','bronze','closed','unknown'].forEach(function(o) {
+                if (oaCounts[o]) $('#filterOA').append('<option value="' + o + '">' + o + ' (' + oaCounts[o] + ')</option>');
+            });
+
+            // Priority dropdown with counts
+            var priCounts = {};
+            data.forEach(function(r) { var p = r.priority_group||'?'; priCounts[p]=(priCounts[p]||0)+1; });
+            Object.keys(priCounts).sort().forEach(function(p) {
+                $('#filterPriority').append('<option value="' + p + '">' + p + ' (' + priCounts[p] + ')</option>');
+            });
+
+            // Build table data — use journal_clean for the Journal column
             var tableData = data.map(function(r) {
                 var doiLink = r.doi ? '<a href="https://doi.org/' + encodeURIComponent(r.doi) + '" target="_blank" class="doi-link">' + escapeHtml(r.doi) + '</a>' : '';
-                var oaClass = ['gold','green','hybrid','bronze','closed'].includes(r.oa_status) ? 'oa-' + r.oa_status : 'oa-unknown';
-                var oaBadge = '<span class="' + oaClass + '">' + (r.oa_status || 'unknown') + '</span>';
-                if (r.oa_url) oaBadge = '<a href="' + r.oa_url + '" target="_blank">' + oaBadge + '</a>';
+                var oaClass = ['gold','green','hybrid','bronze','closed'].includes(r.oa_status) ? 'oa-'+r.oa_status : 'oa-unknown';
+                var oaBadge = '<span class="'+oaClass+'">' + (r.oa_status||'unknown') + '</span>';
+                if (r.oa_url) oaBadge = '<a href="'+r.oa_url+'" target="_blank">'+oaBadge+'</a>';
                 var authors = escapeHtml(r.authors);
-                var authorsShort = authors.length > 60 ? authors.substring(0,60) + '...' : authors;
-                var actionBtn = '<button class="btn-unclicked" onclick="markClicked(\'' + escapeAttr(r.doi) + '\', \'' + escapeAttr(r.title) + '\')">Mark clicked</button>';
-                return [
-                    doiLink,
-                    escapeHtml(r.title),
-                    '<span title="' + authors + '">' + authorsShort + '</span>',
-                    r.year,
-                    escapeHtml(r.journal),
-                    oaBadge,
-                    '<span class="priority-' + r.priority_group + '">' + r.priority_group + '</span>',
-                    actionBtn
-                ];
+                var authorsShort = authors.length > 60 ? authors.substring(0,60)+'...' : authors;
+                var journal = escapeHtml(r.journal_clean || r.journal || 'Unknown');
+                var actionBtn = '<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(r.doi)+'\',\''+escapeAttr(r.title)+'\')">Mark clicked</button>';
+                return [ doiLink, escapeHtml(r.title), '<span title="'+authors+'">'+authorsShort+'</span>',
+                         r.year, journal, oaBadge, '<span class="priority-'+r.priority_group+'">'+r.priority_group+'</span>', actionBtn ];
             });
 
             $('#loading').hide();
             $('#papersTable').show();
+            $('#filterBar').show();
 
             dataTable = $('#papersTable').DataTable({
                 data: tableData,
                 pageLength: 50,
-                lengthMenu: [[25, 50, 100, 250, -1], [25, 50, 100, 250, "All"]],
-                order: [[6, 'asc'], [3, 'desc']],
+                lengthMenu: [[25,50,100,250,-1],[25,50,100,250,"All"]],
+                order: [[6,'asc'],[3,'desc']],
                 columnDefs: [
-                    { type: 'oa-status', targets: 5 },
-                    { orderable: false, targets: 7 }
+                    { type:'oa-status', targets:5 },
+                    { orderable:false, targets:7 }
                 ],
                 dom: 'Blfrtip',
-                buttons: [{ extend: 'csv', text: 'Export CSV', filename: 'remaining_papers_' + new Date().toISOString().slice(0,10) }],
-                initComplete: function() {
-                    var oaSortOrder = ['gold', 'green', 'hybrid', 'bronze', 'unknown', 'closed'];
-                    this.api().columns([3, 5, 6]).every(function() {
-                        var column = this;
-                        var colIdx = column.index();
-                        var select = $('<select><option value="">All</option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                column.search(val ? '^' + val + '$' : '', true, false).draw();
-                            });
-                        var values = [];
-                        column.data().unique().each(function(d) {
-                            var text = $('<div>').html(d).text().trim();
-                            if (text) values.push(text);
-                        });
-                        if (colIdx === 5) {
-                            values.sort(function(a, b) {
-                                return oaSortOrder.indexOf(a.toLowerCase()) - oaSortOrder.indexOf(b.toLowerCase());
-                            });
-                        } else {
-                            values.sort();
-                        }
-                        values.forEach(function(text) {
-                            select.append('<option value="' + text + '">' + text + '</option>');
-                        });
-                    });
-                    // Journal column: text input filter
-                    var jCol = this.api().column(4);
-                    $('<input type="text" placeholder="Filter journal...">')
-                        .appendTo($(jCol.footer()).empty())
-                        .on('keyup change', function() { jCol.search(this.value).draw(); });
-
-                    // Load clicked state after table is ready
-                    loadClickedState();
-                }
+                buttons: [{ extend:'csv', text:'Export CSV', filename:'remaining_papers_'+new Date().toISOString().slice(0,10) }]
             });
+
+            // Wire up filter dropdowns to DataTable column search
+            $('#filterJournal').on('change', function() {
+                var val = $(this).val();
+                // Match exact journal name in the column (strip the count suffix from the option value)
+                dataTable.column(4).search(val ? '^'+$.fn.dataTable.util.escapeRegex(val)+'$' : '', true, false).draw();
+            });
+            $('#filterYear').on('change', function() {
+                var val = $(this).val();
+                dataTable.column(3).search(val ? '^'+$.fn.dataTable.util.escapeRegex(val)+'$' : '', true, false).draw();
+            });
+            $('#filterOA').on('change', function() {
+                var val = $(this).val();
+                dataTable.column(5).search(val ? val : '', false, false).draw();
+            });
+            $('#filterPriority').on('change', function() {
+                var val = $(this).val();
+                dataTable.column(6).search(val ? '^'+$.fn.dataTable.util.escapeRegex(val)+'$' : '', true, false).draw();
+            });
+
+            // Load clicked state
+            loadClickedState();
         }).fail(function() {
             $('#loading').html('Error loading data. Please ensure papers_data.json is in the same directory.');
         });
