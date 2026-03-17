@@ -40,30 +40,61 @@
         .legend-items { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
         .updated { color: #95a5a6; font-size: 12px; margin-top: 20px; }
         #loading { text-align: center; padding: 40px; font-size: 18px; color: #7f8c8d; }
+        /* Click-tracking styles */
+        tr.clicked-row { opacity: 0.4; }
+        tr.clicked-row td { text-decoration: line-through; color: #aaa !important; }
+        .btn-clicked { background: #27ae60; color: white; border: none; padding: 3px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; }
+        .btn-unclicked { background: #3498db; color: white; border: none; padding: 3px 10px; border-radius: 3px; font-size: 11px; cursor: pointer; }
+        .btn-clicked:hover { background: #229954; }
+        .btn-unclicked:hover { background: #2980b9; }
+        #user-bar { background: #2c3e50; color: white; padding: 10px 20px; margin: -20px -20px 20px -20px; border-radius: 8px 8px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        #user-bar select, #user-bar input { padding: 5px 10px; border-radius: 4px; border: 1px solid #546e7a; font-size: 14px; }
+        .sync-status { font-size: 12px; color: #95a5a6; }
+        .hide-clicked-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #2c3e50; margin-bottom: 15px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🦈 EEA Data Panel - Remaining Papers to Download</h1>
+        <div id="user-bar">
+            <div>
+                <label>Your name: </label>
+                <select id="userName">
+                    <option value="">-- Select --</option>
+                    <option value="Simon">Simon Dedman</option>
+                    <option value="David RG">David Ruiz-Garcia</option>
+                    <option value="Guuske">Guuske Tiktak</option>
+                    <option value="Elena">Elena Fernandez-Corredor</option>
+                    <option value="David S">David Shiffman</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div>
+                <span class="sync-status" id="syncStatus">Click tracking: local only (Google Sheet not configured)</span>
+            </div>
+        </div>
+
+        <h1>EEA Data Panel - Remaining Papers to Download</h1>
         <p class="subtitle">Papers that still need to be acquired for the systematic review</p>
-        
+
         <div class="stats">
             <div class="stat-box"><div class="stat-number" id="stat-total">...</div><div class="stat-label">Total Remaining</div></div>
-            <div class="stat-box"><div class="stat-number" id="stat-priority1">...</div><div class="stat-label">Priority 1 (Recent)</div></div>
+            <div class="stat-box"><div class="stat-number" id="stat-clicked">0</div><div class="stat-label">Clicked (team)</div></div>
             <div class="stat-box"><div class="stat-number" id="stat-oa">...</div><div class="stat-label">Open Access Available</div></div>
             <div class="stat-box"><div class="stat-number" id="stat-closed">...</div><div class="stat-label">Closed Access</div></div>
         </div>
-        
+
         <div class="instructions">
-            <strong>📋 Instructions:</strong>
-            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
-                <li>Use the <strong>search box</strong> to find papers by any text</li>
-                <li>Use <strong>dropdown filters</strong> in footer for Year, OA Status, Priority, Status</li>
-                <li>Click <strong>column headers</strong> to sort</li>
-                <li>Click <strong>Export CSV</strong> to download filtered view</li>
-            </ul>
+            <strong>Instructions:</strong>
+            <ol style="margin: 10px 0 0 0; padding-left: 20px;">
+                <li><strong>Select your name</strong> above so clicks are attributed to you</li>
+                <li><strong>Filter by journal</strong> using the footer filter to work through one journal at a time</li>
+                <li>Click the <strong>DOI link</strong> to open the paper (opens in new tab)</li>
+                <li>Click <strong>"Mark clicked"</strong> after you have downloaded or attempted the PDF</li>
+                <li>Clicked papers are greyed out and shared with the team via Google Sheet</li>
+                <li><strong>Note:</strong> The master list is only updated after PDFs are ingested on Simon's machine</li>
+            </ol>
         </div>
-        
+
         <div class="legend">
             <div class="legend-title">Open Access Status:</div>
             <div class="legend-items">
@@ -78,56 +109,221 @@
                 <strong>Priority:</strong> 1 = Recent+DOI, 2 = 2000s+DOI, 3 = Key journals, 4 = No DOI
             </div>
         </div>
-        
+
+        <div class="hide-clicked-toggle">
+            <label><input type="checkbox" id="hideClicked"> Hide clicked papers</label>
+            <span style="color: #95a5a6;">(greyed out rows will be hidden from view)</span>
+        </div>
+
         <div id="loading">Loading papers data...</div>
-        
+
         <table id="papersTable" class="display" style="width:100%; display:none;">
-            <thead><tr><th>DOI</th><th>Title</th><th>Authors</th><th>Year</th><th>Journal</th><th>OA Status</th><th>Priority</th><th>Status</th><th>Responsible</th></tr></thead>
-            <tfoot><tr><th></th><th></th><th></th><th>Year</th><th>Journal</th><th>OA</th><th>Pri</th><th>Status</th><th></th></tr></tfoot>
+            <thead><tr><th>DOI</th><th>Title</th><th>Authors</th><th>Year</th><th>Journal</th><th>OA Status</th><th>Priority</th><th>Action</th></tr></thead>
+            <tfoot><tr><th></th><th></th><th></th><th>Year</th><th>Journal</th><th>OA</th><th>Pri</th><th></th></tr></tfoot>
             <tbody></tbody>
         </table>
-        
-        <p class="updated">Last updated: 2026-01-29 | <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub</a></p>
+
+        <p class="updated">Last updated: 2026-03-17 | <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub</a> | Data: <a href="papers_data.json">papers_data.json</a></p>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
+    // =========================================================================
+    // CONFIGURATION
+    // =========================================================================
+
+    // Google Apps Script Web App URL — replace with your deployed URL
+    // See SETUP_GOOGLE_SHEET.md for instructions
+    var GOOGLE_SHEET_URL = '';  // e.g. 'https://script.google.com/macros/s/XXXX/exec'
+
+    // =========================================================================
+    // Click tracking state
+    // =========================================================================
+
+    var clickedDois = {};  // { doi: { by: 'Simon', at: '2026-03-17T10:00:00Z' } }
+    var paperData = [];    // raw JSON data
+    var dataTable = null;
+
     function escapeHtml(text) {
         if (!text) return '';
         return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
-    // Custom sort order for OA status: gold > green > hybrid > bronze > unknown > closed
+    // =========================================================================
+    // Google Sheet sync (or localStorage fallback)
+    // =========================================================================
+
+    function loadClickedState() {
+        // Try Google Sheet first, fall back to localStorage
+        if (GOOGLE_SHEET_URL) {
+            $('#syncStatus').text('Syncing with team...');
+            $.getJSON(GOOGLE_SHEET_URL + '?action=getAll', function(response) {
+                if (response && response.data) {
+                    clickedDois = {};
+                    response.data.forEach(function(row) {
+                        clickedDois[row.doi] = { by: row.by, at: row.at };
+                    });
+                    $('#syncStatus').text('Synced with team (' + Object.keys(clickedDois).length + ' clicked)');
+                }
+                applyClickedState();
+            }).fail(function() {
+                $('#syncStatus').text('Sheet sync failed, using local cache');
+                loadLocalState();
+                applyClickedState();
+            });
+        } else {
+            loadLocalState();
+            applyClickedState();
+        }
+    }
+
+    function loadLocalState() {
+        try {
+            var stored = localStorage.getItem('eea_clicked_dois');
+            if (stored) clickedDois = JSON.parse(stored);
+        } catch(e) {}
+    }
+
+    function saveLocalState() {
+        try {
+            localStorage.setItem('eea_clicked_dois', JSON.stringify(clickedDois));
+        } catch(e) {}
+    }
+
+    function markClicked(doi, title) {
+        var user = $('#userName').val() || 'Anonymous';
+        var now = new Date().toISOString();
+        clickedDois[doi] = { by: user, at: now };
+        saveLocalState();
+        applyClickedState();
+
+        // Sync to Google Sheet
+        if (GOOGLE_SHEET_URL) {
+            $.post(GOOGLE_SHEET_URL, JSON.stringify({
+                action: 'markClicked',
+                doi: doi,
+                title: title,
+                by: user,
+                at: now
+            }), function() {
+                $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)');
+            }, 'json').fail(function() {
+                $('#syncStatus').text('Sync failed (saved locally)');
+            });
+        }
+    }
+
+    function unmarkClicked(doi) {
+        delete clickedDois[doi];
+        saveLocalState();
+        applyClickedState();
+
+        if (GOOGLE_SHEET_URL) {
+            $.post(GOOGLE_SHEET_URL, JSON.stringify({
+                action: 'unmark',
+                doi: doi
+            }), function() {
+                $('#syncStatus').text('Synced (' + Object.keys(clickedDois).length + ' clicked)');
+            }, 'json');
+        }
+    }
+
+    function applyClickedState() {
+        if (!dataTable) return;
+        var count = Object.keys(clickedDois).length;
+        $('#stat-clicked').text(count.toLocaleString());
+
+        // Update each row
+        dataTable.rows().every(function() {
+            var rowData = this.data();
+            var doi = $(rowData[0]).text() || '';  // extract DOI text from HTML
+            var node = this.node();
+
+            if (clickedDois[doi]) {
+                $(node).addClass('clicked-row');
+                // Update action button
+                var info = clickedDois[doi];
+                rowData[7] = '<button class="btn-clicked" onclick="unmarkClicked(\'' + escapeAttr(doi) + '\')" title="Clicked by ' + escapeHtml(info.by) + ' at ' + info.at + '">Undo</button>';
+            } else {
+                $(node).removeClass('clicked-row');
+                var title = rowData[1] || '';
+                rowData[7] = '<button class="btn-unclicked" onclick="markClicked(\'' + escapeAttr(doi) + '\', \'' + escapeAttr(title) + '\')">Mark clicked</button>';
+            }
+            this.data(rowData);
+        });
+
+        // Apply hide filter if checked
+        applyHideFilter();
+    }
+
+    function escapeAttr(text) {
+        if (!text) return '';
+        return text.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    }
+
+    function applyHideFilter() {
+        if ($('#hideClicked').is(':checked')) {
+            $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+                var row = dataTable.row(dataIndex).node();
+                return !$(row).hasClass('clicked-row');
+            });
+        } else {
+            $.fn.dataTable.ext.search = $.fn.dataTable.ext.search.filter(function(fn) {
+                return false;  // clear custom filters
+            });
+        }
+        dataTable.draw();
+    }
+
+    // =========================================================================
+    // Custom sort order for OA status
+    // =========================================================================
+
     var oaOrder = {'gold': 1, 'green': 2, 'hybrid': 3, 'bronze': 4, 'unknown': 5, 'closed': 6};
     $.fn.dataTable.ext.type.order['oa-status-pre'] = function(d) {
         var text = $('<div>').html(d).text().trim().toLowerCase();
         return oaOrder[text] || 99;
     };
 
+    // =========================================================================
+    // Initialise
+    // =========================================================================
+
     $(document).ready(function() {
+        // Load saved username
+        var savedUser = localStorage.getItem('eea_username');
+        if (savedUser) $('#userName').val(savedUser);
+        $('#userName').on('change', function() {
+            localStorage.setItem('eea_username', $(this).val());
+        });
+
+        // Hide-clicked toggle
+        $('#hideClicked').on('change', function() {
+            applyHideFilter();
+        });
+
         $.getJSON('papers_data.json', function(data) {
-            // Compute stats dynamically from data
+            paperData = data;
             var total = data.length;
-            var priority1 = data.filter(function(r) { return r.priority === 1; }).length;
             var oaStatuses = ['gold','green','hybrid','bronze'];
             var oaAvailable = data.filter(function(r) { return oaStatuses.indexOf(r.oa_status) >= 0; }).length;
             var closed = total - oaAvailable;
             $('#stat-total').text(total.toLocaleString());
-            $('#stat-priority1').text(priority1.toLocaleString());
             $('#stat-oa').text(oaAvailable.toLocaleString());
             $('#stat-closed').text(closed.toLocaleString());
 
             var tableData = data.map(function(r) {
                 var doiLink = r.doi ? '<a href="https://doi.org/' + encodeURIComponent(r.doi) + '" target="_blank" class="doi-link">' + escapeHtml(r.doi) + '</a>' : '';
                 var oaClass = ['gold','green','hybrid','bronze','closed'].includes(r.oa_status) ? 'oa-' + r.oa_status : 'oa-unknown';
-                var oaBadge = '<span class="' + oaClass + '">' + r.oa_status + '</span>';
+                var oaBadge = '<span class="' + oaClass + '">' + (r.oa_status || 'unknown') + '</span>';
                 if (r.oa_url) oaBadge = '<a href="' + r.oa_url + '" target="_blank">' + oaBadge + '</a>';
                 var authors = escapeHtml(r.authors);
                 var authorsShort = authors.length > 60 ? authors.substring(0,60) + '...' : authors;
+                var actionBtn = '<button class="btn-unclicked" onclick="markClicked(\'' + escapeAttr(r.doi) + '\', \'' + escapeAttr(r.title) + '\')">Mark clicked</button>';
                 return [
                     doiLink,
                     escapeHtml(r.title),
@@ -135,26 +331,28 @@
                     r.year,
                     escapeHtml(r.journal),
                     oaBadge,
-                    '<span class="priority-' + r.priority + '">' + r.priority + '</span>',
-                    '<span class="' + (r.status === 'unavailable' ? 'status-unavailable' : r.status === 'failed' ? 'status-failed' : '') + '">' + r.status + '</span>',
-                    ''
+                    '<span class="priority-' + r.priority_group + '">' + r.priority_group + '</span>',
+                    actionBtn
                 ];
             });
-            
+
             $('#loading').hide();
             $('#papersTable').show();
-            
-            var table = $('#papersTable').DataTable({
+
+            dataTable = $('#papersTable').DataTable({
                 data: tableData,
                 pageLength: 50,
                 lengthMenu: [[25, 50, 100, 250, -1], [25, 50, 100, 250, "All"]],
                 order: [[6, 'asc'], [3, 'desc']],
-                columnDefs: [{ type: 'oa-status', targets: 5 }],
+                columnDefs: [
+                    { type: 'oa-status', targets: 5 },
+                    { orderable: false, targets: 7 }
+                ],
                 dom: 'Blfrtip',
-                buttons: [{ extend: 'csv', text: '📥 Export CSV', filename: 'remaining_papers_' + new Date().toISOString().slice(0,10) }],
+                buttons: [{ extend: 'csv', text: 'Export CSV', filename: 'remaining_papers_' + new Date().toISOString().slice(0,10) }],
                 initComplete: function() {
                     var oaSortOrder = ['gold', 'green', 'hybrid', 'bronze', 'unknown', 'closed'];
-                    this.api().columns([3, 5, 6, 7]).every(function() {
+                    this.api().columns([3, 5, 6]).every(function() {
                         var column = this;
                         var colIdx = column.index();
                         var select = $('<select><option value="">All</option></select>')
@@ -168,7 +366,6 @@
                             var text = $('<div>').html(d).text().trim();
                             if (text) values.push(text);
                         });
-                        // Custom sort for OA status column (index 5)
                         if (colIdx === 5) {
                             values.sort(function(a, b) {
                                 return oaSortOrder.indexOf(a.toLowerCase()) - oaSortOrder.indexOf(b.toLowerCase());
@@ -180,14 +377,18 @@
                             select.append('<option value="' + text + '">' + text + '</option>');
                         });
                     });
+                    // Journal column: text input filter
                     var jCol = this.api().column(4);
-                    $('<input type="text" placeholder="Filter...">')
+                    $('<input type="text" placeholder="Filter journal...">')
                         .appendTo($(jCol.footer()).empty())
                         .on('keyup change', function() { jCol.search(this.value).draw(); });
+
+                    // Load clicked state after table is ready
+                    loadClickedState();
                 }
             });
         }).fail(function() {
-            $('#loading').html('Error loading data. Please refresh the page.');
+            $('#loading').html('Error loading data. Please ensure papers_data.json is in the same directory.');
         });
     });
     </script>
