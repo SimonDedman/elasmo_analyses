@@ -79,5 +79,36 @@ Some items appear in both the gear schema and the technique taxonomy. This is in
 
 **Principle:** Gear describes *what physical equipment was used in the water*. Technique describes *what analytical method was applied to the data*. A paper can use longline gear and apply CPUE standardisation technique to the resulting data.
 
+## Columns Added 2026-03-16
+
+New gear types from ISSCFG classification and mitigation devices from BMIS (Bycatch Management Information System) review.
+
+### Additional Gear Types
+
+| Column | Label | Search Terms | Threshold | Notes |
+|--------|-------|-------------|-----------|-------|
+| `gear_dredge` | Dredge | dredge, towed dredge, scallop dredge, clam dredge, oyster dredge, hydraulic dredge | 1 | ISSCFG code 04. Previously absent; relevant for benthic elasmobranch bycatch studies. |
+| `gear_trawl_beam` | Beam Trawl | beam trawl, beam-trawl | 1 | Subtype of `gear_trawl`. Separated because beam trawl bycatch composition differs substantially from otter trawl. |
+| `gear_trawl_otter` | Otter Trawl | otter trawl, otter-trawl | 1 | Subtype of `gear_trawl`. Most common demersal trawl type in elasmobranch bycatch literature. |
+
+### Additional Mitigation Devices (from BMIS)
+
+| Column | Label | Search Terms | Threshold | Notes |
+|--------|-------|-------------|-----------|-------|
+| `gear_mit_weak_hook` | Weak Hook | weak hook, corrodible hook, designed to straighten | 1 | Hook designed to release large non-target species (sharks, rays) while retaining target species. From BMIS. |
+| `gear_mit_line_weight` | Line Weighting | line weight\*, weighted branchline, leaded swivel, sliding lead, lumo lead, sink rate | 1 | Branchline weighting to increase sink rate, reducing seabird and shark interactions. From BMIS. |
+| `gear_mit_setting` | Setting Practice | night set\*, deep set\*, deep-set buoy gear, side-set\*, underwater set\* | 1 | Operational modifications to when/how gear is deployed. From BMIS. |
+| `gear_mit_pinger` | Pinger/Acoustic Alarm | pinger, acoustic alarm, acoustic deterrent, porpoise alerting device, PAL | 1 | Acoustic devices attached to nets to deter marine mammals and elasmobranchs. From BMIS. |
+| `gear_mit_illumination` | Net Illumination | illuminat\* net, illuminat\* gillnet, LED net, net light\*, lightstick\*, light attract\* | 1 | Visual deterrents or attractants on nets. Distinct from `gear_mit_deterrent` (which covers shark-specific electronic/magnetic devices). From BMIS. |
+| `gear_mit_wire_leader` | Wire/Mono Leader | wire leader, monofilament leader, wire trace, nylon leader | 1 | Leader material affects shark catch and bite-off rates. From BMIS. |
+| `gear_mit_ghost` | Ghost Gear | ghost gear, ghost net, ALDFG, abandoned gear, lost gear, derelict gear, derelict fishing | 1 | Abandoned, lost, or otherwise discarded fishing gear. From BMIS. |
+
+### Updated Existing Column
+
+- **`gear_survey`**: Now also includes "diving survey" and "diver transect" as search terms, covering in-water visual survey methods alongside drone, ROV, and vessel-based surveys.
+
+**Rationale:** Dredge and trawl subtypes fill gaps in gear resolution identified via ISSCFG cross-referencing. The seven new mitigation columns cover the most commonly studied bycatch mitigation approaches catalogued in BMIS that were not already captured by `gear_mit_circle_hook`, `gear_mit_brd`, `gear_mit_deterrent`, `gear_mit_time_area`, or `gear_mit_handling`.
+
 ---
 *Draft created: 2026-03-10, revised with team feedback*
+*Updated: 2026-03-16, added 10 columns from ISSCFG and BMIS review*

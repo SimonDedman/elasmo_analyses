@@ -143,6 +143,10 @@ PR = SchemaCategory(prefix="pr_", columns=[
     BinaryColumn("pr_light", ["light pollution", "artificial light", "ALAN"], threshold=1),
     BinaryColumn("pr_electromagnetic", ["electromagnetic field", "EMF", "submarine cable", "electroreception interference"], threshold=1),
     BinaryColumn("pr_cumulative", ["cumulative impact", "multiple stressor*", "synergistic", "additive effect"], threshold=2),
+    # Added 2026-03-16 following Beukhof et al. (2026) comparison
+    BinaryColumn("pr_discarding", ["discard*", "discarding practice*", "high-grading", "slipping"], threshold=2),
+    BinaryColumn("pr_seabed_disturbance", ["seabed disturbance", "bottom disturbance", "benthic disturbance", "physical disturbance of the seabed", "sediment resuspension", "trawl impact on seabed", "habitat scraping"], threshold=1),
+    BinaryColumn("pr_visual_disturbance", ["visual disturbance", "vessel presence", "diver disturbance", "boat disturbance", "swimmer disturbance", "shadow effect"], threshold=1),
 ])
 
 # ---- Gear schema ----------------------------------------------------------
@@ -158,7 +162,10 @@ GEAR = SchemaCategory(prefix="gear_", columns=[
     BinaryColumn("gear_trap", ["trap", "pot", "fish trap", "drumline", "SMART drumline"], threshold=2),
     BinaryColumn("gear_net_other", ["cast net", "lift net", "scoop net", "fyke net", "pound net", "weir"], threshold=1),
     BinaryColumn("gear_harpoon", ["harpoon", "spearfish*", "spear gun"], threshold=1),
-    BinaryColumn("gear_survey", ["research vessel", "survey trawl", "BRUVs", "longline survey", "fishery-independent survey", "drone survey", "UAV survey", "ROV", "submersible"], threshold=2),
+    BinaryColumn("gear_dredge", ["dredge", "towed dredge", "scallop dredge", "clam dredge", "oyster dredge", "hydraulic dredge"], threshold=1),
+    BinaryColumn("gear_trawl_beam", ["beam trawl", "beam-trawl"], threshold=1),
+    BinaryColumn("gear_trawl_otter", ["otter trawl", "otter-trawl"], threshold=1),
+    BinaryColumn("gear_survey", ["research vessel", "survey trawl", "BRUVs", "longline survey", "fishery-independent survey", "drone survey", "UAV survey", "ROV", "submersible", "diving survey", "diver transect"], threshold=2),
     BinaryColumn("gear_pelagic", ["pelagic longline", "pelagic trawl", "midwater trawl"], threshold=1),
     BinaryColumn("gear_demersal", ["demersal longline", "bottom trawl", "demersal trawl", "bottom longline"], threshold=1),
     BinaryColumn("gear_artisanal", ["artisanal", "traditional gear", "small-scale", "hand-operated"], threshold=2),
@@ -168,6 +175,14 @@ GEAR = SchemaCategory(prefix="gear_", columns=[
     BinaryColumn("gear_mit_deterrent", ["shark deterrent", "SharkGuard", "shark guard", "electropositive", "Rare Earth", "EPM", "LED deterrent", "magnetic deterrent"], threshold=1),
     BinaryColumn("gear_mit_time_area", ["time-area closure", "spatial closure", "fishing closure", "seasonal closure", "MPA"], threshold=2),
     BinaryColumn("gear_mit_handling", ["safe release", "handling practice*", "live release", "post-release mortality", "PRM"], threshold=1),
+    # Added 2026-03-16 from BMIS (elasmobranch-relevant techniques)
+    BinaryColumn("gear_mit_weak_hook", ["weak hook", "corrodible hook", "designed to straighten"], threshold=1),
+    BinaryColumn("gear_mit_line_weight", ["line weight*", "weighted branchline", "leaded swivel", "sliding lead", "lumo lead", "sink rate"], threshold=1),
+    BinaryColumn("gear_mit_setting", ["night set*", "deep set*", "deep-set buoy gear", "side-set*", "underwater set*"], threshold=1),
+    BinaryColumn("gear_mit_pinger", ["pinger", "acoustic alarm", "acoustic deterrent", "porpoise alerting device", "PAL"], threshold=1),
+    BinaryColumn("gear_mit_illumination", ["illuminat* net", "illuminat* gillnet", "LED net", "net light*", "lightstick*", "light attract*"], threshold=1),
+    BinaryColumn("gear_mit_wire_leader", ["wire leader", "monofilament leader", "wire trace", "nylon leader"], threshold=1),
+    BinaryColumn("gear_mit_ghost", ["ghost gear", "ghost net", "ALDFG", "abandoned gear", "lost gear", "derelict gear", "derelict fishing"], threshold=1),
 ])
 
 # ---- Impact schema (with scoring/anchors) ---------------------------------
@@ -182,15 +197,20 @@ IMP = SchemaCategory(prefix="imp_", columns=[
     BinaryColumn("imp_distribution", ["distribution shift", "range shift", "range contraction", "habitat shift"], threshold=1),
     BinaryColumn("imp_behaviour_change", ["behavioural change", "behavioral change", "avoidance behaviour", "flight response", "habituation"], anchors=["change", "response"], threshold=2),
     BinaryColumn("imp_physiology_stress", ["cortisol", "lactate", "blood chemistry", "acid-base", "reflex impairment", "RAMP", "physiological stress"], threshold=1),
-    BinaryColumn("imp_injury", ["injury", "hooking injury", "scarring", "body condition index"], threshold=2),
+    BinaryColumn("imp_injury", ["injury", "hooking injury", "scarring", "body condition index", "entanglement", "entangled", "gear interaction", "net mark*"], threshold=2),
     BinaryColumn("imp_reproduction", ["reproductive output", "fecundity change", "reproductive failure"], threshold=1),
-    BinaryColumn("imp_growth", ["growth rate change", "stunting", "condition factor change"], anchors=["change", "impact"], threshold=2),
+    BinaryColumn("imp_growth", ["growth rate", "von Bertalanffy", "growth curve", "somatic growth", "condition factor", "Fulton", "length-weight", "stunting", "growth overfishing"], anchors=["change", "impact", "decline", "reduce", "affect", "alter", "slow", "decrease", "increase"], threshold=2),
     BinaryColumn("imp_genetic", ["genetic diversity", "effective population size", r"Ne\b", "bottleneck", "inbreeding"], threshold=2),
     BinaryColumn("imp_trophic", ["trophic level change", "dietary shift", "prey depletion", "mesopredator release"], threshold=1),
     BinaryColumn("imp_habitat_quality", ["habitat quality", "habitat suitability", "degradation index"], threshold=2),
     BinaryColumn("imp_contamination", ["contaminant load", "bioaccumulation", "biomagnification", "tissue concentration"], threshold=1),
     BinaryColumn("imp_economic", ["economic value", "fishery value", "tourism revenue", "willingness to pay", "WTP"], threshold=1),
     BinaryColumn("imp_social", ["livelihood", "food security", "human dimension", "attitude", "perception"], threshold=3),
+    # Added 2026-03-16 following Beukhof et al. (2026) comparison
+    BinaryColumn("imp_community_composition", ["community composition", "assemblage composition", "species composition", "community structure change", "assemblage shift"], anchors=["change", "shift", "impact", "alter*"], threshold=2),
+    BinaryColumn("imp_biodiversity", ["biodiversity loss", "species richness change", "diversity index", "Shannon", "Simpson", "evenness change", "species loss"], anchors=["change", "loss", "decline", "impact"], threshold=2),
+    BinaryColumn("imp_size_structure", ["size structure", "length frequency", "age structure", "size composition", "size distribution", "mean length", "maximum length", "length at maturity shift", "truncated size"], anchors=["change", "shift", "impact", "decline", "truncat*"], threshold=2),
+    BinaryColumn("imp_productivity", ["productivity", "recruitment", "yield per recruit", "spawning potential ratio", "SPR", "surplus production", "reproductive output"], anchors=["change", "decline", "impact", "reduce", "increase", "affect", "fishing", "overfishing"], threshold=2),
 ])
 
 # ---- Discipline schema (research area classification) --------------------
@@ -439,6 +459,63 @@ def extract_target_species(text: str) -> str | None:
             }:
                 found.add(g.lower())
     return ", ".join(sorted(found)) if found else None
+
+
+# ---------------------------------------------------------------------------
+# Elasmobranch bycatch inference
+# ---------------------------------------------------------------------------
+
+# Terms that indicate the target species IS an elasmobranch (not bycatch)
+_ELASMOBRANCH_TARGETS = {
+    "shark", "ray", "skate", "elasmobranch", "chondrichthyan",
+    "batoid", "rajiform", "carcharhinid", "dogfish", "catshark",
+    "hammerhead", "mako", "thresher", "porbeagle", "blue",
+    "bull", "tiger", "whitetip", "blacktip", "sandbar", "dusky",
+    "spinner", "silky", "lemon", "nurse", "leopard", "sevengill",
+    "sixgill", "angel", "guitarfish", "sawfish", "stingray",
+    "manta", "mobula", "eagle", "cownose", "thornback",
+    "shovelnose", "wedgefish", "torpedo", "electric",
+    "chimera", "chimaera", "ratfish", "elephantfish",
+    "whale", "basking", "megamouth", "wobbegong", "bamboo",
+    "epaulette", "zebra", "tawny", "grey", "white", "great",
+}
+
+
+def infer_is_bycatch(
+    pr_bycatch: int,
+    gear_target_species: str | None,
+) -> bool | None:
+    """Infer whether elasmobranchs are bycatch in this paper.
+
+    Logic:
+      - If pr_bycatch=1 AND a non-elasmobranch target species is
+        identified (e.g. "tuna fishery"), elasmobranchs are likely bycatch.
+      - If pr_bycatch=1 but target species is elasmobranch or missing,
+        return None (ambiguous).
+      - If pr_bycatch=0, return False.
+
+    Returns:
+        True  = elasmobranchs are likely bycatch in a non-elasmobranch fishery
+        False = no bycatch signal
+        None  = bycatch mentioned but target species unclear or is elasmobranch
+    """
+    if not pr_bycatch:
+        return False
+
+    if not gear_target_species:
+        return None  # bycatch mentioned but can't determine target
+
+    # Check if ANY extracted target term is non-elasmobranch
+    targets = {t.strip() for t in gear_target_species.split(",")}
+    non_elasmo_targets = set()
+    for t in targets:
+        # Check if this target word overlaps with known elasmobranch terms
+        if not any(elasmo in t or t in elasmo for elasmo in _ELASMOBRANCH_TARGETS):
+            non_elasmo_targets.add(t)
+
+    if non_elasmo_targets:
+        return True  # e.g. "tuna fishery" + bycatch = elasmos are bycatch
+    return None  # target species is elasmobranch, bycatch may refer to other taxa
 
 
 # ---------------------------------------------------------------------------
@@ -933,6 +1010,7 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
             "eco_1_guess": None, "eco_2_guess": None, "eco_3_guess": None,
             "depth_range": None, "depth_min_m": None, "depth_max_m": None,
             "gear_target_species": None,
+            "imp_is_bycatch": None,
             "imp_direction": "not stated", "imp_quantified": False,
             "imp_confidence": "{}",
         })
@@ -975,6 +1053,12 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
 
     # ---- Gear target species ----
     result["gear_target_species"] = extract_target_species(full_text)
+
+    # ---- Elasmobranch bycatch inference ----
+    result["imp_is_bycatch"] = infer_is_bycatch(
+        pr_bycatch=result.get("pr_bycatch", 0),
+        gear_target_species=result["gear_target_species"],
+    )
 
     # ---- Impact direction & quantification ----
     # Only assess if any impact column is flagged

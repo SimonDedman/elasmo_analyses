@@ -52,5 +52,18 @@ Classify each paper by the pressure/threat type(s) it addresses. Enables analyse
 5. **Depredation:** Added as separate category (`pr_depredation`). Not a human pressure per se but a human-induced shark behaviour. Relevant to recreational fishing, commercial fishing, and tourism/provisioning contexts. Keeping it separate avoids forcing it into an ill-fitting category.
 6. **False-positive-prone terms:** SST, dissolved oxygen, pH, "debris", "shipping", "boat", "range expansion" removed or tightened with anchor terms to reduce false positives.
 
+## Columns Added 2026-03-16
+
+Gap analysis against Beukhof et al. (2026) identified three pressure categories used in their framework that were missing from our schema.
+
+| Column | Label | Search Terms | Threshold | Notes |
+|--------|-------|-------------|-----------|-------|
+| `pr_discarding` | Discarding | discard\*, discarding practice\*, high-grading, slipping | 2 | Distinct from bycatch: captures the practice of returning unwanted catch (dead or alive). Beukhof et al. treat discarding as a separate pressure from incidental capture. |
+| `pr_seabed_disturbance` | Seabed Disturbance | seabed disturbance, bottom disturbance, benthic disturbance, physical disturbance of the seabed, sediment resuspension, trawl impact on seabed, habitat scraping | 1 | Physical disruption of benthic habitat by fishing gear. Complements `pr_habitat_loss` (which covers permanent loss/degradation) — this column targets acute mechanical disturbance. |
+| `pr_visual_disturbance` | Visual Disturbance | visual disturbance, vessel presence, diver disturbance, boat disturbance, swimmer disturbance, shadow effect | 1 | Non-acoustic anthropogenic disturbance from human presence. Distinct from `pr_pollution_noise` (acoustic) and `pr_tourism` (which captures tourism as a pressure context, not the specific sensory mechanism). |
+
+**Rationale:** Beukhof et al. (2026) use discarding, seabed disturbance, and visual disturbance as distinct pressure categories in their fisheries impact framework. Adding these ensures our schema can cross-reference with their classification and captures pressures that were previously subsumed into broader categories or missed entirely.
+
 ---
 *Draft created: 2026-03-10, revised with team feedback*
+*Updated: 2026-03-16, added 3 columns from Beukhof et al. comparison*

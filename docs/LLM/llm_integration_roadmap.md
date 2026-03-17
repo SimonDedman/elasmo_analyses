@@ -52,6 +52,38 @@ This structured data can be combined with RAG to enable:
 - Structured answers with citations
 - Trend analysis queries
 
+## User-Facing Search Interface Requirements
+
+*Based on feedback from David Ruiz Garcia (GitHub Issue #2, 2026-03-16) and project planning.*
+
+### Search scope
+- Users must be able to search across different parts of each paper: title, abstract, keywords, full text
+- Option to restrict searches to specific sections (as in academic search engines)
+
+### Query capabilities
+- Boolean operators: **AND**, **OR**, **NOT**
+- Phrase matching (quoted strings)
+- Wildcard/stem matching (e.g. `shark*` matches shark, sharks, sharking)
+
+### Filters
+- Year / year range
+- Geographic area (ocean basin, LME, FAO area)
+- Taxonomic group / species
+- Journal
+- Discipline (from `d_` schema columns)
+- Pressure type, gear type, impact type (from schema columns)
+
+### Frequency scoring controls
+- Option to adjust weight or threshold for term frequency when running searches
+- Transparency: show users the frequency score alongside binary classification
+
+### Output
+- Sortable, exportable results (CSV/Excel)
+- Paper-level detail with links to DOI
+- Aggregated summaries (counts by year, discipline, geography)
+
+---
+
 ## Future Development
 
 - [ ] Prototype with AnythingLLM
