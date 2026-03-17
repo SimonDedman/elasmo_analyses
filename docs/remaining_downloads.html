@@ -77,6 +77,10 @@
                 <select id="filterJournal"><option value="">All journals</option></select>
             </div>
             <div class="filter-group">
+                <label>Publisher</label>
+                <select id="filterPublisher"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
                 <label>Year</label>
                 <select id="filterYear"><option value="">All</option></select>
             </div>
@@ -125,7 +129,7 @@
         <div id="loading">Loading...</div>
 
         <table id="papersTable" class="display compact" style="width:100%; display:none;">
-            <thead><tr><th>DOI</th><th>Title</th><th>Authors</th><th>Year</th><th>Journal</th><th>OA</th><th>Pri</th><th></th></tr></thead>
+            <thead><tr><th>DOI</th><th>Title</th><th>Authors</th><th>Year</th><th>Journal</th><th>Publisher</th><th>OA</th><th>Pri</th><th></th></tr></thead>
             <tbody></tbody>
         </table>
 
@@ -174,9 +178,9 @@
         dataTable.rows().every(function(){
             var d=this.data(),doi=$(d[0]).text()||'',n=this.node();
             if(clickedDois[doi]){$(n).addClass('clicked-row');var i=clickedDois[doi];
-                d[7]='<button class="btn-clicked" onclick="unmarkClicked(\''+escapeAttr(doi)+'\')" title="'+escapeHtml(i.by)+' '+i.at+'">Undo</button>';
+                d[8]='<button class="btn-clicked" onclick="unmarkClicked(\''+escapeAttr(doi)+'\')" title="'+escapeHtml(i.by)+' '+i.at+'">Undo</button>';
             }else{$(n).removeClass('clicked-row');
-                d[7]='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(doi)+'\',\''+escapeAttr(d[1])+'\')">Mark</button>';
+                d[8]='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(doi)+'\',\''+escapeAttr(d[1])+'\')">Mark</button>';
             }
             this.data(d);
         });
@@ -188,7 +192,7 @@
         if($('#hideClicked').is(':checked')){hideFilterFn=function(s,d,di){return !$(dataTable.row(di).node()).hasClass('clicked-row');};$.fn.dataTable.ext.search.push(hideFilterFn);}
         dataTable.draw();
     }
-    function clearAllFilters(){$('#filterJournal,#filterYear,#filterOA,#filterPriority').val('').trigger('change');}
+    function clearAllFilters(){$('#filterJournal,#filterPublisher,#filterYear,#filterOA,#filterPriority').val('').trigger('change');}
     var oaOrder={'gold':1,'green':2,'hybrid':3,'bronze':4,'unknown':5,'closed':6};
     $.fn.dataTable.ext.type.order['oa-status-pre']=function(d){return oaOrder[$('<div>').html(d).text().trim().toLowerCase()]||99;};
 
@@ -203,10 +207,14 @@
             var oaAvail=data.filter(function(r){return oaOpen.indexOf(r.oa_status)>=0;}).length;
             $('#stat-total').text(total);$('#stat-oa').text(oaAvail);$('#stat-closed').text(total-oaAvail);
 
-            // Journal dropdown with counts
+            // Journal dropdown with counts — sorted alphabetically
             var jc={};data.forEach(function(r){var j=(r.journal_clean||r.journal||'Unknown').trim();jc[j]=(jc[j]||0)+1;});
-            Object.keys(jc).sort(function(a,b){return jc[b]-jc[a];}).forEach(function(j){
+            Object.keys(jc).sort(function(a,b){return a.localeCompare(b);}).forEach(function(j){
                 $('#filterJournal').append('<option value="'+escapeHtml(j)+'">'+escapeHtml(j)+' ('+jc[j]+')</option>');});
+            // Publisher dropdown with counts — sorted by count descending
+            var pubc={};data.forEach(function(r){var p=(r.publisher||'').trim();if(p)pubc[p]=(pubc[p]||0)+1;});
+            Object.keys(pubc).sort(function(a,b){return pubc[b]-pubc[a];}).forEach(function(p){
+                $('#filterPublisher').append('<option value="'+escapeHtml(p)+'">'+escapeHtml(p)+' ('+pubc[p]+')</option>');});
             // Year
             var yc={};data.forEach(function(r){var y=r.year||'?';yc[y]=(yc[y]||0)+1;});
             Object.keys(yc).sort(function(a,b){return b-a;}).forEach(function(y){
@@ -227,24 +235,26 @@
                 if(r.oa_url)ob='<a href="'+r.oa_url+'" target="_blank">'+ob+'</a>';
                 var au=escapeHtml(r.authors),aus=au.length>50?au.substring(0,50)+'...':au;
                 var jn=escapeHtml(r.journal_clean||r.journal||'');
+                var pub=escapeHtml(r.publisher||'');
                 var ab='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(r.doi)+'\',\''+escapeAttr(r.title)+'\')">Mark</button>';
-                return[dl,escapeHtml(r.title),'<span title="'+au+'">'+aus+'</span>',r.year,jn,ob,
+                return[dl,escapeHtml(r.title),'<span title="'+au+'">'+aus+'</span>',r.year,jn,pub,ob,
                     '<span class="priority-'+r.priority_group+'">'+r.priority_group+'</span>',ab];
             });
 
             $('#loading').hide();$('#papersTable').show();
             dataTable=$('#papersTable').DataTable({
                 data:tableData,pageLength:100,lengthMenu:[[50,100,250,-1],[50,100,250,"All"]],
-                order:[[6,'asc'],[3,'desc']],
-                columnDefs:[{type:'oa-status',targets:5},{orderable:false,targets:7},{width:'60px',targets:7}],
+                order:[[7,'asc'],[3,'desc']],
+                columnDefs:[{type:'oa-status',targets:6},{orderable:false,targets:8},{width:'60px',targets:8}],
                 dom:'Blfrtip',
                 buttons:[{extend:'csv',text:'CSV',filename:'remaining_'+new Date().toISOString().slice(0,10)}]
             });
 
             $('#filterJournal').on('change',function(){var v=$(this).val();dataTable.column(4).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
+            $('#filterPublisher').on('change',function(){var v=$(this).val();dataTable.column(5).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
             $('#filterYear').on('change',function(){var v=$(this).val();dataTable.column(3).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
-            $('#filterOA').on('change',function(){var v=$(this).val();dataTable.column(5).search(v||'',false,false).draw();});
-            $('#filterPriority').on('change',function(){var v=$(this).val();dataTable.column(6).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
+            $('#filterOA').on('change',function(){var v=$(this).val();dataTable.column(6).search(v||'',false,false).draw();});
+            $('#filterPriority').on('change',function(){var v=$(this).val();dataTable.column(7).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
             loadClickedState();
         }).fail(function(){$('#loading').html('Error loading papers_data.json');});
     });
