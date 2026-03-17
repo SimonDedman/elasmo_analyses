@@ -1359,6 +1359,16 @@ Based on discipline analysis incorporating:
 - Cons: Hosting costs, maintenance burden, traffic generation needed
 - Structure: Searchable database, interactive visualizations, auto-updating trends
 
+**Search Interface Requirements (all options):**
+Whichever hosting option is chosen, the search interface should support:
+- Section-specific search (title, abstract, keywords, full text)
+- Boolean operators (AND, OR, NOT)
+- Filters by year, geographic area, taxonomic group, journal, discipline, pressure, gear, impact
+- Adjustable frequency/threshold controls for term scoring
+- Exportable results (CSV/Excel) with DOI links
+- Aggregated summaries (counts by year, discipline, geography)
+See also: `docs/LLM/llm_integration_roadmap.md` for detailed requirements.
+
 ### Long-Term (2028+)
 
 **Automation Pipeline:**
@@ -1443,39 +1453,36 @@ https://www.amazon.com/Shark-Research-Technologies-Applications-Laboratory-ebook
 
 ## Appendices
 
-### Appendix A: Template Spreadsheet Structure
+### Appendix A: Extraction Schema (123 binary columns + 5 derived fields)
 
-**Tab 1: Discipline Data**
-| Column | Description | Example |
-|--------|-------------|---------|
-| Discipline | Major field | "Biology & Ecology" |
-| Subdiscipline | Specific area | "Age & Growth" |
-| Technique | Method name | "Bomb radiocarbon dating" |
-| Synonyms | Alternate terms | "14C dating, radiocarbon" |
-| Keywords | Search terms | "radiocarbon", "14C", "vertebrae dating" |
-| Review_Source | Umbrella review citation | "Smith et al. 2022" |
-| Primary_Papers | Key citations (2-5) | "Campana et al. 2002; Natanson & Cailliet 2010" |
-| Description | Brief explanation (1-2 sent) | "Uses bomb radiocarbon to validate age..." |
-| First_Applied | Year first used for elasmos | "1990s" |
-| Adoption_Level | Current usage | "Emerging/Common/Dominant/Rare" |
-| Trend_Class | Temporal classification | "Classic/Emerging/Cutting-Edge/Declining" |
-| Accuracy | Score 1-5 | 4 |
-| Cost_Effectiveness | Low/Med/High | "High cost" |
-| Accessibility | Score 1-5 | 2 (requires specialized lab) |
-| Code_Availability | Yes/Limited/No | "Limited" |
-| Code_Links | URLs | "github.com/..." |
-| Scalability | Limited/Mod/High | "Limited" |
-| Maturity | Experimental/Emerging/Established/Mature | "Established" |
-| Strengths | Expert assessment | "High accuracy, validates growth..." |
-| Weaknesses | Expert assessment | "Expensive, requires specialized..." |
-| Best_Practices | Expert recommendations | "Use with other validation methods..." |
-| Resources | Learning materials | "Campana 2001 review; OTN workshop" |
-| Key_Practitioners | Active researchers | "Lisa Natanson, Gregor Cailliet" |
-| Expert_Notes | Additional insights | "Most valuable for long-lived species..." |
+*Auto-generated from `scripts/extract_schema_columns.py`, 2026-03-17. Full column reference with keywords: see `docs/schema_proposals/extraction_logic.md`.*
 
-**Tab 2: Summary (Auto-populated from Discipline Tabs)**
-**Tab 3: Methodology Documentation**
-**Tab 4: References (All Citations)**
+**Summary by schema:**
+
+| Schema | Prefix | Columns | Matching mode | Description |
+|--------|--------|---------|---------------|-------------|
+| Ecosystem | `eco_` | 20 | Frequency-based | Habitat/environment (marine, coastal, reef, deep-sea, nursery, etc.) |
+| Pressure | `pr_` | 26 | Frequency-based | Threats and stressors (fishing types, climate, pollution, bycatch, etc.) |
+| Gear — types | `gear_` | 16 | Frequency-based | Fishing gear and survey methods (longline, trawl, gillnet, BRUV, etc.) |
+| Gear — mitigation | `gear_mit_` | 12 | Frequency-based | Mitigation devices (circle hooks, BRDs, deterrents, pingers, etc.) |
+| Impact | `imp_` | 21 | Frequency + anchors | Measured responses (mortality, abundance, CPUE, growth, genetic, etc.) |
+| Discipline | `d_` | 19 | Frequency-based | Research area (biology, genetics, movement, fisheries, conservation, etc.) |
+| Ocean basin | `b_` | 9 | Frequency-based | Study geography (N/S Atlantic, N/S Pacific, Indian, Med, Caribbean, etc.) |
+| **Total** | | **123** | | |
+
+**Derived (non-binary) fields:**
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `gear_target_species` | Free text | Extracted from "[X] fishery", "[X] trawl" patterns |
+| `imp_is_bycatch` | Boolean | True if `pr_bycatch=1` AND target species is non-elasmobranch |
+| `imp_direction` | Categorical | positive / negative / mixed / not stated |
+| `imp_quantified` | Boolean | Whether paper reports quantitative impact measures |
+| `depth_range` | Free text | Extracted depth range (e.g. "50-200 m") |
+
+**Extraction method:** PDF full-text keyword matching with frequency-based scoring and per-column thresholds. Each keyword is matched as a whole word (with wildcard support); a column is flagged =1 only when total keyword frequency meets or exceeds the threshold, and (for impact columns) at least one anchor term co-occurs. Every match is logged in `outputs/schema_extraction_evidence.csv` for auditability.
+
+**Validation references:** Beukhof et al. (2026) pressure/impact categories; FAO ISSCFG gear classification; BMIS bycatch mitigation database; Schiffman et al. (2020) discipline taxonomy.
 
 ### Appendix B: Email Templates
 

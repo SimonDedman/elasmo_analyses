@@ -46,7 +46,7 @@ literature_review.parquet          SharkPapers/YYYY/*.pdf
 | File | Purpose |
 |------|---------|
 | `outputs/literature_review.parquet` | Input: ~30,500 papers × 1,546 columns |
-| `outputs/literature_review_enriched.parquet` | Output: original + ~120 new columns (106 binary + metadata) |
+| `outputs/literature_review_enriched.parquet` | Output: original + ~140 new columns (123 binary + metadata) |
 | `outputs/schema_extraction_evidence.csv` | Evidence: one row per (paper, column) match |
 | `outputs/.schema_extraction_progress.json` | Checkpoint for resume capability |
 
@@ -135,9 +135,9 @@ The 80.5% rate reflects actual PDF availability for these years. Overall PDF cov
 | Category | Prefix | Columns | Matching mode | Description |
 |----------|--------|---------|---------------|-------------|
 | Ecosystem | `eco_` | 20 | Frequency-based | Habitat/environment classification |
-| Pressure | `pr_` | 23 | Frequency-based | Threats and stressors |
-| Gear | `gear_` | 18 | Frequency-based | Fishing gear and mitigation |
-| Impact | `imp_` | 17 | Frequency + anchors | Population/ecological impacts |
+| Pressure | `pr_` | 26 | Frequency-based | Threats and stressors |
+| Gear | `gear_` | 28 | Frequency-based | Fishing gear, survey methods, and mitigation |
+| Impact | `imp_` | 21 | Frequency + anchors | Population/ecological impacts |
 | Discipline | `d_` | 19 | Frequency-based | Research area classification |
 | Ocean basin | `b_` | 9 | Frequency-based | Study geography |
 
