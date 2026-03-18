@@ -114,36 +114,89 @@ def strip_accents(s: str) -> str:
     )
 
 
-def extract_doi_from_pdf(pdf_path: Path) -> str:
-    """Extract DOI from PDF using pdftotext.
+_REFS_HEADER_RE = re.compile(
+    r'^\s*(REFERENCES|References|Bibliography|BIBLIOGRAPHY|'
+    r'LITERATURE\s+CITED|Literature\s+Cited|WORKS\s+CITED)\s*$',
+    re.MULTILINE
+)
 
-    Searches the first page first (fast); if no DOI found, searches
-    the full document to catch DOIs in footers, headers, or references.
+
+def _strip_references(text: str) -> str:
+    """Remove everything after the references header."""
+    m = _REFS_HEADER_RE.search(text)
+    if m:
+        return text[:m.start()]
+    return text
+
+
+def _search_text_for_doi(text: str, allow_bare: bool = False) -> str:
+    """Search text for a DOI. Returns the first match or empty string.
+
+    If allow_bare is True, also matches bare '10.XXXX/...' patterns
+    (riskier — may match reference DOIs).
     """
-    for pages_arg in [["-l", "1"], []]:  # first page, then full doc
-        try:
+    # DOI: or doi: prefix
+    m = re.search(r'(?:doi|DOI)[\s:]*\s*(10\.\d{4,}/[^\s\]>)]+)', text)
+    if m:
+        return m.group(1).rstrip('.,;')
+    # https://doi.org/ URL
+    m = re.search(r'https?://(?:dx\.)?doi\.org/(10\.\d{4,}/[^\s\]>)]+)', text)
+    if m:
+        return m.group(1).rstrip('.,;')
+    # Bare DOI (only when explicitly allowed)
+    if allow_bare:
+        m = re.search(r'(10\.\d{4,}/[^\s\]>)]{3,})', text)
+        if m:
+            return m.group(1).rstrip('.,;')
+    return ""
+
+
+def extract_doi_from_pdf(pdf_path: Path) -> str:
+    """Extract the paper's own DOI from a PDF.
+
+    Strategy (in order):
+      1. First page — full search including bare DOIs (most papers
+         print their DOI on page 1).
+      2. Last page, excluding references section — catches DOIs in
+         footers/headers. Only doi:/doi.org patterns, not bare DOIs,
+         to avoid matching cited references.
+    """
+    # Pass 1: first page (fast, allow bare DOI)
+    try:
+        result = subprocess.run(
+            ["pdftotext", "-l", "1", str(pdf_path), "-"],
+            capture_output=True, text=True, timeout=15
+        )
+        if result.stdout:
+            doi = _search_text_for_doi(result.stdout, allow_bare=True)
+            if doi:
+                return doi
+    except (subprocess.TimeoutExpired, Exception):
+        pass
+
+    # Pass 2: last page only, references stripped, no bare DOIs
+    try:
+        # Get page count
+        result = subprocess.run(
+            ["pdfinfo", str(pdf_path)],
+            capture_output=True, text=True, timeout=10
+        )
+        pages_match = re.search(r'Pages:\s*(\d+)', result.stdout)
+        if pages_match:
+            last_page = pages_match.group(1)
             result = subprocess.run(
-                ["pdftotext"] + pages_arg + [str(pdf_path), "-"],
-                capture_output=True, text=True, timeout=30
+                ["pdftotext", "-f", last_page, "-l", last_page,
+                 str(pdf_path), "-"],
+                capture_output=True, text=True, timeout=15
             )
-            text = result.stdout
-            if not text:
-                continue
-            # Look for DOI: prefix first
-            m = re.search(r'(?:doi|DOI)[\s:]*\s*(10\.\d{4,}/[^\s\]>)]+)', text)
-            if m:
-                return m.group(1).rstrip('.,;')
-            # Look for https://doi.org/ URLs
-            m = re.search(r'https?://(?:dx\.)?doi\.org/(10\.\d{4,}/[^\s\]>)]+)', text)
-            if m:
-                return m.group(1).rstrip('.,;')
-            # Bare DOI pattern (only on first-page pass to avoid reference DOIs)
-            if pages_arg:  # first page only
-                m = re.search(r'(10\.\d{4,}/[^\s\]>)]{3,})', text)
-                if m:
-                    return m.group(1).rstrip('.,;')
-        except (subprocess.TimeoutExpired, Exception):
-            continue
+            if result.stdout:
+                text = _strip_references(result.stdout)
+                doi = _search_text_for_doi(text, allow_bare=False)
+                if doi:
+                    return doi
+    except (subprocess.TimeoutExpired, Exception):
+        pass
+
     return ""
 
 
