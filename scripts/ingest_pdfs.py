@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """
-Ingest PDFs from Elena's library and today's Downloads into SharkPapers.
+Ingest PDFs from any source into the SharkPapers library.
+
+Usage:
+    python scripts/ingest_pdfs.py /path/to/pdfs/           # ingest a directory
+    python scripts/ingest_pdfs.py file1.pdf file2.pdf       # ingest specific files
+    python scripts/ingest_pdfs.py                           # (no args) does nothing
 
 Matching strategy (in order):
-  1. Extract DOI from first page of PDF via pdftotext
+  1. Extract DOI from full PDF text via pdftotext (not just first page)
   2. Match author surname + year from filename
   3. Fuzzy title matching from filename (if enough words)
 
@@ -28,24 +33,12 @@ PDF_BASE = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers"
 PROJECT = Path("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
 VIZ_DATA = PROJECT / "outputs/viz_data.csv"
 LOG_DIR = PROJECT / "logs"
-LOG_FILE = LOG_DIR / "elena_downloads_ingest_log.txt"
+LOG_FILE = LOG_DIR / "ingest_pdfs_log.txt"
 
 # Tracking files
 PAPERS_DATA_JSON = PROJECT / "docs/papers_data.json"
 DOWNLOAD_TRACKER_DB = PROJECT / "database/download_tracker.db"
 DOWNLOAD_QUEUE_DB = PROJECT / "outputs/download_queue.db"
-
-ELENA_DIR = Path(
-    "/home/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
-    "/database/others_libraries/Elena/papers_elena"
-)
-DOWNLOADS_DIR = Path("/home/simon/Downloads")
-DOWNLOADS_FILES = [
-    "1-s2.0-S2351989425003580-main.pdf",
-    "Environmetrics - 2024 - Panunzi - Estimating the spatial distribution of the white shark in the Mediterranean Sea via an.pdf",
-    "aps.73.20240399.pdf",
-    "2023_art_faagoyanna.pdf",
-]
 
 
 # ---------------------------------------------------------------------------
@@ -122,33 +115,35 @@ def strip_accents(s: str) -> str:
 
 
 def extract_doi_from_pdf(pdf_path: Path) -> str:
-    """Extract DOI from first page of PDF using pdftotext."""
-    try:
-        result = subprocess.run(
-            ["pdftotext", "-l", "1", str(pdf_path), "-"],
-            capture_output=True, text=True, timeout=15
-        )
-        text = result.stdout
-        if not text:
-            return ""
-        # Common DOI patterns
-        # Look for DOI: prefix first
-        m = re.search(r'(?:doi|DOI)[\s:]*\s*(10\.\d{4,}/[^\s\]>)]+)', text)
-        if m:
-            doi = m.group(1).rstrip('.,;')
-            return doi
-        # Look for https://doi.org/ URLs
-        m = re.search(r'https?://(?:dx\.)?doi\.org/(10\.\d{4,}/[^\s\]>)]+)', text)
-        if m:
-            doi = m.group(1).rstrip('.,;')
-            return doi
-        # Bare DOI pattern
-        m = re.search(r'(10\.\d{4,}/[^\s\]>)]{3,})', text)
-        if m:
-            doi = m.group(1).rstrip('.,;')
-            return doi
-    except (subprocess.TimeoutExpired, Exception):
-        pass
+    """Extract DOI from PDF using pdftotext.
+
+    Searches the first page first (fast); if no DOI found, searches
+    the full document to catch DOIs in footers, headers, or references.
+    """
+    for pages_arg in [["-l", "1"], []]:  # first page, then full doc
+        try:
+            result = subprocess.run(
+                ["pdftotext"] + pages_arg + [str(pdf_path), "-"],
+                capture_output=True, text=True, timeout=30
+            )
+            text = result.stdout
+            if not text:
+                continue
+            # Look for DOI: prefix first
+            m = re.search(r'(?:doi|DOI)[\s:]*\s*(10\.\d{4,}/[^\s\]>)]+)', text)
+            if m:
+                return m.group(1).rstrip('.,;')
+            # Look for https://doi.org/ URLs
+            m = re.search(r'https?://(?:dx\.)?doi\.org/(10\.\d{4,}/[^\s\]>)]+)', text)
+            if m:
+                return m.group(1).rstrip('.,;')
+            # Bare DOI pattern (only on first-page pass to avoid reference DOIs)
+            if pages_arg:  # first page only
+                m = re.search(r'(10\.\d{4,}/[^\s\]>)]{3,})', text)
+                if m:
+                    return m.group(1).rstrip('.,;')
+        except (subprocess.TimeoutExpired, Exception):
+            continue
     return ""
 
 
@@ -535,60 +530,62 @@ def ingest_source(label: str, pdf_paths: list[Path],
 
 
 def main():
+    import sys
+
     LOG_DIR.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Parse arguments: directories or individual PDF files
+    args = sys.argv[1:]
+    if not args:
+        print("Usage: python scripts/ingest_pdfs.py /path/to/pdfs/ [file1.pdf ...]")
+        print("  Provide one or more directories or PDF file paths to ingest.")
+        sys.exit(0)
+
+    pdf_paths: list[Path] = []
+    for arg in args:
+        p = Path(arg)
+        if p.is_dir():
+            pdf_paths.extend(sorted(p.glob("*.pdf")))
+        elif p.is_file() and p.suffix.lower() == ".pdf":
+            pdf_paths.append(p)
+        else:
+            print(f"  WARNING: skipping {arg} (not a PDF or directory)")
+
+    if not pdf_paths:
+        print("No PDFs found in the given paths.")
+        sys.exit(0)
 
     print("Loading database from viz_data.csv...")
     all_rows, doi_lookup, author_year_lookup = load_database()
     print(f"  {len(all_rows):,} papers loaded, {len(doi_lookup):,} with DOIs")
 
-    # --- Source 1: Elena's papers ---
-    elena_pdfs = sorted(ELENA_DIR.glob("*.pdf"))
-    elena_ids, elena_names, elena_log = ingest_source(
-        "Elena's papers", elena_pdfs, doi_lookup, author_year_lookup, all_rows
+    source_label = ", ".join(args)
+    all_ids, all_names, all_log = ingest_source(
+        source_label, pdf_paths, doi_lookup, author_year_lookup, all_rows
     )
 
-    # --- Source 2: Today's downloads ---
-    download_pdfs = []
-    for fname in DOWNLOADS_FILES:
-        p = DOWNLOADS_DIR / fname
-        if p.exists():
-            download_pdfs.append(p)
-        else:
-            print(f"  WARNING: not found: {p}")
-    dl_ids, dl_names, dl_log = ingest_source(
-        "Today's Downloads", download_pdfs, doi_lookup, author_year_lookup, all_rows
-    )
-
-    # --- Combine and update tracking ---
-    all_ids = elena_ids | dl_ids
-    all_names = {**elena_names, **dl_names}
-
+    # --- Update tracking ---
     print(f"\n{'=' * 70}")
     print("Updating tracking systems...")
-    n_json = update_papers_data_json(all_ids, timestamp, "Elena + Downloads ingest")
+    n_json = update_papers_data_json(all_ids, timestamp, source_label)
     print(f"  papers_data.json: {n_json} entries removed (no longer missing)")
-    update_tracking_dbs(all_ids, all_names, timestamp, "Elena + Downloads ingest")
+    update_tracking_dbs(all_ids, all_names, timestamp, source_label)
 
     # --- Write log ---
     log_content = (
-        f"Elena & Downloads PDF Ingest Log\n"
+        f"PDF Ingest Log\n"
         f"Date: {timestamp}\n"
+        f"Source: {source_label}\n"
         f"{'=' * 70}\n\n"
-        f"Elena's papers ({len(elena_pdfs)} PDFs):\n"
-        f"  Acquired: {len(elena_ids)}\n\n"
-        f"Today's Downloads ({len(download_pdfs)} PDFs):\n"
-        f"  Acquired: {len(dl_ids)}\n\n"
-        f"Total acquired: {len(all_ids)}\n"
+        f"PDFs found: {len(pdf_paths)}\n"
+        f"Acquired: {len(all_ids)}\n"
         f"papers_data.json entries removed: {n_json}\n"
-        f"\n{'=' * 70}\n\nElena details:\n"
+        f"\n{'=' * 70}\n\nDetails:\n"
     )
     with open(LOG_FILE, "w") as f:
         f.write(log_content)
-        for line in elena_log:
-            f.write(line + "\n")
-        f.write(f"\n{'=' * 70}\n\nDownloads details:\n")
-        for line in dl_log:
+        for line in all_log:
             f.write(line + "\n")
 
     print(f"\n{'=' * 70}")
