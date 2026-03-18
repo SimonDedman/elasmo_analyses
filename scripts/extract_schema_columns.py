@@ -71,12 +71,16 @@ class BinaryColumn:
         threshold: Minimum total mention count (summed across all terms)
             required for binary=1.  Higher values filter out passing mentions.
             Default 2 means a single mention is insufficient.
+        case_sensitive_terms: Subset of ``terms`` that must be matched with
+            case-sensitive patterns (AC fix — acronym collision).  All other
+            terms remain case-insensitive.
     """
 
     name: str
     terms: list[str]
     anchors: list[str] | None = None
     threshold: int = 2  # default: require ≥2 total mentions
+    case_sensitive_terms: set[str] = field(default_factory=set)  # AC fix
 
 
 @dataclass
@@ -94,7 +98,8 @@ ECO = SchemaCategory(prefix="eco_", columns=[
     BinaryColumn("eco_marine", ["marine", "ocean", "sea", "saltwater"], threshold=3),
     BinaryColumn("eco_freshwater", ["freshwater", "freshwater river", "river shark", "river system", "riverine", "lake", "estuarine", "estuarin*", "brackish"], threshold=3),
     BinaryColumn("eco_brackish", ["estuar*", "brackish", "lagoon", "mangrove"], threshold=2),
-    BinaryColumn("eco_pelagic", ["pelagic", "open ocean", "oceanic", "offshore", "epipelagic", "mesopelagic", "bathypelagic"], threshold=2),
+    # AK fix: removed "offshore" — too ambiguous (matches any offshore context)
+    BinaryColumn("eco_pelagic", ["pelagic", "open ocean", "oceanic", "epipelagic", "mesopelagic", "bathypelagic"], threshold=2),
     BinaryColumn("eco_coastal", ["coastal", "neritic", "inshore", "nearshore", "continental shelf"], threshold=3),
     BinaryColumn("eco_demersal", ["demersal", "benthic", "bottom-dwelling", "epibenthic", "benthopelagic"], threshold=2),
     # Specific habitat terms — lower threshold
@@ -120,16 +125,18 @@ PR = SchemaCategory(prefix="pr_", columns=[
     # Generic fishing terms — high threshold (mentioned in passing constantly)
     BinaryColumn("pr_fishing_commercial", ["commercial fish*", "industrial fish*", "fishing pressure", "fishing mortality", "exploitation"], threshold=3),
     BinaryColumn("pr_fishing_artisanal", ["artisanal", "small-scale fish*", "subsistence fish*", "traditional fish*"], threshold=2),
-    BinaryColumn("pr_fishing_recreational", ["recreational fish*", "sport fish*", "game fish*", "catch-and-release", "angl*"], threshold=2),
-    BinaryColumn("pr_fishing_iuu", ["illegal fish*", "unreported", "unregulated", "IUU", "poach*"], threshold=2),
+    # AK fix: replaced wildcard "angl*" with three specific terms to avoid
+    # matching "anglophone", "angle", "angular" etc.
+    BinaryColumn("pr_fishing_recreational", ["recreational fish*", "sport fish*", "game fish*", "catch-and-release", "angling", "angler", "anglers"], threshold=2),
+    BinaryColumn("pr_fishing_iuu", ["illegal fish*", "unreported", "unregulated", "IUU", "poach*"], threshold=2, case_sensitive_terms={"IUU"}),  # AC fix
     BinaryColumn("pr_bycatch", ["bycatch", "by-catch", "incidental capture", "non-target", "discards"], threshold=2),
     BinaryColumn("pr_shark_finning", ["shark fin*", "finning", "fin trade"], threshold=1),
     BinaryColumn("pr_targeted_fishing", ["targeted shark fish*", "directed shark fish*", "shark fish*"], threshold=2),
     # Environmental pressures — moderate threshold (threat-list problem)
     BinaryColumn("pr_climate_change", ["climate change", "global warming", "ocean warming"], threshold=3),
     BinaryColumn("pr_ocean_acidification", ["ocean acidification", "(acidification AND pH)", "(acidification AND pCO2)"], threshold=1),
-    BinaryColumn("pr_hypoxia", ["hypoxia", "deoxygenation", "oxygen minimum zone", "OMZ"], threshold=1),
-    BinaryColumn("pr_pollution_chemical", ["pollut*", "contaminant*", "heavy metal*", "mercury", "PCB", "PFAS", "pesticide*"], threshold=3),
+    BinaryColumn("pr_hypoxia", ["hypoxia", "deoxygenation", "oxygen minimum zone", "OMZ"], threshold=1, case_sensitive_terms={"OMZ"}),  # AC fix
+    BinaryColumn("pr_pollution_chemical", ["pollut*", "contaminant*", "heavy metal*", "mercury", "PCB", "PFAS", "pesticide*"], threshold=3, case_sensitive_terms={"PCB", "PFAS"}),  # AC fix
     BinaryColumn("pr_pollution_plastic", ["plastic pollution", "microplastic*", "macroplastic*", "plastic ingestion", "plastic debris"], threshold=1),
     BinaryColumn("pr_pollution_noise", ["noise pollution", "anthropogenic noise", "shipping noise", "sonar", "acoustic disturbance"], threshold=1),
     BinaryColumn("pr_habitat_loss", ["habitat loss", "habitat degradation", "coastal development", "dredg*", "mangrove loss"], threshold=2),
@@ -140,8 +147,8 @@ PR = SchemaCategory(prefix="pr_", columns=[
     BinaryColumn("pr_aquaculture", ["aquaculture", "fish farm*", "mariculture"], threshold=1),
     BinaryColumn("pr_invasive", ["invasive species", "non-native species", "alien species"], threshold=1),
     BinaryColumn("pr_disease", ["disease", "pathogen", "parasite", "epizootic", "infection"], threshold=3),
-    BinaryColumn("pr_light", ["light pollution", "artificial light", "ALAN"], threshold=1),
-    BinaryColumn("pr_electromagnetic", ["electromagnetic field", "EMF", "submarine cable", "electroreception interference"], threshold=1),
+    BinaryColumn("pr_light", ["light pollution", "artificial light", "ALAN"], threshold=1, case_sensitive_terms={"ALAN"}),  # AC fix
+    BinaryColumn("pr_electromagnetic", ["electromagnetic field", "EMF", "submarine cable", "electroreception interference"], threshold=1, case_sensitive_terms={"EMF"}),  # AC fix
     BinaryColumn("pr_cumulative", ["cumulative impact", "multiple stressor*", "synergistic", "additive effect"], threshold=2),
     # Added 2026-03-16 following Beukhof et al. (2026) comparison
     BinaryColumn("pr_discarding", ["discard*", "discarding practice*", "high-grading", "slipping"], threshold=2),
@@ -165,38 +172,38 @@ GEAR = SchemaCategory(prefix="gear_", columns=[
     BinaryColumn("gear_dredge", ["dredge", "towed dredge", "scallop dredge", "clam dredge", "oyster dredge", "hydraulic dredge"], threshold=1),
     BinaryColumn("gear_trawl_beam", ["beam trawl", "beam-trawl"], threshold=1),
     BinaryColumn("gear_trawl_otter", ["otter trawl", "otter-trawl"], threshold=1),
-    BinaryColumn("gear_survey", ["research vessel", "survey trawl", "BRUVs", "longline survey", "fishery-independent survey", "drone survey", "UAV survey", "ROV", "submersible", "diving survey", "diver transect"], threshold=2),
+    BinaryColumn("gear_survey", ["research vessel", "survey trawl", "BRUVs", "longline survey", "fishery-independent survey", "drone survey", "UAV survey", "ROV", "submersible", "diving survey", "diver transect"], threshold=2, case_sensitive_terms={"BRUVs", "UAV", "ROV"}),  # AC fix
     BinaryColumn("gear_pelagic", ["pelagic longline", "pelagic trawl", "midwater trawl"], threshold=1),
     BinaryColumn("gear_demersal", ["demersal longline", "bottom trawl", "demersal trawl", "bottom longline"], threshold=1),
     BinaryColumn("gear_artisanal", ["artisanal", "traditional gear", "small-scale", "hand-operated"], threshold=2),
     # Mitigation — specific terms, low threshold
     BinaryColumn("gear_mit_circle_hook", ["circle hook", "non-offset hook"], threshold=1),
-    BinaryColumn("gear_mit_brd", ["bycatch reduction device", "BRD", "turtle excluder", "TED"], threshold=1),
-    BinaryColumn("gear_mit_deterrent", ["shark deterrent", "SharkGuard", "shark guard", "electropositive", "Rare Earth", "EPM", "LED deterrent", "magnetic deterrent"], threshold=1),
-    BinaryColumn("gear_mit_time_area", ["time-area closure", "spatial closure", "fishing closure", "seasonal closure", "MPA"], threshold=2),
-    BinaryColumn("gear_mit_handling", ["safe release", "handling practice*", "live release", "post-release mortality", "PRM"], threshold=1),
+    BinaryColumn("gear_mit_brd", ["bycatch reduction device", "BRD", "turtle excluder", "TED"], threshold=1, case_sensitive_terms={"BRD", "TED"}),  # AC fix
+    BinaryColumn("gear_mit_deterrent", ["shark deterrent", "SharkGuard", "shark guard", "electropositive", "Rare Earth", "EPM", "LED deterrent", "magnetic deterrent"], threshold=1, case_sensitive_terms={"EPM"}),  # AC fix
+    BinaryColumn("gear_mit_time_area", ["time-area closure", "spatial closure", "fishing closure", "seasonal closure", "MPA"], threshold=2, case_sensitive_terms={"MPA"}),  # AC fix
+    BinaryColumn("gear_mit_handling", ["safe release", "handling practice*", "live release", "post-release mortality", "PRM"], threshold=1, case_sensitive_terms={"PRM"}),  # AC fix
     # Added 2026-03-16 from BMIS (elasmobranch-relevant techniques)
     BinaryColumn("gear_mit_weak_hook", ["weak hook", "corrodible hook", "designed to straighten"], threshold=1),
     BinaryColumn("gear_mit_line_weight", ["line weight*", "weighted branchline", "leaded swivel", "sliding lead", "lumo lead", "sink rate"], threshold=1),
     BinaryColumn("gear_mit_setting", ["night set*", "deep set*", "deep-set buoy gear", "side-set*", "underwater set*"], threshold=1),
-    BinaryColumn("gear_mit_pinger", ["pinger", "acoustic alarm", "acoustic deterrent", "porpoise alerting device", "PAL"], threshold=1),
+    BinaryColumn("gear_mit_pinger", ["pinger", "acoustic alarm", "acoustic deterrent", "porpoise alerting device", "PAL"], threshold=1, case_sensitive_terms={"PAL"}),  # AC fix
     BinaryColumn("gear_mit_illumination", ["illuminat* net", "illuminat* gillnet", "LED net", "net light*", "lightstick*", "light attract*"], threshold=1),
     BinaryColumn("gear_mit_wire_leader", ["wire leader", "monofilament leader", "wire trace", "nylon leader"], threshold=1),
-    BinaryColumn("gear_mit_ghost", ["ghost gear", "ghost net", "ALDFG", "abandoned gear", "lost gear", "derelict gear", "derelict fishing"], threshold=1),
+    BinaryColumn("gear_mit_ghost", ["ghost gear", "ghost net", "ALDFG", "abandoned gear", "lost gear", "derelict gear", "derelict fishing"], threshold=1, case_sensitive_terms={"ALDFG"}),  # AC fix
 ])
 
 # ---- Impact schema (with scoring/anchors) ---------------------------------
 
 IMP = SchemaCategory(prefix="imp_", columns=[
     # Impact columns use anchors for co-occurrence AND frequency thresholds
-    BinaryColumn("imp_mortality", ["mortality", "survival rate", "lethality", "dead on arrival", "DOA", "at-vessel mortality", "AVM"], threshold=2),
-    BinaryColumn("imp_post_release", ["post-release mortality", "PRM", "delayed mortality", "post-capture survival"], threshold=1),
+    BinaryColumn("imp_mortality", ["mortality", "survival rate", "lethality", "dead on arrival", "DOA", "at-vessel mortality", "AVM"], threshold=2, case_sensitive_terms={"DOA", "AVM"}),  # AC fix
+    BinaryColumn("imp_post_release", ["post-release mortality", "PRM", "delayed mortality", "post-capture survival"], threshold=1, case_sensitive_terms={"PRM"}),  # AC fix
     BinaryColumn("imp_abundance", ["abundance", "population size", "population decline", "population trend"], anchors=["population", "decline", "increase", "change", "trend", "status"], threshold=2),
-    BinaryColumn("imp_cpue", ["CPUE", "catch per unit effort", "catch rate"], threshold=1),
-    BinaryColumn("imp_biomass", ["biomass", "standing stock", "spawning stock biomass", "SSB"], threshold=2),
+    BinaryColumn("imp_cpue", ["CPUE", "catch per unit effort", "catch rate"], threshold=1, case_sensitive_terms={"CPUE"}),  # AC fix
+    BinaryColumn("imp_biomass", ["biomass", "standing stock", "spawning stock biomass", "SSB"], threshold=2, case_sensitive_terms={"SSB"}),  # AC fix
     BinaryColumn("imp_distribution", ["distribution shift", "range shift", "range contraction", "habitat shift"], threshold=1),
     BinaryColumn("imp_behaviour_change", ["behavioural change", "behavioral change", "avoidance behaviour", "flight response", "habituation"], anchors=["change", "response"], threshold=2),
-    BinaryColumn("imp_physiology_stress", ["cortisol", "lactate", "blood chemistry", "acid-base", "reflex impairment", "RAMP", "physiological stress"], threshold=1),
+    BinaryColumn("imp_physiology_stress", ["cortisol", "lactate", "blood chemistry", "acid-base", "reflex impairment", "RAMP", "physiological stress"], threshold=1, case_sensitive_terms={"RAMP"}),  # AC fix
     BinaryColumn("imp_injury", ["injury", "hooking injury", "scarring", "body condition index", "entanglement", "entangled", "gear interaction", "net mark*"], threshold=2),
     BinaryColumn("imp_reproduction", ["reproductive output", "fecundity change", "reproductive failure"], threshold=1),
     BinaryColumn("imp_growth", ["growth rate", "von Bertalanffy", "growth curve", "somatic growth", "condition factor", "Fulton", "length-weight", "stunting", "growth overfishing"], anchors=["change", "impact", "decline", "reduce", "affect", "alter", "slow", "decrease", "increase"], threshold=2),
@@ -204,13 +211,13 @@ IMP = SchemaCategory(prefix="imp_", columns=[
     BinaryColumn("imp_trophic", ["trophic level change", "dietary shift", "prey depletion", "mesopredator release"], threshold=1),
     BinaryColumn("imp_habitat_quality", ["habitat quality", "habitat suitability", "degradation index"], threshold=2),
     BinaryColumn("imp_contamination", ["contaminant load", "bioaccumulation", "biomagnification", "tissue concentration"], threshold=1),
-    BinaryColumn("imp_economic", ["economic value", "fishery value", "tourism revenue", "willingness to pay", "WTP"], threshold=1),
+    BinaryColumn("imp_economic", ["economic value", "fishery value", "tourism revenue", "willingness to pay", "WTP"], threshold=1, case_sensitive_terms={"WTP"}),  # AC fix
     BinaryColumn("imp_social", ["livelihood", "food security", "human dimension", "attitude", "perception"], threshold=3),
     # Added 2026-03-16 following Beukhof et al. (2026) comparison
     BinaryColumn("imp_community_composition", ["community composition", "assemblage composition", "species composition", "community structure change", "assemblage shift"], anchors=["change", "shift", "impact", "alter*"], threshold=2),
     BinaryColumn("imp_biodiversity", ["biodiversity loss", "species richness change", "diversity index", "Shannon", "Simpson", "evenness change", "species loss"], anchors=["change", "loss", "decline", "impact"], threshold=2),
     BinaryColumn("imp_size_structure", ["size structure", "length frequency", "age structure", "size composition", "size distribution", "mean length", "maximum length", "length at maturity shift", "truncated size"], anchors=["change", "shift", "impact", "decline", "truncat*"], threshold=2),
-    BinaryColumn("imp_productivity", ["productivity", "recruitment", "yield per recruit", "spawning potential ratio", "SPR", "surplus production", "reproductive output"], anchors=["change", "decline", "impact", "reduce", "increase", "affect", "fishing", "overfishing"], threshold=2),
+    BinaryColumn("imp_productivity", ["productivity", "recruitment", "yield per recruit", "spawning potential ratio", "SPR", "surplus production", "reproductive output"], anchors=["change", "decline", "impact", "reduce", "increase", "affect", "fishing", "overfishing"], threshold=2, case_sensitive_terms={"SPR"}),  # AC fix
 ])
 
 # ---- Discipline schema (research area classification) --------------------
@@ -220,10 +227,10 @@ DISC = SchemaCategory(prefix="d_", columns=[
     BinaryColumn("d_biology", ["life history", "age and growth", "growth rate", "longevity", "maturity", "length-at-maturity", "length-weight", "vertebral band"], threshold=2),
     BinaryColumn("d_behaviour", ["behavio*", "behavioral ecology", "predator-prey", "diel vertical migration", "activity pattern", "social behavio*", "agonistic", "refuging"], threshold=3),
     BinaryColumn("d_trophic", ["trophic", "diet", "feeding ecology", "stomach content*", "prey composition", "stable isotope", "fatty acid", "food web"], threshold=2),
-    BinaryColumn("d_genetics", ["genetic*", "genomic*", "eDNA", "environmental DNA", "microsatellite", "mitochondrial", "phylogenet*", "haplotype", "SNP", "RADseq", "population genetics"], threshold=2),
+    BinaryColumn("d_genetics", ["genetic*", "genomic*", "eDNA", "environmental DNA", "microsatellite", "mitochondrial", "phylogenet*", "haplotype", "SNP", "RADseq", "population genetics"], threshold=2, case_sensitive_terms={"eDNA", "SNP"}),  # AC fix
     BinaryColumn("d_movement", ["movement", "telemetry", "satellite tag*", "acoustic tag*", "archival tag*", "home range", "migration", "habitat use", "space use", "tracking"], threshold=3),
-    BinaryColumn("d_fisheries", ["stock assessment", "fisheries management", "catch data", "fishing mortality", "maximum sustainable yield", "MSY", "fishery-dependent", "fishery-independent"], threshold=2),
-    BinaryColumn("d_conservation", ["conservation", "endangered", "CITES", "IUCN", "Red List", "protected area", "marine protected area", "recovery plan", "conservation status"], threshold=3),
+    BinaryColumn("d_fisheries", ["stock assessment", "fisheries management", "catch data", "fishing mortality", "maximum sustainable yield", "MSY", "fishery-dependent", "fishery-independent"], threshold=2, case_sensitive_terms={"MSY"}),  # AC fix
+    BinaryColumn("d_conservation", ["conservation", "endangered", "CITES", "IUCN", "Red List", "protected area", "marine protected area", "recovery plan", "conservation status"], threshold=3, case_sensitive_terms={"CITES", "IUCN"}),  # AC fix
     BinaryColumn("d_data_science", ["machine learning", "deep learning", "neural network", "random forest", "Bayesian", "meta-analysis", "systematic review", "simulation model"], threshold=2),
     # Finer-grained disciplines — lower threshold (specific terms)
     BinaryColumn("d_husbandry", ["aquarium", "captive", "husbandry", "captive breeding", "ex situ", "tank-held", "aquaria"], threshold=2),
@@ -295,10 +302,237 @@ ALL_SCHEMAS = [ECO, PR, GEAR, IMP, DISC, BASIN]
 
 
 # ---------------------------------------------------------------------------
+# SM fix: Subject Mismatch — elasmobranch proximity check
+# ---------------------------------------------------------------------------
+# For columns listed in PROXIMITY_CHECK_COLUMNS, each keyword match is only
+# counted when an elasmobranch reference term appears within the same sentence
+# or one sentence either side (±1 sentence window).  Matches without such a
+# neighbour have their contribution to total_freq reduced by 1 (i.e. removed),
+# preventing spurious hits where generic terms match non-elasmobranch content.
+#
+# This does NOT apply to: species columns, basin columns (b_), or columns
+# whose keywords are inherently elasmobranch-specific (e.g. d_sensory,
+# pr_shark_finning).
+
+# Common names and higher-taxon terms that unambiguously identify an
+# elasmobranch subject.  Matched case-insensitively.
+_ELASMO_TERMS: frozenset[str] = frozenset({
+    # Common names
+    "shark", "sharks", "ray", "rays", "skate", "skates",
+    "chimaera", "chimaeras", "chimaeroid", "dogfish",
+    "guitarfish", "sawfish", "sawshark", "catshark",
+    "hammerhead", "stingray", "manta", "mobula",
+    "torpedo", "numbfish", "wobbegong", "angel shark",
+    "thresher", "porbeagle", "mako", "whaler", "requiem",
+    "houndshark", "smoothhound",
+    # Higher taxa
+    "Chondrichthyes", "chondrichthyan", "chondrichthyans",
+    "Elasmobranchii", "elasmobranch", "elasmobranchs",
+    "Batoidea", "batoid", "batoids",
+    "Selachii", "selachian", "selachians",
+    "Holocephali", "holocephalan",
+    "Rajiformes", "Myliobatiformes", "Carcharhiniformes",
+    "Lamniformes", "Squaliformes", "Pristiformes",
+    "Rhinopristiformes", "Torpediniformes", "Chimaeriformes",
+})
+
+# Pre-compiled pattern for fast whole-text proximity scanning
+_ELASMO_PATTERN: re.Pattern[str] = re.compile(
+    r"\b(?:" + "|".join(re.escape(t) for t in sorted(_ELASMO_TERMS, key=len, reverse=True)) + r")\b",
+    re.IGNORECASE,
+)
+
+# Sentence splitter: split on . ! ? followed by whitespace/end
+_SENTENCE_SPLIT_RE: re.Pattern[str] = re.compile(r"(?<=[.!?])\s+")
+
+# Columns that require the elasmobranch proximity check
+PROXIMITY_CHECK_COLUMNS: frozenset[str] = frozenset({
+    "imp_abundance", "imp_biomass", "imp_mortality", "imp_post_release",
+    "imp_economic", "imp_behaviour_change", "imp_injury",
+    "d_behaviour", "d_biomechanics", "d_physiology", "d_taxonomy",
+    "d_trophic", "d_biology", "d_reproductive", "d_husbandry",
+    "d_movement", "d_fisheries", "d_data_science",
+    "eco_pelagic",
+})
+
+
+def _sentences_near_match(sentences: list[str], match_sentence_idx: int) -> str:
+    """Return the text of sentences[i-1], sentences[i], sentences[i+1] joined."""
+    lo = max(0, match_sentence_idx - 1)
+    hi = min(len(sentences), match_sentence_idx + 2)  # +2 because slice is exclusive
+    return " ".join(sentences[lo:hi])
+
+
+def _proximity_adjusted_freq(
+    pattern: re.Pattern[str],
+    text: str,
+    sentences: list[str],
+) -> int:
+    """Count pattern matches in text, subtracting matches lacking elasmo proximity.
+
+    For each match of ``pattern`` in ``text``:
+    - Identify which sentence the match falls in.
+    - Check if any elasmobranch term appears in that sentence ±1 neighbour.
+    - If not, subtract 1 from the returned count.
+
+    Returns:
+        Adjusted frequency (minimum 0).
+    """
+    # Build a list of (sentence_start_char, sentence_end_char) for index lookups
+    sentence_spans: list[tuple[int, int]] = []
+    pos = 0
+    for sent in sentences:
+        start = pos
+        end = pos + len(sent)
+        sentence_spans.append((start, end))
+        # Account for the separator that was stripped: approximate +1 for space
+        pos = end + 1  # crude but sufficient for index lookup
+
+    freq = 0
+    for m in pattern.finditer(text):
+        match_pos = m.start()
+        # Find which sentence this match belongs to
+        sent_idx = 0
+        for i, (s_start, s_end) in enumerate(sentence_spans):
+            if s_start <= match_pos <= s_end:
+                sent_idx = i
+                break
+        # Check ±1 sentence window for elasmobranch terms
+        window_text = _sentences_near_match(sentences, sent_idx)
+        if _ELASMO_PATTERN.search(window_text):
+            freq += 1
+        # else: match discarded — no elasmobranch term in window
+    return freq
+
+
+# ---------------------------------------------------------------------------
+# SW fix: Section detection — regex patterns and weight table
+# ---------------------------------------------------------------------------
+# Parse extracted PDF text into labelled sections so that keyword matches
+# in high-signal sections (e.g. Methods) count more than matches in
+# low-signal sections (e.g. front matter).  Derived from a corpus survey
+# of 208 papers with 99.8% coverage.
+
+# ORDER MATTERS: combined forms (e.g. "Results and Discussion") must be
+# tested before their individual components.
+_SECTION_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    ("RESULTS_AND_DISCUSSION", re.compile(
+        r"^\d*\.?\s*results?\s+(?:and|&)\s+discussion", re.I)),
+    ("METHODS", re.compile(
+        r"^\d*\.?\s*(?:materials?\s+(?:and|&)\s+methods?|methods?\s+(?:and|&)\s+materials?)", re.I)),
+    ("ABSTRACT", re.compile(
+        r"^\d*\.?\s*(?:abstract|summary)\s*[.\-:]?\s*$", re.I)),
+    ("INTRODUCTION", re.compile(
+        r"^\d*\.?\s*(?:introduction|background)\s*$", re.I)),
+    ("METHODS", re.compile(
+        r"^\d*(?:\.\d+)*\.?\s*(?:methods?|methodology|experimental(?:\s+\w+)?|"
+        r"study\s+(?:area|site|region)|(?:data|statistical)\s+(?:analy\w+|methods?)|"
+        r"sampling|field\s+(?:methods?|work)|(?:data|sample)\s+collection)",
+        re.I)),
+    ("RESULTS", re.compile(
+        r"^\d*\.?\s*(?:results?|findings|observations?)\s*$", re.I)),
+    ("DISCUSSION", re.compile(
+        r"^\d*\.?\s*(?:(?:general\s+)?discussion(?:\s+and\s+conclusions?)?)\s*\.?\s*$", re.I)),
+    ("CONCLUSIONS", re.compile(
+        r"^\d*\.?\s*(?:conclusions?|concluding\s+remarks?)\s*$", re.I)),
+]
+
+# SW fix: section-weight multipliers per schema prefix.
+# Primary sections receive 1.0, secondary 0.5, low-value 0.25.
+# RESULTS_AND_DISCUSSION carries the MAX weight of Results and Discussion
+# for each schema (values already reflect this).
+_SECTION_WEIGHTS: dict[str, dict[str, float]] = {
+    "eco_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
+        "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+    },
+    "pr_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
+        "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 1.0,
+        "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+    },
+    "gear_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 0.25, "METHODS": 1.0,
+        "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
+        "DISCUSSION": 0.25, "CONCLUSIONS": 0.25, "OTHER": 0.25,
+    },
+    "imp_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 0.25, "METHODS": 0.5,
+        "RESULTS": 1.0, "RESULTS_AND_DISCUSSION": 1.0,
+        "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+    },
+    "d_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 0.5, "METHODS": 1.0,
+        "RESULTS": 1.0, "RESULTS_AND_DISCUSSION": 1.0,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+    },
+    "b_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
+        "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+    },
+}
+
+# Maximum line length for a section header (longer lines are body text)
+_MAX_HEADER_LEN = 100
+
+
+def _label_sections(text: str) -> list[tuple[str, str]]:
+    """Split PDF body text into labelled sections.
+
+    Each line is pre-processed (replace non-breaking spaces, collapse
+    multiple spaces, strip) before testing against section header
+    patterns.  A line is treated as a header only when it is short
+    (< _MAX_HEADER_LEN chars) and matches one of _SECTION_PATTERNS.
+
+    Returns:
+        List of (section_label, chunk_text) tuples in document order.
+        If no section headers are detected the entire text is returned
+        as a single ``OTHER`` chunk (fallback).
+    """
+    lines = text.splitlines()
+    sections: list[tuple[str, str]] = []
+    current_label = "OTHER"
+    current_lines: list[str] = []
+
+    for line in lines:
+        # SW fix: pre-process line — replace NBSP, collapse spaces, strip
+        normalised = line.replace("\xa0", " ")
+        normalised = re.sub(r" {2,}", " ", normalised).strip()
+
+        matched_label: str | None = None
+        if len(normalised) < _MAX_HEADER_LEN:
+            for label, pattern in _SECTION_PATTERNS:
+                if pattern.match(normalised):
+                    matched_label = label
+                    break
+
+        if matched_label is not None:
+            # Flush the current chunk before starting a new section
+            if current_lines:
+                sections.append((current_label, "\n".join(current_lines)))
+            current_label = matched_label
+            current_lines = []
+        else:
+            current_lines.append(line)
+
+    # Flush the last chunk
+    if current_lines:
+        sections.append((current_label, "\n".join(current_lines)))
+
+    # Fallback: if nothing was sectioned, return the whole text as OTHER
+    if not sections:
+        return [("OTHER", text)]
+
+    return sections
+
+
+# ---------------------------------------------------------------------------
 # Regex compilation helpers
 # ---------------------------------------------------------------------------
 
-def _term_to_regex(term: str) -> re.Pattern[str]:
+def _term_to_regex(term: str, case_sensitive: bool = False) -> re.Pattern[str]:
     """Convert a search term (possibly with wildcards or AND logic) to a compiled regex.
 
     Supports:
@@ -306,24 +540,30 @@ def _term_to_regex(term: str) -> re.Pattern[str]:
         - Phrases: ``"post-release mortality"`` matches as a phrase
         - Whole-word anchors: ``\\bNe\\b`` passes through raw
         - AND logic: ``(acidification AND pH)`` returns a special marker
+
+    Args:
+        term: The search term to compile.
+        case_sensitive: When True, compile without re.IGNORECASE (AC fix).
     """
     # AND logic is handled separately at match time; return None here
     if term.startswith("(") and " AND " in term:
         return None  # sentinel
 
     # If term already contains a regex word-boundary marker, compile as-is
-    # Case-sensitive: raw regex terms have intentional casing (e.g. Ne\b)
+    # Raw regex terms have intentional casing (e.g. Ne\b); honour case_sensitive.
     if r"\b" in term:
-        return re.compile(term)
+        return re.compile(term) if case_sensitive else re.compile(term, re.IGNORECASE)
+
+    flags = 0 if case_sensitive else re.IGNORECASE
 
     # Wildcard expansion: fish* -> \bfish\w*
     if "*" in term:
         escaped = re.escape(term).replace(r"\*", r"\w*")
-        return re.compile(r"\b" + escaped, re.IGNORECASE)
+        return re.compile(r"\b" + escaped, flags)
 
     # Plain phrase / keyword: whole-word match
     escaped = re.escape(term)
-    return re.compile(r"\b" + escaped + r"\b", re.IGNORECASE)
+    return re.compile(r"\b" + escaped + r"\b", flags)
 
 
 def _parse_and_term(term: str) -> tuple[str, str] | None:
@@ -343,14 +583,21 @@ class CompiledTerm:
     and_parts: tuple[re.Pattern[str], re.Pattern[str]] | None  # for AND terms
 
 
-def compile_term(term: str) -> CompiledTerm:
-    """Compile a single search term into a matchable structure."""
+def compile_term(term: str, case_sensitive: bool = False) -> CompiledTerm:
+    """Compile a single search term into a matchable structure.
+
+    Args:
+        term: The search term to compile.
+        case_sensitive: When True, compile without re.IGNORECASE (AC fix).
+    """
     and_pair = _parse_and_term(term)
     if and_pair:
-        r1 = re.compile(r"\b" + re.escape(and_pair[0]) + r"\b", re.IGNORECASE)
-        r2 = re.compile(r"\b" + re.escape(and_pair[1]) + r"\b", re.IGNORECASE)
+        # AND terms: both parts use the same case sensitivity flag
+        flags = 0 if case_sensitive else re.IGNORECASE
+        r1 = re.compile(r"\b" + re.escape(and_pair[0]) + r"\b", flags)
+        r2 = re.compile(r"\b" + re.escape(and_pair[1]) + r"\b", flags)
         return CompiledTerm(raw=term, regex=None, and_parts=(r1, r2))
-    return CompiledTerm(raw=term, regex=_term_to_regex(term), and_parts=None)
+    return CompiledTerm(raw=term, regex=_term_to_regex(term, case_sensitive), and_parts=None)
 
 
 @dataclass
@@ -364,10 +611,18 @@ class CompiledColumn:
 
 
 def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
-    """Pre-compile all regex patterns for a schema category."""
+    """Pre-compile all regex patterns for a schema category.
+
+    AC fix: terms listed in BinaryColumn.case_sensitive_terms are compiled
+    without re.IGNORECASE so that acronyms like CPUE, MPA, IUU only match
+    their intended uppercase form.
+    """
     compiled: list[CompiledColumn] = []
     for col in schema.columns:
-        c_terms = [compile_term(t) for t in col.terms]
+        c_terms = [
+            compile_term(t, case_sensitive=(t in col.case_sensitive_terms))
+            for t in col.terms
+        ]
         c_anchors = None
         if col.anchors:
             c_anchors = [
@@ -647,7 +902,9 @@ def _title_words(title: str) -> set[str]:
         "has", "he", "in", "is", "it", "its", "of", "on", "or", "s",
         "that", "the", "to", "was", "were", "will", "with",
     }
-    words = set(re.findall(r"[a-z]{3,}", _normalise_name(title)))
+    # NB: _normalise_name strips spaces, concatenating the whole title into
+    # one giant word — use title.lower() to preserve word boundaries.
+    words = set(re.findall(r"[a-z]{3,}", title.lower()))
     return words - stops
 
 
@@ -743,14 +1000,27 @@ def _pick_best_pdf(
 # These sections inflate false positives (author names in headers,
 # journal titles in references, affiliation place-names, etc.).
 
+# RB fix: expanded reference section header patterns to catch more journal
+# styles including "Cited literature", "SOURCES", French "Référ...", etc.
 # References section: "References", "REFERENCES", "Bibliography", etc.
 # on its own line (possibly with leading whitespace).
 _REF_HEADER_RE = re.compile(
-    r"^[\s]*(REFERENCES|References|BIBLIOGRAPHY|Bibliography|"
-    r"LITERATURE\s+CITED|Literature\s+[Cc]ited|WORKS\s+CITED|Works\s+[Cc]ited)"
-    r"[\s]*$",
+    r"^[\s]*("
+    r"REFERENCES|References|"
+    r"BIBLIOGRAPHY|Bibliography|"
+    r"LITERATURE\s+CITED|Literature\s+[Cc]ited|"
+    r"CITED\s+LITERATURE|Cited\s+[Ll]iterature|"
+    r"WORKS\s+CITED|Works\s+[Cc]ited|"
+    r"SOURCES|Sources\s+[Cc]ited|"
+    r"Réf\w*"  # French papers: Références, Référence, Référ...
+    r")[\s]*$",
     re.MULTILINE,
 )
+
+# RB fix: pattern to detect numbered-reference lines like "[1]", "[2]" near
+# end of text.  If >10 sequential bracketed-number lines are found, the
+# block is treated as an unstripped reference list.
+_NUMBERED_REF_LINE_RE = re.compile(r"^\s*\[\d+\]", re.MULTILINE)
 
 # Abstract header: marks the start of useful content.
 # Matches both standalone headers ("Abstract\n") and inline ("Abstract: text..." / "ABSTRACT. text...")
@@ -760,16 +1030,26 @@ _ABSTRACT_RE = re.compile(
     re.MULTILINE,
 )
 
-# Acknowledgements section (strip to avoid institution/funder name matches).
+# Acknowledgements and supplementary material sections (strip to avoid
+# institution/funder name matches and supplementary content bleed).
+# RB fix: added Supplementary material / data / Supporting information patterns.
 _ACK_HEADER_RE = re.compile(
-    r"^[\s]*(ACKNOWLEDG[E]?MENTS?|Acknowledg[e]?ments?|"
-    r"FUNDING|Funding|AUTHOR\s+CONTRIBUTIONS?|Author\s+[Cc]ontributions?|"
+    r"^[\s]*("
+    r"ACKNOWLEDG[E]?MENTS?|Acknowledg[e]?ments?|"
+    r"FUNDING|Funding|"
+    r"AUTHOR\s+CONTRIBUTIONS?|Author\s+[Cc]ontributions?|"
     r"DATA\s+AVAILABILITY|Data\s+[Aa]vailability|"
     r"CONFLICT[S]?\s+OF\s+INTEREST|Conflict[s]?\s+of\s+[Ii]nterest|"
-    r"DECLARATION|Declaration)"
-    r"[\s]*$",
+    r"DECLARATION|Declaration|"
+    r"SUPPLEMENTARY\s+(?:MATERIAL|DATA|INFORMATION)|"
+    r"Supplementary\s+(?:[Mm]aterial|[Dd]ata|[Ii]nformation)|"
+    r"SUPPORTING\s+INFORMATION|Supporting\s+[Ii]nformation"
+    r")[\s]*$",
     re.MULTILINE,
 )
+
+# RB fix: pattern to detect DOI URLs for the density heuristic
+_DOI_URL_RE = re.compile(r"https?://doi\.org/|doi:", re.IGNORECASE)
 
 
 def strip_non_body_sections(text: str) -> str:
@@ -784,8 +1064,15 @@ def strip_non_body_sections(text: str) -> str:
            (catches journal metadata, author names, affiliations, editors).
         2. The **References / Bibliography** section and everything after it.
         3. **Acknowledgements, Author Contributions, Data Availability,
-           Conflict of Interest, Funding** blocks (which sit between the
-           discussion and the references in many journals).
+           Conflict of Interest, Funding, Supplementary material** blocks
+           (which sit between the discussion and the references in many
+           journals). (RB fix: supplementary sections added.)
+        4. RB fix: numbered-reference blocks (``[1]``, ``[2]`` ...) detected
+           by >10 sequential bracketed lines in the final 40% of the text.
+        5. RB fix: DOI-density heuristic — if the last 30% of the remaining
+           text contains >15 ``https://doi.org/`` or ``doi:`` URLs, that
+           trailing section is almost certainly an unstripped reference list
+           and is truncated.
     """
     # --- Step 1: trim front matter (before abstract/introduction) ---
     abstract_match = _ABSTRACT_RE.search(text)
@@ -797,14 +1084,33 @@ def strip_non_body_sections(text: str) -> str:
     if ref_match:
         text = text[:ref_match.start()]
 
-    # --- Step 3: remove acknowledgements / back-matter blocks ---
-    # These may appear before references (already trimmed) or at the
-    # very end of what remains.  Remove from the FIRST such header onward
-    # only if it appears in the last 30% of the remaining text (to avoid
-    # stripping a paragraph that merely mentions "acknowledgement" in passing).
+    # --- Step 3: remove acknowledgements / back-matter blocks (incl. supplementary) ---
+    # Only strip if the header appears in the last 30% of the remaining text to
+    # avoid removing a body paragraph that merely mentions "acknowledgement".
     ack_match = _ACK_HEADER_RE.search(text)
     if ack_match and ack_match.start() > len(text) * 0.7:
         text = text[:ack_match.start()]
+
+    # --- Step 4 (RB fix): numbered-reference block heuristic ---
+    # Some papers (especially older or preprint formats) use [1], [2] …
+    # numbering without a "References" header.  If >10 such lines appear
+    # in the final 40% of the text, truncate there.
+    cutoff_40 = int(len(text) * 0.6)
+    tail_40 = text[cutoff_40:]
+    numbered_matches = list(_NUMBERED_REF_LINE_RE.finditer(tail_40))
+    if len(numbered_matches) > 10:
+        # Truncate at the position of the first such line in the tail section
+        text = text[:cutoff_40 + numbered_matches[0].start()]
+
+    # --- Step 5 (RB fix): DOI-density heuristic ---
+    # If the last 30% of remaining text has >15 DOI URLs, it is likely an
+    # unstripped reference section — find and truncate at its start.
+    cutoff_70 = int(len(text) * 0.7)
+    tail_30 = text[cutoff_70:]
+    doi_matches = list(_DOI_URL_RE.finditer(tail_30))
+    if len(doi_matches) > 15:
+        # Truncate at the position of the first DOI URL in the tail section
+        text = text[:cutoff_70 + doi_matches[0].start()]
 
     return text
 
@@ -862,11 +1168,13 @@ class MatchResult:
     """Result of matching a single column against text."""
 
     binary: int                    # 0 or 1
-    total_freq: int                # total mention count across all terms
+    total_freq: int                # weighted mention count (after SW fix)
+    raw_freq: int                  # SW fix: unweighted mention count for audit
     term_count: int                # number of distinct terms that fired
     matched_terms: list[str]       # which search terms fired (with frequency)
     matched_anchors: list[str]     # which anchor terms fired
     sample_context: str | None     # short text snippet around first match
+    primary_section: str           # SW fix: section of the best-weight match
 
 
 def _extract_context(text: str, pattern: re.Pattern[str], window: int = 80) -> str | None:
@@ -885,7 +1193,13 @@ def _count_matches(pattern: re.Pattern[str], text: str) -> int:
     return len(pattern.findall(text))
 
 
-def _match_column(text: str, col: CompiledColumn) -> MatchResult:
+def _match_column(
+    text: str,
+    col: CompiledColumn,
+    sentences: list[str] | None = None,
+    schema_prefix: str = "",
+    labelled_sections: list[tuple[str, str]] | None = None,
+) -> MatchResult:
     """Match a single column's terms against text using frequency counting.
 
     Every term is counted (not just detected), and the total mention count
@@ -893,35 +1207,141 @@ def _match_column(text: str, col: CompiledColumn) -> MatchResult:
     binary classification.  For columns with anchors, at least one anchor
     must also fire.
 
+    SM fix: for columns in PROXIMITY_CHECK_COLUMNS, each individual term
+    match only counts toward total_freq if an elasmobranch reference term
+    appears within the same sentence or one sentence either side.  Matches
+    without such a neighbour are discarded (freq not incremented).
+
+    SW fix: when labelled_sections is provided and the schema prefix has
+    a weight table entry, keyword matches are multiplied by the weight for
+    their section.  The proximity check (SM fix) is applied first within
+    each section chunk so we only weight surviving matches.  raw_freq
+    holds the unweighted count for audit purposes.
+
+    Args:
+        text: Full paper body text.
+        col: Pre-compiled column definition.
+        sentences: Pre-split sentence list (for proximity check).  Built
+            lazily from text if None and the column requires it.
+        schema_prefix: Schema prefix string (e.g. "eco_") for SW lookup.
+        labelled_sections: List of (section_label, chunk_text) from
+            _label_sections(); None disables section weighting.
+
     Returns a MatchResult with frequencies, binary decision, and evidence.
     """
-    fired_terms: list[tuple[str, int]] = []  # (term_raw, frequency)
+    # SM fix: build sentence list once if this column needs proximity checking
+    use_proximity = col.name in PROXIMITY_CHECK_COLUMNS
+    if use_proximity and sentences is None:
+        sentences = _SENTENCE_SPLIT_RE.split(text)
+
+    # SW fix: determine whether section weighting applies to this column
+    section_weight_map: dict[str, float] | None = None
+    use_section_weights = (
+        labelled_sections is not None
+        and schema_prefix in _SECTION_WEIGHTS
+    )
+    if use_section_weights:
+        section_weight_map = _SECTION_WEIGHTS[schema_prefix]
+
+    fired_terms: list[tuple[str, int]] = []  # (term_raw, raw_frequency)
     first_regex: re.Pattern[str] | None = None
-    total_freq = 0
+    total_freq = 0      # weighted total (equals raw when no SW)
+    raw_freq_total = 0  # SW fix: unweighted total for audit
+    # SW fix: track best section (highest weighted contribution across all terms)
+    best_section = "OTHER"
+    best_section_weight = 0.0
 
     for ct in col.terms:
         if ct.and_parts is not None:
-            # AND logic: both parts must be present; count = min of the two
-            c1 = _count_matches(ct.and_parts[0], text)
-            c2 = _count_matches(ct.and_parts[1], text)
-            if c1 > 0 and c2 > 0:
-                freq = min(c1, c2)
-                fired_terms.append((ct.raw, freq))
-                total_freq += freq
-                if first_regex is None:
-                    first_regex = ct.and_parts[0]
+            if use_section_weights and labelled_sections is not None:
+                # SW fix: count AND-logic matches per section chunk
+                term_raw = 0
+                term_weighted = 0.0
+                for sec_label, chunk in labelled_sections:
+                    c1 = _count_matches(ct.and_parts[0], chunk)
+                    c2 = _count_matches(ct.and_parts[1], chunk)
+                    if c1 > 0 and c2 > 0:
+                        chunk_raw = min(c1, c2)
+                        if use_proximity:
+                            chunk_sents = _SENTENCE_SPLIT_RE.split(chunk)
+                            prox = _proximity_adjusted_freq(
+                                ct.and_parts[0], chunk, chunk_sents)
+                            chunk_raw = min(prox, c2)
+                        if chunk_raw > 0:
+                            weight = section_weight_map.get(sec_label, 0.25)  # type: ignore[union-attr]
+                            term_raw += chunk_raw
+                            term_weighted += chunk_raw * weight
+                            if weight > best_section_weight:
+                                best_section_weight = weight
+                                best_section = sec_label
+                if term_raw > 0:
+                    fired_terms.append((ct.raw, term_raw))
+                    raw_freq_total += term_raw
+                    total_freq += term_weighted
+                    if first_regex is None:
+                        first_regex = ct.and_parts[0]
+            else:
+                # No section weighting — original logic
+                c1 = _count_matches(ct.and_parts[0], text)
+                c2 = _count_matches(ct.and_parts[1], text)
+                if c1 > 0 and c2 > 0:
+                    freq = min(c1, c2)
+                    if use_proximity and sentences is not None:
+                        # Use the first AND part for proximity window lookup
+                        freq = _proximity_adjusted_freq(ct.and_parts[0], text, sentences)
+                        freq = min(freq, c2)  # cap at the AND constraint
+                    if freq > 0:
+                        fired_terms.append((ct.raw, freq))
+                        raw_freq_total += freq
+                        total_freq += freq
+                        if first_regex is None:
+                            first_regex = ct.and_parts[0]
         elif ct.regex is not None:
-            freq = _count_matches(ct.regex, text)
-            if freq > 0:
-                fired_terms.append((ct.raw, freq))
-                total_freq += freq
-                if first_regex is None:
-                    first_regex = ct.regex
+            if use_section_weights and labelled_sections is not None:
+                # SW fix: count matches per section chunk, apply weight
+                term_raw = 0
+                term_weighted = 0.0
+                for sec_label, chunk in labelled_sections:
+                    if use_proximity:
+                        chunk_sents = _SENTENCE_SPLIT_RE.split(chunk)
+                        chunk_raw = _proximity_adjusted_freq(
+                            ct.regex, chunk, chunk_sents)
+                    else:
+                        chunk_raw = _count_matches(ct.regex, chunk)
+                    if chunk_raw > 0:
+                        weight = section_weight_map.get(sec_label, 0.25)  # type: ignore[union-attr]
+                        term_raw += chunk_raw
+                        term_weighted += chunk_raw * weight
+                        if weight > best_section_weight:
+                            best_section_weight = weight
+                            best_section = sec_label
+                if term_raw > 0:
+                    fired_terms.append((ct.raw, term_raw))
+                    raw_freq_total += term_raw
+                    total_freq += term_weighted
+                    if first_regex is None:
+                        first_regex = ct.regex
+            else:
+                # No section weighting — original logic
+                if use_proximity and sentences is not None:
+                    # SM fix: count only matches with elasmo term in ±1 sentence
+                    freq = _proximity_adjusted_freq(ct.regex, text, sentences)
+                else:
+                    freq = _count_matches(ct.regex, text)
+                if freq > 0:
+                    fired_terms.append((ct.raw, freq))
+                    raw_freq_total += freq
+                    total_freq += freq
+                    if first_regex is None:
+                        first_regex = ct.regex
 
     if not fired_terms:
-        return MatchResult(binary=0, total_freq=0, term_count=0,
+        return MatchResult(binary=0, total_freq=0, raw_freq=0, term_count=0,
                            matched_terms=[], matched_anchors=[],
-                           sample_context=None)
+                           sample_context=None, primary_section="OTHER")
+
+    # SW fix: round weighted total to nearest integer for threshold comparison
+    total_freq_int = round(total_freq) if use_section_weights else int(total_freq)
 
     term_count = len(fired_terms)
     # Format matched_terms with frequency: "marine(12); ocean(5)"
@@ -941,14 +1361,21 @@ def _match_column(text: str, col: CompiledColumn) -> MatchResult:
     if col.anchors and not fired_anchors:
         # Anchors defined but none fired — reject regardless of frequency
         binary = 0
-    elif total_freq >= col.threshold:
+    elif total_freq_int >= col.threshold:
         binary = 1
     else:
         binary = 0
 
-    return MatchResult(binary=binary, total_freq=total_freq,
-                       term_count=term_count, matched_terms=matched_terms_str,
-                       matched_anchors=fired_anchors, sample_context=context)
+    return MatchResult(
+        binary=binary,
+        total_freq=total_freq_int,
+        raw_freq=raw_freq_total,
+        term_count=term_count,
+        matched_terms=matched_terms_str,
+        matched_anchors=fired_anchors,
+        sample_context=context,
+        primary_section=best_section if use_section_weights else "OTHER",
+    )
 
 
 def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
@@ -1021,9 +1448,23 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
     imp_scores: dict[str, int] = {}
     evidence_rows: list[dict[str, Any]] = []  # for evidence table
 
+    # SM fix: pre-split text into sentences once per paper for proximity checks
+    _sentences: list[str] = _SENTENCE_SPLIT_RE.split(full_text)
+
+    # SW fix: label sections once per paper for section-weighted scoring
+    _labelled_sections: list[tuple[str, str]] = _label_sections(full_text)
+
     for schema_name, compiled_cols in _COMPILED_SCHEMAS:
+        # SW fix: reconstruct schema prefix (schema_name has trailing "_" stripped
+        # in init_worker; re-append it for _SECTION_WEIGHTS lookup)
+        prefix = schema_name + "_"
         for col in compiled_cols:
-            mr = _match_column(full_text, col)
+            mr = _match_column(
+                full_text, col,
+                sentences=_sentences,
+                schema_prefix=prefix,
+                labelled_sections=_labelled_sections,
+            )
             result[col.name] = mr.binary
             if mr.total_freq > 0:
                 imp_scores[col.name] = mr.total_freq
@@ -1035,6 +1476,8 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
                     "column": col.name,
                     "binary": mr.binary,
                     "total_freq": mr.total_freq,
+                    "raw_freq": mr.raw_freq,        # SW fix: unweighted count
+                    "section": mr.primary_section,  # SW fix: best-match section
                     "term_count": mr.term_count,
                     "threshold": col.threshold,
                     "matched_terms": "; ".join(mr.matched_terms),
