@@ -1,26 +1,25 @@
 # Setting Up Shared Click Tracking via Google Sheets
 
-This enables team members to share their download progress on the
-[remaining papers dashboard](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html).
+This enables team members to share their download progress on the [remaining papers dashboard](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html).
 
 ## Step 1: Create Google Sheet
 
-1. Go to [Google Sheets](https://sheets.google.com) and create a new spreadsheet
-2. Name it "EEA Paper Download Tracking"
-3. In Sheet1, add these headers in row 1:
+1.  Go to [Google Sheets](https://sheets.google.com) and create a new spreadsheet
+2.  Name it "EEA Paper Download Tracking"
+3.  In Sheet1, add these headers in row 1:
 
-| A | B | C | D |
-|---|---|---|---|
-| doi | title | by | at |
+| A   | B     | C   | D   |
+|-----|-------|-----|-----|
+| doi | title | by  | at  |
 
-4. Share the sheet with your team (view access is enough; the Apps Script handles writes)
+4.  Share the sheet with your team (view access is enough; the Apps Script handles writes)
 
 ## Step 2: Create Google Apps Script Web App
 
-1. In the spreadsheet, go to **Extensions > Apps Script**
-2. Delete any default code and paste the following:
+1.  In the spreadsheet, go to **Extensions \> Apps Script**
+2.  Delete any default code and paste the following:
 
-```javascript
+``` javascript
 // Google Apps Script for EEA Paper Download Tracking
 // Deploy as: Web App, execute as: Me, access: Anyone
 
@@ -106,41 +105,41 @@ function unmarkDoi(doi) {
 }
 ```
 
-3. Click **Deploy > New deployment**
-4. Type: **Web app**
-5. Execute as: **Me**
-6. Who has access: **Anyone**
-7. Click **Deploy** and copy the URL (looks like `https://script.google.com/macros/s/XXXXX/exec`)
+3.  Click **Deploy \> New deployment**
+4.  Type: **Web app**
+5.  Execute as: **Me**
+6.  Who has access: **Anyone**
+7.  Click **Deploy** and copy the URL (looks like `https://script.google.com/macros/s/XXXXX/exec`)
 
 ## Step 3: Configure the Dashboard
 
-1. Open `docs/remaining_downloads.html`
-2. Find this line near the top of the `<script>` section:
+1.  Open `docs/remaining_downloads.html`
+2.  Find this line near the top of the `<script>` section:
 
-```javascript
+``` javascript
 var GOOGLE_SHEET_URL = '';  // e.g. 'https://script.google.com/macros/s/XXXX/exec'
 ```
 
-3. Replace with your deployed URL:
+3.  Replace with your deployed URL:
 
-```javascript
+``` javascript
 var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/YOUR_ID_HERE/exec';
 ```
 
-4. Commit and push to GitHub
+4.  Commit and push to GitHub
 
 ## How It Works
 
-- **On page load:** fetches all clicked DOIs from Google Sheet, greys out those rows
-- **On "Mark clicked":** records DOI + team member name + timestamp to Sheet and greys out row
-- **On "Undo":** removes the row from Sheet and un-greys the row
-- **Fallback:** if Sheet is unreachable, uses browser localStorage (local only)
-- **"Hide clicked" checkbox:** filters clicked papers from view entirely
-- **Journal filter:** type in the journal footer filter to work through one journal at a time
+-   **On page load:** fetches all clicked DOIs from Google Sheet, greys out those rows
+-   **On "Mark clicked":** records DOI + team member name + timestamp to Sheet and greys out row
+-   **On "Undo":** removes the row from Sheet and un-greys the row
+-   **Fallback:** if Sheet is unreachable, uses browser localStorage (local only)
+-   **"Hide clicked" checkbox:** filters clicked papers from view entirely
+-   **Journal filter:** type in the journal footer filter to work through one journal at a time
 
 ## Important Notes
 
-- The Google Sheet is the **shared click log**, not the master list
-- Papers are only **officially removed** from `papers_data.json` after Simon ingests the PDFs
-- Team members should upload downloaded PDFs to the shared NAS
-- The click log helps avoid duplicate effort — it does not confirm acquisition
+-   The Google Sheet is the **shared click log**, not the master list
+-   Papers are only **officially removed** from `papers_data.json` after Simon ingests the PDFs
+-   Team members should upload downloaded PDFs to the shared NAS
+-   The click log helps avoid duplicate effort — it does not confirm acquisition

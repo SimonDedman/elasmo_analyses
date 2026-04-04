@@ -335,40 +335,55 @@ if (length(gender_col) == 0) {
         gender %in% c("female", "f")  ~ "Female",
         TRUE                           ~ "Unknown"
       ),
-      year_bin = paste0(floor(year / 5) * 5, "–", floor(year / 5) * 5 + 4)
+      year_bin = floor(year / 5) * 5
     )
 
   # Overall bar
-  overall <- gender_df |> count(gender) |> mutate(gender = fct_reorder(gender, n))
-  scale_max <- max(overall$n) * 1.1
+  overall <- gender_df |> count(gender) |> mutate(gender = fct_reorder(gender, -n))
 
-  # % female by 5-year bin
+  gender_cols <- c(Male = "#4393c3", Female = "#e91e8d", Unknown = "#aaaaaa")
+
+  # % of each gender per 5-year bin
   trend <- gender_df |>
-    filter(gender %in% c("Male", "Female")) |>
     count(year_bin, gender) |>
-    pivot_wider(names_from = gender, values_from = n, values_fill = 0) |>
-    mutate(pct_female = 100 * Female / (Male + Female)) |>
-    arrange(year_bin)
+    group_by(year_bin) |>
+    mutate(total = sum(n), pct = 100 * n / total) |>
+    ungroup()
+
+  # Overall averages for horizontal reference lines
+  avg <- gender_df |>
+    count(gender) |>
+    mutate(pct = 100 * n / sum(n))
 
   p_d6a <- ggplot(overall, aes(x = gender, y = n, fill = gender)) +
     geom_col(show.legend = FALSE) +
-    scale_fill_manual(values = c(Male = "#4393c3", Female = "#d6604d", Unknown = "#aaaaaa")) +
-    labs(title = "First author gender in elasmobranch research",
-         x = NULL, y = "Number of papers") +
+    geom_text(aes(label = scales::comma(n)), vjust = -0.5, size = 3.5) +
+    scale_fill_manual(values = gender_cols) +
+    scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
+    labs(title = "Gender counts", x = NULL, y = "Number of papers") +
     theme_eea +
     theme(axis.text.x = element_text(angle = 0, hjust = 0.5))
 
-  p_d6b <- ggplot(trend, aes(x = year_bin, y = pct_female, group = 1)) +
-    geom_line(colour = "#d6604d", linewidth = 1.2) +
-    geom_point(colour = "#d6604d", size = 2.5) +
-    labs(
-      subtitle = "% female first author by 5-year period",
-      x = NULL, y = "% female first author"
-    ) +
-    theme_eea
+  p_d6b <- ggplot(trend, aes(x = year_bin, y = pct, colour = gender, group = gender)) +
+    geom_hline(data = avg, aes(yintercept = pct, colour = gender),
+               linetype = "dashed", linewidth = 0.7, show.legend = FALSE) +
+    geom_line(linewidth = 1.2) +
+    geom_point(aes(size = n)) +
+    scale_colour_manual(values = gender_cols) +
+    scale_size_continuous(range = c(1.5, 5), name = "Papers") +
+    scale_y_continuous(labels = scales::percent_format(scale = 1)) +
+    labs(title = "Trend over time", x = "Year (5-year bins)",
+         y = "% first author") +
+    theme_eea +
+    guides(colour = guide_legend(title = "Gender"))
 
-  p_d6 <- p_d6a / p_d6b + plot_layout(heights = c(1, 1))
-  save_plot(p_d6, "D6_bars_gender_summary", w = 12, h = 10)
+  p_d6 <- (p_d6a | p_d6b) +
+    plot_annotation(
+      title    = "First author gender in elasmobranch research",
+      subtitle = "Left: total counts | Right: % by 5-year period"
+    ) +
+    plot_layout(widths = c(1, 2))
+  save_plot(p_d6, "D6_bars_gender_summary", w = 14, h = 6)
 }
 
 # ── E1. sankey_fishery_flow ────────────────────────────────────────────────────
