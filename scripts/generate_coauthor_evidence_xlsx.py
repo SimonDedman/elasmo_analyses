@@ -2,7 +2,7 @@
 """Generate per-coauthor evidence XLSX from schema extraction results.
 
 Creates an Excel workbook with:
-- Summary tab (coauthor name, paper count, evidence row count)
+- Summary tab (coauthor name, paper count, evidence row count, glossary)
 - One tab per team member with their papers' evidence rows
 - Acronym Matches tab for validating case-sensitive acronym detection
 
@@ -13,6 +13,7 @@ Usage:
 from __future__ import annotations
 
 import re
+import sqlite3
 from pathlib import Path
 
 import pandas as pd
@@ -26,8 +27,11 @@ from openpyxl.utils.dataframe import dataframe_to_rows
 BASE = Path("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
 EVIDENCE_CSV = BASE / "outputs" / "schema_extraction_evidence.csv"
 AUTHORS_CSV = BASE / "outputs" / "openalex_paper_authors.csv"
+ALTMETRIC_CSV = BASE / "outputs" / "altmetric_scores.csv"
+UNPAYWALL_CSV = BASE / "outputs" / "unpaywall_oa_by_doi.csv"
 PARQUET = BASE / "outputs" / "literature_review_enriched.parquet"
-OUTPUT = BASE / "outputs" / "schema_extraction_evidence_by_coauthor.xlsx"
+DB = BASE / "database" / "technique_taxonomy.db"
+OUTPUT = BASE / "outputs" / "meeting_review" / "schema_extraction_evidence_by_coauthor.xlsx"
 
 # ---------------------------------------------------------------------------
 # Team members: display name -> list of surname variants (lowercase, normalised)
@@ -38,6 +42,11 @@ TEAM: dict[str, list[str]] = {
     "Guuske Tiktak": ["tiktak"],
     "Elena Fernandez-Corredor": ["fernandez-corredor", "fernández-corredor"],
     "David Shiffman": ["shiffman"],
+    "Chris Mull": ["mull"],
+    "Alex McInturf": ["mcinturf"],
+    "Sophia Pelletier": ["pelletier"],
+    "Deven Guerrero": ["guerrero"],
+    "Ryan McMullen": ["mcmullen"],
 }
 
 # Acronyms to check in matched_terms
@@ -51,10 +60,44 @@ ACRONYMS = [
 # Evidence tab columns (order matters)
 EVIDENCE_COLS = [
     "literature_id", "year", "authors", "journal", "title",
-    "column", "binary", "total_freq", "raw_freq", "section",
-    "term_count", "threshold", "matched_terms", "matched_anchors", "context",
+    "column", "matched_terms", "section", "threshold", "total_freq",
+    "raw_freq", "term_count", "matched_anchors", "binary", "context",
 ]
-REVIEWER_COLS = ["Notes", "Comments"]
+REVIEWER_COLS = ["Notes"]
+
+# Glossary rows for Summary tab
+GLOSSARY_FIELDS = [
+    ("literature_id", "Unique paper identifier (Shark-References database)"),
+    ("year", "Publication year"),
+    ("authors", "Author list"),
+    ("journal", "Journal name"),
+    ("title", "Paper title"),
+    ("column", "Schema column name being evaluated (e.g. eco_marine, imp_abundance)"),
+    ("matched_terms", 'Terms that matched with frequencies, e.g. "marine(5); ocean(18)"'),
+    ("section", "Paper section where primary match occurred (e.g. METHODS, RESULTS)"),
+    ("threshold", "Minimum total_freq required for binary=1"),
+    ("total_freq", "Frequency count after section weighting and proximity checks"),
+    ("raw_freq", "Raw frequency count before section weighting (for comparison)"),
+    ("term_count", "Number of distinct terms that matched"),
+    ("matched_anchors", "Anchor/context terms that fired (impact columns only; empty = no anchors required or none fired)"),
+    ("binary", "Final classification: 1 = column applies to this paper, 0 = does not"),
+    ("context", "~160-character text snippet around first match"),
+    ("Notes", "Reviewer notes and comments"),
+]
+
+TECHNIQUE_CODES = [
+    ("KFT", "Keyword frequency threshold — total mentions >= N"),
+    ("ANC", "Context anchors — anchor term must co-occur"),
+    ("KPC", "Keyword proximity check — elasmobranch term within ±1 sentence"),
+    ("SW", "Section-weighted scoring — section-specific weight multipliers"),
+    ("AC", "Case-sensitive acronym matching"),
+    ("SS", "Section stripping — references/acknowledgements removed"),
+    ("KM", "Key match — species binomial or technique name lookup"),
+    ("RE", "Regex extraction — structured value extracted from text"),
+    ("SA", "Sentiment analysis — directional impact classification"),
+    ("DRV", "Derived — value inferred from other fields"),
+    ("API", "API/GEO lookup — value from external data source"),
+]
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -118,6 +161,268 @@ def write_dataframe(ws: any, df: pd.DataFrame) -> None:
                 cell.alignment = Alignment(wrap_text=True)
 
 
+def make_extra_row(
+    lit_id: int,
+    year: any,
+    authors: str,
+    journal: str,
+    title: str,
+    column: str,
+    matched_terms: str,
+    section: str,
+    threshold: any,
+    total_freq: any,
+    raw_freq: any,
+    term_count: any,
+    matched_anchors: str,
+    binary: int,
+    context: str,
+) -> dict:
+    """Build a dict matching EVIDENCE_COLS order for extra evidence rows."""
+    return {
+        "literature_id": lit_id,
+        "year": year,
+        "authors": authors,
+        "journal": journal,
+        "title": title,
+        "column": column,
+        "matched_terms": matched_terms,
+        "section": section,
+        "threshold": threshold,
+        "total_freq": total_freq,
+        "raw_freq": raw_freq,
+        "term_count": term_count,
+        "matched_anchors": matched_anchors,
+        "binary": binary,
+        "context": context,
+    }
+
+
+def sp_col_to_binomial(col: str) -> str:
+    """Convert sp_genus_species column name to 'Genus species' binomial."""
+    # e.g. sp_carcharodon_carcharias -> Carcharodon carcharias
+    parts = col[3:].split("_")  # strip "sp_"
+    if len(parts) >= 2:
+        return parts[0].capitalize() + " " + " ".join(parts[1:])
+    return col[3:].replace("_", " ").capitalize()
+
+
+def a_col_to_label(col: str) -> str:
+    """Convert a_technique_name column name to human-readable label."""
+    return col[2:].replace("_", " ").capitalize()
+
+
+def is_truthy(val: any) -> bool:
+    """Return True if val represents a positive/present value."""
+    if pd.isna(val):
+        return False
+    if isinstance(val, bool):
+        return val
+    if isinstance(val, (int, float)):
+        return val != 0
+    s = str(val).strip().lower()
+    return s not in ("", "false", "0", "none", "nan", "not stated")
+
+
+# ---------------------------------------------------------------------------
+# Build extra evidence rows for a set of paper IDs
+# ---------------------------------------------------------------------------
+def build_extra_evidence(
+    paper_ids: set[int],
+    meta_lookup: dict[int, dict],
+    parquet_extra: pd.DataFrame,
+    openalex_authors: pd.DataFrame,
+    altmetric: pd.DataFrame,
+    unpaywall: pd.DataFrame,
+    geo_df: pd.DataFrame,
+    sp_cols: list[str],
+    a_cols: list[str],
+) -> list[dict]:
+    """Build extra evidence rows for techniques not in schema extraction CSV."""
+    rows: list[dict] = []
+
+    # Filter parquet_extra to this coauthor's papers
+    sub = parquet_extra[parquet_extra["lit_id_int"].isin(paper_ids)].copy()
+
+    for _, prow in sub.iterrows():
+        lid = int(prow["lit_id_int"])
+        m = meta_lookup.get(lid, {})
+        year = m.get("year", "")
+        authors = m.get("authors", "")
+        journal = m.get("journal", "")
+        title = m.get("title", "")
+
+        def base_row(col, matched, section, binary=1, threshold="", total_freq="", raw_freq="", term_count="", context=""):
+            return make_extra_row(
+                lit_id=lid, year=year, authors=authors, journal=journal, title=title,
+                column=col, matched_terms=str(matched), section=section,
+                threshold=threshold, total_freq=total_freq, raw_freq=raw_freq,
+                term_count=term_count, matched_anchors="", binary=binary, context=context,
+            )
+
+        # ---- 5a: Species (KM) ----
+        for sc in sp_cols:
+            if is_truthy(prow.get(sc)):
+                rows.append(base_row(
+                    col=sc,
+                    matched=sp_col_to_binomial(sc),
+                    section="N/A (binomial name match)",
+                    threshold=1, total_freq=1, raw_freq=1, term_count=1,
+                ))
+
+        # ---- 5b: Technique (KM) ----
+        for ac in a_cols:
+            if is_truthy(prow.get(ac)):
+                rows.append(base_row(
+                    col=ac,
+                    matched=a_col_to_label(ac),
+                    section="N/A (technique name match)",
+                    threshold=1, total_freq=1, raw_freq=1, term_count=1,
+                ))
+
+        # ---- 5c: Depth extraction (RE) ----
+        dr = prow.get("depth_range")
+        if not pd.isna(dr) and str(dr).strip() not in ("", "nan", "None"):
+            rows.append(base_row(
+                col="depth_range",
+                matched=str(dr),
+                section="N/A (regex extraction)",
+                threshold=1, total_freq=1, raw_freq=1, term_count=1,
+            ))
+
+        # ---- 5d: Gear target species (RE) ----
+        gts = prow.get("gear_target_species")
+        if not pd.isna(gts) and str(gts).strip() not in ("", "nan", "None"):
+            rows.append(base_row(
+                col="gear_target_species",
+                matched=str(gts),
+                section="N/A (regex extraction)",
+                threshold=1, total_freq=1, raw_freq=1, term_count=1,
+            ))
+
+        # ---- 5e: Impact direction (SA) ----
+        imp_dir = prow.get("imp_direction")
+        if not pd.isna(imp_dir) and str(imp_dir).strip().lower() not in ("", "nan", "none", "not stated"):
+            rows.append(base_row(
+                col="imp_direction",
+                matched=str(imp_dir),
+                section="SA (sentiment)",
+                threshold=1, total_freq=1, raw_freq=1, term_count=1,
+            ))
+
+        # ---- 5f: Derived columns (DRV) ----
+        for dcol in ("eco_1_guess", "eco_2_guess", "eco_3_guess", "imp_is_bycatch", "imp_quantified"):
+            dval = prow.get(dcol)
+            if is_truthy(dval):
+                rows.append(base_row(
+                    col=dcol,
+                    matched=str(dval),
+                    section="DRV (derived)",
+                    threshold=1, total_freq=1, raw_freq=1, term_count=1,
+                ))
+
+    # ---- 5g: API/GEO lookups ----
+    paper_ids_list = list(paper_ids)
+
+    # OpenAlex: first author per paper
+    if not openalex_authors.empty:
+        oa_sub = openalex_authors[openalex_authors["lit_id_int"].isin(paper_ids)].copy()
+        # Take first author (author_position == 'first' if available, else position 0)
+        if "author_position" in oa_sub.columns:
+            first_authors = oa_sub[oa_sub["author_position"] == "first"].drop_duplicates(subset="lit_id_int")
+            # Fall back to first row per paper if no 'first' position
+            fallback_mask = ~oa_sub["lit_id_int"].isin(first_authors["lit_id_int"])
+            fallback = oa_sub[fallback_mask].drop_duplicates(subset="lit_id_int")
+            first_authors = pd.concat([first_authors, fallback], ignore_index=True)
+        else:
+            first_authors = oa_sub.drop_duplicates(subset="lit_id_int")
+
+        for _, arow in first_authors.iterrows():
+            lid = int(arow["lit_id_int"])
+            m = meta_lookup.get(lid, {})
+            institution = str(arow.get("institution_name", "")) if not pd.isna(arow.get("institution_name", float("nan"))) else ""
+            country = str(arow.get("institution_country", "")) if not pd.isna(arow.get("institution_country", float("nan"))) else ""
+            gender = str(arow.get("gender", "")) if not pd.isna(arow.get("gender", float("nan"))) else ""
+            summary = "; ".join(v for v in [institution, country, gender] if v)
+            if summary:
+                rows.append(make_extra_row(
+                    lit_id=lid,
+                    year=m.get("year", ""), authors=m.get("authors", ""),
+                    journal=m.get("journal", ""), title=m.get("title", ""),
+                    column="openalex_first_author",
+                    matched_terms=summary,
+                    section="API (OpenAlex)",
+                    threshold="", total_freq="", raw_freq="", term_count="",
+                    matched_anchors="", binary=1, context="",
+                ))
+
+    # Altmetric
+    if not altmetric.empty:
+        alt_sub = altmetric[altmetric["lit_id_int"].isin(paper_ids)].drop_duplicates(subset="lit_id_int")
+        for _, arow in alt_sub.iterrows():
+            lid = int(arow["lit_id_int"])
+            m = meta_lookup.get(lid, {})
+            score = arow.get("alt_score", "")
+            summary = f"alt_score={score}"
+            rows.append(make_extra_row(
+                lit_id=lid,
+                year=m.get("year", ""), authors=m.get("authors", ""),
+                journal=m.get("journal", ""), title=m.get("title", ""),
+                column="alt_score",
+                matched_terms=summary,
+                section="API (Altmetric)",
+                threshold="", total_freq="", raw_freq="", term_count="",
+                matched_anchors="", binary=1 if not pd.isna(score) else 0,
+                context="",
+            ))
+
+    # Unpaywall
+    if not unpaywall.empty:
+        unp_sub = unpaywall[unpaywall["lit_id_int"].isin(paper_ids)].drop_duplicates(subset="lit_id_int")
+        for _, urow in unp_sub.iterrows():
+            lid = int(urow["lit_id_int"])
+            m = meta_lookup.get(lid, {})
+            oa_status = str(urow.get("oa_status", "")) if not pd.isna(urow.get("oa_status", float("nan"))) else ""
+            oa_license = str(urow.get("oa_license", "")) if not pd.isna(urow.get("oa_license", float("nan"))) else ""
+            summary = "; ".join(v for v in [oa_status, oa_license] if v)
+            if summary:
+                rows.append(make_extra_row(
+                    lit_id=lid,
+                    year=m.get("year", ""), authors=m.get("authors", ""),
+                    journal=m.get("journal", ""), title=m.get("title", ""),
+                    column="oa_status",
+                    matched_terms=summary,
+                    section="API (Unpaywall)",
+                    threshold="", total_freq="", raw_freq="", term_count="",
+                    matched_anchors="", binary=1 if oa_status not in ("", "closed") else 0,
+                    context="",
+                ))
+
+    # Geographic (SQLite)
+    if not geo_df.empty:
+        geo_sub = geo_df[geo_df["lit_id_int"].isin(paper_ids)]
+        for _, grow in geo_sub.iterrows():
+            lid = int(grow["lit_id_int"])
+            m = meta_lookup.get(lid, {})
+            study_country = str(grow.get("study_country", "")) if not pd.isna(grow.get("study_country", float("nan"))) else ""
+            auth_country = str(grow.get("first_author_country", "")) if not pd.isna(grow.get("first_author_country", float("nan"))) else ""
+            basin = str(grow.get("study_ocean_basin", "")) if not pd.isna(grow.get("study_ocean_basin", float("nan"))) else ""
+            summary = "; ".join(v for v in [f"auth={auth_country}", f"study={study_country}", f"basin={basin}"] if v.split("=")[1])
+            if summary:
+                rows.append(make_extra_row(
+                    lit_id=lid,
+                    year=m.get("year", ""), authors=m.get("authors", ""),
+                    journal=m.get("journal", ""), title=m.get("title", ""),
+                    column="geography",
+                    matched_terms=summary,
+                    section="GEO (geographic)",
+                    threshold="", total_freq="", raw_freq="", term_count="",
+                    matched_anchors="", binary=1, context="",
+                ))
+
+    return rows
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -141,10 +446,73 @@ def main() -> None:
     # Load paper metadata from parquet
     meta = pd.read_parquet(PARQUET, columns=["literature_id", "year", "authors", "journal", "title"])
     meta["lit_id_int"] = meta["literature_id"].apply(lit_id_to_int)
-    # Deduplicate (should be unique but just in case)
     meta = meta.drop_duplicates(subset="lit_id_int")
     print(f"  Papers (parquet): {len(meta):,}")
     print(f"  Author-paper rows: {len(authors):,}")
+
+    # Build a quick lookup dict for metadata
+    meta_lookup: dict[int, dict] = {
+        int(r["lit_id_int"]): {
+            "year": r["year"],
+            "authors": r["authors"],
+            "journal": r["journal"],
+            "title": r["title"],
+        }
+        for _, r in meta.iterrows()
+    }
+
+    # -----------------------------------------------------------------------
+    # Load extra parquet columns (sp_, a_, derived)
+    # -----------------------------------------------------------------------
+    print("  Loading sp_ and a_ columns from parquet (this may take a moment)...")
+    all_parquet_cols = pd.read_parquet(PARQUET, columns=["literature_id"]).columns.tolist()
+    # Get full column list without loading full parquet
+    import pyarrow.parquet as pq_lib
+    pq_file = pq_lib.ParquetFile(str(PARQUET))
+    all_cols = pq_file.schema_arrow.names
+
+    sp_cols = [c for c in all_cols if c.startswith("sp_")]
+    a_cols = [c for c in all_cols if c.startswith("a_")]
+    derived_cols = [c for c in all_cols if c in (
+        "eco_1_guess", "eco_2_guess", "eco_3_guess",
+        "imp_is_bycatch", "imp_quantified", "imp_direction",
+        "depth_range", "depth_min_m", "depth_max_m",
+        "gear_target_species",
+    )]
+    print(f"    sp_ columns: {len(sp_cols)}, a_ columns: {len(a_cols)}, derived: {len(derived_cols)}")
+
+    extra_cols_to_load = ["literature_id"] + sp_cols + a_cols + derived_cols
+    parquet_extra = pd.read_parquet(PARQUET, columns=extra_cols_to_load)
+    parquet_extra["lit_id_int"] = parquet_extra["literature_id"].apply(lit_id_to_int)
+    print(f"  Extra parquet rows: {len(parquet_extra):,}")
+
+    # -----------------------------------------------------------------------
+    # Load external data sources
+    # -----------------------------------------------------------------------
+    print("  Loading external data sources...")
+
+    openalex_authors = pd.read_csv(AUTHORS_CSV, dtype={"literature_id": str})
+    openalex_authors["lit_id_int"] = openalex_authors["literature_id"].apply(lit_id_to_int)
+
+    altmetric = pd.read_csv(ALTMETRIC_CSV, dtype={"literature_id": str})
+    altmetric["lit_id_int"] = altmetric["literature_id"].apply(lit_id_to_int)
+
+    unpaywall = pd.read_csv(UNPAYWALL_CSV, dtype={"literature_id": str})
+    unpaywall["lit_id_int"] = unpaywall["literature_id"].apply(lit_id_to_int)
+
+    # Load geographic data from SQLite
+    try:
+        conn = sqlite3.connect(DB)
+        geo_df = pd.read_sql_query(
+            "SELECT paper_id, first_author_country, study_country, study_ocean_basin FROM paper_geography",
+            conn,
+        )
+        conn.close()
+        geo_df["lit_id_int"] = geo_df["paper_id"].apply(lit_id_to_int)
+        print(f"  Geographic rows: {len(geo_df):,}")
+    except Exception as exc:
+        print(f"  Warning: could not load paper_geography ({exc})")
+        geo_df = pd.DataFrame(columns=["paper_id", "first_author_country", "study_country", "study_ocean_basin", "lit_id_int"])
 
     # -----------------------------------------------------------------------
     # Build per-coauthor paper sets
@@ -192,32 +560,86 @@ def main() -> None:
         mask = merged["lit_id_int"].isin(paper_ids)
         coauthor_ev = merged.loc[mask].copy()
 
+        # Build extra evidence rows
+        extra_rows = build_extra_evidence(
+            paper_ids=paper_ids,
+            meta_lookup=meta_lookup,
+            parquet_extra=parquet_extra,
+            openalex_authors=openalex_authors,
+            altmetric=altmetric,
+            unpaywall=unpaywall,
+            geo_df=geo_df,
+            sp_cols=sp_cols,
+            a_cols=a_cols,
+        )
+
+        n_schema_rows = len(coauthor_ev)
+        n_extra_rows = len(extra_rows)
         n_papers = coauthor_ev["lit_id_int"].nunique()
-        n_rows = len(coauthor_ev)
+        n_rows = n_schema_rows + n_extra_rows
         note = ""
         if n_rows > 50_000:
             note = f"Large tab: {n_rows:,} rows"
 
         summary_rows.append((name, n_papers, n_rows, note))
 
-        # Build tab dataframe
+        # Build tab dataframe: schema evidence first
         tab_df = coauthor_ev[EVIDENCE_COLS].copy()
+
+        # Append extra rows
+        if extra_rows:
+            extra_df = pd.DataFrame(extra_rows, columns=EVIDENCE_COLS)
+            # Add separator row
+            sep_row = pd.DataFrame(
+                [{col: ("--- Additional evidence (species/techniques/lookups) ---" if col == "column" else "") for col in EVIDENCE_COLS}]
+            )
+            tab_df = pd.concat([tab_df, sep_row, extra_df], ignore_index=True)
+
         tab_df["Notes"] = ""
-        tab_df["Comments"] = ""
-        tab_df = tab_df.sort_values(["literature_id", "column"]).reset_index(drop=True)
+        tab_df = tab_df.sort_values(["literature_id", "column"], na_position="last").reset_index(drop=True)
 
         # Write tab
         ws = wb.create_sheet(title=name)
         write_dataframe(ws, tab_df)
         style_header(ws)
         auto_width(ws)
-        print(f"  Wrote tab '{name}': {n_rows:,} rows, {n_papers} papers")
+        ws.auto_filter.ref = ws.dimensions
+        print(f"  Wrote tab '{name}': {n_schema_rows:,} schema rows + {n_extra_rows:,} extra rows, {n_papers} papers")
 
     # Write summary data
     for row in summary_rows:
         ws_summary.append(list(row))
-    style_header(ws_summary)
-    auto_width(ws_summary)
+
+    # -----------------------------------------------------------------------
+    # Glossary section on Summary tab
+    # -----------------------------------------------------------------------
+    ws_summary.append([])
+    ws_summary.append([])
+    bold_gold = Font(bold=True, color="8B6914")
+    section_fill = PatternFill(start_color="FFF2CC", end_color="FFF2CC", fill_type="solid")
+
+    # Glossary header
+    gloss_header_row = ws_summary.max_row + 1
+    ws_summary.append(["Evidence Table Field Glossary", "Description"])
+    for cell in ws_summary[ws_summary.max_row]:
+        cell.font = Font(bold=True)
+        cell.fill = section_fill
+
+    for field, desc in GLOSSARY_FIELDS:
+        ws_summary.append([field, desc])
+
+    ws_summary.append([])
+
+    # Technique codes header
+    ws_summary.append(["Extraction Technique Codes", "Description"])
+    for cell in ws_summary[ws_summary.max_row]:
+        cell.font = Font(bold=True)
+        cell.fill = section_fill
+
+    for code, desc in TECHNIQUE_CODES:
+        ws_summary.append([code, desc])
+
+    ws_summary.append([])
 
     # -----------------------------------------------------------------------
     # Acronym Matches tab
@@ -250,9 +672,9 @@ def main() -> None:
     write_dataframe(ws_acr, acr_df)
     style_header(ws_acr)
     auto_width(ws_acr)
+    ws_acr.auto_filter.ref = ws_acr.dimensions
 
     # Add acronym summary to the Summary tab
-    ws_summary.append([])
     ws_summary.append(["Acronym Matches", "", n_acr, "All evidence rows with acronym term matches"])
 
     # Breakdown per acronym
@@ -265,9 +687,14 @@ def main() -> None:
     for acr_name, count in sorted(acr_counts.items(), key=lambda x: -x[1]):
         ws_summary.append([acr_name, count])
 
+    style_header(ws_summary)
+    auto_width(ws_summary)
+    ws_summary.auto_filter.ref = ws_summary.dimensions
+
     # -----------------------------------------------------------------------
     # Save
     # -----------------------------------------------------------------------
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     wb.save(OUTPUT)
     print(f"\nSaved to: {OUTPUT}")
     print(f"  File size: {OUTPUT.stat().st_size / 1024 / 1024:.1f} MB")
