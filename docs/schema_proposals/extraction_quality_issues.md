@@ -30,7 +30,7 @@ Schema definitions: [`scripts/extract_schema_columns.py` lines 92-292](https://g
 
 ---
 
-## 2. Subject Mismatch (SM) — PROPOSED
+## 2. Subject Mismatch (SM) — IMPLEMENTED
 
 Keyword appears in the paper but describes something other than a shark, ray, or chimaera.
 
@@ -51,7 +51,7 @@ Opt-in per column: apply for generic terms (`imp_abundance`, `d_behaviour`, `d_b
 
 ---
 
-## 3. Ambiguous Keyword (AK) — PROPOSED
+## 3. Ambiguous Keyword (AK) — IMPLEMENTED
 
 Keyword stem matches a completely different concept.
 
@@ -71,7 +71,7 @@ Keyword stem matches a completely different concept.
 
 ---
 
-## 4. Acronym Collision (AC) — PROPOSED
+## 4. Acronym Collision (AC) — IMPLEMENTED
 
 Case-insensitive matching hits a common lowercase word.
 
@@ -119,7 +119,7 @@ Case-insensitive matching hits a common lowercase word.
 
 ---
 
-## 5. Reference Bleed (RB) — PROPOSED
+## 5. Reference Bleed (RB) — IMPLEMENTED
 
 Reference sections not fully stripped; keywords match in reference titles, author affiliations, or journal names.
 
@@ -147,7 +147,7 @@ David notes several references don't even belong to the paper — possibly PDF c
 
 ---
 
-## 6. Contextual Mention (CM) — PROPOSED
+## 6. Contextual Mention (CM) — IMPLEMENTED
 
 Keyword correctly describes elasmobranchs but appears only in introductory/background context, not as a research focus.
 

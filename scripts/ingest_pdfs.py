@@ -5,7 +5,8 @@ Ingest PDFs from any source into the SharkPapers library.
 Usage:
     python scripts/ingest_pdfs.py /path/to/pdfs/           # ingest a directory
     python scripts/ingest_pdfs.py file1.pdf file2.pdf       # ingest specific files
-    python scripts/ingest_pdfs.py                           # (no args) does nothing
+    python scripts/ingest_pdfs.py --check /path/to/pdfs/    # dry-run: check matches only
+    python scripts/ingest_pdfs.py                           # (no args) shows usage
 
 Matching strategy (in order):
   1. Extract DOI from full PDF text via pdftotext (not just first page)
@@ -394,8 +395,12 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
 # Tracking updates (from ingest_jurgen_pdfs.py pattern)
 # ---------------------------------------------------------------------------
 
-def update_papers_data_json(copied_ids: set, timestamp: str, source_label: str) -> int:
-    """Remove matched papers from docs/papers_data.json (they are no longer missing)."""
+def update_papers_data_json(copied_ids: set, copied_dois: set,
+                            timestamp: str, source_label: str) -> int:
+    """Remove matched papers from docs/papers_data.json (they are no longer missing).
+
+    Matches by literature_id first, then by DOI for papers with empty literature_ids.
+    """
     if not PAPERS_DATA_JSON.exists():
         return 0
     with open(PAPERS_DATA_JSON) as f:
@@ -418,11 +423,24 @@ def update_papers_data_json(copied_ids: set, timestamp: str, source_label: str) 
     # Safety: never match empty strings
     id_lookup.discard("")
 
+    # Normalise DOIs for matching
+    doi_lookup = set()
+    for doi in copied_dois:
+        nd = normalise_doi(doi)
+        if nd:
+            doi_lookup.add(nd)
+
     before = len(data)
-    data = [
-        entry for entry in data
-        if str(entry.get("literature_id", "")).strip() not in id_lookup
-    ]
+    filtered = []
+    for entry in data:
+        lid = str(entry.get("literature_id", "")).strip()
+        if lid and lid in id_lookup:
+            continue  # matched by literature_id
+        entry_doi = normalise_doi(str(entry.get("doi", "")))
+        if entry_doi and entry_doi in doi_lookup:
+            continue  # matched by DOI (catches empty-lit_id papers)
+        filtered.append(entry)
+    data = filtered
     after = len(data)
     removed = before - after
 
@@ -510,9 +528,9 @@ def update_tracking_dbs(copied_ids: set, pdf_names: dict, timestamp: str, source
 
 def ingest_source(label: str, pdf_paths: list[Path],
                   doi_lookup: dict, author_year_lookup: dict,
-                  all_rows: list[dict]) -> tuple[set, dict, list[str]]:
+                  all_rows: list[dict]) -> tuple[set, set, dict, list[str]]:
     """
-    Ingest a list of PDFs. Returns (copied_ids, pdf_names, log_lines).
+    Ingest a list of PDFs. Returns (copied_ids, copied_dois, pdf_names, log_lines).
     """
     log_lines = []
     copied = 0
@@ -521,6 +539,7 @@ def ingest_source(label: str, pdf_paths: list[Path],
     unmatched = 0
     errors = 0
     copied_ids: set = set()
+    copied_dois: set = set()
     pdf_names: dict = {}
 
     print(f"\n{'=' * 70}")
@@ -552,6 +571,8 @@ def ingest_source(label: str, pdf_paths: list[Path],
         if target.exists():
             skipped_exists += 1
             copied_ids.add(lit_id)
+            if row.get("doi"):
+                copied_dois.add(row["doi"])
             pdf_names[lit_id] = f"{year_str}/{new_name}"
             log_lines.append(f"EXISTS: {year_str}/{new_name} (from {pdf_path.name}) [{method}]")
             print(f"  EXISTS: {pdf_path.name} → {year_str}/{new_name}")
@@ -562,6 +583,8 @@ def ingest_source(label: str, pdf_paths: list[Path],
             shutil.copy2(pdf_path, target)
             copied += 1
             copied_ids.add(lit_id)
+            if row.get("doi"):
+                copied_dois.add(row["doi"])
             pdf_names[lit_id] = f"{year_str}/{new_name}"
             log_lines.append(f"COPIED: {pdf_path.name} → {year_str}/{new_name} [{method}]")
             print(f"  COPIED: {pdf_path.name}")
@@ -577,9 +600,77 @@ def ingest_source(label: str, pdf_paths: list[Path],
     print(f"    Already existed: {skipped_exists}")
     print(f"    Unmatched:       {unmatched}")
     print(f"    Errors:          {errors}")
-    print(f"    Total acquired:  {len(copied_ids)}")
+    print(f"    Total acquired:  {len(copied_ids)} IDs, {len(copied_dois)} DOIs")
 
-    return copied_ids, pdf_names, log_lines
+    return copied_ids, copied_dois, pdf_names, log_lines
+
+
+def check_source(label: str, pdf_paths: list[Path],
+                  doi_lookup: dict, author_year_lookup: dict,
+                  all_rows: list[dict]) -> None:
+    """
+    Dry-run: check which PDFs match the database without copying or updating anything.
+    Prints a summary table and saves CSV to outputs/ingest_check.csv.
+    """
+    results = []
+    matched = 0
+    unmatched = 0
+
+    print(f"\n{'=' * 70}")
+    print(f"  CHECK MODE (dry run) — no files will be copied or moved")
+    print(f"  Source: {label}")
+    print(f"  PDFs: {len(pdf_paths)}")
+    print(f"{'=' * 70}")
+
+    for i, pdf_path in enumerate(pdf_paths, 1):
+        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup, all_rows)
+
+        if row is None:
+            unmatched += 1
+            print(f"  [{i:3d}/{len(pdf_paths)}] NOT FOUND: {pdf_path.name}")
+            print(f"            Reason: {method}")
+            results.append({
+                "filename": pdf_path.name,
+                "status": "NOT FOUND",
+                "match_method": method,
+                "literature_id": "",
+                "matched_title": "",
+                "matched_doi": "",
+            })
+        else:
+            matched += 1
+            # Check if PDF already exists in SharkPapers
+            new_name = build_filename(row)
+            try:
+                year_str = str(int(float(row["year"])))
+            except (ValueError, TypeError):
+                year_str = "Unknown"
+            target = PDF_BASE / year_str / new_name
+            exists_label = " (PDF already in library)" if target.exists() else ""
+            print(f"  [{i:3d}/{len(pdf_paths)}] FOUND{exists_label}: {pdf_path.name}")
+            print(f"            → {row['title'][:80]}")
+            print(f"            Method: {method}")
+            results.append({
+                "filename": pdf_path.name,
+                "status": "FOUND" + (" (exists)" if target.exists() else ""),
+                "match_method": method,
+                "literature_id": row["literature_id"] or "",
+                "matched_title": row["title"],
+                "matched_doi": row.get("doi", ""),
+            })
+
+    print(f"\n{'=' * 70}")
+    print(f"CHECK SUMMARY")
+    print(f"  Total PDFs:    {len(pdf_paths)}")
+    print(f"  Matched:       {matched}")
+    print(f"  Not found:     {unmatched}")
+    print(f"{'=' * 70}")
+
+    # Save CSV
+    import pandas as pd
+    out_csv = PROJECT / "outputs" / "ingest_check.csv"
+    pd.DataFrame(results).to_csv(out_csv, index=False)
+    print(f"  Results saved to: {out_csv}")
 
 
 def main():
@@ -588,10 +679,15 @@ def main():
     LOG_DIR.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Parse arguments: directories or individual PDF files
+    # Parse arguments: --check flag + directories or individual PDF files
     args = sys.argv[1:]
+    check_mode = "--check" in args
+    if check_mode:
+        args = [a for a in args if a != "--check"]
+
     if not args:
-        print("Usage: python scripts/ingest_pdfs.py /path/to/pdfs/ [file1.pdf ...]")
+        print("Usage: python scripts/ingest_pdfs.py [--check] /path/to/pdfs/ [file1.pdf ...]")
+        print("  --check    Dry run: check matches without copying or updating anything")
         print("  Provide one or more directories or PDF file paths to ingest.")
         sys.exit(0)
 
@@ -600,10 +696,21 @@ def main():
         p = Path(arg)
         if p.is_dir():
             pdf_paths.extend(sorted(p.glob("*.pdf")))
+            # Also pick up .PDF extension
+            pdf_paths.extend(sorted(p.glob("*.PDF")))
         elif p.is_file() and p.suffix.lower() == ".pdf":
             pdf_paths.append(p)
         else:
             print(f"  WARNING: skipping {arg} (not a PDF or directory)")
+
+    # Deduplicate (in case .pdf and .PDF overlap)
+    seen = set()
+    unique = []
+    for p in pdf_paths:
+        if p.name not in seen:
+            seen.add(p.name)
+            unique.append(p)
+    pdf_paths = unique
 
     if not pdf_paths:
         print("No PDFs found in the given paths.")
@@ -614,14 +721,19 @@ def main():
     print(f"  {len(all_rows):,} papers loaded, {len(doi_lookup):,} with DOIs")
 
     source_label = ", ".join(args)
-    all_ids, all_names, all_log = ingest_source(
+
+    if check_mode:
+        check_source(source_label, pdf_paths, doi_lookup, author_year_lookup, all_rows)
+        return
+
+    all_ids, all_dois, all_names, all_log = ingest_source(
         source_label, pdf_paths, doi_lookup, author_year_lookup, all_rows
     )
 
     # --- Update tracking ---
     print(f"\n{'=' * 70}")
     print("Updating tracking systems...")
-    n_json = update_papers_data_json(all_ids, timestamp, source_label)
+    n_json = update_papers_data_json(all_ids, all_dois, timestamp, source_label)
     print(f"  papers_data.json: {n_json} entries removed (no longer missing)")
     update_tracking_dbs(all_ids, all_names, timestamp, source_label)
 
