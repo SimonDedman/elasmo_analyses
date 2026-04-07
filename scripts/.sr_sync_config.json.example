@@ -1,0 +1,6 @@
+{
+  "ntfy_topic": "your-private-topic-name",
+  "gmail_address": "you@gmail.com",
+  "gmail_app_password": "xxxx xxxx xxxx xxxx",
+  "notify_to": "you@gmail.com"
+}
