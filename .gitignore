@@ -94,6 +94,7 @@ credentials.json
 .env
 *_SECRET*
 *_PRIVATE*
+scripts/.sr_sync_config.json
 
 # Office documents (until reviewed)
 *.docx

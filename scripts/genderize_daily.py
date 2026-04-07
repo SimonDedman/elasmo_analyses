@@ -2,7 +2,7 @@
 """
 Daily genderize.io batch resolver for unknown author genders.
 
-Queries up to 100 names/day (free tier limit) from the genderize.io API,
+Queries up to 100 name lookups/day (free tier limit) from the genderize.io API,
 updates the local cache and CSV files, then prints a summary report.
 
 Designed to run as a daily cron job. See SETUP instructions at bottom.
@@ -39,8 +39,8 @@ UNIQUE_AUTHORS = PROJECT_BASE / "outputs/openalex_unique_authors.csv"
 PAPER_AUTHORS = PROJECT_BASE / "outputs/openalex_paper_authors.csv"
 LOG_DIR = PROJECT_BASE / "outputs/logs"
 GENDERIZE_URL = "https://api.genderize.io"
-# Free tier: 100 requests/day, 10 names/request = 1,000 names/day
-DAILY_LIMIT = 1000
+# Free tier: 100 name lookups/day (batched 10/request = 10 requests)
+DAILY_LIMIT = 100
 # Minimum probability to accept a genderize.io result
 MIN_PROBABILITY = 0.6
 
@@ -91,6 +91,10 @@ def extract_query_name(first_name: str | None) -> str | None:
     for token in name.replace("-", " ").split():
         token = token.strip(".")
         if len(token) > 1 and not _INITIAL_RE.match(token):
+            # Reject 2-letter ALL-CAPS tokens — these are initials (DA, CJ, MJ)
+            # but keep mixed/lower case (Li, Xu, Qi, Na) which are real names
+            if len(token) == 2 and token.isupper():
+                continue
             return token
     return None
 
@@ -105,7 +109,7 @@ def simplify_gender(gender: str | None, probability: float) -> str:
 def query_genderize(names: list[str]) -> list[dict]:
     """Query genderize.io for a batch of names (max 10 per request).
 
-    Uses the free tier (no API key): 100 requests/day, 10 names each.
+    Uses the free tier (no API key): 100 name lookups/day, batched 10 per request.
     """
     results = []
     for i in range(0, len(names), 10):
@@ -265,10 +269,14 @@ def main() -> None:
     unique_upd, paper_upd = apply_cache_to_csvs(cache)
     logger.info("Updated %d unique authors, %d paper-author rows", unique_upd, paper_upd)
 
-    # Count remaining after this run
-    remaining_after = len(remaining) - len(batch)
-    successful = new_male + new_female
+    # Count remaining after this run (use actual queried, not limit)
     total_queried = len(results)
+    remaining_after = len(remaining) - total_queried
+    successful = new_male + new_female
+
+    # Estimate days using actual throughput (not the configured limit)
+    daily_rate = total_queried if total_queried > 0 else args.limit
+    est_days = (remaining_after // daily_rate + (1 if remaining_after % daily_rate else 0)) if remaining_after else 0
 
     # Build report
     lines = [
@@ -278,7 +286,7 @@ def main() -> None:
         f"  Unresolved: {new_unknown} (below {MIN_PROBABILITY:.0%} threshold or null)",
         f"  CSV updates: {unique_upd} unique authors, {paper_upd} paper-author rows",
         f"  Remaining:  {remaining_after} uncached names",
-        f"  Est. days:  {remaining_after // args.limit + (1 if remaining_after % args.limit else 0) if remaining_after else 0}",
+        f"  Est. days:  {est_days} (at {daily_rate}/day)",
     ]
 
     if successful == 0 and total_queried > 0:
