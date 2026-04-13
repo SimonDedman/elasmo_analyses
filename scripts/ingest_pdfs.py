@@ -130,25 +130,57 @@ def _strip_references(text: str) -> str:
     return text
 
 
-def _search_text_for_doi(text: str, allow_bare: bool = False) -> str:
-    """Search text for a DOI. Returns the first match or empty string.
+def _strip_zero_width(text: str) -> str:
+    """Strip Unicode zero-width characters that break DOI extraction."""
+    return re.sub(r'[\u200b\u200c\u200d\u200e\u200f\ufeff\u00ad]', '', text)
 
-    If allow_bare is True, also matches bare '10.XXXX/...' patterns
-    (riskier — may match reference DOIs).
+
+def _search_text_for_doi(text: str, allow_bare: bool = False) -> str:
+    """Search text for a DOI. Returns the best (longest) match or empty string.
+
+    Collects all DOI candidates from prefixed and URL patterns, then returns
+    the longest (most complete) one.  If allow_bare is True, also matches
+    bare '10.XXXX/...' patterns (riskier — may match reference DOIs).
     """
-    # DOI: or doi: prefix
-    m = re.search(r'(?:doi|DOI)[\s:]*\s*(10\.\d{4,}/[^\s\]>)]+)', text)
-    if m:
-        return m.group(1).rstrip('.,;')
-    # https://doi.org/ URL
-    m = re.search(r'https?://(?:dx\.)?doi\.org/(10\.\d{4,}/[^\s\]>)]+)', text)
-    if m:
-        return m.group(1).rstrip('.,;')
-    # Bare DOI (only when explicitly allowed)
+    text = _strip_zero_width(text)
+    candidates: list[str] = []
+
+    # DOI: or doi: prefix — find all
+    for m in re.finditer(r'(?:doi|DOI)[\s:]*\s*(10\.\d{4,}/[^\s\]>)]+)', text):
+        candidates.append(m.group(1).rstrip('.,;'))
+    # https://doi.org/ URL — find all
+    for m in re.finditer(r'https?://(?:dx\.)?doi\.org/(10\.\d{4,}/[^\s\]>)]+)', text):
+        candidates.append(m.group(1).rstrip('.,;'))
+
+    if candidates:
+        # Prefer longest (most complete) DOI; discard obviously truncated
+        valid = [d for d in candidates
+                 if len(d.split('/', 1)[1]) >= 5] or candidates
+        return max(valid, key=len)
+
+    # Bare DOI (only when explicitly allowed, if nothing else found)
     if allow_bare:
         m = re.search(r'(10\.\d{4,}/[^\s\]>)]{3,})', text)
         if m:
             return m.group(1).rstrip('.,;')
+    return ""
+
+
+def reconstruct_doi_from_filename(filename: str) -> str:
+    """Reconstruct DOI from known filename patterns.
+
+    Covers Springer (BF*, s*) and Wiley (j.*) article-ID filenames.
+    """
+    stem = Path(filename).stem
+    # Springer BF pattern: BF00002546 → 10.1007/BF00002546
+    if re.match(r'^BF\d{5,}$', stem):
+        return f"10.1007/{stem}"
+    # Springer s-prefix: s00227-005-0151-x → 10.1007/s00227-005-0151-x
+    if re.match(r'^s\d{4,}', stem) and '-' in stem:
+        return f"10.1007/{stem}"
+    # Wiley j.* pattern: j.1365-2621.1991.tb01157.x → 10.1111/j.1365-2621.1991.tb01157.x
+    if re.match(r'^j\.\d{4}', stem):
+        return f"10.1111/{stem}"
     return ""
 
 
@@ -199,6 +231,427 @@ def extract_doi_from_pdf(pdf_path: Path) -> str:
         pass
 
     return ""
+
+
+# ---------------------------------------------------------------------------
+# Title-based fuzzy matching from PDF text
+# ---------------------------------------------------------------------------
+
+# Words too common to be useful for title matching
+_TITLE_STOP_WORDS = frozenset({
+    'with', 'from', 'that', 'this', 'have', 'been', 'were', 'their',
+    'also', 'into', 'than', 'only', 'other', 'some', 'more', 'which',
+    'when', 'will', 'each', 'make', 'like', 'very', 'does', 'made',
+    'about', 'between', 'through', 'after', 'before', 'these', 'those',
+    'under', 'over', 'such', 'both', 'most', 'same', 'first', 'last',
+    'using', 'used', 'based', 'results', 'study', 'however', 'found',
+    # Publishing boilerplate
+    'journal', 'volume', 'number', 'press', 'published', 'received',
+    'accepted', 'copyright', 'rights', 'reserved', 'abstract',
+    'introduction', 'methods', 'discussion', 'acknowledgements',
+    'references', 'printed', 'netherlands', 'springer', 'verlag',
+    'wiley', 'elsevier', 'academic', 'publishers', 'university',
+})
+
+
+def _title_words(text: str) -> set[str]:
+    """Extract meaningful 4+ char lowercase words, excluding stop words."""
+    return set(re.findall(r'[a-z]{4,}', text.lower())) - _TITLE_STOP_WORDS
+
+
+def extract_text_for_matching(pdf_path: Path) -> str:
+    """Extract text from first 2 pages for title matching.
+
+    Tries page 1 first; if it yields <30 chars (watermark/blank), tries page 2.
+    """
+    text_parts = []
+    for page in ["1", "2"]:
+        try:
+            result = subprocess.run(
+                ["pdftotext", "-f", page, "-l", page, str(pdf_path), "-"],
+                capture_output=True, text=True, timeout=15
+            )
+            if result.stdout:
+                text_parts.append(_strip_zero_width(result.stdout))
+        except (subprocess.TimeoutExpired, Exception):
+            continue
+    return "\n".join(text_parts)
+
+
+def match_by_pdf_title(pdf_path: Path, all_rows: list[dict],
+                       filename_year: str = "") -> tuple[dict | None, str]:
+    """Extract text from PDF and fuzzy-match against database titles.
+
+    Scores by how many of the DB title's meaningful words appear in
+    the PDF's first-page text.  Requires >=60% coverage AND >=4 words.
+
+    ``filename_year`` is an optional year extracted from the filename;
+    used as fallback when the year cannot be read from the PDF text.
+    """
+    text = extract_text_for_matching(pdf_path)
+    if len(text.strip()) < 30:
+        return None, "no readable text in PDF"
+
+    pdf_words = _title_words(text[:2000])  # first ~2000 chars, title area
+    if len(pdf_words) < 3:
+        return None, "too few meaningful words in PDF"
+
+    # Try to extract a year from the text for faster filtering
+    year_hint = ""
+    ym = re.search(r'\b(19\d{2}|20\d{2})\b', text[:500])
+    if ym:
+        year_hint = ym.group(1)
+    elif filename_year:
+        year_hint = filename_year
+
+    best: dict | None = None
+    best_score = 0.0
+    best_overlap = 0
+
+    for r in all_rows:
+        # Filter by year if available (speeds up search)
+        if year_hint:
+            try:
+                ry = str(int(float(r["year"])))
+            except (ValueError, TypeError):
+                continue
+            if ry != year_hint:
+                continue
+
+        rtw = _title_words(r["title"])
+        if len(rtw) < 2:
+            continue
+        overlap = len(pdf_words & rtw)
+        if overlap < 4:
+            continue
+        score = overlap / len(rtw)
+        if score > best_score or (score == best_score and overlap > best_overlap):
+            best_score = score
+            best_overlap = overlap
+            best = r
+
+    if best and best_score >= 0.6 and best_overlap >= 4:
+        return best, f"Title match from PDF text ({best_overlap} words, {best_score:.0%} of title)"
+
+    # If year filter gave no result, retry without it
+    if year_hint:
+        best = None
+        best_score = 0.0
+        best_overlap = 0
+        for r in all_rows:
+            rtw = _title_words(r["title"])
+            if len(rtw) < 2:
+                continue
+            overlap = len(pdf_words & rtw)
+            if overlap < 4:
+                continue
+            score = overlap / len(rtw)
+            if score > best_score or (score == best_score and overlap > best_overlap):
+                best_score = score
+                best_overlap = overlap
+                best = r
+        if best and best_score >= 0.6 and best_overlap >= 4:
+            return best, f"Title match from PDF text, no year filter ({best_overlap} words, {best_score:.0%})"
+
+    reason = f"best title overlap: {best_overlap} words"
+    if best:
+        reason += f", {best_score:.0%} coverage"
+    return None, reason
+
+
+# ---------------------------------------------------------------------------
+# Book detection and chapter extraction
+# ---------------------------------------------------------------------------
+
+def get_page_count(pdf_path: Path) -> int:
+    """Get page count via pdfinfo."""
+    try:
+        result = subprocess.run(
+            ["pdfinfo", str(pdf_path)],
+            capture_output=True, text=True, timeout=10
+        )
+        m = re.search(r'Pages:\s*(\d+)', result.stdout)
+        if m:
+            return int(m.group(1))
+    except (subprocess.TimeoutExpired, Exception):
+        pass
+    return 0
+
+
+def detect_book(pdf_path: Path) -> bool:
+    """Detect if a PDF is a book (ISBN in filename or very high page count)."""
+    stem = Path(pdf_path).stem
+    # ISBN-13 pattern in filename
+    if re.match(r'^978[-\d]+$', stem):
+        return True
+    # ISBN-10 pattern
+    if re.match(r'^\d{10}$', stem):
+        return True
+    # High page count
+    pages = get_page_count(pdf_path)
+    if pages > 200:
+        return True
+    return False
+
+
+def extract_toc_entries(pdf_path: Path) -> list[tuple[str, int, int]]:
+    """Extract table-of-contents entries from a book PDF.
+
+    Scans pages 2-30 for chapter/section headings with page numbers.
+    Handles multiple TOC formats:
+      - "Chapter N  Title ...... page"
+      - "N. Title  page"
+      - "Title ......... page"
+      - Multi-line: "Chapter N  Title\\n  Author ... page"
+    Returns list of (chapter_title, start_page, end_page).
+    """
+    try:
+        result = subprocess.run(
+            ["pdftotext", "-f", "2", "-l", "30", str(pdf_path), "-"],
+            capture_output=True, text=True, timeout=30
+        )
+        if not result.stdout:
+            return []
+    except (subprocess.TimeoutExpired, Exception):
+        return []
+
+    text = _strip_zero_width(result.stdout)
+
+    # First, try to find the "Contents" section
+    contents_start = 0
+    for m in re.finditer(r'^Contents\s*$', text, re.MULTILINE | re.IGNORECASE):
+        contents_start = m.end()
+        break
+
+    if contents_start:
+        toc_text = text[contents_start:]
+    else:
+        toc_text = text
+
+    entries: list[tuple[str, int]] = []
+    lines = toc_text.split('\n')
+
+    # Multi-format TOC parser.  Springer books typically use:
+    #   Chapter N                            ← chapter marker
+    #                                        ← blank
+    #   Title Spanning One or                ← title lines
+    #   More Lines                           ← title continuation
+    #   Author Name . . . . . . . . .        ← author + dots (no page!)
+    #                                        ← blank
+    #   17                                   ← page number standalone
+
+    # State machine: collect chapter title, then wait for page number
+    pending_title = ""
+    saw_author_dots = False
+
+    for line in lines:
+        stripped = line.strip()
+
+        # Detect "Chapter N" marker (title may follow on same line or next)
+        m = re.match(r'^Chapter\s+(\d+)\s*(.*)', stripped, re.IGNORECASE)
+        if m:
+            # Save any previous pending entry if we somehow missed its page
+            pending_title = m.group(2).strip()
+            saw_author_dots = False
+            continue
+
+        # Detect "Part N" section headers — reset state, skip
+        if re.match(r'^Part\s+[IVXLCDM]+', stripped, re.IGNORECASE):
+            pending_title = ""
+            saw_author_dots = False
+            continue
+
+        # Skip TOC page numbers like "xii", "xiii", boilerplate
+        if re.match(r'^[ivxlcdm]+$', stripped, re.IGNORECASE):
+            continue
+        if stripped.lower() in ('contents', 'contributors', ''):
+            continue
+
+        # Standalone page number (1-4 digits on a line by itself)
+        if re.match(r'^\d{1,4}$', stripped):
+            page = int(stripped)
+            if pending_title and page > 0:
+                entries.append((pending_title, page))
+                pending_title = ""
+                saw_author_dots = False
+            continue
+
+        # Line ending with page number after dots/spaces
+        m = re.match(r'^(.+?)\s*[.·\s]{3,}\s*(\d{1,4})\s*$', stripped)
+        if m:
+            page = int(m.group(2))
+            if page > 0:
+                if pending_title:
+                    entries.append((pending_title, page))
+                    pending_title = ""
+                    saw_author_dots = False
+                else:
+                    # Standalone entry: title...page on one line
+                    title = m.group(1).strip()
+                    if title.lower() not in (
+                        'preface', 'acknowledgments', 'index',
+                        'subject index', 'author index', 'taxonomic index'
+                    ) and len(title) > 10:
+                        entries.append((title, page))
+            continue
+
+        # Author line (contains dots/periods pattern, no page number)
+        if re.search(r'[.·]{3,}', stripped):
+            saw_author_dots = True
+            continue
+
+        # If no pending title and blank line, skip
+        if not stripped:
+            continue
+
+        # Title or title continuation line
+        if pending_title and not saw_author_dots:
+            pending_title += " " + stripped
+        elif not pending_title:
+            # Skip boilerplate
+            if stripped.lower() in (
+                'preface', 'acknowledgments', 'contributors',
+                'index', 'subject index', 'author index',
+                'taxonomic index', 'taxonomic appendix'
+            ):
+                continue
+            # Could be start of a non-"Chapter N" title
+            if len(stripped) > 10:
+                pending_title = stripped
+                saw_author_dots = False
+
+    if not entries:
+        return []
+
+    # Deduplicate (same page) and enforce monotonically increasing pages.
+    # Once page numbers start decreasing, we've left the TOC.
+    total_pages = get_page_count(pdf_path)
+    seen_pages: set[int] = set()
+    unique_entries: list[tuple[str, int]] = []
+    max_page_seen = 0
+    for title, page in entries:
+        if page > total_pages or page < 1:
+            continue
+        if page in seen_pages:
+            continue
+        if page < max_page_seen:
+            # Page numbers went backwards — we've left the TOC
+            break
+        seen_pages.add(page)
+        max_page_seen = page
+        unique_entries.append((title, page))
+    entries = unique_entries
+
+    # Convert to (title, start_page, end_page) using next chapter's start
+    result_entries: list[tuple[str, int, int]] = []
+    for i, (title, start) in enumerate(entries):
+        if i + 1 < len(entries):
+            end = entries[i + 1][1] - 1
+        else:
+            end = min(start + 30, total_pages)
+        result_entries.append((title, start, end))
+
+    return result_entries
+
+
+def handle_book(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
+                all_rows: list[dict]) -> list[tuple[Path, dict, str]]:
+    """Handle a book PDF: detect chapters, match against DB, extract pages.
+
+    Returns list of (extracted_pdf_path, matched_row, method) for each
+    successfully extracted and matched chapter.
+    """
+    import pikepdf
+
+    pages = get_page_count(pdf_path)
+    print(f"  BOOK DETECTED: {pdf_path.name} ({pages} pages)")
+
+    # Check if it's really just a single article with a book-like filename
+    if pages <= 50:
+        print(f"    Low page count ({pages}) — treating as single article")
+        return []  # fall through to normal matching
+
+    # Extract and parse TOC
+    toc = extract_toc_entries(pdf_path)
+    if not toc:
+        print(f"    No TOC entries found — cannot extract chapters")
+        return []
+
+    print(f"    Found {len(toc)} TOC entries")
+
+    # Match TOC chapter titles against database
+    matched_chapters: list[tuple[str, int, int, dict, str]] = []
+    for title, start, end in toc:
+        title_words_set = _title_words(title)
+        if len(title_words_set) < 3:
+            continue
+
+        best_row = None
+        best_score = 0.0
+        best_overlap = 0
+        for r in all_rows:
+            rtw = _title_words(r["title"])
+            if len(rtw) < 2:
+                continue
+            overlap = len(title_words_set & rtw)
+            if overlap < 3:
+                continue
+            score = overlap / len(rtw)
+            if score > best_score or (score == best_score and overlap > best_overlap):
+                best_score = score
+                best_overlap = overlap
+                best_row = r
+
+        if best_row and best_score >= 0.7 and best_overlap >= 5:
+            matched_chapters.append(
+                (title, start, end, best_row,
+                 f"Book chapter TOC match ({best_overlap} words, {best_score:.0%})")
+            )
+            print(f"    CHAPTER MATCH: '{title[:60]}' (pp.{start}-{end})")
+            print(f"      → {best_row['title'][:70]}")
+
+    if not matched_chapters:
+        print(f"    No chapter titles matched database entries")
+        return []
+
+    # Extract matched chapters as separate PDFs
+    extracted: list[tuple[Path, dict, str]] = []
+    extract_dir = pdf_path.parent / "_extracted_chapters"
+    extract_dir.mkdir(exist_ok=True)
+
+    try:
+        src = pikepdf.open(pdf_path)
+    except Exception as e:
+        print(f"    ERROR opening book PDF: {e}")
+        return []
+
+    for title, start, end, row, method in matched_chapters:
+        # PDF pages are 0-indexed in pikepdf, but TOC numbers are logical
+        # Need to account for front matter offset — estimate from first chapter
+        # For now, use page numbers as-is (0-indexed adjustment)
+        p_start = max(0, start - 1)
+        p_end = min(len(src.pages) - 1, end - 1)
+
+        if p_start >= len(src.pages):
+            print(f"    SKIP: page {start} beyond PDF length ({len(src.pages)})")
+            continue
+
+        chapter_name = build_filename(row)
+        chapter_path = extract_dir / chapter_name
+
+        try:
+            dst = pikepdf.new()
+            for p in range(p_start, p_end + 1):
+                dst.pages.append(src.pages[p])
+            dst.save(chapter_path)
+            dst.close()
+            extracted.append((chapter_path, row, method))
+            print(f"    EXTRACTED: pp.{start}-{end} → {chapter_name}")
+        except Exception as e:
+            print(f"    ERROR extracting pp.{start}-{end}: {e}")
+
+    src.close()
+    return extracted
 
 
 def parse_filename_info(filename: str) -> dict:
@@ -316,6 +769,13 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
               all_rows: list[dict]) -> tuple[dict | None, str]:
     """
     Try to match a PDF to the database. Returns (matched_row, method) or (None, reason).
+
+    Strategies (tried in order):
+      1. Extract DOI from PDF content
+      2. Reconstruct DOI from filename pattern (Springer BF*, Wiley j.*, etc.)
+      3. Author + year from filename
+      4. Year + title words from filename
+      5. Title fuzzy-match from PDF text (OCR fallback)
     """
     # Strategy 1: extract DOI from PDF content
     doi_text = extract_doi_from_pdf(pdf_path)
@@ -329,7 +789,14 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
             if trimmed in doi_lookup:
                 return doi_lookup[trimmed], f"DOI from PDF text (trimmed): {doi_text}"
 
-    # Strategy 2: filename-based author+year matching
+    # Strategy 2: reconstruct DOI from filename pattern
+    recon_doi = reconstruct_doi_from_filename(pdf_path.name)
+    if recon_doi:
+        nd = normalise_doi(recon_doi)
+        if nd in doi_lookup:
+            return doi_lookup[nd], f"DOI reconstructed from filename: {recon_doi}"
+
+    # Strategy 3: filename-based author+year matching
     finfo = parse_filename_info(pdf_path.name)
     if finfo["author"] and finfo["year"]:
         key = f"{finfo['author']}_{finfo['year']}"
@@ -352,7 +819,7 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
             # If only 2-3 candidates and no title words, still ambiguous
             return None, f"AMBIGUOUS: {len(candidates)} candidates for {finfo['author']} {finfo['year']}"
 
-    # Strategy 3: if we have a year and title words from filename, try broader match
+    # Strategy 4: if we have a year and title words from filename, try broader match
     if finfo["year"] and finfo["title_words"] and len(finfo["title_words"]) >= 3:
         target_words = set(finfo["title_words"][:8])
         best = None
@@ -376,17 +843,26 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
         if best and best_score >= 3:
             return best, f"Year+title words from filename ({best_score} words)"
 
+    # Strategy 5: extract text from PDF and fuzzy-match title against database
+    row, method = match_by_pdf_title(pdf_path, all_rows, filename_year=finfo.get("year", ""))
+    if row:
+        return row, method
+
+    # All strategies failed — build informative reason
     reason_parts = []
     if not doi_text:
         reason_parts.append("no DOI in PDF")
     else:
         reason_parts.append(f"DOI not in DB: {doi_text}")
+    if recon_doi:
+        reason_parts.append(f"reconstructed DOI not in DB: {recon_doi}")
     if not finfo["author"]:
         reason_parts.append("no author in filename")
     elif not finfo["year"]:
         reason_parts.append("no year in filename")
     else:
         reason_parts.append(f"no DB match for {finfo['author']} {finfo['year']}")
+    reason_parts.append(f"title match failed ({method})")
 
     return None, "; ".join(reason_parts)
 
@@ -547,16 +1023,9 @@ def ingest_source(label: str, pdf_paths: list[Path],
     print(f"  PDFs: {len(pdf_paths)}")
     print(f"{'=' * 70}")
 
-    for pdf_path in pdf_paths:
-        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup, all_rows)
-
-        if row is None:
-            unmatched += 1
-            log_lines.append(f"UNMATCHED: {pdf_path.name} — {method}")
-            print(f"  UNMATCHED: {pdf_path.name}")
-            print(f"            Reason: {method}")
-            continue
-
+    def _file_one(pdf_src: Path, row: dict, method: str):
+        """Copy a single matched PDF into the library. Returns True if new copy."""
+        nonlocal copied, skipped_exists, errors
         lit_id = row["literature_id"]
         new_name = build_filename(row)
         try:
@@ -574,26 +1043,52 @@ def ingest_source(label: str, pdf_paths: list[Path],
             if row.get("doi"):
                 copied_dois.add(row["doi"])
             pdf_names[lit_id] = f"{year_str}/{new_name}"
-            log_lines.append(f"EXISTS: {year_str}/{new_name} (from {pdf_path.name}) [{method}]")
-            print(f"  EXISTS: {pdf_path.name} → {year_str}/{new_name}")
-            continue
+            log_lines.append(f"EXISTS: {year_str}/{new_name} (from {pdf_src.name}) [{method}]")
+            print(f"  EXISTS: {pdf_src.name} → {year_str}/{new_name}")
+            return False
 
         try:
             year_dir.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(pdf_path, target)
+            shutil.copy2(pdf_src, target)
             copied += 1
             copied_ids.add(lit_id)
             if row.get("doi"):
                 copied_dois.add(row["doi"])
             pdf_names[lit_id] = f"{year_str}/{new_name}"
-            log_lines.append(f"COPIED: {pdf_path.name} → {year_str}/{new_name} [{method}]")
-            print(f"  COPIED: {pdf_path.name}")
+            log_lines.append(f"COPIED: {pdf_src.name} → {year_str}/{new_name} [{method}]")
+            print(f"  COPIED: {pdf_src.name}")
             print(f"      → {year_str}/{new_name}")
             print(f"      Method: {method}")
+            return True
         except Exception as e:
             errors += 1
-            log_lines.append(f"ERROR: {pdf_path.name} — {e}")
-            print(f"  ERROR: {pdf_path.name} — {e}")
+            log_lines.append(f"ERROR: {pdf_src.name} — {e}")
+            print(f"  ERROR: {pdf_src.name} — {e}")
+            return False
+
+    for pdf_path in pdf_paths:
+        # Book detection: handle multi-chapter books specially
+        if detect_book(pdf_path):
+            chapters = handle_book(pdf_path, doi_lookup, author_year_lookup, all_rows)
+            if chapters:
+                for ch_path, ch_row, ch_method in chapters:
+                    _file_one(ch_path, ch_row, ch_method)
+                log_lines.append(f"BOOK: {pdf_path.name} — {len(chapters)} chapters extracted")
+                continue
+            # If no chapters matched, fall through to normal matching
+            # (could be a single-chapter book or misdetected)
+            print(f"    Falling through to normal matching for {pdf_path.name}")
+
+        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup, all_rows)
+
+        if row is None:
+            unmatched += 1
+            log_lines.append(f"UNMATCHED: {pdf_path.name} — {method}")
+            print(f"  UNMATCHED: {pdf_path.name}")
+            print(f"            Reason: {method}")
+            continue
+
+        _file_one(pdf_path, row, method)
 
     print(f"\n  Summary for {label}:")
     print(f"    Copied (new):    {copied}")
@@ -623,6 +1118,48 @@ def check_source(label: str, pdf_paths: list[Path],
     print(f"{'=' * 70}")
 
     for i, pdf_path in enumerate(pdf_paths, 1):
+        # Book detection in check mode
+        if detect_book(pdf_path):
+            pages = get_page_count(pdf_path)
+            print(f"  [{i:3d}/{len(pdf_paths)}] BOOK: {pdf_path.name} ({pages} pages)")
+            toc = extract_toc_entries(pdf_path)
+            if toc:
+                print(f"            {len(toc)} TOC entries found")
+                # Check chapter matches
+                ch_matches = 0
+                for title, start, end in toc:
+                    tw = _title_words(title)
+                    if len(tw) < 3:
+                        continue
+                    for r in all_rows:
+                        rtw = _title_words(r["title"])
+                        if len(rtw) < 2:
+                            continue
+                        overlap = len(tw & rtw)
+                        score = overlap / len(rtw) if rtw else 0
+                        if score >= 0.7 and overlap >= 5:
+                            ch_matches += 1
+                            print(f"            Chapter: '{title[:50]}' → {r['title'][:50]}")
+                            break
+                if ch_matches:
+                    matched += ch_matches
+                    print(f"            {ch_matches} chapters matched DB entries")
+                else:
+                    unmatched += 1
+                    print(f"            No chapters matched DB entries (threshold: 70%/5 words)")
+            else:
+                unmatched += 1
+                print(f"            No TOC entries found")
+            results.append({
+                "filename": pdf_path.name,
+                "status": f"BOOK ({pages}pp, {len(toc)} TOC entries)",
+                "match_method": "book detection",
+                "literature_id": "",
+                "matched_title": "",
+                "matched_doi": "",
+            })
+            continue
+
         row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup, all_rows)
 
         if row is None:
