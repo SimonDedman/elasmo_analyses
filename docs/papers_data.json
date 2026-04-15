@@ -4734,24 +4734,6 @@
     "publisher": ""
   },
   {
-    "id": 365,
-    "literature_id": "33716",
-    "year": 2024,
-    "authors": "Brownstein, C.D. & Near, T.J. & Dearden, R.P. (2024)",
-    "title": "The Palaeozoic assembly of the holocephalan body plan far preceded post-Cretaceous radiations into the ocean depths.",
-    "journal": "Proceedings of the Royal Society B-Biological Sciences",
-    "doi": "10.1098/rspb.2024.1824",
-    "priority_group": 1,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Proceedings of the Royal Society B-Biological Sciences",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 366,
     "literature_id": "32929",
     "year": 2024,
@@ -8494,24 +8476,6 @@
     "oa_license": "",
     "journal_clean": "Journal of Vertebrate Paleontology",
     "publisher": "Taylor & Francis"
-  },
-  {
-    "id": 615,
-    "literature_id": "500214",
-    "year": 2024,
-    "authors": "Sayama, S. & Natsuhara, M. & Shinohara, G. & Maeda, M. & Tanaka, H. (2024)",
-    "title": "Three-dimensional shape of natural riblets in the white shark: relationship between the denticle morphology and swimming speed of sharks.",
-    "journal": "Journal of the Royal Society Interface",
-    "doi": "10.1098/rsif.2024.0063",
-    "priority_group": 1,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Journal of the Royal Society Interface",
-    "publisher": "Royal Society"
   },
   {
     "id": 616,
@@ -15156,24 +15120,6 @@
     "publisher": "Elsevier"
   },
   {
-    "id": 1034,
-    "literature_id": "30911",
-    "year": 2022,
-    "authors": "Benites-Palomino, A. & Velez-Juarbe, J. & Altamirano-Sierra, A. & Collareta, A. & Carrillo-Briceno, J.D. & Urbina, M. (2022)",
-    "title": "Sperm whales (Physeteroidea) from the Pisco Formation, Peru, and their trophic role as fat sources for late Miocene sharks.",
-    "journal": "Proceedings of the Royal Society of London",
-    "doi": "10.1098/rspb.2022.0774",
-    "priority_group": 1,
-    "last_status": "unavailable",
-    "notes": "oa_status: green; tried 4 sources",
-    "oa_status": "green",
-    "oa_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/9240678",
-    "oa_host_type": "repository",
-    "oa_license": "",
-    "journal_clean": "Proceedings of the Royal Society of London, Series B",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 1035,
     "literature_id": "34030",
     "year": 2022,
@@ -17316,24 +17262,6 @@
     "publisher": "Springer"
   },
   {
-    "id": 1167,
-    "literature_id": "31242",
-    "year": 2022,
-    "authors": "Park, J.S. & Almer, J.D. & James, K.C. & Natanson, L.J. & Stock, S.R. (2022)",
-    "title": "Bioapatite in shark centra studied by wide-angle and by small-angle X-ray scattering.",
-    "journal": "Journal of the Royal Society Interface",
-    "doi": "10.1098/rsif.2022.0373",
-    "priority_group": 1,
-    "last_status": "unavailable",
-    "notes": "oa_status: green; tried 5 sources",
-    "oa_status": "green",
-    "oa_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/9490346",
-    "oa_host_type": "repository",
-    "oa_license": "",
-    "journal_clean": "Journal of the Royal Society Interface",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 1168,
     "literature_id": "31352",
     "year": 2022,
@@ -19080,24 +19008,6 @@
     "publisher": ""
   },
   {
-    "id": 1272,
-    "literature_id": "500374",
-    "year": 2021,
-    "authors": "De Vivo, G. & Lautenschlager, S. & Vinther, J. (2021)",
-    "title": "Three-dimensional modelling, disparity and ecology of the first Cambrian apex predators.",
-    "journal": "Proceedings of the Royal Society of London",
-    "doi": "10.1098/rspb.2021.1176",
-    "priority_group": 1,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Proceedings of the Royal Society of London",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 1273,
     "literature_id": "29297",
     "year": 2021,
@@ -20680,24 +20590,6 @@
     "oa_license": "",
     "journal_clean": "Marine Policy",
     "publisher": "Elsevier"
-  },
-  {
-    "id": 1365,
-    "literature_id": "30324",
-    "year": 2021,
-    "authors": "Ryan, L.A. & Slip, D.J. & Chapuis, L. & Collin, S.P. & Gennari, E. & Hemmi, J.M. & How, M.J. & Huveneers, C. & Peddemors, V.M. & Tosetto, L. & Hart, N.S. (2021)",
-    "title": "A shark's eye view: testing the 'mistaken identity theory' behind shark bites on humans.",
-    "journal": "Journal of the Royal Society Interface",
-    "doi": "10.1098/rsif.2021.0533",
-    "priority_group": 1,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Journal of the Royal Society Interface",
-    "publisher": "Royal Society"
   },
   {
     "id": 1367,
@@ -23364,24 +23256,6 @@
     "publisher": "Taylor & Francis"
   },
   {
-    "id": 1527,
-    "literature_id": "27496",
-    "year": 2019,
-    "authors": "Di Santo, V. & Blevins, E.L. & Lauder, G.V. (2019)",
-    "title": "Ocean acidification and warming affect skeletal mineralization in a marine fish.",
-    "journal": "Proceedings of the Royal Society of London",
-    "doi": "10.1098/rspb.2018.2187",
-    "priority_group": 1,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Proceedings of the Royal Society of London",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 1528,
     "literature_id": "500402",
     "year": 2019,
@@ -25684,24 +25558,6 @@
     "oa_license": "",
     "journal_clean": "PINRO. - Murmansk: PINRO",
     "publisher": ""
-  },
-  {
-    "id": 1665,
-    "literature_id": "26807",
-    "year": 2018,
-    "authors": "Du Clos, K.T. & Lang, A. & Devey, S. & Motta, P.J. & Habegger, M.L. & Gemmell, B.J. (2018)",
-    "title": "Passive bristling of mako shark scales in reversing flows.",
-    "journal": "Journal of the Royal Society Interface",
-    "doi": "10.1098/rsif.2018.0473",
-    "priority_group": 1,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Journal of the Royal Society Interface",
-    "publisher": "Royal Society"
   },
   {
     "id": 1666,
@@ -58050,24 +57906,6 @@
     "publisher": ""
   },
   {
-    "id": 3488,
-    "literature_id": "13492",
-    "year": 2011,
-    "authors": "Finarelli, J.A. & Coates, M.I. (2011)",
-    "title": "First tooth-set outside the jaws in a vertebrate.",
-    "journal": "Proceedings of the Royal Society of London",
-    "doi": "10.1098/rspb.2011.1107",
-    "priority_group": 2,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Proceedings of the Royal Society of London",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 3489,
     "literature_id": "15794",
     "year": 2011,
@@ -82926,24 +82764,6 @@
     "publisher": "Inter-Research"
   },
   {
-    "id": 4878,
-    "literature_id": "5870",
-    "year": 2007,
-    "authors": "Chapman, D.D. & Shivji, M.S. & Louis, E. & Sommer, J. & Fletcher, H. & Prod\u00f6hl, P.A. (2007)",
-    "title": "Virgin birth in a hammerhead shark.",
-    "journal": "Biology Letters",
-    "doi": "10.1098/rsbl.2007.0189",
-    "priority_group": 2,
-    "last_status": "",
-    "notes": "",
-    "oa_status": "unknown",
-    "oa_url": "",
-    "oa_host_type": "",
-    "oa_license": "",
-    "journal_clean": "Biology Letters",
-    "publisher": "Royal Society"
-  },
-  {
     "id": 4879,
     "literature_id": "18518",
     "year": 2007,
@@ -93058,24 +92878,6 @@
     "oa_license": "",
     "journal_clean": "Journal of Fish Diseases",
     "publisher": "Wiley"
-  },
-  {
-    "id": 5451,
-    "literature_id": "6541",
-    "year": 2006,
-    "authors": "Priede, I.G. & Froese, R. & Bailey, D.M. & Bergstad, O.K. & Collins, M.A. & Dyb, J.E. & Henriques, C. & Jones, E.G. (2006)",
-    "title": "The absence of sharks from abyssal regions of the world's oceans.",
-    "journal": "Proceedings of the Royal Society of London",
-    "doi": "10.1098/rspb.2005.3461",
-    "priority_group": 2,
-    "last_status": "unavailable",
-    "notes": "oa_status: green; tried 5 sources",
-    "oa_status": "green",
-    "oa_url": "http://doi.org/10.1098/rspb.2005.3461",
-    "oa_host_type": "repository",
-    "oa_license": "",
-    "journal_clean": "Proceedings of the Royal Society of London, Series B",
-    "publisher": "Royal Society"
   },
   {
     "id": 5452,
