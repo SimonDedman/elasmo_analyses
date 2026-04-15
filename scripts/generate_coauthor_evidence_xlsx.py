@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from datetime import date
 from pathlib import Path
 
 import pandas as pd
@@ -31,7 +32,7 @@ ALTMETRIC_CSV = BASE / "outputs" / "altmetric_scores.csv"
 UNPAYWALL_CSV = BASE / "outputs" / "unpaywall_oa_by_doi.csv"
 PARQUET = BASE / "outputs" / "literature_review_enriched.parquet"
 DB = BASE / "database" / "technique_taxonomy.db"
-OUTPUT = BASE / "outputs" / "meeting_review" / "schema_extraction_evidence_by_coauthor.xlsx"
+OUTPUT = BASE / "outputs" / "meeting_review" / f"{date.today().isoformat()}_schema_extraction_evidence_by_coauthor.xlsx"
 
 # ---------------------------------------------------------------------------
 # Team members: display name -> list of surname variants (lowercase, normalised)

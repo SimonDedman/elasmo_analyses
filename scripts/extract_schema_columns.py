@@ -142,7 +142,7 @@ PR = SchemaCategory(prefix="pr_", columns=[
     BinaryColumn("pr_habitat_loss", ["habitat loss", "habitat degradation", "coastal development", "dredg*", "mangrove loss"], threshold=2),
     BinaryColumn("pr_shipping", ["ship strike", "vessel strike", "maritime traffic"], threshold=1),
     # Very specific terms — low threshold
-    BinaryColumn("pr_tourism", ["dive tourism", "ecotourism", "shark tourism", "provisioning", "shark feed*", "cage div*"], threshold=1),
+    BinaryColumn("pr_tourism", ["dive tourism", "ecotourism", "shark tourism", "provisioning", "shark feed*", "cage div*"], threshold=2),  # threshold 1→2: lone "provisioning" was false-positive (Elena issue #7)
     BinaryColumn("pr_depredation", ["depredation", "depredating", "bait loss", "catch damage"], threshold=1),
     BinaryColumn("pr_aquaculture", ["aquaculture", "fish farm*", "mariculture"], threshold=1),
     BinaryColumn("pr_invasive", ["invasive species", "non-native species", "alien species"], threshold=1),
@@ -167,7 +167,7 @@ GEAR = SchemaCategory(prefix="gear_", columns=[
     BinaryColumn("gear_seine", ["beach seine", "Danish seine", "seine net"], threshold=1),
     BinaryColumn("gear_hook_line", ["hook and line", "handline", "rod and reel", "trolling", "jigging", "pole and line"], threshold=2),
     BinaryColumn("gear_trap", ["trap", "pot", "fish trap", "drumline", "SMART drumline"], threshold=2),
-    BinaryColumn("gear_net_other", ["cast net", "lift net", "scoop net", "fyke net", "pound net", "weir"], threshold=1),
+    BinaryColumn("gear_net_other", ["cast net", "lift net", "scoop net", "fyke net", "pound net", "weir"], threshold=1, case_sensitive_terms={"weir"}),  # case-sensitive: avoid surname Weir (Elena issue #7)
     BinaryColumn("gear_harpoon", ["harpoon", "spearfish*", "spear gun"], threshold=1),
     BinaryColumn("gear_dredge", ["dredge", "towed dredge", "scallop dredge", "clam dredge", "oyster dredge", "hydraulic dredge"], threshold=1),
     BinaryColumn("gear_trawl_beam", ["beam trawl", "beam-trawl"], threshold=1),
@@ -207,7 +207,7 @@ IMP = SchemaCategory(prefix="imp_", columns=[
     BinaryColumn("imp_injury", ["injury", "hooking injury", "scarring", "body condition index", "entanglement", "entangled", "gear interaction", "net mark*"], threshold=2),
     BinaryColumn("imp_reproduction", ["reproductive output", "fecundity change", "reproductive failure"], threshold=1),
     BinaryColumn("imp_growth", ["growth rate", "von Bertalanffy", "growth curve", "somatic growth", "condition factor", "Fulton", "length-weight", "stunting", "growth overfishing"], anchors=["change", "impact", "decline", "reduce", "affect", "alter", "slow", "decrease", "increase"], threshold=2),
-    BinaryColumn("imp_genetic", ["genetic diversity", "effective population size", r"Ne\b", "bottleneck", "inbreeding"], threshold=2),
+    BinaryColumn("imp_genetic", ["genetic diversity", "effective population size", "bottleneck", "inbreeding"], threshold=2),  # Ne\b removed: too ambiguous even case-sensitive (Elena issue #7)
     BinaryColumn("imp_trophic", ["trophic level change", "dietary shift", "prey depletion", "mesopredator release"], threshold=1),
     BinaryColumn("imp_habitat_quality", ["habitat quality", "habitat suitability", "degradation index"], threshold=2),
     BinaryColumn("imp_contamination", ["contaminant load", "bioaccumulation", "biomagnification", "tissue concentration"], threshold=1),
