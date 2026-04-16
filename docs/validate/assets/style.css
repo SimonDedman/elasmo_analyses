@@ -363,46 +363,35 @@ a:hover {
   word-break: break-word;
 }
 
-/* ── Evidence detail panels ────────────────────────────────── */
+/* ── Evidence detail panels (full-width below checkbox grid) ── */
 
 .evidence-panel {
   background: #f0f2f6;
   border-left: 3px solid #B6862C;
   border-radius: 0 4px 4px 0;
   margin-bottom: 0.6rem;
+  padding: 0.5rem 0.75rem;
   overflow: hidden;
+  width: 100%;
 }
 
-.evidence-panel > summary {
-  padding: 0.4rem 0.7rem;
-  cursor: pointer;
-  font-size: 0.76rem;
+.evidence-panel-header {
+  font-size: 0.8rem;
   font-weight: 600;
   color: #2d3748;
-  list-style: none;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+  text-transform: capitalize;
 }
 
-.evidence-panel > summary::-webkit-details-marker {
-  display: none;
-}
-
-.evidence-panel > summary::before {
-  content: "▶";
-  font-size: 0.6rem;
-  color: #B6862C;
-  transition: transform 0.2s ease;
-}
-
-.evidence-panel[open] > summary::before {
-  transform: rotate(90deg);
-}
-
-.evidence-panel > summary:hover {
+/* SR habitat guess tags */
+.sr-guess-tag {
+  display: inline-block;
   background: #e2e8f0;
+  border: 1px solid #cbd5e0;
+  border-radius: 12px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+  color: #2d3748;
 }
 
 .evidence-body {

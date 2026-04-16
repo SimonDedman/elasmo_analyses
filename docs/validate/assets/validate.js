@@ -22,12 +22,12 @@
     'b_':     'Ocean Basin',
     'd_':     'Discipline',
     'eco_':   'Ecosystem',
-    'pr_':    'Pressure',
-    'imp_':   'Impact',
-    'gear_':  'Gear',
+    'pr_':    'Pressure / Threat',
+    'imp_':   'Impact / Response',
+    'gear_':  'Fishing Gear',
     'sp_':    'Species',
-    'a_':     'Author Affiliation',
-    'ob_':    'Observation Method',
+    'a_':     'Analytical Techniques',
+    'ob_':    'Ocean Basin (geographic)',
     'depth_': 'Depth'
   };
 
@@ -186,18 +186,21 @@
     var ratings  = ['correct', 'partially_correct', 'incorrect'];
     var labels   = ['Correct', 'Partially correct', 'Incorrect'];
 
-    var html = '<div class="rating-row">';
-    html += '<span class="rating-label">Rating:</span>';
+    var html = '<div class="rating-row" style="display:flex;align-items:center;gap:1rem;margin:0.5rem 0;">';
+    html += '<span class="rating-label" style="font-weight:600;font-size:0.85rem;">Rating:</span>';
     for (var i = 0; i < ratings.length; i++) {
       var checked = s.rating === ratings[i] ? ' checked' : '';
-      html += '<label class="rating-option">';
+      html += '<label class="rating-option" style="display:inline-flex;align-items:center;gap:0.25rem;cursor:pointer;font-size:0.85rem;">';
       html += '<input type="radio" name="' + escapeHtml(nameBase) + '"';
       html += ' value="' + ratings[i] + '"' + checked;
       html += ' data-paper="' + escapeHtml(paperId) + '"';
       html += ' data-prefix="' + escapeHtml(prefix) + '"';
-      html += ' class="rating-radio">';
+      html += ' class="rating-radio" style="margin:0;">';
       html += ' ' + labels[i];
       html += '</label>';
+    }
+    if (s.changes_count != null) {
+      html += '<span class="changes-count" style="font-size:0.75rem;color:#868e96;">(' + s.changes_count + ' change' + (s.changes_count !== 1 ? 's' : '') + ')</span>';
     }
     html += '</div>';
 
@@ -219,8 +222,11 @@
       html += '<input type="number" class="threshold-input"';
       html += ' data-paper="' + escapeHtml(paperId) + '"';
       html += ' data-prefix="' + escapeHtml(prefix) + '"';
-      html += ' min="0" step="1" placeholder="current"';
-      html += ' value="' + escapeHtml(rs.threshold != null ? rs.threshold : '') + '">';
+      html += ' min="1" step="1" placeholder="current"';
+      html += ' value="' + escapeHtml(rs.threshold != null ? String(rs.threshold) : '') + '">';
+      html += ' <button class="btn-reset-threshold" data-paper="' + escapeHtml(paperId) + '"';
+      html += ' data-prefix="' + escapeHtml(prefix) + '"';
+      html += ' style="font-size:0.75rem;cursor:pointer;background:none;border:1px solid #ccc;border-radius:3px;padding:0 4px;">Reset</button>';
       html += '</label>';
       html += '<label class="rule-item">Add term: ';
       html += '<input type="text" class="add-term-input"';
@@ -311,14 +317,22 @@
         html += ' data-paper="' + escapeHtml(paperId) + '"';
         html += ' data-col="' + escapeHtml(colName) + '"';
         html += '>&#9432;</button>';
-        html += '<div class="evidence-panel" id="ev_' + escapeHtml(paperId) + '_' + escapeHtml(colName) + '" hidden>';
-        html += _renderEvidence(evidence);
-        html += '</div>';
       }
 
       html += '</div>'; // .checkbox-item
     }
     html += '</div>'; // .checkbox-grid
+
+    // Evidence panels rendered below the grid (full width)
+    for (var j = 0; j < columns.length; j++) {
+      var evCol = columns[j];
+      if (evCol.evidence && evCol.evidence.length > 0) {
+        html += '<div class="evidence-panel" id="ev_' + escapeHtml(paperId) + '_' + escapeHtml(evCol.name) + '" hidden>';
+        html += '<div class="evidence-panel-header">' + escapeHtml(evCol.name.replace(prefix, '').replace(/_/g, ' ')) + '</div>';
+        html += _renderEvidence(evCol.evidence);
+        html += '</div>';
+      }
+    }
 
     html += _renderRatingRow(paperId, prefix, isTier1);
     return html;
@@ -458,7 +472,6 @@
 
     // Summary line
     html += '<summary class="paper-summary">';
-    html += '<span class="chevron">&#9654;</span>';
     html += '<span class="paper-year">' + escapeHtml(String(year)) + '</span>';
     html += '<span class="paper-short-author">' + escapeHtml(shortAuth) + '</span>';
     html += '<span class="paper-title-short" title="' + escapeHtml(title) + '">' + escapeHtml(shortTitle) + '</span>';
@@ -476,12 +489,26 @@
     if (doi) {
       html += '<span class="meta-item"><strong>DOI:</strong> <a href="https://doi.org/' + escapeHtml(doi) + '" target="_blank" rel="noopener">' + escapeHtml(doi) + '</a></span>';
     }
-    if (studyType)   { html += '<span class="meta-item"><strong>Type:</strong> '        + escapeHtml(studyType)   + '</span>'; }
+    if (studyType)   { html += '<span class="meta-item" title="Empirical, review, theoretical, etc."><strong>Study type:</strong> ' + escapeHtml(studyType) + '</span>'; }
     if (country)     { html += '<span class="meta-item"><strong>Country:</strong> '     + escapeHtml(country)     + '</span>'; }
     if (superregion) { html += '<span class="meta-item"><strong>Superregion:</strong> ' + escapeHtml(superregion) + '</span>'; }
-    if (epoch)       { html += '<span class="meta-item"><strong>Epoch:</strong> '       + escapeHtml(epoch)       + '</span>'; }
-    if (altScore)    { html += '<span class="meta-item"><strong>Altmetric:</strong> '   + escapeHtml(altScore)    + '</span>'; }
-    html += '<span class="meta-item meta-id"><strong>ID:</strong> ' + escapeHtml(String(paperId)) + '</span>';
+    if (epoch)       { html += '<span class="meta-item" title="Geological time period of study specimens"><strong>Epoch:</strong> ' + escapeHtml(epoch) + '</span>'; }
+    if (altScore) {
+      var altNum = parseFloat(altScore);
+      var altBin = altNum >= 500 ? 'exceptional' : altNum >= 100 ? 'very high' : altNum >= 50 ? 'high' : altNum >= 10 ? 'moderate' : altNum >= 1 ? 'low' : 'minimal';
+      html += '<span class="meta-item" title="Altmetric attention score (social media, news, policy). Bins: minimal (<1), low (1-10), moderate (10-50), high (50-100), very high (100-500), exceptional (500+)"><strong>Altmetric:</strong> ' + escapeHtml(altScore) + ' <em>(' + altBin + ')</em></span>';
+    }
+    html += '<span class="meta-item" title="Internal Shark References literature database ID"><strong>ID:</strong> ' + escapeHtml(String(paperId)) + '</span>';
+
+    // SR habitat guesses (eco_1_guess, eco_2_guess, eco_3_guess)
+    var g1 = meta.eco_1_guess, g2 = meta.eco_2_guess, g3 = meta.eco_3_guess;
+    if (g1 || g2 || g3) {
+      html += '<br><span class="meta-item" title="Shark References habitat classification (not rule-based extraction)"><strong>SR habitat:</strong> ';
+      if (g1) { html += '<span class="sr-guess-tag">' + escapeHtml(g1) + '</span> '; }
+      if (g2) { html += '<span class="sr-guess-tag">' + escapeHtml(g2) + '</span> '; }
+      if (g3) { html += '<span class="sr-guess-tag">' + escapeHtml(g3) + '</span> '; }
+      html += '</span>';
+    }
     html += '</div>'; // .meta-row
 
     // Full authors
@@ -658,7 +685,23 @@
           el.parentElement.parentElement.classList.add('manually-removed');
           el.parentElement.parentElement.classList.remove('manually-added');
         }
+        // Update change count and auto-set rating
+        s.changes_count = (s.added ? s.added.length : 0) + (s.removed ? s.removed.length : 0);
+        if (!s.rating) {
+          s.rating = s.changes_count > 0 ? 'partially_correct' : 'correct';
+          // Update radio button display
+          var radios = el.closest('.category-section').querySelectorAll('.rating-radio');
+          for (var ri2 = 0; ri2 < radios.length; ri2++) {
+            radios[ri2].checked = radios[ri2].value === s.rating;
+          }
+        }
+        // Update changes count display
+        var countSpan = el.closest('.category-section').querySelector('.changes-count');
+        if (countSpan) {
+          countSpan.textContent = '(' + s.changes_count + ' change' + (s.changes_count !== 1 ? 's' : '') + ')';
+        }
         _saveState();
+        _updateProgress();
         return;
       }
 
@@ -807,17 +850,21 @@
         _refreshRuleFeedback(container, paperId, prefix);
         return;
       }
+
+      // Reset threshold
+      if (el.classList.contains('btn-reset-threshold')) {
+        var paperId = el.dataset.paper;
+        var prefix  = el.dataset.prefix;
+        var s       = _ensureState(paperId, prefix);
+        s.rule_suggestions.threshold = null;
+        var inp = container.querySelector('.threshold-input[data-paper="' + paperId + '"][data-prefix="' + prefix + '"]');
+        if (inp) { inp.value = ''; }
+        _saveState();
+        return;
+      }
     });
 
-    // details toggle: update chevron
-    container.addEventListener('toggle', function (e) {
-      var details = e.target;
-      if (details.tagName !== 'DETAILS') { return; }
-      var chevron = details.querySelector('.chevron');
-      if (chevron) {
-        chevron.innerHTML = details.open ? '&#9660;' : '&#9654;';
-      }
-    }, true);
+    // (native <details> disclosure triangle handles open/close indicator)
   }
 
   // ---------------------------------------------------------------------------

@@ -61,6 +61,42 @@ def strip_openalex_prefix(full_id: str) -> str:
     return str(full_id) if pd.notna(full_id) else ""
 
 
+def _clean_epoch(val) -> str:
+    """Normalise epoch values — 'rezent' (German) → 'Recent'."""
+    if pd.isna(val) or not val:
+        return ""
+    s = str(val).strip()
+    if s.lower() == "rezent":
+        return "Recent"
+    return s
+
+
+def _round_alt_score(val) -> str:
+    """Round altmetric score to 1 decimal place."""
+    if not val:
+        return ""
+    try:
+        return str(round(float(val), 1))
+    except (ValueError, TypeError):
+        return str(val)
+
+
+def _safe_str(row, col: str) -> str:
+    """Safely extract a string from a Series row, handling NaN and Series."""
+    val = row.get(col)
+    if val is None:
+        return ""
+    # Handle case where val is a Series (duplicate index)
+    if isinstance(val, pd.Series):
+        val = val.iloc[0]
+    try:
+        if pd.isna(val):
+            return ""
+    except (ValueError, TypeError):
+        pass
+    return str(val)
+
+
 def lit_id_str(val) -> str:
     """Convert literature_id to clean string, handling float64 NaN."""
     if pd.isna(val):
@@ -85,6 +121,7 @@ def load_parquet_metadata(all_lit_ids: set[str]) -> pd.DataFrame:
         "literature_id", "year", "title", "authors", "doi",
         "journal", "study_type", "country", "superregion", "epoch",
         "depth_range", "depth_min_m", "depth_max_m",
+        "eco_1_guess", "eco_2_guess", "eco_3_guess",
     ]
     # Also load binary columns for all prefixes
     pq_all = pd.read_parquet(PARQUET_PATH)
@@ -239,16 +276,19 @@ def build_page_data(
 
         meta = {
             "year": year_int,
-            "title": str(row.get("title", "")) if pd.notna(row.get("title")) else "",
-            "authors": str(row.get("authors", "")) if pd.notna(row.get("authors")) else "",
-            "journal": str(row.get("journal", "")) if pd.notna(row.get("journal")) else "",
-            "doi": str(row.get("doi", "")) if pd.notna(row.get("doi")) else "",
-            "study_type": str(row.get("study_type", "")) if pd.notna(row.get("study_type")) else "",
-            "country": str(row.get("country", "")) if pd.notna(row.get("country")) else "",
-            "superregion": str(row.get("superregion", "")) if pd.notna(row.get("superregion")) else "",
-            "epoch": str(row.get("epoch", "")) if pd.notna(row.get("epoch")) else "",
-            "alt_score": altmetric.get(lid, ""),
+            "title": _safe_str(row, "title"),
+            "authors": _safe_str(row, "authors"),
+            "journal": _safe_str(row, "journal"),
+            "doi": _safe_str(row, "doi"),
+            "study_type": _safe_str(row, "study_type"),
+            "country": _safe_str(row, "country"),
+            "superregion": _safe_str(row, "superregion"),
+            "epoch": _clean_epoch(row.get("epoch")),
+            "alt_score": _round_alt_score(altmetric.get(lid, "")),
             "literature_id": lid,
+            "eco_1_guess": _safe_str(row, "eco_1_guess"),
+            "eco_2_guess": _safe_str(row, "eco_2_guess"),
+            "eco_3_guess": _safe_str(row, "eco_3_guess"),
         }
 
         # --- categories ---
@@ -256,8 +296,10 @@ def build_page_data(
         paper_evidence = evidence.get(lid, {})
 
         # Tier 1: columns format with evidence
+        # Exclude eco_guess columns from checkbox grid (shown in metadata instead)
+        eco_guess_cols = {"eco_1_guess", "eco_2_guess", "eco_3_guess"}
         for prefix in TIER1_PREFIXES:
-            cols_for_prefix = all_prefix_cols.get(prefix, [])
+            cols_for_prefix = [c for c in all_prefix_cols.get(prefix, []) if c not in eco_guess_cols]
             col_list = []
             for col in cols_for_prefix:
                 col_val = row.get(col)
