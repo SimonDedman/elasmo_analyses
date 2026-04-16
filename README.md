@@ -56,58 +56,77 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 
 ## Repository Structure
 
-```
-elasmo_analyses/
-├── docs/
-│   ├── core/                          # Project status & planning
-│   │   ├── eea2025_data_panel_comprehensive_plan.md
-│   │   └── project_status_comprehensive.md
-│   ├── database/                      # Database schema, extraction, acquisition
-│   │   ├── database_schema_design.md
-│   │   ├── extraction_complete_summary.md
-│   │   └── ... (40+ guides)
-│   ├── schema_proposals/              # Extraction column categories & logic
-│   │   ├── ecosystem_component_proposal.md
-│   │   ├── pressure_proposal.md
-│   │   ├── gear_proposal.md
-│   │   ├── impact_proposal.md
-│   │   ├── extraction_logic.md
-│   │   ├── extraction_quality_issues.md
-│   │   ├── extraction_review_reference.md
-│   │   └── schiffman_comparison.md
-│   ├── integrations/                  # External database integrations
-│   │   ├── sharkipedia_integration.md
-│   │   ├── megamove_integration.md
-│   │   ├── altmetric_integration.md
-│   │   └── altmetric_grants_datasets.md
-│   ├── technical/                     # Technical specs & design docs
-│   │   ├── 2026-04-16-validation-ui-design.md
-│   │   ├── 2026-04-06-sr-monthly-sync-design.md
-│   │   ├── visualization_strategy.md
-│   │   └── external_database_integration_analysis.md
-│   ├── geographic/                    # Geographic extraction & analysis
-│   ├── species/                       # Species database & SR automation
-│   ├── techniques/                    # Technique taxonomy & classification
-│   ├── LLM/                           # LLM integration roadmap
-│   ├── candidates/                    # Panellist recruitment
-│   ├── abstract/                      # Conference abstract materials
-│   └── archive/                       # Historical documents
-├── scripts/                           # Data processing & extraction scripts
-├── database/                          # SQLite databases
-│   └── technique_taxonomy.db
-├── outputs/                           # Generated outputs
-│   ├── analysis/                      # Analysis CSV files
-│   ├── figures/                       # Publication-ready visualisations
-│   └── meeting_review/                # Coauthor validation XLSX
-├── data/                              # Input & integration data
-│   ├── sharkipedia/                   # Sharkipedia API & Zenodo data
-│   └── journal_quality/              # SCImago journal matching
-├── .gitignore
-├── README.md                          # This file
-└── CONTRIBUTING.md
-```
-
-**Key documents:** [Master plan](docs/core/eea2025_data_panel_comprehensive_plan.md) | [Project status](docs/core/project_status_comprehensive.md) | [Database schema](docs/database/database_schema_design.md) | [Extraction logic](docs/schema_proposals/extraction_logic.md) | [Validation UI design](docs/technical/2026-04-16-validation-ui-design.md) | [Schema proposals](docs/schema_proposals/) | [Integrations](docs/integrations/)
+- **[docs/](docs/)** — Documentation
+  - **[core/](docs/core/)** — Project status & planning
+    - [eea2025_data_panel_comprehensive_plan.md](docs/core/eea2025_data_panel_comprehensive_plan.md) — Master plan
+    - [eea2025_data_panel_program_timeline_personnel.md](docs/core/eea2025_data_panel_program_timeline_personnel.md) — Programme timeline & personnel
+    - [project_status_comprehensive.md](docs/core/project_status_comprehensive.md) — Current project status
+    - [project_cleanup_plan.md](docs/core/project_cleanup_plan.md) — Cleanup plan
+    - [project_cleanup_review.md](docs/core/project_cleanup_review.md) — Cleanup review
+    - [project_completion_summary.md](docs/core/project_completion_summary.md) — Completion summary
+    - [project_organization_complete.md](docs/core/project_organization_complete.md) — Organisation complete
+    - [visualization_summary.md](docs/core/visualization_summary.md) — Visualisation summary
+  - **[database/](docs/database/)** — Database schema, extraction, acquisition (53 files)
+    - [database_schema_design.md](docs/database/database_schema_design.md) — Schema documentation
+    - [extraction_complete_summary.md](docs/database/extraction_complete_summary.md) — Extraction results
+    - [technique_taxonomy_database_design.md](docs/database/technique_taxonomy_database_design.md) — Technique taxonomy design
+    - [paper_acquisition_status.md](docs/database/paper_acquisition_status.md) — Paper acquisition status
+    - [pdf_acquisition_complete_summary.md](docs/database/pdf_acquisition_complete_summary.md) — PDF acquisition summary
+    - [ocr_processing_guide.md](docs/database/ocr_processing_guide.md) — OCR processing guide
+    - [duplicate_removal_final_guide.md](docs/database/duplicate_removal_final_guide.md) — Duplicate removal guide
+    - ... and 46 more guides (download tools, institutional access, thesis handling, etc.)
+  - **[schema_proposals/](docs/schema_proposals/)** — Extraction column categories & logic
+    - [ecosystem_component_proposal.md](docs/schema_proposals/ecosystem_component_proposal.md) — `eco_*` columns (20)
+    - [pressure_proposal.md](docs/schema_proposals/pressure_proposal.md) — `pr_*` columns (26)
+    - [gear_proposal.md](docs/schema_proposals/gear_proposal.md) — `gear_*` columns (28)
+    - [impact_proposal.md](docs/schema_proposals/impact_proposal.md) — `imp_*` columns (21)
+    - [extraction_logic.md](docs/schema_proposals/extraction_logic.md) — Pipeline documentation
+    - [extraction_quality_issues.md](docs/schema_proposals/extraction_quality_issues.md) — False-positive catalogue
+    - [extraction_review_reference.md](docs/schema_proposals/extraction_review_reference.md) — Review reference
+    - [schiffman_comparison.md](docs/schema_proposals/schiffman_comparison.md) — Schiffman et al. 2020 comparison
+    - [issue7_ecosystem_marine_removal.md](docs/schema_proposals/issue7_ecosystem_marine_removal.md) — eco_marine removal
+  - **[integrations/](docs/integrations/)** — External database integrations
+    - [sharkipedia_integration.md](docs/integrations/sharkipedia_integration.md) — Sharkipedia API & data overlap
+    - [megamove_integration.md](docs/integrations/megamove_integration.md) — MegaMove/GSMP tracking data
+    - [altmetric_integration.md](docs/integrations/altmetric_integration.md) — Altmetric scoring & social impact
+    - [altmetric_grants_datasets.md](docs/integrations/altmetric_grants_datasets.md) — Dimensions grants & datasets
+  - **[technical/](docs/technical/)** — Technical specs & design docs
+    - [2026-04-16-validation-ui-design.md](docs/technical/2026-04-16-validation-ui-design.md) — Interactive validation UI design
+    - [2026-04-06-sr-monthly-sync-design.md](docs/technical/2026-04-06-sr-monthly-sync-design.md) — Shark-References monthly sync design
+    - [visualization_strategy.md](docs/technical/visualization_strategy.md) — Visualisation strategy
+    - [external_database_integration_analysis.md](docs/technical/external_database_integration_analysis.md) — External DB integration analysis
+    - [final_data_cleaning_report.md](docs/technical/final_data_cleaning_report.md) — Data cleaning report
+    - [shark_references_search_script_guide.md](docs/technical/shark_references_search_script_guide.md) — SR search script guide
+  - **[geographic/](docs/geographic/)** — Geographic extraction & analysis (14 files)
+    - [QUICK_START_GEOGRAPHIC_ANALYSIS.md](docs/geographic/QUICK_START_GEOGRAPHIC_ANALYSIS.md) — Quick start guide
+    - [PHASE_4_FINAL_RESULTS.md](docs/geographic/PHASE_4_FINAL_RESULTS.md) — Phase 4 final results
+    - [PARACHUTE_RESEARCH_ANALYSIS_SUMMARY.md](docs/geographic/PARACHUTE_RESEARCH_ANALYSIS_SUMMARY.md) — Parachute research analysis
+    - [DATABASE_QUERY_REFERENCE.md](docs/geographic/DATABASE_QUERY_REFERENCE.md) — Query reference
+    - ... and 10 more (phase 3-4 docs, temporal analysis, etc.)
+  - **[species/](docs/species/)** — Species database & SR automation (8 files)
+    - [species_database_readme.md](docs/species/species_database_readme.md) — Species database readme
+    - [shark_references_automation_workflow.md](docs/species/shark_references_automation_workflow.md) — SR automation workflow
+    - [shark_species_extraction_summary.md](docs/species/shark_species_extraction_summary.md) — Species extraction summary
+    - ... and 5 more
+  - **[techniques/](docs/techniques/)** — Technique taxonomy & classification (11 files)
+    - [technique_classification_schema_proposal.md](docs/techniques/technique_classification_schema_proposal.md) — Classification schema
+    - [discipline_structure_analysis.md](docs/techniques/discipline_structure_analysis.md) — Discipline structure
+    - [ai_impact_on_shark_research_disciplines.md](docs/techniques/ai_impact_on_shark_research_disciplines.md) — AI impact assessment
+    - ... and 8 more
+  - **[LLM/](docs/LLM/)** — LLM integration
+    - [llm_integration_roadmap.md](docs/LLM/llm_integration_roadmap.md) — LLM roadmap
+    - [notebooklm_alternatives_summary.md](docs/LLM/notebooklm_alternatives_summary.md) — Platform comparison
+  - **[candidates/](docs/candidates/)** — Panellist recruitment (6 files)
+    - [candidate_search_protocol.md](docs/candidates/candidate_search_protocol.md) — Search protocol
+    - [expert_recommendations_comprehensive.md](docs/candidates/expert_recommendations_comprehensive.md) — Expert recommendations
+    - ... and 4 more
+  - **[abstract/](docs/abstract/)** — Conference abstract materials (9 files)
+  - **[archive/](docs/archive/)** — Historical documents (31 files)
+- **scripts/** — Data processing & extraction scripts
+- **database/** — SQLite databases
+- **outputs/** — Generated outputs (analysis CSVs, figures, validation XLSX)
+- **data/** — Input & integration data (Sharkipedia, SCImago)
+- [CONTRIBUTING.md](CONTRIBUTING.md) — Contribution guidelines
 
 ---
 
