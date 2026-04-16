@@ -84,15 +84,15 @@ Rules are also embedded in every validation page as `assets/rules.json` so revie
 
 Papers are split into labelled sections (abstract, introduction, methods, results, discussion, references, acknowledgements). Each schema has a section weight profile — e.g. references and acknowledgements are excluded from `d_`/`eco_` to prevent false positives from citation titles. See [extraction_logic.md](extraction_logic.md) for the full section weight matrix.
 
-### Derived columns (no evidence trail)
+### Derived columns
 
-Three columns are derived rather than keyword-extracted, and therefore appear ticked on validation pages without an evidence panel:
+Three columns are derived rather than keyword-extracted and historically lacked an evidence trail. As of 2026-04-16, these have been upgraded:
 
-- `gear_target_species` (string) — captured words around "targeting X" / "X fishery". Currently produces noisy data; fix planned.
-- `imp_quantified` (bool) — True if any statistical expression (%, p-value, CI, decimals) appears anywhere in the paper. Planned upgrade: capture the actual values, units, and context.
-- `imp_is_bycatch` (bool) — derived from `pr_bycatch` + `gear_target_species`. Downstream of the above fixes.
+- `gear_target_species` (string) — now filtered through an exclusion list (gear/habitat modifiers handled by `gear_*` and `eco_*`) and an inclusion list of real target groups (tuna, swordfish, shrimp, shark, genus names, etc.). Evidence rows written for both accepted and rejected captures, so reviewers can audit the filter. See [gear_proposal.md](gear_proposal.md).
+- `imp_quantified` (bool) — still boolean, but now backed by evidence rows for each quantified statement found. Captures percentages, p-values, confidence intervals, mean±error, fold changes, with values, units, directions, and context sentences. See [impact_proposal.md](impact_proposal.md).
+- `imp_is_bycatch` (bool) — now accurate since it's downstream of the corrected `gear_target_species`.
 
-See [extraction_quality_issues.md](extraction_quality_issues.md) and the planned fixes.
+See [extraction_quality_issues.md](extraction_quality_issues.md) for the history.
 
 ---
 
@@ -100,11 +100,9 @@ See [extraction_quality_issues.md](extraction_quality_issues.md) and the planned
 
 Every author in the OpenAlex database has a validation page at:
 
-```
-https://simondedman.github.io/elasmo_analyses/validate/{openalex_id}.html
-```
+`https://simondedman.github.io/elasmo_analyses/validate/{openalex_id}.html`
 
-The landing page at `https://simondedman.github.io/elasmo_analyses/validate/` lets anyone search by name.
+The landing page at <https://simondedman.github.io/elasmo_analyses/validate/> lets anyone search by name.
 
 Reviewers can:
 - See which rules fired for each of their papers
