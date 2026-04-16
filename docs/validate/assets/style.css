@@ -383,6 +383,83 @@ a:hover {
   text-transform: capitalize;
 }
 
+/* ── Rules palette ─────────────────────────────────────────── */
+
+.rules-palette {
+  margin: 0.5rem 0;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+.rules-palette-summary {
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  color: #495057;
+  font-weight: 500;
+  background: #f8f9fa;
+  user-select: none;
+}
+.rules-palette-body {
+  padding: 0.5rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.rule-entry {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  background: white;
+}
+.rule-entry.rule-fired {
+  background: #d3f9d8;
+  border-color: #69db7c;
+}
+.rule-name {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.rule-threshold {
+  font-size: 0.7rem;
+  color: #868e96;
+  background: #f1f3f5;
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+}
+.rule-badge-active {
+  font-size: 0.65rem;
+  color: white;
+  background: #37b24d;
+  padding: 0.05rem 0.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.rule-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-top: 0.2rem;
+}
+.rule-term {
+  background: #e9ecef;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.72rem;
+}
+.rule-anchors, .rule-cs {
+  margin-top: 0.2rem;
+  color: #495057;
+  font-size: 0.72rem;
+}
+.rule-anchor {
+  background: #fff3bf;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.72rem;
+}
+
 /* SR habitat guess tags */
 .sr-guess-tag {
   display: inline-block;
