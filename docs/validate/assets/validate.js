@@ -421,17 +421,16 @@
     }
     html += '</div>'; // .tag-list
 
-    // Autocomplete select for adding new tags
+    // First dropdown: all options alphabetically (current behaviour)
     var selectId = 'ts_' + paperId + '_' + prefix.replace('_', '');
+    var effectiveVals = effective.map(function (t) { return t.val; });
     html += '<select id="' + escapeHtml(selectId) + '"';
     html += ' class="tag-select"';
     html += ' data-paper="' + escapeHtml(paperId) + '"';
     html += ' data-prefix="' + escapeHtml(prefix) + '"';
     html += '>';
-    html += '<option value="">Add ' + escapeHtml(PREFIX_LABELS[prefix] || prefix) + '&hellip;</option>';
+    html += '<option value="">Add ' + escapeHtml(PREFIX_LABELS[prefix] || prefix) + ' (alphabetical)&hellip;</option>';
 
-    // Options: all_options not already in effective
-    var effectiveVals = effective.map(function (t) { return t.val; });
     for (i = 0; i < allOptions.length; i++) {
       var opt = allOptions[i];
       if (effectiveVals.indexOf(opt) === -1) {
@@ -440,6 +439,43 @@
       }
     }
     html += '</select>';
+
+    // Second dropdown (species only): options sorted by frequency descending
+    if (prefix === 'sp_') {
+      var frequencies = catData.frequencies || null;
+      var freqSelectId = 'ts_' + paperId + '_spfreq';
+      if (frequencies && Object.keys(frequencies).length > 0) {
+        // Build list of species with freq > 0 that are not already in effective tags,
+        // sorted by frequency descending
+        var freqEntries = [];
+        var freqKeys = Object.keys(frequencies);
+        for (var fi = 0; fi < freqKeys.length; fi++) {
+          var fk = freqKeys[fi];
+          if (effectiveVals.indexOf(fk) === -1 && frequencies[fk] > 0) {
+            freqEntries.push({ val: fk, freq: frequencies[fk] });
+          }
+        }
+        freqEntries.sort(function (a, b) { return b.freq - a.freq; });
+
+        html += '<select id="' + escapeHtml(freqSelectId) + '"';
+        html += ' class="tag-select"';
+        html += ' data-paper="' + escapeHtml(paperId) + '"';
+        html += ' data-prefix="' + escapeHtml(prefix) + '"';
+        html += ' data-freq="1"';
+        html += '>';
+        html += '<option value="">Add Species (by occurrence, &ge;1 mention)&hellip;</option>';
+        for (var fei = 0; fei < freqEntries.length; fei++) {
+          var fe = freqEntries[fei];
+          var feLabel = fe.val.replace(prefix, '').replace(/_/g, ' ');
+          html += '<option value="' + escapeHtml(fe.val) + '">' + escapeHtml(feLabel) + ' (' + fe.freq + ')</option>';
+        }
+        html += '</select>';
+      } else {
+        html += '<p class="tag-freq-unavailable" style="font-size:0.75rem;color:#868e96;margin:0.25rem 0 0;">';
+        html += 'Frequency-sorted species dropdown not available — frequency data not yet generated.';
+        html += '</p>';
+      }
+    }
 
     html += '</div>'; // .tag-section
 
@@ -673,6 +709,7 @@
     var selects = container.querySelectorAll('select.tag-select');
     for (var i = 0; i < selects.length; i++) {
       (function (sel) {
+        var isFreqSelect = sel.dataset.freq === '1';
         new TomSelect(sel, {
           create:      false,
           placeholder: sel.options[0] ? sel.options[0].text : 'Add…',
@@ -683,18 +720,39 @@
             // Reset select
             this.clear();
             this.clearOptions();
-            // Reload options minus newly added
-            var s       = _ensureState(paperId, prefix);
-            var catData = ((_pageData.papers[paperId] || {}).categories || {})[prefix] || {};
-            var allOptions = _sharedOptions[prefix] || [];
+            // Reload options minus current effective tags
+            var s        = _ensureState(paperId, prefix);
+            var catData  = ((_pageData.papers[paperId] || {}).categories || {})[prefix] || {};
             var triggered  = catData.triggered  || [];
             var effective  = triggered.filter(function (v) { return s.removed.indexOf(v) === -1; }).concat(s.added);
             var self       = this;
-            allOptions.forEach(function (opt) {
-              if (effective.indexOf(opt) === -1) {
-                self.addOption({ value: opt, text: opt.replace(prefix, '').replace(/_/g, ' ') });
+            if (isFreqSelect) {
+              // Frequency-sorted dropdown: reload from catData.frequencies
+              var frequencies = catData.frequencies || {};
+              var freqEntries = [];
+              var freqKeys = Object.keys(frequencies);
+              for (var fi = 0; fi < freqKeys.length; fi++) {
+                var fk = freqKeys[fi];
+                if (effective.indexOf(fk) === -1 && frequencies[fk] > 0) {
+                  freqEntries.push({ val: fk, freq: frequencies[fk] });
+                }
               }
-            });
+              freqEntries.sort(function (a, b) { return b.freq - a.freq; });
+              freqEntries.forEach(function (fe) {
+                self.addOption({
+                  value: fe.val,
+                  text: fe.val.replace(prefix, '').replace(/_/g, ' ') + ' (' + fe.freq + ')'
+                });
+              });
+            } else {
+              // Alphabetical dropdown: reload from allOptions
+              var allOptions = _sharedOptions[prefix] || [];
+              allOptions.forEach(function (opt) {
+                if (effective.indexOf(opt) === -1) {
+                  self.addOption({ value: opt, text: opt.replace(prefix, '').replace(/_/g, ' ') });
+                }
+              });
+            }
             self.refreshOptions(false);
           }
         });
@@ -1068,6 +1126,107 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Author corrections helpers
+  // ---------------------------------------------------------------------------
+
+  function _getAuthorCorrections() {
+    return _state.author_corrections || {};
+  }
+
+  function _setAuthorCorrection(field, original, corrected) {
+    if (!_state.author_corrections) { _state.author_corrections = {}; }
+    if (corrected === original || corrected === '') {
+      // User reverted to original — remove the correction
+      delete _state.author_corrections[field];
+    } else {
+      _state.author_corrections[field] = { original: original, corrected: corrected };
+    }
+    _saveState();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Author enrichment rendering (editable NamSor fields)
+  // ---------------------------------------------------------------------------
+
+  function _renderAuthorEnrichment(enrichEl, ns) {
+    var ac = _getAuthorCorrections();
+    var ehtml = '<div class="namsor-fields" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;">';
+
+    // Gender select
+    var genderVal = (ac.gender && ac.gender.corrected) ? ac.gender.corrected : (ns.gender || '');
+    var genderOrig = ns.gender || '';
+    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
+    ehtml += '<span title="NamSor gender inference (probability: ' + escapeHtml(ns.gender_probability || '?') + ')"><strong>Gender</strong></span>';
+    ehtml += '<select id="namsor-gender" class="namsor-edit" data-field="gender" data-original="' + escapeHtml(genderOrig) + '">';
+    var genderOptions = ['', 'M', 'F', 'Non-binary', 'Unknown'];
+    var genderLabels  = ['— select —', 'M (male)', 'F (female)', 'Non-binary', 'Unknown'];
+    for (var gi = 0; gi < genderOptions.length; gi++) {
+      var gSel = genderVal === genderOptions[gi] ? ' selected' : '';
+      ehtml += '<option value="' + escapeHtml(genderOptions[gi]) + '"' + gSel + '>' + escapeHtml(genderLabels[gi]) + '</option>';
+    }
+    ehtml += '</select>';
+    if (ac.gender) {
+      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.gender.original) + ')</span>';
+    }
+    ehtml += '</label>';
+
+    // Origin country text input
+    var originVal = (ac.origin_country && ac.origin_country.corrected) ? ac.origin_country.corrected : (ns.origin_country || '');
+    var originOrig = ns.origin_country || '';
+    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
+    ehtml += '<span title="NamSor inferred origin country"><strong>Origin country</strong>';
+    if (ns.origin_region) { ehtml += ' <span style="font-weight:normal;color:#868e96;">(' + escapeHtml(ns.origin_region) + ')</span>'; }
+    ehtml += '</span>';
+    ehtml += '<input type="text" id="namsor-origin" class="namsor-edit" data-field="origin_country" data-original="' + escapeHtml(originOrig) + '"';
+    ehtml += ' value="' + escapeHtml(originVal) + '" placeholder="ISO code or country name" style="width:14rem;">';
+    if (ac.origin_country) {
+      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.origin_country.original) + ')</span>';
+    }
+    ehtml += '</label>';
+
+    // Ethnicity text input
+    var ethVal = (ac.ethnicity && ac.ethnicity.corrected) ? ac.ethnicity.corrected : (ns.ethnicity || '');
+    var ethOrig = ns.ethnicity || '';
+    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
+    ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity / diaspora</strong></span>';
+    ehtml += '<input type="text" id="namsor-ethnicity" class="namsor-edit" data-field="ethnicity" data-original="' + escapeHtml(ethOrig) + '"';
+    ehtml += ' value="' + escapeHtml(ethVal) + '" placeholder="e.g. British, Hispanic" style="width:14rem;">';
+    if (ac.ethnicity) {
+      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.ethnicity.original) + ')</span>';
+    }
+    ehtml += '</label>';
+
+    ehtml += '</div>';
+    ehtml += '<p style="margin:0.4rem 0 0;color:#868e96;font-size:0.75rem;">NamSor inference — corrections welcome. Changes saved automatically.</p>';
+    enrichEl.innerHTML = ehtml;
+
+    // Attach change/input handlers
+    var editEls = enrichEl.querySelectorAll('.namsor-edit');
+    for (var ni = 0; ni < editEls.length; ni++) {
+      (function (el) {
+        var eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+        el.addEventListener(eventType, function () {
+          _setAuthorCorrection(el.dataset.field, el.dataset.original, el.value.trim());
+          // Update the "(originally: X)" note inline
+          var note = el.parentElement.querySelector('.namsor-orig-note');
+          var ac2  = _getAuthorCorrections();
+          var corr = ac2[el.dataset.field];
+          if (corr) {
+            if (!note) {
+              note = document.createElement('span');
+              note.className = 'namsor-orig-note';
+              el.parentElement.appendChild(note);
+            }
+            note.textContent = '(originally: ' + corr.original + ')';
+          } else {
+            if (note) { note.parentElement.removeChild(note); }
+          }
+        });
+      })(editEls[ni]);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // Public API
   // ---------------------------------------------------------------------------
 
@@ -1082,24 +1241,11 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     _loadState();
-    // Render author enrichment (NamSor data)
+    // Render author enrichment (NamSor data) — editable fields
     var enrichEl = document.getElementById('author-enrichment');
     var ns = _pageData.namsor || {};
     if (enrichEl && (ns.gender || ns.origin_country || ns.ethnicity)) {
-      var ehtml = '';
-      if (ns.gender) {
-        ehtml += '<span title="NamSor gender inference (probability: ' + (ns.gender_probability || '?') + ')"><strong>Gender:</strong> ' + escapeHtml(ns.gender) + '</span>';
-      }
-      if (ns.origin_country) {
-        ehtml += '<span title="NamSor inferred origin country"><strong>Origin:</strong> ' + escapeHtml(ns.origin_country);
-        if (ns.origin_region) { ehtml += ' (' + escapeHtml(ns.origin_region) + ')'; }
-        ehtml += '</span>';
-      }
-      if (ns.ethnicity) {
-        ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity:</strong> ' + escapeHtml(ns.ethnicity) + '</span>';
-      }
-      ehtml += '<span style="color:#868e96;font-size:0.75rem;">(NamSor inference — corrections welcome)</span>';
-      enrichEl.innerHTML = ehtml;
+      _renderAuthorEnrichment(enrichEl, ns);
     } else if (enrichEl) {
       enrichEl.style.display = 'none';
     }
