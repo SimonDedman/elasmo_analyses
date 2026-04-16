@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validate: {{ author_name }}</title>
+  <link rel="stylesheet" href="assets/tom-select.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="page-header">
+    <h1>{{ author_name }}</h1>
+    <div class="meta">{{ institution }} · OpenAlex: {{ openalex_id }} · {{ paper_count }} paper{{ 's' if paper_count != 1 else '' }} in database</div>
+    {% if merged_ids %}<div class="merge-note">This page includes papers from merged OpenAlex profiles: {{ merged_ids | join(', ') }}</div>{% endif %}
+  </div>
+
+  <!-- Papers rendered by JS -->
+  <div id="papers-container"></div>
+
+  <!-- Sticky footer: save indicator, progress bar, progress text, download + submit buttons -->
+  <div class="page-footer">
+    <span id="save-indicator" class="save-indicator">Not yet saved</span>
+    <div class="progress-bar"><div class="fill" style="width: 0%"></div></div>
+    <span id="progress-text" class="progress-text">0 of {{ paper_count }} reviewed</span>
+    <button id="btn-download" class="btn btn-secondary">Download JSON</button>
+    <button id="btn-submit" class="btn btn-primary">Submit validation</button>
+  </div>
+
+  <!-- Data and scripts -->
+  <script>
+    window.PAGE_DATA = {{ page_data_json }};
+    window.SUBMIT_CONFIG = { proxy_url: '{{ proxy_url }}', dispatch_token: '{{ dispatch_token }}' };
+  </script>
+  <script src="assets/tom-select.min.js"></script>
+  <script src="assets/validate.js"></script>
+  <script src="assets/submit.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elasmobranch Analytical Methods Review — Author Validation</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="index-container">
+    <h1>Elasmobranch Analytical Methods Review</h1>
+    <p class="subtitle">Validate the automated extractions for your papers</p>
+
+    <input
+      type="text"
+      class="search-box"
+      id="author-search"
+      placeholder="Search by name..."
+      autocomplete="off"
+    >
+
+    <div id="search-results"></div>
+
+    <div class="help-text">
+      <p>
+        Search for your name above to find your author page. Results come from
+        <a href="https://openalex.org" target="_blank" rel="noopener noreferrer">OpenAlex</a>.
+        If your page is not yet in our database, please locate your
+        <a href="https://openalex.org/authors" target="_blank" rel="noopener noreferrer">OpenAlex author ID</a>
+        and submit your papers via
+        <a href="https://www.shark-references.com" target="_blank" rel="noopener noreferrer">Shark References</a>.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const KNOWN_IDS = new Set({{ known_ids_json }});
+    const BASE_URL = '{{ base_url }}';
+
+    let debounceTimer = null;
+
+    function debounce(fn, delay) {
+      return function (...args) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => fn.apply(this, args), delay);
+      };
+    }
+
+    function renderResults(authors) {
+      const container = document.getElementById('search-results');
+      if (!authors || authors.length === 0) {
+        container.innerHTML = '<p class="no-results">No authors found. Try a different spelling.</p>';
+        return;
+      }
+
+      container.innerHTML = authors.map(author => {
+        const id = author.id.replace('https://openalex.org/', '');
+        const name = author.display_name || 'Unknown name';
+        const institution = (author.last_known_institutions && author.last_known_institutions[0])
+          ? author.last_known_institutions[0].display_name
+          : 'Institution unknown';
+        const worksCount = author.works_count != null ? author.works_count.toLocaleString() : '?';
+        const inDatabase = KNOWN_IDS.has(id);
+
+        if (inDatabase) {
+          return `
+            <a class="result-card" href="${BASE_URL}${id}.html">
+              <div class="result-name">${name}</div>
+              <div class="result-meta">${institution} · ${worksCount} works · ${id}</div>
+              <div class="result-badge in-db">In our database</div>
+            </a>`;
+        } else {
+          return `
+            <div class="result-card result-card--disabled" data-id="${id}" data-name="${name}">
+              <div class="result-name">${name}</div>
+              <div class="result-meta">${institution} · ${worksCount} works · ${id}</div>
+              <div class="result-badge not-in-db">Not in our database</div>
+            </div>`;
+        }
+      }).join('');
+
+      // Attach click handlers for greyed-out cards
+      container.querySelectorAll('.result-card--disabled').forEach(card => {
+        card.addEventListener('click', () => {
+          const name = card.dataset.name;
+          const id = card.dataset.id;
+          alert(
+            `"${name}" (${id}) is not yet in our database.\n\n` +
+            `To be included, please ensure your papers are listed on Shark References ` +
+            `(https://www.shark-references.com) and contact the project team.`
+          );
+        });
+      });
+    }
+
+    async function searchAuthors(query) {
+      const container = document.getElementById('search-results');
+      if (!query || query.trim().length < 2) {
+        container.innerHTML = '';
+        return;
+      }
+
+      container.innerHTML = '<p class="searching">Searching...</p>';
+
+      try {
+        const url = `https://api.openalex.org/authors?search=${encodeURIComponent(query.trim())}&per_page=10`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`OpenAlex API error: ${response.status}`);
+        const data = await response.json();
+        renderResults(data.results || []);
+      } catch (err) {
+        container.innerHTML = `<p class="error">Search failed: ${err.message}. Please try again.</p>`;
+      }
+    }
+
+    const debouncedSearch = debounce(searchAuthors, 300);
+
+    document.getElementById('author-search').addEventListener('input', function () {
+      debouncedSearch(this.value);
+    });
+  </script>
+</body>
+</html>
