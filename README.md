@@ -10,14 +10,14 @@
 
 This repository contains materials for the **"New Frontiers in Elasmobranch Data Analysis"** project, initially presented at the European Elasmobranch Association (EEA) Conference 2025 in Rotterdam, Netherlands.
 
-**Project Status:** Post-conference development phase (March 2026) — External integrations & schema design
+**Project Status:** Analysis & validation phase (April 2026) — Extraction complete, author enrichment done, building interactive validation UI
 
 **Original Session (EEA 2025):**
 - **Date:** Thursday, 30 October 2025
 - **Format:** 45 minutes of discipline panel reviews + 50 minutes of oral presentations
 - **Organizers:** Dr. Simon Dedman & Dr. Guuske Tiktak
 
-**Current Scale:** ~30,500 papers | ~14,940 PDFs acquired | 2,559 remaining | 151 techniques | 8 disciplines
+**Current Scale:** 30,553 papers | 18,065 PDFs acquired | 123 extraction columns (6 schemas) | 28,953 unique authors | 1,308 species columns
 
 ---
 
@@ -58,103 +58,119 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 
 ```
 elasmo_analyses/
-├── docs/                                        # Documentation
-│   ├── core/                                    # Project status & planning
-│   ├── database/                                # Database & extraction documentation
-│   ├── integrations/                            # External database integration analyses
-│   │   ├── sharkipedia_integration.md           # Sharkipedia API & data overlap
-│   │   ├── megamove_integration.md              # MegaMove/GSMP tracking data
-│   │   ├── altmetric_integration.md             # Altmetric scoring & social impact
-│   │   └── altmetric_grants_datasets.md         # Dimensions grants & datasets
-│   ├── schema_proposals/                        # Proposed new column categories
-│   │   ├── ecosystem_component_proposal.md      # eco_* columns (habitat, depth, realm)
-│   │   ├── pressure_proposal.md                 # pr_* columns (fishing, climate, pollution)
-│   │   ├── gear_proposal.md                     # gear_* columns (gear type, mitigation)
-│   │   └── impact_proposal.md                   # imp_* columns (mortality, abundance, etc.)
-│   ├── LLM/                                     # LLM integration
-│   ├── candidates/                              # Panelist recruitment
-│   ├── geographic/                              # Geographic analysis
-│   ├── species/                                 # Species database
-│   ├── techniques/                              # Technique classification
-│   └── technical/                               # Technical guides
-├── scripts/                                     # Data processing scripts
-├── database/                                    # SQLite/DuckDB databases
-│   └── technique_taxonomy.db                    # Technique extraction database
-├── outputs/                                     # Generated outputs
-│   ├── analysis/                                # Analysis CSV files
-│   ├── figures/                                 # Publication-ready visualisations
-│   ├── literature_review.duckdb                 # Main analytical database
-│   └── remaining_downloads_for_web.csv          # Papers still needed
-├── data/                                        # Input & integration data
-│   ├── sharkipedia/                             # Sharkipedia API & Zenodo data
-│   └── journal_quality/                         # SCImago journal matching
-├── .gitignore                                   # Git ignore rules
-├── README.md                                    # This file
-└── CONTRIBUTING.md                              # Contribution guidelines
+├── docs/
+│   ├── core/                          # Project status & planning
+│   │   ├── eea2025_data_panel_comprehensive_plan.md
+│   │   └── project_status_comprehensive.md
+│   ├── database/                      # Database schema, extraction, acquisition
+│   │   ├── database_schema_design.md
+│   │   ├── extraction_complete_summary.md
+│   │   └── ... (40+ guides)
+│   ├── schema_proposals/              # Extraction column categories & logic
+│   │   ├── ecosystem_component_proposal.md
+│   │   ├── pressure_proposal.md
+│   │   ├── gear_proposal.md
+│   │   ├── impact_proposal.md
+│   │   ├── extraction_logic.md
+│   │   ├── extraction_quality_issues.md
+│   │   ├── extraction_review_reference.md
+│   │   └── schiffman_comparison.md
+│   ├── integrations/                  # External database integrations
+│   │   ├── sharkipedia_integration.md
+│   │   ├── megamove_integration.md
+│   │   ├── altmetric_integration.md
+│   │   └── altmetric_grants_datasets.md
+│   ├── technical/                     # Technical specs & design docs
+│   │   ├── 2026-04-16-validation-ui-design.md
+│   │   ├── 2026-04-06-sr-monthly-sync-design.md
+│   │   ├── visualization_strategy.md
+│   │   └── external_database_integration_analysis.md
+│   ├── geographic/                    # Geographic extraction & analysis
+│   ├── species/                       # Species database & SR automation
+│   ├── techniques/                    # Technique taxonomy & classification
+│   ├── LLM/                           # LLM integration roadmap
+│   ├── candidates/                    # Panellist recruitment
+│   ├── abstract/                      # Conference abstract materials
+│   └── archive/                       # Historical documents
+├── scripts/                           # Data processing & extraction scripts
+├── database/                          # SQLite databases
+│   └── technique_taxonomy.db
+├── outputs/                           # Generated outputs
+│   ├── analysis/                      # Analysis CSV files
+│   ├── figures/                       # Publication-ready visualisations
+│   └── meeting_review/                # Coauthor validation XLSX
+├── data/                              # Input & integration data
+│   ├── sharkipedia/                   # Sharkipedia API & Zenodo data
+│   └── journal_quality/              # SCImago journal matching
+├── .gitignore
+├── README.md                          # This file
+└── CONTRIBUTING.md
 ```
+
+**Key documents:** [Master plan](docs/core/eea2025_data_panel_comprehensive_plan.md) | [Project status](docs/core/project_status_comprehensive.md) | [Database schema](docs/database/database_schema_design.md) | [Extraction logic](docs/schema_proposals/extraction_logic.md) | [Validation UI design](docs/technical/2026-04-16-validation-ui-design.md) | [Schema proposals](docs/schema_proposals/) | [Integrations](docs/integrations/)
 
 ---
 
-## Current Status (March 2026)
+## Current Status (April 2026)
 
 ### Latest Updates
 
-**✅ External Integrations Assessed** (March 2026)
-- Sharkipedia: 90% species overlap, API pull complete (1,288 species, 8,494 trait measurements)
-- MegaMove: Assessed as closed; GSMP GitHub repos and Movebank API as alternatives
-- Altmetric/Dimensions: SRAD application submitted (awaiting approval)
+**✅ Author Enrichment Complete** (April 2026)
+- OpenAlex: 28,953 unique authors, 71,801 author-paper records, 87.7% with institution data
+- NamSor: gender (16,793 M / 9,429 F), origin, and diaspora enrichment for 28,922 authors
+- Gender resolved: 86.9% (13.1% unknown, daily genderize.io batch running)
 
-**✅ Schema Extraction Pipeline Built** (March 2026)
-- 4 new column categories: [Ecosystem](docs/schema_proposals/ecosystem_component_proposal.md), [Pressure](docs/schema_proposals/pressure_proposal.md), [Gear](docs/schema_proposals/gear_proposal.md), [Impact](docs/schema_proposals/impact_proposal.md)
-- Automated extraction from PDFs with score-based matching and false-positive mitigation
-- Evidence table for team validation (matched terms, anchors, context snippets)
+**✅ Altmetric Integration Complete** (March 2026)
+- 10,897 papers enriched with social attention scores (65.5% hit rate)
+
+**✅ Schema Extraction Pipeline Complete** (March 2026)
+- 6 schemas, 123 binary columns: [Ecosystem](docs/schema_proposals/ecosystem_component_proposal.md) (20), [Pressure](docs/schema_proposals/pressure_proposal.md) (26), [Gear](docs/schema_proposals/gear_proposal.md) (28), [Impact](docs/schema_proposals/impact_proposal.md) (21), Discipline (19), Ocean basin (9)
+- 247,131 evidence rows across 18,202 papers
+- Section-weighted scoring with corpus-trained section detection
 - Full pipeline documentation: [Extraction Logic](docs/schema_proposals/extraction_logic.md)
 
-**✅ Journal Quality Matching** (March 2026)
-- SCImago journal data matched: 1,558 journals covering 64.7% of papers
-- Theses, book chapters, and grey literature identified and categorised separately
+**✅ Corpus Expansion Largely Complete** (April 2026)
+- 18,065 PDFs on disk (up from ~12,400 at conference)
+- Ingested batches from Jürgen (1,361), David (89), Elena (316), Guuske (19)
+- Automated monthly Shark-References sync via anacron
+
+**🔨 Interactive Validation UI** (April 2026, in progress)
+- Static HTML pages on GitHub Pages, one per author (28,952 pages)
+- Structured validation inputs replacing free-text XLSX approach
+- Submission via GitHub Actions → PRs
+- Design spec: [Validation UI design](docs/technical/2026-04-16-validation-ui-design.md)
 
 ### Completed Phases
 
 - [x] **Phase 1: PDF Technique Extraction** (2025-10-26)
-  - 12,381 PDFs processed
-  - 9,503 papers with techniques (76.5% coverage)
-  - 151 unique techniques identified
-  - 23,307 technique mentions
+  - 12,381 PDFs processed, 9,503 papers with techniques (76.5% coverage)
+  - 151 unique techniques identified, 23,307 technique mentions
 
 - [x] **Phase 2: Analysis & Conference Materials** (2025-10-26)
-  - Collaboration networks (18,633 authors)
-  - Geographic analysis (73 countries)
-  - AI impact assessment
-  - 25+ publication-ready visualisations
+  - Collaboration networks (18,633 authors), geographic analysis (73 countries)
+  - AI impact assessment, 25+ publication-ready visualisations
 
 - [x] **Phase 3: EEA 2025 Conference** (2025-10-30)
-  - Panel session delivered
-  - Expert reviews collected
-  - Community feedback incorporated
+  - Panel session delivered, expert reviews collected
+
+- [x] **Phase 4: Corpus Expansion & Schema Extraction** (2026 Q1)
+  - 18,065 PDFs acquired, 123 extraction columns across 6 schemas
+  - Author enrichment (OpenAlex + NamSor), Altmetric integration
+  - Automated monthly Shark-References sync
 
 ### In Progress
 
-- [ ] **Phase 4: Corpus Expansion** (2026 Q1)
-  - [**Remaining Papers to Download**](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html) — 2,559 papers remaining
-  - PDF deduplication complete (removed 4,780 duplicates, freed ~13.5 GB)
-  - Awaiting Shark-References NAS upload from Jürgen
-  - ~14,940 unique PDFs acquired to date
+- [ ] **Phase 5: Validation & Analysis** (2026 Q2)
+  - Interactive validation UI for community-scale review
+  - Temporal trend lineplots, co-occurrence heatmaps, geographic dashboards
+  - Cross-validation against Schiffman et al. 2020
 
-- [ ] **Phase 5: LLM Integration** (2026 Q1-Q2)
+- [ ] **Phase 6: LLM Integration** (2026 Q2)
   - Stack: Qdrant + nomic-embed-text + Ollama
-  - Build conversational interface for querying corpus
-  - Quality control: predatory publishers, paper mills, species misidentification
-
-- [ ] **Phase 6: External Integrations & Schema** (2026 Q1-Q2)
-  - Sharkipedia species/trait/trend data integration
-  - Altmetric/Dimensions social impact and grant data (pending SRAD approval)
-  - New metadata columns: ecosystem, pressure, gear, impact ([schema proposals](docs/schema_proposals/))
+  - Conversational interface for querying corpus
 
 - [ ] **Phase 7: Manuscript & Public Release** (2026)
-  - Methods paper
-  - Interactive web dashboard
-  - Public database release
+  - Methods paper, interactive web dashboard, public database release
 
 ---
 
@@ -164,12 +180,14 @@ elasmo_analyses/
 
 | Metric | Value |
 |--------|-------|
-| Papers in database | ~30,500 |
-| PDFs acquired | ~14,940 unique |
-| Remaining to acquire | 2,559 |
-| Techniques identified | 151 |
-| Disciplines | 8 |
+| Papers in database | 30,553 |
+| PDFs acquired | 18,065 |
+| Extraction columns | 123 (6 schemas) |
+| Evidence rows | 247,131 |
+| Papers with evidence | 18,202 |
+| Unique authors (OpenAlex) | 28,953 |
 | Species columns | 1,308 |
+| Analytical technique columns | 215 |
 
 ### PDF Technique Extraction (from initial 12,381 PDFs)
 
@@ -212,25 +230,28 @@ elasmo_analyses/
 - See [docs/integrations/megamove_integration.md](docs/integrations/megamove_integration.md)
 
 ### Altmetric / Dimensions
-- **Status:** SRAD application submitted (March 2026, 30 business day review)
-- **Value:** Social impact scores, grant linkage, dataset discovery for ~30,500 DOIs
+- **Status:** Complete — 10,897 papers enriched (65.5% hit rate)
+- **Value:** Social impact scores for ~30,500 DOIs; grant/dataset integration via Dimensions
 - See [docs/integrations/altmetric_integration.md](docs/integrations/altmetric_integration.md)
 
 ---
 
 ## Schema Proposals
 
-Four new column categories have been proposed to enrich the database beyond techniques and species. Each uses binary columns with keyword + context matching, and includes false-positive mitigation strategies.
+Six schema categories extract binary classifications from PDFs using keyword + context matching with section-weighted scoring. Fully implemented and run across all 18,065 PDFs.
 
 | Category | Prefix | Columns | Proposal |
 |----------|--------|---------|----------|
-| Ecosystem Component | `eco_` | Realm, zone/habitat, depth | [ecosystem_component_proposal.md](docs/schema_proposals/ecosystem_component_proposal.md) |
-| Pressure / Threat | `pr_` | Fishing types, climate, pollution | [pressure_proposal.md](docs/schema_proposals/pressure_proposal.md) |
-| Fishing Gear | `gear_` | Gear families, modifiers, mitigation | [gear_proposal.md](docs/schema_proposals/gear_proposal.md) |
-| Impact / Response | `imp_` | Mortality, abundance, stress, etc. | [impact_proposal.md](docs/schema_proposals/impact_proposal.md) |
-| **Extraction Logic** | — | Pipeline documentation, validation, evidence table | [extraction_logic.md](docs/schema_proposals/extraction_logic.md) |
+| Ecosystem | `eco_` | 20 (habitat, depth, realm) | [ecosystem_component_proposal.md](docs/schema_proposals/ecosystem_component_proposal.md) |
+| Pressure / Threat | `pr_` | 26 (fishing, climate, pollution) | [pressure_proposal.md](docs/schema_proposals/pressure_proposal.md) |
+| Fishing Gear | `gear_` | 28 (gear type, mitigation) | [gear_proposal.md](docs/schema_proposals/gear_proposal.md) |
+| Impact / Response | `imp_` | 21 (mortality, abundance, etc.) | [impact_proposal.md](docs/schema_proposals/impact_proposal.md) |
+| Discipline | `d_` | 19 (research area) | — |
+| Ocean Basin | `b_` | 9 (study geography) | — |
+| **Extraction Logic** | — | Pipeline docs, evidence table | [extraction_logic.md](docs/schema_proposals/extraction_logic.md) |
+| **Quality Issues** | — | False-positive catalogue | [extraction_quality_issues.md](docs/schema_proposals/extraction_quality_issues.md) |
 
-Automated extraction pipeline running against full corpus — see [Issue #2](https://github.com/SimonDedman/elasmo_analyses/issues/2) for the ongoing column design conversation and validation updates.
+See [Issue #2](https://github.com/SimonDedman/elasmo_analyses/issues/2) for column design discussion. Extraction review reference: [extraction_review_reference.md](docs/schema_proposals/extraction_review_reference.md).
 
 ---
 
@@ -317,10 +338,10 @@ head outputs/analysis/top_techniques.csv
 We welcome contributions from the elasmobranch research community!
 
 **Current needs:**
-1. **Validate extraction results** - Check for false positives
-2. **Identify missing techniques** - Review 31 techniques not found
-3. **Suggest improvements** - Alternative technique names, search queries
-4. **Test LLM prototypes** - Help evaluate conversational interfaces
+1. **Validate extraction results** — interactive validation pages coming soon (see [Validation UI design](docs/technical/2026-04-16-validation-ui-design.md))
+2. **Review schema columns** — check false positives/negatives, suggest rule changes
+3. **Share missing papers** — contribute PDFs via [Shark References](https://shark-references.com/)
+4. **Test LLM prototypes** — help evaluate conversational interfaces
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
@@ -370,5 +391,5 @@ This project builds upon:
 
 ---
 
-*Last updated: 2026-03-10*
-*Version: 3.0 — External integrations & schema design phase*
+*Last updated: 2026-04-16*
+*Version: 4.0 — Validation & analysis phase*
