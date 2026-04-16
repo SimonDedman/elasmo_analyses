@@ -38,6 +38,7 @@
   var _state   = {};   // { [paperId]: { [prefix]: { rating, added, removed, notes, rule_suggestions, depth_min_m, depth_max_m } } }
   var _pageData = window.PAGE_DATA || {};
   var _storageKey = 'validate_' + (_pageData.openalex_id || 'unknown');
+  var _sharedOptions = {};  // loaded from assets/options.json: { sp_: [...], a_: [...] }
 
   function _loadState() {
     try {
@@ -330,7 +331,7 @@
   function _renderTagCategory(paperId, prefix, catData) {
     var s          = _ensureState(paperId, prefix);
     var triggered  = catData.triggered  || [];
-    var allOptions = catData.all_options || [];
+    var allOptions = _sharedOptions[prefix] || [];
 
     // Effective tags: triggered minus removed plus added
     var effective = [];
@@ -592,7 +593,7 @@
             // Reload options minus newly added
             var s       = _ensureState(paperId, prefix);
             var catData = ((_pageData.papers[paperId] || {}).categories || {})[prefix] || {};
-            var allOptions = catData.all_options || [];
+            var allOptions = _sharedOptions[prefix] || [];
             var triggered  = catData.triggered  || [];
             var effective  = triggered.filter(function (v) { return s.removed.indexOf(v) === -1; }).concat(s.added);
             var self       = this;
@@ -968,7 +969,12 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     _loadState();
-    _renderAll();
+    // Load shared options (sp_, a_ column lists) then render
+    fetch('assets/options.json')
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (data) { _sharedOptions = data; })
+      .catch(function () { _sharedOptions = {}; })
+      .then(function () { _renderAll(); });
   });
 
 })();
