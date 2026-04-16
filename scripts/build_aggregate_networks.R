@@ -76,15 +76,52 @@ country_nodes_f <- country_nodes |>
     continent = coalesce(continent, "Other")
   )
 
+# Geographic layout: use country centroids from natural earth
+# Robust iso_a2: prefer iso_a2_eh when iso_a2 isn't a standard 2-char code
+ne_centroids <- world |>
+  mutate(
+    iso_a2_fixed = if_else(
+      is.na(iso_a2) | iso_a2 == "-99" | nchar(iso_a2) != 2,
+      iso_a2_eh, iso_a2
+    )
+  ) |>
+  filter(!is.na(iso_a2_fixed), nchar(iso_a2_fixed) == 2) |>
+  st_make_valid() |>
+  mutate(
+    centroid = st_point_on_surface(geometry),
+    lon = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
+    lat = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[2])
+  ) |>
+  st_drop_geometry() |>
+  select(iso_a2 = iso_a2_fixed, lon, lat) |>
+  distinct(iso_a2, .keep_all = TRUE)
+
+# Map French overseas territories to FR
+country_nodes_f <- country_nodes_f |>
+  mutate(country_for_layout = case_when(
+    country %in% c("GP", "MQ", "RE", "GF", "YT", "NC", "PF") ~ "FR",
+    TRUE ~ country
+  )) |>
+  left_join(ne_centroids, by = c("country_for_layout" = "iso_a2"))
+
+# Drop any still-missing
+missing_cc <- country_nodes_f |> filter(is.na(lon)) |> pull(country)
+if (length(missing_cc) > 0) {
+  cat("  Dropping unmappable countries:", paste(missing_cc, collapse = ", "), "\n")
+  country_nodes_f <- country_nodes_f |> filter(!is.na(lon))
+  country_edges_f <- country_edges_f |>
+    filter(from %in% country_nodes_f$country & to %in% country_nodes_f$country)
+}
+
+layout_mat <- country_nodes_f |> select(lon, lat) |> as.matrix()
 g_country <- graph_from_data_frame(country_edges_f, vertices = country_nodes_f, directed = FALSE)
 
-# Kamada-Kawai layout packs nodes more evenly than fr
 library(ggraph)
-p_country <- ggraph(as_tbl_graph(g_country), layout = "stress") +
+p_country <- ggraph(as_tbl_graph(g_country), layout = layout_mat) +
   geom_edge_link(aes(width = weight, alpha = weight), colour = "#081E3F") +
   geom_node_point(aes(size = papers, colour = continent), alpha = 0.88) +
   geom_node_text(aes(label = name), repel = TRUE, size = 3,
-                 max.overlaps = 60, family = "sans",
+                 max.overlaps = 80, family = "sans",
                  bg.colour = "white", bg.r = 0.1) +
   scale_edge_width(range = c(0.15, 2.5), name = "Shared papers") +
   scale_edge_alpha(range = c(0.12, 0.7), guide = "none") +
@@ -100,11 +137,12 @@ p_country <- ggraph(as_tbl_graph(g_country), layout = "stress") +
       "Other"    = "#868e96"
     )
   ) +
+  coord_fixed() +
   theme_graph(base_family = "sans") +
   labs(
     title = "Elasmobranch research: country collaboration network",
-    subtitle = sprintf("%d countries connected by ≥3 shared papers (out of %d total); coloured by continent",
-                       nrow(country_nodes_f), nrow(country_nodes)),
+    subtitle = sprintf("%d countries connected by ≥3 shared papers; geographic layout (Mercator-ish)",
+                       nrow(country_nodes_f)),
     caption = sprintf("Data: OpenAlex, %s", format(Sys.Date(), "%Y-%m-%d"))
   )
 
@@ -184,7 +222,23 @@ cat(sprintf("  Disciplines: %d, edges: %d\n", nrow(disc_nodes), nrow(disc_edges)
 
 g_disc <- graph_from_data_frame(disc_edges, vertices = disc_nodes, directed = FALSE)
 
-# Edge intra-group vs inter-group
+# Circular layout, ordered by group so thematic clusters are adjacent
+disc_nodes_ordered <- disc_nodes |>
+  arrange(group, desc(papers))
+
+# Build circular layout coordinates manually
+n_disc <- nrow(disc_nodes_ordered)
+angles <- seq(pi/2, pi/2 - 2*pi, length.out = n_disc + 1)[-(n_disc + 1)]
+disc_nodes_ordered <- disc_nodes_ordered |>
+  mutate(
+    x = cos(angles),
+    y = sin(angles)
+  )
+
+layout_disc <- disc_nodes_ordered |> select(x, y) |> as.matrix()
+
+# Rebuild graph with ordered vertices
+g_disc <- graph_from_data_frame(disc_edges, vertices = disc_nodes_ordered, directed = FALSE)
 g_tbl <- as_tbl_graph(g_disc)
 
 disc_palette <- c(
@@ -195,21 +249,27 @@ disc_palette <- c(
   "Methods & evolution"    = "#8844aa"
 )
 
-p_disc <- ggraph(g_tbl, layout = "stress") +
-  geom_edge_link(aes(width = weight, alpha = weight), colour = "#444") +
+p_disc <- ggraph(g_tbl, layout = layout_disc) +
+  geom_edge_arc(aes(width = weight, alpha = weight), colour = "#444",
+                strength = 0.25) +
   geom_node_point(aes(size = papers, colour = group), alpha = 0.92) +
-  geom_node_text(aes(label = name), repel = TRUE, size = 3.8,
-                 family = "sans", bg.colour = "white", bg.r = 0.1) +
+  geom_node_text(aes(label = name, colour = group),
+                 size = 3.8, family = "sans", fontface = "bold",
+                 nudge_x = disc_nodes_ordered$x * 0.18,
+                 nudge_y = disc_nodes_ordered$y * 0.18,
+                 bg.colour = "white", bg.r = 0.15) +
   scale_edge_width(range = c(0.3, 3), name = "Shared papers",
                    labels = comma) +
   scale_edge_alpha(range = c(0.2, 0.75), guide = "none") +
   scale_size_continuous(range = c(3, 16), name = "Papers", labels = comma) +
   scale_colour_manual(name = "Group", values = disc_palette) +
+  coord_fixed(clip = "off") +
   theme_graph(base_family = "sans") +
+  theme(plot.margin = margin(20, 100, 20, 100)) +
   labs(
     title = "Elasmobranch research: discipline co-occurrence network",
-    subtitle = sprintf("%d disciplines grouped by theme; edge weight = papers in both",
-                       nrow(disc_nodes)),
+    subtitle = sprintf("%d disciplines clustered by theme (circular layout); edge weight = papers in both",
+                       nrow(disc_nodes_ordered)),
     caption = sprintf("Data: PDF-based extraction, %s papers, %s",
                       comma(n_distinct(pq_disc$literature_id)),
                       format(Sys.Date(), "%Y-%m-%d"))
@@ -232,20 +292,30 @@ cat(sprintf("  Countries with authors: %d\n", nrow(author_by_country)))
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
-# OpenAlex uses ISO 2-letter codes; rnaturalearth has iso_a2
-map_data <- world |>
-  left_join(author_by_country, by = c("iso_a2" = "institution_country"))
+# Fix broken iso_a2 codes (FR, NO, TW, XK, etc. use iso_a2_eh)
+world <- world |>
+  mutate(iso_a2_fixed = if_else(
+    is.na(iso_a2) | iso_a2 == "-99" | nchar(iso_a2) != 2,
+    iso_a2_eh, iso_a2
+  ))
 
-# Compute centroids for labels
-centroids <- map_data |>
+map_data <- world |>
+  left_join(author_by_country, by = c("iso_a2_fixed" = "institution_country"))
+
+# Compute visual centroids (point on surface, avoiding water)
+# st_point_on_surface gives a point guaranteed to be inside the polygon
+map_valid <- map_data |>
   filter(!is.na(authors)) |>
-  st_make_valid() |>
-  mutate(centroid = st_centroid(geometry)) |>
+  st_make_valid()
+
+# Use point_on_surface for mainland; this avoids centroids falling in lakes/seas
+centroids <- map_valid |>
+  mutate(centroid = st_point_on_surface(geometry)) |>
   st_drop_geometry() |>
   mutate(
     lon = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
     lat = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[2]),
-    # Contrast-aware label colour: dark countries get white text
+    # Contrast-aware: log10(authors) > 2 → dark fill → white text
     label_colour = if_else(log10(authors) > 2, "white", "black")
   ) |>
   filter(!is.na(lon), !is.na(lat))
@@ -253,37 +323,60 @@ centroids <- map_data |>
 centroids_sf <- centroids |>
   st_as_sf(coords = c("lon", "lat"), crs = 4326)
 
-p_map <- ggplot(map_data) +
-  geom_sf(aes(fill = authors), colour = "white", linewidth = 0.15) +
-  geom_sf_text(data = centroids_sf, aes(label = authors, colour = label_colour),
-               size = 2.3, family = "sans", fontface = "plain") +
-  scale_fill_gradient(
-    low = "#fef3c7", high = "#081E3F",
-    na.value = "#e2e8f0",
-    name = "Authors",
-    labels = comma,
-    trans = "log10",
-    breaks = c(1, 10, 100, 1000, 5000)
-  ) +
-  scale_colour_identity() +
-  coord_sf(crs = "+proj=robin") +
-  theme_void(base_family = "sans") +
-  theme(
-    plot.title = element_text(size = 14, face = "bold", margin = margin(b = 5)),
-    plot.subtitle = element_text(size = 10, colour = "#4a5568", margin = margin(b = 10)),
-    legend.position = "bottom",
-    legend.key.width = unit(1.8, "cm")
-  ) +
-  labs(
-    title = "Elasmobranch research: authors by country",
-    subtitle = sprintf("%s authors across %s countries (log scale); labels = author count",
-                       comma(sum(author_by_country$authors)),
-                       nrow(author_by_country)),
-    caption = sprintf("Data: OpenAlex, %s", format(Sys.Date(), "%Y-%m-%d"))
-  )
+make_map <- function(bbox = NULL, subtitle_suffix = "") {
+  p <- ggplot(map_data) +
+    geom_sf(aes(fill = authors), colour = "white", linewidth = 0.15) +
+    geom_sf_text(data = centroids_sf, aes(label = authors, colour = label_colour),
+                 size = 2.6, family = "sans", fontface = "plain") +
+    scale_fill_gradient(
+      low = "#fef3c7", high = "#081E3F",
+      na.value = "#e2e8f0",
+      name = "Authors",
+      labels = comma,
+      trans = "log10",
+      breaks = c(1, 10, 100, 1000, 5000)
+    ) +
+    scale_colour_identity() +
+    theme_void(base_family = "sans") +
+    theme(
+      plot.title = element_text(size = 14, face = "bold", margin = margin(b = 5)),
+      plot.subtitle = element_text(size = 10, colour = "#4a5568", margin = margin(b = 10)),
+      legend.position = "bottom",
+      legend.key.width = unit(1.8, "cm")
+    ) +
+    labs(
+      title = "Elasmobranch research: authors by country",
+      subtitle = sprintf("%s authors across %s countries (log scale)%s",
+                         comma(sum(author_by_country$authors)),
+                         nrow(author_by_country),
+                         subtitle_suffix),
+      caption = sprintf("Data: OpenAlex, %s", format(Sys.Date(), "%Y-%m-%d"))
+    )
 
+  if (is.null(bbox)) {
+    p + coord_sf(crs = "+proj=robin")
+  } else {
+    # Use ETRS89 / Lambert Azimuthal for Europe
+    p + coord_sf(crs = "+proj=laea +lat_0=52 +lon_0=10",
+                 xlim = bbox$xlim, ylim = bbox$ylim)
+  }
+}
+
+p_map <- make_map()
 ggsave("outputs/figures/author_country_map.png", p_map,
        width = 14, height = 8, dpi = 150, bg = "white")
 cat("  Wrote author_country_map.png\n")
+
+# Europe-zoomed version
+p_map_eu <- make_map(
+  bbox = list(
+    xlim = c(-1.5e6, 3.5e6),
+    ylim = c(-2.5e6, 2.5e6)
+  ),
+  subtitle_suffix = " — Europe"
+)
+ggsave("outputs/figures/author_country_map_europe.png", p_map_eu,
+       width = 12, height = 10, dpi = 150, bg = "white")
+cat("  Wrote author_country_map_europe.png\n")
 
 cat("\nDone.\n")

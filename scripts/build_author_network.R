@@ -211,10 +211,19 @@ vn <- visNetwork(vis_nodes, vis_edges,
       main = "Select author"
     )
   ) |>
-  # Freeze physics on stabilisation so clicking stays reliable
-  visEvents(stabilizationIterationsDone = "function() {
-    this.setOptions({ physics: false });
-  }")
+  # Freeze physics and expose network instance globally for filter controls
+  visEvents(
+    stabilizationIterationsDone = "function() {
+      this.setOptions({ physics: false });
+      window.fpNetwork = this;
+      if (window.fpOnReady) window.fpOnReady();
+    }",
+    beforeDrawing = "function() {
+      if (!window.fpNetwork) {
+        window.fpNetwork = this;
+      }
+    }"
+  )
 
 saveWidget(vn, "docs/network/index.html", selfcontained = TRUE,
            title = "Elasmobranch Author Collaboration Atlas")
@@ -293,7 +302,9 @@ div.vis-network { width: 100vw !important; height: 100vh !important; }
   cursor: pointer;
   font-size: 0.75rem;
 }
-h2.main { display: none; }
+/* Tighten visNetwork header spacing */
+h2.main { font-size: 1rem; margin: 0.2rem 0 0.1rem 0; }
+h3.submain { font-size: 0.8rem; margin: 0 0 0.2rem 0; color: #718096; font-weight: normal; font-style: italic; }
 /* Hide the default selectedBy/nodesIdSelection dropdowns, we replace them */
 .vis-configuration-wrapper { display: none !important; }
 </style>'
@@ -332,32 +343,18 @@ window.fpReset = function() {
   document.getElementById("fp-author").value = "";
   window.fpApply();
 };
-window.fpGetNetwork = function() {
-  // visNetwork stores instance in multiple places depending on version. Try them all.
-  if (window.fpNetwork) return window.fpNetwork;
-  var widgets = HTMLWidgets.find(".html-widget");
-  if (widgets) {
-    // Try common patterns
-    if (widgets.instance && widgets.instance.network) return (window.fpNetwork = widgets.instance.network);
-    if (widgets.instance) return (window.fpNetwork = widgets.instance);
-  }
-  // Last resort: dig into the DOM
-  var el = document.querySelector(".vis-network");
-  if (el && el.__vis_network_instance__) return (window.fpNetwork = el.__vis_network_instance__);
-  return null;
-};
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
   var g = document.getElementById("fp-gender").value;
   var r = document.getElementById("fp-region").value;
   var e = document.getElementById("fp-ethnicity").value;
-  var network = window.fpGetNetwork();
-  if (!network || !network.body) {
-    console.warn("fpApply: network not ready yet");
+  var nw = window.fpNetwork;
+  if (!nw || !nw.body || !nw.body.data || !nw.body.data.nodes) {
+    console.warn("fpApply: network not ready, retrying in 500ms");
     setTimeout(window.fpApply, 500);
     return;
   }
-  var nodesDS = network.body.data.nodes;
+  var nodesDS = nw.body.data.nodes;
   var keep = new Set();
   window.fpNodesMeta.forEach(function(n) {
     if (c && n.country !== c) return;
@@ -373,10 +370,11 @@ window.fpApply = function() {
   nodesDS.update(updates);
   document.getElementById("fp-stats").textContent =
     "Showing " + keep.size + " / " + allIds.length + " authors";
+  console.log("fpApply: showing", keep.size, "/", allIds.length);
 };
 window.fpAuthorJump = function() {
   var val = document.getElementById("fp-author").value;
-  var nw = window.fpGetNetwork();
+  var nw = window.fpNetwork;
   if (!nw || !nw.body) return;
   var found = null;
   nw.body.data.nodes.forEach(function(n) {
@@ -387,24 +385,17 @@ window.fpAuthorJump = function() {
     nw.focus(found, { scale: 1.5, animation: true });
   }
 };
+// Wire up filter listeners immediately (they check fpNetwork at call time)
+window.fpOnReady = function() {
+  console.log("Network instance captured:", !!window.fpNetwork);
+};
 document.addEventListener("DOMContentLoaded", function() {
-  // Wait for visNetwork to initialise (stabilisation event fires then)
-  var tries = 0;
-  var wait = setInterval(function() {
-    tries++;
-    var nw = window.fpGetNetwork();
-    if (nw && nw.body) {
-      clearInterval(wait);
-      console.log("Network ready after", tries * 300, "ms");
-      ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
-        document.getElementById(id).addEventListener("change", window.fpApply);
-      });
-      document.getElementById("fp-author").addEventListener("change", window.fpAuthorJump);
-    } else if (tries > 50) {
-      clearInterval(wait);
-      console.error("Network did not initialise after 15s");
-    }
-  }, 300);
+  ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("change", window.fpApply);
+  });
+  var au = document.getElementById("fp-author");
+  if (au) au.addEventListener("change", window.fpAuthorJump);
 });
 </script>')
 
