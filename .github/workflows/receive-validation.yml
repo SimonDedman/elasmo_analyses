@@ -1,0 +1,152 @@
+name: Receive Validation Submission
+
+on:
+  repository_dispatch:
+    types: [validation-submitted]
+
+jobs:
+  receive-validation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract submission data
+        id: extract
+        env:
+          PAYLOAD: ${{ toJson(github.event.client_payload) }}
+        run: |
+          echo "$PAYLOAD" > /tmp/payload_raw.json
+          OPENALEX_ID=$(echo "$PAYLOAD" | jq -r '.openalex_id')
+          AUTHOR_NAME=$(echo "$PAYLOAD" | jq -r '.author_name')
+          PAPERS_REVIEWED=$(echo "$PAYLOAD" | jq -r '.papers_reviewed')
+          TIMESTAMP=$(echo "$PAYLOAD" | jq -r '.timestamp')
+          # Sanitise timestamp for use in branch/filename (replace colons and spaces)
+          TIMESTAMP_SAFE=$(echo "$TIMESTAMP" | tr ':' '-' | tr ' ' '_')
+          echo "openalex_id=$OPENALEX_ID" >> "$GITHUB_OUTPUT"
+          echo "author_name=$AUTHOR_NAME" >> "$GITHUB_OUTPUT"
+          echo "papers_reviewed=$PAPERS_REVIEWED" >> "$GITHUB_OUTPUT"
+          echo "timestamp=$TIMESTAMP" >> "$GITHUB_OUTPUT"
+          echo "timestamp_safe=$TIMESTAMP_SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Configure git
+        run: |
+          git config user.name "Validation Bot"
+          git config user.email "noreply@github.com"
+
+      - name: Create branch and commit validation file
+        id: branch
+        env:
+          OPENALEX_ID: ${{ steps.extract.outputs.openalex_id }}
+          AUTHOR_NAME: ${{ steps.extract.outputs.author_name }}
+          PAPERS_REVIEWED: ${{ steps.extract.outputs.papers_reviewed }}
+          TIMESTAMP_SAFE: ${{ steps.extract.outputs.timestamp_safe }}
+          PAYLOAD: ${{ toJson(github.event.client_payload) }}
+        run: |
+          BRANCH="validation/${OPENALEX_ID}/${TIMESTAMP_SAFE}"
+          git checkout -b "$BRANCH"
+
+          OUTFILE="validations/${OPENALEX_ID}_${TIMESTAMP_SAFE}.json"
+          echo "$PAYLOAD" | jq '.' > "$OUTFILE"
+
+          git add "$OUTFILE"
+          git commit -m "validation: ${AUTHOR_NAME} (${PAPERS_REVIEWED} papers)"
+          git push origin "$BRANCH"
+
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "outfile=$OUTFILE" >> "$GITHUB_OUTPUT"
+
+      - name: Generate PR summary
+        env:
+          OPENALEX_ID: ${{ steps.extract.outputs.openalex_id }}
+          AUTHOR_NAME: ${{ steps.extract.outputs.author_name }}
+          PAPERS_REVIEWED: ${{ steps.extract.outputs.papers_reviewed }}
+          TIMESTAMP: ${{ steps.extract.outputs.timestamp }}
+          OUTFILE: ${{ steps.branch.outputs.outfile }}
+        run: |
+          python3 - <<'PYEOF'
+          import json, os
+
+          openalex_id   = os.environ["OPENALEX_ID"]
+          author_name   = os.environ["AUTHOR_NAME"]
+          papers_reviewed = os.environ["PAPERS_REVIEWED"]
+          timestamp     = os.environ["TIMESTAMP"]
+          outfile       = os.environ["OUTFILE"]
+
+          with open(outfile) as f:
+              payload = json.load(f)
+
+          lines = [
+              f"## Validation submission: {author_name}",
+              f"",
+              f"| Field | Value |",
+              f"|---|---|",
+              f"| Author | {author_name} |",
+              f"| OpenAlex ID | `{openalex_id}` |",
+              f"| Papers reviewed | {papers_reviewed} |",
+              f"| Timestamp | {timestamp} |",
+              f"",
+              f"---",
+              f"",
+              f"## Per-paper changes",
+              f"",
+          ]
+
+          papers = payload.get("papers", [])
+          if not papers:
+              lines.append("_No per-paper data provided._")
+          else:
+              for paper in papers:
+                  lit_id = paper.get("literature_id", "unknown")
+                  title  = paper.get("title", "")
+                  header = f"### `{lit_id}`"
+                  if title:
+                      header += f" — {title}"
+                  lines.append(header)
+                  lines.append("")
+
+                  categories = paper.get("categories", {})
+                  if not categories:
+                      lines.append("_No category changes._")
+                  else:
+                      for cat_name, cat_data in categories.items():
+                          lines.append(f"**{cat_name}**")
+                          rating = cat_data.get("rating")
+                          if rating is not None:
+                              lines.append(f"- Rating: {rating}")
+                          added = cat_data.get("added", [])
+                          if added:
+                              lines.append(f"- Added: {', '.join(str(x) for x in added)}")
+                          removed = cat_data.get("removed", [])
+                          if removed:
+                              lines.append(f"- Removed: {', '.join(str(x) for x in removed)}")
+                          notes = cat_data.get("notes", "")
+                          if notes:
+                              lines.append(f"- Notes: {notes}")
+                          rule_suggestions = cat_data.get("rule_suggestions", "")
+                          if rule_suggestions:
+                              lines.append(f"- Rule suggestions: {rule_suggestions}")
+                  lines.append("")
+
+          with open("/tmp/pr_body.md", "w") as f:
+              f.write("\n".join(lines))
+
+          print("PR body written to /tmp/pr_body.md")
+          PYEOF
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR_NAME: ${{ steps.extract.outputs.author_name }}
+          PAPERS_REVIEWED: ${{ steps.extract.outputs.papers_reviewed }}
+          BRANCH: ${{ steps.branch.outputs.branch }}
+        run: |
+          gh pr create \
+            --title "Validation: ${AUTHOR_NAME} (${PAPERS_REVIEWED} papers)" \
+            --body-file /tmp/pr_body.md \
+            --base main \
+            --head "$BRANCH"
