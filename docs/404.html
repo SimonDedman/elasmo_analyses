@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Page Not Found</title>
+  <link rel="stylesheet" href="/elasmo_analyses/validate/assets/style.css">
+</head>
+<body>
+  <div class="four-oh-four">
+    <h1>404</h1>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const BASE_URL = '/elasmo_analyses/validate/';
+    const path = window.location.pathname;
+    const messageEl = document.getElementById('message');
+
+    if (path.includes('/validate/')) {
+      // Extract the attempted OpenAlex ID from the URL for a helpful message
+      const match = path.match(/\/validate\/([^/]+)\.html?$/);
+      const attemptedId = match ? match[1] : null;
+      const idNote = attemptedId ? ` (<code>${attemptedId}</code>)` : '';
+
+      messageEl.innerHTML = `
+        <p>The OpenAlex author ID${idNote} was not found in our database.</p>
+        <p>
+          To be included, please ensure your papers are listed on
+          <a href="https://www.shark-references.com" target="_blank" rel="noopener noreferrer">Shark References</a>
+          and contact the project team.
+        </p>
+        <p>
+          You can also <a href="${BASE_URL}">return to the author search page</a>
+          to look up a different author.
+        </p>`;
+    } else {
+      messageEl.innerHTML = `
+        <p>The page you requested could not be found.</p>
+        <p><a href="${BASE_URL}">Return to the author search page</a></p>`;
+    }
+  </script>
+</body>
+</html>
