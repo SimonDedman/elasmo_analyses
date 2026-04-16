@@ -1,0 +1,102 @@
+# Proposed Schema: Depth
+
+**Status:** Active — regex extraction from full PDF text; evidence rows added 2026-04-16
+**Column prefix:** `depth_`
+**Team lead:** Chris Mull
+**Source:** Regex patterns in `scripts/extract_schema_columns.py`; evidence writing via `scripts/extract_species_techniques_from_pdfs.py`
+
+## Purpose
+
+Capture the study depth range reported in each paper. Enables analyses like "are deep-water species systematically under-studied?" or "how does technique choice vary across depth zones?" Three columns are produced: a human-readable text summary, and parsed numeric minimum and maximum depths in metres.
+
+## Columns
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `depth_range` | `str` | Stated depth range as extracted text, e.g., `"10–200 m"`, `">500 m"`, `"150 m"` |
+| `depth_min_m` | `float` | Smallest depth value found (metres). `NaN` if no depth stated. |
+| `depth_max_m` | `float` | Largest depth value found (metres). `NaN` if no depth stated. |
+
+For single-value statements (e.g., "depth of 500 m"), both `depth_min_m` and `depth_max_m` are set to that value.
+
+## Extraction Method
+
+### Script
+
+`scripts/extract_schema_columns.py` (regex extraction); `scripts/extract_species_techniques_from_pdfs.py` (evidence row writing, added 2026-04-16).
+
+### Regex Patterns
+
+Two pattern families are applied to the full PDF text:
+
+**Range pattern** — matches explicit depth ranges:
+
+```
+depths? of (\d+(?:\.\d+)?)\s*(?:to|–|-)\s*(\d+(?:\.\d+)?)\s*m
+\b(\d+(?:\.\d+)?)\s*(?:to|–|-)\s*(\d+(?:\.\d+)?)\s*m\b
+```
+
+Examples matched: "0–200 m", "depths of 150 m to 300 m", "10 to 800 m depth".
+
+**Single pattern** — matches single depth values with optional qualifiers:
+
+```
+depth[s]? of\s*([><=~≈±]?\s*\d+(?:\.\d+)?)\s*m
+\b([><=~≈±]?\s*\d+(?:\.\d+)?)\s*m depth
+```
+
+Examples matched: "depth of 500 m", ">200 m depth", "~350 m".
+
+When multiple depth values are found in a paper, `depth_min_m` takes the smallest and `depth_max_m` takes the largest. `depth_range` is set to the corresponding `"min–max m"` text (or a single value if min = max).
+
+## Evidence
+
+Since 2026-04-16, every paper with a depth match generates a row in `outputs/schema_extraction_evidence.csv`:
+
+| Field | Content |
+|-------|---------|
+| `literature_id` | Paper identifier |
+| `column` | `depth_range`, `depth_min_m`, or `depth_max_m` |
+| `matched_terms` | The regex-matched text fragment |
+| `frequency` | Number of depth expressions found in the paper |
+| `context` | Sentence containing the first depth match, for manual verification |
+
+## Known Issues and Limitations
+
+1. **Ambiguous "m" unit:** The regex matches any number followed by "m" in a depth-like context. It will occasionally match non-depth uses of metres (e.g., "molecular weight of 45 m Da", transect lengths, distance travelled). No elasmobranch-proximity check is applied, unlike some other schema columns. Review the evidence `context` sentence to confirm genuine depth values.
+2. **Depth not always stated:** Many papers do not report a study depth explicitly. These papers will have `NaN` in all three columns. A `NaN` does not imply a shallow-water study.
+3. **Relative qualifiers:** Statements like ">200 m" are captured in `depth_range` as text but `depth_min_m` and `depth_max_m` are set to the numeric value (200) without the qualifier. The qualifier is preserved only in the `depth_range` string.
+4. **Multiple study sites at different depths:** The current pipeline takes the global minimum and maximum across all depth mentions in a paper. A paper comparing 10 m and 800 m sites will yield `depth_min_m = 10`, `depth_max_m = 800` — which faithfully represents the range studied but does not distinguish between a gradient study and a comparison of discrete sites.
+5. **Unit conversion:** All depths are assumed to be in metres. Fathom or foot units are not currently converted. These are rare in modern elasmobranch literature but may occur in older papers.
+
+## Relationship to `eco_` Depth Zone Columns
+
+The `eco_` schema contains categorical depth zone columns (`eco_epipelagic`, `eco_mesopelagic`, `eco_bathypelagic`, `eco_deepwater`) derived from keyword matching. The `depth_*` columns complement these with precise numeric values where reported. Both are useful:
+
+- Use `depth_min_m` / `depth_max_m` for continuous depth analyses and scatterplots.
+- Use `eco_deepwater`, `eco_mesopelagic` etc. for quick categorical filters, including papers that mention a depth zone without stating an explicit depth in metres.
+
+## Coverage Expectations
+
+Based on the elasmobranch literature:
+
+- Tagging, telemetry, and habitat use papers routinely report depth ranges — expected high `depth_*` coverage (~30–50% of papers).
+- Fisheries and bycatch papers often report gear set depth rather than species depth — these will be captured but represent gear depth, not habitat depth.
+- Taxonomy, genetics, and review papers often do not report a study depth — `NaN` is expected for these.
+
+## Validation
+
+Evidence review pages for depth extraction are linked from the extraction review dashboard:
+
+**<https://simondedman.github.io/elasmo_analyses/validate/>**
+
+Review pages show context sentences for all depth matches, flagged cases where the "m" unit appears in a non-depth context, and the distribution of `depth_min_m` and `depth_max_m` values across the corpus.
+
+## Discussion Points
+
+1. **Elasmobranch proximity check:** Other schema columns (e.g., `eco_pelagic`) include a proximity check requiring an elasmobranch term within N words of the matched keyword. Adding a similar check to depth extraction would reduce false positives from methods sections reporting transect lengths or tank dimensions.
+2. **Gear depth vs. habitat depth disambiguation:** Consider adding a `depth_context` text column to flag whether the matched depth appears to describe gear set depth, habitat depth, or dive depth. This would require a small keyword-context classifier.
+3. **Fathom/foot conversion:** A pre-processing step to convert imperial depth units in older papers would improve coverage for pre-1980 literature.
+
+---
+*Draft created: 2026-04-16. Evidence row writing added 2026-04-16 via `extract_species_techniques_from_pdfs.py`.*
