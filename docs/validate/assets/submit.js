@@ -77,7 +77,7 @@
       }
     }
 
-    return {
+    var result = {
       openalex_id:      pageData.openalex_id      || '',
       author_name:      pageData.author_name       || '',
       timestamp:        new Date().toISOString(),
@@ -86,6 +86,14 @@
       papers_total:     pageData.papers_total      || 0,
       papers:           papers
     };
+
+    /* Include author_corrections only if non-empty. */
+    var ac = state.author_corrections;
+    if (ac && typeof ac === 'object' && Object.keys(ac).length > 0) {
+      result.author_corrections = ac;
+    }
+
+    return result;
   }
 
   /* ------------------------------------------------------------------

@@ -1206,3 +1206,34 @@ a:hover {
     padding-bottom: 0;
   }
 }
+
+/* ── NamSor editable author enrichment fields ─────────────── */
+
+.namsor-fields select,
+.namsor-fields input[type="text"] {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: #fff;
+  color: #212529;
+}
+
+.namsor-fields select:focus,
+.namsor-fields input[type="text"]:focus {
+  outline: none;
+  border-color: #4c6ef5;
+  box-shadow: 0 0 0 2px rgba(76, 110, 245, 0.2);
+}
+
+.namsor-orig-note {
+  font-size: 0.72rem;
+  color: #868e96;
+  font-style: italic;
+}
+
+.tag-freq-unavailable {
+  color: #868e96;
+  font-size: 0.75rem;
+  margin: 0.25rem 0 0;
+}
