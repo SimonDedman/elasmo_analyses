@@ -451,7 +451,10 @@
     var country    = meta.country     || '';
     var superregion = meta.superregion || '';
     var epoch      = meta.epoch       || '';
-    var altScore   = meta.alt_score   || '';
+    var altmetric  = meta.altmetric   || {};
+    var altScore   = altmetric.alt_score || '';
+    var oaStatus   = meta.oa_status   || '';
+    var oaLicense  = meta.oa_license  || '';
 
     var shortAuth  = _shortAuthor(authors);
     var shortTitle = _truncate(title, 80);
@@ -493,10 +496,32 @@
     if (country)     { html += '<span class="meta-item"><strong>Country:</strong> '     + escapeHtml(country)     + '</span>'; }
     if (superregion) { html += '<span class="meta-item"><strong>Superregion:</strong> ' + escapeHtml(superregion) + '</span>'; }
     if (epoch)       { html += '<span class="meta-item" title="Geological time period of study specimens"><strong>Epoch:</strong> ' + escapeHtml(epoch) + '</span>'; }
+    if (oaStatus) {
+      var oaColour = oaStatus === 'gold' ? '#f59f00' : oaStatus === 'green' ? '#37b24d' : oaStatus === 'hybrid' ? '#f76707' : oaStatus === 'bronze' ? '#ae6c3c' : '#868e96';
+      html += '<span class="meta-item" title="Open access status (from Unpaywall)"><strong>OA:</strong> <span style="color:' + oaColour + ';font-weight:600;">' + escapeHtml(oaStatus) + '</span>';
+      if (oaLicense) { html += ' (' + escapeHtml(oaLicense) + ')'; }
+      html += '</span>';
+    }
     if (altScore) {
       var altNum = parseFloat(altScore);
       var altBin = altNum >= 500 ? 'exceptional' : altNum >= 100 ? 'very high' : altNum >= 50 ? 'high' : altNum >= 10 ? 'moderate' : altNum >= 1 ? 'low' : 'minimal';
-      html += '<span class="meta-item" title="Altmetric attention score (social media, news, policy). Bins: minimal (<1), low (1-10), moderate (10-50), high (50-100), very high (100-500), exceptional (500+)"><strong>Altmetric:</strong> ' + escapeHtml(altScore) + ' <em>(' + altBin + ')</em></span>';
+      var altBinColour = altNum >= 500 ? '#e03131' : altNum >= 100 ? '#f76707' : altNum >= 50 ? '#f59f00' : altNum >= 10 ? '#37b24d' : '#868e96';
+      var altTooltip = 'Altmetric attention score. Bins: minimal (<1), low (1-10), moderate (10-50), high (50-100), very high (100-500), exceptional (500+)';
+      if (altmetric.alt_pct_journal) { altTooltip += '\\nJournal percentile: ' + altmetric.alt_pct_journal + '%'; }
+      if (altmetric.alt_pct_all) { altTooltip += '\\nAll papers percentile: ' + altmetric.alt_pct_all + '%'; }
+      html += '<span class="meta-item" title="' + escapeHtml(altTooltip) + '"><strong>Altmetric:</strong> ' + escapeHtml(altScore) + ' <span style="color:' + altBinColour + ';font-weight:600;">(' + altBin + ')</span></span>';
+      // Altmetric breakdown
+      var altParts = [];
+      if (altmetric.alt_tweeters) { altParts.push('tweets:' + altmetric.alt_tweeters); }
+      if (altmetric.alt_news) { altParts.push('news:' + altmetric.alt_news); }
+      if (altmetric.alt_blogs) { altParts.push('blogs:' + altmetric.alt_blogs); }
+      if (altmetric.alt_policy) { altParts.push('policy:' + altmetric.alt_policy); }
+      if (altmetric.alt_wikipedia) { altParts.push('wiki:' + altmetric.alt_wikipedia); }
+      if (altmetric.alt_mendeley) { altParts.push('Mendeley:' + altmetric.alt_mendeley); }
+      if (altmetric.alt_pct_journal) { altParts.push('pct(journal):' + altmetric.alt_pct_journal + '%'); }
+      if (altParts.length > 0) {
+        html += '<span class="meta-item" style="font-size:0.75rem;color:#868e96;">' + altParts.join(' · ') + '</span>';
+      }
     }
     html += '<span class="meta-item" title="Internal Shark References literature database ID"><strong>ID:</strong> ' + escapeHtml(String(paperId)) + '</span>';
 
@@ -1016,6 +1041,28 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     _loadState();
+    // Render author enrichment (NamSor data)
+    var enrichEl = document.getElementById('author-enrichment');
+    var ns = _pageData.namsor || {};
+    if (enrichEl && (ns.gender || ns.origin_country || ns.ethnicity)) {
+      var ehtml = '';
+      if (ns.gender) {
+        ehtml += '<span title="NamSor gender inference (probability: ' + (ns.gender_probability || '?') + ')"><strong>Gender:</strong> ' + escapeHtml(ns.gender) + '</span>';
+      }
+      if (ns.origin_country) {
+        ehtml += '<span title="NamSor inferred origin country"><strong>Origin:</strong> ' + escapeHtml(ns.origin_country);
+        if (ns.origin_region) { ehtml += ' (' + escapeHtml(ns.origin_region) + ')'; }
+        ehtml += '</span>';
+      }
+      if (ns.ethnicity) {
+        ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity:</strong> ' + escapeHtml(ns.ethnicity) + '</span>';
+      }
+      ehtml += '<span style="color:#868e96;font-size:0.75rem;">(NamSor inference — corrections welcome)</span>';
+      enrichEl.innerHTML = ehtml;
+    } else if (enrichEl) {
+      enrichEl.style.display = 'none';
+    }
+
     // Load shared options (sp_, a_ column lists) then render
     fetch('assets/options.json')
       .then(function (r) { return r.ok ? r.json() : {}; })
