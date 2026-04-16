@@ -250,8 +250,7 @@ disc_palette <- c(
 )
 
 p_disc <- ggraph(g_tbl, layout = layout_disc) +
-  geom_edge_arc(aes(width = weight, alpha = weight), colour = "#444",
-                strength = 0.25) +
+  geom_edge_link(aes(width = weight, alpha = weight), colour = "#444") +
   geom_node_point(aes(size = papers, colour = group), alpha = 0.92) +
   geom_node_text(aes(label = name, colour = group),
                  size = 3.8, family = "sans", fontface = "bold",
@@ -268,7 +267,7 @@ p_disc <- ggraph(g_tbl, layout = layout_disc) +
   theme(plot.margin = margin(20, 100, 20, 100)) +
   labs(
     title = "Elasmobranch research: discipline co-occurrence network",
-    subtitle = sprintf("%d disciplines clustered by theme (circular layout); edge weight = papers in both",
+    subtitle = sprintf("%d disciplines clustered by theme; edge weight = papers in both",
                        nrow(disc_nodes_ordered)),
     caption = sprintf("Data: PDF-based extraction, %s papers, %s",
                       comma(n_distinct(pq_disc$literature_id)),
@@ -367,13 +366,13 @@ ggsave("outputs/figures/author_country_map.png", p_map,
        width = 14, height = 8, dpi = 150, bg = "white")
 cat("  Wrote author_country_map.png\n")
 
-# Europe-zoomed version
+# Europe-zoomed version — extended to include Greenland, Russia, N. Africa, Iran
 p_map_eu <- make_map(
   bbox = list(
-    xlim = c(-1.5e6, 3.5e6),
-    ylim = c(-2.5e6, 2.5e6)
+    xlim = c(-4.5e6, 5.5e6),
+    ylim = c(-4.0e6, 4.0e6)
   ),
-  subtitle_suffix = " — Europe"
+  subtitle_suffix = " — Europe & surrounds"
 )
 ggsave("outputs/figures/author_country_map_europe.png", p_map_eu,
        width = 12, height = 10, dpi = 150, bg = "white")

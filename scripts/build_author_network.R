@@ -174,7 +174,7 @@ vn <- visNetwork(vis_nodes, vis_edges,
   visNodes(
     shape = "dot",
     scaling = list(min = 4, max = 40),
-    font = list(size = 10)
+    font = list(size = 0, face = "sans", strokeWidth = 3, strokeColor = "#ffffff")
   ) |>
   visEdges(
     smooth = FALSE,
@@ -364,30 +364,85 @@ window.fpApply = function() {
     keep.add(n.id);
   });
   var allIds = nodesDS.getIds();
+  // Dynamic label sizing: show labels only when <=150 visible, scale by count
+  var n = keep.size;
+  var labelSize = n === allIds.length ? 0
+                : n <= 20 ? 24
+                : n <= 50 ? 18
+                : n <= 150 ? 14
+                : 0;
   var updates = allIds.map(function(id) {
-    return { id: id, hidden: !keep.has(id) };
+    var visible = keep.has(id);
+    return {
+      id: id,
+      hidden: !visible,
+      font: { size: visible ? labelSize : 0, strokeWidth: 4, strokeColor: "#ffffff" }
+    };
   });
   nodesDS.update(updates);
   document.getElementById("fp-stats").textContent =
-    "Showing " + keep.size + " / " + allIds.length + " authors";
-  console.log("fpApply: showing", keep.size, "/", allIds.length);
+    "Showing " + n + " / " + allIds.length + " authors" +
+    (labelSize ? " (labels visible)" : " (filter down to ≤150 to see labels)");
+  console.log("fpApply: showing", n, "/", allIds.length);
 };
 window.fpAuthorJump = function() {
-  var val = document.getElementById("fp-author").value;
+  var val = document.getElementById("fp-author").value.trim();
   var nw = window.fpNetwork;
   if (!nw || !nw.body) return;
-  var found = null;
-  nw.body.data.nodes.forEach(function(n) {
-    if (n.label === val) { found = n.id; }
-  });
-  if (found) {
-    nw.selectNodes([found]);
-    nw.focus(found, { scale: 1.5, animation: true });
+  if (!val) {
+    // Clear search: show all per other filters
+    window.fpApply();
+    return;
   }
+  var nodesDS = nw.body.data.nodes;
+  var allIds = nodesDS.getIds();
+  var matched = [];
+  nodesDS.forEach(function(n) {
+    if (n.label === val) matched.push(n.id);
+  });
+  if (matched.length === 0) {
+    // Try substring match as fallback
+    var lval = val.toLowerCase();
+    nodesDS.forEach(function(n) {
+      if (n.label.toLowerCase().indexOf(lval) !== -1) matched.push(n.id);
+    });
+  }
+  if (matched.length === 0) {
+    document.getElementById("fp-stats").textContent = "No match for " + val;
+    return;
+  }
+  // Hide all non-matches and their non-neighbours; keep matches + 1-degree neighbours
+  var show = new Set(matched);
+  matched.forEach(function(id) {
+    (nw.getConnectedNodes(id) || []).forEach(function(nid) { show.add(nid); });
+  });
+  var updates = allIds.map(function(id) {
+    return {
+      id: id,
+      hidden: !show.has(id),
+      font: { size: show.has(id) ? 18 : 0, strokeWidth: 4, strokeColor: "#ffffff" }
+    };
+  });
+  nodesDS.update(updates);
+  nw.selectNodes(matched);
+  if (matched.length === 1) {
+    nw.focus(matched[0], { scale: 2, animation: true });
+  } else {
+    nw.fit({ nodes: Array.from(show), animation: true });
+  }
+  document.getElementById("fp-stats").textContent =
+    matched.length + " match(es) for " + val + " (showing " + show.size + " nodes with neighbours)";
 };
 // Wire up filter listeners immediately (they check fpNetwork at call time)
 window.fpOnReady = function() {
   console.log("Network instance captured:", !!window.fpNetwork);
+  // Apply any retained filter values from browser autofill/reload
+  var hasSearch = document.getElementById("fp-author").value.trim();
+  if (hasSearch) {
+    window.fpAuthorJump();
+  } else {
+    window.fpApply();
+  }
 };
 document.addEventListener("DOMContentLoaded", function() {
   ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
@@ -395,7 +450,12 @@ document.addEventListener("DOMContentLoaded", function() {
     if (el) el.addEventListener("change", window.fpApply);
   });
   var au = document.getElementById("fp-author");
-  if (au) au.addEventListener("change", window.fpAuthorJump);
+  if (au) {
+    au.addEventListener("change", window.fpAuthorJump);
+    au.addEventListener("keydown", function(ev) {
+      if (ev.key === "Enter") window.fpAuthorJump();
+    });
+  }
 });
 </script>')
 
