@@ -298,7 +298,152 @@ BASIN = SchemaCategory(prefix="b_", columns=[
     ], threshold=2),
 ])
 
-ALL_SCHEMAS = [ECO, PR, GEAR, IMP, DISC, BASIN]
+# ---- Ocean sub-basin schema (finer-grained study geography) ---------------
+
+SUB_BASIN = SchemaCategory(prefix="sb_", columns=[
+
+    # ----- Atlantic sub-basins -----------------------------------------------
+    BinaryColumn("sb_north_sea", [
+        "North Sea",
+    ], threshold=2),
+    BinaryColumn("sb_norwegian_sea", [
+        "Norwegian Sea",
+    ], threshold=2),
+    BinaryColumn("sb_barents_sea", [
+        "Barents Sea",
+    ], threshold=2),
+    BinaryColumn("sb_baltic_sea", [
+        "Baltic Sea",
+    ], threshold=2),
+    BinaryColumn("sb_celtic_sea", [
+        "Celtic Sea",
+    ], threshold=2),
+    BinaryColumn("sb_irish_sea", [
+        "Irish Sea",
+    ], threshold=2),
+    BinaryColumn("sb_english_channel", [
+        "English Channel", "La Manche",
+    ], threshold=2),
+    BinaryColumn("sb_bay_of_biscay", [
+        "Bay of Biscay", "Biscay",
+    ], threshold=2),
+    BinaryColumn("sb_azores", [
+        "Azores",
+    ], threshold=2),
+    BinaryColumn("sb_gulf_of_maine", [
+        "Gulf of Maine",
+    ], threshold=2),
+    BinaryColumn("sb_gulf_of_mexico", [
+        "Gulf of Mexico", "GoMex",
+        # "GoM" is too ambiguous (matches "GoMex", "GoMar", etc.) — use case-sensitive
+        "GOM",
+    ], threshold=2, case_sensitive_terms={"GOM"}),
+    BinaryColumn("sb_caribbean_sea", [
+        "Caribbean Sea", "Caribbean",
+        "Antilles", "West Indies",
+    ], threshold=2),
+    BinaryColumn("sb_bahamas", [
+        "Bahamas", "Bahamian",
+    ], threshold=2),
+    BinaryColumn("sb_sargasso_sea", [
+        "Sargasso Sea",
+    ], threshold=2),
+    BinaryColumn("sb_gulf_of_guinea", [
+        "Gulf of Guinea",
+    ], threshold=2),
+    BinaryColumn("sb_benguela", [
+        "Benguela", "Benguela Current",
+    ], threshold=2),
+
+    # ----- Mediterranean / semi-enclosed seas --------------------------------
+    BinaryColumn("sb_alboran_sea", [
+        "Alboran Sea", "Alboran",
+    ], threshold=2),
+    BinaryColumn("sb_ligurian_sea", [
+        "Ligurian Sea",
+    ], threshold=2),
+    BinaryColumn("sb_tyrrhenian_sea", [
+        "Tyrrhenian Sea", "Tyrrhenian",
+    ], threshold=2),
+    BinaryColumn("sb_adriatic_sea", [
+        "Adriatic Sea", "Adriatic",
+    ], threshold=2),
+    BinaryColumn("sb_ionian_sea", [
+        "Ionian Sea", "Ionian",
+    ], threshold=2),
+    BinaryColumn("sb_aegean_sea", [
+        "Aegean Sea", "Aegean",
+    ], threshold=2),
+    BinaryColumn("sb_black_sea", [
+        "Black Sea",
+    ], threshold=2),
+    BinaryColumn("sb_sea_of_marmara", [
+        "Sea of Marmara", "Marmara",
+    ], threshold=2),
+    BinaryColumn("sb_red_sea", [
+        "Red Sea",
+    ], threshold=2),
+
+    # ----- Indian Ocean sub-basins -------------------------------------------
+    BinaryColumn("sb_arabian_sea", [
+        "Arabian Sea",
+    ], threshold=2),
+    BinaryColumn("sb_persian_gulf", [
+        "Persian Gulf", "Arabian Gulf",
+    ], threshold=2),
+    BinaryColumn("sb_bay_of_bengal", [
+        "Bay of Bengal",
+    ], threshold=2),
+    BinaryColumn("sb_andaman_sea", [
+        "Andaman Sea",
+    ], threshold=2),
+    BinaryColumn("sb_mozambique_channel", [
+        "Mozambique Channel",
+    ], threshold=2),
+
+    # ----- Pacific sub-basins ------------------------------------------------
+    BinaryColumn("sb_gulf_of_california", [
+        "Gulf of California", "Sea of Cortez", "Sea of Cortés", "GoCali",
+    ], threshold=2),
+    BinaryColumn("sb_gulf_of_alaska", [
+        "Gulf of Alaska",
+    ], threshold=2),
+    BinaryColumn("sb_bering_sea", [
+        "Bering Sea",
+    ], threshold=2),
+    BinaryColumn("sb_sea_of_okhotsk", [
+        "Sea of Okhotsk",
+    ], threshold=2),
+    BinaryColumn("sb_sea_of_japan", [
+        "Sea of Japan", "East Sea",
+    ], threshold=2),
+    BinaryColumn("sb_east_china_sea", [
+        "East China Sea",
+    ], threshold=2),
+    BinaryColumn("sb_south_china_sea", [
+        "South China Sea",
+    ], threshold=2),
+    BinaryColumn("sb_yellow_sea", [
+        "Yellow Sea",
+    ], threshold=2),
+    BinaryColumn("sb_philippine_sea", [
+        "Philippine Sea", "Philippines",
+    ], threshold=2),
+    BinaryColumn("sb_coral_sea", [
+        "Coral Sea",
+    ], threshold=2),
+    BinaryColumn("sb_tasman_sea", [
+        "Tasman Sea",
+    ], threshold=2),
+    BinaryColumn("sb_hawaii", [
+        "Hawaii", "Hawaiian Island*", "Hawaiian archipelago",
+    ], threshold=2),
+    BinaryColumn("sb_california_current", [
+        "California Current",
+    ], threshold=2),
+])
+
+ALL_SCHEMAS = [ECO, PR, GEAR, IMP, DISC, BASIN, SUB_BASIN]
 
 
 # ---------------------------------------------------------------------------
@@ -468,6 +613,12 @@ _SECTION_WEIGHTS: dict[str, dict[str, float]] = {
         "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
     },
     "b_": {
+        "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
+        "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+    },
+    # sb_ uses the same section-weight profile as b_ (geographic context)
+    "sb_": {
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
         "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
