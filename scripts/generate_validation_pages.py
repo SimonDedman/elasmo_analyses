@@ -280,7 +280,7 @@ def build_page_data(
             })
         categories[OB_PREFIX] = {"columns": ob_list}
 
-        # Tier 2: triggered + all_options format
+        # Tier 2: triggered only (all_options in shared file, not per-paper)
         for prefix in TIER2_PREFIXES:
             all_options = all_prefix_cols.get(prefix, [])
             triggered_cols = [
@@ -289,7 +289,6 @@ def build_page_data(
             ]
             categories[prefix] = {
                 "triggered": triggered_cols,
-                "all_options": all_options,
             }
 
         # depth_
@@ -491,6 +490,15 @@ def generate_pages(
         base_url=base_url,
     )
     (DOCS_VALIDATE_DIR / "index.html").write_text(index_html, encoding="utf-8")
+
+    # --- Shared options file (sp_ and a_ column lists, loaded once by JS) ---
+    print("Generating shared options JSON…")
+    shared_options = {}
+    for prefix in TIER2_PREFIXES:
+        shared_options[prefix] = all_prefix_cols.get(prefix, [])
+    (DOCS_VALIDATE_DIR / "assets" / "options.json").write_text(
+        json.dumps(shared_options, ensure_ascii=False), encoding="utf-8"
+    )
 
     # --- 404 page ---
     print("Generating 404 page…")
