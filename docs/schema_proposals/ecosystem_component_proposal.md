@@ -1,8 +1,13 @@
 # Proposed Schema: Ecosystem Component
 
 **Status:** Draft for team discussion
+**Team lead:** Chris Mull
 **Column prefix:** `eco_`
 **Source:** David Ruiz Garcia's reference paper (Issue #2), adapted for elasmobranch context
+
+## Validation
+
+Extracted classifications for this schema can be reviewed at <https://simondedman.github.io/elasmo_analyses/validate/>. Validators are encouraged to check papers associated with their own work and submit corrections via their OpenAlex author page.
 
 ## Purpose
 

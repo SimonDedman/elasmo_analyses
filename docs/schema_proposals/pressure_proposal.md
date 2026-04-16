@@ -1,8 +1,13 @@
 # Proposed Schema: Pressure / Threat Type
 
 **Status:** Draft for team discussion
+**Team lead:** David Ruiz-Garcia (DRG)
 **Column prefix:** `pr_`
 **Source:** David Ruiz Garcia's reference paper (Issue #2), IUCN threat classification, adapted for elasmobranch context
+
+## Validation
+
+Extracted classifications for this schema can be reviewed at <https://simondedman.github.io/elasmo_analyses/validate/>. Validators are encouraged to check papers associated with their own work and submit corrections via their OpenAlex author page.
 
 ## Purpose
 
