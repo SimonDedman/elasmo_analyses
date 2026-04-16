@@ -137,35 +137,39 @@ cat("Wrote outputs/figures/author_network_static.png\n")
 cat("Rendering interactive visNetwork...\n")
 
 # Build visNetwork node/edge data
+# group = country (categorical, drives colour)
 vis_nodes <- nodes_out |>
   mutate(
     id = openalex_author_id,
     label = display_name,
     title = sprintf(
-      "<b>%s</b><br>%s<br>%s<br>%d papers<br>Gender: %s<br>Ethnicity: %s",
+      "<b>%s</b><br><i>%s</i><br>%s<br>%d papers<br>Gender: %s<br>Origin: %s (%s)<br>Ethnicity: %s",
       display_name,
       coalesce(institution, ""),
       coalesce(country, ""),
       papers,
       gender,
+      coalesce(origin_country, "—"),
+      coalesce(origin_region, "—"),
       coalesce(ethnicity, "—")
     ),
-    value = pmin(papers, 50),  # cap for visual scaling
-    group = coalesce(country, "Unknown")
+    value = pmin(papers, 50),
+    group = coalesce(country, "Unknown"),
+    # Short display label for dropdown
+    labelDropdown = sprintf("%s (%d)", display_name, papers)
   ) |>
-  select(id, label, title, value, group, papers, gender, country, ethnicity, origin_region)
+  select(id, label, title, value, group, labelDropdown,
+         papers, gender, country, ethnicity, origin_region, origin_country, institution)
 
 vis_edges <- edges_focal |>
   rename(value = weight) |>
   mutate(title = sprintf("%d shared papers", value))
 
-# Build the widget
+# Build widget with multiple filter dimensions
 vn <- visNetwork(vis_nodes, vis_edges,
-                 height = "800px", width = "100%",
+                 height = "100vh", width = "100%",
                  main = sprintf("Elasmobranch Author Collaboration Atlas (%d authors, %d edges)",
-                                nrow(vis_nodes), nrow(vis_edges)),
-                 submain = sprintf("Authors with ≥%d papers, edges ≥%d shared papers",
-                                   MIN_PAPERS, MIN_EDGE_WEIGHT)) |>
+                                nrow(vis_nodes), nrow(vis_edges))) |>
   visNodes(
     shape = "dot",
     scaling = list(min = 4, max = 40),
@@ -179,21 +183,213 @@ vn <- visNetwork(vis_nodes, vis_edges,
   visPhysics(
     solver = "forceAtlas2Based",
     forceAtlas2Based = list(gravitationalConstant = -50, springLength = 100),
-    stabilization = list(iterations = 200)
+    stabilization = list(
+      enabled = TRUE,
+      iterations = 300,
+      fit = TRUE
+    ),
+    # Freeze after stabilisation so clicks are easier
+    timestep = 0.3,
+    adaptiveTimestep = TRUE
+  ) |>
+  visInteraction(
+    navigationButtons = TRUE,
+    hover = TRUE,
+    tooltipDelay = 100
   ) |>
   visOptions(
-    highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE),
+    highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE, labelOnly = FALSE),
     selectedBy = list(
       variable = "country",
-      multiple = TRUE,
-      main = "Filter by country"
+      main = "Filter by country",
+      multiple = TRUE
     ),
-    nodesIdSelection = TRUE
+    nodesIdSelection = list(
+      enabled = TRUE,
+      useLabels = TRUE,
+      main = "Select author"
+    )
   ) |>
-  visLegend()
+  # Freeze physics on stabilisation so clicking stays reliable
+  visEvents(stabilizationIterationsDone = "function() {
+    this.setOptions({ physics: false });
+  }")
 
 saveWidget(vn, "docs/network/index.html", selfcontained = TRUE,
            title = "Elasmobranch Author Collaboration Atlas")
+
+# Post-process: inject CSS + custom filter sidebar
+html <- readLines("docs/network/index.html")
+
+# Build filter options from the data
+gender_opts <- sort(unique(vis_nodes$gender))
+region_opts <- sort(unique(vis_nodes$origin_region[!is.na(vis_nodes$origin_region)]))
+ethnicity_opts <- sort(unique(vis_nodes$ethnicity[!is.na(vis_nodes$ethnicity)]))
+country_opts <- sort(unique(vis_nodes$country[!is.na(vis_nodes$country)]))
+
+# Embed nodes data as JSON for client-side filtering
+nodes_json <- jsonlite::toJSON(
+  vis_nodes |> select(id, gender, country, ethnicity, origin_region),
+  auto_unbox = FALSE
+)
+
+make_opts <- function(values) {
+  paste0('<option value="', values, '">', values, '</option>', collapse = "\n")
+}
+
+inject_style <- '<style>
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: -apple-system, system-ui, sans-serif; }
+.html-widget { width: 100vw !important; height: 100vh !important; }
+#htmlwidget_container { width: 100vw !important; height: 100vh !important; }
+div.vis-network { width: 100vw !important; height: 100vh !important; }
+
+.filter-panel {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid #c8d0dc;
+  border-radius: 6px;
+  padding: 0.6rem 0.8rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 0.85rem;
+  max-width: 260px;
+}
+.filter-panel h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: #081E3F;
+  border-bottom: 2px solid #B6862C;
+  padding-bottom: 0.2rem;
+}
+.filter-panel label {
+  display: block;
+  margin-top: 0.4rem;
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 0.75rem;
+}
+.filter-panel select, .filter-panel input {
+  width: 100%;
+  padding: 0.2rem;
+  border: 1px solid #c8d0dc;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+.filter-panel .stats {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #718096;
+}
+.filter-panel button.reset {
+  margin-top: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  background: #081E3F;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+h2.main { display: none; }
+/* Hide the default selectedBy/nodesIdSelection dropdowns, we replace them */
+.vis-configuration-wrapper { display: none !important; }
+</style>'
+
+# Build filter panel HTML
+panel_html <- paste0('<div class="filter-panel" id="filter-panel">
+<h3>Elasmobranch Author Atlas</h3>
+<label>Search author</label>
+<input type="text" id="fp-author" list="fp-author-list" placeholder="Type name...">
+<datalist id="fp-author-list">',
+paste0('<option value="', vis_nodes$label, '" data-id="', vis_nodes$id, '">',
+       collapse = "\n"),
+'</datalist>
+<label>Country</label>
+<select id="fp-country"><option value="">(all)</option>',
+make_opts(country_opts), '</select>
+<label>Gender</label>
+<select id="fp-gender"><option value="">(all)</option>',
+make_opts(gender_opts), '</select>
+<label>Origin region</label>
+<select id="fp-region"><option value="">(all)</option>',
+make_opts(region_opts), '</select>
+<label>Ethnicity</label>
+<select id="fp-ethnicity"><option value="">(all)</option>',
+make_opts(ethnicity_opts), '</select>
+<button class="reset" onclick="window.fpReset()">Reset filters</button>
+<div class="stats" id="fp-stats">Showing ', nrow(vis_nodes), ' / ', nrow(vis_nodes), ' authors</div>
+</div>
+<script>
+window.fpNodesMeta = ', nodes_json, ';
+window.fpReset = function() {
+  document.getElementById("fp-country").value = "";
+  document.getElementById("fp-gender").value = "";
+  document.getElementById("fp-region").value = "";
+  document.getElementById("fp-ethnicity").value = "";
+  document.getElementById("fp-author").value = "";
+  window.fpApply();
+};
+window.fpApply = function() {
+  var c = document.getElementById("fp-country").value;
+  var g = document.getElementById("fp-gender").value;
+  var r = document.getElementById("fp-region").value;
+  var e = document.getElementById("fp-ethnicity").value;
+  var network = window.fpNetwork;
+  if (!network) { return; }
+  var keep = new Set();
+  window.fpNodesMeta.forEach(function(n) {
+    if (c && n.country !== c) return;
+    if (g && n.gender !== g) return;
+    if (r && n.origin_region !== r) return;
+    if (e && n.ethnicity !== e) return;
+    keep.add(n.id);
+  });
+  // Hide non-matching nodes
+  var allIds = network.body.data.nodes.getIds();
+  var updates = allIds.map(function(id) {
+    return { id: id, hidden: !keep.has(id) };
+  });
+  network.body.data.nodes.update(updates);
+  document.getElementById("fp-stats").textContent =
+    "Showing " + keep.size + " / " + allIds.length + " authors";
+};
+window.fpAuthorJump = function() {
+  var val = document.getElementById("fp-author").value;
+  var match = window.fpNodesMeta.find(function(n) { return n.label === val; });
+  // Need to look up by label — rebuild map
+  var nw = window.fpNetwork;
+  if (!nw) return;
+  var found = null;
+  nw.body.data.nodes.forEach(function(n) {
+    if (n.label === val) { found = n.id; }
+  });
+  if (found) {
+    nw.selectNodes([found]);
+    nw.focus(found, { scale: 1.5, animation: true });
+  }
+};
+document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(function() {
+    // Grab the network instance from HTMLWidgets
+    var wid = HTMLWidgets.find(".html-widget");
+    if (wid) { window.fpNetwork = wid.instance; }
+    ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
+      document.getElementById(id).addEventListener("change", window.fpApply);
+    });
+    document.getElementById("fp-author").addEventListener("change", window.fpAuthorJump);
+  }, 500);
+});
+</script>')
+
+idx <- grep("</head>", html, fixed = TRUE)[1]
+html <- append(html, inject_style, after = idx - 1)
+# Inject panel after <body>
+idx <- grep("<body", html, fixed = TRUE)[1]
+html <- append(html, panel_html, after = idx)
+writeLines(html, "docs/network/index.html")
+
 cat("Wrote docs/network/index.html\n")
 
 cat("\nDone.\n")
