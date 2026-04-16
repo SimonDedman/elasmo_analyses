@@ -164,9 +164,18 @@ def process_paper(
 ) -> dict:
     """Extract species freq, technique freq, and depth evidence from text."""
 
+    text_lower = text.lower()
+
     sp_counts: dict[str, int] = {}
     sp_evidence: list[dict] = []
     for sp in species:
+        # Fast pre-filter: skip regex if binomial not in text
+        if sp["binomial"].lower() not in text_lower:
+            if sp["common"] and sp["common"].lower() in text_lower:
+                pass  # common name present, do regex
+            else:
+                sp_counts[sp["col"]] = 0
+                continue
         total = 0
         first_ctx = ""
         for pat in sp["patterns"]:
@@ -194,6 +203,11 @@ def process_paper(
     tech_counts: dict[str, int] = {}
     tech_evidence: list[dict] = []
     for tech in techniques:
+        # Fast pre-filter
+        any_present = any(q.lower() in text_lower for q in tech["queries"])
+        if not any_present:
+            tech_counts[tech["col"]] = 0
+            continue
         total = 0
         first_ctx = ""
         parts = []
