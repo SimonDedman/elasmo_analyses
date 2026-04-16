@@ -39,6 +39,7 @@
   var _pageData = window.PAGE_DATA || {};
   var _storageKey = 'validate_' + (_pageData.openalex_id || 'unknown');
   var _sharedOptions = {};  // loaded from assets/options.json: { sp_: [...], a_: [...] }
+  var _rules = {};  // loaded from assets/rules.json: { prefix: { col_name: { terms, threshold, anchors, ... } } }
 
   function _loadState() {
     try {
@@ -332,6 +333,46 @@
         html += _renderEvidence(evCol.evidence);
         html += '</div>';
       }
+    }
+
+    // Rules palette (collapsible, shows all rules for this schema)
+    var prefixRules = _rules[prefix];
+    if (prefixRules && Object.keys(prefixRules).length > 0) {
+      html += '<details class="rules-palette">';
+      html += '<summary class="rules-palette-summary">Extraction rules (' + Object.keys(prefixRules).length + ' rules)</summary>';
+      html += '<div class="rules-palette-body">';
+      var ruleNames = Object.keys(prefixRules).sort();
+      for (var ri = 0; ri < ruleNames.length; ri++) {
+        var rn = ruleNames[ri];
+        var rule = prefixRules[rn];
+        // Check if this rule fired for this paper
+        var fired = false;
+        for (var ci = 0; ci < columns.length; ci++) {
+          if (columns[ci].name === rn && columns[ci].triggered) { fired = true; break; }
+        }
+        html += '<div class="rule-entry' + (fired ? ' rule-fired' : '') + '">';
+        html += '<span class="rule-name">' + escapeHtml(rn.replace(prefix, '').replace(/_/g, ' ')) + '</span>';
+        html += ' <span class="rule-threshold">thr:' + rule.threshold + '</span>';
+        if (fired) { html += ' <span class="rule-badge-active">active</span>'; }
+        html += '<div class="rule-terms">';
+        for (var ti = 0; ti < rule.terms.length; ti++) {
+          html += '<span class="rule-term">' + escapeHtml(rule.terms[ti]) + '</span>';
+        }
+        html += '</div>';
+        if (rule.anchors && rule.anchors.length > 0) {
+          html += '<div class="rule-anchors">Anchors: ';
+          for (var ai = 0; ai < rule.anchors.length; ai++) {
+            html += '<span class="rule-anchor">' + escapeHtml(rule.anchors[ai]) + '</span>';
+          }
+          html += '</div>';
+        }
+        if (rule.case_sensitive_terms && rule.case_sensitive_terms.length > 0) {
+          html += '<div class="rule-cs">Case-sensitive: ' + rule.case_sensitive_terms.map(escapeHtml).join(', ') + '</div>';
+        }
+        html += '</div>'; // .rule-entry
+      }
+      html += '</div>'; // .rules-palette-body
+      html += '</details>';
     }
 
     html += _renderRatingRow(paperId, prefix, isTier1);
@@ -1063,12 +1104,15 @@
       enrichEl.style.display = 'none';
     }
 
-    // Load shared options (sp_, a_ column lists) then render
-    fetch('assets/options.json')
-      .then(function (r) { return r.ok ? r.json() : {}; })
-      .then(function (data) { _sharedOptions = data; })
-      .catch(function () { _sharedOptions = {}; })
-      .then(function () { _renderAll(); });
+    // Load shared assets (options + rules) then render
+    Promise.all([
+      fetch('assets/options.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+      fetch('assets/rules.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+    ]).then(function (results) {
+      _sharedOptions = results[0];
+      _rules = results[1];
+      _renderAll();
+    });
   });
 
 })();
