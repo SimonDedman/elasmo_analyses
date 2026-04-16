@@ -20,6 +20,7 @@ suppressMessages({
   library(sf)
   library(rnaturalearth)
   library(arrow)
+  library(countrycode)
 })
 
 setwd("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
@@ -67,23 +68,42 @@ cat(sprintf("  Countries: %d, edges: %d\n", nrow(country_nodes), nrow(country_ed
 # Filter to edges with weight >= 3 to reduce clutter
 country_edges_f <- country_edges |> filter(weight >= 3)
 connected <- unique(c(country_edges_f$from, country_edges_f$to))
-country_nodes_f <- country_nodes |> filter(country %in% connected)
+country_nodes_f <- country_nodes |>
+  filter(country %in% connected) |>
+  mutate(
+    continent = countrycode(country, origin = "iso2c", destination = "continent",
+                            warn = FALSE),
+    continent = coalesce(continent, "Other")
+  )
 
 g_country <- graph_from_data_frame(country_edges_f, vertices = country_nodes_f, directed = FALSE)
 
+# Kamada-Kawai layout packs nodes more evenly than fr
 library(ggraph)
-p_country <- ggraph(as_tbl_graph(g_country), layout = "fr") +
+p_country <- ggraph(as_tbl_graph(g_country), layout = "stress") +
   geom_edge_link(aes(width = weight, alpha = weight), colour = "#081E3F") +
-  geom_node_point(aes(size = papers), colour = "#B6862C", alpha = 0.85) +
+  geom_node_point(aes(size = papers, colour = continent), alpha = 0.88) +
   geom_node_text(aes(label = name), repel = TRUE, size = 3,
-                 max.overlaps = 40, family = "sans") +
-  scale_edge_width(range = c(0.2, 2.5), name = "Shared papers") +
-  scale_edge_alpha(range = c(0.15, 0.7), guide = "none") +
+                 max.overlaps = 60, family = "sans",
+                 bg.colour = "white", bg.r = 0.1) +
+  scale_edge_width(range = c(0.15, 2.5), name = "Shared papers") +
+  scale_edge_alpha(range = c(0.12, 0.7), guide = "none") +
   scale_size_continuous(range = c(1.5, 12), name = "Papers", labels = comma) +
+  scale_colour_manual(
+    name = "Continent",
+    values = c(
+      "Africa"   = "#d9534f",
+      "Americas" = "#5bc0de",
+      "Asia"     = "#f0ad4e",
+      "Europe"   = "#5cb85c",
+      "Oceania"  = "#9b59b6",
+      "Other"    = "#868e96"
+    )
+  ) +
   theme_graph(base_family = "sans") +
   labs(
     title = "Elasmobranch research: country collaboration network",
-    subtitle = sprintf("%d countries connected by ≥3 shared papers (out of %d total)",
+    subtitle = sprintf("%d countries connected by ≥3 shared papers (out of %d total); coloured by continent",
                        nrow(country_nodes_f), nrow(country_nodes)),
     caption = sprintf("Data: OpenAlex, %s", format(Sys.Date(), "%Y-%m-%d"))
   )
@@ -125,27 +145,70 @@ disc_edges <- pq_disc |>
   ) |>
   count(from, to, name = "weight")
 
+# Discipline groupings
+disc_groups <- tribble(
+  ~discipline,       ~group,
+  "fisheries",       "Fisheries & management",
+  "ecotourism",      "Fisheries & management",
+  "conservation",    "Fisheries & management",
+  "husbandry",       "Fisheries & management",
+  "human_dimensions","Fisheries & management",
+  "movement",        "Movement & behaviour",
+  "behaviour",       "Movement & behaviour",
+  "trophic",         "Movement & behaviour",
+  "immunology",      "Health",
+  "toxicology",      "Health",
+  "physiology",      "Organismal biology",
+  "biology",         "Organismal biology",
+  "biomechanics",    "Organismal biology",
+  "sensory",         "Organismal biology",
+  "reproductive",    "Organismal biology",
+  "data_science",    "Methods & evolution",
+  "genetics",        "Methods & evolution",
+  "paleontology",    "Methods & evolution",
+  "taxonomy",        "Methods & evolution"
+)
+
 disc_nodes <- pq_disc |>
   count(discipline, name = "papers") |>
-  filter(discipline %in% unique(c(disc_edges$from, disc_edges$to)))
+  filter(discipline %in% unique(c(disc_edges$from, disc_edges$to))) |>
+  left_join(disc_groups, by = "discipline") |>
+  mutate(
+    group = factor(group, levels = c(
+      "Fisheries & management", "Movement & behaviour", "Organismal biology",
+      "Health", "Methods & evolution"
+    ))
+  )
 
 cat(sprintf("  Disciplines: %d, edges: %d\n", nrow(disc_nodes), nrow(disc_edges)))
 
 g_disc <- graph_from_data_frame(disc_edges, vertices = disc_nodes, directed = FALSE)
 
-p_disc <- ggraph(as_tbl_graph(g_disc), layout = "circle") +
-  geom_edge_link(aes(width = weight, alpha = weight), colour = "#081E3F") +
-  geom_node_point(aes(size = papers), colour = "#B6862C", alpha = 0.85) +
-  geom_node_text(aes(label = name), repel = TRUE, size = 3.5,
-                 family = "sans") +
+# Edge intra-group vs inter-group
+g_tbl <- as_tbl_graph(g_disc)
+
+disc_palette <- c(
+  "Fisheries & management" = "#0088cc",
+  "Movement & behaviour"   = "#33aa55",
+  "Organismal biology"     = "#cc3333",
+  "Health"                 = "#f0ad4e",
+  "Methods & evolution"    = "#8844aa"
+)
+
+p_disc <- ggraph(g_tbl, layout = "stress") +
+  geom_edge_link(aes(width = weight, alpha = weight), colour = "#444") +
+  geom_node_point(aes(size = papers, colour = group), alpha = 0.92) +
+  geom_node_text(aes(label = name), repel = TRUE, size = 3.8,
+                 family = "sans", bg.colour = "white", bg.r = 0.1) +
   scale_edge_width(range = c(0.3, 3), name = "Shared papers",
                    labels = comma) +
   scale_edge_alpha(range = c(0.2, 0.75), guide = "none") +
-  scale_size_continuous(range = c(3, 15), name = "Papers", labels = comma) +
+  scale_size_continuous(range = c(3, 16), name = "Papers", labels = comma) +
+  scale_colour_manual(name = "Group", values = disc_palette) +
   theme_graph(base_family = "sans") +
   labs(
     title = "Elasmobranch research: discipline co-occurrence network",
-    subtitle = sprintf("%d disciplines; edge weight = papers in both",
+    subtitle = sprintf("%d disciplines grouped by theme; edge weight = papers in both",
                        nrow(disc_nodes)),
     caption = sprintf("Data: PDF-based extraction, %s papers, %s",
                       comma(n_distinct(pq_disc$literature_id)),
@@ -173,8 +236,27 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 map_data <- world |>
   left_join(author_by_country, by = c("iso_a2" = "institution_country"))
 
+# Compute centroids for labels
+centroids <- map_data |>
+  filter(!is.na(authors)) |>
+  st_make_valid() |>
+  mutate(centroid = st_centroid(geometry)) |>
+  st_drop_geometry() |>
+  mutate(
+    lon = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
+    lat = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[2]),
+    # Contrast-aware label colour: dark countries get white text
+    label_colour = if_else(log10(authors) > 2, "white", "black")
+  ) |>
+  filter(!is.na(lon), !is.na(lat))
+
+centroids_sf <- centroids |>
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+
 p_map <- ggplot(map_data) +
   geom_sf(aes(fill = authors), colour = "white", linewidth = 0.15) +
+  geom_sf_text(data = centroids_sf, aes(label = authors, colour = label_colour),
+               size = 2.3, family = "sans", fontface = "plain") +
   scale_fill_gradient(
     low = "#fef3c7", high = "#081E3F",
     na.value = "#e2e8f0",
@@ -183,6 +265,7 @@ p_map <- ggplot(map_data) +
     trans = "log10",
     breaks = c(1, 10, 100, 1000, 5000)
   ) +
+  scale_colour_identity() +
   coord_sf(crs = "+proj=robin") +
   theme_void(base_family = "sans") +
   theme(
@@ -193,7 +276,7 @@ p_map <- ggplot(map_data) +
   ) +
   labs(
     title = "Elasmobranch research: authors by country",
-    subtitle = sprintf("%s authors across %s countries (log scale)",
+    subtitle = sprintf("%s authors across %s countries (log scale); labels = author count",
                        comma(sum(author_by_country$authors)),
                        nrow(author_by_country)),
     caption = sprintf("Data: OpenAlex, %s", format(Sys.Date(), "%Y-%m-%d"))
