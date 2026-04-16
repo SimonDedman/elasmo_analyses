@@ -169,7 +169,8 @@ vis_edges <- edges_focal |>
 vn <- visNetwork(vis_nodes, vis_edges,
                  height = "100vh", width = "100%",
                  main = sprintf("Elasmobranch Author Collaboration Atlas (%d authors, %d edges)",
-                                nrow(vis_nodes), nrow(vis_edges))) |>
+                                nrow(vis_nodes), nrow(vis_edges)),
+                 submain = "(lots of data: may take a while to load)") |>
   visNodes(
     shape = "dot",
     scaling = list(min = 4, max = 40),
@@ -331,13 +332,32 @@ window.fpReset = function() {
   document.getElementById("fp-author").value = "";
   window.fpApply();
 };
+window.fpGetNetwork = function() {
+  // visNetwork stores instance in multiple places depending on version. Try them all.
+  if (window.fpNetwork) return window.fpNetwork;
+  var widgets = HTMLWidgets.find(".html-widget");
+  if (widgets) {
+    // Try common patterns
+    if (widgets.instance && widgets.instance.network) return (window.fpNetwork = widgets.instance.network);
+    if (widgets.instance) return (window.fpNetwork = widgets.instance);
+  }
+  // Last resort: dig into the DOM
+  var el = document.querySelector(".vis-network");
+  if (el && el.__vis_network_instance__) return (window.fpNetwork = el.__vis_network_instance__);
+  return null;
+};
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
   var g = document.getElementById("fp-gender").value;
   var r = document.getElementById("fp-region").value;
   var e = document.getElementById("fp-ethnicity").value;
-  var network = window.fpNetwork;
-  if (!network) { return; }
+  var network = window.fpGetNetwork();
+  if (!network || !network.body) {
+    console.warn("fpApply: network not ready yet");
+    setTimeout(window.fpApply, 500);
+    return;
+  }
+  var nodesDS = network.body.data.nodes;
   var keep = new Set();
   window.fpNodesMeta.forEach(function(n) {
     if (c && n.country !== c) return;
@@ -346,21 +366,18 @@ window.fpApply = function() {
     if (e && n.ethnicity !== e) return;
     keep.add(n.id);
   });
-  // Hide non-matching nodes
-  var allIds = network.body.data.nodes.getIds();
+  var allIds = nodesDS.getIds();
   var updates = allIds.map(function(id) {
     return { id: id, hidden: !keep.has(id) };
   });
-  network.body.data.nodes.update(updates);
+  nodesDS.update(updates);
   document.getElementById("fp-stats").textContent =
     "Showing " + keep.size + " / " + allIds.length + " authors";
 };
 window.fpAuthorJump = function() {
   var val = document.getElementById("fp-author").value;
-  var match = window.fpNodesMeta.find(function(n) { return n.label === val; });
-  // Need to look up by label — rebuild map
-  var nw = window.fpNetwork;
-  if (!nw) return;
+  var nw = window.fpGetNetwork();
+  if (!nw || !nw.body) return;
   var found = null;
   nw.body.data.nodes.forEach(function(n) {
     if (n.label === val) { found = n.id; }
@@ -371,15 +388,23 @@ window.fpAuthorJump = function() {
   }
 };
 document.addEventListener("DOMContentLoaded", function() {
-  setTimeout(function() {
-    // Grab the network instance from HTMLWidgets
-    var wid = HTMLWidgets.find(".html-widget");
-    if (wid) { window.fpNetwork = wid.instance; }
-    ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
-      document.getElementById(id).addEventListener("change", window.fpApply);
-    });
-    document.getElementById("fp-author").addEventListener("change", window.fpAuthorJump);
-  }, 500);
+  // Wait for visNetwork to initialise (stabilisation event fires then)
+  var tries = 0;
+  var wait = setInterval(function() {
+    tries++;
+    var nw = window.fpGetNetwork();
+    if (nw && nw.body) {
+      clearInterval(wait);
+      console.log("Network ready after", tries * 300, "ms");
+      ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
+        document.getElementById(id).addEventListener("change", window.fpApply);
+      });
+      document.getElementById("fp-author").addEventListener("change", window.fpAuthorJump);
+    } else if (tries > 50) {
+      clearInterval(wait);
+      console.error("Network did not initialise after 15s");
+    }
+  }, 300);
 });
 </script>')
 
