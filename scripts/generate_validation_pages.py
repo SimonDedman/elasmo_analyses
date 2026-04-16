@@ -229,6 +229,9 @@ def build_page_data(
         if lid not in pq.index:
             continue
         row = pq.loc[lid]
+        # Handle duplicate literature_ids: take the first row
+        if isinstance(row, pd.DataFrame):
+            row = row.iloc[0]
 
         # --- meta ---
         year_val = row.get("year")
