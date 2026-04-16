@@ -36,6 +36,8 @@ EVIDENCE_PATH = OUTPUTS_DIR / "schema_extraction_evidence.csv"
 PAPER_AUTHORS_PATH = OUTPUTS_DIR / "openalex_paper_authors.csv"
 UNIQUE_AUTHORS_PATH = OUTPUTS_DIR / "openalex_unique_authors.csv"
 ALTMETRIC_PATH = OUTPUTS_DIR / "altmetric_scores.csv"
+NAMSOR_PATH = OUTPUTS_DIR / "namsor_enrichment.csv"
+OA_PATH = OUTPUTS_DIR / "unpaywall_oa_by_doi.csv"
 
 # Prefixes that use the evidence/columns format
 TIER1_PREFIXES = ["b_", "d_", "eco_", "pr_", "imp_", "gear_"]
@@ -173,17 +175,77 @@ def load_evidence(all_lit_ids: set[str]) -> dict[str, dict[str, list[dict]]]:
     return evidence
 
 
-def load_altmetric(all_lit_ids: set[str]) -> dict[str, str]:
-    """Return mapping literature_id_str -> alt_score string."""
+def load_altmetric(all_lit_ids: set[str]) -> dict[str, dict]:
+    """Return mapping literature_id_str -> dict of all altmetric fields."""
     print("Loading altmetric scores…")
-    alt = pd.read_csv(ALTMETRIC_PATH, usecols=["literature_id", "alt_score"])
+    alt_cols = [
+        "literature_id", "alt_score", "alt_tweeters", "alt_posts", "alt_fbwalls",
+        "alt_blogs", "alt_news", "alt_policy", "alt_wikipedia", "alt_reddit",
+        "alt_peer_review", "alt_pct_journal", "alt_pct_all", "alt_pct_similar_age",
+        "alt_mendeley",
+    ]
+    alt = pd.read_csv(ALTMETRIC_PATH, usecols=alt_cols)
     alt["literature_id"] = alt["literature_id"].apply(lit_id_str)
     result = {}
     for _, row in alt.iterrows():
         lid = row["literature_id"]
         if lid in all_lit_ids:
-            result[lid] = str(row["alt_score"]) if pd.notna(row["alt_score"]) else ""
-    print(f"  Altmetric scores loaded for {len(result)} papers.")
+            d = {}
+            for col in alt_cols:
+                if col == "literature_id":
+                    continue
+                val = row.get(col)
+                if pd.notna(val):
+                    d[col] = _round_alt_score(str(val))
+                else:
+                    d[col] = ""
+            result[lid] = d
+    print(f"  Altmetric data loaded for {len(result)} papers.")
+    return result
+
+
+def load_namsor() -> dict[str, dict]:
+    """Load NamSor author enrichment keyed by OpenAlex author ID."""
+    print("Loading NamSor enrichment…")
+    if not NAMSOR_PATH.exists():
+        print("  No NamSor file found, skipping")
+        return {}
+    ns = pd.read_csv(NAMSOR_PATH)
+    # 'id' column is the OpenAlex author ID (bare, no URL prefix)
+    result = {}
+    for _, row in ns.iterrows():
+        aid = str(row.get("id", ""))
+        if not aid:
+            continue
+        aid = strip_openalex_prefix(aid)
+        result[aid] = {
+            "gender": str(row.get("namsor_gender", "")) if pd.notna(row.get("namsor_gender")) else "",
+            "gender_probability": round(float(row.get("namsor_gender_probability", 0)), 2) if pd.notna(row.get("namsor_gender_probability")) else None,
+            "origin_country": str(row.get("namsor_origin_country", "")) if pd.notna(row.get("namsor_origin_country")) else "",
+            "origin_region": str(row.get("namsor_origin_region", "")) if pd.notna(row.get("namsor_origin_region")) else "",
+            "ethnicity": str(row.get("namsor_ethnicity", "")) if pd.notna(row.get("namsor_ethnicity")) else "",
+        }
+    print(f"  NamSor data loaded for {len(result)} authors.")
+    return result
+
+
+def load_oa_status(all_lit_ids: set[str]) -> dict[str, dict]:
+    """Load OA status keyed by literature_id."""
+    print("Loading OA status…")
+    if not OA_PATH.exists():
+        print("  No OA file found, skipping")
+        return {}
+    oa = pd.read_csv(OA_PATH, usecols=["literature_id", "oa_status", "oa_license"])
+    oa["literature_id"] = oa["literature_id"].apply(lit_id_str)
+    result = {}
+    for _, row in oa.iterrows():
+        lid = row["literature_id"]
+        if lid in all_lit_ids:
+            result[lid] = {
+                "oa_status": str(row["oa_status"]) if pd.notna(row["oa_status"]) else "",
+                "oa_license": str(row["oa_license"]) if pd.notna(row["oa_license"]) else "",
+            }
+    print(f"  OA status loaded for {len(result)} papers.")
     return result
 
 
@@ -248,7 +310,8 @@ def build_page_data(
     paper_lit_ids: list[str],
     pq: pd.DataFrame,
     evidence: dict[str, dict[str, list[dict]]],
-    altmetric: dict[str, str],
+    altmetric: dict[str, dict],
+    oa_status: dict[str, dict],
     merged_ids: list[str],
     all_prefix_cols: dict[str, list[str]],
     today_str: str,
@@ -284,7 +347,9 @@ def build_page_data(
             "country": _safe_str(row, "country"),
             "superregion": _safe_str(row, "superregion"),
             "epoch": _clean_epoch(row.get("epoch")),
-            "alt_score": _round_alt_score(altmetric.get(lid, "")),
+            "altmetric": altmetric.get(lid, {}),
+            "oa_status": oa_status.get(lid, {}).get("oa_status", ""),
+            "oa_license": oa_status.get(lid, {}).get("oa_license", ""),
             "literature_id": lid,
             "eco_1_guess": _safe_str(row, "eco_1_guess"),
             "eco_2_guess": _safe_str(row, "eco_2_guess"),
@@ -436,6 +501,12 @@ def generate_pages(
     # --- Load altmetric ---
     altmetric = load_altmetric(all_lit_ids)
 
+    # --- Load OA status ---
+    oa_status = load_oa_status(all_lit_ids)
+
+    # --- Load NamSor ---
+    namsor = load_namsor()
+
     # --- Set up Jinja2 (autoescape=False: page_data_json is raw JSON) ---
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),
@@ -489,10 +560,15 @@ def generate_pages(
             pq=pq,
             evidence=evidence,
             altmetric=altmetric,
+            oa_status=oa_status,
             merged_ids=merged_ids,
             all_prefix_cols=all_prefix_cols,
             today_str=today_str,
         )
+
+        # Add NamSor data at page level (author, not paper)
+        ns = namsor.get(primary_id, {})
+        page_data["namsor"] = ns
 
         author_name = page_data["author_name"]
         institution = page_data["institution"]
