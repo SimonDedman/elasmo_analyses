@@ -277,9 +277,23 @@ vn <- visNetwork(vis_nodes, vis_edges,
       window.fpNetwork = this;
       if (window.fpOnReady) window.fpOnReady();
     }",
-    beforeDrawing = "function() {
+    beforeDrawing = "function(ctx) {
       if (!window.fpNetwork) {
         window.fpNetwork = this;
+      }
+      // Draw equirectangular world map as background in geographic layout mode
+      if (window.fpMapImage && window.fpMapImage.complete &&
+          document.body.classList.contains('geo-layout')) {
+        var scale = 60;
+        // World spans lon -180..180, lat -90..90, with our x=lon*scale, y=-lat*scale
+        var left = -180 * scale;
+        var top  = -90 * scale;
+        var width  = 360 * scale;
+        var height = 180 * scale;
+        ctx.save();
+        ctx.globalAlpha = 0.35;
+        ctx.drawImage(window.fpMapImage, left, top, width, height);
+        ctx.restore();
       }
     }",
     zoom = "function(params) {
@@ -480,17 +494,6 @@ div.vis-network { width: 100vw !important; height: 100vh !important; }
 /* Tighten visNetwork header spacing */
 h2.main { font-size: 1rem; margin: 0.2rem 0 0.1rem 0; }
 h3.submain { font-size: 0.8rem; margin: 0 0 0.2rem 0; color: #718096; font-weight: normal; font-style: italic; }
-
-/* World ocean floor map background (Berann/Heezen/Tharp 1977), shown in geographic mode */
-body.geo-layout .vis-network {
-  background-image: url("assets/world_ocean_floor.jpg");
-  background-size: cover;
-  background-position: center;
-}
-body.geo-layout .vis-network canvas {
-  opacity: 0.92;
-  mix-blend-mode: multiply;
-}
 /* Hide the default selectedBy/nodesIdSelection dropdowns, we replace them */
 .vis-configuration-wrapper { display: none !important; }
 </style>'
@@ -551,6 +554,12 @@ make_opts(ethnicity_opts), '</select>
 <script>
 window.fpNodesMeta = ', nodes_json, ';
 window.fpIsoCoords = ', iso_coords_json, ';
+// Preload world map image for geographic layout background
+window.fpMapImage = new Image();
+window.fpMapImage.src = "assets/world_equirect.png";
+window.fpMapImage.onload = function() {
+  if (window.fpNetwork) window.fpNetwork.redraw();
+};
 window.fpReset = function() {
   document.getElementById("fp-country").value = "";
   document.getElementById("fp-gender").value = "";
@@ -583,12 +592,14 @@ window.fpApplyEdgeWeight = function() {
 window.fpSetLayout = function(mode) {
   var nw = window.fpNetwork;
   if (!nw || !nw.body) return;
-  // Toggle CSS class for map background
+  // Toggle class so beforeDrawing knows whether to render the map
   if (mode === "geo-inst" || mode === "geo-origin") {
     document.body.classList.add("geo-layout");
   } else {
     document.body.classList.remove("geo-layout");
   }
+  // Trigger a redraw to paint (or clear) the map background
+  if (nw.redraw) nw.redraw();
   var nodesDS = nw.body.data.nodes;
   var meta = window.fpNodesMeta;
   if (mode === "physics") {
