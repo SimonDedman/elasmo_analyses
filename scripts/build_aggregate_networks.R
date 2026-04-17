@@ -31,6 +31,13 @@ authors <- read_csv("outputs/openalex_unique_authors.csv", show_col_types = FALS
 paper_authors <- read_csv("outputs/openalex_paper_authors.csv", show_col_types = FALSE) |>
   mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"))
 
+# Load natural earth data once (used by country network and map)
+world <- ne_countries(scale = "medium", returnclass = "sf") |>
+  mutate(iso_a2_fixed = if_else(
+    is.na(iso_a2) | iso_a2 == "-99" | nchar(iso_a2) != 2,
+    iso_a2_eh, iso_a2
+  ))
+
 # =============================================================================
 # 1. COUNTRY COLLABORATION NETWORK
 # =============================================================================
@@ -96,13 +103,25 @@ ne_centroids <- world |>
   select(iso_a2 = iso_a2_fixed, lon, lat) |>
   distinct(iso_a2, .keep_all = TRUE)
 
-# Map French overseas territories to FR
+# Manual centroids for territories missing from NE medium-scale
+manual_centroids <- tibble::tribble(
+  ~iso_a2, ~lon, ~lat,
+  "GP",  -61.55,  16.25,
+  "MQ",  -61.00,  14.67,
+  "RE",   55.53, -21.12,
+  "GF",  -53.13,   3.93,
+  "YT",   45.17, -12.83,
+  "GL",  -42.00,  72.00,
+  "HK",  114.17,  22.32,
+  "SG",  103.82,   1.35
+)
+ne_centroids_plus <- dplyr::bind_rows(
+  ne_centroids,
+  manual_centroids |> anti_join(ne_centroids, by = "iso_a2")
+)
+
 country_nodes_f <- country_nodes_f |>
-  mutate(country_for_layout = case_when(
-    country %in% c("GP", "MQ", "RE", "GF", "YT", "NC", "PF") ~ "FR",
-    TRUE ~ country
-  )) |>
-  left_join(ne_centroids, by = c("country_for_layout" = "iso_a2"))
+  left_join(ne_centroids_plus, by = c("country" = "iso_a2"))
 
 # Drop any still-missing
 missing_cc <- country_nodes_f |> filter(is.na(lon)) |> pull(country)
@@ -289,14 +308,7 @@ author_by_country <- authors |>
 
 cat(sprintf("  Countries with authors: %d\n", nrow(author_by_country)))
 
-world <- ne_countries(scale = "medium", returnclass = "sf")
-
-# Fix broken iso_a2 codes (FR, NO, TW, XK, etc. use iso_a2_eh)
-world <- world |>
-  mutate(iso_a2_fixed = if_else(
-    is.na(iso_a2) | iso_a2 == "-99" | nchar(iso_a2) != 2,
-    iso_a2_eh, iso_a2
-  ))
+# world already loaded at script start
 
 map_data <- world |>
   left_join(author_by_country, by = c("iso_a2_fixed" = "institution_country"))

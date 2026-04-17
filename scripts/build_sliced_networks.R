@@ -104,6 +104,25 @@ build_country_network <- function(paper_ids, slice_label, n_papers, out_path) {
 
   if (nrow(c_edges) == 0) return(invisible(NULL))
 
+  # Manual centroid overrides for overseas territories missing from NE medium-scale
+  manual_centroids <- tibble::tribble(
+    ~iso, ~lon, ~lat,
+    "GP",  -61.55,  16.25,   # Guadeloupe
+    "MQ",  -61.00,  14.67,   # Martinique
+    "RE",   55.53, -21.12,   # Réunion
+    "GF",  -53.13,   3.93,   # French Guiana
+    "YT",   45.17, -12.83,   # Mayotte
+    "GL",  -42.00,  72.00,   # Greenland
+    "HK",  114.17,  22.32,   # Hong Kong
+    "TW",  120.96,  23.70,   # Taiwan (backup)
+    "SG",  103.82,   1.35    # Singapore
+  )
+
+  ne_plus <- dplyr::bind_rows(
+    ne_centroids,
+    manual_centroids |> rename(iso_a2 = iso) |> anti_join(ne_centroids, by = "iso_a2")
+  )
+
   c_nodes <- subset_pa |> distinct(literature_id, country) |>
     count(country, name = "papers") |>
     filter(country %in% unique(c(c_edges$from, c_edges$to))) |>
@@ -111,13 +130,9 @@ build_country_network <- function(paper_ids, slice_label, n_papers, out_path) {
       continent = coalesce(
         countrycode(country, "iso2c", "continent", warn = FALSE),
         "Other"
-      ),
-      country_for_layout = case_when(
-        country %in% c("GP", "MQ", "RE", "GF", "YT", "NC", "PF") ~ "FR",
-        TRUE ~ country
       )
     ) |>
-    left_join(ne_centroids, by = c("country_for_layout" = "iso_a2")) |>
+    left_join(ne_plus, by = c("country" = "iso_a2")) |>
     filter(!is.na(lon))
 
   c_edges <- c_edges |> filter(from %in% c_nodes$country & to %in% c_nodes$country)
@@ -229,7 +244,7 @@ for (schema_name in names(SCHEMAS)) {
       cat(sprintf("  %s: only %d papers, skipping\n", col, n))
       next
     }
-    label <- paste0(schema$label, ": ", str_replace_all(str_remove(col, prefix), "_", " "))
+    label <- paste0(schema$label, ": ", str_to_title(str_replace_all(str_remove(col, prefix), "_", " ")))
     cat(sprintf("  %s: %d papers\n", col, n))
 
     # Country network
