@@ -306,8 +306,10 @@ vn <- visNetwork(vis_nodes, vis_edges,
         window.fpNetwork = this;
       }
       // Draw equirectangular world map as background in geographic layout mode
-      if (window.fpMapImage && window.fpMapImage.complete &&
-          document.body.classList.contains('geo-layout')) {
+      var inGeo = document.body.classList.contains('geo-layout');
+      if (inGeo && window.fpDrawMap) {
+        window.fpDrawMap(ctx);
+      } else if (inGeo && window.fpMapImage && window.fpMapImage.complete) {
         var scale = 60;
         // World spans lon -180..180, lat -90..90, with our x=lon*scale, y=-lat*scale
         var left = -180 * scale;
@@ -417,6 +419,92 @@ iso_coords_json <- jsonlite::toJSON(
     { \(d) setNames(d$entry, d$iso) }(),
   auto_unbox = TRUE
 )
+
+# ---- Map layers: country + state borders, label centroids ----
+cat("Building map layers (country/state polygons, labels)...\n")
+sf_to_rings <- function(sf_data, dp = 2) {
+  all_rings <- list()
+  geoms <- sf::st_geometry(sf_data)
+  for (i in seq_along(geoms)) {
+    g <- geoms[[i]]
+    if (sf::st_is_empty(g)) next
+    coords <- sf::st_coordinates(g)
+    if (is.null(coords) || nrow(coords) == 0) next
+    grp_cols <- intersect(c("L3", "L2", "L1"), colnames(coords))
+    if (length(grp_cols) == 0) next
+    grp <- do.call(paste, c(lapply(grp_cols, function(cc) coords[, cc]), sep = "_"))
+    by_grp <- split(as.data.frame(coords[, c("X", "Y")]), grp)
+    for (ring in by_grp) {
+      if (nrow(ring) < 3) next
+      pts <- round(as.matrix(ring), dp)
+      all_rings[[length(all_rings) + 1]] <- unname(pts)
+    }
+  }
+  all_rings
+}
+
+countries_sf <- ne_countries(scale = 50, returnclass = "sf") |>
+  st_make_valid() |>
+  st_simplify(dTolerance = 0.2, preserveTopology = TRUE)
+country_rings <- sf_to_rings(countries_sf, dp = 2)
+country_labels_df <- countries_sf |>
+  st_point_on_surface() |>
+  mutate(
+    lon = sapply(geometry, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
+    lat = sapply(geometry, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[2])
+  ) |>
+  st_drop_geometry() |>
+  filter(!is.na(lon), !is.na(lat), !is.na(name_long), nchar(name_long) > 0) |>
+  # Skip Antarctica (labels look weird)
+  filter(name_long != "Antarctica") |>
+  transmute(name = name_long,
+            lon = round(lon, 2),
+            lat = round(lat, 2))
+
+# State/province borders for a selection of larger nations
+states_sf <- tryCatch(
+  ne_states(country = c(
+    "United States of America", "Canada", "Mexico", "Brazil", "Argentina",
+    "Australia", "New Zealand", "India", "China", "Russia", "South Africa",
+    "Indonesia", "France", "Germany", "Italy", "Spain", "United Kingdom",
+    "Chile", "Colombia", "Peru", "Japan"
+  ), returnclass = "sf"),
+  error = function(e) NULL
+)
+if (!is.null(states_sf)) {
+  states_sf <- states_sf |>
+    st_make_valid() |>
+    st_simplify(dTolerance = 0.1, preserveTopology = TRUE)
+  state_rings <- sf_to_rings(states_sf, dp = 2)
+  state_labels_df <- states_sf |>
+    st_point_on_surface() |>
+    mutate(
+      lon = sapply(geometry, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
+      lat = sapply(geometry, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[2])
+    ) |>
+    st_drop_geometry() |>
+    { \(d) {
+      nm_col <- intersect(c("name", "name_en", "gn_name", "woe_name"), colnames(d))[1]
+      if (is.na(nm_col)) nm_col <- "name"
+      d$label <- d[[nm_col]]
+      d
+    } }() |>
+    filter(!is.na(lon), !is.na(lat), !is.na(label), nchar(label) > 0) |>
+    transmute(name = label, lon = round(lon, 2), lat = round(lat, 2))
+} else {
+  state_rings <- list()
+  state_labels_df <- tibble::tibble(name = character(), lon = numeric(), lat = numeric())
+}
+
+country_rings_json <- jsonlite::toJSON(country_rings, auto_unbox = FALSE, digits = 3)
+state_rings_json   <- jsonlite::toJSON(state_rings,   auto_unbox = FALSE, digits = 3)
+country_labels_json <- jsonlite::toJSON(country_labels_df, dataframe = "rows", auto_unbox = FALSE)
+state_labels_json   <- jsonlite::toJSON(state_labels_df,   dataframe = "rows", auto_unbox = FALSE)
+
+cat(sprintf("  Country rings: %d, state rings: %d\n",
+            length(country_rings), length(state_rings)))
+cat(sprintf("  Country labels: %d, state labels: %d\n",
+            nrow(country_labels_df), nrow(state_labels_df)))
 
 make_opts <- function(values) {
   paste0('<option value="', values, '">', values, '</option>', collapse = "\n")
@@ -563,11 +651,60 @@ make_opts(ethnicity_opts), '</select>
 <script>
 window.fpNodesMeta = ', nodes_json, ';
 window.fpIsoCoords = ', iso_coords_json, ';
-// Preload world map image for geographic layout background
-window.fpMapImage = new Image();
-window.fpMapImage.src = "assets/world_equirect.png";
-window.fpMapImage.onload = function() {
-  if (window.fpNetwork) window.fpNetwork.redraw();
+window.fpCountryRings  = ', country_rings_json, ';
+window.fpStateRings    = ', state_rings_json, ';
+window.fpCountryLabels = ', country_labels_json, ';
+window.fpStateLabels   = ', state_labels_json, ';
+// Draw map with zoom-tier borders + labels. scale=60 (px per lon/lat degree).
+window.fpDrawMap = function(ctx) {
+  var nw = window.fpNetwork;
+  var s  = nw && nw.getScale ? nw.getScale() : 1;
+  var worldScale = 60;
+  ctx.save();
+  // Ocean
+  ctx.fillStyle = "#d8e3ec";
+  ctx.fillRect(-180*worldScale, -90*worldScale, 360*worldScale, 180*worldScale);
+  // Draw country polygons (filled + stroked)
+  var drawRings = function(rings, fill, stroke, lw) {
+    ctx.lineWidth = lw;
+    if (fill)   ctx.fillStyle   = fill;
+    if (stroke) ctx.strokeStyle = stroke;
+    for (var r = 0; r < rings.length; r++) {
+      var ring = rings[r];
+      if (!ring || ring.length < 3) continue;
+      ctx.beginPath();
+      for (var i = 0; i < ring.length; i++) {
+        var x =  ring[i][0] * worldScale;
+        var y = -ring[i][1] * worldScale;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      if (fill)   ctx.fill();
+      if (stroke) ctx.stroke();
+    }
+  };
+  drawRings(window.fpCountryRings || [], "#e8efdb", "#8fa68f", 1.2 / s);
+  // State borders at mid zoom
+  if (s > 1.4) {
+    drawRings(window.fpStateRings || [], null, "#a8b8a8", 0.7 / s);
+  }
+  // Country labels — always; size counter-zooms to stay at target screen px
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "rgba(60,80,60,0.75)";
+  ctx.font = (12 / s) + "px sans-serif";
+  (window.fpCountryLabels || []).forEach(function(l) {
+    ctx.fillText(l.name, l.lon * worldScale, -l.lat * worldScale);
+  });
+  // State labels at scale > 2
+  if (s > 2) {
+    ctx.fillStyle = "rgba(90,110,90,0.7)";
+    ctx.font = (9 / s) + "px sans-serif";
+    (window.fpStateLabels || []).forEach(function(l) {
+      ctx.fillText(l.name, l.lon * worldScale, -l.lat * worldScale);
+    });
+  }
+  ctx.restore();
 };
 window.fpReset = function() {
   document.getElementById("fp-country").value = "";
