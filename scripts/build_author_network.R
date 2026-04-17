@@ -153,9 +153,9 @@ vis_nodes <- nodes_out |>
       coalesce(origin_region, "—"),
       coalesce(ethnicity, "—")
     ),
-    value = pmin(papers, 50),
+    # Log-scale size: log2(papers+1) * 3 gives range ~3-24 for 0-240 papers
+    value = log2(papers + 1) * 3,
     group = coalesce(country, "Unknown"),
-    # Short display label for dropdown
     labelDropdown = sprintf("%s (%d)", display_name, papers)
   ) |>
   select(id, label, title, value, group, labelDropdown,
@@ -163,7 +163,11 @@ vis_nodes <- nodes_out |>
 
 vis_edges <- edges_focal |>
   rename(value = weight) |>
-  mutate(title = sprintf("%d shared papers", value))
+  mutate(
+    title = sprintf("%d shared papers", value),
+    # Log-scaled width for visual clarity (many edges = thick line drowns out the rest)
+    width = log2(value + 1) * 0.8
+  )
 
 # Build widget with multiple filter dimensions
 vn <- visNetwork(vis_nodes, vis_edges,
@@ -173,7 +177,10 @@ vn <- visNetwork(vis_nodes, vis_edges,
                  submain = "(lots of data: may take a while to load)") |>
   visNodes(
     shape = "dot",
-    scaling = list(min = 4, max = 40),
+    scaling = list(
+      min = 4, max = 60,
+      label = list(enabled = FALSE)
+    ),
     font = list(size = 0, face = "sans", strokeWidth = 3, strokeColor = "#ffffff")
   ) |>
   visEdges(
@@ -237,9 +244,56 @@ region_opts <- sort(unique(vis_nodes$origin_region[!is.na(vis_nodes$origin_regio
 ethnicity_opts <- sort(unique(vis_nodes$ethnicity[!is.na(vis_nodes$ethnicity)]))
 country_opts <- sort(unique(vis_nodes$country[!is.na(vis_nodes$country)]))
 
-# Embed nodes data as JSON for client-side filtering
+# Country centroids for geographic layout option
+country_coords <- nodes_out |>
+  distinct(country) |>
+  filter(!is.na(country)) |>
+  left_join(
+    tibble::tribble(
+      ~country, ~lon, ~lat,
+      # Fill with ISO2 -> centroid
+      # We'll compute these from rnaturalearth at runtime
+    ),
+    by = "country"
+  )
+
+# Build a simple ISO2 -> lon/lat lookup from rnaturalearth
+library(sf)
+library(rnaturalearth)
+world_for_layout <- ne_countries(scale = "medium", returnclass = "sf") |>
+  mutate(iso = if_else(is.na(iso_a2) | iso_a2 == "-99" | nchar(iso_a2) != 2,
+                       iso_a2_eh, iso_a2)) |>
+  filter(!is.na(iso), nchar(iso) == 2)
+
+iso_coords <- world_for_layout |>
+  st_make_valid() |>
+  mutate(
+    centroid = st_point_on_surface(geometry),
+    lon = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
+    lat = sapply(centroid, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[2])
+  ) |>
+  st_drop_geometry() |>
+  select(iso, lon, lat) |>
+  distinct(iso, .keep_all = TRUE)
+
+# Add manual overrides
+iso_coords <- dplyr::bind_rows(
+  iso_coords,
+  tibble::tribble(
+    ~iso, ~lon, ~lat,
+    "GP",  -61.55,  16.25, "MQ", -61.00, 14.67, "RE", 55.53, -21.12,
+    "GF",  -53.13,   3.93, "YT",  45.17,-12.83, "GL",-42.00,  72.00,
+    "HK",  114.17,  22.32, "SG", 103.82,  1.35
+  ) |> anti_join(iso_coords, by = "iso")
+)
+
+# Embed enriched nodes data with centroids for geographic layout
+vis_nodes_enriched <- vis_nodes |>
+  left_join(iso_coords |> rename(country = iso), by = "country")
+
 nodes_json <- jsonlite::toJSON(
-  vis_nodes |> select(id, gender, country, ethnicity, origin_region),
+  vis_nodes_enriched |> select(id, gender, country, ethnicity, origin_region,
+                                origin_country, papers, lon, lat),
   auto_unbox = FALSE
 )
 
@@ -302,6 +356,21 @@ div.vis-network { width: 100vw !important; height: 100vh !important; }
   cursor: pointer;
   font-size: 0.75rem;
 }
+.filter-panel .legend {
+  margin-top: 0.7rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #c8d0dc;
+  font-size: 0.72rem;
+  color: #4a5568;
+}
+.filter-panel .legend h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.78rem;
+  color: #081E3F;
+}
+.filter-panel .legend div {
+  margin-bottom: 0.15rem;
+}
 /* Tighten visNetwork header spacing */
 h2.main { font-size: 1rem; margin: 0.2rem 0 0.1rem 0; }
 h3.submain { font-size: 0.8rem; margin: 0 0 0.2rem 0; color: #718096; font-weight: normal; font-style: italic; }
@@ -312,6 +381,15 @@ h3.submain { font-size: 0.8rem; margin: 0 0 0.2rem 0; color: #718096; font-weigh
 # Build filter panel HTML
 panel_html <- paste0('<div class="filter-panel" id="filter-panel">
 <h3>Elasmobranch Author Atlas</h3>
+
+<label>Layout</label>
+<select id="fp-layout">
+<option value="physics">Force-directed (default)</option>
+<option value="geographic">Geographic (institution country)</option>
+<option value="gender">By gender (columns)</option>
+<option value="origin_region">By origin region (columns)</option>
+</select>
+
 <label>Search author</label>
 <input type="text" id="fp-author" list="fp-author-list" placeholder="Type name...">
 <datalist id="fp-author-list">',
@@ -332,6 +410,14 @@ make_opts(region_opts), '</select>
 make_opts(ethnicity_opts), '</select>
 <button class="reset" onclick="window.fpReset()">Reset filters</button>
 <div class="stats" id="fp-stats">Showing ', nrow(vis_nodes), ' / ', nrow(vis_nodes), ' authors</div>
+
+<div class="legend">
+  <h4>Legend</h4>
+  <div><strong>Node size</strong>: papers (log scale)</div>
+  <div><strong>Node colour</strong>: institution country (hover for details)</div>
+  <div><strong>Edge width</strong>: shared papers (log scale)</div>
+  <div><strong>Edge alpha</strong>: same</div>
+</div>
 </div>
 <script>
 window.fpNodesMeta = ', nodes_json, ';
@@ -341,7 +427,67 @@ window.fpReset = function() {
   document.getElementById("fp-region").value = "";
   document.getElementById("fp-ethnicity").value = "";
   document.getElementById("fp-author").value = "";
+  document.getElementById("fp-layout").value = "physics";
+  window.fpSetLayout("physics");
   window.fpApply();
+};
+window.fpSetLayout = function(mode) {
+  var nw = window.fpNetwork;
+  if (!nw || !nw.body) return;
+  var nodesDS = nw.body.data.nodes;
+  var meta = window.fpNodesMeta;
+  if (mode === "physics") {
+    // Re-enable physics and clear fixed positions
+    var updates = meta.map(function(n) {
+      return { id: n.id, x: undefined, y: undefined, fixed: false };
+    });
+    nodesDS.update(updates);
+    nw.setOptions({ physics: { enabled: true, stabilization: { iterations: 200 } } });
+    setTimeout(function() { nw.setOptions({ physics: false }); }, 3000);
+    return;
+  }
+  // For non-physics layouts: compute positions and set fixed
+  nw.setOptions({ physics: false });
+  var positions = window.fpComputePositions(meta, mode);
+  var updates = meta.map(function(n) {
+    var p = positions[n.id] || { x: 0, y: 0 };
+    return { id: n.id, x: p.x, y: p.y, fixed: { x: true, y: true } };
+  });
+  nodesDS.update(updates);
+  nw.fit({ animation: true });
+};
+window.fpComputePositions = function(meta, mode) {
+  var positions = {};
+  if (mode === "geographic") {
+    meta.forEach(function(n) {
+      if (n.lon != null && n.lat != null) {
+        // Convert to pixel-ish coords, scale up
+        positions[n.id] = { x: n.lon * 40, y: -n.lat * 40 };
+      }
+    });
+    return positions;
+  }
+  if (mode === "gender" || mode === "origin_region") {
+    // Group into vertical columns
+    var buckets = {};
+    meta.forEach(function(n) {
+      var k = n[mode] || "Unknown";
+      if (!buckets[k]) buckets[k] = [];
+      buckets[k].push(n);
+    });
+    var keys = Object.keys(buckets).sort();
+    var colWidth = 400;
+    keys.forEach(function(k, i) {
+      buckets[k].forEach(function(n, j) {
+        positions[n.id] = {
+          x: (i - keys.length / 2) * colWidth,
+          y: (j - buckets[k].length / 2) * 15
+        };
+      });
+    });
+    return positions;
+  }
+  return positions;
 };
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
@@ -456,6 +602,10 @@ document.addEventListener("DOMContentLoaded", function() {
       if (ev.key === "Enter") window.fpAuthorJump();
     });
   }
+  var lay = document.getElementById("fp-layout");
+  if (lay) lay.addEventListener("change", function() {
+    window.fpSetLayout(lay.value);
+  });
 });
 </script>')
 
