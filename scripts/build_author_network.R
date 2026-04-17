@@ -74,9 +74,10 @@ cat(sprintf("Coauthor edges: %d (weight >=3: %d)\n",
             nrow(coauthor_edges),
             sum(coauthor_edges$weight >= 3)))
 
-# --- Focal network: filter to authors with >= 3 papers and edges with weight >= 2 ---
+# --- Focal network: filter to authors with >= 3 papers, include ALL edges (weight >= 1) ---
+# Client-side slider controls visible edge weight threshold
 MIN_PAPERS <- 3
-MIN_EDGE_WEIGHT <- 2
+MIN_EDGE_WEIGHT <- 1
 
 focal_authors <- author_meta |> filter(paper_count >= MIN_PAPERS)
 focal_ids <- focal_authors$openalex_author_id
@@ -300,6 +301,16 @@ nodes_json <- jsonlite::toJSON(
   auto_unbox = FALSE
 )
 
+# Full iso2 -> centroid lookup (for origin country layout)
+iso_coords_json <- jsonlite::toJSON(
+  iso_coords |> rowwise() |>
+    mutate(entry = list(list(lon = lon, lat = lat))) |>
+    ungroup() |>
+    select(iso, entry) |>
+    { \(d) setNames(d$entry, d$iso) }(),
+  auto_unbox = TRUE
+)
+
 make_opts <- function(values) {
   paste0('<option value="', values, '">', values, '</option>', collapse = "\n")
 }
@@ -345,6 +356,12 @@ div.vis-network { width: 100vw !important; height: 100vh !important; }
   border: 1px solid #c8d0dc;
   border-radius: 3px;
   font-size: 0.8rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.filter-panel input[type="range"] {
+  padding: 0;
 }
 .filter-panel .stats {
   margin-top: 0.5rem;
@@ -388,15 +405,22 @@ panel_html <- paste0('<div class="filter-panel" id="filter-panel">
 <h3>Elasmobranch Author Atlas</h3>
 
 <label>Layout</label>
-<select id="fp-layout">
+<select id="fp-layout" style="width:100%">
 <option value="physics">Force-directed (default)</option>
-<option value="geographic">Geographic (institution country)</option>
-<option value="gender">By gender (columns)</option>
-<option value="origin_region">By origin region (columns)</option>
+<option value="geo-inst">Geographic: institution country</option>
+<option value="geo-origin">Geographic: NamSor origin country</option>
+</select>
+
+<label>Colour by</label>
+<select id="fp-colour" style="width:100%">
+<option value="country">Institution country (default)</option>
+<option value="gender">Gender</option>
+<option value="origin_region">Origin region</option>
+<option value="ethnicity">Ethnicity</option>
 </select>
 
 <label>Min edge weight (shared papers) <span id="fp-min-edge-val">2</span></label>
-<input type="range" id="fp-min-edge" min="2" max="20" step="1" value="2" style="width:100%">
+<input type="range" id="fp-min-edge" min="1" max="20" step="1" value="2" style="width:100%">
 <button class="reset" onclick="window.fpFit()" style="margin-top:0.3rem;background:#4a5568">Fit to view</button>
 
 <label>Search author</label>
@@ -430,6 +454,7 @@ make_opts(ethnicity_opts), '</select>
 </div>
 <script>
 window.fpNodesMeta = ', nodes_json, ';
+window.fpIsoCoords = ', iso_coords_json, ';
 window.fpReset = function() {
   document.getElementById("fp-country").value = "";
   document.getElementById("fp-gender").value = "";
@@ -437,12 +462,13 @@ window.fpReset = function() {
   document.getElementById("fp-ethnicity").value = "";
   document.getElementById("fp-author").value = "";
   document.getElementById("fp-layout").value = "physics";
+  document.getElementById("fp-colour").value = "country";
   document.getElementById("fp-min-edge").value = "2";
   document.getElementById("fp-min-edge-val").textContent = "2";
+  window.fpSetColour("country");
   window.fpSetLayout("physics");
   window.fpApplyEdgeWeight();
   window.fpApply();
-  if (window.fpNetwork) window.fpNetwork.fit({ animation: true });
 };
 window.fpFit = function() {
   if (window.fpNetwork) window.fpNetwork.fit({ animation: true });
@@ -464,57 +490,82 @@ window.fpSetLayout = function(mode) {
   var nodesDS = nw.body.data.nodes;
   var meta = window.fpNodesMeta;
   if (mode === "physics") {
-    // Re-enable physics and clear fixed positions
+    // Unfix positions and re-enable physics from a stable start
     var updates = meta.map(function(n) {
-      return { id: n.id, x: undefined, y: undefined, fixed: false };
+      return { id: n.id, x: null, y: null, fixed: false };
     });
     nodesDS.update(updates);
-    nw.setOptions({ physics: { enabled: true, stabilization: { iterations: 200 } } });
-    setTimeout(function() { nw.setOptions({ physics: false }); }, 3000);
+    nw.setOptions({ physics: { enabled: true,
+      forceAtlas2Based: { gravitationalConstant: -50, springLength: 100 },
+      solver: "forceAtlas2Based",
+      stabilization: { enabled: true, iterations: 200 }
+    }});
+    // Freeze after re-stabilisation
+    setTimeout(function() {
+      nw.setOptions({ physics: false });
+      nw.fit({ animation: true });
+    }, 2500);
     return;
   }
-  // For non-physics layouts: compute positions and set fixed
+  // For geographic: compute positions with jitter, set fixed
   nw.setOptions({ physics: false });
   var positions = window.fpComputePositions(meta, mode);
   var updates = meta.map(function(n) {
-    var p = positions[n.id] || { x: 0, y: 0 };
-    return { id: n.id, x: p.x, y: p.y, fixed: { x: true, y: true } };
+    var p = positions[n.id];
+    if (!p) return { id: n.id, hidden: true };
+    return { id: n.id, x: p.x, y: p.y, fixed: { x: true, y: true }, hidden: false };
   });
   nodesDS.update(updates);
-  nw.fit({ animation: true });
+  setTimeout(function() { nw.fit({ animation: true }); }, 200);
+};
+// Deterministic jitter per node ID (consistent layout across reloads)
+window.fpJitter = function(id) {
+  var h = 0;
+  for (var i = 0; i < id.length; i++) { h = ((h << 5) - h) + id.charCodeAt(i); h |= 0; }
+  var rx = ((h & 0xFFFF) / 0xFFFF - 0.5);
+  var ry = (((h >> 16) & 0xFFFF) / 0xFFFF - 0.5);
+  return { x: rx, y: ry };
 };
 window.fpComputePositions = function(meta, mode) {
   var positions = {};
-  if (mode === "geographic") {
-    meta.forEach(function(n) {
-      if (n.lon != null && n.lat != null) {
-        // Convert to pixel-ish coords, scale up
-        positions[n.id] = { x: n.lon * 40, y: -n.lat * 40 };
+  var scale = 50;         // degrees → pixels
+  var jitterScale = 100;  // pixel radius of jitter around centroid
+  var coordField = mode === "geo-origin" ? "origin_country" : "country";
+  // Build lookup if origin: we only have country centroids baked in; origin_country uses lon/lat from institution
+  // For origin layout, we need origin_country centroid, not institution.
+  // Attach origin centroid via client-side lookup table below.
+  meta.forEach(function(n) {
+    var lon, lat;
+    if (mode === "geo-origin") {
+      var oc = n.origin_country;
+      if (oc && window.fpIsoCoords && window.fpIsoCoords[oc]) {
+        lon = window.fpIsoCoords[oc].lon;
+        lat = window.fpIsoCoords[oc].lat;
       }
-    });
-    return positions;
-  }
-  if (mode === "gender" || mode === "origin_region") {
-    // Group into vertical columns
-    var buckets = {};
-    meta.forEach(function(n) {
-      var k = n[mode] || "Unknown";
-      if (!buckets[k]) buckets[k] = [];
-      buckets[k].push(n);
-    });
-    var keys = Object.keys(buckets).sort();
-    var colWidth = 400;
-    keys.forEach(function(k, i) {
-      buckets[k].forEach(function(n, j) {
-        positions[n.id] = {
-          x: (i - keys.length / 2) * colWidth,
-          y: (j - buckets[k].length / 2) * 15
-        };
-      });
-    });
-    return positions;
-  }
+    } else {
+      // institution country: use baked-in lon/lat
+      lon = n.lon;
+      lat = n.lat;
+    }
+    if (lon == null || lat == null) return;  // skip unmappable
+    var j = window.fpJitter(n.id);
+    positions[n.id] = {
+      x: lon * scale + j.x * jitterScale,
+      y: -lat * scale + j.y * jitterScale
+    };
+  });
   return positions;
+};
+// Colour by attribute — change node group on the fly
+window.fpSetColour = function(attr) {
+  var nw = window.fpNetwork;
+  if (!nw || !nw.body) return;
+  var nodesDS = nw.body.data.nodes;
+  var meta = window.fpNodesMeta;
+  var updates = meta.map(function(n) {
+    return { id: n.id, group: (n[attr] || "Unknown") };
+  });
+  nodesDS.update(updates);
 };
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
@@ -638,6 +689,10 @@ document.addEventListener("DOMContentLoaded", function() {
   var lay = document.getElementById("fp-layout");
   if (lay) lay.addEventListener("change", function() {
     window.fpSetLayout(lay.value);
+  });
+  var col = document.getElementById("fp-colour");
+  if (col) col.addEventListener("change", function() {
+    window.fpSetColour(col.value);
   });
   var me = document.getElementById("fp-min-edge");
   if (me) me.addEventListener("input", function() {
