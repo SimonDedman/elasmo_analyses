@@ -217,12 +217,12 @@ vis_nodes <- nodes_out |>
       coalesce(origin_region, "—"),
       coalesce(ethnicity, "—")
     ),
-    # Log-scale size: log2(papers+1) * 3 gives range ~3-24 for 0-240 papers
-    value = log2(papers + 1) * 3,
+    # Direct pixel size (3-20 range) - no value/scaling interaction
+    size = pmin(20, pmax(3, log2(papers + 1) * 2.4)),
     group = coalesce(country, "Unknown"),
     labelDropdown = sprintf("%s (%d)", display_name, papers)
   ) |>
-  select(id, label, title, value, group, labelDropdown,
+  select(id, label, title, size, group, labelDropdown,
          papers, gender, country, ethnicity, origin_region, origin_country,
          institution, inst_city, inst_region, inst_lat, inst_lon)
 
@@ -248,12 +248,8 @@ vn <- visNetwork(vis_nodes, vis_edges,
                  )) |>
   visNodes(
     shape = "dot",
-    scaling = list(
-      min = 4, max = 60,
-      label = list(enabled = FALSE)
-    ),
-    # size here is in absolute pixels, not affected by zoom
-    font = list(size = 0, face = "sans", strokeWidth = 3, strokeColor = "#ffffff"),
+    # size is set per-node (see vis_nodes$size) — no value/scaling interaction
+    font = list(size = 0, face = "sans", strokeWidth = 2, strokeColor = "#ffffff"),
     labelHighlightBold = FALSE
   ) |>
   visEdges(
@@ -501,6 +497,20 @@ html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family:
 #htmlwidget_container { width: 100vw !important; height: 100vh !important; }
 div.vis-network { width: 100vw !important; height: 100vh !important; }
 
+#fp-debug-top {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 2000;
+  background: #081E3F;
+  color: #FFCC00;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
 .filter-panel {
   position: fixed;
   top: 10px;
@@ -580,8 +590,10 @@ h3.submain { font-size: 0.8rem; margin: 0 0 0.2rem 0; color: #718096; font-weigh
 .vis-configuration-wrapper { display: none !important; }
 </style>'
 
+build_ts <- format(Sys.time(), "%Y-%m-%d %H:%M")
 # Build filter panel HTML
-panel_html <- paste0('<div class="filter-panel" id="filter-panel">
+panel_html <- paste0('<div id="fp-debug-top">build ', build_ts, ' · zoom — · label —px</div>
+<div class="filter-panel" id="filter-panel">
 <h3>Elasmobranch Author Atlas</h3>
 
 <label>Layout</label>
@@ -624,7 +636,6 @@ make_opts(region_opts), '</select>
 make_opts(ethnicity_opts), '</select>
 <button class="reset" onclick="window.fpReset()">Reset filters</button>
 <div class="stats" id="fp-stats">Showing ', nrow(vis_nodes), ' / ', nrow(vis_nodes), ' authors</div>
-<div class="stats" id="fp-debug" style="color:#4a5568;font-family:monospace">zoom —</div>
 
 <div class="legend">
   <h4>Legend</h4>
@@ -903,8 +914,9 @@ window.fpApplyFont = function(scale) {
   });
   nodesDS.update(updates);
   window.fpCurrentScale = scale;
-  var dbg = document.getElementById("fp-debug");
-  if (dbg) dbg.textContent = "zoom " + scale.toFixed(2) + " · label " + screenFontPx + "px";
+  var dbg = document.getElementById("fp-debug-top");
+  if (dbg) dbg.textContent = "zoom " + scale.toFixed(2) + " · label " + screenFontPx + "px · " + updates.length + " nodes";
+  console.log("fpApplyFont", { scale: scale, screenFontPx: screenFontPx, worldFont: worldFont, nodesUpdated: updates.length });
 };
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
