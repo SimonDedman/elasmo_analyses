@@ -31,7 +31,8 @@ namsor <- read_csv("outputs/namsor_enrichment.csv", show_col_types = FALSE)
 # Optional enrichment files (from scripts/enrich_author_last_institutions.py)
 last_inst_path <- "outputs/openalex_authors_last_institution.csv"
 if (file.exists(last_inst_path)) {
-  last_inst <- read_csv(last_inst_path, show_col_types = FALSE)
+  last_inst <- read_csv(last_inst_path, show_col_types = FALSE) |>
+    mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"))
   cat(sprintf("  Loaded last_known_institutions for %d authors\n", nrow(last_inst)))
 } else {
   last_inst <- NULL
