@@ -175,14 +175,19 @@ vn <- visNetwork(vis_nodes, vis_edges,
                  height = "100vh", width = "100%",
                  main = sprintf("Elasmobranch Author Collaboration Atlas — %d authors, %d edges",
                                 nrow(vis_nodes), nrow(vis_edges)),
-                 submain = "(lots of data; default view: edges ≥2 shared papers. Use slider to adjust)") |>
+                 submain = paste0(
+                   "Gender, origin & ethnicity inferred from name via NamSor — corrections welcome via each author's validation page<br>",
+                   "<span style='font-size:0.75rem;color:#868e96'>(lots of data; default view: edges ≥2 shared papers. Use slider to adjust)</span>"
+                 )) |>
   visNodes(
     shape = "dot",
     scaling = list(
       min = 4, max = 60,
       label = list(enabled = FALSE)
     ),
-    font = list(size = 0, face = "sans", strokeWidth = 3, strokeColor = "#ffffff")
+    # size here is in absolute pixels, not affected by zoom
+    font = list(size = 0, face = "sans", strokeWidth = 3, strokeColor = "#ffffff"),
+    labelHighlightBold = FALSE
   ) |>
   visEdges(
     smooth = FALSE,
@@ -232,6 +237,23 @@ vn <- visNetwork(vis_nodes, vis_edges,
     beforeDrawing = "function() {
       if (!window.fpNetwork) {
         window.fpNetwork = this;
+      }
+    }",
+    zoom = "function(params) {
+      // Counter vis-network label zoom scaling so labels stay readable
+      if (!this.body.data.nodes) return;
+      var scale = params.scale || 1;
+      var base = window.fpLabelBaseSize || 14;
+      var target = Math.max(8, Math.min(28, base / scale));
+      var nodesDS = this.body.data.nodes;
+      var updates = [];
+      nodesDS.forEach(function(n) {
+        if (!n.hidden && n.font && n.font.size > 0) {
+          updates.push({ id: n.id, font: { size: target, strokeWidth: 4, strokeColor: '#ffffff' } });
+        }
+      });
+      if (updates.length > 0 && updates.length < 250) {
+        nodesDS.update(updates);
       }
     }"
   )
@@ -672,8 +694,21 @@ window.fpAuthorJump = function() {
 // Wire up filter listeners immediately (they check fpNetwork at call time)
 window.fpOnReady = function() {
   console.log("Network instance captured:", !!window.fpNetwork);
-  // Reset filters on load (ignore browser-retained values)
-  window.fpReset();
+  // Reset UI control values to defaults, but do NOT re-seed node positions
+  // (visNetwork has already stabilised its own good layout).
+  document.getElementById("fp-country").value = "";
+  document.getElementById("fp-gender").value = "";
+  document.getElementById("fp-region").value = "";
+  document.getElementById("fp-ethnicity").value = "";
+  document.getElementById("fp-author").value = "";
+  document.getElementById("fp-layout").value = "physics";
+  document.getElementById("fp-colour").value = "country";
+  document.getElementById("fp-min-edge").value = "2";
+  document.getElementById("fp-min-edge-val").textContent = "2";
+  // Apply default edge filter (hide weight<2)
+  window.fpApplyEdgeWeight();
+  window.fpApply();
+  window.fpNetwork.fit({ animation: true });
 };
 document.addEventListener("DOMContentLoaded", function() {
   ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
