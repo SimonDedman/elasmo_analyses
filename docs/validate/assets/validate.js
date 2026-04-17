@@ -1171,7 +1171,7 @@
     }
     ehtml += '</label>';
 
-    // Origin country text input
+    // Origin country input with ISO2 datalist
     var originVal = (ac.origin_country && ac.origin_country.corrected) ? ac.origin_country.corrected : (ns.origin_country || '');
     var originOrig = ns.origin_country || '';
     ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
@@ -1179,19 +1179,19 @@
     if (ns.origin_region) { ehtml += ' <span style="font-weight:normal;color:#868e96;">(' + escapeHtml(ns.origin_region) + ')</span>'; }
     ehtml += '</span>';
     ehtml += '<input type="text" id="namsor-origin" class="namsor-edit" data-field="origin_country" data-original="' + escapeHtml(originOrig) + '"';
-    ehtml += ' value="' + escapeHtml(originVal) + '" placeholder="ISO code or country name" style="width:14rem;">';
+    ehtml += ' list="origin-country-list" value="' + escapeHtml(originVal) + '" placeholder="ISO2 code" style="width:14rem;">';
     if (ac.origin_country) {
       ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.origin_country.original) + ')</span>';
     }
     ehtml += '</label>';
 
-    // Ethnicity text input
+    // Ethnicity input with datalist
     var ethVal = (ac.ethnicity && ac.ethnicity.corrected) ? ac.ethnicity.corrected : (ns.ethnicity || '');
     var ethOrig = ns.ethnicity || '';
     ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
     ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity / diaspora</strong></span>';
     ehtml += '<input type="text" id="namsor-ethnicity" class="namsor-edit" data-field="ethnicity" data-original="' + escapeHtml(ethOrig) + '"';
-    ehtml += ' value="' + escapeHtml(ethVal) + '" placeholder="e.g. British, Hispanic" style="width:14rem;">';
+    ehtml += ' list="ethnicity-list" value="' + escapeHtml(ethVal) + '" placeholder="start typing..." style="width:14rem;">';
     if (ac.ethnicity) {
       ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.ethnicity.original) + ')</span>';
     }
@@ -1199,6 +1199,22 @@
 
     ehtml += '</div>';
     ehtml += '<p style="margin:0.4rem 0 0;color:#868e96;font-size:0.75rem;">NamSor inference — corrections welcome. Changes saved automatically.</p>';
+
+    // Datalists for autocomplete
+    ehtml += '<datalist id="origin-country-list">';
+    var isoCountries = ['AD','AE','AF','AG','AI','AL','AM','AO','AR','AS','AT','AU','AW','AX','AZ','BA','BB','BD','BE','BF','BG','BH','BI','BJ','BL','BM','BN','BO','BQ','BR','BS','BT','BV','BW','BY','BZ','CA','CC','CD','CF','CG','CH','CI','CK','CL','CM','CN','CO','CR','CU','CV','CW','CX','CY','CZ','DE','DJ','DK','DM','DO','DZ','EC','EE','EG','EH','ER','ES','ET','FI','FJ','FK','FM','FO','FR','GA','GB','GD','GE','GF','GG','GH','GI','GL','GM','GN','GP','GQ','GR','GS','GT','GU','GW','GY','HK','HM','HN','HR','HT','HU','ID','IE','IL','IM','IN','IO','IQ','IR','IS','IT','JE','JM','JO','JP','KE','KG','KH','KI','KM','KN','KP','KR','KW','KY','KZ','LA','LB','LC','LI','LK','LR','LS','LT','LU','LV','LY','MA','MC','MD','ME','MF','MG','MH','MK','ML','MM','MN','MO','MP','MQ','MR','MS','MT','MU','MV','MW','MX','MY','MZ','NA','NC','NE','NF','NG','NI','NL','NO','NP','NR','NU','NZ','OM','PA','PE','PF','PG','PH','PK','PL','PM','PN','PR','PS','PT','PW','PY','QA','RE','RO','RS','RU','RW','SA','SB','SC','SD','SE','SG','SH','SI','SJ','SK','SL','SM','SN','SO','SR','SS','ST','SV','SX','SY','SZ','TC','TD','TF','TG','TH','TJ','TK','TL','TM','TN','TO','TR','TT','TV','TW','TZ','UA','UG','UM','US','UY','UZ','VA','VC','VE','VG','VI','VN','VU','WF','WS','YE','YT','ZA','ZM','ZW'];
+    for (var i = 0; i < isoCountries.length; i++) {
+      ehtml += '<option value="' + isoCountries[i] + '">';
+    }
+    ehtml += '</datalist>';
+
+    ehtml += '<datalist id="ethnicity-list">';
+    var ethList = ['African','Anglo-Saxon','Arab','Armenian','Bengali','British','Burmese','Chinese','Dutch','Eastern-European','Filipino','French','German','Greek','Hispanic','Indian','Indo-Caribbean','Indonesian','Iranian','Irish','Italian','Japanese','Jewish','Korean','Lao-Thai','Malagasy','Malay','Mongolian','Nordic','Nubian','Pakistani','Persian','Polish','Polynesian','Portuguese','Russian','Scottish','Sikh','Somali','Sri-Lankan','Swedish','Swiss','Turkish','Ukrainian','Urdu','Uzbek','Vietnamese','Welsh'];
+    for (var j = 0; j < ethList.length; j++) {
+      ehtml += '<option value="' + ethList[j] + '">';
+    }
+    ehtml += '</datalist>';
+
     enrichEl.innerHTML = ehtml;
 
     // Attach change/input handlers
