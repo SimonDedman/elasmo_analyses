@@ -110,6 +110,15 @@
       try {
         const url = `https://api.openalex.org/authors?search=${encodeURIComponent(query.trim())}&per_page=10`;
         const response = await fetch(url);
+        if (response.status === 429) {
+          container.innerHTML = `<p class="error" style="background:#fff3cd;border-left:3px solid #B6862C;padding:0.6rem 0.8rem;color:#5c4617;">
+            <strong>OpenAlex search is temporarily rate-limited.</strong><br>
+            This resets daily at midnight UTC. Meanwhile, if you know your OpenAlex author ID, you can go directly to your validation page:<br>
+            <code>https://simondedman.github.io/elasmo_analyses/validate/A&lt;your-id&gt;.html</code><br>
+            Find your ID at <a href="https://openalex.org" target="_blank" rel="noopener">openalex.org</a> by searching your name and copying the ID from the URL (e.g. <code>A5086753224</code>).
+          </p>`;
+          return;
+        }
         if (!response.ok) throw new Error(`OpenAlex API error: ${response.status}`);
         const data = await response.json();
         renderResults(data.results || []);

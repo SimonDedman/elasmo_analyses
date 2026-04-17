@@ -32,6 +32,21 @@
     'depth_': 'Depth'
   };
 
+  var RULE_DOC_BASE = 'https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/';
+  var PREFIX_RULE_DOCS = {
+    'b_':     'ocean_basin_proposal.md',
+    'sb_':    'ocean_basin_proposal.md',
+    'd_':     'discipline_proposal.md',
+    'eco_':   'ecosystem_component_proposal.md',
+    'pr_':    'pressure_proposal.md',
+    'imp_':   'impact_proposal.md',
+    'gear_':  'gear_proposal.md',
+    'sp_':    'species_proposal.md',
+    'a_':     'analytical_techniques_proposal.md',
+    'ob_':    'ocean_basin_proposal.md',
+    'depth_': 'depth_proposal.md'
+  };
+
   // ---------------------------------------------------------------------------
   // State
   // ---------------------------------------------------------------------------
@@ -632,9 +647,16 @@
       var isTier1    = TIER1_CHECKBOX.indexOf(prefix) !== -1;
 
       var catLabel = PREFIX_LABELS[prefix] || prefix;
+      var ruleDoc = PREFIX_RULE_DOCS[prefix];
 
       html += '<section class="cat-section" data-prefix="' + escapeHtml(prefix) + '">';
-      html += '<h3 class="cat-title">' + escapeHtml(catLabel) + '</h3>';
+      html += '<h3 class="cat-title">' + escapeHtml(catLabel);
+      if (ruleDoc) {
+        html += ' <a href="' + RULE_DOC_BASE + ruleDoc + '" target="_blank" rel="noopener" ';
+        html += 'style="font-size:0.75rem;font-weight:normal;color:#B6862C;text-decoration:underline;margin-left:0.5rem;" ';
+        html += 'title="View the extraction rules for this schema">rules &#8599;</a>';
+      }
+      html += '</h3>';
       html += '<div class="cat-body">';
 
       if (isDepth) {
