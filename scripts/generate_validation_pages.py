@@ -37,6 +37,7 @@ PAPER_AUTHORS_PATH = OUTPUTS_DIR / "openalex_paper_authors.csv"
 UNIQUE_AUTHORS_PATH = OUTPUTS_DIR / "openalex_unique_authors.csv"
 ALTMETRIC_PATH = OUTPUTS_DIR / "altmetric_scores.csv"
 NAMSOR_PATH = OUTPUTS_DIR / "namsor_enrichment.csv"
+LAST_INST_PATH = OUTPUTS_DIR / "openalex_authors_last_institution.csv"
 OA_PATH = OUTPUTS_DIR / "unpaywall_oa_by_doi.csv"
 
 # Prefixes that use the evidence/columns format
@@ -201,6 +202,31 @@ def load_altmetric(all_lit_ids: set[str]) -> dict[str, dict]:
                     d[col] = ""
             result[lid] = d
     print(f"  Altmetric data loaded for {len(result)} papers.")
+    return result
+
+
+def load_last_institutions() -> dict[str, dict]:
+    """Load last_known_institutions keyed by OpenAlex author ID."""
+    if not LAST_INST_PATH.exists():
+        print("  No last-institutions file, using modal institution")
+        return {}
+    print("Loading last-known institutions…")
+    li = pd.read_csv(LAST_INST_PATH)
+    result = {}
+    for _, row in li.iterrows():
+        aid = str(row["openalex_author_id"])
+        if not aid:
+            continue
+        result[aid] = {
+            "institution_id":   row.get("last_institution_id", ""),
+            "institution_name": row.get("last_institution_name", ""),
+            "country":          row.get("last_institution_country", ""),
+            "city":             row.get("last_institution_city", ""),
+            "region":           row.get("last_institution_region", ""),
+            "lat":              row.get("last_institution_lat", None),
+            "lon":              row.get("last_institution_lon", None),
+        }
+    print(f"  Loaded for {len(result)} authors")
     return result
 
 
@@ -516,6 +542,7 @@ def generate_pages(
 
     # --- Load NamSor ---
     namsor = load_namsor()
+    last_institutions = load_last_institutions()
 
     # --- Set up Jinja2 (autoescape=False: page_data_json is raw JSON) ---
     env = Environment(
@@ -579,6 +606,25 @@ def generate_pages(
         # Add NamSor data at page level (author, not paper)
         ns = namsor.get(primary_id, {})
         page_data["namsor"] = ns
+
+        # Add current institution (from OpenAlex last_known_institutions)
+        li = last_institutions.get(primary_id, {})
+        if li:
+            def _s(v):
+                if v is None:
+                    return ""
+                try:
+                    if pd.isna(v):
+                        return ""
+                except (ValueError, TypeError):
+                    pass
+                return str(v)
+            page_data["current_institution"] = {
+                "name": _s(li.get("institution_name")),
+                "country": _s(li.get("country")),
+                "city": _s(li.get("city")),
+                "region": _s(li.get("region")),
+            }
 
         author_name = page_data["author_name"]
         institution = page_data["institution"]
