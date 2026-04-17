@@ -302,24 +302,9 @@ vn <- visNetwork(vis_nodes, vis_edges,
       if (window.fpOnReady) window.fpOnReady();
     }",
     beforeDrawing = "function(ctx) {
-      if (!window.fpNetwork) {
-        window.fpNetwork = this;
-      }
-      // Draw equirectangular world map as background in geographic layout mode
-      var inGeo = document.body.classList.contains('geo-layout');
-      if (inGeo && window.fpDrawMap) {
-        window.fpDrawMap(ctx);
-      } else if (inGeo && window.fpMapImage && window.fpMapImage.complete) {
-        var scale = 60;
-        // World spans lon -180..180, lat -90..90, with our x=lon*scale, y=-lat*scale
-        var left = -180 * scale;
-        var top  = -90 * scale;
-        var width  = 360 * scale;
-        var height = 180 * scale;
-        ctx.save();
-        ctx.globalAlpha = 0.35;
-        ctx.drawImage(window.fpMapImage, left, top, width, height);
-        ctx.restore();
+      if (!window.fpNetwork) { window.fpNetwork = this; }
+      if (document.body.classList.contains('geo-layout') && window.fpDrawMap) {
+        try { window.fpDrawMap(ctx); } catch (e) { console.error('fpDrawMap error', e); }
       }
     }",
     zoom = "function(params) {
@@ -639,6 +624,7 @@ make_opts(region_opts), '</select>
 make_opts(ethnicity_opts), '</select>
 <button class="reset" onclick="window.fpReset()">Reset filters</button>
 <div class="stats" id="fp-stats">Showing ', nrow(vis_nodes), ' / ', nrow(vis_nodes), ' authors</div>
+<div class="stats" id="fp-debug" style="color:#4a5568;font-family:monospace">zoom —</div>
 
 <div class="legend">
   <h4>Legend</h4>
@@ -879,47 +865,46 @@ window.fpSetColour = function(attr) {
   });
   nodesDS.update(updates);
 };
-// Single source of truth for font size and node radii: counter-zoom via setOptions.
-// screen_px = world_size * scale, so set world = target_px / scale.
+// Single source of truth: counter-zoom by updating EVERY node explicitly.
+// screen_px = world_px * scale, so set world = target_screen_px / scale.
+// setOptions on scaling was unreliable — per-node `size` + `font.size` wins.
 window.fpApplyFont = function(scale) {
   var nw = window.fpNetwork;
-  if (!nw) return;
+  if (!nw || !nw.body || !nw.body.data || !nw.body.data.nodes) return;
   scale = scale || (nw.getScale ? nw.getScale() : 1);
-  // How many nodes currently visible determines label pixel size
-  var visibleCount = 0;
-  var totalCount = 0;
-  if (nw.body && nw.body.data && nw.body.data.nodes) {
-    nw.body.data.nodes.forEach(function(n) {
-      totalCount++;
-      if (!n.hidden) visibleCount++;
-    });
-  }
-  // Target SCREEN pixel size (kept constant regardless of zoom)
+  var nodesDS = nw.body.data.nodes;
+  var meta = window.fpNodesMeta || [];
+
+  var visibleCount = 0, totalCount = 0;
+  nodesDS.forEach(function(n) { totalCount++; if (!n.hidden) visibleCount++; });
+
   var screenFontPx = visibleCount >= totalCount ? 0
                    : visibleCount <= 20 ? 13
                    : visibleCount <= 60 ? 11
                    : visibleCount <= 200 ? 9
                    : 0;
-  // If all are shown, show labels only if the user has zoomed in enough
-  if (visibleCount >= totalCount && scale > 2.2) screenFontPx = 9;
-  if (visibleCount >= totalCount && scale > 4)   screenFontPx = 11;
+  if (visibleCount >= totalCount && scale > 2.5) screenFontPx = 9;
+  if (visibleCount >= totalCount && scale > 4.5) screenFontPx = 11;
   if (visibleCount >= totalCount && scale > 7)   screenFontPx = 13;
+  var worldFont = screenFontPx > 0 ? screenFontPx / scale : 0;
 
-  nw.setOptions({
-    nodes: {
-      font: {
-        size: screenFontPx / scale,
-        strokeWidth: Math.max(1.5, 3 / scale),
-        strokeColor: "#ffffff",
-        face: "sans"
-      },
-      scaling: {
-        min: 4 / scale,
-        max: 18 / scale,
-        label: { enabled: false }
-      }
-    }
+  var updates = meta.map(function(n) {
+    var papers = n.papers || 1;
+    // Target SCREEN radius 3–20 px (log-scaled by papers)
+    var targetRadius = Math.min(20, Math.max(3, Math.log(papers + 1) / Math.LN2 * 2.4));
+    return {
+      id: n.id,
+      size: targetRadius / scale,
+      font: { size: worldFont,
+              strokeWidth: Math.max(1, 2 / scale),
+              strokeColor: "#ffffff",
+              face: "sans" }
+    };
   });
+  nodesDS.update(updates);
+  window.fpCurrentScale = scale;
+  var dbg = document.getElementById("fp-debug");
+  if (dbg) dbg.textContent = "zoom " + scale.toFixed(2) + " · label " + screenFontPx + "px";
 };
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
