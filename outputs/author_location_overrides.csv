@@ -1,0 +1,7 @@
+openalex_author_id,last_institution_name,last_institution_city,last_institution_region,last_institution_country,last_institution_lat,last_institution_lon,notes
+A5089408999,,Frutigen,,CH,46.5954,7.6497,Vital Heim (user override)
+A5086753224,,San Carlos,California,US,37.5072,-122.2605,Simon Dedman (user override)
+A5011480148,,Beverly Beach,Maryland,US,38.6740,-76.5335,Bryan Keller (user override)
+A5018496471,,'s-Hertogenbosch,,NL,51.6978,5.3037,Maurits van Zinnicq Bergmann (user override)
+A5003627676,,'s-Hertogenbosch,,NL,51.6978,5.3037,MPM Van Zinnicq Bergmann (user override; dup of A5018496471)
+A5004789455,University of Washington,Seattle,Washington,US,47.6553,-122.3035,Naomi F. Farabaugh (user override)

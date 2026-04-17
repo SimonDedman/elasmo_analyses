@@ -34,6 +34,27 @@ if (file.exists(last_inst_path)) {
   last_inst <- read_csv(last_inst_path, show_col_types = FALSE) |>
     mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"))
   cat(sprintf("  Loaded last_known_institutions for %d authors\n", nrow(last_inst)))
+
+  # Apply manual overrides from outputs/author_location_overrides.csv if present.
+  # Any non-empty field in the overrides replaces the corresponding column.
+  ov_path <- "outputs/author_location_overrides.csv"
+  if (file.exists(ov_path)) {
+    ov <- read_csv(ov_path, show_col_types = FALSE) |>
+      mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"))
+    last_inst <- last_inst |>
+      left_join(ov |> select(-any_of("notes")),
+                by = "openalex_author_id", suffix = c("", ".ov")) |>
+      mutate(
+        last_institution_name    = coalesce(last_institution_name.ov,    last_institution_name),
+        last_institution_city    = coalesce(last_institution_city.ov,    last_institution_city),
+        last_institution_region  = coalesce(last_institution_region.ov,  last_institution_region),
+        last_institution_country = coalesce(last_institution_country.ov, last_institution_country),
+        last_institution_lat     = coalesce(last_institution_lat.ov,     last_institution_lat),
+        last_institution_lon     = coalesce(last_institution_lon.ov,     last_institution_lon)
+      ) |>
+      select(-ends_with(".ov"))
+    cat(sprintf("  Applied %d manual overrides from %s\n", nrow(ov), ov_path))
+  }
 } else {
   last_inst <- NULL
   cat("  No last_known_institutions file yet — using modal institution\n")
@@ -300,61 +321,12 @@ vn <- visNetwork(vis_nodes, vis_edges,
       }
     }",
     zoom = "function(params) {
-      // Counter vis-network zoom: size & font are world units, screen = world * scale.
-      // To hold them at target screen pixels, set world = target_px / scale.
-      if (!this.body.data.nodes) return;
-      var self = this;
+      // Counter-zoom: vis-network draws in a scaled canvas so font.size and node radii
+      // are multiplied by zoom on screen. Divide by scale to hold constant screen pixels.
       var scale = params.scale || 1;
-      // Throttle early
-      if (window.fpLastZoomApply && Math.abs((window.fpLastZoomApply.scale || 0) - scale) < 0.05) return;
-      window.fpLastZoomApply = { scale: scale, time: Date.now() };
-
-      // Global counter-zoom for node radii — scaling.min/max are also world units
-      self.setOptions({
-        nodes: {
-          scaling: { min: 6 / scale, max: 40 / scale }
-        }
-      });
-
-      var view = this.getViewPosition ? this.getViewPosition() : { x: 0, y: 0 };
-      var cv = this.canvas && this.canvas.frame ? this.canvas.frame : null;
-      var w = cv ? cv.canvas.clientWidth : 1200;
-      var h = cv ? cv.canvas.clientHeight : 800;
-      var halfW = (w / 2) / scale, halfH = (h / 2) / scale;
-      var xmin = view.x - halfW, xmax = view.x + halfW;
-      var ymin = view.y - halfH, ymax = view.y + halfH;
-
-      var nodesDS = this.body.data.nodes;
-      var positions = this.getPositions ? this.getPositions() : {};
-      var inViewport = {};
-      var nInView = 0;
-      nodesDS.forEach(function(n) {
-        if (n.hidden) return;
-        var p = positions[n.id];
-        if (!p) return;
-        if (p.x >= xmin && p.x <= xmax && p.y >= ymin && p.y <= ymax) {
-          inViewport[n.id] = true;
-          nInView++;
-        }
-      });
-
-      // Target SCREEN font size; convert to world units (/scale)
-      var screenFontPx = nInView <= 15 ? 14
-                      : nInView <= 50 ? 12
-                      : nInView <= 150 ? 10
-                      : 0;
-      var worldFont = screenFontPx > 0 ? screenFontPx / scale : 0;
-
-      var updates = [];
-      nodesDS.forEach(function(n) {
-        var show = worldFont > 0 && inViewport[n.id];
-        var newSize = show ? worldFont : 0;
-        var curSize = (n.font && n.font.size) || 0;
-        if (Math.abs(curSize - newSize) > 0.1) {
-          updates.push({ id: n.id, font: { size: newSize, strokeWidth: 3 / scale, strokeColor: '#ffffff' } });
-        }
-      });
-      if (updates.length > 0) nodesDS.update(updates);
+      if (window.fpLastZoomApply && Math.abs((window.fpLastZoomApply - scale) / scale) < 0.05) return;
+      window.fpLastZoomApply = scale;
+      window.fpApplyFont(scale);
     }"
   )
 
@@ -770,6 +742,48 @@ window.fpSetColour = function(attr) {
   });
   nodesDS.update(updates);
 };
+// Single source of truth for font size and node radii: counter-zoom via setOptions.
+// screen_px = world_size * scale, so set world = target_px / scale.
+window.fpApplyFont = function(scale) {
+  var nw = window.fpNetwork;
+  if (!nw) return;
+  scale = scale || (nw.getScale ? nw.getScale() : 1);
+  // How many nodes currently visible determines label pixel size
+  var visibleCount = 0;
+  var totalCount = 0;
+  if (nw.body && nw.body.data && nw.body.data.nodes) {
+    nw.body.data.nodes.forEach(function(n) {
+      totalCount++;
+      if (!n.hidden) visibleCount++;
+    });
+  }
+  // Target SCREEN pixel size (kept constant regardless of zoom)
+  var screenFontPx = visibleCount >= totalCount ? 0
+                   : visibleCount <= 20 ? 13
+                   : visibleCount <= 60 ? 11
+                   : visibleCount <= 200 ? 9
+                   : 0;
+  // If all are shown, show labels only if the user has zoomed in enough
+  if (visibleCount >= totalCount && scale > 2.2) screenFontPx = 9;
+  if (visibleCount >= totalCount && scale > 4)   screenFontPx = 11;
+  if (visibleCount >= totalCount && scale > 7)   screenFontPx = 13;
+
+  nw.setOptions({
+    nodes: {
+      font: {
+        size: screenFontPx / scale,
+        strokeWidth: Math.max(1.5, 3 / scale),
+        strokeColor: "#ffffff",
+        face: "sans"
+      },
+      scaling: {
+        min: 4 / scale,
+        max: 18 / scale,
+        label: { enabled: false }
+      }
+    }
+  });
+};
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
   var g = document.getElementById("fp-gender").value;
@@ -791,26 +805,14 @@ window.fpApply = function() {
     keep.add(n.id);
   });
   var allIds = nodesDS.getIds();
-  // Dynamic label sizing: show labels only when <=150 visible, scale by count
-  var n = keep.size;
-  var labelSize = n === allIds.length ? 0
-                : n <= 20 ? 24
-                : n <= 50 ? 18
-                : n <= 150 ? 14
-                : 0;
   var updates = allIds.map(function(id) {
-    var visible = keep.has(id);
-    return {
-      id: id,
-      hidden: !visible,
-      font: { size: visible ? labelSize : 0, strokeWidth: 4, strokeColor: "#ffffff" }
-    };
+    return { id: id, hidden: !keep.has(id) };
   });
   nodesDS.update(updates);
+  window.fpApplyFont();
   document.getElementById("fp-stats").textContent =
-    "Showing " + n + " / " + allIds.length + " authors" +
-    (labelSize ? " (labels visible)" : " (filter down to ≤150 to see labels)");
-  console.log("fpApply: showing", n, "/", allIds.length);
+    "Showing " + keep.size + " / " + allIds.length + " authors";
+  console.log("fpApply: showing", keep.size, "/", allIds.length);
 };
 window.fpAuthorJump = function() {
   var val = document.getElementById("fp-author").value.trim();
