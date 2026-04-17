@@ -212,6 +212,9 @@ def load_last_institutions() -> dict[str, dict]:
         return {}
     print("Loading last-known institutions…")
     li = pd.read_csv(LAST_INST_PATH)
+    li["openalex_author_id"] = li["openalex_author_id"].str.replace(
+        "https://openalex.org/", "", regex=False
+    )
     result = {}
     for _, row in li.iterrows():
         aid = str(row["openalex_author_id"])
