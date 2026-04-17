@@ -867,7 +867,7 @@ https://openalex.org/A5003606234,https://openalex.org/I92664306,Walter Reed Army
 https://openalex.org/A5003606843,I91036609,Citadel,US,Charleston,South Carolina,32.79722213745117,-79.96111297607422,education
 https://openalex.org/A5003606898,https://openalex.org/I203088144,Nova Southeastern University,US,Fort Lauderdale,Florida,26.077899932861328,-80.24188995361328,education
 https://openalex.org/A5003626281,,,,,,,,
-https://openalex.org/A5003627676,https://openalex.org/I19700959,Florida International University,US,Miami,,25.774269104003903,-80.19365692138672,education
+https://openalex.org/A5003627676,https://openalex.org/I19700959,Florida International University,NL,'s-Hertogenbosch,,51.6978,5.3037,education
 https://openalex.org/A5003630381,https://openalex.org/I169335092,University of North Carolina at Greensboro,US,Greensboro,,36.07263946533203,-79.79197692871094,education
 https://openalex.org/A5003630682,https://openalex.org/I45438204,The University of Texas at San Antonio,US,San Antonio,Texas,29.42412,-98.49363,education
 https://openalex.org/A5003633285,https://openalex.org/I4210166444,Institut de Recherche pour le Développement,FR,Marseille,Provence-Alpes-Côte d'Azur,43.29695,5.38107,government
@@ -1149,7 +1149,7 @@ https://openalex.org/A5004767117,https://openalex.org/I243754102,Universidade Fe
 https://openalex.org/A5004769583,https://openalex.org/I104946051,Nihon University,JP,Tokyo,,35.691001892089844,139.73760986328125,education
 https://openalex.org/A5004769648,https://openalex.org/I11874761,University of North Florida,US,Jacksonville,,30.33218002319336,-81.65564727783203,education
 https://openalex.org/A5004783156,https://openalex.org/I17974374,Universidade de São Paulo,BR,São Paulo,São Paulo,-23.5475,-46.63611,education
-https://openalex.org/A5004789455,https://openalex.org/I19700959,Florida International University,US,Miami,,25.774269104003903,-80.19365692138672,education
+https://openalex.org/A5004789455,https://openalex.org/I19700959,University of Washington,US,Seattle,Washington,47.6553,-122.3035,education
 https://openalex.org/A5004795033,https://openalex.org/I32597200,Ghent University,BE,Ghent,Flanders,51.05,3.71667,education
 https://openalex.org/A5004799451,https://openalex.org/I4210119688,Large Marine Vertebrates Research Institute Philippines,PH,Jagna,,9.656207084655762,124.36514282226562,nonprofit
 https://openalex.org/A5004800522,https://openalex.org/I1313323035,Russian Academy of Sciences,RU,Moscow,Moscow,55.75222,37.61556,government
@@ -2783,7 +2783,7 @@ https://openalex.org/A5011465307,https://openalex.org/I27765905,North-West Unive
 https://openalex.org/A5011471868,https://openalex.org/I4210086287,Institute of Vertebrate Paleontology and Paleoanthropology,CN,Beijing,,39.93597412109375,116.32583618164062,facility
 https://openalex.org/A5011473260,,,,,,,,
 https://openalex.org/A5011475413,https://openalex.org/I107720978,Ain Shams University,EG,Cairo,,30.07691192626953,31.29068183898925,education
-https://openalex.org/A5011480148,https://openalex.org/I103163165,Florida State University,US,Tallahassee,,30.43825912475586,-84.28073120117188,education
+https://openalex.org/A5011480148,https://openalex.org/I103163165,Florida State University,US,Beverly Beach,Maryland,38.674,-76.5335,education
 https://openalex.org/A5011480736,https://openalex.org/I66958751,Woods Hole Oceanographic Institution,US,Falmouth,,41.55149841308594,-70.61475372314453,funder
 https://openalex.org/A5011482116,https://openalex.org/I74801974,The University of Tokyo,JP,Tokyo,,35.68949890136719,139.69171142578125,education
 https://openalex.org/A5011484066,https://openalex.org/I1319261023,Monterey Bay Aquarium Research Institute,US,Castroville,,36.76578903198242,-121.75800323486328,nonprofit
@@ -4555,7 +4555,7 @@ https://openalex.org/A5018489206,https://openalex.org/I19820366,Chinese Academy 
 https://openalex.org/A5018491183,https://openalex.org/I183898223,International Hellenic University,GR,Thessaloniki,,40.64360809326172,22.93086051940918,education
 https://openalex.org/A5018492886,,World Wildlife Fund Canada,CA,,,,,
 https://openalex.org/A5018495124,https://openalex.org/I205274468,Trinity College Dublin,IE,Dublin,,53.33306121826172,-6.248889923095703,education
-https://openalex.org/A5018496471,https://openalex.org/I19700959,Florida International University,US,Miami,,25.774269104003903,-80.19365692138672,education
+https://openalex.org/A5018496471,https://openalex.org/I19700959,Florida International University,NL,'s-Hertogenbosch,,51.6978,5.3037,education
 https://openalex.org/A5018506771,https://openalex.org/I121748325,Universidad Complutense de Madrid,ES,Madrid,Madrid,40.4165,-3.70256,education
 https://openalex.org/A5018510272,https://openalex.org/I39586589,Swansea University,GB,Swansea,Wales,51.62079,-3.94323,education
 https://openalex.org/A5018511556,,,,,,,,
@@ -21704,7 +21704,7 @@ https://openalex.org/A5086737283,https://openalex.org/I4210096541,Institute for 
 https://openalex.org/A5086744470,https://openalex.org/I59553526,Stony Brook University,US,Stony Brook,,40.92565155029297,-73.14093780517578,education
 https://openalex.org/A5086750483,https://openalex.org/I263512288,Universidad Científica del Sur,PE,Lima,Lima Province,-12.04318,-77.02824,education
 https://openalex.org/A5086752227,https://openalex.org/I185103710,"University of California, Santa Cruz",US,Santa Cruz,,36.97412109375,-122.03079986572266,education
-https://openalex.org/A5086753224,https://openalex.org/I19700959,Florida International University,US,Miami,,25.774269104003903,-80.19365692138672,education
+https://openalex.org/A5086753224,https://openalex.org/I19700959,Florida International University,US,San Carlos,California,37.5072,-122.2605,education
 https://openalex.org/A5086757707,https://openalex.org/I8078737,Clemson University,US,Clemson,,34.683441162109375,-82.83737182617188,education
 https://openalex.org/A5086763067,https://openalex.org/I19700959,Florida International University,US,Miami,,25.774269104003903,-80.19365692138672,education
 https://openalex.org/A5086772674,https://openalex.org/I1294671590,Centre National de la Recherche Scientifique,FR,Paris,Île-de-France,48.85341,2.3488,government
@@ -22360,7 +22360,7 @@ https://openalex.org/A5089398531,https://openalex.org/I71267560,University of Na
 https://openalex.org/A5089399002,https://openalex.org/I151746483,University of Waterloo,CA,Waterloo,Ontario,43.4668,-80.51639,education
 https://openalex.org/A5089400973,https://openalex.org/I4210166444,Institut de Recherche pour le Développement,FR,Marseille,Provence-Alpes-Côte d'Azur,43.29695,5.38107,government
 https://openalex.org/A5089405496,https://openalex.org/I172675005,Nanyang Technological University,SG,Singapore,,1.28967,103.85007,education
-https://openalex.org/A5089408999,https://openalex.org/I4210114257,Saving the Blue,US,Kendall,Florida,25.666667938232425,-80.3566665649414,nonprofit
+https://openalex.org/A5089408999,https://openalex.org/I4210114257,Saving the Blue,CH,Frutigen,Florida,46.5954,7.6497,nonprofit
 https://openalex.org/A5089410199,https://openalex.org/I112862951,University of Messina,IT,Messina,,38.193939208984375,15.552559852600098,education
 https://openalex.org/A5089410623,https://openalex.org/I2802153510,Norwegian Institute of Marine Research,NO,Bergen,,60.39299011230469,5.324150085449219,facility
 https://openalex.org/A5089413331,https://openalex.org/I172787465,University of Concepción,CL,Concepción,Biobío,-36.82699,-73.04977,education

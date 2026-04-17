@@ -44,6 +44,7 @@ outputs/*
 !outputs/panel_reports/
 !outputs/abstract_reviews/
 !outputs/figures/*.png
+!outputs/author_location_overrides.csv
 outputs/candidate_database_phase1.csv
 outputs/conference_attendance_summary.csv
 outputs/analytical_techniques_by_discipline.csv
