@@ -300,12 +300,23 @@ vn <- visNetwork(vis_nodes, vis_edges,
       }
     }",
     zoom = "function(params) {
-      // Counter vis-network zoom scaling: shrink nodes, auto-show labels in viewport
+      // Counter vis-network zoom: size & font are world units, screen = world * scale.
+      // To hold them at target screen pixels, set world = target_px / scale.
       if (!this.body.data.nodes) return;
       var self = this;
       var scale = params.scale || 1;
+      // Throttle early
+      if (window.fpLastZoomApply && Math.abs((window.fpLastZoomApply.scale || 0) - scale) < 0.05) return;
+      window.fpLastZoomApply = { scale: scale, time: Date.now() };
+
+      // Global counter-zoom for node radii — scaling.min/max are also world units
+      self.setOptions({
+        nodes: {
+          scaling: { min: 6 / scale, max: 40 / scale }
+        }
+      });
+
       var view = this.getViewPosition ? this.getViewPosition() : { x: 0, y: 0 };
-      // Compute viewport bounds in world coords
       var cv = this.canvas && this.canvas.frame ? this.canvas.frame : null;
       var w = cv ? cv.canvas.clientWidth : 1200;
       var h = cv ? cv.canvas.clientHeight : 800;
@@ -313,47 +324,37 @@ vn <- visNetwork(vis_nodes, vis_edges,
       var xmin = view.x - halfW, xmax = view.x + halfW;
       var ymin = view.y - halfH, ymax = view.y + halfH;
 
-      // Count visible (not hidden) nodes within viewport
       var nodesDS = this.body.data.nodes;
       var positions = this.getPositions ? this.getPositions() : {};
-      var inViewport = [];
+      var inViewport = {};
+      var nInView = 0;
       nodesDS.forEach(function(n) {
         if (n.hidden) return;
         var p = positions[n.id];
         if (!p) return;
         if (p.x >= xmin && p.x <= xmax && p.y >= ymin && p.y <= ymax) {
-          inViewport.push(n.id);
+          inViewport[n.id] = true;
+          nInView++;
         }
       });
 
-      var nInView = inViewport.length;
-      // Label size: show when zoomed in enough that <= 150 nodes are in view
-      var baseLabel = 14;
-      var labelSize = nInView <= 15 ? 18
-                    : nInView <= 50 ? 14
-                    : nInView <= 150 ? 11
-                    : 0;
+      // Target SCREEN font size; convert to world units (/scale)
+      var screenFontPx = nInView <= 15 ? 14
+                      : nInView <= 50 ? 12
+                      : nInView <= 150 ? 10
+                      : 0;
+      var worldFont = screenFontPx > 0 ? screenFontPx / scale : 0;
 
-      // Counter-zoom node sizes — always apply, to ALL nodes
       var updates = [];
       nodesDS.forEach(function(n) {
-        if (n._baseValue == null) { n._baseValue = n.value; }
-        var baseValue = n._baseValue;
-        var targetValue = Math.max(2, Math.min(40, baseValue / Math.sqrt(scale)));
-        var update = { id: n.id, value: targetValue };
-        // Only labels for nodes in viewport (if label threshold met)
-        if (labelSize > 0 && inViewport.indexOf(n.id) !== -1) {
-          update.font = { size: labelSize, strokeWidth: 4, strokeColor: '#ffffff' };
-        } else if (n.font && n.font.size > 0) {
-          update.font = { size: 0 };
+        var show = worldFont > 0 && inViewport[n.id];
+        var newSize = show ? worldFont : 0;
+        var curSize = (n.font && n.font.size) || 0;
+        if (Math.abs(curSize - newSize) > 0.1) {
+          updates.push({ id: n.id, font: { size: newSize, strokeWidth: 3 / scale, strokeColor: '#ffffff' } });
         }
-        updates.push(update);
       });
-      // Throttle: only apply if zoom changed significantly since last update
-      if (!window.fpLastZoomApply || Math.abs((window.fpLastZoomApply.scale || 0) - scale) > 0.05) {
-        nodesDS.update(updates);
-        window.fpLastZoomApply = { scale: scale, time: Date.now() };
-      }
+      if (updates.length > 0) nodesDS.update(updates);
     }"
   )
 
@@ -736,15 +737,17 @@ window.fpComputePositions = function(meta, mode) {
       return;
     }
 
-    // Spiral placement
+    // Spiral placement — node slots sized for max node radius ~30px + 15px gap = 45px
+    // Ring stride 50 units; ring 1 at 55 gives a ~25-unit gap around the centre node.
     var placed = 0;
     var ring = 0;
+    var slot = 50;
     while (placed < count) {
-      var ringRadius = ring === 0 ? 0 : 8 + ring * 14;
-      var ringCapacity = ring === 0 ? 1 : Math.max(6, Math.floor(2 * Math.PI * ringRadius / 16));
+      var ringRadius = ring === 0 ? 0 : slot * ring + 5;
+      var ringCapacity = ring === 0 ? 1 : Math.max(6, Math.floor(2 * Math.PI * ringRadius / slot));
       var toPlace = Math.min(ringCapacity, count - placed);
       for (var i = 0; i < toPlace; i++) {
-        var angle = (2 * Math.PI * i) / toPlace + (ring * 0.4);
+        var angle = (2 * Math.PI * i) / toPlace + (ring * 0.5);
         var x = cx + ringRadius * Math.cos(angle);
         var y = cy + ringRadius * Math.sin(angle);
         positions[members[placed].id] = { x: x, y: y };
