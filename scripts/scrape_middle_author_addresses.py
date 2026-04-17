@@ -96,8 +96,17 @@ def normalise(s: str) -> str:
     return re.sub(r"[^a-z]", "", s.lower())
 
 
-def strip_accents(s: str) -> str:
-    """Strip accents but keep alphabetic structure (for accent-insensitive matching)."""
+def strip_accents(s) -> str:
+    """Strip accents but keep alphabetic structure (accent-insensitive matching)."""
+    if s is None:
+        return ""
+    try:
+        import math
+        if isinstance(s, float) and math.isnan(s):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    s = str(s)
     if not s:
         return ""
     s = unicodedata.normalize("NFKD", s)

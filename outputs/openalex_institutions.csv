@@ -92,7 +92,7 @@ https://openalex.org/I105296287,Kurume University,JP,education,Kurume,,33.316669
 https://openalex.org/I105333472,University of the Philippines Cebu,PH,education,Cebu City,,10.322930335998535,123.89854431152344
 https://openalex.org/I10535382,Chongqing University of Posts and Telecommunications,CN,education,Chongqing,,29.56026077270508,106.55770874023438
 https://openalex.org/I105818395,University of Kashan,IR,education,Kāshān,,34.002281188964844,51.43878936767578
-https://openalex.org/I105991555,Jingdezhen Ceramic Institute,CN,education,Jingdezhen,,29.294700622558597,117.20789337158205
+https://openalex.org/I105991555,Jingdezhen Ceramic Institute,CN,education,Jingdezhen,,29.2947006225586,117.20789337158205
 https://openalex.org/I106053113,Central University of Karnataka,IN,education,Kalaburagi,,17.335830688476562,76.83757019042969
 https://openalex.org/I106073371,University of Findlay,US,education,Findlay,Ohio,41.05454635620117,-83.65452575683594
 https://openalex.org/I106079672,Hebei University of Engineering,CN,education,Handan,,36.609989166259766,114.48764038085938
@@ -137,7 +137,7 @@ https://openalex.org/I107639228,University of Notre Dame,US,education,Notre Dame
 https://openalex.org/I107656453,South Australia Pathology,AU,nonprofit,Adelaide,South Australia,-34.9346809387207,138.63174438476562
 https://openalex.org/I107672454,Dartmouth College,US,education,Hanover,New Hampshire,43.70229,-72.28954
 https://openalex.org/I107707843,Roskilde University,DK,education,Roskilde,,55.64152145385742,12.080349922180176
-https://openalex.org/I107720978,Ain Shams University,EG,education,Cairo,,30.07691192626953,31.290681838989254
+https://openalex.org/I107720978,Ain Shams University,EG,education,Cairo,,30.07691192626953,31.29068183898925
 https://openalex.org/I107740395,Sri Venkateswara Institute of Medical Sciences,IN,education,Tirumala - Tirupati,,13.641852378845217,79.40632629394531
 https://openalex.org/I107766831,NSF National Center for Atmospheric Research,US,facility,Boulder,Colorado,40.01499,-105.27055
 https://openalex.org/I107851509,Chinese Academy of Tropical Agricultural Sciences,CN,government,Haikou,,20.034210205078125,110.34651184082033
@@ -203,7 +203,7 @@ https://openalex.org/I111406484,Ministry of Health,GH,government,Accra,Greater A
 https://openalex.org/I111483173,King University,US,education,Bristol,Tennessee,36.58729553222656,-82.15910339355469
 https://openalex.org/I111552434,GenVec,US,company,Gaithersburg,Maryland,39.15154647827149,-77.23320007324219
 https://openalex.org/I111575329,Bharathiar University,IN,education,Coimbatore,Tamil Nadu,11.00555,76.96612
-https://openalex.org/I111599522,Jiangnan University,CN,education,Wuxi,,31.568870544433597,120.28856658935548
+https://openalex.org/I111599522,Jiangnan University,CN,education,Wuxi,,31.5688705444336,120.28856658935548
 https://openalex.org/I111753288,Fujian Normal University,CN,education,Fuzhou,,26.061389923095703,119.3061065673828
 https://openalex.org/I111796040,Global Biodiversity Information Facility,DK,other,Copenhagen,Capital Region,55.67594,12.56553
 https://openalex.org/I1118541,University of East Anglia,GB,education,Norwich,,52.62783050537109,1.2983399629592896
@@ -265,7 +265,7 @@ https://openalex.org/I115228651,"Agency for Science, Technology and Research",SG
 https://openalex.org/I115253235,Federico Villarreal National University,PE,education,Lima,,-12.075278282165527,-77.0919418334961
 https://openalex.org/I115475287,Oklahoma State University,US,education,Stillwater,,36.11560821533203,-97.0583724975586
 https://openalex.org/I115498069,Jikei University School of Medicine,JP,education,Tokyo,,35.66273880004883,139.7505645751953
-https://openalex.org/I115566878,Shahid Bahonar University of Kerman,IR,education,Kerman,Kermān,30.252538681030277,57.10932540893555
+https://openalex.org/I115566878,Shahid Bahonar University of Kerman,IR,education,Kerman,Kermān,30.25253868103028,57.10932540893555
 https://openalex.org/I115592961,Jiangsu University,CN,education,Zhenjiang,,32.21086120605469,119.455078125
 https://openalex.org/I115600380,Balıkesir University,TR,education,Balıkesir,,39.649169921875,27.886110305786133
 https://openalex.org/I115684694,Industrial University of Santander,CO,education,Bucaramanga,Santander Department,7.125,-73.11895
@@ -375,7 +375,7 @@ https://openalex.org/I121058860,Dickinson College,US,education,Carlisle,,40.2014
 https://openalex.org/I12113309,DePauw University,US,education,Greencastle,,39.64448928833008,-86.86473083496094
 https://openalex.org/I121374431,Unifor,NO,nonprofit,Oslo,,59.9127311706543,10.746089935302734
 https://openalex.org/I12150220,University of Mosul,IQ,education,Mosul,Nineveh,36.335,43.11889
-https://openalex.org/I121502294,Physical Research Laboratory,IN,facility,Ahmedabad,,23.025789260864254,72.58727264404297
+https://openalex.org/I121502294,Physical Research Laboratory,IN,facility,Ahmedabad,,23.02578926086425,72.58727264404297
 https://openalex.org/I121595252,Polytechnic University of Puerto Rico,PR,education,San Juan,,18.46632957458496,-66.10572052001953
 https://openalex.org/I121708413,Chukwuemeka Odumegwu Ojukwu University,NG,education,Ihiala,Anambra,5.85475,6.85944
 https://openalex.org/I121748325,Universidad Complutense de Madrid,ES,education,Madrid,Madrid,40.4165,-3.70256
@@ -552,7 +552,7 @@ https://openalex.org/I1288043984,Techno India University,IN,education,Kolkata,,2
 https://openalex.org/I128807351,Camosun College,CA,education,Victoria,,48.4359016418457,-123.35154724121094
 https://openalex.org/I1288214837,United States Naval Research Laboratory,US,facility,Washington,,38.895111083984375,-77.03636932373047
 https://openalex.org/I1288380561,Animal and Plant Health Inspection Service,US,government,Riverdale Park,,38.96343994140625,-76.931640625
-https://openalex.org/I1288435858,Ministry of Agriculture and Rural Development,PL,government,Warsaw,,52.23092269897461,20.999364852905277
+https://openalex.org/I1288435858,Ministry of Agriculture and Rural Development,PL,government,Warsaw,,52.23092269897461,20.99936485290528
 https://openalex.org/I1288451689,Real Academia Española,ES,education,Madrid,,40.414920806884766,-3.691173076629639
 https://openalex.org/I1288652306,Royal Museum for Central Africa,BE,archive,Tervuren,,50.8237190246582,4.5141801834106445
 https://openalex.org/I1288675226,"Ministry of the Environment, Conservation and Parks",CA,government,Toronto,,43.70011138916016,-79.41629791259766
@@ -569,7 +569,7 @@ https://openalex.org/I1289461252,Indian Space Research Organisation,IN,governmen
 https://openalex.org/I1289490764,Centers for Disease Control and Prevention,US,funder,Atlanta,,33.749000549316406,-84.38797760009766
 https://openalex.org/I1289525096,Texas Biomedical Research Institute,US,facility,San Antonio,,29.42411994934082,-98.4936294555664
 https://openalex.org/I1289530486,BC Cancer Agency,CA,healthcare,Vancouver,British Columbia,49.24966,-123.11934
-https://openalex.org/I1289550199,Dorset HealthCare University NHS Foundation Trust,GB,healthcare,Poole,,50.71429061889648,-1.9845800399780276
+https://openalex.org/I1289550199,Dorset HealthCare University NHS Foundation Trust,GB,healthcare,Poole,,50.71429061889648,-1.984580039978028
 https://openalex.org/I128956969,Texas Christian University,US,education,Fort Worth,,32.72541046142578,-97.3208465576172
 https://openalex.org/I1289638682,Organization for Tropical Studies,CR,nonprofit,San José,,10.455621719360352,-83.97907257080078
 https://openalex.org/I1289784979,University College Hospital,GB,healthcare,London,,51.52473449707031,-0.1363459974527359
@@ -601,7 +601,7 @@ https://openalex.org/I1293309919,National Board of Medical Examiners,US,nonprofi
 https://openalex.org/I1293318137,Michelin (United States),US,company,Greenville,South Carolina,34.861061096191406,-82.25823211669922
 https://openalex.org/I1293448361,Institut de Radioprotection et de Sûreté Nucléaire,FR,nonprofit,Fontenay-aux-Roses,Île-de-France,48.79325,2.29275
 https://openalex.org/I1293719834,Ministry of Natural Resources and Environment,RU,government,Moscow,,55.76188278198242,37.57966613769531
-https://openalex.org/I1293796582,Seat (Spain),ES,company,Martorell,,41.50187683105469,1.9018900394439695
+https://openalex.org/I1293796582,Seat (Spain),ES,company,Martorell,,41.50187683105469,1.9018900394439693
 https://openalex.org/I1294345657,Sea Turtle Conservancy,US,nonprofit,Gainesville,Florida,29.65163,-82.32483
 https://openalex.org/I1294429298,Morgan Stanley Children's Hospital,US,healthcare,New York,New York,40.83985137939453,-73.94147491455078
 https://openalex.org/I1294537935,Point Blue Conservation Science,US,nonprofit,Petaluma,California,38.22794723510742,-122.59088134765624
@@ -654,7 +654,7 @@ https://openalex.org/I1298723799,Environmental Defense Fund,US,nonprofit,New Yor
 https://openalex.org/I129877168,Carl von Ossietzky Universität Oldenburg,DE,education,Oldenburg,Lower Saxony,53.14118,8.21467
 https://openalex.org/I1298883833,Pew Charitable Trusts,US,funder,Philadelphia,,39.9523811340332,-75.16361999511719
 https://openalex.org/I129902397,Dalhousie University,CA,education,Halifax,Nova Scotia,44.64269,-63.57688
-https://openalex.org/I1299107671,Queensland Police Service,AU,government,Brisbane,Queensland,-27.466745376586918,153.01795959472656
+https://openalex.org/I1299107671,Queensland Police Service,AU,government,Brisbane,Queensland,-27.46674537658692,153.01795959472656
 https://openalex.org/I1299209451,Cardiff and Vale University Health Board,GB,healthcare,Cardiff,,51.49342727661133,-3.2302169799804688
 https://openalex.org/I1299218025,MetroHealth,US,healthcare,Cleveland,Ohio,41.4995,-81.69541
 https://openalex.org/I1299303238,National Institutes of Health,US,government,Bethesda,Maryland,38.98067,-77.10026
@@ -747,7 +747,7 @@ https://openalex.org/I1308923049,University Hospitals Birmingham NHS Foundation 
 https://openalex.org/I1309050143,Santa Barbara Museum of Natural History,US,archive,Santa Barbara,California,34.43854522705078,-119.71482849121094
 https://openalex.org/I1309140791,Royal Netherlands Meteorological Institute,NL,government,De Bilt,Utrecht,52.11,5.18056
 https://openalex.org/I1309191912,Research Triangle Park Foundation,US,nonprofit,Durham,North Carolina,35.90805435180664,-78.86277770996094
-https://openalex.org/I130923123,Institute of the Estonian Language,EE,facility,Tallinn,,59.43159866333008,24.743356704711918
+https://openalex.org/I130923123,Institute of the Estonian Language,EE,facility,Tallinn,,59.43159866333008,24.74335670471192
 https://openalex.org/I130929987,University of Mons,BE,education,Mons,,50.45412826538086,3.9522900581359854
 https://openalex.org/I1310012087,Royal Statistical Society,GB,nonprofit,London,England,51.50853,-0.12574
 https://openalex.org/I1310019138,Michigan Department of Health and Human Services,US,government,Lansing,Michigan,42.73341751098633,-84.55338287353516
@@ -888,7 +888,7 @@ https://openalex.org/I1326872476,Maimonides Medical Center,US,healthcare,New Yor
 https://openalex.org/I1327020802,Geological Survey of Canada,CA,government,Ottawa,Ontario,45.401893615722656,-75.70528411865234
 https://openalex.org/I1327163397,State University of New York,US,education,Albany,New York,42.65258,-73.75623
 https://openalex.org/I1327237609,Ministry of Education of the People's Republic of China,CN,government,Beijing,Beijing,39.9075,116.39723
-https://openalex.org/I132735039,University of Debrecen,HU,education,Debrecen,,47.53166961669922,21.624439239501957
+https://openalex.org/I132735039,University of Debrecen,HU,education,Debrecen,,47.53166961669922,21.62443923950196
 https://openalex.org/I1327405815,Museum of Science,US,archive,Boston,Massachusetts,42.36777877807617,-71.07099914550781
 https://openalex.org/I1327551190,Zoological Society of San Diego,US,nonprofit,San Diego,California,32.736183166503906,-117.15042114257812
 https://openalex.org/I1327576362,Feinstein Institute for Medical Research,US,facility,Manhasset,,40.79787826538086,-73.69956970214844
@@ -900,7 +900,7 @@ https://openalex.org/I1328336097,Arrowe Park Hospital,GB,healthcare,Birkenhead,,
 https://openalex.org/I1328359107,Los Angeles County Department of Health Services,US,healthcare,Los Angeles,,34.05223083496094,-118.24368286132812
 https://openalex.org/I1328540965,Australian Institute of Marine Science,AU,facility,Townsville,Queensland,-19.26639,146.80569
 https://openalex.org/I1328594524,Children's Mercy Hospital,US,healthcare,Kansas City,Missouri,39.08404922485352,-94.57717895507812
-https://openalex.org/I1328775524,Zhejiang Sci-Tech University,CN,education,Hangzhou,,30.293649673461918,120.1614227294922
+https://openalex.org/I1328775524,Zhejiang Sci-Tech University,CN,education,Hangzhou,,30.29364967346192,120.1614227294922
 https://openalex.org/I1328915075,Arthritis Foundation,US,nonprofit,Atlanta,Georgia,33.79216003417969,-84.38763427734375
 https://openalex.org/I1329086014,Los Angeles County Museum of Art,US,archive,Los Angeles,California,34.05223,-118.24368
 https://openalex.org/I1329267311,National Parks Board,SG,government,Singapore,,1.3157459497451782,103.81627655029295
@@ -1174,7 +1174,7 @@ https://openalex.org/I143302722,University of Kentucky,US,education,Lexington,Ke
 https://openalex.org/I143318147,University of Maragheh,IR,education,Marāgheh,,37.39205932617188,46.23908996582031
 https://openalex.org/I143396566,Fırat University,TR,education,Elâzığ,,38.67430877685547,39.22320938110352
 https://openalex.org/I143397708,Innsbruck Medical University,AT,education,Innsbruck,,47.26266098022461,11.394539833068848
-https://openalex.org/I143578492,Asia University,TW,education,Taichung,,24.146900177001957,120.68389892578124
+https://openalex.org/I143578492,Asia University,TW,education,Taichung,,24.14690017700196,120.68389892578124
 https://openalex.org/I143593769,East China University of Science and Technology,CN,education,Shanghai,,31.22221946716309,121.45806121826172
 https://openalex.org/I143601524,Public Authority for Applied Education and Training,KW,education,Kuwait City,,29.36972045898437,47.978328704833984
 https://openalex.org/I143663144,Research Institute for Advanced Computer Science,US,facility,Mountain View,,37.38605117797852,-122.08384704589844
@@ -1202,7 +1202,7 @@ https://openalex.org/I145808223,Hanbat National University,KR,education,Daejeon,
 https://openalex.org/I145872427,Radboud University Nijmegen,NL,education,Nijmegen,Gelderland,51.8425,5.85278
 https://openalex.org/I145876445,"University of Education, Winneba",GH,education,Winneba,,5.35113000869751,-0.6231300234794617
 https://openalex.org/I145894827,Indian Institute of Technology Kharagpur,IN,education,Kharagpur,,22.339710235595703,87.32501220703125
-https://openalex.org/I146071755,Kunming University,CN,education,Kunming,,24.977222442626957,102.79444122314452
+https://openalex.org/I146071755,Kunming University,CN,education,Kunming,,24.97722244262696,102.79444122314452
 https://openalex.org/I146161461,Kenya Wildlife Service,KE,archive,Nairobi,Nairobi County,-1.28333,36.81667
 https://openalex.org/I146165071,Universidade Federal de Viçosa,BR,education,Viçosa,Minas Gerais,-20.75389,-42.88194
 https://openalex.org/I146367977,Applied Science Private University,JO,education,Amman,Amman,31.95522,35.94503
@@ -1454,7 +1454,7 @@ https://openalex.org/I162838928,National Chung Hsing University,TW,education,Tai
 https://openalex.org/I16285277,William & Mary,US,education,Williamsburg,,37.27069854736328,-76.70745849609375
 https://openalex.org/I162868743,Tianjin University,CN,education,Tianjin,,39.14221954345703,117.17666625976562
 https://openalex.org/I1629065,Central Michigan University,US,education,Mount Pleasant,,43.59780883789063,-84.76750946044922
-https://openalex.org/I163151501,Hangzhou Normal University,CN,education,Hangzhou,,30.293649673461918,120.1614227294922
+https://openalex.org/I163151501,Hangzhou Normal University,CN,education,Hangzhou,,30.29364967346192,120.1614227294922
 https://openalex.org/I163205636,Tabriz University of Medical Sciences,IR,education,Tabriz,,38.08000183105469,46.291900634765625
 https://openalex.org/I163234304,Institute of Evolutionary Physiology and Biochemistry,RU,facility,Saint Petersburg,,60.00811767578125,30.349365234375
 https://openalex.org/I163245316,Corvinus University of Budapest,HU,education,Budapest,Budapest,47.49835,19.04045
@@ -1472,7 +1472,7 @@ https://openalex.org/I163902620,Mount Allison University,CA,education,Sackville,
 https://openalex.org/I16391192,Tel Aviv University,IL,education,Tel Aviv,Tel Aviv,32.08088,34.78057
 https://openalex.org/I163917720,St. Marianna University School of Medicine,JP,education,Kawasaki,,35.52056121826172,139.71722412109375
 https://openalex.org/I164061489,University of Papua New Guinea,PG,education,Port Moresby,,-9.477230072021484,147.15089416503906
-https://openalex.org/I164185940,Texas A&M University at Galveston,US,education,Galveston,,29.301349639892575,-94.79769897460938
+https://openalex.org/I164185940,Texas A&M University at Galveston,US,education,Galveston,,29.30134963989257,-94.79769897460938
 https://openalex.org/I164213776,King's College - North Carolina,US,education,Charlotte,North Carolina,35.21329879760742,-80.82219696044922
 https://openalex.org/I164387090,University of Applied Sciences Mainz,DE,education,Mainz,,49.997188568115234,8.279092788696289
 https://openalex.org/I164389053,Fordham University,US,education,New York,,40.71427154541016,-74.00596618652344
@@ -1507,7 +1507,7 @@ https://openalex.org/I165862685,"St George's, University of London",GB,education
 https://openalex.org/I16590763,National Quemoy University,TW,education,Jincheng,,24.43415069580078,118.31712341308594
 https://openalex.org/I165932596,National University of Singapore,SG,education,Singapore,,1.28967,103.85007
 https://openalex.org/I165951966,The University of Texas at San Antonio Health Science Center,US,education,San Antonio,Texas,29.42412,-98.49363
-https://openalex.org/I165972669,Universidade Federal da Integração Latino-Americana,BR,education,Foz do Iguaçu,,-25.547779083251957,-54.58805847167969
+https://openalex.org/I165972669,Universidade Federal da Integração Latino-Americana,BR,education,Foz do Iguaçu,,-25.54777908325196,-54.58805847167969
 https://openalex.org/I166073570,Binus University,ID,education,Jakarta,Jakarta,-6.21462,106.84513
 https://openalex.org/I16609230,Hunan University,CN,education,Changsha,Hunan,28.19874,112.97087
 https://openalex.org/I1662191,University of Puerto Rico at Río Piedras,PR,education,San Juan,,18.46632957458496,-66.10572052001953
@@ -1602,7 +1602,7 @@ https://openalex.org/I172675005,Nanyang Technological University,SG,education,Si
 https://openalex.org/I172685059,Uniwersytet Komisji Edukacji Narodowej w Krakowie,PL,education,Krakow,Lesser Poland,50.06143,19.93658
 https://openalex.org/I172787465,University of Concepción,CL,education,Concepción,Biobío,-36.82699,-73.04977
 https://openalex.org/I172828483,University of Sri Jayewardenepura,LK,education,Colombo,Western Province,6.93548,79.84868
-https://openalex.org/I172901346,St Petersburg University,RU,education,Saint Petersburg,,59.94200134277344,30.298999786376957
+https://openalex.org/I172901346,St Petersburg University,RU,education,Saint Petersburg,,59.94200134277344,30.29899978637696
 https://openalex.org/I172951950,McNeese State University,US,education,Lake Charles,Louisiana,30.180492401123047,-93.21784210205078
 https://openalex.org/I172980758,Kennesaw State University,US,education,Kennesaw,,34.02342987060547,-84.61549377441406
 https://openalex.org/I173009982,Iwate University,JP,education,Morioka,,39.7158317565918,141.13722229003906
@@ -1654,11 +1654,11 @@ https://openalex.org/I176446549,Golder Associates (Canada),CA,company,Toronto,On
 https://openalex.org/I176453806,University of Potsdam,DE,education,Potsdam,Brandenburg,52.39886,13.06566
 https://openalex.org/I176698425,Anglian Water Services (United Kingdom),GB,company,Huntingdon,,52.33049011230469,-0.1865099966526031
 https://openalex.org/I176790772,Murdoch University,AU,education,Perth,,-31.95223999023437,115.86139678955078
-https://openalex.org/I176834541,Guangdong Medical College,CN,education,Zhanjiang,,21.233909606933597,110.38748931884766
+https://openalex.org/I176834541,Guangdong Medical College,CN,education,Zhanjiang,,21.2339096069336,110.38748931884766
 https://openalex.org/I176838256,Pontifícia Universidade Católica do Paraná,BR,education,Curitiba,,-25.421932220458984,-49.29484939575195
 https://openalex.org/I177055848,University of Brawijaya,ID,education,Malang,,-7.979700088500977,112.63040161132812
 https://openalex.org/I177064439,Université de Bourgogne,FR,education,Dijon,Bourgogne-Franche-Comté,47.31667,5.01667
-https://openalex.org/I177065122,Occidental Petroleum (United States),US,company,Houston,,29.763280868530277,-95.36327362060548
+https://openalex.org/I177065122,Occidental Petroleum (United States),US,company,Houston,,29.76328086853028,-95.36327362060548
 https://openalex.org/I177081203,Saint Mary's College of California,US,education,Moraga,,37.83493041992188,-122.12969207763672
 https://openalex.org/I177097968,University of Tennessee at Chattanooga,US,education,Chattanooga,,35.045631408691406,-85.30967712402344
 https://openalex.org/I177136067,Saga University,JP,education,Saga,,33.23332977294922,130.3000030517578
@@ -1754,7 +1754,7 @@ https://openalex.org/I182078086,University of Dar es Salaam,TZ,education,Dar es 
 https://openalex.org/I182083151,Universidad Rey Juan Carlos,ES,education,Madrid,,40.416500091552734,-3.702559947967529
 https://openalex.org/I182212641,University of Salzburg,AT,education,Salzburg,,47.79941177368164,13.043990135192873
 https://openalex.org/I182286215,Institute of Arctic and Alpine Research,US,facility,Boulder,,40.01499176025391,-105.2705535888672
-https://openalex.org/I182386381,Zunyi Medical University,CN,education,Zunyi,,27.708332061767575,106.9465103149414
+https://openalex.org/I182386381,Zunyi Medical University,CN,education,Zunyi,,27.70833206176757,106.9465103149414
 https://openalex.org/I18241798,Lake Erie College of Osteopathic Medicine,US,education,Erie,Pennsylvania,42.08154678344727,-80.10640716552734
 https://openalex.org/I182451676,Université du Québec à Rimouski,CA,education,Rimouski,Quebec,48.44879,-68.52396
 https://openalex.org/I182534213,Universidade do Porto,PT,education,Porto,Porto,41.1485,-8.61097
@@ -1764,7 +1764,7 @@ https://openalex.org/I18307633,Scottish Enterprise,GB,government,Glasgow,,55.865
 https://openalex.org/I183111857,Malmö University,SE,education,Malmo,,55.60586929321289,13.00072956085205
 https://openalex.org/I183496438,Portuguese Air Force Academy,PT,education,Sintra,Lisbon,38.80097,-9.37826
 https://openalex.org/I183519381,Capital Medical University,CN,education,Beijing,Beijing,39.9075,116.39723
-https://openalex.org/I183562009,Instituto Tecnológico de Querétaro,MX,education,Querétaro City,,20.593942642211918,-100.40542602539062
+https://openalex.org/I183562009,Instituto Tecnológico de Querétaro,MX,education,Querétaro City,,20.59394264221192,-100.40542602539062
 https://openalex.org/I183570559,National Chiayi University,TW,education,Chiayi City,,23.463682174682617,120.48360443115234
 https://openalex.org/I183638586,Parthenope University of Naples,IT,education,Naples,,40.8521614074707,14.268110275268556
 https://openalex.org/I183898223,International Hellenic University,GR,education,Thessaloniki,,40.64360809326172,22.93086051940918
@@ -1776,7 +1776,7 @@ https://openalex.org/I184558857,Royal Holloway University of London,GB,education
 https://openalex.org/I184565670,Georgetown University,US,education,Washington,District of Columbia,38.89511,-77.03637
 https://openalex.org/I184647316,South Dakota School of Mines and Technology,US,education,Rapid City,,44.08053970336914,-103.23101043701172
 https://openalex.org/I184681353,Anhui University of Science and Technology,CN,education,Huainan,,32.62638854980469,116.99694061279295
-https://openalex.org/I184693016,China Medical University,TW,education,Taichung,,24.146900177001957,120.68389892578124
+https://openalex.org/I184693016,China Medical University,TW,education,Taichung,,24.14690017700196,120.68389892578124
 https://openalex.org/I184746854,Lincoln University,NZ,education,Lincoln,,-43.650001525878906,172.48333740234375
 https://openalex.org/I184759092,Lafayette College,US,education,Easton,,40.68843078613281,-75.22073364257812
 https://openalex.org/I184763120,Bangladesh University,BD,education,Dhaka,,23.761791229248047,90.36732482910156
@@ -1813,7 +1813,7 @@ https://openalex.org/I185852735,University of Lancashire,GB,education,Preston,En
 https://openalex.org/I186143895,Lehigh University,US,education,Bethlehem,,40.62593078613281,-75.3704605102539
 https://openalex.org/I186246823,University of Lucknow,IN,education,Lucknow,Uttar Pradesh,26.83928,80.92313
 https://openalex.org/I186335123,East Carolina University,US,education,Greenville,North Carolina,35.61266,-77.36635
-https://openalex.org/I186414734,University of Pinar del Río,CU,education,Pinar del Río,,22.414796829223636,-83.68473052978516
+https://openalex.org/I186414734,University of Pinar del Río,CU,education,Pinar del Río,,22.41479682922364,-83.68473052978516
 https://openalex.org/I186442907,Universidad de Oriente,VE,education,Cumaná,,10.453969955444336,-64.18256378173828
 https://openalex.org/I186523950,Regeneron (United States),US,company,Tarrytown,New York,41.07861328125,-73.82343292236328
 https://openalex.org/I186765156,State University of Papua,ID,education,Manokwari,,-0.8629099726676941,134.06402587890625
@@ -1939,7 +1939,7 @@ https://openalex.org/I196829312,La Trobe University,AU,education,Melbourne,Victo
 https://openalex.org/I19700959,Florida International University,US,education,Miami,,25.774269104003903,-80.19365692138672
 https://openalex.org/I197081775,Annamalai University,IN,education,Chidambaram,Tamil Nadu,11.39933,79.69144
 https://openalex.org/I197097402,Universidad Peruana Cayetano Heredia,PE,education,Lima,Lima Province,-12.04318,-77.02824
-https://openalex.org/I197173980,Southeastern Louisiana University,US,education,Hammond,Louisiana,30.517000198364254,-90.46800231933594
+https://openalex.org/I197173980,Southeastern Louisiana University,US,education,Hammond,Louisiana,30.51700019836425,-90.46800231933594
 https://openalex.org/I197191942,St. Francis Xavier University,CA,education,Antigonish,,45.61685180664063,-61.99858093261719
 https://openalex.org/I19722,Ateneo de Manila University,PH,education,Quezon City,,14.63888931274414,121.0777816772461
 https://openalex.org/I197251160,Hebrew University of Jerusalem,IL,education,Jerusalem,Jerusalem,31.76904,35.21633
@@ -2209,7 +2209,7 @@ https://openalex.org/I256760539,Natural Resources Wales,GB,facility,Cardiff,Wale
 https://openalex.org/I257086091,Palawan State University,PH,education,Puerto Princesa City,,9.77940273284912,118.73382568359376
 https://openalex.org/I257179599,Baker Hughes (United States),US,company,Houston,Texas,29.760730743408203,-95.39756774902344
 https://openalex.org/I25757504,China University of Mining and Technology,CN,education,Xuzhou,,34.20441818237305,117.28385925292967
-https://openalex.org/I25846049,National Tsing Hua University,TW,education,Hsinchu,,24.793611526489254,120.9927749633789
+https://openalex.org/I25846049,National Tsing Hua University,TW,education,Hsinchu,,24.79361152648925,120.9927749633789
 https://openalex.org/I25859482,Takasaki University of Health and Welfare,JP,education,Takasaki,,36.32477188110352,139.05487060546875
 https://openalex.org/I25974101,University of Würzburg,DE,education,Würzburg,Bavaria,49.79391,9.95121
 https://openalex.org/I260054107,University of the Immaculate Conception,PH,education,Davao City,,7.101359844207764,125.6212387084961
@@ -2225,7 +2225,7 @@ https://openalex.org/I26359584,Council of Agriculture,TW,government,Taipei,Taiwa
 https://openalex.org/I26415053,University of L'Aquila,IT,education,L’Aquila,,42.35055160522461,13.399539947509766
 https://openalex.org/I26538001,San Diego State University,US,education,San Diego,,32.7157096862793,-117.16471862792967
 https://openalex.org/I2656126,University of Havana,CU,education,Havana,Havana,23.13302,-82.38304
-https://openalex.org/I26604189,Shiv Nadar University,IN,education,Dadri,,28.552570343017575,77.55403137207031
+https://openalex.org/I26604189,Shiv Nadar University,IN,education,Dadri,,28.55257034301757,77.55403137207031
 https://openalex.org/I26725883,Shimizu (Japan),JP,company,Tokyo,,35.68949890136719,139.69171142578125
 https://openalex.org/I267684635,Univar (United Kingdom),GB,company,Thornbury,,51.58369064331055,-3.044732093811035
 https://openalex.org/I268303160,Medical University of Warsaw,PL,education,Warsaw,,52.22977066040039,21.01177978515625
@@ -2274,7 +2274,7 @@ https://openalex.org/I2799323385,Board of the Swiss Federal Institutes of Techno
 https://openalex.org/I2799333108,Health Sciences Authority,SG,government,Singapore,,1.2805700302124023,103.83840942382812
 https://openalex.org/I2799340341,National Museum,CZ,archive,Prague,,50.08803939819336,14.42076015472412
 https://openalex.org/I2799343972,University Hospitals of Cleveland,US,healthcare,Cleveland,Ohio,41.4995,-81.69541
-https://openalex.org/I2799345741,CMH Lahore Medical College and Institute of Dentistry,PK,healthcare,Lahore,,31.539159774780277,74.37056732177734
+https://openalex.org/I2799345741,CMH Lahore Medical College and Institute of Dentistry,PK,healthcare,Lahore,,31.53915977478028,74.37056732177734
 https://openalex.org/I2799346673,Hong Kong Eye Hospital,CN,healthcare,Hong Kong,,22.324922561645508,114.18453979492188
 https://openalex.org/I2799351866,Government of India,IN,government,New Delhi,Delhi,28.62137,77.2148
 https://openalex.org/I2799353445,TuBerculosis Vaccine Initiative,NL,nonprofit,Lelystad,Flevoland,52.50833,5.475
@@ -2503,7 +2503,7 @@ https://openalex.org/I2800975541,Wells National Estuarine Research Reserve,US,fa
 https://openalex.org/I2800982320,Universidad Cardenal Herrera CEU,ES,education,Valencia,,39.47391128540039,-0.3796600103378296
 https://openalex.org/I2800988382,Central Institute of Brackishwater Aquaculture,IN,facility,Chennai,,13.024999618530272,80.25749969482422
 https://openalex.org/I2801008940,Maryland Department of General Services,US,government,Baltimore,Maryland,39.30167770385742,-76.6220474243164
-https://openalex.org/I2801014300,Florida Gulf Coast University,US,education,Fort Myers,,26.621679306030277,-81.84059143066406
+https://openalex.org/I2801014300,Florida Gulf Coast University,US,education,Fort Myers,,26.62167930603028,-81.84059143066406
 https://openalex.org/I2801025900,Natural History Museum of Los Angeles County,US,archive,Los Angeles,California,34.016990661621094,-118.28878021240234
 https://openalex.org/I2801030728,German Centre for Integrative Biodiversity Research,DE,facility,Leipzig,Saxony,51.33962,12.37129
 https://openalex.org/I2801034501,Nahda College,SD,education,Khartoum,,15.544393539428713,32.543418884277344
@@ -2748,13 +2748,13 @@ https://openalex.org/I2802740592,Riley Hospital for Children,US,healthcare,India
 https://openalex.org/I2802761940,European Academy of Neurology,AT,nonprofit,Vienna,,48.20848846435547,16.372079849243164
 https://openalex.org/I2802769386,Boca Raton Regional Hospital,US,healthcare,Boca Raton,Florida,26.35849380493164,-80.10236358642578
 https://openalex.org/I2802773633,Christchurch Hospital,NZ,healthcare,Christchurch,Canterbury,-43.53333,172.63333
-https://openalex.org/I2802775521,Secretariat of Environment and Natural Resources,MX,government,Mexico City,,19.470783233642575,-99.19259643554688
+https://openalex.org/I2802775521,Secretariat of Environment and Natural Resources,MX,government,Mexico City,,19.47078323364257,-99.19259643554688
 https://openalex.org/I2802779139,Stazione Zoologica Anton Dohrn,IT,facility,Naples,,40.8521614074707,14.268110275268556
 https://openalex.org/I2802789809,Edinburgh Royal Infirmary,GB,healthcare,Edinburgh,Scotland,55.9228515625,-3.1366419792175293
 https://openalex.org/I2802806801,Xerces Society,US,nonprofit,Portland,Oregon,45.534915924072266,-122.65889739990234
 https://openalex.org/I2802822262,Florida Keys Community College,US,education,Key West,Florida,24.583471298217773,-81.74424743652344
 https://openalex.org/I2802823369,ASA College,US,education,Brooklyn,New York,40.69240951538086,-73.986328125
-https://openalex.org/I2802827828,Zoo Miami,US,archive,Miami,Florida,25.607126235961918,-80.39928436279297
+https://openalex.org/I2802827828,Zoo Miami,US,archive,Miami,Florida,25.60712623596192,-80.39928436279297
 https://openalex.org/I2802828525,Generalitat Valenciana,ES,government,Valencia,Valencia,39.47391,-0.37966
 https://openalex.org/I2802828768,Frimley Health NHS Foundation Trust,GB,healthcare,Frimley,,51.31666946411133,-0.7454400062561035
 https://openalex.org/I2802835388,Seoul National University Hospital,KR,healthcare,Seoul,Seoul,37.566,126.9784
@@ -2904,7 +2904,7 @@ https://openalex.org/I3130743028,Universidad Nacional de la Amazonía Peruana,PE
 https://openalex.org/I3130751423,Shaoguan University,CN,education,Shaoguan,,24.80997085571289,113.60343933105467
 https://openalex.org/I3130823459,Universidade Federal Rural da Amazônia,BR,education,Belém,,-1.4558299779891968,-48.50444030761719
 https://openalex.org/I3130920692,South Westphalia University of Applied Sciences,DE,education,Iserlohn,North Rhine-Westphalia,51.37547,7.70281
-https://openalex.org/I3130933589,University of Mpumalanga,ZA,education,Mbombela,,-25.475120544433597,30.969350814819336
+https://openalex.org/I3130933589,University of Mpumalanga,ZA,education,Mbombela,,-25.4751205444336,30.969350814819336
 https://openalex.org/I3130965127,Qarshi University,PK,education,Lahore,Punjab,31.423152923583984,74.17705535888672
 https://openalex.org/I3130994091,Seisa Dohto University,JP,education,Kitahiroshima,,42.97969055175781,141.54251098632812
 https://openalex.org/I3131163126,Negros Oriental State University,PH,education,Dumaguete,,9.312171936035156,123.3033218383789
@@ -2928,7 +2928,7 @@ https://openalex.org/I3132875200,Viña del Mar University,CL,education,Viña del
 https://openalex.org/I3132931743,University of Kigali,RW,education,Kigali,Kigali,-1.94995,30.05885
 https://openalex.org/I3132940433,Politecnica Salesiana University,EC,education,Cuenca,,-2.90054988861084,-79.00453186035156
 https://openalex.org/I3132960018,Cyprus Institute of Marketing,CY,education,Nicosia,,35.17481231689453,33.34529495239258
-https://openalex.org/I3133055985,Westlake University,CN,education,Hangzhou,,30.293649673461918,120.1614227294922
+https://openalex.org/I3133055985,Westlake University,CN,education,Hangzhou,,30.29364967346192,120.1614227294922
 https://openalex.org/I3133099055,Kamdhenu University,IN,education,Gandhinagar,,23.21457862854004,72.65254974365234
 https://openalex.org/I3133134087,Lanzhou Jiaotong University,CN,education,Lanzhou,,36.057010650634766,103.8398666381836
 https://openalex.org/I3133171086,Bandırma Onyedi Eylül University,TR,education,Bandırma,,40.35221862792969,27.97666931152344
@@ -2979,7 +2979,7 @@ https://openalex.org/I32393484,Petrobras (Brazil),BR,company,Rio de Janeiro,,-22
 https://openalex.org/I32394136,Northumbria University,GB,education,Newcastle upon Tyne,,54.97328186035156,-1.613960027694702
 https://openalex.org/I324100,Bowie State University,US,education,Bowie,Maryland,39.01948165893555,-76.75826263427734
 https://openalex.org/I32462889,Fatih University,TR,education,Istanbul,Istanbul,41.01384,28.94966
-https://openalex.org/I32574673,Shantou University,CN,education,Shantou,,23.354890823364254,116.6787567138672
+https://openalex.org/I32574673,Shantou University,CN,education,Shantou,,23.35489082336425,116.6787567138672
 https://openalex.org/I32597200,Ghent University,BE,education,Ghent,Flanders,51.05,3.71667
 https://openalex.org/I32625721,University of Saskatchewan,CA,education,Saskatoon,Saskatchewan,52.13238,-106.66892
 https://openalex.org/I32725510,Universidade Federal de Mato Grosso,BR,education,Cuiabá,,-15.608699798583984,-56.06370162963867
@@ -3186,7 +3186,7 @@ https://openalex.org/I4210088206,N.D. Zelinsky Institute of Organic Chemistry,RU
 https://openalex.org/I4210088229,Instituto Interdisciplinario de Ciencias Básicas,AR,facility,Mendoza,,-32.890838623046875,-68.8271713256836
 https://openalex.org/I4210088239,Senckenberg Centre for Human Evolution and Palaeoenvironment,DE,facility,Tübingen,Baden-Wurttemberg,48.52266,9.05222
 https://openalex.org/I4210088324,Shizuoka Cancer Center,JP,funder,Shizuoka,,34.98332977294922,138.38333129882812
-https://openalex.org/I4210088331,Quzhou City People's Hospital,CN,healthcare,Quzhou,,28.962350845336918,118.87210083007812
+https://openalex.org/I4210088331,Quzhou City People's Hospital,CN,healthcare,Quzhou,,28.96235084533692,118.87210083007812
 https://openalex.org/I4210088374,Irish Rail,IE,government,Dublin,,53.351356506347656,-6.249557971954346
 https://openalex.org/I4210088380,Cornwall College,GB,education,St Austell,,50.34249877929688,-4.774419784545898
 https://openalex.org/I4210088381,Institute for Coastal Marine Environment,IT,facility,Naples,,40.84333801269531,14.260483741760254
@@ -3214,13 +3214,13 @@ https://openalex.org/I4210088917,Cereal Research Centre,IT,facility,Foggia,,41.4
 https://openalex.org/I4210088918,Kumamoto City Hospital,JP,healthcare,Kumamoto,,32.80588912963867,130.69180297851562
 https://openalex.org/I4210088960,Kochi Medical School Hospital,JP,healthcare,Kochi,,33.54999923706055,133.5333251953125
 https://openalex.org/I4210089003,Max Planck Institute for Psycholinguistics,NL,facility,Nijmegen,Gelderland,51.8425,5.85278
-https://openalex.org/I4210089012,Aquatic Farms (United States),US,company,Kaneohe,Hawaii,21.507722854614254,-157.85562133789062
+https://openalex.org/I4210089012,Aquatic Farms (United States),US,company,Kaneohe,Hawaii,21.50772285461425,-157.85562133789062
 https://openalex.org/I4210089078,Centrum Kopernika Badań Interdyscyplinarnych,PL,facility,Krakow,Lesser Poland,50.06143,19.93658
 https://openalex.org/I4210089079,Ruhrlandklinik,DE,healthcare,Essen,North Rhine-Westphalia,51.45657,7.01228
 https://openalex.org/I4210089112,Instituto Nacional de Estudos e Pesquisa,GW,facility,Bissau,,11.856610298156738,-15.610199928283691
 https://openalex.org/I4210089209,Japan International Research Center for Agricultural Sciences,JP,facility,Tsukuba,Ibaraki,36.08333,140.11667
 https://openalex.org/I4210089242,Düsseldorf University Hospital,DE,healthcare,Düsseldorf,,51.19879913330078,6.789299964904785
-https://openalex.org/I4210089278,Universidade do Oeste Paulista,BR,education,Presidente Prudente,,-22.132740020751957,-51.40255737304688
+https://openalex.org/I4210089278,Universidade do Oeste Paulista,BR,education,Presidente Prudente,,-22.13274002075196,-51.40255737304688
 https://openalex.org/I4210089307,East–West Center,US,facility,Honolulu,Hawaii,21.29606437683105,-157.78555297851562
 https://openalex.org/I4210089330,Cooper Medical School of Rowan University,US,education,Camden,New Jersey,39.94047164916992,-75.11969757080078
 https://openalex.org/I4210089366,João Pinheiro Foundation,BR,government,Belo Horizonte,,-19.852251052856445,-43.96455383300781
@@ -3252,11 +3252,11 @@ https://openalex.org/I4210090230,Laboratoire de Biotechnologie et Chimie Marines
 https://openalex.org/I4210090234,Marine Megafauna Foundation,US,nonprofit,Truckee,California,39.32731246948242,-120.2057876586914
 https://openalex.org/I4210090236,National Human Genome Research Institute,US,facility,Bethesda,Maryland,38.99696731567383,-77.09693145751953
 https://openalex.org/I4210090349,Tsumura Research Institute (Japan),JP,company,Osaka,,34.813350677490234,135.57386779785156
-https://openalex.org/I4210090512,Guangzhou Experimental Station,CN,facility,Guangzhou,,23.122072219848636,113.2472152709961
+https://openalex.org/I4210090512,Guangzhou Experimental Station,CN,facility,Guangzhou,,23.12207221984864,113.2472152709961
 https://openalex.org/I4210090542,Pacific Antenna Systems (United States),US,company,Camarillo,California,34.2198371887207,-119.09237670898438
 https://openalex.org/I4210090596,"Bundesministerium für Land- und Forstwirtschaft, Umwelt und Wasserwirtschaft",AT,government,Vienna,,48.20848846435547,16.372079849243164
 https://openalex.org/I4210090647,Nagoya University Hospital,JP,healthcare,Nagoya,,35.18146896362305,136.90640258789062
-https://openalex.org/I4210090683,University Ecclesiastical Academy of Thessaloniki,GR,education,Thessaloniki,,40.60239410400391,22.979515075683597
+https://openalex.org/I4210090683,University Ecclesiastical Academy of Thessaloniki,GR,education,Thessaloniki,,40.60239410400391,22.9795150756836
 https://openalex.org/I4210090690,Centro de Investigação em Artes e Comunicação,PT,facility,Faro,Faro,37.01869,-7.92716
 https://openalex.org/I4210090719,Cablevision (United States),US,company,Bethpage,New York,40.76138305664063,-73.49504089355469
 https://openalex.org/I4210090750,Universidade Federal do Cariri,BR,education,Juazeiro do Norte,Ceará,-7.21306,-39.31528
@@ -3677,7 +3677,7 @@ https://openalex.org/I4210104810,West Lothian Council,GB,government,Livingston,,
 https://openalex.org/I4210104852,International Commission for the Conservation of Atlantic Tunas,ES,government,Madrid,,40.416500091552734,-3.702559947967529
 https://openalex.org/I4210104899,Ecologie & Evolution,FR,facility,Paris,,48.84641647338867,2.355052947998047
 https://openalex.org/I4210104955,Instituto Costarricense de Investigación y Enseñanza en Nutrición y Salud,CR,other,Tres Ríos,,9.905923843383787,-83.99012756347656
-https://openalex.org/I4210105051,Institute of Parasitology of the Slovak Academy of Sciences,SK,facility,Košice,,48.71395111083984,21.258079528808597
+https://openalex.org/I4210105051,Institute of Parasitology of the Slovak Academy of Sciences,SK,facility,Košice,,48.71395111083984,21.2580795288086
 https://openalex.org/I4210105130,Asia Centre,TH,nonprofit,Bangkok,,13.756369590759276,100.53263092041016
 https://openalex.org/I4210105141,"Biomedical Research Networking Center in Bioengineering, Biomaterials and Nanomedicine",ES,other,Madrid,Madrid,40.4165,-3.70256
 https://openalex.org/I4210105143,Universidad de Ciencias y Artes de Chiapas,MX,education,Tuxtla Gutiérrez,,16.75160789489746,-93.09957885742188
@@ -3698,7 +3698,7 @@ https://openalex.org/I4210105538,Maryland Department of Natural Resources,US,fun
 https://openalex.org/I4210105551,ATA Engineering (United States),US,company,San Diego,California,32.958980560302734,-117.0972137451172
 https://openalex.org/I4210105571,Institute of Bioorganic Chemistry,RU,facility,Moscow,,55.647552490234375,37.51060104370117
 https://openalex.org/I4210105587,Marine Research Foundation,MY,nonprofit,Kota Kinabalu,,5.974899768829346,116.07240295410156
-https://openalex.org/I4210105608,ShenZhen People’s Hospital,CN,healthcare,Shenzhen,,22.556100845336918,114.12850189208984
+https://openalex.org/I4210105608,ShenZhen People’s Hospital,CN,healthcare,Shenzhen,,22.55610084533692,114.12850189208984
 https://openalex.org/I4210105625,Moravian Museum,CZ,archive,Brno,South Moravian,49.19522,16.60796
 https://openalex.org/I4210105683,Universidade Regional de Blumenau,BR,education,Blumenau,,-26.9194393157959,-49.06610870361328
 https://openalex.org/I4210105746,Regional Health,US,healthcare,Rapid City,South Dakota,44.05878448486328,-103.22530364990234
@@ -3748,7 +3748,7 @@ https://openalex.org/I4210107242,CathRx (Australia),AU,company,Rydalmere,New Sou
 https://openalex.org/I4210107249,Klinikum Magdeburg,DE,healthcare,Magdeburg,Saxony-Anhalt,52.12773,11.62916
 https://openalex.org/I4210107283,Royal Netherlands Institute for Sea Research,NL,facility,Den Burg,North Holland,53.05417,4.79722
 https://openalex.org/I4210107290,DC Cancer Consortium,US,nonprofit,Washington D.C.,District of Columbia,38.95844650268555,-77.08406829833984
-https://openalex.org/I4210107299,Hospital Erasto Gaertner,BR,healthcare,Curitiba,,-25.452978134155277,-49.23931503295898
+https://openalex.org/I4210107299,Hospital Erasto Gaertner,BR,healthcare,Curitiba,,-25.45297813415528,-49.23931503295898
 https://openalex.org/I4210107309,Faculdade de Ciências Médicas de Minas Gerais,BR,education,Belo Horizonte,,-19.92428207397461,-43.93177032470703
 https://openalex.org/I4210107310,Banner Wyoming Medical Center,US,healthcare,Casper,,42.86663055419922,-106.31307983398438
 https://openalex.org/I4210107404,Clinical Research Solutions,US,facility,Franklin,Tennessee,35.91988754272461,-86.81721496582031
@@ -3766,7 +3766,7 @@ https://openalex.org/I4210107844,Fraunhofer Institute for Translational Medicine
 https://openalex.org/I4210107867,Research Institute for Sustainability at GFZ,DE,facility,Potsdam,Brandenburg,52.39886,13.06566
 https://openalex.org/I4210107920,North Carolina Sea Grant,US,other,Morehead City,North Carolina,34.72269821166992,-76.75777435302734
 https://openalex.org/I4210107937,Immunologie et Neurogénétique Expérimentales et Moléculaires,FR,facility,Orléans,Centre-Val de Loire,47.90289,1.90389
-https://openalex.org/I4210107956,Institut de Recherche pour le Développement,NC,education,Noumea,,-22.300861358642575,166.44349670410156
+https://openalex.org/I4210107956,Institut de Recherche pour le Développement,NC,education,Noumea,,-22.30086135864257,166.44349670410156
 https://openalex.org/I4210108049,Nemours Children's Health System,US,healthcare,Jacksonville,,30.33218002319336,-81.65564727783203
 https://openalex.org/I4210108110,Mohamed I University,MA,education,Oujda,,34.65137481689453,-1.8987619876861568
 https://openalex.org/I4210108209,MRC Centre for Regenerative Medicine,GB,facility,Edinburgh,,55.92124557495117,-3.1300530433654785
@@ -3957,7 +3957,7 @@ https://openalex.org/I4210114766,Muscat College,OM,education,Muscat,,23.58412933
 https://openalex.org/I4210114768,John Wiley & Sons (United Kingdom),GB,company,Chichester,,50.831485748291016,-0.782634973526001
 https://openalex.org/I4210114874,National University of East Timor,TL,education,Dili,,-8.558609962463379,125.5736083984375
 https://openalex.org/I4210114882,Instituto Superior Politécnico de Gaza,MZ,education,Chokwé,,-24.5333309173584,32.98332977294922
-https://openalex.org/I4210114956,GSI Environmental (United States),US,company,Houston,,29.763280868530277,-95.36327362060548
+https://openalex.org/I4210114956,GSI Environmental (United States),US,company,Houston,,29.76328086853028,-95.36327362060548
 https://openalex.org/I4210114974,IMEC,BE,nonprofit,Leuven,,50.87958908081055,4.700930118560791
 https://openalex.org/I4210115028,Genoscope,FR,facility,Évry-Courcouronnes,,48.633888244628906,2.4441699981689453
 https://openalex.org/I4210115089,Centre for Southern Hemisphere Oceans Research,AU,facility,Hobart,,-42.87936019897461,147.32940673828125
@@ -4090,7 +4090,7 @@ https://openalex.org/I4210120023,Ridley College,AU,education,Melbourne,Victoria,
 https://openalex.org/I4210120068,IBM Research - Australia,AU,facility,Melbourne,Victoria,-37.80183410644531,144.9669189453125
 https://openalex.org/I4210120109,Museo Nacional de Ciencias Naturales,ES,archive,Madrid,,40.416500091552734,-3.702559947967529
 https://openalex.org/I4210120114,OAI Consulting (United States),US,company,Arlington,,38.88100814819336,-77.10427856445312
-https://openalex.org/I4210120139,Swaziland National Trust Commission,SZ,archive,Lobamba,,-26.446645736694336,31.207616806030277
+https://openalex.org/I4210120139,Swaziland National Trust Commission,SZ,archive,Lobamba,,-26.446645736694336,31.20761680603028
 https://openalex.org/I4210120228,Department of Social Sciences,RU,government,Moscow,,55.710723876953125,37.57817840576172
 https://openalex.org/I4210120238,PowerChina (China),CN,company,Beijing,,39.9315071105957,116.32023620605467
 https://openalex.org/I4210120279,Associazione Italiana per l'Agricoltura Biologica,IT,other,Milan,,45.48567962646485,9.192427635192873
@@ -4151,7 +4151,7 @@ https://openalex.org/I4210122070,Ministerio de Salud Pública,EC,government,Quit
 https://openalex.org/I4210122071,Medical University of Lodz,PL,education,Lodz,,51.77058029174805,19.473949432373047
 https://openalex.org/I4210122096,Southern District Health Board,NZ,government,Dunedin,Otago,-45.87416,170.50361
 https://openalex.org/I4210122138,Volandis,NL,nonprofit,Harderwijk,,52.33366775512695,5.645423889160156
-https://openalex.org/I4210122181,Unichristus,BR,education,Fortaleza,Ceará,-3.7336089611053462,-38.49319839477539
+https://openalex.org/I4210122181,Unichristus,BR,education,Fortaleza,Ceará,-3.733608961105346,-38.49319839477539
 https://openalex.org/I4210122261,Swiss Data Science Center,CH,education,Zurich,,47.37936782836914,8.547945976257324
 https://openalex.org/I4210122304,Institute for EthnoMedicine,US,nonprofit,Jackson,Wyoming,43.46429443359375,-110.79308319091795
 https://openalex.org/I4210122450,Benaki Phytopathological Institute,GR,facility,Athens,,38.08138656616211,23.81316566467285
@@ -4343,7 +4343,7 @@ https://openalex.org/I4210129773,Institute of Engineering,NP,education,Pulchowk,
 https://openalex.org/I4210129827,Electra- Empresa de Electricidade e Água (Cape Verde),CV,company,Mindelo,,16.876733779907227,-24.981388092041016
 https://openalex.org/I4210129904,Organ and Tissue Authority,AU,government,Canberra,Australian Capital Territory,-35.28346,149.12807
 https://openalex.org/I4210129909,ideXlab (France),FR,company,Paris,,48.89836883544922,2.3780200481414795
-https://openalex.org/I4210129938,Guangzhou Maritime College,CN,education,Guangzhou,,23.094579696655277,113.47789764404295
+https://openalex.org/I4210129938,Guangzhou Maritime College,CN,education,Guangzhou,,23.09457969665528,113.47789764404295
 https://openalex.org/I4210129988,Arrien Pharmaceuticals (United States),US,company,Salt Lake City,,40.760780334472656,-111.89105224609376
 https://openalex.org/I4210130065,Myanmar Geosciences Society,MM,other,Yangon,,16.85207748413086,96.12934112548828
 https://openalex.org/I4210130081,Centro Científico Tecnológico - Patagonia Norte,AR,facility,Bariloche,,-41.14556884765625,-71.30821990966797
@@ -4421,7 +4421,7 @@ https://openalex.org/I4210132709,Yamagata Research Institute Of Technology,JP,fa
 https://openalex.org/I4210132764,Washington Department of Fish and Wildlife,US,government,Olympia,,47.03786849975586,-122.90070343017578
 https://openalex.org/I4210132818,Hanwa Memorial Hospital,JP,healthcare,Osaka,,34.598445892333984,135.513916015625
 https://openalex.org/I4210132853,Laboratoire d’Ethologie Expérimentale et Comparée,FR,facility,Villetaneuse,,48.95832824707031,2.341670036315918
-https://openalex.org/I4210132878,Department of Fisheries,ZM,government,Lusaka,,-15.388320922851562,28.323827743530277
+https://openalex.org/I4210132878,Department of Fisheries,ZM,government,Lusaka,,-15.388320922851562,28.32382774353028
 https://openalex.org/I4210132902,"Institute of Cellular and Organismic Biology, Academia Sinica",TW,facility,Taipei,,25.0449161529541,121.6138153076172
 https://openalex.org/I4210133125,Mitsubishi Electric (Japan),JP,company,Tokyo,Tokyo,35.6895,139.69171
 https://openalex.org/I4210133166,The Catholic University of Korea Bucheon St. Mary's Hospital,KR,healthcare,Bucheon-si,Gyeonggi-do,37.49889,126.78306
@@ -4450,7 +4450,7 @@ https://openalex.org/I4210133906,Institute of Marine Engineering,IT,education,Ro
 https://openalex.org/I4210133932,China National Center for Food Safety Risk Assessment,CN,government,Beijing,,39.907501220703125,116.39723205566406
 https://openalex.org/I4210133934,Bernstein Center for Computational Neuroscience Tübingen,DE,government,Tübingen,,48.53169631958008,9.041913032531738
 https://openalex.org/I4210133958,Universidad Técnica de Manabí,EC,education,Portoviejo,,-1.0441919565200806,-80.45603942871094
-https://openalex.org/I4210134017,Universidad Marista,MX,education,Mexico City,,19.281930923461918,-99.06051635742188
+https://openalex.org/I4210134017,Universidad Marista,MX,education,Mexico City,,19.28193092346192,-99.06051635742188
 https://openalex.org/I4210134028,Sociedad Española de Cuidados Intensivos Pediátricos,ES,nonprofit,Madrid,,40.422157287597656,-3.681509971618652
 https://openalex.org/I4210134054,UCB Pharma (United Kingdom),GB,company,Slough,,51.50949096679688,-0.5954099893569946
 https://openalex.org/I4210134062,North Carolina Division of Public Health,US,government,Raleigh,North Carolina,35.85200119018555,-78.64308166503906
@@ -4487,7 +4487,7 @@ https://openalex.org/I4210134929,Jilin Province Science and Technology Departmen
 https://openalex.org/I4210134931,Smart Solution (Norway),NO,company,Billingstad,,59.87765884399414,10.50384521484375
 https://openalex.org/I4210134932,Gonbad Kavous University,IR,education,Gonbad-e Kāvūs,,37.250038146972656,55.16720962524414
 https://openalex.org/I4210134950,Asociación por los Derechos Civiles,AR,nonprofit,Buenos Aires,,-34.61315155029297,-58.37723159790039
-https://openalex.org/I4210135017,Cancer Research UK Clinical Trials Unit,GB,facility,Birmingham,,52.4508056640625,-1.9304970502853396
+https://openalex.org/I4210135017,Cancer Research UK Clinical Trials Unit,GB,facility,Birmingham,,52.4508056640625,-1.93049705028534
 https://openalex.org/I4210135039,Institute of Marine and Coastal Research,AR,facility,Mar del Plata,,-38.00041961669922,-57.55619812011719
 https://openalex.org/I4210135053,Quality Research,US,facility,San Antonio,Texas,29.50767707824707,-98.47115325927734
 https://openalex.org/I4210135110,Centre Hospitalier Universitaire de Martinique,MQ,healthcare,Fort-de-France,,14.603650093078612,-61.074180603027344
@@ -4513,11 +4513,11 @@ https://openalex.org/I4210135762,Câmara Municipal de Lisboa,PT,other,Lisbon,Lis
 https://openalex.org/I4210135778,Generaldirektion Kulturelles Erbe Rheinland-Pfalz,DE,government,Mainz,,49.98419189453125,8.27910041809082
 https://openalex.org/I4210135792,Roman L. Hruska U.S. Meat Animal Research Center,US,facility,Clay Center,Nebraska,40.5236930847168,-98.13319396972656
 https://openalex.org/I4210135831,Centro Universitário Monte Serrat,BR,education,Santos,,-23.943565368652344,-46.32794952392578
-https://openalex.org/I4210135832,Institute of Child Health,IN,healthcare,Kolkata,,22.538728713989254,88.37201690673828
+https://openalex.org/I4210135832,Institute of Child Health,IN,healthcare,Kolkata,,22.53872871398925,88.37201690673828
 https://openalex.org/I4210135910,National Maternity Hospital,IE,healthcare,Dublin,,53.34031295776367,-6.246078968048096
 https://openalex.org/I4210135931,Hospital Nacional de Niños,CR,healthcare,San José,,9.934414863586426,-84.08763122558594
 https://openalex.org/I4210135986,Museu da Amazonia,BR,archive,Manaus,Amazonas,-3.10194,-60.025
-https://openalex.org/I4210135999,Institut de Paléontologie Humaine,FR,facility,Paris,,48.83875274658203,2.3591480255126958
+https://openalex.org/I4210135999,Institut de Paléontologie Humaine,FR,facility,Paris,,48.83875274658203,2.359148025512696
 https://openalex.org/I4210136011,Madagasikara Voakajy,MG,nonprofit,Antananarivo,,-18.90532112121582,47.55625915527344
 https://openalex.org/I4210136121,Suez (France),FR,company,Courbevoie,,48.89672088623047,2.256659984588623
 https://openalex.org/I4210136124,Hôpital Jeanne d'Arc,FR,healthcare,Toul,,48.68075180053711,5.891149997711182
@@ -4695,7 +4695,7 @@ https://openalex.org/I4210142683,Instituto Nacional de Câncer - INCA,BR,healthc
 https://openalex.org/I4210142721,Hospital Universitário da Universidade de São Paulo,BR,healthcare,São Paulo,,-23.54750061035156,-46.6361083984375
 https://openalex.org/I4210142742,Pennsylvania Academy of Science,US,other,Philadelphia,,39.9523811340332,-75.16361999511719
 https://openalex.org/I4210142749,Italian Resuscitation Council,IT,other,Bologna,,44.53042984008789,11.355045318603516
-https://openalex.org/I4210142759,Instituto Nacional de Desenvolvimento das Pescas,CV,facility,Mindelo,,16.878032684326172,-24.994464874267575
+https://openalex.org/I4210142759,Instituto Nacional de Desenvolvimento das Pescas,CV,facility,Mindelo,,16.878032684326172,-24.99446487426757
 https://openalex.org/I4210142765,Instituto de Pesquisas Tecnológicas,BR,facility,São Paulo,,-23.54750061035156,-46.6361083984375
 https://openalex.org/I4210142784,Kingfisher (United Kingdom),GB,company,London,,51.523773193359375,-0.1332200020551681
 https://openalex.org/I4210142920,Global Policy Institute,US,nonprofit,Washington D.C.,District of Columbia,38.900611877441406,-77.03459930419922
@@ -4792,7 +4792,7 @@ https://openalex.org/I4210145932,Johnson & Johnson (Canada),CA,company,Markham,O
 https://openalex.org/I4210145996,"Research Center for Environmental Changes, Academia Sinica",TW,facility,Taipei,,25.040712356567383,121.61417388916016
 https://openalex.org/I4210146061,Centro de Biología Molecular Severo Ochoa,ES,facility,Madrid,,40.416500091552734,-3.702559947967529
 https://openalex.org/I4210146087,Malayer University,IR,education,Malāyer,,34.30157852172852,48.821659088134766
-https://openalex.org/I4210146140,Aberdeenshire Council,GB,government,Aberdeen,,57.153934478759766,-2.1481659412384038
+https://openalex.org/I4210146140,Aberdeenshire Council,GB,government,Aberdeen,,57.153934478759766,-2.148165941238404
 https://openalex.org/I4210146205,Obstetrics and Gynecology Hospital of Fudan University,CN,healthcare,Shanghai,,31.25934410095215,121.53501892089844
 https://openalex.org/I4210146223,Museu da Lourinhã,PT,archive,Lourinhã,,39.24222183227539,-9.313343048095703
 https://openalex.org/I4210146298,Energy International (United States),US,company,Canton,Michigan,42.33365631103516,-83.44432067871094
@@ -4822,14 +4822,14 @@ https://openalex.org/I4210147170,Eurofins (Germany),DE,company,Hamburg,,53.55987
 https://openalex.org/I4210147185,Klinik und Poliklinik für Psychiatrie und Psychotherapie,DE,healthcare,Munich,,48.137428283691406,11.57548999786377
 https://openalex.org/I4210147190,Turkish Aerospace Industries (Turkey),TR,company,Ankara,Ankara,39.91987,32.85427
 https://openalex.org/I4210147215,National Agricultural Research Foundation,GR,facility,Athens,,37.98376083374024,23.727840423583984
-https://openalex.org/I4210147228,Chengdu Normal University,CN,education,Chengdu,,30.676218032836918,103.82057189941406
+https://openalex.org/I4210147228,Chengdu Normal University,CN,education,Chengdu,,30.67621803283692,103.82057189941406
 https://openalex.org/I4210147290,Heron Therapeutics (United States),US,company,Redwood City,California,37.48522,-122.23635
 https://openalex.org/I4210147328,Sozialstiftung Bamberg,DE,healthcare,Bamberg,Bavaria,49.89873,10.90067
 https://openalex.org/I4210147344,Malaysia University of Science and Technology,MY,education,Petaling Jaya,,3.1541810035705566,101.5960693359375
 https://openalex.org/I4210147452,ITEMS International,FR,company,Issy-les-Moulineaux,,48.86042785644531,2.369407892227173
 https://openalex.org/I4210147496,Universitas Pgri Banyuwangi,ID,education,Banyuwangi,East Java,-8.2325,114.35755
 https://openalex.org/I4210147543,Universidade Estadual do Amapá,BR,education,Macapá,,0.0423510000109672,-51.065185546875
-https://openalex.org/I4210147586,Texas Children's Hospital,US,funder,Houston,,29.763280868530277,-95.36327362060548
+https://openalex.org/I4210147586,Texas Children's Hospital,US,funder,Houston,,29.76328086853028,-95.36327362060548
 https://openalex.org/I4210147594,Universidade do Estado do Amazonas,BR,education,Manaus,,-3.1019399166107178,-60.025001525878906
 https://openalex.org/I4210147610,Kap Natirel,GP,nonprofit,Vieux-Habitants,,15.951530456542969,-61.70716857910156
 https://openalex.org/I4210147616,Secretaria de Agricultura e Abastecimento,BR,government,São Paulo,,-23.54495429992676,-46.63796615600586
@@ -5147,7 +5147,7 @@ https://openalex.org/I4210161302,Vale Technological Institute,BR,education,Belé
 https://openalex.org/I4210161358,Institute of Parasitology,CZ,facility,České Budějovice,,48.97446823120117,14.474340438842772
 https://openalex.org/I4210161408,ABB (United Kingdom),GB,company,Warrington,,53.33044052124024,-2.6459720134735107
 https://openalex.org/I4210161409,Berlin Heart (Germany),DE,company,Berlin,State of Berlin,52.52437,13.41053
-https://openalex.org/I4210161461,University of Navojoa,MX,education,Navojoa,,27.001562118530277,-109.52953338623048
+https://openalex.org/I4210161461,University of Navojoa,MX,education,Navojoa,,27.00156211853028,-109.52953338623048
 https://openalex.org/I4210161471,Department of Archaeology,LK,government,Colombo,,6.923338890075684,79.85419464111328
 https://openalex.org/I4210161485,Klinikum Stuttgart,DE,healthcare,Stuttgart,,48.78351211547852,9.171395301818848
 https://openalex.org/I4210161504,International Union for Conservation of Nature,CH,nonprofit,Gland,Vaud,46.42082,6.2701
@@ -5193,7 +5193,7 @@ https://openalex.org/I4210163131,Max Planck Institute for Meteorology,DE,facilit
 https://openalex.org/I4210163156,Complejo Hospitalario Universitario de Toledo,ES,healthcare,Toledo,Castille-La Mancha,39.8581,-4.02263
 https://openalex.org/I4210163172,Environmental Earth Sciences,AU,other,Sydney,New South Wales,-33.81703186035156,151.1826934814453
 https://openalex.org/I4210163179,Republican Scientific and Practical Center of Neurology and Neurosurgery,BY,facility,Minsk,,53.92338562011719,27.677631378173828
-https://openalex.org/I4210163231,The FRAM Centre,NO,facility,Tromsø,,69.6489028930664,18.955080032348636
+https://openalex.org/I4210163231,The FRAM Centre,NO,facility,Tromsø,,69.6489028930664,18.95508003234864
 https://openalex.org/I4210163234,Combined Arms Academy of the Armed Forces of the Russian Federation,RU,government,Moscow,,55.73795700073242,37.57603073120117
 https://openalex.org/I4210163238,Urologische Klinik München,DE,healthcare,Planegg,,48.10963821411133,11.415098190307615
 https://openalex.org/I4210163247,Henan Institute of Science and Technology,CN,education,Xinxiang,,35.190330505371094,113.801513671875
@@ -5270,7 +5270,7 @@ https://openalex.org/I4210166499,Henan Polytechnic University,CN,education,Jiaoz
 https://openalex.org/I4210166601,Ministère des Ressources naturelles et des Forêts,CA,government,Québec,Quebec,46.81228,-71.21454
 https://openalex.org/I4210166725,HAS green academy,NL,education,'s-Hertogenbosch,,51.69916915893555,5.30417013168335
 https://openalex.org/I4210166766,Evergreen Health Medical Center,US,healthcare,Kirkland,Washington,47.71548080444336,-122.17838287353516
-https://openalex.org/I4210166843,Universidad del Ejército y Fuerza Aérea,MX,education,Mexico City,,19.274681091308597,-99.16525268554688
+https://openalex.org/I4210166843,Universidad del Ejército y Fuerza Aérea,MX,education,Mexico City,,19.2746810913086,-99.16525268554688
 https://openalex.org/I4210166886,Université Professionnelle d'Afrique,CG,education,Pointe-Noire,,-4.776090145111084,11.863519668579102
 https://openalex.org/I4210166920,NOAA National Marine Fisheries Service Northwest Fisheries Science Center,US,funder,Seattle,,47.60620880126953,-122.33206939697266
 https://openalex.org/I4210167034,Millennium Institute for Integrative Biology,CL,other,Santiago,Santiago Metropolitan,-33.45694,-70.64827
@@ -5345,7 +5345,7 @@ https://openalex.org/I44265643,Rowan University,US,education,Glassboro,,39.70288
 https://openalex.org/I443046,Indian River State College,US,education,Ft. Pierce,Florida,27.423303604125977,-80.3579330444336
 https://openalex.org/I4432739,University of Bergen,NO,education,Bergen,Vestland,60.39299,5.32415
 https://openalex.org/I44430492,Indian Institute of Management Bangalore,IN,education,Bengaluru,Karnataka,12.894869804382324,77.60275268554688
-https://openalex.org/I44461941,University of Houston,US,education,Houston,,29.763280868530277,-95.36327362060548
+https://openalex.org/I44461941,University of Houston,US,education,Houston,,29.76328086853028,-95.36327362060548
 https://openalex.org/I44635919,National Institute of Technology Delhi,IN,education,New Delhi,,28.62137031555176,77.21479797363281
 https://openalex.org/I44666525,University of the South Pacific,FJ,education,Suva,,-18.136829376220703,178.42530822753906
 https://openalex.org/I44675526,Shanghai Ocean University,CN,education,Shanghai,,31.22221946716309,121.45806121826172
@@ -5382,7 +5382,7 @@ https://openalex.org/I47327664,Universidade Federal do Maranhão,BR,education,S�
 https://openalex.org/I47396830,Bristol-Myers Squibb (Switzerland),CH,company,Steinhausen,,47.195098876953125,8.485810279846191
 https://openalex.org/I47403697,"Instituto Federal de Educação, Ciência e Tecnologia de Santa Catarina",BR,education,Florianópolis,Santa Catarina,-27.59667,-48.54917
 https://openalex.org/I47508984,Imperial College London,GB,education,London,England,51.50853,-0.12574
-https://openalex.org/I47519274,Taipei Medical University,TW,education,Taipei,,25.024999618530277,121.56099700927734
+https://openalex.org/I47519274,Taipei Medical University,TW,education,Taipei,,25.02499961853028,121.56099700927734
 https://openalex.org/I47658575,Endangered Wildlife Trust,ZA,nonprofit,Modderfontein,,-26.1155948638916,28.14105987548828
 https://openalex.org/I47818738,Sultan Qaboos University,OM,education,Muscat,,23.584129333496094,58.40777969360352
 https://openalex.org/I47838141,Saint Louis University,US,education,St Louis,,38.62726974487305,-90.19789123535156
@@ -5461,7 +5461,7 @@ https://openalex.org/I55143463,University of Turin,IT,education,Turin,Piedmont,4
 https://openalex.org/I55214057,Sam Ratulangi University,ID,education,Manado,,1.4821799993515017,124.8489227294922
 https://openalex.org/I55302922,The University of Texas Medical Branch at Galveston,US,education,Galveston,Texas,29.30135,-94.7977
 https://openalex.org/I5561750,University of Bari Aldo Moro,IT,education,Bari,Apulia,41.12066,16.86982
-https://openalex.org/I55712492,Zhejiang University of Technology,CN,education,Hangzhou,,30.293649673461918,120.1614227294922
+https://openalex.org/I55712492,Zhejiang University of Technology,CN,education,Hangzhou,,30.29364967346192,120.1614227294922
 https://openalex.org/I55732556,Arizona State University,US,education,Tempe,Arizona,33.41477,-111.90931
 https://openalex.org/I55741626,Technical University of Crete,GR,education,Chania,,35.51123809814453,24.02920913696289
 https://openalex.org/I55801708,Saint Michael's College,US,education,Colchester,Vermont,44.49505615234375,-73.162841796875
@@ -5660,7 +5660,7 @@ https://openalex.org/I75093019,National Institute of Oceanography,IN,facility,Pa
 https://openalex.org/I75198481,Wakayama University,JP,education,Wakayama,,34.266090393066406,135.1517791748047
 https://openalex.org/I75381157,Wilfrid Laurier University,CA,education,Waterloo,,43.46680068969727,-80.51638793945312
 https://openalex.org/I75421653,University of Missouri–Kansas City,US,education,Kansas City,Missouri,39.03354644775391,-94.57557678222656
-https://openalex.org/I75444546,West Bengal University of Animal and Fishery Sciences,IN,education,Kolkata,,22.606111526489254,88.38806915283203
+https://openalex.org/I75444546,West Bengal University of Animal and Fishery Sciences,IN,education,Kolkata,,22.60611152648925,88.38806915283203
 https://openalex.org/I75573869,Institute of Molecular and Cell Biology,SG,facility,Singapore,,1.2896699905395508,103.85006713867188
 https://openalex.org/I75821886,University of South Florida St. Petersburg,US,education,St. Petersburg,Florida,27.763193130493164,-82.63544464111328
 https://openalex.org/I75881417,WorldFish,MY,nonprofit,George Town,,5.288567066192627,100.28418731689452
@@ -5803,7 +5803,7 @@ https://openalex.org/I87182695,Universidad del Noreste,MX,education,Tampico,,22.
 https://openalex.org/I87216513,Michigan State University,US,education,East Lansing,Michigan,42.73698,-84.48387
 https://openalex.org/I872614749,Unitec Institute of Technology,NZ,education,Auckland,,-36.84852981567383,174.76348876953125
 https://openalex.org/I872945872,University of Winnipeg,CA,education,Winnipeg,,49.8843994140625,-97.14704132080078
-https://openalex.org/I87302398,Norwegian Polar Institute,NO,facility,Tromsø,,69.6489028930664,18.955080032348636
+https://openalex.org/I87302398,Norwegian Polar Institute,NO,facility,Tromsø,,69.6489028930664,18.95508003234864
 https://openalex.org/I87303767,U.S. Army Engineer Research and Development Center,US,facility,Vicksburg,,32.3526496887207,-90.87787628173828
 https://openalex.org/I87339560,College of Marin,US,education,Kentfield,California,37.956642150878906,-122.54977416992188
 https://openalex.org/I87424562,Ithaca College,US,education,Ithaca,,42.44063186645508,-76.49661254882812
@@ -5867,7 +5867,7 @@ https://openalex.org/I904495901,Ruhr University Bochum,DE,education,Bochum,North
 https://openalex.org/I90464598,University of Alaska Southeast,US,education,Juneau,,58.30194091796875,-134.4197235107422
 https://openalex.org/I905000135,College of The Bahamas,BS,education,Nassau,,25.062244415283203,-77.35338592529297
 https://openalex.org/I90527594,Université de Nouakchott,MR,education,Nouakchott,,18.08581,-15.9785
-https://openalex.org/I90546491,University of Limpopo,ZA,education,Polokwane,,-23.904489517211918,29.468849182128903
+https://openalex.org/I90546491,University of Limpopo,ZA,education,Polokwane,,-23.90448951721192,29.468849182128903
 https://openalex.org/I90610280,South China University of Technology,CN,education,Guangzhou,,23.116670608520508,113.25
 https://openalex.org/I90678064,University of Colombo,LK,education,Colombo,Western Province,6.93548,79.84868
 https://openalex.org/I907135538,Rotterdam University of Applied Sciences,NL,education,Rotterdam,,51.91016006469727,4.462540149688721
@@ -5993,19 +5993,19 @@ I177877127,The University of Western Australia,AU,education,Perth,Western Austra
 I165143802,The University of Queensland,AU,education,Brisbane,Queensland,-27.46794,153.02809
 I91083438,Fort Hays State University,US,education,Hays,Kansas,38.87918,-99.32677
 I4210153222,South Carolina State Department of Mental Health,US,government,Columbia,South Carolina,34.02046203613281,-81.0357894897461
-I4210166914,École Nationale des Travaux Publics de l'État,FR,education,Vaulx-en-Velin,,45.786930084228516,4.925099849700928
+I4210166914,École Nationale des Travaux Publics de l'État,FR,education,Vaulx-en-Velin,,45.78693008422852,4.925099849700928
 I5681781,The University of Adelaide,AU,education,Adelaide,South Australia,-34.92866,138.59863
 I165779595,The University of Melbourne,AU,education,Melbourne,Victoria,-37.814,144.96332
-I4210106043,Foundation for Ichthyosis and Related Skin Types,US,nonprofit,Colmar Manor,,38.933170318603516,-76.94580841064453
+I4210106043,Foundation for Ichthyosis and Related Skin Types,US,nonprofit,Colmar Manor,,38.93317031860352,-76.94580841064453
 I12202714,Windward Community College,US,education,Kaneohe,Hawaii,21.40921974182129,-157.81321716308594
 I3133344323,Hakodate University,JP,education,Hakodate,,41.7893180847168,140.80641174316406
 I196375840,Universidad Autónoma de Sinaloa,MX,education,Culiacán,Sinaloa,24.80209,-107.39421
 I4210131549,Biologie Intégrative des Organismes Marins,FR,facility,Banyuls de la Marenda,Occitanie,42.48375,3.12897
-I61152923,Cabot (United States),US,company,Boston,Massachusetts,42.350013732910156,-71.0457534790039
+I61152923,Cabot (United States),US,company,Boston,Massachusetts,42.35001373291016,-71.0457534790039
 I4210117518,Dagestan State University,RU,education,Makhachkala,Dagestan,42.97782,47.50027
 I4210126810,Scientific Consulting Group,US,other,Gaithersburg,Maryland,39.14116287231445,-77.2237319946289
 I4210122696,Centro Laser,IT,company,Valenzano,,41.01824951171875,16.902971267700195
-I1302438520,Australian Wildlife Conservancy,AU,nonprofit,Subiaco,Western Australia,-31.946815490722656,115.82942199707031
+I1302438520,Australian Wildlife Conservancy,AU,nonprofit,Subiaco,Western Australia,-31.946815490722656,115.82942199707033
 I4210118187,MSD (Mexico),MX,company,Mexico City,,19.428470611572266,-99.1276626586914
 I4210129963,Ecopath International Initiative,ES,nonprofit,Barcelona,,41.388790130615234,2.158989906311035
 I4210095677,Instituto Andaluz de Ciencias de la Tierra,ES,facility,Granada,Andalusia,37.18817,-3.60667
@@ -6022,9 +6022,9 @@ I4210120522,Shantou University Medical College,CN,education,Shantou,,23.36813926
 I433269,Royal Society for the Conservation of Nature,JO,nonprofit,Al Jubayhah,,32.02739334106445,35.8622932434082
 I4210130562,"Industry, Tourism and Investment",CA,government,Yellowknife,Northwest Territories,62.45368576049805,-114.37386322021484
 I2746051580,Université Paris Sciences et Lettres,FR,education,Paris,Île-de-France,48.85341,2.3488
-I4210109501,Studio Associato Gaia,IT,education,Genoa,,44.403194427490234,8.943437576293945
+I4210109501,Studio Associato Gaia,IT,education,Genoa,,44.40319442749024,8.943437576293945
 I36258959,University of California San Diego,US,education,San Diego,California,32.71571,-117.16472
-I4210142979,Desert Research Foundation of Namibia,NA,nonprofit,Windhoek,,-22.585176467895508,17.080520629882812
+I4210142979,Desert Research Foundation of Namibia,,nonprofit,Windhoek,,-22.585176467895508,17.080520629882812
 I4210162872,Laboratoire des Sciences de l'Environnement Marin,FR,facility,Plouzané,Brittany,48.38131,-4.61805
 I4210131460,Escola Nacional de Saúde Pública,BR,education,Rio de Janeiro,,-22.90641975402832,-43.18223190307617
 I4210138492,Sociedade Brasileira de Educação Matemática,BR,nonprofit,Brasília,,-15.792428016662598,-47.8853759765625
@@ -6047,19 +6047,19 @@ I4210164589,Department of Primary Industries,AU,government,Brisbane,Queensland,-
 I4210117719,National Administration of Power Plants and Electrical Transmissions (Uruguay),UY,company,Montevideo,,-34.88541030883789,-56.195106506347656
 I24354313,Universidad de Buenos Aires,AR,education,Buenos Aires,Buenos Aires F.D.,-34.61315,-58.37723
 I4210164349,Universitas Hindu Indonesia,ID,education,Denpasar,,-8.63295841217041,115.2436294555664
-I120506574,Allegheny College,US,education,Meadville,,41.641441345214844,-80.15145111083984
+I120506574,Allegheny College,US,education,Meadville,,41.64144134521485,-80.15145111083984
 I78927796,Georgia Gwinnett College,US,education,Lawrenceville,Georgia,33.98014831542969,-84.00537109375
 I4210094997,Rabbit Free Australia,AU,other,Adelaide,South Australia,-34.8870964050293,138.61329650878906
-I4210163725,Ege Üniversitesi Tıp Fakültesi Hastanesi,TR,healthcare,Izmir,,38.45425033569336,27.214027404785156
-I4210149810,Institut für Geologie und Umwelt (Germany),DE,company,Sehnde,,52.346866607666016,9.958846092224121
+I4210163725,Ege Üniversitesi Tıp Fakültesi Hastanesi,TR,healthcare,Izmir,,38.45425033569336,27.21402740478516
+I4210149810,Institut für Geologie und Umwelt (Germany),DE,company,Sehnde,,52.346866607666016,9.95884609222412
 I4387154406,Observatório Oceânico da Madeira,,facility,Funchal,,32.665679931640625,-16.92547035217285
 I2802089456,Analytical Services,US,nonprofit,Falls Church,,38.88233184814453,-77.17108917236328
-I113848333,Ibaraki Prefectural University of Health Sciences,JP,education,Ami,,36.026676177978516,140.21095275878906
+I113848333,Ibaraki Prefectural University of Health Sciences,JP,education,Ami,,36.02667617797852,140.21095275878906
 I2799597470,Everglades University,US,education,Boca Raton,Florida,26.391218185424805,-80.10832977294922
 I91036609,Citadel,US,education,Charleston,South Carolina,32.79722213745117,-79.96111297607422
 I866804994,National Research Foundation,ZA,nonprofit,Pretoria,,-25.7469482421875,28.276865005493164
 I4210106306,NCCOS Hollings Marine Laboratory,US,facility,Charleston,,32.77656936645508,-79.93092346191406
-I4210099176,Universidade Cidade de São Paulo,BR,education,São Paulo,,-23.535661697387695,-46.558048248291016
+I4210099176,Universidade Cidade de São Paulo,BR,education,São Paulo,,-23.53566169738769,-46.558048248291016
 I4210164740,"Czech Academy of Sciences, Biology Centre",CZ,facility,České Budějovice,Jihočeský kraj,48.97447,14.47434
 I4210087105,UK Research and Innovation,GB,government,Swindon,England,51.55797,-1.78116
 I4210098382,LIttoral ENvironnement et Sociétés,FR,facility,La Rochelle,Nouvelle-Aquitaine,46.16308,-1.15222
@@ -6069,21 +6069,21 @@ I3019204325,Centre Hospitalier Universitaire de Nantes,FR,healthcare,Nantes,Pays
 I98461037,Tecnológico de Monterrey,MX,education,Monterrey,,25.67506980895996,-100.31846618652344
 I126820664,Vassar College,US,education,Town of Poughkeepsie,,41.6698112487793,-73.90702819824219
 I3129743071,"Instituto Federal de Educação, Ciência e Tecnologia de Brasília",BR,education,Brasília,,-15.779720306396484,-47.92972183227539
-I55133342,University of Macerata,IT,education,Macerata,,43.297889709472656,13.452930450439453
+I55133342,University of Macerata,IT,education,Macerata,,43.297889709472656,13.452930450439451
 I902798049,National Center for Genetic Engineering and Biotechnology,TH,facility,Pathum Thani,,14.013460159301758,100.53048706054688
 I4210145073,Institute of Geological Sciences,AM,facility,Yerevan,,40.19304275512695,44.50447082519531
-I4210142992,Stress Environnementaux et Biosurveillance des Milieux Aquatiques,FR,facility,Le Havre,,49.49346160888672,0.10785000026226044
+I4210142992,Stress Environnementaux et Biosurveillance des Milieux Aquatiques,FR,facility,Le Havre,,49.49346160888672,0.1078500002622604
 I4210128459,Ridgewood Public Schools,US,education,Ridgewood,New Jersey,40.98902130126953,-74.10667419433594
 I4210096587,Vision Eye Institute,AU,education,Chatswood,New South Wales,-33.79435729980469,151.18736267089844
 I94062374,Florida College,US,education,Temple Terrace,Florida,28.03455924987793,-82.38349151611328
-I4210104075,Conseil Régional de La Réunion,RE,government,Saint-Denis,,-20.88231086730957,55.450401306152344
+I4210104075,Conseil Régional de La Réunion,RE,government,Saint-Denis,,-20.88231086730957,55.45040130615234
 I4210095511,Bord Iascaigh Mharaga,IE,other,Dublin,Leinster,53.33306,-6.24889
-I170658231,Osnabrück University,DE,education,Osnabrück,,52.272640228271484,8.049799919128418
+I170658231,Osnabrück University,DE,education,Osnabrück,,52.27264022827149,8.049799919128418
 I4387154004,Institute for Marine Biological Resources and Biotechnology,,other,Messina,,38.193939208984375,15.552559852600098
 I143485900,Trout Unlimited,US,nonprofit,Arlington,Virginia,38.89676284790039,-77.0692138671875
 I4210162499,Bentham Science Publishers (China),CN,company,Beijing,,39.907501220703125,116.39723205566406
 I285663978,Weatherford College,US,education,Weatherford,Texas,32.74093246459961,-97.79269409179688
-I2293663,Governors State University,US,education,University Park,Illinois,41.448646545410156,-87.71669006347656
+I2293663,Governors State University,US,education,University Park,Illinois,41.44864654541016,-87.71669006347656
 I4210116822,Fundação de Amparo à Pesquisa do Estado de São Paulo,BR,other,São Paulo,São Paulo,-23.5475,-46.63611
 I103716689,University College of the North,CA,education,The Pas,Manitoba,53.82159,-101.24488
 I1319399744,Pacific Community,NC,government,Noumea,South Province,-22.27407,166.44884
@@ -6091,13 +6091,13 @@ I129604602,The University of Sydney,AU,education,Sydney,New South Wales,-33.8678
 I4390039235,New Brunswick Museum,,archive,Saint John,,45.27075958251953,-66.05615997314453
 I4210165038,University of Chinese Academy of Sciences,CN,education,Beijing,Beijing,39.9075,116.39723
 I4210118072,Instituto Biofisika,ES,facility,Leioa,Basque Country,43.32686,-2.98884
-I4210150906,Ri.MED,IT,facility,Palermo,,38.116600036621094,13.36359977722168
+I4210150906,Ri.MED,IT,facility,Palermo,,38.11660003662109,13.36359977722168
 I88761825,Korea University of Science and Technology,KR,education,Daejeon,,36.38636779785156,127.36930084228516
 I187079419,Instituto Nacional de Pesquisas da Amazônia,BR,facility,Manaus,Amazonas,-3.10194,-60.025
 I2801189931,Australia Bioinformatics Resource,AU,facility,Carlton,Victoria,-37.80000305175781,144.96441650390625
-I4210108044,Nawi Graz,AT,education,Graz,,47.07754135131836,15.449728965759277
+I4210108044,Nawi Graz,AT,education,Graz,,47.07754135131836,15.449728965759276
 I4210115591,Albanian University,AL,education,Tirana,Tirana,41.32744,19.81866
-I4210114902,Florida Sea Grant,US,other,Gainesville,Florida,29.645832061767578,-82.34575653076172
+I4210114902,Florida Sea Grant,US,other,Gainesville,Florida,29.64583206176757,-82.34575653076172
 I4210101388,Health Sciences and Nutrition,AU,facility,Adelaide,South Australia,-34.92742919921875,138.5998992919922
 I4210154464,Océanopolis,FR,archive,Brest,,48.39004898071289,-4.435730934143066
 I4210134898,J.M. Burgerscentrum,NL,facility,Delft,,52.00107955932617,4.371970176696777
@@ -6105,53 +6105,53 @@ I4210165242,Olema Pharmaceuticals (United States),US,company,San Francisco,Calif
 I4388891776,Centro Oceanográfico de Murcia,,facility,San Pedro del Pinatar,,37.83567810058594,-0.7910199761390686
 I73236664,Wheaton College - Illinois,US,education,Wheaton,,41.86613845825195,-88.10700988769531
 I4210100674,Escuela Superior Politécnica Agropecuaria de Manabí Manuel Félix López,EC,education,Calceta,,-0.8458200097084045,-80.16388702392578
-I4210147819,Institute of Archaeology,CN,facility,Beijing,,39.9185791015625,116.40556335449219
+I4210147819,Institute of Archaeology,CN,facility,Beijing,,39.9185791015625,116.4055633544922
 I4210136389,International Union for Conservation of Nature (Guinea-Bissau),GW,nonprofit,Bissau,Bissau,11.86357,-15.59767
 I141810926,Baruch College,US,education,New York,New York,40.71427,-74.00597
 I4210099699,University of Jeddah,SA,education,Jeddah,Mecca Region,21.49012,39.18624
 I4210127832,Greensboro Science Center,US,archive,Greensboro,North Carolina,36.12990188598633,-79.83409881591797
 I4210089144,Centre National pour la Recherche Scientifique et Technique (CNRST),MA,government,Rabat,Rabat-Salé-Kénitra,34.01325,-6.83255
-I4210112759,Realistic Education in Action Coalition to Foster Health,US,healthcare,Los Angeles,California,34.030818939208984,-118.24322509765625
+I4210112759,Realistic Education in Action Coalition to Foster Health,US,healthcare,Los Angeles,California,34.030818939208984,-118.24322509765624
 I4210134317,"Secretaría Nacional de Ciencia, Tecnología e Innovación",PA,government,Panama City,Panamá,8.9936,-79.51973
 I4210126929,CE Technologies (United Kingdom),GB,company,Nuneaton,England,52.51863479614258,-1.4525344371795654
 I208333798,University of Missouri–St. Louis,US,education,St Louis,,38.62726974487305,-90.19789123535156
-I136804859,South African National Space Agency,ZA,government,Pretoria,,-25.74485969543457,28.187829971313477
+I136804859,South African National Space Agency,ZA,government,Pretoria,,-25.74485969543457,28.18782997131348
 I4210116645,Centre Alexandre Koyré,FR,facility,Paris,Île-de-France,48.85341,2.3488
-I4210094664,International University School of Medicine,BQ,education,Kralendijk,,12.149999618530273,-68.26667022705078
+I4210094664,International University School of Medicine,BQ,education,Kralendijk,,12.149999618530272,-68.26667022705078
 I4210145261,Iwate Prefectural Kamaishi Hospital,JP,healthcare,Kamaishi,,39.28643798828125,141.875
-I84038732,Falklands Conservation,GB,nonprofit,Sandy,,52.122222900390625,-0.2610040009021759
-I281246009,Justo Sierra University,MX,education,Mexico City,,19.671903610229492,-99.17317962646484
+I84038732,Falklands Conservation,GB,nonprofit,Sandy,,52.12222290039063,-0.2610040009021759
+I281246009,Justo Sierra University,MX,education,Mexico City,,19.67190361022949,-99.17317962646484
 I108907416,Latakia University,SY,education,Latakia,Latakia,35.53125,35.79088
 I4210090273,Madison Group (United States),US,company,Madison,Wisconsin,42.99638748168945,-89.4278335571289
-I4210105941,Institut pour la Recherche sur le Cancer de Lille,FR,facility,Lille,,50.612728118896484,3.0349879264831543
+I4210105941,Institut pour la Recherche sur le Cancer de Lille,FR,facility,Lille,,50.61272811889648,3.0349879264831543
 I4210096347,Biomark (United States),US,company,Boise,Idaho,43.61173629760742,-116.20880889892578
 I4210132800,Ordela (United States),US,company,Oak Ridge,Tennessee,35.97776412963867,-84.23017883300781
-I4210106624,École Nationale d'Ingénieurs de Gabès,TN,education,Gabès,,33.850650787353516,10.10346794128418
+I4210106624,École Nationale d'Ingénieurs de Gabès,TN,education,Gabès,,33.85065078735352,10.10346794128418
 I4210138074,Delphinus Medical Technologies (United States),US,company,Novi,Michigan,42.4849853515625,-83.49620819091797
 I4210098204,John B. Pierce Laboratory,US,nonprofit,New Haven,Connecticut,41.30815,-72.92816
-I1310053265,St George's Hospital,GB,healthcare,London,,51.427120208740234,-0.17488299310207367
+I1310053265,St George's Hospital,GB,healthcare,London,,51.42712020874024,-0.1748829931020736
 I4210094946,Noosa Hospital,AU,healthcare,Noosaville,Queensland,-26.40241050720215,153.04544067382812
 I27837315,University of Michigan,US,education,Ann Arbor,Michigan,42.27756,-83.74088
-I4210109174,Ospedale Cervesi di Cattolica,IT,healthcare,Cattolica,,43.952327728271484,12.735742568969727
+I4210109174,Ospedale Cervesi di Cattolica,IT,healthcare,Cattolica,,43.95232772827149,12.735742568969728
 I4210151670,Ecosystem (Spain),ES,company,Barcelona,,41.388790130615234,2.158989906311035
 I4210107495,General Electric (Austria),AT,company,Vienna,,48.23294448852539,16.4141788482666
 I132806614,University of Dubai,AE,education,Dubai,,25.106380462646484,55.41429901123047
 I4210159174,Ministerio de Salud - Provincia de Buenos Aires,AR,government,La Plata,,-34.91836929321289,-57.96025085449219
 I4210127096,Eugene O'Neill Theater Center,US,nonprofit,New London,Connecticut,41.3103141784668,-72.1056900024414
 I68368234,Centro de Investigación y de Estudios Avanzados del Instituto Politécnico Nacional,MX,facility,Mexico City,Mexico City,19.42847,-99.12766
-I4387153107,Pacific States Marine Fisheries Commission,,other,Portland,,45.5234489440918,-122.67620849609375
+I4387153107,Pacific States Marine Fisheries Commission,,other,Portland,,45.5234489440918,-122.67620849609376
 I4387153601,Centro Interdisciplinar de Investigação Marinha e Ambiental,,facility,Porto,,41.14960861206055,-8.610989570617676
 I32046576,Universidad Rafael Landívar,GT,education,Guatemala City,Guatemala,14.64072,-90.51327
 I4387156258,Instituto de Biodiversidad y Biología Experimental y Aplicada,AR,facility,Buenos Aires,Buenos Aires F.D.,-34.61315,-58.37723
 I4210128182,Centre For Wildlife Studies,IN,nonprofit,Bengaluru,,12.976251602172852,77.6162109375
 I92614990,Tokyo University of Agriculture and Technology,JP,education,Tokyo,,35.68949890136719,139.69171142578125
-I4210159530,Interface (United Kingdom),GB,company,Halifax,,53.753387451171875,-1.8153049945831299
+I4210159530,Interface (United Kingdom),GB,company,Halifax,,53.75338745117188,-1.8153049945831297
 I4210119109,Indiana University Bloomington,US,education,Bloomington,Indiana,39.16533,-86.52639
 I299799659,Omar Al-Mukhtar University,LY,education,Al Bayḑā’,,32.762718200683594,21.75506019592285
 I4210107629,Baylor School,US,education,Chattanooga,Tennessee,35.087406158447266,-85.33768463134766
 I4210103038,Luxel (United States),US,company,Friday Harbor,Washington,48.53778076171875,-123.04640197753906
 I80611190,Jeonbuk National University,KR,education,Jeonju,Jeollabuk-do,35.82194,127.14889
-I189718659,Pfizer (United Kingdom),GB,company,Tadworth,Surrey,51.27178955078125,-0.25360798835754395
+I189718659,Pfizer (United Kingdom),GB,company,Tadworth,Surrey,51.27178955078125,-0.2536079883575439
 I926574661,Leipzig University,DE,education,Leipzig,Saxony,51.33962,12.37129
 I4210133091,Universidad Fraternidad de Agrupaciones Santo Tomás de Aquino,AR,education,Mar del Plata,,-38.00041961669922,-57.55619812011719
 I4210155074,Instituto de Investigacao das Pescas e do Mar,PT,facility,Lisbon,Lisbon,38.71667,-9.13333
@@ -6191,7 +6191,7 @@ I4210130600,Children's Hospital of Pittsburgh,US,healthcare,Pittsburgh,Pennsylva
 I4210110579,Institut Africain d'Informatique,GA,education,Libreville,,0.3697679936885834,9.480426788330078
 I4210128695,Hormozgan University of Medical Sciences,IR,education,Bandar Abbas,,27.186500549316406,56.280799865722656
 I4210095952,Institute for Cross-Disciplinary Physics and Complex Systems,ES,facility,Palma,,39.56938934326172,2.650239944458008
-I8165072,Universidade Federal de Itajubá,BR,education,Itajubá,,-22.425559997558594,-45.452781677246094
+I8165072,Universidade Federal de Itajubá,BR,education,Itajubá,,-22.4255599975586,-45.452781677246094
 I4210104019,Pioneer (Japan),JP,company,Tokyo,Tokyo,35.6895,139.69171
 I4210152127,Conway School of Landscape Design,US,education,Conway,Massachusetts,42.50981,-72.69953
 I4210137402,Instituto Nacional de Investigação Pesqueira,MZ,government,Maputo,,-25.8909854888916,32.60209655761719
@@ -6202,8 +6202,8 @@ I4210153948,National Agricultural Technology Institute,AR,funder,Buenos Aires,,-
 I4210130959,Mineral Resources,AU,facility,Canberra,,-35.2834587097168,149.12806701660156
 I4210115933,Palm Beach Gardens Medical Center,US,healthcare,Palm Beach Gardens,Florida,26.829477310180664,-80.0866470336914
 I4387152698,Atlantic Technological University,,education,Ireland,,53.0,-8.0
-I4210159203,Western Australian Marine Science Institution,AU,facility,Crawley,,-31.984180450439453,115.81603240966797
-I4210145950,École Nationale Supérieure Maritime,FR,education,Le Havre,,49.49346160888672,0.10785000026226044
+I4210159203,Western Australian Marine Science Institution,AU,facility,Crawley,,-31.984180450439453,115.81603240966795
+I4210145950,École Nationale Supérieure Maritime,FR,education,Le Havre,,49.49346160888672,0.1078500002622604
 I4210104113,Kanagawa Prefectural Institute of Public Health,JP,government,Yokohama,,35.33078384399414,139.38389587402344
 I1286858202,Energy and Resources Institute,IN,nonprofit,New Delhi,,28.589967727661133,77.22525787353516
 I2801337628,Beth Israel Deaconess Hospital,US,healthcare,Plymouth,,41.958438873291016,-70.6672592163086
@@ -6211,15 +6211,15 @@ I4210096767,Ocean Tracking Network,CA,facility,Halifax,Nova Scotia,44.6358528137
 I4210137962,Centre for Genomic Regulation,ES,nonprofit,Barcelona,Catalonia,41.38879,2.15899
 I4210163483,Incheon Medical Center,KR,healthcare,Incheon,Incheon,37.45646,126.70515
 I4210126678,Archéozoologie et Archéobotanique,FR,facility,Paris,Île-de-France,48.85341,2.3488
-I4210130277,National Archaeological Museum of Spain,ES,archive,Madrid,,40.416500091552734,-3.7025599479675293
+I4210130277,National Archaeological Museum of Spain,ES,archive,Madrid,,40.416500091552734,-3.702559947967529
 I32021983,Christian-Albrechts-Universität zu Kiel,DE,education,Kiel,Schleswig-Holstein,54.32133,10.13489
 I4210154782,Favaloro Foundation,AR,facility,Buenos Aires,,-34.6131591796875,-58.391204833984375
 I4210097413,Paulsson (United States),US,company,Van Nuys,California,34.215267181396484,-118.49388122558594
 I2800212897,Gobierno del Principado de Asturias,ES,government,Oviedo,,43.36029052734375,-5.844759941101074
 I99542240,Polish Academy of Sciences,PL,government,Warsaw,Mazovia,52.22977,21.01178
 I142509341,College of the Atlantic,US,education,Bar Harbor,,44.38758087158203,-68.20390319824219
-I8901234,Foundation for Research and Technology Hellas,GR,facility,Heraklion,,35.3278694152832,25.143409729003906
-I4210114174,National Institute of Food and Drug Safety Evaluation,KR,facility,Cheongju-si,,36.640159606933594,127.33026123046875
+I8901234,Foundation for Research and Technology Hellas,GR,facility,Heraklion,,35.3278694152832,25.143409729003903
+I4210114174,National Institute of Food and Drug Safety Evaluation,KR,facility,Cheongju-si,,36.6401596069336,127.33026123046876
 I4210112860,Senckenberg Biodiversity and Climate Research Centre,DE,facility,Frankfurt am Main,Hesse,50.11552,8.68417
 I2801884250,British Broadcasting Corporation (United Kingdom),GB,government,London,England,51.50853,-0.12574
 I2800683076,Government of South Africa,ZA,government,Pretoria,Gauteng,-25.74486,28.18783
@@ -6230,3 +6230,541 @@ I116710086,Mesalands Community College,US,education,Tucumcari,New Mexico,35.1609
 I4210113042,Centre Hospitalier de Beauvais,FR,healthcare,Beauvais,Hauts-de-France,49.43333,2.08333
 I75356249,Hochschule Düsseldorf University of Applied Sciences,DE,education,Düsseldorf,,51.22172164916992,6.776159763336182
 I2801267896,Scarborough General Hospital,GB,healthcare,Scarborough,,54.28194046020508,-0.4369350075721741
+,China National GeneBank,CN,,龙岗区,广东省,22.5887901,114.4622246
+,Laboratório Nacional de Computação Científica,BR,,Petrópolis,Rio de Janeiro,-22.5298089,-43.217433
+,University of Eswatini,SZ,,Inkhundla Ludzeludze,Manzini,-26.4791491,31.3062386
+,Bipar,GW,,Bipar,Região de Cacheu,12.1169228,-16.2235752
+,Swiss Ornithological Institute,CH,,Sempach,Luzern,47.12778,8.192433
+,Pompeu Fabra University,ES,,Barcelona,Catalunya,41.4043275,2.1937054
+,"University of Vlora ""Ismail Qemali""",AL,,Vlorë,Shqipëria Jugore,40.4541485,19.4852307
+,Murmansk State Technical University,RU,,Мурманск,Мурманская область,68.9537786,33.0619615
+,United States Department of Agriculture,US,,Washington,District of Columbia,38.8878412,-77.029994
+,Osaka University,JP,,河南町,,34.5111992,135.631448
+,Accident Compensation Corporation,WS,,Saleufi,Tuamasaga,-13.8351808,-171.771703
+,St. Joseph Medical Center,US,,Tacoma,Washington,47.2454805,-122.4480476
+,Logan Hospital,AU,,Brisbane,Queensland,-27.6700316,153.141552
+,Data61,AU,,Sydney,New South Wales,-33.8954501,151.1970367
+,Williams (United States),US,,New London,Connecticut,41.3519917,-72.1089888
+,Universidad Pablo de Olavide,ES,,Dos Hermanas,Andalucía,37.3560809,-5.9381678
+,Instituto Evandro Chagas,BR,,Ananindeua,Pará,-1.3735669,-48.3857414
+,Humboldt State University,US,,Arcata,California,40.8755745,-124.078044
+,Hellenic Mediterranean University,GR,,Δημοτική Ενότητα Ηρακλείου,Περιφέρεια Κρήτης,35.3196274,25.1023374
+,Doncaster College,GB,,Doncaster,England,53.5280286,-1.1328703
+,Addis Ababa University,ET,,Akaki Beseka,አዲስ አበባ أديس أبابا,8.8882405,38.8092022
+,Bates College,US,,Lewiston,Maine,44.1055314,-70.2015082
+,Longwood University,US,,Farmville,Virginia,37.3090314,-78.4016795
+,Baylor Genetics,US,,Houston,Texas,29.7159902,-95.4014465
+,International Institute for Environment and Development,GB,,City of Edinburgh,Alba / Scotland,55.9523139,-3.1969241
+,West Pomeranian University of Technology,PL,,Szczecin,województwo zachodniopomorskie,53.4274785,14.520196
+,Universidad Autónoma del Noreste,MX,,Saltillo,Coahuila,25.457104,-100.9685147
+,Transgene (France),FR,,Illkirch-Graffenstaden,Grand Est,48.5242506,7.7428227
+,Primary Health Care,QA,,,الدوحة,25.2883797,51.5452798
+,Hospital Universitário Clementino Fraga Filho,BR,,Rio de Janeiro,Rio de Janeiro,-22.8421417,-43.2374958
+,Tohoku Fukushi University,JP,,仙台市,,38.2803707,140.842515
+,Hunter College,US,,New York,New York,40.7683107,-73.964406
+,TRIUMF,CA,,Electoral Area A,British Columbia,49.2472455,-123.2295664
+,National Great Rivers Research and Education Center,US,,East Alton,Illinois,38.8666457,-90.1405695
+,Davao Oriental State College of Science and Technology,PH,,Mati,Davao Oriental,6.9316447,126.2546693
+,Statistical Research (United States),US,,Albuquerque,New Mexico,35.0796435,-106.6097543
+,Institut des Sciences Biologiques,FR,,Lyon,Auvergne-Rhône-Alpes,45.7416687,4.8793747
+,Universidad Católica San Antonio de Murcia,ES,,Murcia,Región de Murcia,37.9912577,-1.1852019
+,Taichung Veterans General Hospital,TW,,臺中市,,24.1845526,120.6047597
+,Norsk Teknisk Museum,NO,,Oslo,,59.966914,10.783414
+,St Thomas' Hospital,GB,,Greater London,England,51.4990645,-0.1186968
+,Bronx-Lebanon Hospital Center,US,,New York,New York,40.8314156,-73.9031729
+,Royal University of Fine Arts,KH,,ខណ្ឌជ្រោយចង្វារ,រាជធានីភ្នំពេញ,11.6430472,104.9159974
+,Université Grenoble Alpes,FR,,Saint-Martin-d'Hères,Auvergne-Rhône-Alpes,45.1915609,5.7672639
+,Feed Research Institute,CN,,海淀区,,39.9611867,116.3201018
+,Kettering University,US,,Flint,Michigan,43.0140409,-83.714004
+,Hôpital Xavier Arnozan,FR,,Pessac,Nouvelle-Aquitaine,44.7974242,-0.6572288
+,Ontario Genomics,CA,,Guelph,Ontario,43.5284919,-80.2290428
+,Jouf University,SA,,محافظة سكاكا,منطقة الجوف,29.7848626,40.0352745
+,Korea Maritime Institute,KR,,부산광역시,,35.0770741,129.0769246
+,Piedmont Athens Regional,US,,Athens,Georgia,33.9606706,-83.3994565
+,Australian Maritime College,AU,,Launceston,Tasmania,-41.4008515,147.1208049
+,Instituto de Cardiologia de Santa Catarina,BR,,Blumenau,Santa Catarina,-26.9237248,-49.0640482
+,Louisiana State University Health Sciences Center New Orleans,US,,New Orleans,Louisiana,29.956837,-90.083135
+,Ono Pharmaceutical (Japan),JP,,仙台市,,38.2711767,140.8746867
+,Minia University,EG,,شاكر سيحه,المنيا,28.1077815,30.7452561
+,Open Data Institute,GB,,Greater London,England,51.5223376,-0.0834373
+,Khulna University,BD,,বটিয়াঘাটা উপজেলা,খুলনা বিভাগ,22.8014445,89.5342366
+,National Zoological Park,US,,Washington,District of Columbia,38.9285937,-77.0485378
+,Federal Institute for Geosciences and Natural Resources,DE,,Hannover,Niedersachsen,52.4046112,9.8220465
+,Centre Hospitalier de Vitré,FR,,Vitré,Bretagne,48.1227911,-1.2267744
+,Instituut voor Landbouw en Visserijonderzoek,BE,,Melle,Oost-Vlaanderen,50.9930493,3.7846812
+,Touro College,US,,New York,New York,40.7505364,-73.995675
+,Minnesota Zoo,US,,Apple Valley,Minnesota,44.7700407,-93.1957165
+,University of Bradford,GB,,Bradford,England,53.7916522,-1.7661184
+,Royal London Hospital,GB,,Greater London,England,51.5175027,-0.0598851
+,Hospital Ana Nery,BR,,Salvador,Bahia,-12.9573494,-38.4958437
+,Ministry of Livestock and Fisheries,TZ,,Dar es-Salaam,Coastal Zone,-6.8505736,39.2504381
+,Franklin Institute,US,,Philadelphia,Pennsylvania,39.9582436,-75.1730789
+,Museum of Kyoto,JP,,京都市,,35.012315,135.7819586
+,Biocom,AO,,Cacuso,Malanje,-9.4309253,15.7493246
+,Ministerio de Educación del Perú,PE,,San Borja,Lima,-12.0852024,-77.000892
+,Tennessee Technological University,US,,Cookeville,Tennessee,36.1748736,-85.5089051
+,Walker (United States),US,,Salisbury,Pennsylvania,39.7518035,-79.0820281
+,Centro Oceanográfico de A Coruña,ES,,A Coruña,Galicia,43.3699708,-8.3885697
+,Associação Paulista de Medicina,BR,,São Caetano do Sul,São Paulo,-23.6219136,-46.5636373
+,Universidad del Distrito Federal,MX,,Ciudad de México,Ciudad de México,19.3244753,-99.1739054
+,Indian Institute of Management Lucknow,IN,,Lucknow,Uttar Pradesh,26.9363415,80.8980289
+,Dalian Jiaotong University,CN,,沙河口区,辽宁省,38.9115422,121.5653388
+,Genetic Resources Center,JP,,つくば市,,36.0301488,140.0981293
+,Documentation Center of Cambodia,KH,,ខណ្ឌដូនពេញ,រាជធានីភ្នំពេញ,11.5586667,104.9282701
+,Amersham Hospital,GB,,Amersham,England,51.6627656,-0.6213928
+,Museu de Ciències Naturals de Barcelona,ES,,Sant Adrià de Besòs,Catalunya,41.4111252,2.2210522
+,Universidad Europea de Madrid,ES,,Villaviciosa de Odón,Comunidad de Madrid,40.3727017,-3.9185823
+,Oniris,FR,,Nantes,Pays de la Loire,47.2877577,-1.5185964
+,University of Bío-Bío,CA,,Saskatoon,Saskatchewan,52.1419352,-106.631368
+,Miami University,US,,Oxford,Ohio,39.5094198,-84.7311546
+,École Supérieure d'Électronique de l'Ouest,FR,,Angers,Pays de la Loire,47.4934798,-0.5505917
+,Sumitomo Metal Mining (Japan),JP,,青梅市,,35.7783873,139.3164954
+,Hospital for Tropical Diseases,GB,,Greater London,England,51.5227697,-0.1356007
+,Humane Society of the United States,US,,Detroit,Michigan,42.3799247,-83.0651346
+,Chesapeake Public Schools,US,,Chesapeake,Virginia,36.7746771,-76.2386218
+,Fatima Mata National College,IN,,Kollam,Kerala,8.8853492,76.6022813
+,Bristol Robotics Laboratory,GB,,Bradley Stoke,England,51.5015294,-2.5521073
+,Phillips Exeter Academy,US,,Exeter,New Hampshire,42.9777027,-70.9412082
+,Ospedale San Giacomo Apostolo,IT,,Castelfranco Veneto,Veneto,45.6770788,11.9314238
+,Guiana Space Centre,FR,,Kourou,Guyane,5.2123752,-52.7738833
+,Central Land Council,AU,,Tennant Creek,,-19.6420358,134.1919568
+,Max-Planck-Institut für Nachhaltige Materialien,DE,,Düsseldorf,Nordrhein-Westfalen,51.2397104,6.8135736
+,University of Córdoba,CO,,Perímetro Urbano Montería,Córdoba,8.7904236,-75.8617925
+,School of Visual Arts,US,,New York,New York,40.7387542,-73.9822417
+,Regulus (Czechia),CZ,,Praha,Praha,49.9928466,14.418885
+,Universitas Nahdlatul Ulama Indonesia,ID,,Jakarta Barat,Jawa,-6.1821136,106.7657446
+,Universidad Tecnológica de Hermosillo,MX,,Hermosillo,Sonora,29.0915047,-110.9532446
+,Loyola University Maryland,US,,Baltimore,Maryland,39.3483538,-76.6159318
+,Einstein Medical Center Philadelphia,US,,Philadelphia,Pennsylvania,40.0368481,-75.1415887
+,John Radcliffe Hospital,GB,,Oxford,England,51.7641187,-1.2180799
+,Cythelia (France),FR,,La Motte-Servolex,Auvergne-Rhône-Alpes,45.6382873,5.8714766
+,Quinnipiac University,US,,Hamden,Connecticut,41.4181949,-72.8931049
+,Universidad Estatal de Sonora,MX,,Navojoa,Sonora,27.0443288,-109.4526375
+,Animal Health Research Institute,DE,,Greifswald,Mecklenburg-Vorpommern,54.1828786,13.3674711
+,Eastern Illinois University,US,,Charleston,Illinois,39.478692,-88.1790663
+,Universitas Dhyana Pura,ID,,Kuta Utara,Bali,-8.6291811,115.1770898
+,SiMPore (United States),US,,Town of Henrietta,New York,43.0701271,-77.6831644
+,Smith-Kettlewell Eye Research Institute,US,,San Francisco,California,37.7911677,-122.4341915
+,Elwyn,US,,Media,Pennsylvania,39.907865,-75.4112533
+,Prefeitura Municipal de Campos dos Goytacazes,BR,,Campos dos Goytacazes,Rio de Janeiro,-21.7640057,-41.3353742
+,Scania (Sweden),SE,,Skåne län,,55.8472301,13.6339292
+,University of Louisiana at Lafayette,US,,Lafayette,Louisiana,30.2117256,-92.0195772
+,Fundación Universitaria San Pablo CEU,ES,,Madrid,Comunidad de Madrid,40.4289069,-3.7164699
+,Salus University,US,,Cheltenham Township,Pennsylvania,40.0865567,-75.1295393
+,Max Planck Florida Institute for Neuroscience,US,,Jupiter,Florida,26.8838289,-80.1148505
+,Robert Bosch (Australia),AU,,Melbourne,Victoria,-37.9294345,145.1390557
+,Altera (United States),US,,Leander,Texas,30.5832309,-97.8738795
+,Pacific Adventist University,PG,,Tanubada,Central,-9.4055745,147.2738061
+,University of California San Diego Medical Center,US,,San Diego,California,32.8780896,-117.2221863
+,Hôpital Edouard Herriot,FR,,Lyon,Auvergne-Rhône-Alpes,45.7434732,4.8826195
+,Universidad Nacional Experimental Francisco de Miranda,VE,,Tucacas,Falcón,10.8013388,-68.3304778
+,FH Campus Wien,AT,,Wien,,48.1886073,16.4032895
+,Shanghai Customs College,CN,,御桥,,31.1712401,121.574381
+,Liberal Arts University,RU,,Санкт-Петербург,Санкт-Петербург,59.9299371,30.2852807
+,NORCE Norwegian Research Centre,NO,,Stavanger,,58.934201,5.7054288
+,National Institute of Statistics,IT,,Potenza,Basilicata,40.6399209,15.8091357
+,Bell (Canada),CA,,Kitchener,Ontario,43.4315491,-80.4447691
+,St Xavier’s College,IN,,Kolkata,West Bengal,22.5486324,88.3561659
+,Centre Hospitalier Universitaire de Bordeaux,FR,,Bordeaux,Nouvelle-Aquitaine,44.8275266,-0.6038675
+,Polish Geological Institute,PL,,Warszawa,województwo mazowieckie,52.2089096,21.0131845
+,Fryske Akademy,NL,,Leeuwarden,Fryslân,53.2036374,5.7927421
+,Chelsea and Westminster Hospital,GB,,Greater London,England,51.4843131,-0.1813433
+,Wadsworth Center,US,,City of Albany,New York,42.6767337,-73.8057486
+,Azienda USL di Pescara,IT,,Pianella,Abruzzo,42.4008582,14.0522614
+,Moorabbin Hospital,AU,,Melbourne,Victoria,-37.9209721,145.0639082
+,Wellington Hospital,NZ,,Wellington City,Wellington,-41.3088882,174.7802407
+,Ente Ospedaliero Ospedali Galliera,IT,,Genova,Liguria,44.399525,8.9415855
+,Central Park Conservancy,IN,,Bengaluru,Karnataka,12.9899308,77.5752443
+,Korea Research Institute of Bioscience and Biotechnology,KR,,서울특별시,,37.594431,127.100686
+,Department of Marine and Coastal Resources,TH,,กรุงเทพมหานคร,,13.8823725,100.5657438
+,Stamford University Bangladesh,BD,,ঢাকা,ঢাকা বিভাগ,23.7444825,90.4083602
+,Earlham Institute,GB,,Norwich,England,52.6217619,1.2190376
+,University of Veterinary Medicine,AT,,Wien,,48.2548154,16.4304238
+,Wilhelmina Children's Hospital,NL,,Utrecht,Utrecht,52.0894645,5.1811818
+,Mental Research Institute,AU,,Melbourne,Victoria,-37.7786002,144.9422572
+,Aleutian Pribilof Islands Association,US,,Anchorage,Alaska,61.174454,-149.8612874
+,RIKEN,JP,,和光市,,35.7788386,139.6160176
+,Heritage Malta,MT,,Il-Kalkara,,35.8928564,14.5247053
+,La Rochelle Université,FR,,La Rochelle,Nouvelle-Aquitaine,46.1484125,-1.1568188
+,Khairun University,ID,,Ternate,Maluku Utara,0.7586144,127.3375188
+,Gordon College,US,,Wenham,Massachusetts,42.5888528,-70.8203006
+,Lymington New Forest Hospital,GB,,New Forest,England,50.7693943,-1.5457922
+,Universitas Dian Nusantara,ID,,Jakarta Barat,Jawa,-6.1758388,106.7830481
+,Doncaster Council,GB,,Doncaster,England,53.5215387,-1.1352347
+,German University of Technology,OM,,ولاية السيب,محافظة مسقط,23.6367443,58.0480999
+,Institut Gustave Roussy,FR,,Villejuif,Île-de-France,48.7936946,2.354221
+,IAC (United States),US,,West Hollywood,California,34.0909205,-118.3841741
+,Harbin University of Science and Technology,CN,,哈尔滨市,黑龙江省,45.7088083,126.6283625
+,University of Asmara,ER,,ኣስመራ Asmara أسمرة,ዞባ ማእከል Maekel zone المنطقة المركزية,15.3434783,38.9281185
+,Genentech,US,,Vacaville,California,38.3901767,-121.9482113
+,New York State College of Veterinary Medicine,US,,Town of Ithaca,New York,42.4609853,-76.4548
+,National University of Tierra del Fuego,AR,,Ushuaia,Tierra del Fuego,-54.8255271,-68.3282413
+,Central Institute of Mental Health,IN,,Hyderabad,Telangana,17.4502822,78.4359503
+,Peninsula Health,AU,,Wallaroo,South Australia,-33.9272744,137.6364972
+,Portsmouth College,GB,,Portsmouth,England,50.808301,-1.0447849
+,Université des Antilles,FR,,Pointe-à-Pitre,Guadeloupe,16.2246205,-61.5290953
+,Japan Coast Guard,JP,,千代田区,,35.6761293,139.7501236
+,Denver Museum of Nature and Science,US,,Denver,Colorado,39.7475479,-104.9429113
+,Research Institute of Innovative Technology for the Earth,JP,,木津川市,,34.7417132,135.7783075
+,United States Public Health Service,US,,Norfolk,Virginia,36.9020901,-76.303009
+,Herbal Apothecary (United Kingdom),GB,,Barton-upon-Humber,England,53.6850757,-0.4407902
+,Escola Superior de Saúde da Cruz Vermelha Portuguesa,PT,,Lisboa,,38.7127126,-9.1758068
+,National Neuroscience Institute,SG,,Singapore,,1.3220719,103.8455834
+,Flagstaff Medical Center,US,,Flagstaff,Arizona,35.2087899,-111.6440219
+,Sejong University,KR,,서울특별시,,37.550848,127.0746074
+,Centro Oceanográfico de Vigo,ES,,Vigo,Galicia,42.1836893,-8.8134096
+,Northeast Forestry University,CN,,香坊区,黑龙江省,45.7186275,126.6287385
+,Wellcome Trust,GB,,Greater London,England,51.5255433,-0.1348864
+,National Archaeological Museum,IT,,Spoleto,Umbria,42.7335433,12.7350736
+,New Valley University,US,,Town of Delhi,New York,42.2526871,-74.9331146
+,The King's College,US,,New York,New York,40.7066535,-74.0123807
+,Johns Hopkins Medicine,US,,Baltimore,Maryland,39.2874081,-76.5523701
+,Universidad de Sonsonate,SV,,Sonsonate,Sonsonate,13.7307736,-89.7188015
+,University of South Carolina Aiken,US,,Aiken,South Carolina,33.5727131,-81.7720634
+,Universidade Federal de Pelotas,BR,,Pelotas,Rio Grande do Sul,-31.7812606,-52.3236949
+,Miyagi University,JP,,大和町,,38.3500495,140.841258
+,Augusta University Health,US,,Augusta,Georgia,33.4694103,-81.9884196
+,North Carolina Agricultural and Technical State University,US,,Greensboro,North Carolina,36.0781271,-79.770547
+,WWF-Indonesia,ID,,Mataram,Nusa Tenggara Barat,-8.5896126,116.1073582
+,Escola Superior de Ciências da Saúde,BR,,Brasília,Distrito Federal,-15.7845328,-47.8869278
+,University of Mauritius,MU,,"Moka VCA, East",Moka,-20.2345142,57.4976573
+,DELL (United States),US,,Washington,District of Columbia,38.9029411,-77.048556
+,Nebraska Wesleyan University,US,,Lincoln,Nebraska,40.8383056,-96.6479296
+,John Jay College of Criminal Justice,US,,New York,New York,40.7707024,-73.9892566
+,Istituto di Fisiologia Clinica,IT,,Pisa,Toscana,43.7169947,10.3928595
+,Universidad Veritas,CR,,Área Metropolitana de San José,,9.9254713,-84.0648763
+,University of South Carolina Sumter,US,,Sumter,South Carolina,33.9348239,-80.3738771
+,Ranger College,US,,Ranger,Texas,32.4557966,-98.6844575
+,UMR Espace-Dev,FR,,Montpellier,Occitanie,43.6471772,3.8779894
+,University of Atlántico,AR,,Ushuaia,Tierra del Fuego,-54.8255271,-68.3282413
+,University of Peradeniya,LK,,Meewatura,Central Province,7.2563571,80.5970538
+,Western Fisheries Research Center,US,,Seattle,Washington,47.6754588,-122.2564623
+,Centre for Higher Education,IN,,Kumarakovil,Tamil Nadu,8.2492332,77.3502525
+,British American Tobacco (United Kingdom),GB,,City of Westminster,England,51.511797,-0.1130734
+,National Historical Museums,US,,Philadelphia,Pennsylvania,39.9423784,-75.1749348
+,Michigan Science Center,US,,Detroit,Michigan,42.3583381,-83.061992
+,Fremantle Hospital,AU,,Fremantle,Western Australia,-32.0574608,115.7533679
+,Instituto Superior Tecnológico Loja,EC,,Riobamba,Chimborazo,-1.6723028,-78.6408573
+,Laboratoire de Biochimie,FR,,Rennes,Bretagne,48.113066,-1.7060903
+,Stellwagen Bank National Marine Sanctuary,,,,,42.4006174,-70.3357931
+,Weber State University,US,,Ogden,Utah,41.1920906,-111.9391269
+,Omar Bongo University,GA,,Libreville,Estuaire,0.4185705,9.4459569
+,Centre de Biologie et de Gestion des Populations,FR,,Montferrier-sur-Lez,Occitanie,43.6825555,3.8751908
+,Hellenic Ministry of Rural Development and Food,GR,,Αθήνα,Περιφέρεια Αττικής,37.9876333,23.7269094
+,Ngee Ann Polytechnic,SG,,Singapore,,1.3331884,103.7746123
+,Université Moulay Ismail de Meknes,MA,,Meknès ⴰⵎⴽⵏⴰⵙ مكناس,Fès-Meknès ⴼⴰⵙ-ⵎⴽⵏⴰⵙ فاس-مكناس,33.857094,-5.5719172
+,Sogang University,KR,,서울특별시,,37.5520909,126.9409875
+,Pacific Engineering (United States),US,,Tukwila,Washington,47.4648754,-122.2689325
+,National University Bangladesh,BD,,গাজীপুর,ঢাকা বিভাগ,23.9504986,90.3800878
+,Cold Spring Harbor Laboratory,US,,Village of Laurel Hollow,New York,40.8623522,-73.4699926
+,Hong Kong Baptist University,CN,,香港 Hong Kong,新界 New Territories,22.337988,114.1826259
+,University of Kurdistan,IR,,شهر سنندج,استان کردستان,35.3110267,46.9942105
+,Instituto Rio Grandense do Arroz,BR,,Cachoeira do Sul,Rio Grande do Sul,-30.0391501,-52.895904
+,Emporia State University,US,,Denver,Colorado,39.7767377,-105.0511037
+,Nikon (United States),US,,Los Angeles,California,34.0634665,-118.3690841
+,Hakai Institute,CA,,Area A (Ocean Falls/Outer Coast),British Columbia,51.6590447,-128.1383228
+,Instituto Sinchi,CO,,Leticia,Amazonas,-4.2061964,-69.9431594
+,Malteser-Krankenhaus,DE,,Berlin,,52.5088009,13.2518631
+,Swinburne University of Technology Sarawak Campus,MY,,Kuching,Sarawak,1.5324818,110.3571832
+,University of Jammu,IN,,Jammu,Jammu and Kashmir,32.7182619,74.8694345
+,Simmons University,US,,Boston,Massachusetts,42.3389354,-71.1004318
+,Gold Coast Health,AU,,Gold Coast,Queensland,-27.9793057,153.3783676
+,Oeschger Centre for Climate Change Research,CH,,Bern,Bern/Berne,46.9506279,7.4384753
+,Saint Mary's College,US,,Notre Dame,Indiana,41.7074744,-86.2562801
+,St. Norbert College,US,,De Pere,Wisconsin,44.4439887,-88.0673452
+,Hawaii Department of Health,US,,Kalaupapa,Hawaii,21.1900459,-156.9832334
+,Fundacion Venezolana de Investigaciones Sismologicas,VE,,Caracas,Miranda,10.4694394,-66.8100134
+,Graduate School USA,US,,Washington,District of Columbia,38.8860291,-77.0202022
+,Trine University,US,,Angola,Indiana,41.6311141,-85.0105982
+,Bangladesh Fisheries Research Institute,BD,,সুনামগঞ্জ,সিলেট বিভাগ,24.9375306,91.4162567
+,Agriculture Victoria,AU,,Tatura,Victoria,-36.439644,145.2702206
+,Brain (Germany),DE,,Braunschweig,Niedersachsen,52.2592249,10.5220162
+,ParisTech,FR,,Champs-sur-Marne,Île-de-France,48.8411282,2.5882677
+,Instituto Nacional de Biodiversidad,EC,,Quito,,-0.1860836,-78.4855501
+,Immersion (United States),US,,Scarborough,Maine,43.6074649,-70.3510006
+,Government of Uttar Pradesh,IN,,Delhi,,28.6283396,77.1121117
+,Institut Universitaire Européen de la Mer,FR,,Plouzané,Bretagne,48.3583917,-4.5621952
+,Hospital de São Sebastião,PT,,Santa Maria da Feira,,40.9302793,-8.5469027
+,Academic Medical Center,NL,,Amsterdam,Noord-Holland,52.2924635,4.9565766
+,Severn Trent (United Kingdom),GB,,Stoke-on-Trent,England,53.0382473,-2.1614385
+,Université du littoral côte d'opale,FR,,Dunkerque,Hauts-de-France,51.0365306,2.3695964
+,Sapporo Higashi Tokushukai Hospital,JP,,札幌市,北海道地方,43.1035612,141.3659298
+,Middlesex Hospital,US,,Middletown,Connecticut,41.5543991,-72.6472261
+,Universidad Andina Simón Bolívar,EC,,Quito,,-0.2114734,-78.4877906
+,Istituto Zooprofilattico Sperimentale del Mezzogiorno,IT,,Monteforte Irpino,Campania,40.8922374,14.7197072
+,ESCP Business School,DE,,Berlin,,52.5236782,13.2893897
+,Mindanao State University Naawan,PH,,Naawan,Misamis Oriental,8.4292497,124.2877493
+,Hôpital du Saint-Sacrement,CA,,Trois-Rivières,Québec,46.3549263,-72.5626876
+,Instituto Tecnológico de Ciudad Madero,MX,,Ciudad Madero,Tamaulipas,22.2563818,-97.8472659
+,University of Tirana,AL,,Tiranë,Shqipëria Qendrore,41.3166196,19.8217354
+,Mercator Ocean (France),FR,,Ramonville-Saint-Agne,Occitanie,43.5493191,1.4852484
+,Wilkes University,US,,Wilkes-Barre,Pennsylvania,41.2444276,-75.8902922
+,Matrix Research (United States),US,,Beavercreek,Ohio,39.7299063,-84.077135
+,University of Peloponnese,GR,,Δημοτική Ενότητα Πατρέων,Περιφέρεια Δυτικής Ελλάδας,38.2187045,21.7478949
+,Helmholtz Zentrum München,DE,,Oberschleißheim,Bayern,48.2213102,11.59294
+,St. George's School,US,,Middletown,Rhode Island,41.4919039,-71.2735615
+,University of Applied Sciences Worms,DE,,Worms,Rheinland-Pfalz,49.6348664,8.3445229
+,Rzeszów University,PL,,Rzeszów,województwo podkarpackie,50.0490767,21.9812403
+,Clínica Diagonal,ES,,Barcelona,Catalunya,41.3958442,2.1543171
+,Centre for Life,GB,,Newcastle upon Tyne,England,54.9670524,-1.6209942
+,Valahia University of Targoviste,RO,,Târgoviște,,44.9433234,25.4549331
+,Suleyman Demirel University,TR,,Isparta Merkez,Akdeniz Bölgesi,37.8379545,30.5350457
+,Servicio Canario de la Salud,ES,,Las Palmas de Gran Canaria,Canarias,28.1193281,-15.4248581
+,Ørsted (Denmark),DK,,Ørsted,Region Midtjylland,56.5007806,10.3363752
+,Toi Ohomai Institute of Technology,NZ,,Welcome Bay,Bay of Plenty,-37.7328761,176.1482303
+,Huazhong University of Science and Technology,CN,,洪山区,湖北省,30.5202172,114.4118463
+,Azienda Sanitaria Locale Viterbo,IT,,Valentano,Lazio,42.5682368,11.8202311
+,Bryn Mawr College,US,,Lower Merion Township,Pennsylvania,40.0286808,-75.3154551
+,De La Salle University,PH,,Manila,Metro Manila,14.5669303,120.9918739
+,Research Square (United States),US,,Durham,North Carolina,35.9977133,-78.9063096
+,Choate Rosemary Hall,US,,Wallingford,Connecticut,41.4583917,-72.8013329
+,Taipei Hospital,TW,,新北市,,25.0395009,121.4613873
+,University of Ilorin,NG,,Ilorin South,Kwara,8.4759307,4.6632267
+,Universidad Nacional del Santa,PE,,Nuevo Chimbote,Ancash,-9.1214945,-78.5127111
+,Monell Chemical Senses Center,US,,Philadelphia,Pennsylvania,39.9557428,-75.1930889
+,Sarajevo School of Science and Technology,BA,,Ilidža,Federacija Bosne i Hercegovine,43.8238836,18.3085122
+,Natural History Museum of Bern,CH,,Bern,Bern/Berne,46.9419306,7.4494457
+,Graz University of Technology,AT,,Graz,Steiermark,47.0582807,15.4602462
+,Miami Foundation,US,,Miami,Florida,25.7854976,-80.1730785
+,AIDS Vancouver,CA,,Courtenay,British Columbia,49.6899692,-124.9990191
+,Marconi University,US,,Colorado Springs,Colorado,38.8984112,-104.7972529
+,Center for Information Technology,US,,San Antonio,Texas,29.4498622,-98.562718
+,Inland Norway University of Applied Sciences,NO,,Stor-Elvdal,,61.4252177,11.0799088
+,Florida Department of Education,US,,Gainesville,Florida,29.6473721,-82.3478763
+,Austrian Institute of Technology,AT,,Seibersdorf,Niederösterreich,47.9746832,16.507779
+,United States Army Corps of Engineers,US,,Township X,South Dakota,44.4449047,-100.3984178
+,Open University of Tanzania,TZ,,Mwanza,Mwanza,-2.5198925,32.8991459
+,Brookhaven National Laboratory,US,,Ridge,New York,40.8745102,-72.8667428
+,East West University,BD,,ঢাকা,ঢাকা বিভাগ,23.7686226,90.4256065
+,Reial Acadèmia de Ciències i Arts de Barcelona,ES,,Barcelona,Catalunya,41.3840311,2.1706425
+,Dar Al Shifaa Hospital,AE,,أبو ظبي,أبو ظبي,24.4784866,54.3815732
+,Universidad de Especialidades Espíritu Santo,EC,,Samborondón,Guayas,-2.1323238,-79.8659151
+,Universidad La República,CL,,Santiago,Región Metropolitana de Santiago,-33.4417543,-70.6625621
+,North Slope Borough,US,,North Slope Borough,Alaska,69.5335129,-153.8220681
+,University of Saint Joseph,US,,West Hartford,Connecticut,41.7825213,-72.7312066
+,ConStat,BR,,Redenção,Pará,-8.0471375,-50.049219
+,Judson College,US,,Marion,Alabama,32.6294086,-87.3130934
+,Eastern University,US,,Ypsilanti,Michigan,42.2522463,-83.6245615
+,Universidad Marista de Mérida,MX,,Mérida,Yucatán,21.0512425,-89.6244877
+,Instituto Tecnológico de Oaxaca,MX,,Oaxaca,Oaxaca,17.0807403,-96.7459074
+,Macalester College,US,,Saint Paul,Minnesota,44.9376942,-93.1692917
+,Sultan Zainal Abidin University,MY,,Kuala Terengganu,Terengganu,5.3228597,103.1505058
+,Universitas Dr. Soetomo,ID,,Surabaya,Jawa,-7.2986353,112.7651865
+,Prona,AL,,Bashkia Durrës,Shqipëria Veriore,41.3166962,19.4452073
+,Instituto Argentino de Radioastronomía,AR,,Pereyra,Buenos Aires,-34.8704388,-58.1399061
+,L'Institut Agro,FR,,Dijon,Bourgogne-Franche-Comté,47.309959,5.064627
+,East China Normal University,CN,,普陀区,上海市,31.2284923,121.4021139
+,Hospital de Santo Espirito de Angra do Heroísmo,PT,,Angra (Santa Luzia),,38.6688818,-27.2198632
+,Urbana University,US,,Urbana,Ohio,40.1020552,-83.760634
+,Hôpitaux de Saint Maurice,FR,,Saint-Maurice,Île-de-France,48.8241528,2.4220317
+,"Hôpital Civil, Strasbourg",FR,,Strasbourg,Grand Est,48.5760904,7.7449085
+,United States Naval Academy,US,,Annapolis,Maryland,38.9819343,-76.4821362
+,Lamar University,US,,Beaumont,Texas,30.0388947,-94.0758929
+,Institute of Archeology,IL,,ירושלים | القدس,מחוז ירושלים,31.7932286,35.2312541
+,Zagazig University,EG,,كفر الزند,الشرقية,30.5886075,31.4819297
+,Freshwater Fisheries Society of BC,CA,,Abbotsford,British Columbia,49.0219237,-122.2730916
+,National Jewish Health,US,,Denver,Colorado,39.7392096,-104.9423779
+,Laboratoire National Henri Becquerel,FR,,Caen,Normandie,49.2138826,-0.3607706
+,Centre de Formation et de Recherche sur les Environnements Méditerranéens,FR,,Perpignan,Occitanie,42.6838097,2.8983816
+,Government of Canada,CA,,Ottawa,Ontario,45.3986606,-75.6089697
+,St Vincent's Hospital,AU,,Sydney,New South Wales,-33.880122,151.2211619
+,Theodore Roosevelt High School,US,,Kent,Ohio,41.1688603,-81.3558521
+,Dirección General Marítima,CO,,Perímetro Urbano Barranquilla,Atlántico,11.0391716,-74.8221911
+,Nordhausen University of Applied Sciences,DE,,Nordhausen,Thüringen,51.483967,10.806135
+,Ningxia University,CN,,银川市,宁夏回族自治区,38.4965932,106.0998505
+,Morehead State University,US,,Morehead,Kentucky,38.1867483,-83.4332396
+,Regione Autonoma Friuli Venezia Giulia,IT,,,Friuli-Venezia Giulia,46.151042,13.055904
+,Duy Tan University,VN,,Thành phố Đà Nẵng,,16.0745864,108.2228663
+,École Nationale de la Statistique et de l'Analyse de l'Information,FR,,Bruz,Bretagne,48.0511495,-1.7420038
+,Ospedale Misericordia - Grosseto,IT,,Grosseto,Toscana,42.7767735,11.1268784
+,Wildlife Management International,US,,Escambia County,Florida,30.8621305,-87.4008121
+,Gendarmerie Nationale,FR,,Bugeat,Nouvelle-Aquitaine,45.6011166,1.9191921
+,Blackpool Victoria Hospital,GB,,Blackpool,England,53.8209731,-3.0140463
+,Hawke's Bay Hospital,NZ,,Napier City,Hawke's Bay,-39.4897935,176.9016577
+,University of Baltimore,US,,Baltimore,Maryland,39.3054661,-76.616577
+,St Vincent's Hospital Sydney,AU,,Sydney,New South Wales,-33.880122,151.2211619
+,Berkshire Hathaway (United States),US,,Jeffersonville,Indiana,38.3225205,-85.7163487
+,Sanibel-Captiva Conservation Foundation,US,,Sanibel,Florida,26.4388749,-82.0972362
+,St. John's University,US,,New York,New York,40.7255421,-73.7919066
+,Ho Chi Minh City University of Technology,VN,,Thành phố Hồ Chí Minh,,10.8797358,106.8061911
+,Institut Français de la Mer,FR,,Villefranche-sur-Mer,Provence-Alpes-Côte d'Azur,43.7028327,7.3047155
+,University of Chittagong,BD,,হাটহাজারী উপজেলা,চট্টগ্রাম বিভাগ,22.4717058,91.7769101
+,Cleveland Museum of Natural History,US,,Cleveland,Ohio,41.5116753,-81.6129728
+,Berliner Wasserbetriebe (Germany),DE,,Berlin,,52.5154868,13.410914
+,Bryan College,US,,Dayton,Tennessee,35.4978913,-84.998551
+,University for Peace,CR,,Colón,,9.9211657,-84.2765696
+,Pusan National University Yangsan Hospital,KR,,양산시,,35.3266447,129.0079543
+,Institut Agronomique et Vétérinaire Hassan II,MA,,Rabat ⵔⴱⴰⵟ الرباط,Rabat-Salé-Kénitra ⵔⴱⴰⵟ-ⵙⵍⴰ-ⵇⵏⵉⵟⵔⴰ الرباط-سلا-القنيطرة,33.9761868,-6.8660053
+,Institute of Acoustics,CN,,海淀区,,39.9854606,116.3184751
+,Institut National de la Recherche Scientifique,CA,,Québec,Québec,46.8127373,-71.2243428
+,National Audubon Society,US,,Grand Junction,Colorado,39.0783454,-108.6054488
+,Constructor University,DE,,Bremen,Bremen,53.1675194,8.6511191
+,Instituto Costarricense de Electricidad,CR,,Área Metropolitana de San José,,9.9386096,-84.1028317
+,Hospital Universitario de Canarias,ES,,San Cristóbal de La Laguna,Canarias,28.4568446,-16.291886
+,Persian Gulf University,IR,,شهر بوشهر,استان بوشهر,28.9104707,50.8215452
+,Chosun University,KR,,광주광역시,,35.1412134,126.9303491
+,STMicroelectronics (United Kingdom),GB,,Bristol,England,51.540495,-2.5770243
+,Nation University,TH,,พิชัย,,18.256571,99.5363482
+,Notre Dame College,US,,Belmont,California,37.5172246,-122.2853164
+,Bishop Auckland Hospital,GB,,Bishop Auckland,England,54.6559478,-1.6781282
+,Instituto de Ciências Farmacêuticas,BR,,São Paulo,São Paulo,-23.5640305,-46.724442
+,Institut Européen des Membranes,FR,,Montpellier,Occitanie,43.6360193,3.8643066
+,Addington Hospital,ZA,,Durban,KwaZulu-Natal,-29.862115,31.0412459
+,NSW Environment and Heritage,AU,,Grafton,New South Wales,-29.6931012,152.9328231
+,Centro Universitário de Belo Horizonte,BR,,Belo Horizonte,Minas Gerais,-19.9719605,-43.9633878
+,Hannover Re (Germany),DE,,Hannover,Niedersachsen,52.3926055,9.8036494
+,Iwaki Meisei University,JP,,いわき市,,37.0184995,140.9182335
+,Repsol (Spain),ES,,Palma,Illes Balears,39.5666697,2.640508
+,École Normale Supérieure - PSL,FR,,Paris,Île-de-France,48.8417072,2.3447923
+,National Museum of Archaeology,TW,,臺南市,,23.1008057,120.2836709
+,Department of Forestry,MW,,Lilongwe,Lilongwe,-13.9602682,33.7955282
+,Cascades (Canada),CA,,Kingsey Falls,Québec,45.8588425,-72.0745668
+,Ministry of Culture,GH,,Accra,Greater Accra Region,5.5521759,-0.2007518
+,Centro Nacional de Investigación sobre la Evolución Humana,ES,,Burgos,Castilla y León,42.3390149,-3.6965284
+,Dow University of Health Sciences,PK,,کراچی ڈویژن,سندھ,24.9442144,67.1420522
+,Biological E (India),IN,,Turakapally,Telangana,17.6593326,78.6200968
+,South College,US,,Mount Pleasant,North Carolina,35.398596,-80.439507
+,Institut de physique du globe de Paris,FR,,Paris,Île-de-France,48.8447758,2.3561335
+,Escola de Comando e Estado-Maior do Exército,BR,,Rio de Janeiro,Rio de Janeiro,-22.9538986,-43.1651615
+,American Institutes for Research,US,,Palo Alto,California,37.3828147,-122.1870424
+,Sabah Parks,MY,,Tanjung Aru,Sabah,5.9519212,116.059145
+,École Nationale Supérieure des Sciences de la Mer et de l'Aménagement du Littoral,DZ,,Daïra de Chéraga,الجزائر ⴷⵣⴰⵢⴻⵔ,36.7553186,2.9817799
+,Vanda Institute,KH,,បាត់ដំបង,ខេត្តបាត់ដំបង,13.1048427,103.2111688
+,Mount Royal University,CA,,Calgary,Alberta,51.0116203,-114.1307018
+,Leibniz Institute for Neurobiology,DE,,Magdeburg,Sachsen-Anhalt,52.1018483,11.6109962
+,Centre d'Etudes Biologiques de Chizé,FR,,Villiers-en-Bois,Nouvelle-Aquitaine,46.1473522,-0.4256608
+,Laboratoire Interdisciplinaire de Physique,FR,,Saint-Martin-d'Hères,Auvergne-Rhône-Alpes,45.193318,5.7626706
+,Earth Observatory of Singapore,SG,,Singapore,,1.3466218,103.6804442
+,Hôtel-Dieu de Lyon,FR,,Lyon,Auvergne-Rhône-Alpes,45.7586965,4.8366141
+,Universidade Vila Velha,BR,,Vila Velha,,-20.3543473,-40.2991866
+,Wrexham University,GB,,Wrexham,Cymru / Wales,53.0534759,-3.0047901
+,Chiba Institute of Science,JP,,柏市,,35.8959885,139.9435813
+,Université d'Angers,FR,,Angers,Pays de la Loire,47.4879427,-0.5509657
+,Pomona College,US,,Claremont,California,34.0974775,-117.7117275
+,Cyprus Institute,CY,,Δήμος Λευκωσίας,Κύπρος,35.1530398,33.3836438
+,Cancer Research Institute,US,,Columbus,Ohio,39.9949945,-83.0196645
+,Ohio Department of Natural Resources,US,,Athens,Ohio,39.3380386,-82.0834091
+,Janssen (United States),US,,Raritan,New Jersey,40.5749896,-74.641192
+,National Heart Lung and Blood Institute,IN,,New Delhi,,28.6417112,77.2053896
+,Université Jean Monnet,FR,,Saint-Étienne,Auvergne-Rhône-Alpes,45.4230567,4.4257212
+,Comenius University Bratislava,SK,,Bratislava,Bratislavský kraj,48.1402969,17.1158258
+,Research Network (United States),US,,Menlo Park,California,37.4839822,-122.1495568
+,Province of Antwerp,ZA,,Cape Town,Western Cape,-33.9136952,18.3961825
+,GEI Consultants,US,,Buffalo,New York,43.011057,-78.775009
+,Hiroshima Shudo University,JP,,広島市,,34.4338522,132.4040863
+,Illinois Archaeological Survey,US,,Urbana,Illinois,40.1316264,-88.2261387
+,Jumeira University,AE,,دبي,دبي,25.1464407,55.2564624
+,Guangdong Province Environmental Monitoring Center,CN,,福田区,广东省,22.5776018,114.0527925
+,Università Campus Bio-Medico,IT,,Roma,Lazio,41.7673727,12.4695515
+,Université de franche-comté,FR,,Besançon,Bourgogne-Franche-Comté,47.2360829,6.0147827
+,Guangxi Normal University,CN,,秀峰区,广西壮族自治区,25.2827818,110.2942408
+,Karnataka Veterinary Animal and Fisheries Sciences University,IN,,Kamatana,Karnataka,17.8674692,77.4730321
+,Science Foundation Ireland,IE,,Limerick,Munster,52.6744667,-8.5772459
+,Institut National Agronomique de Tunisie,TN,,تونس,ولاية تونس,36.8453699,10.1918482
+,Universidad Politécnica de Sinaloa,MX,,Mazatlán,Sinaloa,23.2649684,-106.3739576
+,At Bristol,GB,,Patchway,England,51.5417486,-2.5685949
+,St. Olaf College,US,,Bridgewater Township,Minnesota,44.4641067,-93.1871778
+,Centro Español de Metrología,ES,,Tres Cantos,Comunidad de Madrid,40.594148,-3.6963041
+,Fundação de Amparo à Pesquisa do Estado do Amazonas,BR,,Manaus,Amazonas,-3.0749473,-60.0287201
+,Tohoku Medical Megabank Organization,JP,,仙台市,,38.271139,140.857755
+,Swedish Institute,SE,,Stockholm,,59.3492704,18.0691994
+,Guangdong Ocean University,CN,,霞山区,广东省,21.2008693,110.4063097
+,Guru Gobind Singh Indraprastha University,IN,,Delhi,,28.5947576,77.0180611
+,Novo Holdings (Denmark),DK,,Gentofte Kommune,Region Hovedstaden,55.727107,12.584083
+,Seoul Institute,KR,,서울특별시,,37.479427,127.0201564
+,Svay Rieng University,KH,,សង្កាត់ស្វាយរៀង,ខេត្តស្វាយរៀង,11.1000688,105.7669733
+,Arkansas State University,US,,Jonesboro,Arkansas,35.8441163,-90.6726325
+,Mississippi Department of Environmental Quality,US,,Jackson,Mississippi,32.3002243,-90.1811775
+,Center for Cancer Research,US,,Bastrop,Texas,30.2057026,-97.3054934
+,Universidade Nilton Lins,BR,,Manaus,Amazonas,-3.0571877,-60.0066426
+,Tanta University,EG,,ام المؤمنين,الغربية,30.8002088,30.9922276
+,High Point University,US,,High Point,North Carolina,35.9720859,-79.9936582
+,Université Sorbonne Paris Nord,FR,,L'Île-Saint-Denis,Île-de-France,48.956638,2.3405983
+,Instituto Nacional de Rehabilitación,MX,,Ciudad de México,Ciudad de México,19.2890381,-99.1488831
+,Bridport Community Hospital,GB,,Bridport,England,50.7417823,-2.770294
+,Délégation Paris 7,FR,,Paris,Île-de-France,48.8534194,2.3236303
+,Islamic Azad University Ardabil,IR,,دهستان گوگ تپه,,39.3662444,48.3149653
+,University of Fiji,FJ,,Suva,Central,-18.1261377,178.4480544
+,Kwara State University,NG,,Moro,Kwara,8.7196344,4.4816964
+,Center for Human Reproduction,UA,,Луцьк,Волинська область,50.7613302,25.3780572
+,National University Health System,SG,,Singapore,,1.2919857,103.7837376
+,Hainan Tropical Ocean University,CN,,吉阳区,海南省,18.3137994,109.5293983
+,Botswana Geoscience Institute,BW,,Lobatse,,-25.211112,25.6765128
+,Seonam University,KR,,아산시,,36.7316091,127.000648
+,American Red Cross,US,,New York,New York,40.7644251,-73.9937245
+,Chaminade University of Honolulu,US,,East Honolulu,Hawaii,21.2893093,-157.8084062
+,University of Maine at Machias,US,,Machias,Maine,44.7094174,-67.4564854
+,Simpleware (United Kingdom),GB,,Exeter,England,50.7257634,-3.5292942
+,Hiroshima Institute of Technology,JP,,広島市,,34.37101,132.343313
+,National Synchrotron Radiation Research Center,TW,,新竹市,,24.7822371,120.9936069
+,Food & Nutrition,MX,,Tulum,Quintana Roo,20.2077889,-87.4701441
+,Westmead Hospital,AU,,Sydney,New South Wales,-33.8027875,150.9870903
+,Moscow State Institute of International Relations,RU,,Москва,Москва,55.6725951,37.4857089
+,Fox Chase Cancer Center,US,,Philadelphia,Pennsylvania,40.0712706,-75.0909805
+,Kochi Technical High School,JP,,別府市,,33.2707584,131.5059038
+,Steadman Philippon Research Institute,US,,Frisco,Colorado,39.5887957,-106.0988232
+,Mountain View College,US,,Dallas,Texas,32.725585,-96.9043967
+,Hillenbrand (United States),US,,South Bend,Indiana,41.6034513,-86.2667375
+,Marymount California University,US,,Rancho Palos Verdes,California,33.7344707,-118.3331393
+,Duke University Hospital,US,,Durham,North Carolina,36.0070213,-78.9373479
+,Thomas More College,US,,Crestview Hills,Kentucky,39.0209185,-84.5676956
+,Royal Ontario Museum,CA,,Toronto,Ontario,43.6676565,-79.3946988
+,NHL Stenden University of Applied Sciences,NL,,Leeuwarden,Fryslân,53.211018,5.7985091
+,Great Western Hospital,GB,,Liddington,England,51.53895,-1.7264686
+,Sanyo (Japan),JP,,神戸市,,34.848128,135.2106072
+,Suffolk University,US,,Boston,Massachusetts,42.3567011,-71.0610578
+,Hong Kong Standards and Testing Centre (China),CN,,香港 Hong Kong,新界 New Territories,22.4578867,114.1826872
+,St. Xavier's College (Autonomous),IN,,Kolkata,West Bengal,22.5486324,88.3561659
+,Neurological Surgery,US,,Idaho Falls,Idaho,43.4657769,-111.9942616
+,International Christian University,JP,,三鷹市,,35.6871204,139.5296814
+,Bury College,GB,,Bury,England,53.5868843,-2.2955727
+,Ponce Health Sciences University,US,,Ponce,Puerto Rico,17.9933693,-66.6199462
+,"California State University, Fresno",US,,Fresno,California,36.8209963,-119.7372976
+,Denison University,US,,Granville,Ohio,40.0730051,-82.5224859
+,Cottage Health,US,,Chicago,Illinois,41.7956747,-87.6053924
+,Rhine-Waal University of Applied Sciences,DE,,Kleve,Nordrhein-Westfalen,51.795126,6.1426348
+,Dyson (United Kingdom),GB,,Malmesbury,England,51.5952912,-2.1051101
+,Wexham Park Hospital,GB,,Slough,England,51.5322083,-0.5737328
+,Tokyo Kasei Gakuin University,JP,,町田市,,35.6094643,139.3111458
+,Food and Drug Administration,TH,,เทศบาลนครนนทบุรี,,13.8467044,100.5275562
+,Instituto Canario de Ciencias Marinas,ES,,Telde,Canarias,27.9912014,-15.3696169
+,Scripps Clinic,US,,San Diego,California,32.9431425,-117.2393245
+,The Hunterian,GB,,Glasgow,Alba / Scotland,55.8729269,-4.2888692
+,Loyola Medicine,US,,La Grange,Illinois,41.8142277,-87.8679106
+,Southern Illinois University Edwardsville,US,,Edwardsville,Illinois,38.7941616,-90.0002789
+,Cancer Research Center,US,,Washington,District of Columbia,38.9188246,-77.0216169
+,Universidad Autónoma Monterrey,CR,,Área Metropolitana de San José,,9.9349896,-84.0642942
+,West Cornwall Hospital,GB,,Penzance,England,50.1218891,-5.5429415
+,Northwest Indian College,US,,Bellingham,Washington,48.7932716,-122.6153777
+,Institute for Environmental Sciences,JP,,つくば市,,36.027681,140.1100262
+,Friday Harbor Laboratories,US,,San Juan County,Washington,48.5466413,-123.0113528
+,King's College Hospital,GB,,Greater London,England,51.4681331,-0.0936682
+,Illinois State University,US,,Normal,Illinois,40.5179938,-89.0084607
+,Egyptian Museum,EG,,القاهرة,القاهرة,30.0479664,31.2336093
+,Rothamsted Research,GB,,St Albans,England,51.8096433,-0.3696315
+,Columbia College - South Carolina,US,,Columbia,South Carolina,34.0461318,-81.0303894
+,Institute of Cytology,RU,,городской округ Новосибирск,Новосибирская область,54.8487176,83.1048886
+,Institut de Biologie Structurale,FR,,Toulouse,Occitanie,43.556743,1.4626273
+,Studsvik (Sweden),SE,,Nyköpings kommun,,58.7602169,17.3836729
+,Rockefeller Foundation,US,,New York,New York,40.7508215,-73.983315
+,Nikon (United Kingdom),GB,,City of Westminster,England,51.5167298,-0.1403028
+,Nippon Dental University Hospital,JP,,千代田区,,35.6999666,139.7444278
+,Kwai Chung Hospital,CN,,香港 Hong Kong,新界 New Territories,22.3426854,114.1336184
+,Universitas Muhammadiyah Aceh,ID,,Banda Aceh,Aceh,5.5352117,95.3327629
+,University of Belize,BZ,,Belmopan,Cayo,17.2439321,-88.7607894
+,Woodside (Australia),AU,,Woodside,South Australia,-34.951387,138.875857
+,California Science Center,US,,Los Angeles,California,34.0159757,-118.286287
+,Touro University Nevada,US,,Henderson,Nevada,36.0431837,-115.0240768
+,Université Jean Lorougnon Guédé,CI,,Daloa,Sassandra-Marahoué,6.9120326,-6.4389023
+,Ramboll (United Kingdom),GB,,Southampton,England,50.9110363,-1.4018429
+,Bahir Dar University,ET,,Bahir Dar,አማራ ክልል Amhara أمحرة,11.5718731,37.3971176
+,CAB International,BR,,Guarulhos,São Paulo,-23.4250713,-46.4792656
+,Banaras Hindu University,IN,,Varanasi,Uttar Pradesh,25.2663747,82.9904648
+,Cascade (United States),US,,San Juan County,Colorado,37.656839,-107.8000432
+,Washington University Medical Center,US,,Seattle,Washington,47.6496635,-122.3063866
+,Brenau University,US,,Gainesville,Georgia,34.3036901,-83.8223538
+,Fuchu Hospital,JP,,府中市,,35.659872,139.5189399
+,Kingston Technology (United States),US,,Orange County,California,33.7085615,-117.9269524
+,Loro Parque Fundación,ES,,Adeje,Canarias,28.0723288,-16.7264173
+,Imerys (Germany),DE,,Oberhausen,Nordrhein-Westfalen,51.4838087,6.8515629
+,Eurasia International University,AM,,Երևան,,40.2083944,44.530986
