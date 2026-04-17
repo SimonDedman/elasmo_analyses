@@ -13,13 +13,14 @@
   // Constants
   // ---------------------------------------------------------------------------
 
-  var TIER1_PREFIXES = ['b_', 'd_', 'eco_', 'pr_', 'imp_', 'gear_', 'ob_'];
-  var TIER1_CHECKBOX = ['b_', 'd_', 'eco_', 'pr_', 'imp_', 'gear_'];  // ob_ also checkbox but listed separately
+  var TIER1_PREFIXES = ['b_', 'sb_', 'd_', 'eco_', 'pr_', 'imp_', 'gear_', 'ob_'];
+  var TIER1_CHECKBOX = ['b_', 'sb_', 'd_', 'eco_', 'pr_', 'imp_', 'gear_'];  // ob_ also checkbox but listed separately
   var TAG_PREFIXES   = ['sp_', 'a_'];
-  var PREFIX_ORDER   = ['b_', 'd_', 'eco_', 'pr_', 'imp_', 'gear_', 'sp_', 'a_', 'ob_', 'depth_'];
+  var PREFIX_ORDER   = ['b_', 'sb_', 'd_', 'eco_', 'pr_', 'imp_', 'gear_', 'sp_', 'a_', 'ob_', 'depth_'];
 
   var PREFIX_LABELS = {
     'b_':     'Ocean Basin',
+    'sb_':    'Ocean Sub-basin',
     'd_':     'Discipline',
     'eco_':   'Ecosystem',
     'pr_':    'Pressure / Threat',

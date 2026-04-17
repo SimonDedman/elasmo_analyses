@@ -40,7 +40,7 @@ NAMSOR_PATH = OUTPUTS_DIR / "namsor_enrichment.csv"
 OA_PATH = OUTPUTS_DIR / "unpaywall_oa_by_doi.csv"
 
 # Prefixes that use the evidence/columns format
-TIER1_PREFIXES = ["b_", "d_", "eco_", "pr_", "imp_", "gear_"]
+TIER1_PREFIXES = ["b_", "sb_", "d_", "eco_", "pr_", "imp_", "gear_"]
 # Prefixes that use triggered+all_options format
 TIER2_PREFIXES = ["sp_", "a_"]
 # ob_ uses columns format but without evidence
@@ -390,15 +390,25 @@ def build_page_data(
             })
         categories[OB_PREFIX] = {"columns": ob_list}
 
-        # Tier 2: triggered only (all_options in shared file, not per-paper)
+        # Tier 2: triggered list + frequencies (all_options in shared file, not per-paper)
         for prefix in TIER2_PREFIXES:
             all_options = all_prefix_cols.get(prefix, [])
-            triggered_cols = [
-                col for col in all_options
-                if pd.notna(row.get(col)) and bool(row.get(col))
-            ]
+            triggered_cols = []
+            frequencies = {}
+            for col in all_options:
+                val = row.get(col)
+                if pd.isna(val) or not val:
+                    continue
+                try:
+                    freq = int(val)
+                except (ValueError, TypeError):
+                    freq = 1 if bool(val) else 0
+                if freq > 0:
+                    triggered_cols.append(col)
+                    frequencies[col] = freq
             categories[prefix] = {
                 "triggered": triggered_cols,
+                "frequencies": frequencies,
             }
 
         # depth_
