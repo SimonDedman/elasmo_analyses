@@ -302,12 +302,43 @@ def load_authors() -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def build_merge_groups(unique_auth: pd.DataFrame) -> dict[str, str]:
     """
-    Group authors by (lower display_name, lower most_common_institution).
-    Within each group the primary is the one with highest paper_count;
-    all others are secondaries.
+    Merge authors using two sources:
+    1. Exact (display_name, institution) match → group into primary + secondaries
+    2. High-confidence duplicate candidates from detect_author_duplicates.py
+       (score >= 10), where the lower-paper-count ID gets merged into the higher
+    3. Paper-count-based name-variant detection: same normalised surname + first
+       initial + same country → merge (catches N. Dulvy → Nicholas K. Dulvy)
 
-    Returns a dict: secondary_id -> primary_id
+    Returns: dict mapping secondary_id -> primary_id
     """
+    import unicodedata
+    import re
+
+    def norm_name(s: str) -> str:
+        s = unicodedata.normalize("NFKD", str(s))
+        s = "".join(c for c in s if not unicodedata.combining(c))
+        return re.sub(r"[^a-z]", "", s.lower())
+
+    def surname(name: str) -> str:
+        tokens = str(name).replace(",", " ").split()
+        # last non-initial token
+        for t in reversed(tokens):
+            t_clean = re.sub(r"[^A-Za-z]", "", t)
+            if len(t_clean) > 2:
+                return norm_name(t_clean)
+        return ""
+
+    def first_initial(name: str) -> str:
+        tokens = str(name).replace(",", " ").split()
+        for t in tokens:
+            t_clean = re.sub(r"[^A-Za-z]", "", t)
+            if t_clean:
+                return t_clean[0].lower()
+        return ""
+
+    secondary_to_primary: dict[str, str] = {}
+
+    # --- Pass 1: exact (name, institution) duplicates ---
     groups: dict[tuple, list[dict]] = defaultdict(list)
     for _, row in unique_auth.iterrows():
         name_key = (row["display_name"] or "").strip().lower()
@@ -316,15 +347,75 @@ def build_merge_groups(unique_auth: pd.DataFrame) -> dict[str, str]:
         paper_count = int(row["paper_count"]) if pd.notna(row["paper_count"]) else 0
         groups[(name_key, inst_key)].append({"id": oa_id, "paper_count": paper_count})
 
-    secondary_to_primary: dict[str, str] = {}
     for members in groups.values():
         if len(members) < 2:
             continue
-        # Primary = highest paper_count
         members.sort(key=lambda x: x["paper_count"], reverse=True)
         primary_id = members[0]["id"]
         for m in members[1:]:
             secondary_to_primary[m["id"]] = primary_id
+
+    # --- Pass 2: surname + first-initial + country (name-variant dedupe) ---
+    surname_init_groups: dict[tuple, list[dict]] = defaultdict(list)
+    for _, row in unique_auth.iterrows():
+        oa_id = row["openalex_author_id"]
+        if oa_id in secondary_to_primary:
+            continue  # already merged
+        sname = surname(row["display_name"] or "")
+        fi = first_initial(row["display_name"] or "")
+        country = (row["institution_country"] or "").strip().upper() if pd.notna(row["institution_country"]) else ""
+        if not sname or not fi:
+            continue
+        paper_count = int(row["paper_count"]) if pd.notna(row["paper_count"]) else 0
+        surname_init_groups[(sname, fi, country)].append({
+            "id": oa_id,
+            "paper_count": paper_count,
+            "name": row["display_name"],
+        })
+
+    auto_merged = 0
+    for key, members in surname_init_groups.items():
+        if len(members) < 2:
+            continue
+        # Only merge if clearly same person: the primary has >=20 papers and
+        # secondaries have <primary/3 (asymmetric — a stub profile under a main one)
+        members.sort(key=lambda x: x["paper_count"], reverse=True)
+        primary = members[0]
+        if primary["paper_count"] < 20:
+            continue
+        for m in members[1:]:
+            if m["paper_count"] < primary["paper_count"] / 3:
+                secondary_to_primary[m["id"]] = primary["id"]
+                auto_merged += 1
+
+    # --- Pass 3: duplicate candidates file (score >= 10) ---
+    cand_path = PROJECT_ROOT / "outputs" / "author_duplicate_candidates.xlsx"
+    manual_merged = 0
+    if cand_path.exists():
+        try:
+            dc = pd.read_excel(cand_path)
+            high = dc[dc["score"] >= 10]
+            # Prefer the one with more papers as primary
+            for _, r in high.iterrows():
+                a = r["id_a"]
+                b = r["id_b"]
+                pa = int(r.get("papers_a", 0) or 0)
+                pb = int(r.get("papers_b", 0) or 0)
+                if pa >= pb:
+                    primary, secondary = a, b
+                else:
+                    primary, secondary = b, a
+                if secondary in secondary_to_primary:
+                    continue
+                if primary in secondary_to_primary:
+                    primary = secondary_to_primary[primary]
+                secondary_to_primary[secondary] = primary
+                manual_merged += 1
+        except Exception as e:
+            print(f"  Warning: could not read duplicate candidates: {e}")
+
+    print(f"  Author merges: exact={len(secondary_to_primary) - auto_merged - manual_merged}, "
+          f"surname-init auto-merged={auto_merged}, duplicate-candidates={manual_merged}")
 
     return secondary_to_primary
 
