@@ -219,8 +219,11 @@ vn <- visNetwork(vis_nodes, vis_edges,
                  main = sprintf("Elasmobranch Author Collaboration Atlas — %d authors, %d edges",
                                 nrow(vis_nodes), nrow(vis_edges)),
                  submain = paste0(
-                   "Gender, origin & ethnicity inferred from name via NamSor — corrections welcome via each author's validation page<br>",
-                   "<span style='font-size:0.75rem;color:#868e96'>(lots of data; default view: edges ≥2 shared papers. Use slider to adjust)</span>"
+                   "Gender, origin & ethnicity inferred from name via ",
+                   "<a href=\"https://namsor.app\" target=\"_blank\" rel=\"noopener\">NamSor</a>",
+                   " — corrections welcome via each author's ",
+                   "<a href=\"https://simondedman.github.io/elasmo_analyses/validate/\" target=\"_blank\" rel=\"noopener\">validation page</a>",
+                   "<br><span style='font-size:0.75rem;color:#868e96'>(lots of data; default view: edges &#8805;2 shared papers. Use slider to adjust)</span>"
                  )) |>
   visNodes(
     shape = "dot",
@@ -297,26 +300,59 @@ vn <- visNetwork(vis_nodes, vis_edges,
       }
     }",
     zoom = "function(params) {
-      // Counter vis-network zoom scaling so nodes + labels stay reasonably sized
+      // Counter vis-network zoom scaling: shrink nodes, auto-show labels in viewport
       if (!this.body.data.nodes) return;
+      var self = this;
       var scale = params.scale || 1;
-      var baseLabel = window.fpLabelBaseSize || 14;
-      var targetLabel = Math.max(8, Math.min(28, baseLabel / scale));
+      var view = this.getViewPosition ? this.getViewPosition() : { x: 0, y: 0 };
+      // Compute viewport bounds in world coords
+      var cv = this.canvas && this.canvas.frame ? this.canvas.frame : null;
+      var w = cv ? cv.canvas.clientWidth : 1200;
+      var h = cv ? cv.canvas.clientHeight : 800;
+      var halfW = (w / 2) / scale, halfH = (h / 2) / scale;
+      var xmin = view.x - halfW, xmax = view.x + halfW;
+      var ymin = view.y - halfH, ymax = view.y + halfH;
+
+      // Count visible (not hidden) nodes within viewport
       var nodesDS = this.body.data.nodes;
-      var updates = [];
+      var positions = this.getPositions ? this.getPositions() : {};
+      var inViewport = [];
       nodesDS.forEach(function(n) {
         if (n.hidden) return;
-        var baseValue = n._baseValue != null ? n._baseValue : n.value;
+        var p = positions[n.id];
+        if (!p) return;
+        if (p.x >= xmin && p.x <= xmax && p.y >= ymin && p.y <= ymax) {
+          inViewport.push(n.id);
+        }
+      });
+
+      var nInView = inViewport.length;
+      // Label size: show when zoomed in enough that <= 150 nodes are in view
+      var baseLabel = 14;
+      var labelSize = nInView <= 15 ? 18
+                    : nInView <= 50 ? 14
+                    : nInView <= 150 ? 11
+                    : 0;
+
+      // Counter-zoom node sizes — always apply, to ALL nodes
+      var updates = [];
+      nodesDS.forEach(function(n) {
         if (n._baseValue == null) { n._baseValue = n.value; }
+        var baseValue = n._baseValue;
         var targetValue = Math.max(2, Math.min(40, baseValue / Math.sqrt(scale)));
         var update = { id: n.id, value: targetValue };
-        if (n.font && n.font.size > 0) {
-          update.font = { size: targetLabel, strokeWidth: 4, strokeColor: '#ffffff' };
+        // Only labels for nodes in viewport (if label threshold met)
+        if (labelSize > 0 && inViewport.indexOf(n.id) !== -1) {
+          update.font = { size: labelSize, strokeWidth: 4, strokeColor: '#ffffff' };
+        } else if (n.font && n.font.size > 0) {
+          update.font = { size: 0 };
         }
         updates.push(update);
       });
-      if (updates.length > 0 && updates.length < 250) {
+      // Throttle: only apply if zoom changed significantly since last update
+      if (!window.fpLastZoomApply || Math.abs((window.fpLastZoomApply.scale || 0) - scale) > 0.05) {
         nodesDS.update(updates);
+        window.fpLastZoomApply = { scale: scale, time: Date.now() };
       }
     }"
   )
