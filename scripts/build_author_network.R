@@ -203,7 +203,10 @@ vn <- visNetwork(vis_nodes, vis_edges,
   visInteraction(
     navigationButtons = TRUE,
     hover = TRUE,
-    tooltipDelay = 100
+    tooltipDelay = 100,
+    zoomView = TRUE,
+    dragView = TRUE,
+    keyboard = list(enabled = TRUE, bindToWindow = FALSE)
   ) |>
   visOptions(
     highlightNearest = list(enabled = TRUE, degree = 1, hover = TRUE, labelOnly = FALSE),
@@ -319,6 +322,8 @@ div.vis-network { width: 100vw !important; height: 100vh !important; }
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   font-size: 0.85rem;
   max-width: 260px;
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
 }
 .filter-panel h3 {
   margin: 0 0 0.5rem 0;
@@ -390,6 +395,10 @@ panel_html <- paste0('<div class="filter-panel" id="filter-panel">
 <option value="origin_region">By origin region (columns)</option>
 </select>
 
+<label>Min edge weight (shared papers) <span id="fp-min-edge-val">2</span></label>
+<input type="range" id="fp-min-edge" min="2" max="20" step="1" value="2" style="width:100%">
+<button class="reset" onclick="window.fpFit()" style="margin-top:0.3rem;background:#4a5568">Fit to view</button>
+
 <label>Search author</label>
 <input type="text" id="fp-author" list="fp-author-list" placeholder="Type name...">
 <datalist id="fp-author-list">',
@@ -428,8 +437,26 @@ window.fpReset = function() {
   document.getElementById("fp-ethnicity").value = "";
   document.getElementById("fp-author").value = "";
   document.getElementById("fp-layout").value = "physics";
+  document.getElementById("fp-min-edge").value = "2";
+  document.getElementById("fp-min-edge-val").textContent = "2";
   window.fpSetLayout("physics");
+  window.fpApplyEdgeWeight();
   window.fpApply();
+  if (window.fpNetwork) window.fpNetwork.fit({ animation: true });
+};
+window.fpFit = function() {
+  if (window.fpNetwork) window.fpNetwork.fit({ animation: true });
+};
+window.fpApplyEdgeWeight = function() {
+  var nw = window.fpNetwork;
+  if (!nw || !nw.body || !nw.body.data) return;
+  var minW = parseInt(document.getElementById("fp-min-edge").value, 10);
+  var edgesDS = nw.body.data.edges;
+  var updates = [];
+  edgesDS.forEach(function(e) {
+    updates.push({ id: e.id, hidden: e.value < minW });
+  });
+  edgesDS.update(updates);
 };
 window.fpSetLayout = function(mode) {
   var nw = window.fpNetwork;
@@ -582,13 +609,8 @@ window.fpAuthorJump = function() {
 // Wire up filter listeners immediately (they check fpNetwork at call time)
 window.fpOnReady = function() {
   console.log("Network instance captured:", !!window.fpNetwork);
-  // Apply any retained filter values from browser autofill/reload
-  var hasSearch = document.getElementById("fp-author").value.trim();
-  if (hasSearch) {
-    window.fpAuthorJump();
-  } else {
-    window.fpApply();
-  }
+  // Reset filters on load (ignore browser-retained values)
+  window.fpReset();
 };
 document.addEventListener("DOMContentLoaded", function() {
   ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
@@ -601,10 +623,26 @@ document.addEventListener("DOMContentLoaded", function() {
     au.addEventListener("keydown", function(ev) {
       if (ev.key === "Enter") window.fpAuthorJump();
     });
+    // Fire on datalist selection (click) — input event + exact-match check
+    var authorLabels = new Set();
+    var dl = document.getElementById("fp-author-list");
+    if (dl) {
+      for (var i = 0; i < dl.options.length; i++) authorLabels.add(dl.options[i].value);
+    }
+    au.addEventListener("input", function() {
+      if (authorLabels.has(au.value)) {
+        window.fpAuthorJump();
+      }
+    });
   }
   var lay = document.getElementById("fp-layout");
   if (lay) lay.addEventListener("change", function() {
     window.fpSetLayout(lay.value);
+  });
+  var me = document.getElementById("fp-min-edge");
+  if (me) me.addEventListener("input", function() {
+    document.getElementById("fp-min-edge-val").textContent = me.value;
+    window.fpApplyEdgeWeight();
   });
 });
 </script>')
