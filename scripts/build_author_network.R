@@ -173,9 +173,9 @@ vis_edges <- edges_focal |>
 # Build widget with multiple filter dimensions
 vn <- visNetwork(vis_nodes, vis_edges,
                  height = "100vh", width = "100%",
-                 main = sprintf("Elasmobranch Author Collaboration Atlas (%d authors, %d edges)",
+                 main = sprintf("Elasmobranch Author Collaboration Atlas — %d authors, %d edges",
                                 nrow(vis_nodes), nrow(vis_edges)),
-                 submain = "(lots of data: may take a while to load)") |>
+                 submain = "(lots of data; default view: edges ≥2 shared papers. Use slider to adjust)") |>
   visNodes(
     shape = "dot",
     scaling = list(
@@ -297,7 +297,7 @@ vis_nodes_enriched <- vis_nodes |>
 
 nodes_json <- jsonlite::toJSON(
   vis_nodes_enriched |> select(id, gender, country, ethnicity, origin_region,
-                                origin_country, papers, lon, lat),
+                                origin_country, papers, institution, lon, lat),
   auto_unbox = FALSE
 )
 
@@ -421,6 +421,7 @@ panel_html <- paste0('<div class="filter-panel" id="filter-panel">
 
 <label>Min edge weight (shared papers) <span id="fp-min-edge-val">2</span></label>
 <input type="range" id="fp-min-edge" min="1" max="20" step="1" value="2" style="width:100%">
+<div style="font-size:0.65rem;color:#868e96;margin-top:-0.2rem;display:flex;justify-content:space-between"><span>1</span><span>20</span></div>
 <button class="reset" onclick="window.fpFit()" style="margin-top:0.3rem;background:#4a5568">Fit to view</button>
 
 <label>Search author</label>
@@ -490,24 +491,32 @@ window.fpSetLayout = function(mode) {
   var nodesDS = nw.body.data.nodes;
   var meta = window.fpNodesMeta;
   if (mode === "physics") {
-    // Unfix positions and re-enable physics from a stable start
+    // Seed with random positions in a bounded area so nodes do not stay
+    // stuck in geographic grid; then re-enable physics to converge.
     var updates = meta.map(function(n) {
-      return { id: n.id, x: null, y: null, fixed: false };
+      return {
+        id: n.id,
+        x: (Math.random() - 0.5) * 800,
+        y: (Math.random() - 0.5) * 800,
+        fixed: { x: false, y: false }
+      };
     });
     nodesDS.update(updates);
-    nw.setOptions({ physics: { enabled: true,
-      forceAtlas2Based: { gravitationalConstant: -50, springLength: 100 },
-      solver: "forceAtlas2Based",
-      stabilization: { enabled: true, iterations: 200 }
-    }});
-    // Freeze after re-stabilisation
+    nw.setOptions({
+      physics: {
+        enabled: true,
+        solver: "forceAtlas2Based",
+        forceAtlas2Based: { gravitationalConstant: -50, springLength: 100 },
+        stabilization: { enabled: true, iterations: 300, fit: true }
+      }
+    });
     setTimeout(function() {
       nw.setOptions({ physics: false });
       nw.fit({ animation: true });
-    }, 2500);
+    }, 3000);
     return;
   }
-  // For geographic: compute positions with jitter, set fixed
+  // Geographic layouts: compute positions with institution-level jitter
   nw.setOptions({ physics: false });
   var positions = window.fpComputePositions(meta, mode);
   var updates = meta.map(function(n) {
@@ -518,22 +527,18 @@ window.fpSetLayout = function(mode) {
   nodesDS.update(updates);
   setTimeout(function() { nw.fit({ animation: true }); }, 200);
 };
-// Deterministic jitter per node ID (consistent layout across reloads)
-window.fpJitter = function(id) {
+// Deterministic 32-bit hash of a string
+window.fpHash = function(s) {
   var h = 0;
-  for (var i = 0; i < id.length; i++) { h = ((h << 5) - h) + id.charCodeAt(i); h |= 0; }
-  var rx = ((h & 0xFFFF) / 0xFFFF - 0.5);
-  var ry = (((h >> 16) & 0xFFFF) / 0xFFFF - 0.5);
-  return { x: rx, y: ry };
+  for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
+  return h;
 };
+// Two-level deterministic jitter: institution → sub-position within country
 window.fpComputePositions = function(meta, mode) {
   var positions = {};
-  var scale = 50;         // degrees → pixels
-  var jitterScale = 100;  // pixel radius of jitter around centroid
-  var coordField = mode === "geo-origin" ? "origin_country" : "country";
-  // Build lookup if origin: we only have country centroids baked in; origin_country uses lon/lat from institution
-  // For origin layout, we need origin_country centroid, not institution.
-  // Attach origin centroid via client-side lookup table below.
+  var scale = 60;                 // degrees → pixels
+  var instJitter = 180;           // institution offset within country (px)
+  var authorJitter = 20;          // author offset within institution (px)
   meta.forEach(function(n) {
     var lon, lat;
     if (mode === "geo-origin") {
@@ -543,15 +548,22 @@ window.fpComputePositions = function(meta, mode) {
         lat = window.fpIsoCoords[oc].lat;
       }
     } else {
-      // institution country: use baked-in lon/lat
       lon = n.lon;
       lat = n.lat;
     }
-    if (lon == null || lat == null) return;  // skip unmappable
-    var j = window.fpJitter(n.id);
+    if (lon == null || lat == null) return;
+    // Institution offset (hash the institution name or country if no inst)
+    var instKey = n.institution || n.country || "";
+    var hi = window.fpHash(instKey);
+    var ix = ((hi & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
+    var iy = (((hi >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
+    // Author offset within institution
+    var ha = window.fpHash(n.id);
+    var ax = ((ha & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
+    var ay = (((ha >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
     positions[n.id] = {
-      x: lon * scale + j.x * jitterScale,
-      y: -lat * scale + j.y * jitterScale
+      x: lon * scale + ix + ax,
+      y: -lat * scale + iy + ay
     };
   });
   return positions;
