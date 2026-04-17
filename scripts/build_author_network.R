@@ -283,17 +283,23 @@ vn <- visNetwork(vis_nodes, vis_edges,
       }
     }",
     zoom = "function(params) {
-      // Counter vis-network label zoom scaling so labels stay readable
+      // Counter vis-network zoom scaling so nodes + labels stay reasonably sized
       if (!this.body.data.nodes) return;
       var scale = params.scale || 1;
-      var base = window.fpLabelBaseSize || 14;
-      var target = Math.max(8, Math.min(28, base / scale));
+      var baseLabel = window.fpLabelBaseSize || 14;
+      var targetLabel = Math.max(8, Math.min(28, baseLabel / scale));
       var nodesDS = this.body.data.nodes;
       var updates = [];
       nodesDS.forEach(function(n) {
-        if (!n.hidden && n.font && n.font.size > 0) {
-          updates.push({ id: n.id, font: { size: target, strokeWidth: 4, strokeColor: '#ffffff' } });
+        if (n.hidden) return;
+        var baseValue = n._baseValue != null ? n._baseValue : n.value;
+        if (n._baseValue == null) { n._baseValue = n.value; }
+        var targetValue = Math.max(2, Math.min(40, baseValue / Math.sqrt(scale)));
+        var update = { id: n.id, value: targetValue };
+        if (n.font && n.font.size > 0) {
+          update.font = { size: targetLabel, strokeWidth: 4, strokeColor: '#ffffff' };
         }
+        updates.push(update);
       });
       if (updates.length > 0 && updates.length < 250) {
         nodesDS.update(updates);
