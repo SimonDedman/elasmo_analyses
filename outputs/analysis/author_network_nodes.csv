@@ -829,7 +829,7 @@ A5110483538,Abderrahmen Bouaïn,University of Sfax,TN,12,M,TN,Africa,Tunisian,Sf
 A5075937745,Mariana F. Martins,Universidade Federal do Rio Grande,BR,12,F,PT,Europe,Portuguese,Rio Grande,NA,-32.03499984741211,-52.098609924316406
 A5049695139,Joshua K. Moyer,Earth Island Institute,US,12,M,IE,Europe,Austrian,Berkeley,California,37.8695182800293,-122.26605987548828
 A5049569296,Lauren R. Peel,Save Our Seas Foundation,CH,12,F,GB,Europe,Flemish,Geneva,NA,46.21040344238281,6.15058708190918
-A5076175741,Farid Hemida,École Nationale Supérieure des Sciences de la Mer et de l'Aménagement du Littoral,DZ,12,M,DZ,Africa,Egyptian,NA,NA,NA,NA
+A5076175741,Farid Hemida,École Nationale Supérieure des Sciences de la Mer et de l'Aménagement du Littoral,DZ,12,M,DZ,Africa,Egyptian,Daïra de Chéraga,الجزائر ⴷⵣⴰⵢⴻⵔ,36.7553186,2.9817799
 A5019136974,James C. Weaver,Harvard University,US,12,M,GB,Europe,British,Cambridge,Massachusetts,42.3751,-71.10561
 A5020097279,Yuko Ohta,"University of Maryland, Baltimore",US,12,F,JP,Asia,Japanese,Baltimore,Maryland,39.29038,-76.61219
 A5051839915,Jan R. McDowell,Virginia Sea Grant,US,12,M,IE,Europe,British,Gloucester Point,NA,37.2540283203125,-76.49688720703125
@@ -4721,7 +4721,7 @@ A5111911195,Toru Kitamura,Engineering Advancement Association of Japan,JP,3,M,JP
 A5002149454,Shannon P. Gerry,Fairfield University,US,3,F,IE,Europe,Irish,Fairfield,NA,41.14120864868164,-73.26373291015625
 A5084520937,Heidi Ahonen,Macquarie University,AU,3,F,FI,Europe,Finnish,Sydney,New South Wales,-33.86785,151.20732
 A5084464350,David Maxwell,"Centre for Environment, Fisheries and Aquaculture Science",GB,3,M,GB,Europe,British,Lowestoft,NA,52.4752311706543,1.751670002937317
-A5032393825,James L. Knight,University of South Carolina Aiken,US,3,M,GB,Europe,British,NA,NA,NA,NA
+A5032393825,James L. Knight,University of South Carolina Aiken,US,3,M,GB,Europe,British,Aiken,South Carolina,33.5727131,-81.7720634
 A5006549055,HF Mollet,Moss Landing Marine Laboratories,US,3,M,FR,Europe,French,Moss Landing,California,36.8044,-121.7869
 A5092729736,P. Santiago Domínguez-Sánchez,Oregon Department of Fish and Wildlife,US,3,M,ES,Europe,Hispanic,Salem,Oregon,44.897403717041016,-123.00270080566406
 A5092453074,Noémie Coulon,Centre National de la Recherche Scientifique,FR,3,F,FR,Europe,French,Paris,Île-de-France,48.85341,2.3488
@@ -4860,7 +4860,7 @@ A5029121069,Esmail Shakman,University of Tripoli,LY,3,M,AF,Asia,Jewish,Tripoli,N
 A5053753514,Peter Verhoog,Exploristics (United Kingdom),GB,3,M,NL,Europe,Dutch,NA,NA,NA,NA
 A5053761444,Cathy Wu,University of Delaware,US,3,F,TW,Asia,Chinese,Newark,Delaware,39.68372,-75.74966
 A5053687573,Yara Tibiriçá,University of Guam,GU,3,F,MZ,Africa,HispanoLatino,Mangilao Village,NA,13.447609901428224,144.80108642578125
-A5047703115,Udo Scheer,Valahia University of Targoviste,RO,3,M,DE,Europe,German,NA,NA,NA,NA
+A5047703115,Udo Scheer,Valahia University of Targoviste,RO,3,M,DE,Europe,German,Târgoviște,NA,44.9433234,25.4549331
 A5064396037,Rosicleire Veríssimo‐Silveira,Universidade Estadual Paulista (Unesp),BR,3,F,PT,Europe,Portuguese,São Paulo,São Paulo,-23.5475,-46.63611
 A5064414609,David L. Taylor,Roger Williams University,US,3,M,GB,Europe,British,Bristol,NA,41.67705154418945,-71.26615905761719
 A5112316357,F. Velasco,Instituto Español de Oceanografía,ES,3,M,ES,Europe,Hispanic,Madrid,NA,40.416500091552734,-3.702559947967529
@@ -4874,7 +4874,7 @@ A5071151581,César Peñaherrera,Charles Darwin Foundation,EC,3,M,ES,Europe,Hispa
 A5071024998,Raquel Perier,National University of Comahue,AR,3,F,ES,Europe,French,Neuquén,NA,-38.94015121459961,-68.05735778808594
 A5039830638,Li Ling Hamady,U.S. National Science Foundation,US,3,F,MY,Asia,Mauritanian,Alexandria,Virginia,38.80484,-77.04692
 A5039857832,Robert T. Leaf,University of Southern Mississippi,US,3,M,GB,Europe,British,Hattiesburg,NA,31.327119827270508,-89.29033660888672
-A5039697598,Gabriel Canani,Instituto Rio Grandense do Arroz,BR,3,M,IT,Europe,Italian,NA,NA,NA,NA
+A5039697598,Gabriel Canani,Instituto Rio Grandense do Arroz,BR,3,M,IT,Europe,Italian,Cachoeira do Sul,Rio Grande do Sul,-30.0391501,-52.895904
 A5112330830,Daniel C. Gledhill,CSIRO Oceans and Atmosphere,AU,3,M,IE,Europe,British,Canberra,Australian Capital Territory,-35.28346,149.12807
 A5001419201,Amanda Batlle-Morera,International Union for Conservation of Nature,CH,3,F,ES,Europe,HispanoLatino,Gland,Vaud,46.42082,6.2701
 A5019794734,Kathryn Crouch,Pfizer (United Kingdom),GB,3,F,GB,Europe,British,Tadworth,Surrey,51.27178955078125,-0.2536079883575439
@@ -4923,13 +4923,13 @@ A5051086111,Victor Lacerda Moura,Universidade Federal do Ceará,BR,3,M,PT,Europe
 A5050985146,Juan Antonio Camiñas,Universidad de Málaga,ES,3,M,ES,Europe,Hispanic,Málaga,NA,36.72016143798828,-4.420340061187744
 A5090804923,Jean R. C. de Marignac,"California State University, Monterey Bay",US,3,M,FR,Europe,French,Seaside,NA,36.61106872558594,-121.85162353515624
 A5009556812,Kim Friedman,The University of Western Australia,AU,3,F,IL,Asia,Jewish,Perth,Western Australia,-31.95224,115.8614
-A5112713004,a.a. buckley,Suffolk University,US,3,F,GB,Europe,Irish,NA,NA,NA,NA
+A5112713004,a.a. buckley,Suffolk University,US,3,F,GB,Europe,Irish,Boston,Massachusetts,42.3567011,-71.0610578
 A5022906415,Ronggai Li,University of Aberdeen,GB,3,M,CN,Asia,Chinese,Aberdeen,NA,57.1436882019043,-2.098140001296997
 A5022933388,Beginer Subhan,IPB University,ID,3,M,AF,Asia,Pakistanese,Bogor,NA,-6.59443998336792,106.78916931152344
 A5064856576,Neil M. Burns,University of Glasgow,GB,3,M,GB,Europe,British,Glasgow,Scotland,55.86515,-4.25763
 A5064868413,Manuel Andreas Staggl,University of Vienna,AT,3,M,AT,Europe,Austrian,Vienna,Vienna,48.20849,16.37208
 A5085591569,David B. Rudders,William & Mary,US,3,M,GB,Europe,British,Williamsburg,NA,37.27069854736328,-76.70745849609375
-A5047761476,Dailos González‐Weller,Servicio Canario de la Salud,ES,3,M,ES,Europe,Hispanic,NA,NA,NA,NA
+A5047761476,Dailos González‐Weller,Servicio Canario de la Salud,ES,3,M,ES,Europe,Hispanic,Las Palmas de Gran Canaria,Canarias,28.1193281,-15.4248581
 A5032185502,Will F. Figueira,The University of Sydney,AU,3,M,PT,Europe,Portuguese,Sydney,New South Wales,-33.86785,151.20732
 A5103324837,Peter Wirtz,University of Algarve,PT,3,M,DE,Europe,German,Faro,Faro,37.01869,-7.92716
 A5103499514,Sun H. Kim,DePaul University,US,3,M,KR,Asia,Korean,Chicago,NA,41.85002899169922,-87.6500473022461
@@ -4987,7 +4987,7 @@ A5091897384,Mark Bosselaers,Institute of Natural Sciences,BE,3,M,BE,Europe,Flemi
 A5091777836,Christian R. Voolstra,University of Konstanz,DE,3,M,NL,Europe,Dutch,Konstanz,NA,47.66033172607422,9.175820350646973
 A5085857861,Arsalan Emami‐Khoyi,University of Johannesburg,ZA,3,M,IR,Asia,Iranian,Johannesburg,Gauteng,-26.20227,28.04363
 A5054747883,Johanna Faure,Centre National de la Recherche Scientifique,FR,3,F,FR,Europe,French,Paris,Île-de-France,48.85341,2.3488
-A5086030405,Jefferson Raphael Gonzaga Lemos,Fundação de Amparo à Pesquisa do Estado do Amazonas,BR,3,M,PT,Europe,Portuguese,NA,NA,NA,NA
+A5086030405,Jefferson Raphael Gonzaga Lemos,Fundação de Amparo à Pesquisa do Estado do Amazonas,BR,3,M,PT,Europe,Portuguese,Manaus,Amazonas,-3.0749473,-60.0287201
 A5054719699,Martina Daniela Camiolo,National University of Misiones,AR,3,F,IT,Europe,Italian,Posadas,NA,-27.36708068847656,-55.89608001708984
 A5102976194,Liangming Wang,Chinese Academy of Fishery Sciences,CN,3,M,CN,Asia,Chinese,Beijing,Beijing,39.9075,116.39723
 A5007163627,Esosa Omoregie,Georgia Southern University,US,3,M,NG,Africa,Nigerian,Statesboro,NA,32.44879150390625,-81.783172607421875
@@ -5012,7 +5012,7 @@ A5070001358,B. N. K. Davis,NA,NA,3,M,GB,Europe,NA,NA,NA,NA,NA
 A5069957846,René Rosiles-Martínez,Universidad Nacional Autónoma de México,MX,3,M,ES,Europe,Hispanic,Mexico City,Mexico City,19.42847,-99.12766
 A5065255162,Thomas W. Bodey,University of Aberdeen,GB,3,M,IE,Europe,English,Aberdeen,NA,57.1436882019043,-2.098140001296997
 A5070168001,Jean‐Jacques Jaeger,Institute of Paleoprimatology Human Paleontology Evolution and Paleoenvironments,FR,3,M,NA,Africa,German,Poitiers,NA,46.582611083984375,0.3434799909591675
-A5070077939,Carlos Azevedo,The King's College,US,3,M,PT,Europe,Portuguese,NA,NA,NA,NA
+A5070077939,Carlos Azevedo,The King's College,US,3,M,PT,Europe,Portuguese,New York,New York,40.7066535,-74.0123807
 A5020254510,Appukuttannair Biju Kumar,University of Kerala,IN,3,M,IN,Asia,Indian,Thiruvananthapuram,Kerala,8.4855,76.94924
 A5065031524,Allan D. McDevitt,Atlantic Technological University,GB,3,M,IE,Europe,Irish,Ireland,NA,53,-8
 A5112797639,Dennis A. Powers,Pacific University,US,3,M,IE,Europe,Irish,Forest Grove,NA,45.51984024047852,-123.11065673828124
@@ -5042,7 +5042,7 @@ A5087596898,Jehad Salah,Ministry of Agriculture Livestock and Fisheries,KE,3,M,J
 A5087483984,Eudriano F. S. Costa,Universidade dos Açores,PT,3,M,PT,Europe,Portuguese,Ponta Delgada,Azores,37.73952,-25.66874
 A5087496171,Mareike Dornhege,Sophia University,JP,3,F,DE,Europe,German,Tokyo,NA,35.68949890136719,139.69171142578125
 A5011434055,Nadia Kechemir-Issad,University of Sciences and Technology Houari Boumediene,DZ,3,F,DZ,Africa,Algerian,Algiers,NA,36.73225021362305,3.0874600410461426
-A5048861783,Nian‐Hong Jang‐Liaw,Taipei Hospital,TW,3,F,TW,Asia,Chinese,NA,NA,NA,NA
+A5048861783,Nian‐Hong Jang‐Liaw,Taipei Hospital,TW,3,F,TW,Asia,Chinese,新北市,NA,25.0395009,121.4613873
 A5007628899,Shane Wasik,NA,NA,3,M,IL,Asia,NA,NA,NA,NA,NA
 A5101773110,Taylor Smith,"California State University, Long Beach",US,3,M,GB,Europe,British,Long Beach,NA,33.76696014404297,-118.1892318725586
 A5101779401,Sebastián Gómez,Universidad Nacional de La Plata,AR,3,M,ES,Europe,Hispanic,La Plata,Buenos Aires,-34.92126,-57.95442
@@ -5062,7 +5062,7 @@ A5102887866,Bríd O'Connor,Marine Institute,IE,3,F,IE,Europe,Irish,Oranmore,NA,5
 A5102831634,David Mboglen,Institut de Recherche Agricole pour le Développement,CM,3,M,CM,Africa,Cameroonian,Yaoundé,Centre,3.86667,11.51667
 A5039011841,Alberto Solano-Barquero,Universidad de Costa Rica,CR,3,M,ES,Europe,Hispanic,San José,NA,9.933329582214355,-84.08332824707031
 A5038946187,Wanwan Kurniawan,National Research and Innovation Agency,ID,3,M,ID,Asia,Indonesian,Jakarta,Jakarta,-6.21462,106.84513
-A5038952530,Loghman Maleki,University of Kurdistan,IR,3,M,IR,Asia,Iranian,NA,NA,NA,NA
+A5038952530,Loghman Maleki,University of Kurdistan,IR,3,M,IR,Asia,Iranian,شهر سنندج,استان کردستان,35.3110267,46.9942105
 A5038783850,Stephen T. Kinsey,University of North Carolina Wilmington,US,3,M,IE,Europe,British,Wilmington,North Carolina,34.22698211669922,-77.863250732421875
 A5007218390,K. T. S. Sunil,Central Marine Fisheries Research Institute,IN,3,M,IN,Asia,Indian,Ernakulam,Kerala,9.93988,76.26022
 A5102823275,Yu‐Qin Zhao,Zhejiang Ocean University,CN,3,F,CN,Asia,Chinese,Zhoushan,NA,29.988689422607425,122.2048797607422
@@ -5145,7 +5145,7 @@ A5038505330,Tomaso Fortibuoni,Istituto Superiore per la Protezione e la Ricerca 
 A5038420541,Chelsea Anderson,Florida Aquarium,US,3,F,GB,Europe,Scottish,Tampa,Florida,27.945253372192383,-82.44526672363281
 A5038286034,Merry D. Camhi,Wildlife Conservation Society,US,3,F,ZW,Africa,NativeHawaiian,New York,NA,40.71427154541016,-74.00596618652344
 A5036959835,Akatsuki Kawakoshi,National Cerebral and Cardiovascular Center,JP,3,M,JP,Asia,Japanese,Osaka,NA,34.69374084472656,135.50218200683594
-A5036869562,Tiago Bartolomeu,Centre for Higher Education,DE,3,M,PT,Europe,Portuguese,NA,NA,NA,NA
+A5036869562,Tiago Bartolomeu,Centre for Higher Education,DE,3,M,PT,Europe,Portuguese,Kumarakovil,Tamil Nadu,8.2492332,77.3502525
 A5066076319,Fabien Knoll,Museo Nacional de Ciencias Naturales,ES,3,M,CH,Europe,German,Madrid,NA,40.416500091552734,-3.702559947967529
 A5066134934,Chetan Rao,NA,NA,3,M,IN,Asia,NA,NA,NA,NA,NA
 A5066006168,Kennedy Osuka,University of Liverpool,GB,3,F,KE,Africa,Kenyan,Liverpool,England,53.41058,-2.97794
@@ -5160,7 +5160,7 @@ A5091389653,HR Pethybridge,CSIRO Oceans and Atmosphere,AU,3,M,GB,Europe,British,
 A5091390577,L. Farina,University of Genoa,IT,3,F,IT,Europe,Italian,Genoa,Liguria,44.40478,8.94439
 A5069022194,Laura Mannocci,Institut de Recherche pour le Développement,FR,3,F,IT,Europe,Italian,Marseille,Provence-Alpes-Côte d'Azur,43.29695,5.38107
 A5054385005,Saang‐Yoon Hyun,University of Massachusetts Dartmouth,US,3,M,KR,Asia,Korean,North Dartmouth,Massachusetts,41.63899,-70.97032
-A5054326756,Yan Wu,East China Normal University,CN,3,F,CN,Asia,Chinese,NA,NA,NA,NA
+A5054326756,Yan Wu,East China Normal University,CN,3,F,CN,Asia,Chinese,普陀区,上海市,31.2284923,121.4021139
 A5007558750,Adriana Cevallos‐Garcias,University of Guayaquil,EC,3,F,ES,Europe,Hispanic,Guayaquil,NA,-2.181607961654663,-79.89762878417969
 A5101887127,Sheng-Ping Wang,National Taiwan Ocean University,TW,3,F,TW,Asia,Chinese,Keelung,NA,25.15010643005371,121.77770233154295
 A5048699135,Bonnie Ahr,Kennedy Space Center,US,3,F,DK,Europe,Danish,Merritt Island,Florida,28.52454948425293,-80.6813735961914
@@ -5183,7 +5183,7 @@ A5009339169,John D. C. Linnell,University of Inland Norway,NO,3,M,IE,Europe,Iris
 A5009205032,Nicholas Polunin,Newcastle University,GB,3,M,CY,Asia,Russian,Newcastle upon Tyne,England,54.97328,-1.61396
 A5091281349,Akshay Tanna,Blue Resources Trust,LK,3,M,IN,Asia,Indian,Colombo,NA,6.9191060066223145,79.86799621582031
 A5091287571,Mary Ellen Blasius,"California State University, Long Beach",US,3,F,IE,Europe,German,Long Beach,NA,33.76696014404297,-118.1892318725586
-A5091291202,Patrick Laurenti,Délégation Paris 7,FR,3,M,FR,Europe,Italian,NA,NA,NA,NA
+A5091291202,Patrick Laurenti,Délégation Paris 7,FR,3,M,FR,Europe,Italian,Paris,Île-de-France,48.8534194,2.3236303
 A5066275812,Andrew S. Brierley,University of St Andrews,GB,3,M,GB,Europe,British,St Andrews,Scotland,56.33871,-2.79902
 A5068504550,Xavier Chiappa‐Carrara,Universidad Nacional Autónoma de México,MX,3,M,ES,Europe,Italian,Mexico City,Mexico City,19.42847,-99.12766
 A5021063755,L. B. Hulbert,NOAA National Marine Fisheries Service,US,3,F,DE,Europe,British,Silver Spring,NA,38.99066925048828,-77.026092529296875
@@ -5194,7 +5194,7 @@ A5086724980,Marina Delgado,Universidad de Cádiz,ES,3,F,ES,Europe,Hispanic,Cadiz
 A5011934913,Raquel Ruivo,Universidade do Porto,PT,3,F,PT,Europe,Portuguese,Porto,Porto,41.1485,-8.61097
 A5011736469,Serena Adam,Malaysia University of Science and Technology,MY,3,F,GH,Africa,Sudanese,Petaling Jaya,NA,3.1541810035705566,101.5960693359375
 A5011748739,Paul Marshall,James Cook University,AU,3,M,GB,Europe,British,Townsville,Queensland,-19.26639,146.80569
-A5102759279,Robert C. Anderson,British American Tobacco (United Kingdom),GB,3,M,GB,Europe,Scottish,NA,NA,NA,NA
+A5102759279,Robert C. Anderson,British American Tobacco (United Kingdom),GB,3,M,GB,Europe,Scottish,City of Westminster,England,51.511797,-0.1130734
 A5102761041,Daniela M. Ceccarelli,Reef Ecologic,AU,3,F,IT,Europe,Italian,Townsville,Queensland,-19.26639,146.80569
 A5102717651,Thomas Catchpole,"Centre for Environment, Fisheries and Aquaculture Science",GB,3,M,GB,Europe,British,Lowestoft,NA,52.4752311706543,1.751670002937317
 A5102733584,Jenifer E. Dugan,"University of California, Santa Barbara",US,3,F,IE,Europe,Irish,Santa Barbara,California,34.42083,-119.69819
@@ -5229,7 +5229,7 @@ A5022058562,Joseph Iafrate,Naval Undersea Warfare Center,US,3,M,FR,Europe,Italia
 A5113679042,Ilona Stobutzki,ACT Government,NA,3,F,PL,Europe,NA,Canberra,NA,-35.2834587097168,149.12806701660156
 A5113685556,Jiangfeng Zhu,Ministry of Agriculture and Rural Affairs,CN,3,M,CN,Asia,Chinese,Beijing,Beijing,39.9075,116.39723
 A5038224673,L. Fredrik Sundström,University of Gothenburg,SE,3,M,SE,Europe,Swedish,Gothenburg,Västra Götaland,57.70716,11.96679
-A5038232546,Larbi Boudad,Université Moulay Ismail de Meknes,MA,3,M,DZ,Africa,Moroccan,NA,NA,NA,NA
+A5038232546,Larbi Boudad,Université Moulay Ismail de Meknes,MA,3,M,DZ,Africa,Moroccan,Meknès ⴰⵎⴽⵏⴰⵙ مكناس,Fès-Meknès ⴼⴰⵙ-ⵎⴽⵏⴰⵙ فاس-مكناس,33.857094,-5.5719172
 A5038165966,Luísa Costa,Secretaria Regional do Ambiente e Recursos Naturais,PT,3,F,PT,Europe,Portuguese,Funchal,NA,32.647682189941406,-16.9108829498291
 A5037044485,Nishan Perera,Blue Resources Trust,LK,3,M,LK,Asia,Sri Lankan,Colombo,NA,6.9191060066223145,79.86799621582031
 A5038097151,Daniel Alfredo Cabrera,Centro Científico Tecnológico - La Plata,AR,3,M,ES,Europe,Hispanic,La Plata,NA,-34.92145156860352,-57.95452880859375
@@ -5318,7 +5318,7 @@ A5109067518,P U Zacharia,Central Marine Fisheries Research Institute,IN,3,M,IN,A
 A5045560335,Lorena Couce‐Montero,Universidad de Las Palmas de Gran Canaria,ES,3,F,ES,Europe,Hispanic,Las Palmas de Gran Canaria,NA,28.099729537963867,-15.413430213928224
 A5045593010,L Ranjith,Central Marine Fisheries Research Institute,IN,3,M,LK,Asia,Sri Lankan,Ernakulam,Kerala,9.93988,76.26022
 A5045513846,Jock C. Currie,Nelson Mandela University,ZA,3,M,IE,Europe,British,Port Elizabeth,NA,-33.961090087890625,25.614940643310547
-A5109136419,Dian Feng,Bury College,GB,3,F,CN,Asia,Chinese,NA,NA,NA,NA
+A5109136419,Dian Feng,Bury College,GB,3,F,CN,Asia,Chinese,Bury,England,53.5868843,-2.2955727
 A5000162065,Alejandro D. Pettovello,National University of Patagonia San Juan Bosco,AR,3,M,IT,Europe,Italian,Trelew,Chubut,-43.24895,-65.30505
 A5114051414,P. Pravin,Central Institute of Fisheries Technology,IN,3,F,IN,Asia,Indian,Kochi,NA,9.93988037109375,76.260223388671875
 A5114068124,BA Block,Pacific University,US,3,M,DE,Europe,German,Forest Grove,NA,45.51984024047852,-123.11065673828124
