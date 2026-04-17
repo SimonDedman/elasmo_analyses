@@ -219,12 +219,36 @@ vis_nodes <- nodes_out |>
     ),
     # Direct pixel size (3-20 range) - no value/scaling interaction
     size = pmin(20, pmax(3, log2(papers + 1) * 2.4)),
-    group = coalesce(country, "Unknown"),
     labelDropdown = sprintf("%s (%d)", display_name, papers)
   ) |>
-  select(id, label, title, size, group, labelDropdown,
+  select(id, label, title, size, labelDropdown,
          papers, gender, country, ethnicity, origin_region, origin_country,
          institution, inst_city, inst_region, inst_lat, inst_lon)
+
+# Build a fixed palette for the top-N most-populous countries so a meaningful
+# legend can be drawn. Others fall back to a muted grey.
+top_countries <- vis_nodes |>
+  count(country, sort = TRUE) |>
+  filter(!is.na(country)) |>
+  head(20)
+COUNTRY_PALETTE <- c(
+  "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00",
+  "#FFD700", "#A65628", "#F781BF", "#17becf", "#66C2A5",
+  "#FC8D62", "#8DA0CB", "#E78AC3", "#A6D854", "#6A3D9A",
+  "#E5C494", "#8c564b", "#1B9E77", "#D95F02", "#7570B3"
+)
+country_colors <- setNames(COUNTRY_PALETTE[seq_len(nrow(top_countries))],
+                          top_countries$country)
+country_color_lookup <- function(c) {
+  ifelse(is.na(c) | !(c %in% names(country_colors)),
+         "#cccccc",
+         unname(country_colors[c]))
+}
+# Attach initial color (country mode) to each node
+vis_nodes <- vis_nodes |>
+  mutate(color = country_color_lookup(country))
+# JSON for legend + JS colour lookups
+country_color_json <- jsonlite::toJSON(as.list(country_colors), auto_unbox = TRUE)
 
 vis_edges <- edges_focal |>
   rename(value = weight) |>
@@ -248,14 +272,14 @@ vn <- visNetwork(vis_nodes, vis_edges,
                  )) |>
   visNodes(
     shape = "dot",
-    # size is set per-node (see vis_nodes$size) — no value/scaling interaction
     font = list(size = 0, face = "sans", strokeWidth = 2, strokeColor = "#ffffff"),
-    labelHighlightBold = FALSE
+    labelHighlightBold = FALSE,
+    borderWidth = 0.5
   ) |>
   visEdges(
     smooth = FALSE,
-    color = list(color = "#c8d0dc", highlight = "#B6862C"),
-    scaling = list(min = 0.5, max = 4)
+    color = list(color = "rgba(140,155,180,0.28)", highlight = "#B6862C"),
+    scaling = list(min = 0.3, max = 2.5)
   ) |>
   visPhysics(
     solver = "forceAtlas2Based",
@@ -310,6 +334,21 @@ vn <- visNetwork(vis_nodes, vis_edges,
       if (window.fpLastZoomApply && Math.abs((window.fpLastZoomApply - scale) / scale) < 0.05) return;
       window.fpLastZoomApply = scale;
       window.fpApplyFont(scale);
+      // Enforce min zoom once fit-to-view has happened (see fpMinScale)
+      if (window.fpMinScale && scale < window.fpMinScale) {
+        this.moveTo({ scale: window.fpMinScale });
+      }
+    }",
+    selectNode = "function(params) {
+      if (window.fpSelectNode) window.fpSelectNode(params.nodes[0]);
+    }",
+    deselectNode = "function() {
+      if (window.fpDeselect) window.fpDeselect();
+    }",
+    click = "function(params) {
+      if (params.nodes.length === 0 && params.edges.length === 0) {
+        if (window.fpDeselect) window.fpDeselect();
+      }
     }"
   )
 
@@ -417,8 +456,22 @@ sf_to_rings <- function(sf_data, dp = 2) {
     by_grp <- split(as.data.frame(coords[, c("X", "Y")]), grp)
     for (ring in by_grp) {
       if (nrow(ring) < 3) next
-      pts <- round(as.matrix(ring), dp)
-      all_rings[[length(all_rings) + 1]] <- unname(pts)
+      # Split rings at the antimeridian (|Δlon| > 180) to avoid horizontal streaks
+      lons <- ring$X
+      breaks <- which(abs(diff(lons)) > 180)
+      if (length(breaks) == 0) {
+        pts <- round(as.matrix(ring), dp)
+        all_rings[[length(all_rings) + 1]] <- unname(pts)
+      } else {
+        starts <- c(1, breaks + 1)
+        ends   <- c(breaks, nrow(ring))
+        for (k in seq_along(starts)) {
+          seg <- ring[starts[k]:ends[k], , drop = FALSE]
+          if (nrow(seg) < 3) next
+          pts <- round(as.matrix(seg), dp)
+          all_rings[[length(all_rings) + 1]] <- unname(pts)
+        }
+      }
     }
   }
   all_rings
@@ -640,9 +693,8 @@ make_opts(ethnicity_opts), '</select>
 <div class="legend">
   <h4>Legend</h4>
   <div><strong>Node size</strong>: papers (log scale)</div>
-  <div><strong>Node colour</strong>: institution country (hover for details)</div>
-  <div><strong>Edge width</strong>: shared papers (log scale)</div>
-  <div><strong>Edge alpha</strong>: same</div>
+  <div><strong>Edge width / alpha</strong>: shared papers (log)</div>
+  <div id="fp-legend-colors" style="margin-top:0.5rem;font-size:0.7rem"></div>
 </div>
 </div>
 <script>
@@ -652,6 +704,7 @@ window.fpCountryRings  = ', country_rings_json, ';
 window.fpStateRings    = ', state_rings_json, ';
 window.fpCountryLabels = ', country_labels_json, ';
 window.fpStateLabels   = ', state_labels_json, ';
+window.fpCountryPalette = ', country_color_json, ';
 // Draw map with zoom-tier borders + labels. scale=60 (px per lon/lat degree).
 window.fpDrawMap = function(ctx) {
   var nw = window.fpNetwork;
@@ -681,8 +734,8 @@ window.fpDrawMap = function(ctx) {
     }
   };
   drawRings(window.fpCountryRings || [], "#e8efdb", "#8fa68f", 1.2 / s);
-  // State borders at mid zoom
-  if (s > 1.4) {
+  // State borders once zoomed at all (threshold 0.94 per user request)
+  if (s > 0.94) {
     drawRings(window.fpStateRings || [], null, "#a8b8a8", 0.7 / s);
   }
   // Country labels — always; size counter-zooms to stay at target screen px
@@ -693,8 +746,8 @@ window.fpDrawMap = function(ctx) {
   (window.fpCountryLabels || []).forEach(function(l) {
     ctx.fillText(l.name, l.lon * worldScale, -l.lat * worldScale);
   });
-  // State labels at scale > 2
-  if (s > 2) {
+  // State labels once borders appear
+  if (s > 0.94) {
     ctx.fillStyle = "rgba(90,110,90,0.7)";
     ctx.font = (9 / s) + "px sans-serif";
     (window.fpStateLabels || []).forEach(function(l) {
@@ -741,6 +794,10 @@ window.fpSetLayout = function(mode) {
   } else {
     document.body.classList.remove("geo-layout");
   }
+  // Refresh min-zoom after any layout change (fit determines natural min scale)
+  setTimeout(function() {
+    if (nw.getScale) window.fpMinScale = nw.getScale() * 0.95;
+  }, 1500);
   // Trigger a redraw to paint (or clear) the map background
   if (nw.redraw) nw.redraw();
   var nodesDS = nw.body.data.nodes;
@@ -789,12 +846,13 @@ window.fpHash = function(s) {
   return h;
 };
 // Geographic positions with institution-based clustering.
-// Authors at same institution are placed in a spiral around the institution point
-// (radius scales with count) to avoid stacking.
+// Authors at same institution are placed in a spiral around the institution point.
+// Spiral stride is SMALL (~4 world units ≈ 7 km on the ground) so the cluster
+// stays city-scale and only spreads visibly when zoomed in past state level.
 window.fpComputePositions = function(meta, mode) {
   var positions = {};
   var scale = 60;
-  var instJitter = 180;       // fallback when only country-level coords available
+  var instJitter = 15;       // fallback when only country-level coords available (~25 km)
 
   // Group by (lon, lat) rounded to 3 decimals — effectively by institution
   var groups = {};
@@ -843,13 +901,14 @@ window.fpComputePositions = function(meta, mode) {
       return;
     }
 
-    // Spiral placement — node slots sized for max node radius ~30px + 15px gap = 45px
-    // Ring stride 50 units; ring 1 at 55 gives a ~25-unit gap around the centre node.
+    // Spiral placement — stride 4 world units ≈ 7 km on the ground, so an
+    // institution with 40 authors spans ~60 km total. Overlap at zoom-out,
+    // clear separation when zoomed to street level (scale > 6).
     var placed = 0;
     var ring = 0;
-    var slot = 50;
+    var slot = 4;
     while (placed < count) {
-      var ringRadius = ring === 0 ? 0 : slot * ring + 5;
+      var ringRadius = ring === 0 ? 0 : slot * ring;
       var ringCapacity = ring === 0 ? 1 : Math.max(6, Math.floor(2 * Math.PI * ringRadius / slot));
       var toPlace = Math.min(ringCapacity, count - placed);
       for (var i = 0; i < toPlace; i++) {
@@ -865,16 +924,71 @@ window.fpComputePositions = function(meta, mode) {
 
   return positions;
 };
-// Colour by attribute — change node group on the fly
+// Colour by attribute — assign per-node colour from a palette
+window.fpGenderPalette = { M: "#377EB8", F: "#E41A1C", Unknown: "#cccccc" };
+window.fpRegionPalette = {
+  "Europe": "#377EB8", "North America": "#E41A1C", "South America": "#FF7F00",
+  "Africa": "#4DAF4A", "East Asia": "#984EA3", "South Asia": "#8DA0CB",
+  "South-East Asia": "#A6D854", "Muslim": "#66C2A5", "Central Asia": "#F781BF",
+  "Oceania": "#FFD700", "Unknown": "#cccccc"
+};
 window.fpSetColour = function(attr) {
   var nw = window.fpNetwork;
   if (!nw || !nw.body) return;
   var nodesDS = nw.body.data.nodes;
-  var meta = window.fpNodesMeta;
+  var meta = window.fpNodesMeta || [];
+  var palette;
+  if (attr === "country")      palette = window.fpCountryPalette;
+  else if (attr === "gender")  palette = window.fpGenderPalette;
+  else if (attr === "origin_region") palette = window.fpRegionPalette;
+  else palette = null;
+
+  var nextHue = 0;
+  var dynamicCache = {};
+  var pickColour = function(key) {
+    if (!key) return "#cccccc";
+    if (palette && palette[key]) return palette[key];
+    if (dynamicCache[key]) return dynamicCache[key];
+    // Stable hashing for ethnicity or other unknown attributes
+    var hue = (nextHue * 47) % 360;
+    dynamicCache[key] = "hsl(" + hue + ",55%,55%)";
+    nextHue++;
+    return dynamicCache[key];
+  };
   var updates = meta.map(function(n) {
-    return { id: n.id, group: (n[attr] || "Unknown") };
+    return { id: n.id, color: pickColour(n[attr]) };
   });
   nodesDS.update(updates);
+  // Refresh the legend swatches
+  if (window.fpBuildLegend) window.fpBuildLegend(attr);
+};
+window.fpBuildLegend = function(attr) {
+  var container = document.getElementById("fp-legend-colors");
+  if (!container) return;
+  var palette;
+  if (attr === "country") palette = window.fpCountryPalette;
+  else if (attr === "gender") palette = window.fpGenderPalette;
+  else if (attr === "origin_region") palette = window.fpRegionPalette;
+  else palette = null;
+  container.innerHTML = "";
+  if (!palette) {
+    container.innerHTML = "<em>palette auto-generated</em>";
+    return;
+  }
+  Object.keys(palette).forEach(function(key) {
+    var div = document.createElement("div");
+    div.style.display = "flex";
+    div.style.alignItems = "center";
+    div.style.marginBottom = "2px";
+    div.innerHTML = "<span style=\"display:inline-block;width:10px;height:10px;background:" +
+      palette[key] + ";border-radius:50%;margin-right:6px\"></span>" + key;
+    container.appendChild(div);
+  });
+  var others = document.createElement("div");
+  others.style.color = "#777";
+  others.style.marginTop = "3px";
+  others.innerHTML = "<span style=\"display:inline-block;width:10px;height:10px;background:#cccccc;border-radius:50%;margin-right:6px\"></span>other";
+  container.appendChild(others);
 };
 // Single source of truth: counter-zoom by updating EVERY node explicitly.
 // screen_px = world_px * scale, so set world = target_screen_px / scale.
@@ -889,24 +1003,37 @@ window.fpApplyFont = function(scale) {
   var visibleCount = 0, totalCount = 0;
   nodesDS.forEach(function(n) { totalCount++; if (!n.hidden) visibleCount++; });
 
+  // Default label-visibility policy by how many are shown + zoom level
   var screenFontPx = visibleCount >= totalCount ? 0
                    : visibleCount <= 20 ? 13
                    : visibleCount <= 60 ? 11
                    : visibleCount <= 200 ? 9
                    : 0;
-  if (visibleCount >= totalCount && scale > 2.5) screenFontPx = 9;
-  if (visibleCount >= totalCount && scale > 4.5) screenFontPx = 11;
-  if (visibleCount >= totalCount && scale > 7)   screenFontPx = 13;
+  if (visibleCount >= totalCount && scale > 1.5) screenFontPx = 9;
+  if (visibleCount >= totalCount && scale > 3)   screenFontPx = 11;
+  if (visibleCount >= totalCount && scale > 5)   screenFontPx = 13;
   var worldFont = screenFontPx > 0 ? screenFontPx / scale : 0;
+
+  // Selection mode overrides: only labels for selected + neighbours
+  var selSet = window.fpSelectedSet;
+  var useSelection = !!(selSet && selSet.size > 0);
 
   var updates = meta.map(function(n) {
     var papers = n.papers || 1;
-    // Target SCREEN radius 3–20 px (log-scaled by papers)
     var targetRadius = Math.min(20, Math.max(3, Math.log(papers + 1) / Math.LN2 * 2.4));
+    var showLabel;
+    var labelPx;
+    if (useSelection) {
+      showLabel = selSet.has(n.id);
+      labelPx = showLabel ? 13 / scale : 0;
+    } else {
+      showLabel = worldFont > 0;
+      labelPx = worldFont;
+    }
     return {
       id: n.id,
       size: targetRadius / scale,
-      font: { size: worldFont,
+      font: { size: labelPx,
               strokeWidth: Math.max(1, 2 / scale),
               strokeColor: "#ffffff",
               face: "sans" }
@@ -915,8 +1042,33 @@ window.fpApplyFont = function(scale) {
   nodesDS.update(updates);
   window.fpCurrentScale = scale;
   var dbg = document.getElementById("fp-debug-top");
-  if (dbg) dbg.textContent = "zoom " + scale.toFixed(2) + " · label " + screenFontPx + "px · " + updates.length + " nodes";
-  console.log("fpApplyFont", { scale: scale, screenFontPx: screenFontPx, worldFont: worldFont, nodesUpdated: updates.length });
+  if (dbg) dbg.textContent = "zoom " + scale.toFixed(2) + " · label " + screenFontPx + "px · " + updates.length + " nodes" + (useSelection ? " · SEL" : "");
+};
+// Selection: hide non-connected edges, light up connected author labels.
+window.fpSelectNode = function(nodeId) {
+  var nw = window.fpNetwork;
+  if (!nw || !nw.body || !nodeId) return;
+  var connectedNodes = nw.getConnectedNodes(nodeId) || [];
+  var selSet = new Set();
+  selSet.add(nodeId);
+  connectedNodes.forEach(function(nid) { selSet.add(nid); });
+  window.fpSelectedSet = selSet;
+  var connEdges = new Set((nw.getConnectedEdges(nodeId) || []));
+  var edgesDS = nw.body.data.edges;
+  var minW = parseInt(document.getElementById("fp-min-edge").value, 10) || 1;
+  var updates = [];
+  edgesDS.forEach(function(e) {
+    var keepBase = e.value >= minW;  // respect the slider
+    var keep = keepBase && connEdges.has(e.id);
+    updates.push({ id: e.id, hidden: !keep });
+  });
+  edgesDS.update(updates);
+  window.fpApplyFont();
+};
+window.fpDeselect = function() {
+  window.fpSelectedSet = null;
+  window.fpApplyEdgeWeight();  // restore edges per current slider
+  window.fpApplyFont();
 };
 window.fpApply = function() {
   var c = document.getElementById("fp-country").value;
@@ -999,8 +1151,6 @@ window.fpAuthorJump = function() {
 // Wire up filter listeners immediately (they check fpNetwork at call time)
 window.fpOnReady = function() {
   console.log("Network instance captured:", !!window.fpNetwork);
-  // Reset UI control values to defaults, but do NOT re-seed node positions
-  // (visNetwork has already stabilised its own good layout).
   document.getElementById("fp-country").value = "";
   document.getElementById("fp-gender").value = "";
   document.getElementById("fp-region").value = "";
@@ -1010,10 +1160,15 @@ window.fpOnReady = function() {
   document.getElementById("fp-colour").value = "country";
   document.getElementById("fp-min-edge").value = "2";
   document.getElementById("fp-min-edge-val").textContent = "2";
-  // Apply default edge filter (hide weight<2)
   window.fpApplyEdgeWeight();
   window.fpApply();
+  window.fpBuildLegend("country");
   window.fpNetwork.fit({ animation: true });
+  // Record the fit scale and use it as the minimum zoom
+  setTimeout(function() {
+    var s = window.fpNetwork.getScale ? window.fpNetwork.getScale() : 1;
+    window.fpMinScale = s * 0.95;  // allow 5% margin for padding
+  }, 600);
 };
 document.addEventListener("DOMContentLoaded", function() {
   ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
