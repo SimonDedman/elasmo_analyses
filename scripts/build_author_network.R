@@ -28,6 +28,16 @@ authors <- read_csv("outputs/openalex_unique_authors.csv", show_col_types = FALS
 paper_authors <- read_csv("outputs/openalex_paper_authors.csv", show_col_types = FALSE)
 namsor <- read_csv("outputs/namsor_enrichment.csv", show_col_types = FALSE)
 
+# Optional enrichment files (from scripts/enrich_author_last_institutions.py)
+last_inst_path <- "outputs/openalex_authors_last_institution.csv"
+if (file.exists(last_inst_path)) {
+  last_inst <- read_csv(last_inst_path, show_col_types = FALSE)
+  cat(sprintf("  Loaded last_known_institutions for %d authors\n", nrow(last_inst)))
+} else {
+  last_inst <- NULL
+  cat("  No last_known_institutions file yet — using modal institution\n")
+}
+
 # Author metadata with enrichment
 namsor_clean <- namsor |>
   mutate(openalex_author_id = str_remove(id, "https://openalex.org/")) |>
@@ -46,6 +56,31 @@ author_meta <- authors |>
       TRUE                                 ~ "Unknown"
     )
   )
+
+# If enrichment available: prefer last_known_institution over modal
+if (!is.null(last_inst)) {
+  author_meta <- author_meta |>
+    left_join(last_inst, by = "openalex_author_id") |>
+    mutate(
+      # Use last_known if present, else fall back to modal
+      institution_final = coalesce(last_institution_name, most_common_institution),
+      country_final     = coalesce(last_institution_country, institution_country),
+      inst_city         = last_institution_city,
+      inst_region       = last_institution_region,
+      inst_lat          = last_institution_lat,
+      inst_lon          = last_institution_lon
+    )
+} else {
+  author_meta <- author_meta |>
+    mutate(
+      institution_final = most_common_institution,
+      country_final     = institution_country,
+      inst_city         = NA_character_,
+      inst_region       = NA_character_,
+      inst_lat          = NA_real_,
+      inst_lon          = NA_real_
+    )
+}
 
 # Build coauthor edges
 cat("Building coauthor edges...\n")
@@ -98,11 +133,12 @@ cat(sprintf("After removing isolates: %d authors\n", nrow(nodes_focal)))
 # --- Export node + edge CSVs ---
 dir.create("outputs/analysis", showWarnings = FALSE, recursive = TRUE)
 nodes_out <- nodes_focal |>
-  select(openalex_author_id, display_name, institution = most_common_institution,
-         country = institution_country, papers = paper_count, gender = gender_final,
+  select(openalex_author_id, display_name, institution = institution_final,
+         country = country_final, papers = paper_count, gender = gender_final,
          origin_country = namsor_origin_country,
          origin_region = namsor_origin_region,
-         ethnicity = namsor_ethnicity)
+         ethnicity = namsor_ethnicity,
+         inst_city, inst_region, inst_lat, inst_lon)
 write_csv(nodes_out, "outputs/analysis/author_network_nodes.csv")
 write_csv(edges_focal, "outputs/analysis/author_network_edges.csv")
 cat("Wrote node/edge CSVs\n")
@@ -143,11 +179,16 @@ vis_nodes <- nodes_out |>
   mutate(
     id = openalex_author_id,
     label = display_name,
+    loc_str = dplyr::case_when(
+      !is.na(inst_city) & !is.na(inst_region) ~ paste0(inst_city, ", ", inst_region, ", ", country),
+      !is.na(inst_city)                       ~ paste0(inst_city, ", ", country),
+      TRUE                                     ~ coalesce(country, "")
+    ),
     title = sprintf(
       "<b>%s</b><br><i>%s</i><br>%s<br>%d papers<br>Gender: %s<br>Origin: %s (%s)<br>Ethnicity: %s",
       display_name,
       coalesce(institution, ""),
-      coalesce(country, ""),
+      loc_str,
       papers,
       gender,
       coalesce(origin_country, "—"),
@@ -160,7 +201,8 @@ vis_nodes <- nodes_out |>
     labelDropdown = sprintf("%s (%d)", display_name, papers)
   ) |>
   select(id, label, title, value, group, labelDropdown,
-         papers, gender, country, ethnicity, origin_region, origin_country, institution)
+         papers, gender, country, ethnicity, origin_region, origin_country,
+         institution, inst_city, inst_region, inst_lat, inst_lon)
 
 vis_edges <- edges_focal |>
   rename(value = weight) |>
@@ -313,13 +355,26 @@ iso_coords <- dplyr::bind_rows(
   ) |> anti_join(iso_coords, by = "iso")
 )
 
-# Embed enriched nodes data with centroids for geographic layout
+# Embed node data for geographic layout.
+# Prefer institution lat/lon (inst_lat/inst_lon) when available; fall back to country centroid.
 vis_nodes_enriched <- vis_nodes |>
-  left_join(iso_coords |> rename(country = iso), by = "country")
+  left_join(iso_coords |> rename(country = iso, country_lon = lon, country_lat = lat),
+            by = "country") |>
+  mutate(
+    lon = coalesce(inst_lon, country_lon),
+    lat = coalesce(inst_lat, country_lat),
+    lon_src = if_else(!is.na(inst_lon), "institution", "country")
+  )
+
+cat(sprintf("Institution-level coords: %d / %d authors (%.1f%%)\n",
+            sum(vis_nodes_enriched$lon_src == "institution", na.rm = TRUE),
+            nrow(vis_nodes_enriched),
+            100 * mean(vis_nodes_enriched$lon_src == "institution", na.rm = TRUE)))
 
 nodes_json <- jsonlite::toJSON(
   vis_nodes_enriched |> select(id, gender, country, ethnicity, origin_region,
-                                origin_country, papers, institution, lon, lat),
+                                origin_country, papers, institution,
+                                inst_city, inst_region, lon, lat, lon_src),
   auto_unbox = FALSE
 )
 
@@ -555,38 +610,42 @@ window.fpHash = function(s) {
   for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
   return h;
 };
-// Two-level deterministic jitter: institution → sub-position within country
+// Geographic positions.
+// If lon_src == "institution": use real institution lat/lon with small author-jitter
+// only (±20px). If "country": use country centroid with large institution-jitter
+// (±180px) + author-jitter (±20px) to spread visually.
 window.fpComputePositions = function(meta, mode) {
   var positions = {};
-  var scale = 60;                 // degrees → pixels
-  var instJitter = 180;           // institution offset within country (px)
-  var authorJitter = 20;          // author offset within institution (px)
+  var scale = 60;              // degrees → pixels
+  var instJitter = 180;        // fallback jitter when only country-level
+  var authorJitter = 20;       // author-in-institution jitter
   meta.forEach(function(n) {
-    var lon, lat;
+    var lon, lat, needInstJitter;
     if (mode === "geo-origin") {
       var oc = n.origin_country;
       if (oc && window.fpIsoCoords && window.fpIsoCoords[oc]) {
         lon = window.fpIsoCoords[oc].lon;
         lat = window.fpIsoCoords[oc].lat;
+        needInstJitter = true;  // origin is always country-level
       }
     } else {
       lon = n.lon;
       lat = n.lat;
+      needInstJitter = (n.lon_src !== "institution");
     }
     if (lon == null || lat == null) return;
-    // Institution offset (hash the institution name or country if no inst)
-    var instKey = n.institution || n.country || "";
-    var hi = window.fpHash(instKey);
-    var ix = ((hi & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
-    var iy = (((hi >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
-    // Author offset within institution
+    var x = lon * scale;
+    var y = -lat * scale;
+    if (needInstJitter) {
+      var instKey = n.institution || n.country || "";
+      var hi = window.fpHash(instKey);
+      x += ((hi & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
+      y += (((hi >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
+    }
     var ha = window.fpHash(n.id);
-    var ax = ((ha & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
-    var ay = (((ha >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
-    positions[n.id] = {
-      x: lon * scale + ix + ax,
-      y: -lat * scale + iy + ay
-    };
+    x += ((ha & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
+    y += (((ha >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
+    positions[n.id] = { x: x, y: y };
   });
   return positions;
 };

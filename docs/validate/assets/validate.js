@@ -1151,7 +1151,24 @@
 
   function _renderAuthorEnrichment(enrichEl, ns) {
     var ac = _getAuthorCorrections();
+    var ci = _pageData.current_institution || {};
     var ehtml = '<div class="namsor-fields" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;">';
+
+    // Current institution (editable text input, not a NamSor inference)
+    var instVal = (ac.institution && ac.institution.corrected) ? ac.institution.corrected : (ci.name || '');
+    var instOrig = ci.name || '';
+    var locParts = [ci.city, ci.region, ci.country].filter(function (x) { return x; });
+    var locStr = locParts.join(', ');
+    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;min-width:18rem;">';
+    ehtml += '<span title="Current institution from OpenAlex last_known_institutions"><strong>Institution</strong>';
+    if (locStr) { ehtml += ' <span style="font-weight:normal;color:#868e96;">(' + escapeHtml(locStr) + ')</span>'; }
+    ehtml += '</span>';
+    ehtml += '<input type="text" id="current-institution" class="namsor-edit" data-field="institution" data-original="' + escapeHtml(instOrig) + '"';
+    ehtml += ' value="' + escapeHtml(instVal) + '" placeholder="Current institution" style="width:100%;">';
+    if (ac.institution) {
+      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.institution.original) + ')</span>';
+    }
+    ehtml += '</label>';
 
     // Gender select
     var genderVal = (ac.gender && ac.gender.corrected) ? ac.gender.corrected : (ns.gender || '');
