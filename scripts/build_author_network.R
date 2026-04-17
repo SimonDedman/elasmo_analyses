@@ -786,25 +786,26 @@ window.fpApplyEdgeWeight = function() {
   edgesDS.update(updates);
 };
 window.fpSetLayout = function(mode) {
+  console.log("fpSetLayout called with mode:", mode);
   var nw = window.fpNetwork;
-  if (!nw || !nw.body) return;
-  // Toggle class so beforeDrawing knows whether to render the map
+  if (!nw || !nw.body) { console.warn("fpSetLayout: network not ready"); return; }
+  // Release min-zoom floor so fit() can drop the scale for a wider world map
+  window.fpMinScale = 0;
   if (mode === "geo-inst" || mode === "geo-origin") {
     document.body.classList.add("geo-layout");
   } else {
     document.body.classList.remove("geo-layout");
   }
-  // Refresh min-zoom after any layout change (fit determines natural min scale)
-  setTimeout(function() {
-    if (nw.getScale) window.fpMinScale = nw.getScale() * 0.95;
-  }, 1500);
-  // Trigger a redraw to paint (or clear) the map background
   if (nw.redraw) nw.redraw();
   var nodesDS = nw.body.data.nodes;
-  var meta = window.fpNodesMeta;
+  var meta = window.fpNodesMeta || [];
+  var refreshMinScale = function(delay) {
+    setTimeout(function() {
+      if (nw.getScale) window.fpMinScale = nw.getScale() * 0.95;
+      console.log("fpSetLayout: fpMinScale now", window.fpMinScale);
+    }, delay);
+  };
   if (mode === "physics") {
-    // Seed with random positions in a bounded area so nodes do not stay
-    // stuck in geographic grid; then re-enable physics to converge.
     var updates = meta.map(function(n) {
       return {
         id: n.id,
@@ -825,19 +826,32 @@ window.fpSetLayout = function(mode) {
     setTimeout(function() {
       nw.setOptions({ physics: false });
       nw.fit({ animation: true });
+      refreshMinScale(1500);
     }, 3000);
     return;
   }
-  // Geographic layouts: compute positions with institution-level jitter
+  // Geographic layouts
   nw.setOptions({ physics: false });
-  var positions = window.fpComputePositions(meta, mode);
+  var positions;
+  try {
+    positions = window.fpComputePositions(meta, mode);
+    console.log("fpComputePositions returned", Object.keys(positions).length, "positions");
+  } catch (e) {
+    console.error("fpComputePositions error:", e);
+    positions = {};
+  }
   var updates = meta.map(function(n) {
     var p = positions[n.id];
     if (!p) return { id: n.id, hidden: true };
     return { id: n.id, x: p.x, y: p.y, fixed: { x: true, y: true }, hidden: false };
   });
   nodesDS.update(updates);
-  setTimeout(function() { nw.fit({ animation: true }); }, 200);
+  var hiddenCount = updates.filter(function(u) { return u.hidden; }).length;
+  console.log("fpSetLayout geo: updated", updates.length, "nodes,", hiddenCount, "hidden (no coords)");
+  setTimeout(function() {
+    nw.fit({ animation: true });
+    refreshMinScale(1500);
+  }, 200);
 };
 // Deterministic 32-bit hash of a string
 window.fpHash = function(s) {
