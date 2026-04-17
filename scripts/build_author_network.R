@@ -480,6 +480,17 @@ div.vis-network { width: 100vw !important; height: 100vh !important; }
 /* Tighten visNetwork header spacing */
 h2.main { font-size: 1rem; margin: 0.2rem 0 0.1rem 0; }
 h3.submain { font-size: 0.8rem; margin: 0 0 0.2rem 0; color: #718096; font-weight: normal; font-style: italic; }
+
+/* World ocean floor map background (Berann/Heezen/Tharp 1977), shown in geographic mode */
+body.geo-layout .vis-network {
+  background-image: url("assets/world_ocean_floor.jpg");
+  background-size: cover;
+  background-position: center;
+}
+body.geo-layout .vis-network canvas {
+  opacity: 0.92;
+  mix-blend-mode: multiply;
+}
 /* Hide the default selectedBy/nodesIdSelection dropdowns, we replace them */
 .vis-configuration-wrapper { display: none !important; }
 </style>'
@@ -572,6 +583,12 @@ window.fpApplyEdgeWeight = function() {
 window.fpSetLayout = function(mode) {
   var nw = window.fpNetwork;
   if (!nw || !nw.body) return;
+  // Toggle CSS class for map background
+  if (mode === "geo-inst" || mode === "geo-origin") {
+    document.body.classList.add("geo-layout");
+  } else {
+    document.body.classList.remove("geo-layout");
+  }
   var nodesDS = nw.body.data.nodes;
   var meta = window.fpNodesMeta;
   if (mode === "physics") {
@@ -617,43 +634,79 @@ window.fpHash = function(s) {
   for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
   return h;
 };
-// Geographic positions.
-// If lon_src == "institution": use real institution lat/lon with small author-jitter
-// only (±20px). If "country": use country centroid with large institution-jitter
-// (±180px) + author-jitter (±20px) to spread visually.
+// Geographic positions with institution-based clustering.
+// Authors at same institution are placed in a spiral around the institution point
+// (radius scales with count) to avoid stacking.
 window.fpComputePositions = function(meta, mode) {
   var positions = {};
-  var scale = 60;              // degrees → pixels
-  var instJitter = 180;        // fallback jitter when only country-level
-  var authorJitter = 20;       // author-in-institution jitter
+  var scale = 60;
+  var instJitter = 180;       // fallback when only country-level coords available
+
+  // Group by (lon, lat) rounded to 3 decimals — effectively by institution
+  var groups = {};
   meta.forEach(function(n) {
-    var lon, lat, needInstJitter;
+    var lon, lat, srcKind;
     if (mode === "geo-origin") {
       var oc = n.origin_country;
       if (oc && window.fpIsoCoords && window.fpIsoCoords[oc]) {
         lon = window.fpIsoCoords[oc].lon;
         lat = window.fpIsoCoords[oc].lat;
-        needInstJitter = true;  // origin is always country-level
+        srcKind = "country";
       }
     } else {
       lon = n.lon;
       lat = n.lat;
-      needInstJitter = (n.lon_src !== "institution");
+      srcKind = n.lon_src || "country";
     }
     if (lon == null || lat == null) return;
-    var x = lon * scale;
-    var y = -lat * scale;
-    if (needInstJitter) {
-      var instKey = n.institution || n.country || "";
-      var hi = window.fpHash(instKey);
-      x += ((hi & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
-      y += (((hi >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
-    }
-    var ha = window.fpHash(n.id);
-    x += ((ha & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
-    y += (((ha >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * authorJitter;
-    positions[n.id] = { x: x, y: y };
+    var key = lon.toFixed(3) + "," + lat.toFixed(3);
+    if (!groups[key]) groups[key] = { lon: lon, lat: lat, srcKind: srcKind, members: [] };
+    groups[key].members.push(n);
   });
+
+  // Place members of each group in a spiral / concentric rings
+  Object.keys(groups).forEach(function(key) {
+    var g = groups[key];
+    var members = g.members;
+    var count = members.length;
+    var cx = g.lon * scale;
+    var cy = -g.lat * scale;
+
+    // If source is country-level, add institution-hash offset first
+    if (g.srcKind !== "institution") {
+      var instKey = members[0].institution || members[0].country || "";
+      var hi = window.fpHash(instKey);
+      cx += ((hi & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
+      cy += (((hi >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
+    }
+
+    // Place members on concentric rings. Nodes sized log2(papers+1)*3,
+    // so radius ~10-16px per node. Stride rings every ~14px.
+    members.sort(function(a, b) { return b.papers - a.papers; });
+
+    if (count === 1) {
+      positions[members[0].id] = { x: cx, y: cy };
+      return;
+    }
+
+    // Spiral placement
+    var placed = 0;
+    var ring = 0;
+    while (placed < count) {
+      var ringRadius = ring === 0 ? 0 : 8 + ring * 14;
+      var ringCapacity = ring === 0 ? 1 : Math.max(6, Math.floor(2 * Math.PI * ringRadius / 16));
+      var toPlace = Math.min(ringCapacity, count - placed);
+      for (var i = 0; i < toPlace; i++) {
+        var angle = (2 * Math.PI * i) / toPlace + (ring * 0.4);
+        var x = cx + ringRadius * Math.cos(angle);
+        var y = cy + ringRadius * Math.sin(angle);
+        positions[members[placed].id] = { x: x, y: y };
+        placed++;
+      }
+      ring++;
+    }
+  });
+
   return positions;
 };
 // Colour by attribute — change node group on the fly
