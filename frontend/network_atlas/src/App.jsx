@@ -1,0 +1,522 @@
+import { useEffect, useMemo, useState } from 'react';
+import { Map as MapLibreMap } from 'react-map-gl/maplibre';
+import DeckGL from '@deck.gl/react';
+import { ScatterplotLayer, LineLayer, TextLayer, IconLayer } from '@deck.gl/layers';
+import { getIconAtlas, ICON_MAPPING, pickShape } from './lib/shapes.js';
+import Supercluster from 'supercluster';
+import 'maplibre-gl/dist/maplibre-gl.css';
+
+import FilterPanel from './components/FilterPanel.jsx';
+import {
+  GENDER_PALETTE, REGION_PALETTE,
+  buildCountryPalette, pickColour,
+} from './lib/palettes.js';
+import {
+  loadAuthors, loadEdges, loadStats, loadInstitutions,
+} from './lib/dataLoaders.js';
+import { BASEMAPS, DEFAULT_BASEMAP } from './lib/basemaps.js';
+import './App.css';
+
+const INITIAL_VIEW_STATE = {
+  longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
+};
+
+const CLUSTER_RADIUS_PX  = 50;
+const CLUSTER_MAX_ZOOM   = 8;
+const CLUSTER_MIN_POINTS = 3;
+
+// Zoom used when pan-to-author via search.
+const SEARCH_ZOOM = 6;
+
+export default function App() {
+  const [authorsFC, setAuthorsFC]         = useState(null);
+  const [institutionsFC, setInstitutionsFC] = useState(null);
+  const [edgesList, setEdgesList]         = useState(null);
+  const [stats, setStats]                 = useState(null);
+  const [error, setError]                 = useState(null);
+
+  const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
+  const [filters, setFilters] = useState({
+    country: '', gender: '', origin_region: '', minEdgeWeight: 2,
+  });
+  const [colorBy, setColorBy]           = useState('gender');
+  const [shapeBy, setShapeBy]           = useState('none');
+  const [showEdges, setShowEdges]       = useState(true);
+  const [showClusters, setShowClusters] = useState(true);
+  const [selectedId, setSelectedId]     = useState(null);
+  const [viewMode, setViewMode]         = useState('authors');
+  const [basemap, setBasemap]           = useState(DEFAULT_BASEMAP);
+  const [searchQuery, setSearchQuery]   = useState('');
+  const [aggregateEdges, setAggregateEdges] = useState(true);
+  const [searchTarget, setSearchTarget] = useState('author');  // 'author' | 'institution'
+
+  useEffect(() => {
+    Promise.all([loadAuthors(), loadEdges(), loadStats(), loadInstitutions()])
+      .then(([a, e, s, i]) => {
+        setAuthorsFC(a); setEdgesList(e); setStats(s); setInstitutionsFC(i);
+      })
+      .catch(err => setError(err.message));
+  }, []);
+
+  const authors      = authorsFC?.features ?? [];
+  const institutions = institutionsFC?.features ?? [];
+
+  const countryPalette = useMemo(() => {
+    if (!stats?.by_country) return {};
+    return buildCountryPalette(Object.keys(stats.by_country));
+  }, [stats]);
+
+  const palettes = useMemo(() => ({
+    gender:        GENDER_PALETTE,
+    origin_region: REGION_PALETTE,
+    country:       countryPalette,
+  }), [countryPalette]);
+
+  const originRegions = useMemo(() => {
+    const s = new Set();
+    authors.forEach(f => { if (f.properties.origin_region) s.add(f.properties.origin_region); });
+    return Array.from(s).sort();
+  }, [authors]);
+
+  // Sorted author-name list for the datalist autocomplete (unique, by papers).
+  const authorNames = useMemo(() => {
+    if (!authors.length) return [];
+    return [...authors]
+      .sort((a, b) => (b.properties.papers ?? 0) - (a.properties.papers ?? 0))
+      .map(f => f.properties.name)
+      .filter(Boolean);
+  }, [authors]);
+
+  // Institution-name list for autocomplete, sorted by author count
+  const institutionNames = useMemo(() => {
+    if (!institutions.length) return [];
+    return [...institutions]
+      .sort((a, b) => (b.properties.author_count ?? 0) - (a.properties.author_count ?? 0))
+      .map(f => f.properties.institution)
+      .filter(Boolean);
+  }, [institutions]);
+
+  // --- Filter authors ------------------------------------------------------
+  const filteredAuthors = useMemo(() => authors.filter(f => {
+    const p = f.properties;
+    if (filters.country       && p.country       !== filters.country) return false;
+    if (filters.gender        && p.gender        !== filters.gender) return false;
+    if (filters.origin_region && p.origin_region !== filters.origin_region) return false;
+    return true;
+  }), [authors, filters.country, filters.gender, filters.origin_region]);
+
+  const filteredIdSet = useMemo(
+    () => new Set(filteredAuthors.map(f => f.properties.id)),
+    [filteredAuthors]
+  );
+
+  const positionById = useMemo(() => {
+    const m = new Map();
+    authors.forEach(f => m.set(f.properties.id, f.geometry.coordinates));
+    return m;
+  }, [authors]);
+
+  const filteredEdges = useMemo(() => {
+    if (!edgesList) return [];
+    return edgesList.filter(e =>
+      e.weight >= filters.minEdgeWeight &&
+      filteredIdSet.has(e.from) && filteredIdSet.has(e.to)
+    );
+  }, [edgesList, filters.minEdgeWeight, filteredIdSet]);
+
+  // --- Selection ----------------------------------------------------------
+  const selectedAuthor = useMemo(
+    () => (selectedId ? authors.find(f => f.properties.id === selectedId) : null),
+    [authors, selectedId]
+  );
+
+  const selectedRelated = useMemo(() => {
+    if (!selectedId) return null;
+    const ids = new Set([selectedId]);
+    filteredEdges.forEach(e => {
+      if (e.from === selectedId) ids.add(e.to);
+      if (e.to   === selectedId) ids.add(e.from);
+    });
+    return ids;
+  }, [selectedId, filteredEdges]);
+
+  // --- Search — author or institution depending on searchTarget -----------
+  const onSearchSubmit = () => {
+    if (!searchQuery.trim()) return;
+    const q = searchQuery.trim().toLowerCase();
+    if (searchTarget === 'institution') {
+      const match =
+        institutions.find(f => f.properties.institution?.toLowerCase() === q) ||
+        institutions.find(f => f.properties.institution?.toLowerCase().includes(q));
+      if (!match) return;
+      setViewState(prev => ({
+        ...prev,
+        longitude: match.geometry.coordinates[0],
+        latitude:  match.geometry.coordinates[1],
+        zoom: Math.max(prev.zoom, SEARCH_ZOOM),
+        transitionDuration: 600,
+      }));
+      return;
+    }
+    const match =
+      authors.find(f => f.properties.name?.toLowerCase() === q) ||
+      authors.find(f => f.properties.name?.toLowerCase().includes(q));
+    if (!match) return;
+    setSelectedId(match.properties.id);
+    setViewState(prev => ({
+      ...prev,
+      longitude: match.geometry.coordinates[0],
+      latitude:  match.geometry.coordinates[1],
+      zoom: Math.max(prev.zoom, SEARCH_ZOOM),
+      transitionDuration: 600,
+    }));
+  };
+
+  // --- Clustering ---------------------------------------------------------
+  const clusterIndex = useMemo(() => {
+    if (viewMode !== 'authors' || !showClusters || !filteredAuthors.length) return null;
+    const idx = new Supercluster({
+      radius: CLUSTER_RADIUS_PX,
+      maxZoom: CLUSTER_MAX_ZOOM,
+      minPoints: CLUSTER_MIN_POINTS,
+    });
+    idx.load(filteredAuthors);
+    return idx;
+  }, [filteredAuthors, showClusters, viewMode]);
+
+  const currentPoints = useMemo(() => {
+    if (viewMode !== 'authors') return [];
+    if (!clusterIndex) return filteredAuthors;
+    return clusterIndex.getClusters([-180, -85, 180, 85], Math.floor(viewState.zoom));
+  }, [clusterIndex, viewState.zoom, filteredAuthors, viewMode]);
+
+  const singletons = useMemo(
+    () => currentPoints.filter(c => !c.properties?.cluster),
+    [currentPoints]
+  );
+  const clusterPoints = useMemo(
+    () => currentPoints.filter(c => c.properties?.cluster),
+    [currentPoints]
+  );
+
+  // --- Cluster edges (aggregated to cluster-pair) -------------------------
+  // When clustering is active AND aggregateEdges is on, bundle edges
+  // whose endpoints share a cluster into one cluster-to-cluster line
+  // weighted by the sum. Makes the mesh readable at continental zoom.
+  const clusterMembership = useMemo(() => {
+    if (!aggregateEdges || !clusterIndex || clusterPoints.length === 0) return null;
+    const map = new Map();
+    clusterPoints.forEach(c => {
+      // getLeaves gives the original points under this cluster
+      const leaves = clusterIndex.getLeaves(c.properties.cluster_id ?? c.id, Infinity);
+      leaves.forEach(l => { map.set(l.properties.id, c); });
+    });
+    return map;
+  }, [aggregateEdges, clusterIndex, clusterPoints]);
+
+  const aggregatedEdges = useMemo(() => {
+    if (!clusterMembership) return filteredEdges;
+    const bins = new Map();  // key: "minId|maxId" where id is cluster id or author id
+    filteredEdges.forEach(e => {
+      const cFrom = clusterMembership.get(e.from);
+      const cTo   = clusterMembership.get(e.to);
+      const fromKey = cFrom ? `c:${cFrom.id}` : `a:${e.from}`;
+      const toKey   = cTo   ? `c:${cTo.id}`   : `a:${e.to}`;
+      if (fromKey === toKey) return;  // intra-cluster — skip
+      const [a, b] = fromKey < toKey ? [fromKey, toKey] : [toKey, fromKey];
+      const key = `${a}|${b}`;
+      const agg = bins.get(key);
+      if (agg) { agg.weight += e.weight; agg.count += 1; }
+      else bins.set(key, {
+        fromKey: a, toKey: b,
+        fromPos: cFrom ? cFrom.geometry.coordinates : positionById.get(e.from),
+        toPos:   cTo   ? cTo.geometry.coordinates   : positionById.get(e.to),
+        weight: e.weight, count: 1,
+      });
+    });
+    return Array.from(bins.values());
+  }, [clusterMembership, filteredEdges, positionById]);
+
+  // --- Layers -------------------------------------------------------------
+  const layers = [];
+
+  // Edges (authors view only). Aggregated or per-author depending on toggle.
+  if (viewMode === 'authors' && showEdges) {
+    const edgeData = aggregateEdges && clusterMembership
+      ? aggregatedEdges
+      : filteredEdges;
+    if (edgeData.length > 0) {
+      const isAggregated = aggregateEdges && clusterMembership;
+      layers.push(new LineLayer({
+        id: 'edges',
+        data: edgeData,
+        getSourcePosition: e => isAggregated ? e.fromPos : (positionById.get(e.from) ?? [0, 0]),
+        getTargetPosition: e => isAggregated ? e.toPos   : (positionById.get(e.to)   ?? [0, 0]),
+        getWidth: e => Math.log2((isAggregated ? e.weight : e.weight) + 1) * 0.5,
+        widthMinPixels: 0.4,
+        widthMaxPixels: isAggregated ? 4 : 2,
+        getColor: e => {
+          if (!isAggregated && selectedRelated) {
+            const incident = e.from === selectedId || e.to === selectedId;
+            return incident ? [60, 80, 105, 200] : [140, 155, 180, 20];
+          }
+          return [60, 80, 105, isAggregated ? 140 : 90];
+        },
+        updateTriggers: { getColor: [selectedId, aggregateEdges] },
+        pickable: false,
+      }));
+    }
+  }
+
+  // Individual authors — ScatterplotLayer (circles) OR IconLayer (shapes)
+  if (viewMode === 'authors') {
+    if (shapeBy === 'none') {
+      layers.push(new ScatterplotLayer({
+        id: 'authors',
+        data: singletons,
+        pickable: true,
+        opacity: 0.85,
+        stroked: true,
+        filled: true,
+        radiusMinPixels: 3,
+        radiusMaxPixels: 18,
+        lineWidthMinPixels: 0.5,
+        getPosition: f => f.geometry.coordinates,
+        getRadius: f => 30000 * Math.log2((f.properties.papers ?? 1) + 1),
+        getFillColor: f => {
+          const base = pickColour(f.properties, colorBy, palettes);
+          if (selectedRelated && !selectedRelated.has(f.properties.id)) {
+            return [base[0], base[1], base[2], 40];
+          }
+          return base;
+        },
+        getLineColor: f =>
+          (selectedId && f.properties.id === selectedId)
+            ? [182, 134, 44, 255]
+            : [40, 40, 40, 180],
+        getLineWidth: f => (selectedId && f.properties.id === selectedId) ? 2.5 : 0.5,
+        lineWidthUnits: 'pixels',
+        onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
+        updateTriggers: {
+          getFillColor: [colorBy, selectedId, palettes],
+          getLineColor: [selectedId],
+          getLineWidth: [selectedId],
+        },
+      }));
+    } else {
+      // IconLayer path — procedural shape atlas, area-equivalent across
+      // circle / triangle / square. See src/lib/shapes.js.
+      layers.push(new IconLayer({
+        id: 'authors-shaped',
+        data: singletons,
+        pickable: true,
+        iconAtlas: getIconAtlas(),
+        iconMapping: ICON_MAPPING,
+        sizeUnits: 'pixels',
+        sizeMinPixels: 8,
+        sizeMaxPixels: 48,
+        getPosition: f => f.geometry.coordinates,
+        getIcon: f => pickShape(f.properties, shapeBy),
+        getSize: f => 6 + Math.log2((f.properties.papers ?? 1) + 1) * 4,
+        getColor: f => {
+          const base = pickColour(f.properties, colorBy, palettes);
+          if (selectedRelated && !selectedRelated.has(f.properties.id)) {
+            return [base[0], base[1], base[2], 40];
+          }
+          return base;
+        },
+        onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
+        updateTriggers: {
+          getColor: [colorBy, selectedId, palettes],
+          getIcon: [shapeBy],
+        },
+      }));
+    }
+
+    if (clusterPoints.length > 0) {
+      layers.push(new ScatterplotLayer({
+        id: 'clusters',
+        data: clusterPoints,
+        pickable: true,
+        opacity: 0.88,
+        stroked: true, filled: true,
+        radiusMinPixels: 14, radiusMaxPixels: 46,
+        lineWidthMinPixels: 1,
+        getPosition: c => c.geometry.coordinates,
+        getRadius: c => 40000 + Math.sqrt(c.properties.point_count) * 8000,
+        getFillColor: [8, 30, 63, 200],
+        getLineColor: [255, 255, 255, 220],
+        onClick: info => {
+          if (!info.object || !clusterIndex) return;
+          const z = clusterIndex.getClusterExpansionZoom(info.object.id);
+          setViewState(prev => ({
+            ...prev,
+            longitude: info.object.geometry.coordinates[0],
+            latitude:  info.object.geometry.coordinates[1],
+            zoom: z + 0.5,
+            transitionDuration: 500,
+          }));
+        },
+      }));
+      layers.push(new TextLayer({
+        id: 'cluster-labels',
+        data: clusterPoints,
+        pickable: false,
+        getPosition: c => c.geometry.coordinates,
+        getText: c => String(
+          c.properties.point_count_abbreviated ?? c.properties.point_count
+        ),
+        getSize: 14,
+        getColor: [255, 255, 255, 255],
+        getTextAnchor: 'middle',
+        getAlignmentBaseline: 'center',
+        fontWeight: 700,
+      }));
+    }
+  }
+
+  // Author-name labels. Show only when the visible singletons are
+  // few enough to read (≤20 by default) OR when a selection is active,
+  // in which case we label the selected author + their coauthors.
+  if (viewMode === 'authors') {
+    let labelled = [];
+    if (selectedRelated) {
+      labelled = singletons.filter(f => selectedRelated.has(f.properties.id));
+    } else if (singletons.length > 0 && singletons.length <= 20) {
+      labelled = singletons;
+    }
+    if (labelled.length > 0) {
+      layers.push(new TextLayer({
+        id: 'author-labels',
+        data: labelled,
+        pickable: false,
+        getPosition: f => f.geometry.coordinates,
+        getText: f => f.properties.name ?? '',
+        getSize: 13,
+        getColor: [30, 30, 30, 255],
+        getPixelOffset: [0, 18],                 // below the dot
+        getTextAnchor: 'middle',
+        getAlignmentBaseline: 'top',
+        outlineWidth: 3,
+        outlineColor: [255, 255, 255, 230],
+        fontSettings: { sdf: true, radius: 12 },
+        background: false,
+      }));
+    }
+  }
+
+  // Institutions view
+  if (viewMode === 'institutions' && institutions.length > 0) {
+    layers.push(new ScatterplotLayer({
+      id: 'institutions',
+      data: institutions,
+      pickable: true,
+      opacity: 0.88,
+      stroked: true, filled: true,
+      radiusMinPixels: 5, radiusMaxPixels: 38,
+      lineWidthMinPixels: 0.8,
+      getPosition: f => f.geometry.coordinates,
+      getRadius: f => 25000 * Math.log2(f.properties.author_count + 1),
+      getFillColor: [182, 134, 44, 220],    // FIU gold
+      getLineColor: [40, 40, 40, 200],
+    }));
+  }
+
+  // --- Tooltip -------------------------------------------------------------
+  // Offset from cursor (-12, 24) so the pointer isn't sitting on the
+  // top-left corner of the card and covering its content.
+  const tipOffset = { marginLeft: '14px', marginTop: '14px' };
+  const tipBase = {
+    background: '#081E3F', color: '#fff', fontSize: '0.8em',
+    padding: '6px 9px', borderRadius: '4px',
+    ...tipOffset,
+  };
+  const getTooltip = ({ object }) => {
+    if (!object) return null;
+    if (object.properties?.cluster) {
+      return {
+        text: `${object.properties.point_count_abbreviated ?? object.properties.point_count} authors · click to zoom in`,
+        style: tipBase,
+      };
+    }
+    if (object.properties?.author_count) {
+      const p = object.properties;
+      return {
+        html:
+          `<strong>${p.institution}</strong><br/>` +
+          `${[p.city, p.region, p.country].filter(Boolean).join(', ')}<br/>` +
+          `<em>${p.author_count} authors · ${p.total_papers} papers</em><br/>` +
+          `Top: ${p.top_authors}`,
+        style: { ...tipBase, maxWidth: '320px' },
+      };
+    }
+    const p = object.properties;
+    return {
+      html:
+        `<strong>${p.name}</strong><br/>` +
+        `${p.institution ?? '—'}<br/>` +
+        `${[p.city, p.region, p.country].filter(Boolean).join(', ')}<br/>` +
+        `<em>${p.papers} papers</em> · ${p.gender}${
+          p.origin_region ? ` · origin ${p.origin_region}` : ''
+        }`,
+      style: { ...tipBase, maxWidth: '280px' },
+    };
+  };
+
+  // Cursor: default arrow everywhere, pointer on a hoverable feature.
+  // (deck.gl's default was 'grab'/'grabbing' hand, which hid the point
+  // the user was aiming at.)
+  const getCursor = ({ isDragging, isHovering }) => {
+    if (isDragging) return 'grabbing';
+    if (isHovering) return 'pointer';
+    return 'default';
+  };
+
+  return (
+    <div style={{ position: 'fixed', inset: 0 }}>
+      <DeckGL
+        viewState={viewState}
+        onViewStateChange={e => setViewState(e.viewState)}
+        controller={true}
+        layers={layers}
+        onClick={info => { if (!info.object) setSelectedId(null); }}
+        getTooltip={getTooltip}
+        getCursor={getCursor}
+      >
+        <MapLibreMap reuseMaps mapStyle={BASEMAPS[basemap].url} />
+      </DeckGL>
+
+      {!authorsFC && !error && (
+        <div className="overlay">Loading authors…</div>
+      )}
+      {error && <div className="overlay error">Error: {error}</div>}
+
+      {authorsFC && (
+        <FilterPanel
+          filters={filters} setFilters={setFilters}
+          colorBy={colorBy} setColorBy={setColorBy}
+          shapeBy={shapeBy} setShapeBy={setShapeBy}
+          showEdges={showEdges} setShowEdges={setShowEdges}
+          showClusters={showClusters} setShowClusters={setShowClusters}
+          aggregateEdges={aggregateEdges} setAggregateEdges={setAggregateEdges}
+          viewMode={viewMode} setViewMode={setViewMode}
+          basemap={basemap} setBasemap={setBasemap}
+          searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+          searchTarget={searchTarget} setSearchTarget={setSearchTarget}
+          institutionNames={institutionNames}
+          onSearchSubmit={onSearchSubmit}
+          selectedAuthor={selectedAuthor}
+          onClearSelection={() => setSelectedId(null)}
+          stats={stats}
+          authorCount={filteredAuthors.length}
+          totalAuthors={authors.length}
+          edgeCount={filteredEdges.length}
+          institutionCount={institutions.length}
+          originRegions={originRegions}
+          palettes={palettes}
+          authorNames={authorNames}
+        />
+      )}
+    </div>
+  );
+}
