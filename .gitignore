@@ -143,3 +143,13 @@ data/journal_quality/
 !docs/archive/
 docs/archive/*
 !docs/archive/.gitkeep
+
+# Claude Code runtime state
+.claude/scheduled_tasks.lock
+
+# Reference PDFs held locally but not redistributed
+docs/LLM/*.pdf
+
+# Generated network-viz subsets (large single-file bundles)
+docs/network/index_subset.html
+docs/network/index_subset_files/
