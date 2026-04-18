@@ -128,6 +128,38 @@ export default function FilterPanel({
             onChange={e => update('minEdgeWeight', parseInt(e.target.value, 10))}
           />
 
+          {stats?.year_min != null && stats?.year_max != null && (() => {
+            const lo = filters.yearMin ?? stats.year_min;
+            const hi = filters.yearMax ?? stats.year_max;
+            return (
+              <>
+                <label>
+                  Year range: <strong>{lo}</strong>–<strong>{hi}</strong>
+                </label>
+                <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                  <input
+                    type="range" min={stats.year_min} max={stats.year_max} step="1"
+                    value={lo}
+                    onChange={e => {
+                      const v = parseInt(e.target.value, 10);
+                      update('yearMin', Math.min(v, hi));
+                    }}
+                    style={{ flex: 1 }}
+                  />
+                  <input
+                    type="range" min={stats.year_min} max={stats.year_max} step="1"
+                    value={hi}
+                    onChange={e => {
+                      const v = parseInt(e.target.value, 10);
+                      update('yearMax', Math.max(v, lo));
+                    }}
+                    style={{ flex: 1 }}
+                  />
+                </div>
+              </>
+            );
+          })()}
+
           <label>Colour by</label>
           <select value={colorBy} onChange={e => setColorBy(e.target.value)}>
             <option value="gender">Gender</option>
@@ -190,7 +222,8 @@ export default function FilterPanel({
       <button
         className="reset"
         onClick={() => {
-          setFilters({ country: '', gender: '', origin_region: '', minEdgeWeight: 2 });
+          setFilters({ country: '', gender: '', origin_region: '', minEdgeWeight: 2,
+                       yearMin: null, yearMax: null });
           setSearchQuery('');
           onClearSelection();
         }}

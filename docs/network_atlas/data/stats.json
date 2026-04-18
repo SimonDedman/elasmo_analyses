@@ -1,10 +1,10 @@
 {
-  "build_timestamp": "2026-04-17 18:01:04 PDT",
+  "build_timestamp": "2026-04-18 01:25:37 PDT",
   "total_authors": 5287,
   "total_institutions": 2017,
-  "total_edges": 65164,
+  "total_edges": 65170,
   "by_country": {
-    "US": 1317,
+    "US": 1319,
     "AU": 471,
     "GB": 336,
     "BR": 287,
@@ -30,5 +30,7 @@
     "M": 3527,
     "Unknown": 47
   },
-  "min_papers": 3
+  "min_papers": 3,
+  "year_min": 1950,
+  "year_max": 2025
 }
