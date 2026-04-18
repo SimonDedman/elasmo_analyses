@@ -18,22 +18,32 @@
   /* ------------------------------------------------------------------
    * buildJSON
    * Assembles the submission object from validateUI state.
-   * Only includes paper sections that carry actual data.
-   * Returns a plain JS object (not a string).
+   *
+   * validateUI state shape: { [paperId]: { [prefix]: {...} }, author_corrections: {...} }
+   * — i.e. keyed by paperId at the top level (no intermediate `papers` key).
+   *
+   * A paper counts as "reviewed" if any of its prefixes has a non-empty
+   * `rating` (matches validate.js:_isPaperReviewed).
    * ------------------------------------------------------------------ */
   function buildJSON() {
     var state    = window.validateUI.getState();
     var pageData = window.validateUI.getPageData();
 
-    var papers = {};
+    var papers          = {};
+    var papersReviewed  = 0;
+    var stateKeys       = Object.keys(state || {});
 
-    var paperIds = Object.keys(state.papers || {});
-    for (var i = 0; i < paperIds.length; i++) {
-      var pid        = paperIds[i];
-      var paperState = state.papers[pid];
-      var paperEntry = {};
+    for (var i = 0; i < stateKeys.length; i++) {
+      var pid = stateKeys[i];
+      if (pid === 'author_corrections') { continue; }  // not a paper
 
-      var sectionKeys = Object.keys(paperState || {});
+      var paperState = state[pid];
+      if (!paperState || typeof paperState !== 'object') { continue; }
+
+      var paperEntry    = {};
+      var paperHasRating = false;
+      var sectionKeys    = Object.keys(paperState);
+
       for (var j = 0; j < sectionKeys.length; j++) {
         var section     = sectionKeys[j];
         var sectionData = paperState[section];
@@ -65,6 +75,8 @@
           }
         }
 
+        if (hasRating) { paperHasRating = true; }
+
         if (hasRating || hasAdded || hasRemoved || hasNotes ||
             hasRuleSugg || hasNumericField) {
           paperEntry[section] = sectionData;
@@ -75,15 +87,16 @@
       if (Object.keys(paperEntry).length > 0) {
         papers[pid] = paperEntry;
       }
+      if (paperHasRating) { papersReviewed++; }
     }
 
     var result = {
       openalex_id:      pageData.openalex_id      || '',
-      author_name:      pageData.author_name       || '',
+      author_name:      pageData.author_name      || '',
       timestamp:        new Date().toISOString(),
-      page_version:     pageData.page_version      || '',
-      papers_reviewed:  state.papers_reviewed      || 0,
-      papers_total:     pageData.papers_total      || 0,
+      page_version:     pageData.page_version     || '',
+      papers_reviewed:  papersReviewed,
+      papers_total:     pageData.papers_total     || 0,
       papers:           papers
     };
 
@@ -121,18 +134,26 @@
    * Validates state, then either POSTs to the proxy or falls back to
    * a local download.
    * ------------------------------------------------------------------ */
+  /* Translate helper — falls back to hardcoded English if I18N isn't loaded. */
+  function _t(key, vars) {
+    if (window.I18N && typeof window.I18N.t === 'function') {
+      return window.I18N.t(key, vars);
+    }
+    return key;  /* safe fallback — key identifies the message */
+  }
+
   function submitValidation() {
     var json = buildJSON();
 
     if (!json.papers_reviewed || json.papers_reviewed < 1) {
-      alert('Please review at least one paper before submitting.');
+      alert(_t('submit_no_reviews'));
       return;
     }
 
     var btn = document.getElementById('btn-submit');
     if (btn) {
       btn.disabled     = true;
-      btn.textContent  = 'Submitting\u2026';
+      btn.textContent  = _t('submitting');
     }
 
     var config       = window.SUBMIT_CONFIG || {};
@@ -141,15 +162,11 @@
 
     if (!proxyUrl) {
       /* No endpoint configured — use download as the delivery mechanism. */
-      alert(
-        'No submission endpoint is configured for this page.\n' +
-        'Your validation data will be downloaded as a JSON file.\n' +
-        'Please e-mail it to the study coordinator.'
-      );
+      alert(_t('submit_no_endpoint'));
       downloadJSON();
       if (btn) {
         btn.disabled    = false;
-        btn.textContent = 'Submit';
+        btn.textContent = _t('submit_btn');
       }
       return;
     }
@@ -166,35 +183,27 @@
 
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        alert('Validation submitted successfully. Thank you!');
+        alert(_t('submit_success'));
         if (btn) {
           btn.disabled    = true;
-          btn.textContent = 'Submitted \u2713';
+          btn.textContent = _t('submitted_check');
         }
       } else {
-        alert(
-          'Submission failed (HTTP ' + xhr.status + ').\n' +
-          'Your data will be downloaded as a JSON file.\n' +
-          'Please e-mail it to the study coordinator.'
-        );
+        alert(_t('submit_failed', { status: xhr.status }));
         downloadJSON();
         if (btn) {
           btn.disabled    = false;
-          btn.textContent = 'Submit';
+          btn.textContent = _t('submit_btn');
         }
       }
     };
 
     xhr.onerror = function () {
-      alert(
-        'A network error occurred during submission.\n' +
-        'Your data will be downloaded as a JSON file.\n' +
-        'Please e-mail it to the study coordinator.'
-      );
+      alert(_t('submit_network_error'));
       downloadJSON();
       if (btn) {
         btn.disabled    = false;
-        btn.textContent = 'Submit';
+        btn.textContent = _t('submit_btn');
       }
     };
 

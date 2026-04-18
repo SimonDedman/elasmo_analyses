@@ -47,6 +47,54 @@ TIER2_PREFIXES = ["sp_", "a_"]
 # ob_ uses columns format but without evidence
 OB_PREFIX = "ob_"
 
+# Tier 2 trigger threshold — a species/technique is considered "triggered"
+# when raw mention frequency in the PDF text meets or exceeds this value.
+# Mentions below the threshold (≥ 1) are still surfaced via the
+# "Add by occurrence" dropdown so reviewers can promote them manually.
+TIER2_TRIGGER_THRESHOLD = 2
+
+# Meta-summary columns in the impact schema that carry a derived value
+# (e.g. "positive" / "negative" / "mixed" / "not stated" / True / False)
+# rather than a binary keyword-matched flag. The value is read straight from
+# the parquet and attached to the per-column PAGE_DATA entry as col.value.
+#
+# imp_confidence is intentionally NOT in this list: in the current parquet
+# it is stored as a JSON dict of per-topic frequencies (not a user-facing
+# score) and would render as an unreadable blob. Per its rules.json entry
+# it will be replaced with a numeric 0–1 score in a future pass, at which
+# point it can join this list.
+IMP_META_VALUE_COLS = (
+    "imp_direction",
+    "imp_quantified",
+    "imp_is_bycatch",
+)
+
+
+def _imp_meta_value(row, col: str):
+    """Return the display value for an imp_ meta summary column, or ''.
+
+    Normalises numpy/pandas scalar types into JSON-safe primitives
+    (bool, str) so the downstream json.dumps doesn't choke.
+    """
+    val = row.get(col)
+    if val is None:
+        return ""
+    try:
+        if pd.isna(val):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    # Booleans → pass through; everything else → str
+    if isinstance(val, (bool,)):
+        return bool(val)
+    # numpy bool_
+    if hasattr(val, "item"):
+        v = val.item()
+        if isinstance(v, bool):
+            return v
+    s = str(val).strip()
+    return s
+
 DEFAULT_BASE_URL = "/elasmo_analyses/"
 DEFAULT_VALIDATE_URL = "/elasmo_analyses/validate/"
 
@@ -488,13 +536,27 @@ def build_page_data(
             col_list = []
             for col in cols_for_prefix:
                 col_val = row.get(col)
-                triggered = bool(col_val) if pd.notna(col_val) else False
                 col_evidence = paper_evidence.get(col, [])
-                col_list.append({
+                entry = {
                     "name": col,
-                    "triggered": triggered,
                     "evidence": col_evidence,
-                })
+                }
+
+                # Meta summary columns (imp_direction / imp_quantified / imp_confidence /
+                # imp_is_bycatch) carry a derived value rather than a binary flag.
+                # "Triggered" for these means the derived value is present and
+                # non-default (i.e. not "" / "not stated" / False).
+                if col in IMP_META_VALUE_COLS:
+                    value = _imp_meta_value(row, col)
+                    entry["value"] = value
+                    if isinstance(value, bool):
+                        entry["triggered"] = value
+                    else:
+                        entry["triggered"] = bool(value) and value != "not stated"
+                else:
+                    entry["triggered"] = bool(col_val) if pd.notna(col_val) else False
+
+                col_list.append(entry)
             categories[prefix] = {"columns": col_list}
 
         # ob_: columns format without evidence
@@ -510,7 +572,13 @@ def build_page_data(
             })
         categories[OB_PREFIX] = {"columns": ob_list}
 
-        # Tier 2: triggered list + frequencies (all_options in shared file, not per-paper)
+        # Tier 2 (sp_, a_): two-tier frequency handling.
+        #   • triggered list — columns whose raw mention count meets
+        #     TIER2_TRIGGER_THRESHOLD. These show as pre-selected tag pills.
+        #   • frequencies dict — every column with freq >= 1 (including the
+        #     below-threshold ones), so the "Add by occurrence" dropdown can
+        #     offer mentioned-but-not-triggered species / techniques for the
+        #     reviewer to promote manually.
         for prefix in TIER2_PREFIXES:
             all_options = all_prefix_cols.get(prefix, [])
             triggered_cols = []
@@ -523,12 +591,15 @@ def build_page_data(
                     freq = int(val)
                 except (ValueError, TypeError):
                     freq = 1 if bool(val) else 0
-                if freq > 0:
+                if freq <= 0:
+                    continue
+                frequencies[col] = freq
+                if freq >= TIER2_TRIGGER_THRESHOLD:
                     triggered_cols.append(col)
-                    frequencies[col] = freq
             categories[prefix] = {
                 "triggered": triggered_cols,
                 "frequencies": frequencies,
+                "trigger_threshold": TIER2_TRIGGER_THRESHOLD,
             }
 
         # depth_

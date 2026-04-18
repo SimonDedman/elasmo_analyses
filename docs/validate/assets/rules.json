@@ -1,5 +1,7 @@
 {
   "eco_": {
+    "_description": "Ecosystem component — 20 binary columns covering realm (marine/freshwater/brackish), zone (pelagic/coastal/demersal/…), and habitat (reef, mangrove, kelp, nursery…).",
+    "_criteria": "Keyword frequency in full PDF text; triggered when cumulative matches ≥ column threshold. Elasmobranch-proximity check applied to some eco_ columns to avoid false positives from unrelated habitat mentions.",
     "eco_marine": {
       "terms": [
         "marine",
@@ -223,6 +225,8 @@
     }
   },
   "pr_": {
+    "_description": "Pressure / threat — 26 binary columns covering fishing types, climate stressors, pollution, habitat loss, invasive species, bycatch, and disturbance.",
+    "_criteria": "Keyword frequency in full PDF text; triggered when cumulative matches ≥ column threshold. Reference and acknowledgement sections are stripped before matching to reduce citation-driven false positives.",
     "pr_fishing_commercial": {
       "terms": [
         "commercial fish*",
@@ -534,6 +538,8 @@
     }
   },
   "gear_": {
+    "_description": "Fishing gear — 28 binary columns covering gear types (longline, gillnet, trawl…) and BMIS-derived mitigation measures (circle hooks, leader material…).",
+    "_criteria": "Keyword frequency in full PDF text; triggered when cumulative matches ≥ column threshold. Target-species extraction runs alongside to inform imp_is_bycatch.",
     "gear_longline": {
       "terms": [
         "longline",
@@ -887,6 +893,8 @@
     }
   },
   "imp_": {
+    "_description": "Impact / response — 21 binary topic columns plus 4 meta summary columns (direction, quantified, confidence, is_bycatch).",
+    "_criteria": "Topic columns (imp_mortality, imp_cpue, …) use keyword frequency in full PDF text; triggered when cumulative matches ≥ column threshold. Meta summary columns use derived logic — see the individual meta entries below.",
     "imp_mortality": {
       "terms": [
         "mortality",
@@ -1204,9 +1212,88 @@
       "case_sensitive_terms": [
         "SPR"
       ]
+    },
+    "imp_direction": {
+      "description": "Overall direction of reported impact (positive / negative / mixed / not stated).",
+      "method": "Sentiment-cue counting across the full PDF text.",
+      "positive_cues": [
+        "increase[sd]?",
+        "recover\\w*",
+        "improve\\w*",
+        "growth",
+        "positive",
+        "restor\\w+",
+        "enhance\\w*",
+        "higher",
+        "gain",
+        "benefit",
+        "proliferat\\w*"
+      ],
+      "negative_cues": [
+        "decline[sd]?",
+        "decrease[sd]?",
+        "loss",
+        "reduce[sd]?",
+        "reduction",
+        "deplet\\w+",
+        "degrad\\w+",
+        "lower",
+        "negative",
+        "threat",
+        "endanger",
+        "extinct",
+        "collapse[sd]?",
+        "diminish\\w*",
+        "worsen\\w*"
+      ],
+      "logic": [
+        "neg > 2 × pos → 'negative'",
+        "pos > 2 × neg → 'positive'",
+        "both present, neither dominant → 'mixed'",
+        "only negative cues → 'negative'",
+        "only positive cues → 'positive'",
+        "neither present → 'not stated'"
+      ],
+      "source": "scripts/extract_schema_columns.py → assess_impact_direction()"
+    },
+    "imp_quantified": {
+      "description": "Whether the paper provides any quantitative impact measure.",
+      "method": "Regex scan of full PDF text for numeric / statistical markers.",
+      "patterns": [
+        "N.N% (percentages)",
+        "decimal numbers (e.g. 0.42)",
+        "CI / confidence interval with : or =",
+        "p < 0.NN / p = 0.NN (p-values)",
+        "± N (plus-minus notation)"
+      ],
+      "logic": [
+        "True if any pattern matches anywhere in the PDF text; False otherwise."
+      ],
+      "source": "scripts/extract_schema_columns.py → assess_impact_quantified()"
+    },
+    "imp_confidence": {
+      "description": "Heuristic confidence score for the impact-section extraction.",
+      "method": "Derived from the number of imp_ topic columns that triggered and the presence of imp_quantified evidence.",
+      "logic": [
+        "Currently a triggered-flag set when any imp_ topic column fires; will be replaced with a numeric 0–1 score in a future pass.",
+        "Low confidence → impact discussed in passing; high confidence → impact is a primary finding."
+      ],
+      "source": "scripts/extract_schema_columns.py"
+    },
+    "imp_is_bycatch": {
+      "description": "Whether the paper treats elasmobranchs as bycatch rather than as the directly targeted catch.",
+      "method": "Joint check of pr_bycatch flag and target-species extraction from gear context.",
+      "logic": [
+        "True  → pr_bycatch = 1 AND a non-elasmobranch target species (e.g. 'tuna fishery') is extracted.",
+        "False → pr_bycatch = 0.",
+        "None  → pr_bycatch = 1 but target species unclear or is itself an elasmobranch."
+      ],
+      "source": "scripts/extract_schema_columns.py → bycatch_direction()"
     }
   },
   "d_": {
+    "_description": "Discipline — 19 binary columns classifying the research area (biology, behaviour, trophic, genetics, movement, fisheries, data science, taxonomy…).",
+    "_criteria": "Keyword frequency in full PDF text weighted by section (Abstract / Methods / Results / Discussion carry higher weight than References); triggered when weighted cumulative frequency ≥ column threshold.",
     "d_biology": {
       "terms": [
         "life history",
@@ -1521,6 +1608,8 @@
     }
   },
   "b_": {
+    "_description": "Ocean basin — 9 binary columns indicating which ocean basin(s) the study covers.",
+    "_criteria": "Basin name or distinctive sub-region (e.g. 'Bay of Biscay' for North Atlantic) matched in full PDF text; column triggers when cumulative term frequency ≥ column threshold. Higher thresholds guard against papers merely comparing findings to another basin in a discussion section.",
     "b_north_atlantic": {
       "terms": [
         "North Atlantic",
@@ -1675,5 +1764,37 @@
       "anchors": [],
       "case_sensitive_terms": []
     }
+  },
+  "sb_": {
+    "_description": "Ocean sub-basin — 66 binary columns covering finer geographic regions (Mediterranean, Gulf of Mexico, Sea of Japan, California Current, …).",
+    "_criteria": "Sub-basin name or distinctive sub-region matched in full PDF text; column triggers when cumulative term frequency ≥ column threshold (typically 2). Full per-column term lists are defined in scripts/extract_schema_columns.py.",
+    "source": "scripts/extract_schema_columns.py",
+    "column_count": 66
+  },
+  "sp_": {
+    "_description": "Species — 1,308 integer columns, one per elasmobranch species or broader taxon in the Shark References database.",
+    "_criteria": "Value = raw mention count across the full PDF text (binomial and/or common-name terms from the species taxonomy). A species is considered triggered when raw frequency ≥ 2; mentions ≥ 1 but below threshold appear in the 'Add by occurrence' dropdown so the reviewer can promote them manually. Raising the threshold from ≥ 1 suppresses incidental passing mentions (e.g. a single citation reference) while keeping the full mention list accessible.",
+    "source": "scripts/extract_species_techniques_from_pdfs.py",
+    "column_count": 1308,
+    "storage": "int16 (raw frequency)",
+    "trigger_threshold": 2
+  },
+  "a_": {
+    "_description": "Analytical techniques — 215 integer columns, one per technique in the taxonomy (telemetry, isotopes, genetics, modelling…).",
+    "_criteria": "Value = raw mention count across the full PDF text using primary name + synonym list from the technique taxonomy. A technique is considered triggered when raw frequency ≥ 2; mentions ≥ 1 but below threshold appear in the 'Add by occurrence' dropdown so the reviewer can promote them manually. Per analytical_techniques_proposal.md, a threshold of ≥ 2 better distinguishes papers that genuinely apply a technique from those that cite it in passing.",
+    "source": "scripts/extract_species_techniques_from_pdfs.py",
+    "column_count": 215,
+    "storage": "int16 (raw frequency)",
+    "trigger_threshold": 2
+  },
+  "ob_": {
+    "_description": "Ocean basin (geographic) — basin assignment derived from the study's reported geographic coordinates or country rather than from full-text keyword matching.",
+    "_criteria": "Populated from the geographic-extraction pipeline (database/technique_taxonomy.db → paper_geography). A paper is assigned to an ocean basin when its extracted study coordinates or country fall within the basin's boundaries. Distinct from b_ which is text-based: ob_ reflects where the research actually happened, b_ reflects what basins the paper discusses.",
+    "source": "Geographic extraction pipeline — see docs/geographic/"
+  },
+  "depth_": {
+    "_description": "Depth — sampling / study depth range where reported.",
+    "_criteria": "Min and max depths (in metres) extracted from the full PDF text by regex on numeric-with-unit patterns (e.g. '10-200 m', 'between 50 and 300 m'). depth_range is the combined text string; depth_min_m and depth_max_m are the parsed numeric extremes.",
+    "source": "scripts/extract_schema_columns.py"
   }
 }
