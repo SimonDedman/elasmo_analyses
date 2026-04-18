@@ -18,6 +18,7 @@ No destructive operations — copies only, originals stay in place.
 """
 
 import csv
+import hashlib
 import json
 import re
 import shutil
@@ -40,6 +41,22 @@ LOG_FILE = LOG_DIR / "ingest_pdfs_log.txt"
 PAPERS_DATA_JSON = PROJECT / "docs/papers_data.json"
 DOWNLOAD_TRACKER_DB = PROJECT / "database/download_tracker.db"
 DOWNLOAD_QUEUE_DB = PROJECT / "outputs/download_queue.db"
+
+# OCR fallback for image-only PDFs
+OCR_CACHE = PROJECT / "outputs" / ".ocr_cache"
+OCR_ENABLED = True  # set by --no-ocr CLI flag
+DEDUP_CHECK_ENABLED = True  # set by --no-dedup-check CLI flag
+
+try:
+    import sys as _sys
+    _sys.path.insert(0, str(PROJECT / "scripts"))
+    from dedup.ingest_hook import check_new_pdf as _dedup_check_new_pdf
+    _DEDUP_OK = True
+except Exception as _e:
+    _DEDUP_OK = False
+    _DEDUP_IMPORT_ERR = str(_e)
+OCR_MIN_ALPHA = 50  # page 1 alphabetic-char threshold below which we OCR
+OCR_LANGS = "eng"  # extend with +fra+deu+spa+por+ita once those tesseract packs are installed
 
 
 # ---------------------------------------------------------------------------
@@ -133,6 +150,77 @@ def _strip_references(text: str) -> str:
 def _strip_zero_width(text: str) -> str:
     """Strip Unicode zero-width characters that break DOI extraction."""
     return re.sub(r'[\u200b\u200c\u200d\u200e\u200f\ufeff\u00ad]', '', text)
+
+
+# ---------------------------------------------------------------------------
+# OCR fallback for image-only PDFs
+# ---------------------------------------------------------------------------
+
+def _sha1_short(path: Path) -> str:
+    """Short content hash for OCR cache key."""
+    h = hashlib.sha1()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()[:16]
+
+
+def _page1_alpha_count(pdf_path: Path) -> int:
+    """Count alphabetic characters on page 1 (proxy for text-extractability)."""
+    try:
+        result = subprocess.run(
+            ["pdftotext", "-l", "1", str(pdf_path), "-"],
+            capture_output=True, timeout=15,
+        )
+        text = result.stdout.decode("utf-8", errors="replace")
+        return sum(1 for c in text if c.isalpha())
+    except Exception:
+        return 0
+
+
+def ensure_text_extractable(pdf_path: Path) -> Path:
+    """Return a text-extractable path for the given PDF.
+
+    If the PDF already has text on page 1, returns the original path.
+    Otherwise runs ocrmypdf into ``OCR_CACHE`` keyed by the source SHA1,
+    and returns the cached OCR'd copy. Re-runs re-use the cache.
+
+    Failure is non-fatal: returns the original path if OCR cannot run.
+    """
+    if not OCR_ENABLED:
+        return pdf_path
+    if _page1_alpha_count(pdf_path) >= OCR_MIN_ALPHA:
+        return pdf_path
+
+    OCR_CACHE.mkdir(parents=True, exist_ok=True)
+    h = _sha1_short(pdf_path)
+    cache = OCR_CACHE / f"{h}.pdf"
+    if cache.exists() and cache.stat().st_size > 0:
+        return cache
+
+    print(f"  OCR: {pdf_path.name} (no text on page 1)")
+    try:
+        result = subprocess.run(
+            ["ocrmypdf", "--skip-text", "--output-type", "pdf",
+             "--language", OCR_LANGS, "--quiet",
+             str(pdf_path), str(cache)],
+            capture_output=True, timeout=600,
+        )
+        if cache.exists() and cache.stat().st_size > 0:
+            return cache
+        # Fall back to --force-ocr if --skip-text bailed (e.g., mixed content)
+        result = subprocess.run(
+            ["ocrmypdf", "--force-ocr", "--output-type", "pdf",
+             "--language", OCR_LANGS, "--quiet",
+             str(pdf_path), str(cache)],
+            capture_output=True, timeout=600,
+        )
+        if cache.exists() and cache.stat().st_size > 0:
+            return cache
+        print(f"  OCR failed: {result.stderr.decode('utf-8', errors='replace')[:200]}")
+    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+        print(f"  OCR unavailable/timeout: {e}")
+    return pdf_path
 
 
 def _search_text_for_doi(text: str, allow_bare: bool = False) -> str:
@@ -766,9 +854,15 @@ def load_database() -> tuple[list[dict], dict[str, dict], dict[str, list[dict]]]
 
 
 def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
-              all_rows: list[dict]) -> tuple[dict | None, str]:
+              all_rows: list[dict],
+              text_path: Path | None = None) -> tuple[dict | None, str]:
     """
     Try to match a PDF to the database. Returns (matched_row, method) or (None, reason).
+
+    ``pdf_path`` is the original file (its name drives filename-based
+    strategies). ``text_path`` — if supplied — is used for text
+    extraction (DOI, title match) and defaults to ``pdf_path``; pass an
+    OCR'd copy when the original is image-only.
 
     Strategies (tried in order):
       1. Extract DOI from PDF content
@@ -777,8 +871,11 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
       4. Year + title words from filename
       5. Title fuzzy-match from PDF text (OCR fallback)
     """
+    if text_path is None:
+        text_path = pdf_path
+
     # Strategy 1: extract DOI from PDF content
-    doi_text = extract_doi_from_pdf(pdf_path)
+    doi_text = extract_doi_from_pdf(text_path)
     if doi_text:
         nd = normalise_doi(doi_text)
         if nd in doi_lookup:
@@ -844,7 +941,7 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
             return best, f"Year+title words from filename ({best_score} words)"
 
     # Strategy 5: extract text from PDF and fuzzy-match title against database
-    row, method = match_by_pdf_title(pdf_path, all_rows, filename_year=finfo.get("year", ""))
+    row, method = match_by_pdf_title(text_path, all_rows, filename_year=finfo.get("year", ""))
     if row:
         return row, method
 
@@ -1059,6 +1156,20 @@ def ingest_source(label: str, pdf_paths: list[Path],
             print(f"  COPIED: {pdf_src.name}")
             print(f"      → {year_str}/{new_name}")
             print(f"      Method: {method}")
+
+            if DEDUP_CHECK_ENABLED and _DEDUP_OK:
+                try:
+                    flags = _dedup_check_new_pdf(target, ocr_if_needed=False, do_doi=True)
+                except Exception as e:
+                    flags = []
+                    log_lines.append(f"DEDUP_ERROR: {target.name} — {e}")
+                for fl in flags:
+                    msg = (f"      POSSIBLE DUPLICATE: {fl['candidate']}  "
+                           f"({fl['decision']}, conf={fl['confidence']})  "
+                           f"[{fl.get('signals','')}]")
+                    print(msg)
+                    log_lines.append(f"DEDUP_FLAG: {year_str}/{new_name} ↔ {fl['candidate']} "
+                                     f"{fl['decision']} conf={fl['confidence']}")
             return True
         except Exception as e:
             errors += 1
@@ -1079,7 +1190,9 @@ def ingest_source(label: str, pdf_paths: list[Path],
             # (could be a single-chapter book or misdetected)
             print(f"    Falling through to normal matching for {pdf_path.name}")
 
-        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup, all_rows)
+        text_path = ensure_text_extractable(pdf_path)
+        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
+                                all_rows, text_path=text_path)
 
         if row is None:
             unmatched += 1
@@ -1088,7 +1201,9 @@ def ingest_source(label: str, pdf_paths: list[Path],
             print(f"            Reason: {method}")
             continue
 
-        _file_one(pdf_path, row, method)
+        # Prefer OCR'd version for the library so future extraction has text
+        file_src = text_path if text_path != pdf_path else pdf_path
+        _file_one(file_src, row, method)
 
     print(f"\n  Summary for {label}:")
     print(f"    Copied (new):    {copied}")
@@ -1160,7 +1275,9 @@ def check_source(label: str, pdf_paths: list[Path],
             })
             continue
 
-        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup, all_rows)
+        text_path = ensure_text_extractable(pdf_path)
+        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
+                                all_rows, text_path=text_path)
 
         if row is None:
             unmatched += 1
@@ -1216,15 +1333,28 @@ def main():
     LOG_DIR.mkdir(exist_ok=True)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Parse arguments: --check flag + directories or individual PDF files
+    # Parse arguments: --check / --no-ocr / --no-dedup-check flags + paths
+    global OCR_ENABLED, DEDUP_CHECK_ENABLED
     args = sys.argv[1:]
     check_mode = "--check" in args
     if check_mode:
         args = [a for a in args if a != "--check"]
+    if "--no-ocr" in args:
+        OCR_ENABLED = False
+        args = [a for a in args if a != "--no-ocr"]
+    if "--no-dedup-check" in args:
+        DEDUP_CHECK_ENABLED = False
+        args = [a for a in args if a != "--no-dedup-check"]
+
+    if DEDUP_CHECK_ENABLED and not _DEDUP_OK:
+        print(f"  NOTE: dedup check disabled (import failed: {_DEDUP_IMPORT_ERR})")
+        DEDUP_CHECK_ENABLED = False
 
     if not args:
-        print("Usage: python scripts/ingest_pdfs.py [--check] /path/to/pdfs/ [file1.pdf ...]")
-        print("  --check    Dry run: check matches without copying or updating anything")
+        print("Usage: python scripts/ingest_pdfs.py [--check] [--no-ocr] [--no-dedup-check] /path/to/pdfs/ [file1.pdf ...]")
+        print("  --check            Dry run: check matches without copying or updating")
+        print("  --no-ocr           Disable OCR fallback on image-only PDFs")
+        print("  --no-dedup-check   Skip flagging possible duplicates of existing library files")
         print("  Provide one or more directories or PDF file paths to ingest.")
         sys.exit(0)
 
