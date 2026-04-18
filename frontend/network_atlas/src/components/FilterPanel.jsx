@@ -34,7 +34,9 @@ export default function FilterPanel({
     <div className="filter-panel">
       <h1>
         Elasmobranch Author Atlas{' '}
-        <span className="tag">v2{zoomLevel != null ? ` · z${zoomLevel.toFixed(1)}` : ''}</span>
+        <span className="tag">
+          v2{zoomLevel != null ? ` · z${zoomLevel.toFixed(1)}` : ''} · wasd to pan
+        </span>
       </h1>
       <div className="stats">
         {viewMode === 'authors' ? (
