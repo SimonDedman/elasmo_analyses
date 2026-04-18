@@ -10,6 +10,25 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: resolve(__dirname, '../../docs/network_atlas'),
     emptyOutDir: true,
+    // Split the ~850 kB bundle into a few logical chunks so Pages can
+    // cache them separately and first paint only needs the app shell.
+    // maplibre-gl is already auto-split; here we peel off deck.gl (the
+    // other big dep) and supercluster so they load in parallel and
+    // cache independently across commits that only touch app code.
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          deckgl: [
+            '@deck.gl/core',
+            '@deck.gl/react',
+            '@deck.gl/layers',
+            '@deck.gl/extensions',
+          ],
+          supercluster: ['supercluster'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
   },
   server: {
     port: 5173,
