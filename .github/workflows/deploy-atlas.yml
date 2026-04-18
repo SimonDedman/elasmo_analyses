@@ -1,10 +1,16 @@
 name: Deploy Author Atlas
 
-# Rebuilds the v2 Author Atlas on every push to main that touches the
-# atlas source files (R data script, frontend, or the author data itself).
-# R stage rebuilds GeoJSON + JSON files; Vite stage builds the React site
-# into docs/network_atlas/; commit-back action puts the artefacts into the
-# commit so GitHub Pages picks them up.
+# Rebuilds the v2 Author Atlas frontend on every push to main that
+# touches the frontend or the atlas data. Data (GeoJSON + JSON) is
+# rebuilt locally via scripts/build_author_atlas.R and committed into
+# outputs/author_atlas/ — CI only compiles the React bundle into
+# docs/network_atlas/ so the Pages deploy picks it up.
+#
+# Rationale: the R rebuild needs outputs/literature_review_enriched.parquet
+# (23 MB, not tracked) for the per-author year ranges. On CI without
+# it, the rebuilt authors.geojson loses year_min/year_max and the
+# year-range slider breaks. Keeping the data rebuild local avoids that
+# downgrade.
 #
 # Secret required: VITE_STADIA_KEY (Stadia Maps API key for Stamen tiles).
 
@@ -12,14 +18,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'scripts/build_author_atlas.R'
       - 'frontend/network_atlas/**'
-      - 'outputs/author_aliases.csv'
-      - 'outputs/author_name_corrections.csv'
-      - 'outputs/author_location_overrides.csv'
-      - 'outputs/openalex_unique_authors.csv'
-      - 'outputs/openalex_paper_authors.csv'
-      - 'outputs/namsor_enrichment.csv'
+      - 'outputs/author_atlas/**'
   workflow_dispatch:
 
 jobs:
@@ -29,19 +29,6 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.5'
-
-      - name: Install R packages
-        run: |
-          Rscript -e 'install.packages(c("tidyverse", "jsonlite", "arrow"),
-            repos="https://packagemanager.posit.co/cran/__linux__/jammy/latest")'
-
-      - name: Rebuild Atlas data (GeoJSON + JSON)
-        run: Rscript scripts/build_author_atlas.R
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -68,7 +55,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/network_atlas/ outputs/author_atlas/
+          git add docs/network_atlas/
           if ! git diff --cached --quiet; then
             git commit -m "ci: rebuild Author Atlas [skip ci]"
             git push

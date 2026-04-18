@@ -27,7 +27,12 @@ suppressPackageStartupMessages({
   library(arrow)
 })
 
-setwd("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
+local_root <- "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
+if (dir.exists(local_root)) {
+  setwd(local_root)
+}
+# Otherwise assume we are already at the repo root (e.g. GitHub Actions
+# runner), where relative paths like outputs/... resolve correctly.
 OUT_DIR <- "outputs/author_atlas"
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
