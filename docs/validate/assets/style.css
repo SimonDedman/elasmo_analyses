@@ -460,6 +460,77 @@ a:hover {
   font-size: 0.72rem;
 }
 
+/* Schema-level meta block (description + criteria + source) */
+.rules-schema-meta {
+  padding: 0.4rem 0.5rem;
+  background: #eef4ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  color: #1e3a8a;
+}
+.rules-schema-desc {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+}
+.rules-schema-criteria {
+  margin: 0;
+  font-size: 0.76rem;
+  color: #1e3a8a;
+}
+.rules-schema-meta-extra {
+  margin: 0.3rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.rules-meta-chip {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1e3a8a;
+  border: 1px solid #93c5fd;
+  padding: 0.05rem 0.45rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.rules-schema-source {
+  margin: 0.3rem 0 0;
+  font-size: 0.7rem;
+  color: #475569;
+}
+
+/* Rule-level descriptive extras (cues, patterns, logic, source) */
+.rule-description {
+  margin: 0.2rem 0 0;
+  color: #334155;
+  font-size: 0.76rem;
+}
+.rule-method {
+  margin: 0.15rem 0 0;
+  color: #475569;
+  font-size: 0.72rem;
+}
+.rule-cues, .rule-patterns, .rule-logic {
+  margin: 0.3rem 0 0;
+  font-size: 0.72rem;
+  color: #334155;
+}
+.rule-cues-pos strong { color: #276749; }
+.rule-cues-neg strong { color: #822727; }
+.rule-patterns ul, .rule-logic ul {
+  margin: 0.15rem 0 0 1.2rem;
+  padding: 0;
+}
+.rule-patterns li, .rule-logic li {
+  margin: 0;
+  font-family: inherit;
+}
+.rule-source {
+  margin: 0.3rem 0 0;
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
 /* SR habitat guess tags */
 .sr-guess-tag {
   display: inline-block;
@@ -521,7 +592,7 @@ a:hover {
 }
 
 .rating-option {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   padding: 0.28rem 0.65rem;
@@ -530,7 +601,7 @@ a:hover {
   font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.12s, background 0.12s;
+  transition: border-color 0.12s, background 0.12s, box-shadow 0.12s;
   user-select: none;
 }
 
@@ -548,11 +619,12 @@ a:hover {
   color: #276749;
   border-color: #9ae6b4;
 }
-
+.rating-option.correct.selected,
 .rating-option.correct:has(input:checked) {
   background: #38a169;
   color: #fff;
-  border-color: #276749;
+  border-color: #1c4532;
+  box-shadow: 0 0 0 2px #1c4532;
 }
 
 /* Yellow = partial */
@@ -561,11 +633,12 @@ a:hover {
   color: #744210;
   border-color: #f6e05e;
 }
-
+.rating-option.partial.selected,
 .rating-option.partial:has(input:checked) {
   background: #d69e2e;
   color: #fff;
-  border-color: #b7791f;
+  border-color: #744210;
+  box-shadow: 0 0 0 2px #744210;
 }
 
 /* Red = incorrect */
@@ -574,25 +647,30 @@ a:hover {
   color: #822727;
   border-color: #feb2b2;
 }
-
+.rating-option.incorrect.selected,
 .rating-option.incorrect:has(input:checked) {
   background: #e53e3e;
   color: #fff;
-  border-color: #9b2c2c;
+  border-color: #63171b;
+  box-shadow: 0 0 0 2px #63171b;
+}
+
+/* Keyboard focus ring (radio is visually hidden) */
+.rating-option:focus-within {
+  outline: 2px solid #2b6cb0;
+  outline-offset: 2px;
 }
 
 /* Hover states (unselected) */
-.rating-option.correct:hover:not(:has(input:checked)) {
+.rating-option.correct:hover:not(.selected):not(:has(input:checked)) {
   background: #c6f6d5;
   border-color: #68d391;
 }
-
-.rating-option.partial:hover:not(:has(input:checked)) {
+.rating-option.partial:hover:not(.selected):not(:has(input:checked)) {
   background: #fefcbf;
   border-color: #ecc94b;
 }
-
-.rating-option.incorrect:hover:not(:has(input:checked)) {
+.rating-option.incorrect:hover:not(.selected):not(:has(input:checked)) {
   background: #fed7d7;
   border-color: #fc8181;
 }
@@ -1236,4 +1314,57 @@ a:hover {
   color: #868e96;
   font-size: 0.75rem;
   margin: 0.25rem 0 0;
+}
+
+.tag-threshold-hint {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  color: #334155;
+  background: #f1f5f9;
+  border-left: 3px solid #94a3b8;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0 3px 3px 0;
+}
+.tag-threshold-detail {
+  color: #64748b;
+  font-size: 0.72rem;
+}
+
+.tag-freq-count {
+  color: #4b5563;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-left: 0.15rem;
+}
+
+/* Derived summary value inline next to column label (e.g. imp_direction) */
+.col-value {
+  display: inline-block;
+  margin-left: 0.25rem;
+  padding: 0.02rem 0.4rem;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: #e2e8f0;
+  color: #334155;
+  border: 1px solid #cbd5e0;
+  vertical-align: baseline;
+}
+.col-value-positive   { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.col-value-negative   { background: #fee2e2; color: #7f1d1d; border-color: #fca5a5; }
+.col-value-mixed      { background: #fef3c7; color: #78350f; border-color: #fcd34d; }
+.col-value-not-stated { background: #e2e8f0; color: #475569; border-color: #cbd5e0; }
+.col-value-true       { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+.col-value-false      { background: #e2e8f0; color: #475569; border-color: #cbd5e0; }
+
+.evidence-value {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  color: #334155;
+}
+.evidence-empty-hint {
+  margin: 0.3rem 0 0;
+  font-size: 0.76rem;
+  color: #64748b;
+  font-style: italic;
 }

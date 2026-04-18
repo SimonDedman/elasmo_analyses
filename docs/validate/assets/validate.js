@@ -10,6 +10,384 @@
   'use strict';
 
   // ---------------------------------------------------------------------------
+  // i18n — user-facing warnings, badges, progress text, submit button labels
+  //
+  // Detection: navigator.language (e.g. "es-ES" → "es"). English fallback.
+  // Placeholders in strings use {name} syntax.
+  // To add a language: add a new key to _I18N_STRINGS with the 12 message keys.
+  // ---------------------------------------------------------------------------
+
+  var _lang = (navigator.language || navigator.userLanguage || 'en')
+              .toLowerCase().split('-')[0];
+
+  var _I18N_STRINGS = {
+    en: {
+      submit_no_reviews:     'Please review at least one paper before submitting.',
+      submit_no_endpoint:    'No submission endpoint is configured for this page.\nYour validation data will be downloaded as a JSON file.\nPlease e-mail it to the study coordinator.',
+      submit_success:        'Validation submitted successfully. Thank you!',
+      submit_failed:         'Submission failed (HTTP {status}).\nYour data will be downloaded as a JSON file.\nPlease e-mail it to the study coordinator.',
+      submit_network_error:  'A network error occurred during submission.\nYour data will be downloaded as a JSON file.\nPlease e-mail it to the study coordinator.',
+      submitting:            'Submitting\u2026',
+      submit_btn:            'Submit',
+      submitted_check:       'Submitted \u2713',
+      reviewed:              'Reviewed',
+      pending:               'Pending',
+      progress:              '{reviewed} of {total} reviewed',
+      author_not_in_db:      '"{name}" ({id}) is not yet in our database.\n\nTo be included, please ensure your papers are listed on Shark References (https://www.shark-references.com) and contact the project team.'
+    },
+    es: {
+      submit_no_reviews:     'Por favor, revise al menos un art\u00edculo antes de enviar.',
+      submit_no_endpoint:    'No hay un punto de env\u00edo configurado para esta p\u00e1gina.\nSus datos de validaci\u00f3n se descargar\u00e1n como un archivo JSON.\nPor favor, env\u00edelo por correo electr\u00f3nico al coordinador del estudio.',
+      submit_success:        'Validaci\u00f3n enviada correctamente. \u00a1Gracias!',
+      submit_failed:         'Error al enviar (HTTP {status}).\nSus datos se descargar\u00e1n como un archivo JSON.\nPor favor, env\u00edelo por correo electr\u00f3nico al coordinador del estudio.',
+      submit_network_error:  'Se produjo un error de red durante el env\u00edo.\nSus datos se descargar\u00e1n como un archivo JSON.\nPor favor, env\u00edelo por correo electr\u00f3nico al coordinador del estudio.',
+      submitting:            'Enviando\u2026',
+      submit_btn:            'Enviar',
+      submitted_check:       'Enviado \u2713',
+      reviewed:              'Revisado',
+      pending:               'Pendiente',
+      progress:              '{reviewed} de {total} revisados',
+      author_not_in_db:      '"{name}" ({id}) a\u00fan no est\u00e1 en nuestra base de datos.\n\nPara ser incluido, aseg\u00farese de que sus art\u00edculos est\u00e9n listados en Shark References (https://www.shark-references.com) y contacte al equipo del proyecto.'
+    },
+    fr: {
+      submit_no_reviews:     'Veuillez examiner au moins un article avant de soumettre.',
+      submit_no_endpoint:    'Aucun point de soumission n\'est configur\u00e9 pour cette page.\nVos donn\u00e9es de validation seront t\u00e9l\u00e9charg\u00e9es sous forme de fichier JSON.\nVeuillez l\'envoyer par e-mail au coordinateur de l\'\u00e9tude.',
+      submit_success:        'Validation soumise avec succ\u00e8s. Merci !',
+      submit_failed:         'Échec de la soumission (HTTP {status}).\nVos donn\u00e9es seront t\u00e9l\u00e9charg\u00e9es sous forme de fichier JSON.\nVeuillez l\'envoyer par e-mail au coordinateur de l\'\u00e9tude.',
+      submit_network_error:  'Une erreur r\u00e9seau s\'est produite lors de la soumission.\nVos donn\u00e9es seront t\u00e9l\u00e9charg\u00e9es sous forme de fichier JSON.\nVeuillez l\'envoyer par e-mail au coordinateur de l\'\u00e9tude.',
+      submitting:            'Soumission\u2026',
+      submit_btn:            'Soumettre',
+      submitted_check:       'Soumis \u2713',
+      reviewed:              'Examin\u00e9',
+      pending:               'En attente',
+      progress:              '{reviewed} sur {total} examin\u00e9s',
+      author_not_in_db:      '« {name} » ({id}) n\'est pas encore dans notre base de donn\u00e9es.\n\nPour y \u00eatre inclus, veuillez vous assurer que vos articles sont r\u00e9pertori\u00e9s sur Shark References (https://www.shark-references.com) et contactez l\'\u00e9quipe du projet.'
+    },
+    de: {
+      submit_no_reviews:     'Bitte \u00fcberpr\u00fcfen Sie mindestens eine Arbeit, bevor Sie einreichen.',
+      submit_no_endpoint:    'F\u00fcr diese Seite ist kein Einreichungs-Endpunkt konfiguriert.\nIhre Validierungsdaten werden als JSON-Datei heruntergeladen.\nBitte senden Sie sie per E-Mail an den Studienkoordinator.',
+      submit_success:        'Validierung erfolgreich \u00fcbermittelt. Vielen Dank!',
+      submit_failed:         '\u00dcbermittlung fehlgeschlagen (HTTP {status}).\nIhre Daten werden als JSON-Datei heruntergeladen.\nBitte senden Sie sie per E-Mail an den Studienkoordinator.',
+      submit_network_error:  'W\u00e4hrend der \u00dcbermittlung ist ein Netzwerkfehler aufgetreten.\nIhre Daten werden als JSON-Datei heruntergeladen.\nBitte senden Sie sie per E-Mail an den Studienkoordinator.',
+      submitting:            'Wird \u00fcbermittelt\u2026',
+      submit_btn:            'Einreichen',
+      submitted_check:       'Eingereicht \u2713',
+      reviewed:              '\u00dcberpr\u00fcft',
+      pending:               'Ausstehend',
+      progress:              '{reviewed} von {total} \u00fcberpr\u00fcft',
+      author_not_in_db:      '\u201e{name}\u201c ({id}) ist noch nicht in unserer Datenbank.\n\nUm aufgenommen zu werden, stellen Sie bitte sicher, dass Ihre Arbeiten auf Shark References (https://www.shark-references.com) gelistet sind, und kontaktieren Sie das Projektteam.'
+    },
+    it: {
+      submit_no_reviews:     'Si prega di rivedere almeno un articolo prima dell\'invio.',
+      submit_no_endpoint:    'Nessun endpoint di invio \u00e8 configurato per questa pagina.\nI dati di convalida saranno scaricati come file JSON.\nInvialo via e-mail al coordinatore dello studio.',
+      submit_success:        'Convalida inviata con successo. Grazie!',
+      submit_failed:         'Invio fallito (HTTP {status}).\nI dati saranno scaricati come file JSON.\nInvialo via e-mail al coordinatore dello studio.',
+      submit_network_error:  'Si \u00e8 verificato un errore di rete durante l\'invio.\nI dati saranno scaricati come file JSON.\nInvialo via e-mail al coordinatore dello studio.',
+      submitting:            'Invio in corso\u2026',
+      submit_btn:            'Invia',
+      submitted_check:       'Inviato \u2713',
+      reviewed:              'Revisionato',
+      pending:               'In attesa',
+      progress:              '{reviewed} di {total} revisionati',
+      author_not_in_db:      '"{name}" ({id}) non \u00e8 ancora nel nostro database.\n\nPer essere incluso, assicurati che i tuoi articoli siano elencati su Shark References (https://www.shark-references.com) e contatta il team del progetto.'
+    },
+    pt: {
+      submit_no_reviews:     'Por favor, revise pelo menos um artigo antes de enviar.',
+      submit_no_endpoint:    'Nenhum endpoint de envio est\u00e1 configurado para esta p\u00e1gina.\nSeus dados de valida\u00e7\u00e3o ser\u00e3o baixados como um arquivo JSON.\nPor favor, envie-o por e-mail ao coordenador do estudo.',
+      submit_success:        'Valida\u00e7\u00e3o enviada com sucesso. Obrigado!',
+      submit_failed:         'Falha no envio (HTTP {status}).\nSeus dados ser\u00e3o baixados como um arquivo JSON.\nPor favor, envie-o por e-mail ao coordenador do estudo.',
+      submit_network_error:  'Ocorreu um erro de rede durante o envio.\nSeus dados ser\u00e3o baixados como um arquivo JSON.\nPor favor, envie-o por e-mail ao coordenador do estudo.',
+      submitting:            'Enviando\u2026',
+      submit_btn:            'Enviar',
+      submitted_check:       'Enviado \u2713',
+      reviewed:              'Revisado',
+      pending:               'Pendente',
+      progress:              '{reviewed} de {total} revisados',
+      author_not_in_db:      '"{name}" ({id}) ainda n\u00e3o est\u00e1 em nosso banco de dados.\n\nPara ser inclu\u00eddo, certifique-se de que seus artigos estejam listados no Shark References (https://www.shark-references.com) e entre em contato com a equipe do projeto.'
+    },
+    nl: {
+      submit_no_reviews:     'Controleer ten minste \u00e9\u00e9n paper voordat u verzendt.',
+      submit_no_endpoint:    'Er is geen inzendings-eindpunt geconfigureerd voor deze pagina.\nUw validatiegegevens worden gedownload als JSON-bestand.\nStuur het per e-mail naar de studieco\u00f6rdinator.',
+      submit_success:        'Validatie succesvol ingediend. Bedankt!',
+      submit_failed:         'Indiening mislukt (HTTP {status}).\nUw gegevens worden gedownload als JSON-bestand.\nStuur het per e-mail naar de studieco\u00f6rdinator.',
+      submit_network_error:  'Er is een netwerkfout opgetreden tijdens het indienen.\nUw gegevens worden gedownload als JSON-bestand.\nStuur het per e-mail naar de studieco\u00f6rdinator.',
+      submitting:            'Bezig met verzenden\u2026',
+      submit_btn:            'Verzenden',
+      submitted_check:       'Verzonden \u2713',
+      reviewed:              'Beoordeeld',
+      pending:               'In behandeling',
+      progress:              '{reviewed} van {total} beoordeeld',
+      author_not_in_db:      '"{name}" ({id}) staat nog niet in onze database.\n\nOm te worden opgenomen, zorg ervoor dat uw artikelen vermeld staan op Shark References (https://www.shark-references.com) en neem contact op met het projectteam.'
+    },
+    pl: {
+      submit_no_reviews:     'Prosz\u0119 sprawdzi\u0107 co najmniej jedn\u0105 prac\u0119 przed wys\u0142aniem.',
+      submit_no_endpoint:    'Nie skonfigurowano punktu ko\u0144cowego wysy\u0142ania dla tej strony.\nTwoje dane walidacyjne zostan\u0105 pobrane jako plik JSON.\nProsz\u0119 wys\u0142a\u0107 je e-mailem do koordynatora badania.',
+      submit_success:        'Walidacja zosta\u0142a pomy\u015blnie przes\u0142ana. Dzi\u0119kujemy!',
+      submit_failed:         'Wysy\u0142anie nie powiod\u0142o si\u0119 (HTTP {status}).\nTwoje dane zostan\u0105 pobrane jako plik JSON.\nProsz\u0119 wys\u0142a\u0107 je e-mailem do koordynatora badania.',
+      submit_network_error:  'Podczas wysy\u0142ania wyst\u0105pi\u0142 b\u0142\u0105d sieci.\nTwoje dane zostan\u0105 pobrane jako plik JSON.\nProsz\u0119 wys\u0142a\u0107 je e-mailem do koordynatora badania.',
+      submitting:            'Wysy\u0142anie\u2026',
+      submit_btn:            'Wy\u015blij',
+      submitted_check:       'Wys\u0142ano \u2713',
+      reviewed:              'Sprawdzone',
+      pending:               'Oczekuj\u0105ce',
+      progress:              '{reviewed} z {total} sprawdzonych',
+      author_not_in_db:      '"{name}" ({id}) nie znajduje si\u0119 jeszcze w naszej bazie danych.\n\nAby zosta\u0107 uwzgl\u0119dnionym, upewnij si\u0119, \u017ce Twoje prace s\u0105 wymienione w Shark References (https://www.shark-references.com), i skontaktuj si\u0119 z zespo\u0142em projektu.'
+    },
+    cs: {
+      submit_no_reviews:     'P\u0159ed odesl\u00e1n\u00edm pros\u00edm zkontrolujte alespo\u0148 jednu pr\u00e1ci.',
+      submit_no_endpoint:    'Pro tuto str\u00e1nku nen\u00ed nakonfigurov\u00e1n \u017e\u00e1dn\u00fd endpoint pro odesl\u00e1n\u00ed.\nVa\u0161e valida\u010dn\u00ed data budou sta\u017eena jako soubor JSON.\nPros\u00edm za\u0161lete jej e-mailem koordin\u00e1torovi studie.',
+      submit_success:        'Validace byla \u00fasp\u011b\u0161n\u011b odesl\u00e1na. D\u011bkujeme!',
+      submit_failed:         'Odesl\u00e1n\u00ed selhalo (HTTP {status}).\nVa\u0161e data budou sta\u017eena jako soubor JSON.\nPros\u00edm za\u0161lete jej e-mailem koordin\u00e1torovi studie.',
+      submit_network_error:  'P\u0159i odes\u00edl\u00e1n\u00ed do\u0161lo k chyb\u011b s\u00edt\u011b.\nVa\u0161e data budou sta\u017eena jako soubor JSON.\nPros\u00edm za\u0161lete jej e-mailem koordin\u00e1torovi studie.',
+      submitting:            'Odes\u00edl\u00e1n\u00ed\u2026',
+      submit_btn:            'Odeslat',
+      submitted_check:       'Odesl\u00e1no \u2713',
+      reviewed:              'Zkontrolov\u00e1no',
+      pending:               '\u010cek\u00e1 na zpracov\u00e1n\u00ed',
+      progress:              '{reviewed} z {total} zkontrolov\u00e1no',
+      author_not_in_db:      '"{name}" ({id}) zat\u00edm nen\u00ed v na\u0161\u00ed datab\u00e1zi.\n\nPro za\u0159azen\u00ed se pros\u00edm uji\u0161t\u011bte, \u017ee va\u0161e pr\u00e1ce jsou uvedeny v Shark References (https://www.shark-references.com), a kontaktujte projektov\u00fd t\u00fdm.'
+    },
+    hu: {
+      submit_no_reviews:     'K\u00e9rj\u00fck, bek\u00fcld\u00e9s el\u0151tt ellen\u0151rizzen legal\u00e1bb egy cikket.',
+      submit_no_endpoint:    'Ehhez az oldalhoz nincs bek\u00fcld\u00e9si v\u00e9gpont konfigur\u00e1lva.\nAz \u00e9rv\u00e9nyes\u00edt\u00e9si adatok JSON-f\u00e1jlk\u00e9nt ker\u00fclnek let\u00f6lt\u00e9sre.\nK\u00e9rj\u00fck, k\u00fcldje el e-mailben a tanulm\u00e1ny koordin\u00e1tor\u00e1nak.',
+      submit_success:        'Az \u00e9rv\u00e9nyes\u00edt\u00e9st sikeresen bek\u00fcld\u00f6tte. K\u00f6sz\u00f6nj\u00fck!',
+      submit_failed:         'A bek\u00fcld\u00e9s nem siker\u00fclt (HTTP {status}).\nAz adatok JSON-f\u00e1jlk\u00e9nt ker\u00fclnek let\u00f6lt\u00e9sre.\nK\u00e9rj\u00fck, k\u00fcldje el e-mailben a tanulm\u00e1ny koordin\u00e1tor\u00e1nak.',
+      submit_network_error:  'H\u00e1l\u00f3zati hiba t\u00f6rt\u00e9nt a bek\u00fcld\u00e9s sor\u00e1n.\nAz adatok JSON-f\u00e1jlk\u00e9nt ker\u00fclnek let\u00f6lt\u00e9sre.\nK\u00e9rj\u00fck, k\u00fcldje el e-mailben a tanulm\u00e1ny koordin\u00e1tor\u00e1nak.',
+      submitting:            'Bek\u00fcld\u00e9s\u2026',
+      submit_btn:            'Bek\u00fcld\u00e9s',
+      submitted_check:       'Bek\u00fcldve \u2713',
+      reviewed:              'Ellen\u0151rizve',
+      pending:               'F\u00fcgg\u0151ben',
+      progress:              '{reviewed} / {total} ellen\u0151rizve',
+      author_not_in_db:      'A(z) "{name}" ({id}) m\u00e9g nincs az adatb\u00e1zisunkban.\n\nA beker\u00fcl\u00e9shez k\u00e9rj\u00fck, gy\u0151z\u0151dj\u00f6n meg arr\u00f3l, hogy a cikkei szerepelnek a Shark References oldalon (https://www.shark-references.com), \u00e9s l\u00e9pjen kapcsolatba a projektcsapattal.'
+    },
+    ro: {
+      submit_no_reviews:     'V\u0103 rug\u0103m s\u0103 revizui\u021bi cel pu\u021bin o lucrare \u00eenainte de trimitere.',
+      submit_no_endpoint:    'Niciun punct final de trimitere nu este configurat pentru aceast\u0103 pagin\u0103.\nDatele dvs. de validare vor fi desc\u0103rcate ca fi\u0219ier JSON.\nV\u0103 rug\u0103m s\u0103 le trimite\u021bi prin e-mail coordonatorului de studiu.',
+      submit_success:        'Validare trimis\u0103 cu succes. V\u0103 mul\u021bumim!',
+      submit_failed:         'Trimitere e\u0219uat\u0103 (HTTP {status}).\nDatele dvs. vor fi desc\u0103rcate ca fi\u0219ier JSON.\nV\u0103 rug\u0103m s\u0103 le trimite\u021bi prin e-mail coordonatorului de studiu.',
+      submit_network_error:  'A ap\u0103rut o eroare de re\u021bea la trimitere.\nDatele dvs. vor fi desc\u0103rcate ca fi\u0219ier JSON.\nV\u0103 rug\u0103m s\u0103 le trimite\u021bi prin e-mail coordonatorului de studiu.',
+      submitting:            'Se trimite\u2026',
+      submit_btn:            'Trimite',
+      submitted_check:       'Trimis \u2713',
+      reviewed:              'Revizuit',
+      pending:               '\u00cen a\u0219teptare',
+      progress:              '{reviewed} din {total} revizuite',
+      author_not_in_db:      '"{name}" ({id}) nu este \u00eenc\u0103 \u00een baza noastr\u0103 de date.\n\nPentru a fi inclus, v\u0103 rug\u0103m s\u0103 v\u0103 asigura\u021bi c\u0103 lucr\u0103rile dvs. sunt listate pe Shark References (https://www.shark-references.com) \u0219i contacta\u021bi echipa proiectului.'
+    },
+    el: {
+      submit_no_reviews:     '\u03a0\u03b1\u03c1\u03b1\u03ba\u03b1\u03bb\u03ce \u03b5\u03bb\u03ad\u03b3\u03be\u03c4\u03b5 \u03c4\u03bf\u03c5\u03bb\u03ac\u03c7\u03b9\u03c3\u03c4\u03bf\u03bd \u03bc\u03af\u03b1 \u03b5\u03c1\u03b3\u03b1\u03c3\u03af\u03b1 \u03c0\u03c1\u03b9\u03bd \u03c4\u03b7\u03bd \u03c5\u03c0\u03bf\u03b2\u03bf\u03bb\u03ae.',
+      submit_no_endpoint:    '\u0394\u03b5\u03bd \u03ad\u03c7\u03b5\u03b9 \u03c1\u03c5\u03b8\u03bc\u03b9\u03c3\u03c4\u03b5\u03af \u03c3\u03b7\u03bc\u03b5\u03af\u03bf \u03c5\u03c0\u03bf\u03b2\u03bf\u03bb\u03ae\u03c2 \u03b3\u03b9\u03b1 \u03b1\u03c5\u03c4\u03ae\u03bd \u03c4\u03b7 \u03c3\u03b5\u03bb\u03af\u03b4\u03b1.\n\u03a4\u03b1 \u03b4\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03b1 \u03b5\u03c0\u03b9\u03ba\u03cd\u03c1\u03c9\u03c3\u03ae\u03c2 \u03c3\u03b1\u03c2 \u03b8\u03b1 \u03bb\u03b7\u03c6\u03b8\u03bf\u03cd\u03bd \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf JSON.\n\u03a0\u03b1\u03c1\u03b1\u03ba\u03b1\u03bb\u03ce \u03c3\u03c4\u03b5\u03af\u03bb\u03c4\u03b5 \u03c4\u03bf \u03bc\u03ad\u03c3\u03c9 e-mail \u03c3\u03c4\u03bf\u03bd \u03c3\u03c5\u03bd\u03c4\u03bf\u03bd\u03b9\u03c3\u03c4\u03ae \u03c4\u03b7\u03c2 \u03bc\u03b5\u03bb\u03ad\u03c4\u03b7\u03c2.',
+      submit_success:        '\u0397 \u03b5\u03c0\u03b9\u03ba\u03cd\u03c1\u03c9\u03c3\u03b7 \u03c5\u03c0\u03bf\u03b2\u03bb\u03ae\u03b8\u03b7\u03ba\u03b5 \u03bc\u03b5 \u03b5\u03c0\u03b9\u03c4\u03c5\u03c7\u03af\u03b1. \u0395\u03c5\u03c7\u03b1\u03c1\u03b9\u03c3\u03c4\u03bf\u03cd\u03bc\u03b5!',
+      submit_failed:         '\u0397 \u03c5\u03c0\u03bf\u03b2\u03bf\u03bb\u03ae \u03b1\u03c0\u03ad\u03c4\u03c5\u03c7\u03b5 (HTTP {status}).\n\u03a4\u03b1 \u03b4\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03b1 \u03c3\u03b1\u03c2 \u03b8\u03b1 \u03bb\u03b7\u03c6\u03b8\u03bf\u03cd\u03bd \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf JSON.\n\u03a0\u03b1\u03c1\u03b1\u03ba\u03b1\u03bb\u03ce \u03c3\u03c4\u03b5\u03af\u03bb\u03c4\u03b5 \u03c4\u03bf \u03bc\u03ad\u03c3\u03c9 e-mail \u03c3\u03c4\u03bf\u03bd \u03c3\u03c5\u03bd\u03c4\u03bf\u03bd\u03b9\u03c3\u03c4\u03ae \u03c4\u03b7\u03c2 \u03bc\u03b5\u03bb\u03ad\u03c4\u03b7\u03c2.',
+      submit_network_error:  '\u03a0\u03b1\u03c1\u03bf\u03c5\u03c3\u03b9\u03ac\u03c3\u03c4\u03b7\u03ba\u03b5 \u03c3\u03c6\u03ac\u03bb\u03bc\u03b1 \u03b4\u03b9\u03ba\u03c4\u03cd\u03bf\u03c5 \u03ba\u03b1\u03c4\u03ac \u03c4\u03b7\u03bd \u03c5\u03c0\u03bf\u03b2\u03bf\u03bb\u03ae.\n\u03a4\u03b1 \u03b4\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03b1 \u03c3\u03b1\u03c2 \u03b8\u03b1 \u03bb\u03b7\u03c6\u03b8\u03bf\u03cd\u03bd \u03c9\u03c2 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf JSON.\n\u03a0\u03b1\u03c1\u03b1\u03ba\u03b1\u03bb\u03ce \u03c3\u03c4\u03b5\u03af\u03bb\u03c4\u03b5 \u03c4\u03bf \u03bc\u03ad\u03c3\u03c9 e-mail \u03c3\u03c4\u03bf\u03bd \u03c3\u03c5\u03bd\u03c4\u03bf\u03bd\u03b9\u03c3\u03c4\u03ae \u03c4\u03b7\u03c2 \u03bc\u03b5\u03bb\u03ad\u03c4\u03b7\u03c2.',
+      submitting:            '\u03a5\u03c0\u03bf\u03b2\u03bf\u03bb\u03ae\u2026',
+      submit_btn:            '\u03a5\u03c0\u03bf\u03b2\u03bf\u03bb\u03ae',
+      submitted_check:       '\u03a5\u03c0\u03bf\u03b2\u03bb\u03ae\u03b8\u03b7\u03ba\u03b5 \u2713',
+      reviewed:              '\u0395\u03bb\u03ad\u03b3\u03c7\u03b8\u03b7\u03ba\u03b5',
+      pending:               '\u0395\u03ba\u03ba\u03c1\u03b5\u03bc\u03b5\u03af',
+      progress:              '{reviewed} \u03b1\u03c0\u03cc {total} \u03b5\u03bb\u03b5\u03b3\u03bc\u03ad\u03bd\u03b1',
+      author_not_in_db:      '\u03a4\u03bf "{name}" ({id}) \u03b4\u03b5\u03bd \u03b2\u03c1\u03af\u03c3\u03ba\u03b5\u03c4\u03b1\u03b9 \u03b1\u03ba\u03cc\u03bc\u03b7 \u03c3\u03c4\u03b7 \u03b2\u03ac\u03c3\u03b7 \u03b4\u03b5\u03b4\u03bf\u03bc\u03ad\u03bd\u03c9\u03bd \u03bc\u03b1\u03c2.\n\n\u0393\u03b9\u03b1 \u03bd\u03b1 \u03c3\u03c5\u03bc\u03c0\u03b5\u03c1\u03b9\u03bb\u03b7\u03c6\u03b8\u03b5\u03af\u03c4\u03b5, \u03b2\u03b5\u03b2\u03b1\u03b9\u03c9\u03b8\u03b5\u03af\u03c4\u03b5 \u03cc\u03c4\u03b9 \u03bf\u03b9 \u03b5\u03c1\u03b3\u03b1\u03c3\u03af\u03b5\u03c2 \u03c3\u03b1\u03c2 \u03b5\u03af\u03bd\u03b1\u03b9 \u03ba\u03b1\u03c4\u03b1\u03c7\u03c9\u03c1\u03b7\u03bc\u03ad\u03bd\u03b5\u03c2 \u03c3\u03c4\u03bf Shark References (https://www.shark-references.com) \u03ba\u03b1\u03b9 \u03b5\u03c0\u03b9\u03ba\u03bf\u03b9\u03bd\u03c9\u03bd\u03ae\u03c3\u03c4\u03b5 \u03bc\u03b5 \u03c4\u03b7\u03bd \u03bf\u03bc\u03ac\u03b4\u03b1 \u03c4\u03bf\u03c5 \u03ad\u03c1\u03b3\u03bf\u03c5.'
+    },
+    sv: {
+      submit_no_reviews:     'V\u00e4nligen granska minst en artikel innan du skickar in.',
+      submit_no_endpoint:    'Ingen inl\u00e4mnings\u00e4ndpunkt \u00e4r konfigurerad f\u00f6r denna sida.\nDina valideringsdata kommer att laddas ner som en JSON-fil.\nSkicka den via e-post till studiens koordinator.',
+      submit_success:        'Valideringen har skickats in. Tack!',
+      submit_failed:         'Inl\u00e4mningen misslyckades (HTTP {status}).\nDina data kommer att laddas ner som en JSON-fil.\nSkicka den via e-post till studiens koordinator.',
+      submit_network_error:  'Ett n\u00e4tverksfel uppstod vid inl\u00e4mningen.\nDina data kommer att laddas ner som en JSON-fil.\nSkicka den via e-post till studiens koordinator.',
+      submitting:            'Skickar\u2026',
+      submit_btn:            'Skicka in',
+      submitted_check:       'Skickat \u2713',
+      reviewed:              'Granskad',
+      pending:               'V\u00e4ntande',
+      progress:              '{reviewed} av {total} granskade',
+      author_not_in_db:      '"{name}" ({id}) finns inte \u00e4nnu i v\u00e5r databas.\n\nF\u00f6r att inkluderas, se till att dina artiklar finns listade p\u00e5 Shark References (https://www.shark-references.com) och kontakta projektteamet.'
+    },
+    da: {
+      submit_no_reviews:     'Gennemg\u00e5 venligst mindst \u00e9n artikel f\u00f8r indsendelse.',
+      submit_no_endpoint:    'Der er ikke konfigureret et indsendelsesslutpunkt for denne side.\nDine valideringsdata downloades som en JSON-fil.\nSend den venligst via e-mail til studiekoordinatoren.',
+      submit_success:        'Validering indsendt. Tak!',
+      submit_failed:         'Indsendelse mislykkedes (HTTP {status}).\nDine data downloades som en JSON-fil.\nSend den venligst via e-mail til studiekoordinatoren.',
+      submit_network_error:  'Der opstod en netv\u00e6rksfejl under indsendelsen.\nDine data downloades som en JSON-fil.\nSend den venligst via e-mail til studiekoordinatoren.',
+      submitting:            'Sender\u2026',
+      submit_btn:            'Indsend',
+      submitted_check:       'Indsendt \u2713',
+      reviewed:              'Gennemg\u00e5et',
+      pending:               'Afventer',
+      progress:              '{reviewed} af {total} gennemg\u00e5et',
+      author_not_in_db:      '"{name}" ({id}) er ikke endnu i vores database.\n\nFor at blive inkluderet, s\u00f8rg venligst for, at dine artikler er anf\u00f8rt p\u00e5 Shark References (https://www.shark-references.com), og kontakt projektteamet.'
+    },
+    no: {
+      submit_no_reviews:     'Vennligst gjennomg\u00e5 minst \u00e9n artikkel f\u00f8r innsending.',
+      submit_no_endpoint:    'Ingen innsendings-endepunkt er konfigurert for denne siden.\nValideringsdataene dine lastes ned som en JSON-fil.\nVennligst send den via e-post til studiekoordinatoren.',
+      submit_success:        'Validering sendt inn. Takk!',
+      submit_failed:         'Innsending mislyktes (HTTP {status}).\nDataene dine lastes ned som en JSON-fil.\nVennligst send den via e-post til studiekoordinatoren.',
+      submit_network_error:  'Det oppstod en nettverksfeil under innsendingen.\nDataene dine lastes ned som en JSON-fil.\nVennligst send den via e-post til studiekoordinatoren.',
+      submitting:            'Sender\u2026',
+      submit_btn:            'Send inn',
+      submitted_check:       'Sendt \u2713',
+      reviewed:              'Gjennomg\u00e5tt',
+      pending:               'Avventer',
+      progress:              '{reviewed} av {total} gjennomg\u00e5tt',
+      author_not_in_db:      '"{name}" ({id}) er ikke enn\u00e5 i databasen v\u00e5r.\n\nFor \u00e5 bli inkludert, s\u00f8rg for at artiklene dine er oppf\u00f8rt p\u00e5 Shark References (https://www.shark-references.com) og kontakt prosjektteamet.'
+    },
+    fi: {
+      submit_no_reviews:     'Tarkista v\u00e4hint\u00e4\u00e4n yksi artikkeli ennen l\u00e4hett\u00e4mist\u00e4.',
+      submit_no_endpoint:    'T\u00e4lle sivulle ei ole m\u00e4\u00e4ritetty l\u00e4hetysp\u00e4\u00e4tepistett\u00e4.\nValidointitiedostosi ladataan JSON-tiedostona.\nL\u00e4het\u00e4 se s\u00e4hk\u00f6postitse tutkimuksen koordinaattorille.',
+      submit_success:        'Validointi l\u00e4hetetty. Kiitos!',
+      submit_failed:         'L\u00e4hetys ep\u00e4onnistui (HTTP {status}).\nTiedostosi ladataan JSON-tiedostona.\nL\u00e4het\u00e4 se s\u00e4hk\u00f6postitse tutkimuksen koordinaattorille.',
+      submit_network_error:  'L\u00e4hetyksen aikana tapahtui verkkovirhe.\nTiedostosi ladataan JSON-tiedostona.\nL\u00e4het\u00e4 se s\u00e4hk\u00f6postitse tutkimuksen koordinaattorille.',
+      submitting:            'L\u00e4hetet\u00e4\u00e4n\u2026',
+      submit_btn:            'L\u00e4het\u00e4',
+      submitted_check:       'L\u00e4hetetty \u2713',
+      reviewed:              'Tarkistettu',
+      pending:               'Odottaa',
+      progress:              '{reviewed} / {total} tarkistettu',
+      author_not_in_db:      '"{name}" ({id}) ei ole viel\u00e4 tietokannassamme.\n\nJotta sinut voidaan sis\u00e4llytt\u00e4\u00e4, varmista, ett\u00e4 artikkelisi on lueteltu Shark References -sivustolla (https://www.shark-references.com), ja ota yhteytt\u00e4 projektitiimiin.'
+    },
+    ru: {
+      submit_no_reviews:     '\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0445\u043e\u0442\u044f \u0431\u044b \u043e\u0434\u043d\u0443 \u0441\u0442\u0430\u0442\u044c\u044e \u043f\u0435\u0440\u0435\u0434 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u043e\u0439.',
+      submit_no_endpoint:    '\u0414\u043b\u044f \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u044b \u043d\u0435 \u043d\u0430\u0441\u0442\u0440\u043e\u0435\u043d\u0430 \u043a\u043e\u043d\u0435\u0447\u043d\u0430\u044f \u0442\u043e\u0447\u043a\u0430 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438.\n\u0412\u0430\u0448\u0438 \u0434\u0430\u043d\u043d\u044b\u0435 \u043f\u0440\u043e\u0432\u0435\u0440\u043a\u0438 \u0431\u0443\u0434\u0443\u0442 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d\u044b \u0432 \u0432\u0438\u0434\u0435 \u0444\u0430\u0439\u043b\u0430 JSON.\n\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043e\u0442\u043f\u0440\u0430\u0432\u044c\u0442\u0435 \u0435\u0433\u043e \u043f\u043e \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u0439 \u043f\u043e\u0447\u0442\u0435 \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u043e\u0440\u0443 \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u044f.',
+      submit_success:        '\u041f\u0440\u043e\u0432\u0435\u0440\u043a\u0430 \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0430. \u0421\u043f\u0430\u0441\u0438\u0431\u043e!',
+      submit_failed:         '\u0421\u0431\u043e\u0439 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438 (HTTP {status}).\n\u0412\u0430\u0448\u0438 \u0434\u0430\u043d\u043d\u044b\u0435 \u0431\u0443\u0434\u0443\u0442 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d\u044b \u0432 \u0432\u0438\u0434\u0435 \u0444\u0430\u0439\u043b\u0430 JSON.\n\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043e\u0442\u043f\u0440\u0430\u0432\u044c\u0442\u0435 \u0435\u0433\u043e \u043f\u043e \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u0439 \u043f\u043e\u0447\u0442\u0435 \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u043e\u0440\u0443 \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u044f.',
+      submit_network_error:  '\u041f\u0440\u043e\u0438\u0437\u043e\u0448\u043b\u0430 \u0441\u0435\u0442\u0435\u0432\u0430\u044f \u043e\u0448\u0438\u0431\u043a\u0430 \u043f\u0440\u0438 \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0435.\n\u0412\u0430\u0448\u0438 \u0434\u0430\u043d\u043d\u044b\u0435 \u0431\u0443\u0434\u0443\u0442 \u0437\u0430\u0433\u0440\u0443\u0436\u0435\u043d\u044b \u0432 \u0432\u0438\u0434\u0435 \u0444\u0430\u0439\u043b\u0430 JSON.\n\u041f\u043e\u0436\u0430\u043b\u0443\u0439\u0441\u0442\u0430, \u043e\u0442\u043f\u0440\u0430\u0432\u044c\u0442\u0435 \u0435\u0433\u043e \u043f\u043e \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u0439 \u043f\u043e\u0447\u0442\u0435 \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u043e\u0440\u0443 \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u044f.',
+      submitting:            '\u041e\u0442\u043f\u0440\u0430\u0432\u043a\u0430\u2026',
+      submit_btn:            '\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c',
+      submitted_check:       '\u041e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e \u2713',
+      reviewed:              '\u041f\u0440\u043e\u0432\u0435\u0440\u0435\u043d\u043e',
+      pending:               '\u041e\u0436\u0438\u0434\u0430\u0435\u0442',
+      progress:              '{reviewed} \u0438\u0437 {total} \u043f\u0440\u043e\u0432\u0435\u0440\u0435\u043d\u043e',
+      author_not_in_db:      '"{name}" ({id}) \u043f\u043e\u043a\u0430 \u043d\u0435\u0442 \u0432 \u043d\u0430\u0448\u0435\u0439 \u0431\u0430\u0437\u0435 \u0434\u0430\u043d\u043d\u044b\u0445.\n\n\u0427\u0442\u043e\u0431\u044b \u0431\u044b\u0442\u044c \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u043d\u044b\u043c, \u0443\u0431\u0435\u0434\u0438\u0442\u0435\u0441\u044c, \u0447\u0442\u043e \u0432\u0430\u0448\u0438 \u0441\u0442\u0430\u0442\u044c\u0438 \u0443\u043a\u0430\u0437\u0430\u043d\u044b \u043d\u0430 Shark References (https://www.shark-references.com), \u0438 \u0441\u0432\u044f\u0436\u0438\u0442\u0435\u0441\u044c \u0441 \u043a\u043e\u043c\u0430\u043d\u0434\u043e\u0439 \u043f\u0440\u043e\u0435\u043a\u0442\u0430.'
+    },
+    uk: {
+      submit_no_reviews:     '\u0411\u0443\u0434\u044c \u043b\u0430\u0441\u043a\u0430, \u043f\u0435\u0440\u0435\u0433\u043b\u044f\u043d\u044c\u0442\u0435 \u0449\u043e\u043d\u0430\u0439\u043c\u0435\u043d\u0448\u0435 \u043e\u0434\u043d\u0443 \u0441\u0442\u0430\u0442\u0442\u044e \u043f\u0435\u0440\u0435\u0434 \u043d\u0430\u0434\u0441\u0438\u043b\u0430\u043d\u043d\u044f\u043c.',
+      submit_no_endpoint:    '\u0414\u043b\u044f \u0446\u0456\u0454\u0457 \u0441\u0442\u043e\u0440\u0456\u043d\u043a\u0438 \u043d\u0435 \u043d\u0430\u043b\u0430\u0448\u0442\u043e\u0432\u0430\u043d\u043e \u043a\u0456\u043d\u0446\u0435\u0432\u0443 \u0442\u043e\u0447\u043a\u0443 \u043d\u0430\u0434\u0441\u0438\u043b\u0430\u043d\u043d\u044f.\n\u0412\u0430\u0448\u0456 \u0434\u0430\u043d\u0456 \u0432\u0430\u043b\u0456\u0434\u0430\u0446\u0456\u0457 \u0431\u0443\u0434\u0435 \u0437\u0430\u0432\u0430\u043d\u0442\u0430\u0436\u0435\u043d\u043e \u044f\u043a \u0444\u0430\u0439\u043b JSON.\n\u0411\u0443\u0434\u044c \u043b\u0430\u0441\u043a\u0430, \u043d\u0430\u0434\u0456\u0448\u043b\u0456\u0442\u044c \u0439\u043e\u0433\u043e \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u044e \u043f\u043e\u0448\u0442\u043e\u044e \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u043e\u0440\u0443 \u0434\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f.',
+      submit_success:        '\u0412\u0430\u043b\u0456\u0434\u0430\u0446\u0456\u044e \u0443\u0441\u043f\u0456\u0448\u043d\u043e \u043d\u0430\u0434\u0456\u0441\u043b\u0430\u043d\u043e. \u0414\u044f\u043a\u0443\u0454\u043c\u043e!',
+      submit_failed:         '\u041d\u0430\u0434\u0441\u0438\u043b\u0430\u043d\u043d\u044f \u043d\u0435 \u0432\u0434\u0430\u043b\u043e\u0441\u044f (HTTP {status}).\n\u0412\u0430\u0448\u0456 \u0434\u0430\u043d\u0456 \u0431\u0443\u0434\u0435 \u0437\u0430\u0432\u0430\u043d\u0442\u0430\u0436\u0435\u043d\u043e \u044f\u043a \u0444\u0430\u0439\u043b JSON.\n\u0411\u0443\u0434\u044c \u043b\u0430\u0441\u043a\u0430, \u043d\u0430\u0434\u0456\u0448\u043b\u0456\u0442\u044c \u0439\u043e\u0433\u043e \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u044e \u043f\u043e\u0448\u0442\u043e\u044e \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u043e\u0440\u0443 \u0434\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f.',
+      submit_network_error:  '\u041f\u0456\u0434 \u0447\u0430\u0441 \u043d\u0430\u0434\u0441\u0438\u043b\u0430\u043d\u043d\u044f \u0441\u0442\u0430\u043b\u0430\u0441\u044f \u043c\u0435\u0440\u0435\u0436\u0435\u0432\u0430 \u043f\u043e\u043c\u0438\u043b\u043a\u0430.\n\u0412\u0430\u0448\u0456 \u0434\u0430\u043d\u0456 \u0431\u0443\u0434\u0435 \u0437\u0430\u0432\u0430\u043d\u0442\u0430\u0436\u0435\u043d\u043e \u044f\u043a \u0444\u0430\u0439\u043b JSON.\n\u0411\u0443\u0434\u044c \u043b\u0430\u0441\u043a\u0430, \u043d\u0430\u0434\u0456\u0448\u043b\u0456\u0442\u044c \u0439\u043e\u0433\u043e \u0435\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u044e \u043f\u043e\u0448\u0442\u043e\u044e \u043a\u043e\u043e\u0440\u0434\u0438\u043d\u0430\u0442\u043e\u0440\u0443 \u0434\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f.',
+      submitting:            '\u041d\u0430\u0434\u0441\u0438\u043b\u0430\u043d\u043d\u044f\u2026',
+      submit_btn:            '\u041d\u0430\u0434\u0456\u0441\u043b\u0430\u0442\u0438',
+      submitted_check:       '\u041d\u0430\u0434\u0456\u0441\u043b\u0430\u043d\u043e \u2713',
+      reviewed:              '\u041f\u0435\u0440\u0435\u0432\u0456\u0440\u0435\u043d\u043e',
+      pending:               '\u041e\u0447\u0456\u043a\u0443\u0454',
+      progress:              '{reviewed} \u0437 {total} \u043f\u0435\u0440\u0435\u0432\u0456\u0440\u0435\u043d\u043e',
+      author_not_in_db:      '"{name}" ({id}) \u0449\u0435 \u043d\u0435\u043c\u0430\u0454 \u0432 \u043d\u0430\u0448\u0456\u0439 \u0431\u0430\u0437\u0456 \u0434\u0430\u043d\u0438\u0445.\n\n\u0429\u043e\u0431 \u0431\u0443\u0442\u0438 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u043c, \u043f\u0435\u0440\u0435\u043a\u043e\u043d\u0430\u0439\u0442\u0435\u0441\u044f, \u0449\u043e \u0432\u0430\u0448\u0456 \u0441\u0442\u0430\u0442\u0442\u0456 \u0432\u043a\u0430\u0437\u0430\u043d\u043e \u043d\u0430 Shark References (https://www.shark-references.com), \u0456 \u0437\u0432\'\u044f\u0436\u0456\u0442\u044c\u0441\u044f \u0437 \u043a\u043e\u043c\u0430\u043d\u0434\u043e\u044e \u043f\u0440\u043e\u0454\u043a\u0442\u0443.'
+    },
+    tr: {
+      submit_no_reviews:     'L\u00fctfen g\u00f6ndermeden \u00f6nce en az bir makaleyi inceleyin.',
+      submit_no_endpoint:    'Bu sayfa i\u00e7in bir g\u00f6nderim u\u00e7 noktas\u0131 yap\u0131land\u0131r\u0131lmam\u0131\u015f.\nDo\u011frulama verileriniz bir JSON dosyas\u0131 olarak indirilecektir.\nL\u00fctfen \u00e7al\u0131\u015fma koordinat\u00f6r\u00fcne e-posta ile g\u00f6nderin.',
+      submit_success:        'Do\u011frulama ba\u015far\u0131yla g\u00f6nderildi. Te\u015fekk\u00fcrler!',
+      submit_failed:         'G\u00f6nderim ba\u015far\u0131s\u0131z (HTTP {status}).\nVerileriniz bir JSON dosyas\u0131 olarak indirilecektir.\nL\u00fctfen \u00e7al\u0131\u015fma koordinat\u00f6r\u00fcne e-posta ile g\u00f6nderin.',
+      submit_network_error:  'G\u00f6nderim s\u0131ras\u0131nda bir a\u011f hatas\u0131 olu\u015ftu.\nVerileriniz bir JSON dosyas\u0131 olarak indirilecektir.\nL\u00fctfen \u00e7al\u0131\u015fma koordinat\u00f6r\u00fcne e-posta ile g\u00f6nderin.',
+      submitting:            'G\u00f6nderiliyor\u2026',
+      submit_btn:            'G\u00f6nder',
+      submitted_check:       'G\u00f6nderildi \u2713',
+      reviewed:              '\u0130ncelendi',
+      pending:               'Beklemede',
+      progress:              '{reviewed} / {total} incelendi',
+      author_not_in_db:      '"{name}" ({id}) hen\u00fcz veritaban\u0131m\u0131zda de\u011fil.\n\nDahil edilmek i\u00e7in, makalelerinizin Shark References\'te (https://www.shark-references.com) listelendi\u011finden emin olun ve proje ekibiyle ileti\u015fime ge\u00e7in.'
+    },
+    ar: {
+      submit_no_reviews:     '\u064a\u0631\u062c\u0649 \u0645\u0631\u0627\u062c\u0639\u0629 \u0648\u0631\u0642\u0629 \u0648\u0627\u062d\u062f\u0629 \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644 \u0642\u0628\u0644 \u0627\u0644\u0625\u0631\u0633\u0627\u0644.',
+      submit_no_endpoint:    '\u0644\u0645 \u064a\u062a\u0645 \u062a\u0643\u0648\u064a\u0646 \u0646\u0642\u0637\u0629 \u0625\u0631\u0633\u0627\u0644 \u0644\u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629.\n\u0633\u064a\u062a\u0645 \u062a\u0646\u0632\u064a\u0644 \u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u062a\u062d\u0642\u0642 \u0627\u0644\u062e\u0627\u0635\u0629 \u0628\u0643 \u0643\u0645\u0644\u0641 JSON.\n\u064a\u0631\u062c\u0649 \u0625\u0631\u0633\u0627\u0644\u0647\u0627 \u0628\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0625\u0644\u0649 \u0645\u0646\u0633\u0642 \u0627\u0644\u062f\u0631\u0627\u0633\u0629.',
+      submit_success:        '\u062a\u0645 \u0625\u0631\u0633\u0627\u0644 \u0627\u0644\u062a\u062d\u0642\u0642 \u0628\u0646\u062c\u0627\u062d. \u0634\u0643\u0631\u064b\u0627 \u0644\u0643!',
+      submit_failed:         '\u0641\u0634\u0644 \u0627\u0644\u0625\u0631\u0633\u0627\u0644 (HTTP {status}).\n\u0633\u064a\u062a\u0645 \u062a\u0646\u0632\u064a\u0644 \u0628\u064a\u0627\u0646\u0627\u062a\u0643 \u0643\u0645\u0644\u0641 JSON.\n\u064a\u0631\u062c\u0649 \u0625\u0631\u0633\u0627\u0644\u0647\u0627 \u0628\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0625\u0644\u0649 \u0645\u0646\u0633\u0642 \u0627\u0644\u062f\u0631\u0627\u0633\u0629.',
+      submit_network_error:  '\u062d\u062f\u062b \u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u0634\u0628\u0643\u0629 \u0623\u062b\u0646\u0627\u0621 \u0627\u0644\u0625\u0631\u0633\u0627\u0644.\n\u0633\u064a\u062a\u0645 \u062a\u0646\u0632\u064a\u0644 \u0628\u064a\u0627\u0646\u0627\u062a\u0643 \u0643\u0645\u0644\u0641 JSON.\n\u064a\u0631\u062c\u0649 \u0625\u0631\u0633\u0627\u0644\u0647\u0627 \u0628\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0625\u0644\u0649 \u0645\u0646\u0633\u0642 \u0627\u0644\u062f\u0631\u0627\u0633\u0629.',
+      submitting:            '\u062c\u0627\u0631\u064d \u0627\u0644\u0625\u0631\u0633\u0627\u0644\u2026',
+      submit_btn:            '\u0625\u0631\u0633\u0627\u0644',
+      submitted_check:       '\u062a\u0645 \u0627\u0644\u0625\u0631\u0633\u0627\u0644 \u2713',
+      reviewed:              '\u062a\u0645\u062a \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629',
+      pending:               '\u0642\u064a\u062f \u0627\u0644\u0627\u0646\u062a\u0638\u0627\u0631',
+      progress:              '{reviewed} \u0645\u0646 {total} \u062a\u0645\u062a \u0645\u0631\u0627\u062c\u0639\u062a\u0647\u0627',
+      author_not_in_db:      '"{name}" ({id}) \u063a\u064a\u0631 \u0645\u062f\u0631\u062c \u0628\u0639\u062f \u0641\u064a \u0642\u0627\u0639\u062f\u0629 \u0628\u064a\u0627\u0646\u0627\u062a\u0646\u0627.\n\n\u0644\u0643\u064a \u064a\u062a\u0645 \u062a\u0636\u0645\u064a\u0646\u0643\u060c \u064a\u0631\u062c\u0649 \u0627\u0644\u062a\u0623\u0643\u062f \u0645\u0646 \u0623\u0646 \u0623\u0648\u0631\u0627\u0642\u0643 \u0645\u062f\u0631\u062c\u0629 \u0641\u064a Shark References (https://www.shark-references.com) \u0648\u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0645\u0639 \u0641\u0631\u064a\u0642 \u0627\u0644\u0645\u0634\u0631\u0648\u0639.'
+    },
+    he: {
+      submit_no_reviews:     '\u05d0\u05e0\u05d0 \u05d1\u05d3\u05d5\u05e7 \u05dc\u05e4\u05d7\u05d5\u05ea \u05de\u05d0\u05de\u05e8 \u05d0\u05d7\u05d3 \u05dc\u05e4\u05e0\u05d9 \u05d4\u05e9\u05dc\u05d9\u05d7\u05d4.',
+      submit_no_endpoint:    '\u05dc\u05d0 \u05d4\u05d5\u05d2\u05d3\u05e8\u05d4 \u05e0\u05e7\u05d5\u05d3\u05ea \u05e7\u05e6\u05d4 \u05dc\u05e9\u05dc\u05d9\u05d7\u05d4 \u05e2\u05d1\u05d5\u05e8 \u05d3\u05e3 \u05d6\u05d4.\n\u05e0\u05ea\u05d5\u05e0\u05d9 \u05d4\u05d0\u05d9\u05de\u05d5\u05ea \u05e9\u05dc\u05da \u05d9\u05d5\u05e8\u05d3\u05d5 \u05db\u05e7\u05d5\u05d1\u05e5 JSON.\n\u05d0\u05e0\u05d0 \u05e9\u05dc\u05d7 \u05d0\u05d5\u05ea\u05dd \u05d1\u05d3\u05d5\u05d0\u05f4\u05dc \u05dc\u05de\u05ea\u05d0\u05dd \u05d4\u05de\u05d7\u05e7\u05e8.',
+      submit_success:        '\u05d4\u05d0\u05d9\u05de\u05d5\u05ea \u05e0\u05e9\u05dc\u05d7\u05d4 \u05d1\u05d4\u05e6\u05dc\u05d7\u05d4. \u05ea\u05d5\u05d3\u05d4!',
+      submit_failed:         '\u05d4\u05e9\u05dc\u05d9\u05d7\u05d4 \u05e0\u05db\u05e9\u05dc\u05d4 (HTTP {status}).\n\u05d4\u05e0\u05ea\u05d5\u05e0\u05d9\u05dd \u05e9\u05dc\u05da \u05d9\u05d5\u05e8\u05d3\u05d5 \u05db\u05e7\u05d5\u05d1\u05e5 JSON.\n\u05d0\u05e0\u05d0 \u05e9\u05dc\u05d7 \u05d0\u05d5\u05ea\u05dd \u05d1\u05d3\u05d5\u05d0\u05f4\u05dc \u05dc\u05de\u05ea\u05d0\u05dd \u05d4\u05de\u05d7\u05e7\u05e8.',
+      submit_network_error:  '\u05d0\u05d9\u05e8\u05e2\u05d4 \u05e9\u05d2\u05d9\u05d0\u05ea \u05e8\u05e9\u05ea \u05d1\u05de\u05d4\u05dc\u05da \u05d4\u05e9\u05dc\u05d9\u05d7\u05d4.\n\u05d4\u05e0\u05ea\u05d5\u05e0\u05d9\u05dd \u05e9\u05dc\u05da \u05d9\u05d5\u05e8\u05d3\u05d5 \u05db\u05e7\u05d5\u05d1\u05e5 JSON.\n\u05d0\u05e0\u05d0 \u05e9\u05dc\u05d7 \u05d0\u05d5\u05ea\u05dd \u05d1\u05d3\u05d5\u05d0\u05f4\u05dc \u05dc\u05de\u05ea\u05d0\u05dd \u05d4\u05de\u05d7\u05e7\u05e8.',
+      submitting:            '\u05e9\u05d5\u05dc\u05d7\u2026',
+      submit_btn:            '\u05e9\u05dc\u05d7',
+      submitted_check:       '\u05e0\u05e9\u05dc\u05d7 \u2713',
+      reviewed:              '\u05e0\u05d1\u05d3\u05e7',
+      pending:               '\u05d1\u05d4\u05de\u05ea\u05e0\u05d4',
+      progress:              '{reviewed} \u05de\u05ea\u05d5\u05da {total} \u05e0\u05d1\u05d3\u05e7\u05d5',
+      author_not_in_db:      '"{name}" ({id}) \u05d0\u05d9\u05e0\u05d5 \u05e0\u05de\u05e6\u05d0 \u05e2\u05d3\u05d9\u05d9\u05df \u05d1\u05de\u05e1\u05d3 \u05d4\u05e0\u05ea\u05d5\u05e0\u05d9\u05dd \u05e9\u05dc\u05e0\u05d5.\n\n\u05db\u05d3\u05d9 \u05dc\u05d4\u05d9\u05db\u05dc\u05dc, \u05d5\u05d3\u05d0 \u05e9\u05d4\u05de\u05d0\u05de\u05e8\u05d9\u05dd \u05e9\u05dc\u05da \u05e8\u05e9\u05d5\u05de\u05d9\u05dd \u05d1-Shark References (https://www.shark-references.com) \u05d5\u05e6\u05d5\u05e8 \u05e7\u05e9\u05e8 \u05e2\u05dd \u05e6\u05d5\u05d5\u05ea \u05d4\u05e4\u05e8\u05d5\u05d9\u05e7\u05d8.'
+    },
+    zh: {
+      submit_no_reviews:     '\u8bf7\u5728\u63d0\u4ea4\u524d\u81f3\u5c11\u5ba1\u9605\u4e00\u7bc7\u8bba\u6587\u3002',
+      submit_no_endpoint:    '\u6b64\u9875\u9762\u672a\u914d\u7f6e\u63d0\u4ea4\u7aef\u70b9\u3002\n\u60a8\u7684\u9a8c\u8bc1\u6570\u636e\u5c06\u4e0b\u8f7d\u4e3a JSON \u6587\u4ef6\u3002\n\u8bf7\u901a\u8fc7\u7535\u5b50\u90ae\u4ef6\u53d1\u9001\u7ed9\u7814\u7a76\u534f\u8c03\u5458\u3002',
+      submit_success:        '\u9a8c\u8bc1\u63d0\u4ea4\u6210\u529f\u3002\u8c22\u8c22\uff01',
+      submit_failed:         '\u63d0\u4ea4\u5931\u8d25 (HTTP {status})\u3002\n\u60a8\u7684\u6570\u636e\u5c06\u4e0b\u8f7d\u4e3a JSON \u6587\u4ef6\u3002\n\u8bf7\u901a\u8fc7\u7535\u5b50\u90ae\u4ef6\u53d1\u9001\u7ed9\u7814\u7a76\u534f\u8c03\u5458\u3002',
+      submit_network_error:  '\u63d0\u4ea4\u671f\u95f4\u53d1\u751f\u7f51\u7edc\u9519\u8bef\u3002\n\u60a8\u7684\u6570\u636e\u5c06\u4e0b\u8f7d\u4e3a JSON \u6587\u4ef6\u3002\n\u8bf7\u901a\u8fc7\u7535\u5b50\u90ae\u4ef6\u53d1\u9001\u7ed9\u7814\u7a76\u534f\u8c03\u5458\u3002',
+      submitting:            '\u6b63\u5728\u63d0\u4ea4\u2026',
+      submit_btn:            '\u63d0\u4ea4',
+      submitted_check:       '\u5df2\u63d0\u4ea4 \u2713',
+      reviewed:              '\u5df2\u5ba1\u9605',
+      pending:               '\u5f85\u5ba1\u9605',
+      progress:              '\u5df2\u5ba1\u9605 {reviewed} / {total}',
+      author_not_in_db:      '"{name}" ({id}) \u5c1a\u672a\u5728\u6211\u4eec\u7684\u6570\u636e\u5e93\u4e2d\u3002\n\n\u8981\u88ab\u6536\u5f55\uff0c\u8bf7\u786e\u4fdd\u60a8\u7684\u8bba\u6587\u5df2\u5217\u5728 Shark References (https://www.shark-references.com) \u4e0a\uff0c\u5e76\u8054\u7cfb\u9879\u76ee\u56e2\u961f\u3002'
+    },
+    ja: {
+      submit_no_reviews:     '\u9001\u4fe1\u524d\u306b\u5c11\u306a\u304f\u3068\u3082 1 \u4ef6\u306e\u8ad6\u6587\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044\u3002',
+      submit_no_endpoint:    '\u3053\u306e\u30da\u30fc\u30b8\u306b\u306f\u9001\u4fe1\u30a8\u30f3\u30c9\u30dd\u30a4\u30f3\u30c8\u304c\u69cb\u6210\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\n\u691c\u8a3c\u30c7\u30fc\u30bf\u306f JSON \u30d5\u30a1\u30a4\u30eb\u3068\u3057\u3066\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3055\u308c\u307e\u3059\u3002\n\u7814\u7a76\u30b3\u30fc\u30c7\u30a3\u30cd\u30fc\u30bf\u30fc\u306b\u30e1\u30fc\u30eb\u3067\u9001\u4fe1\u3057\u3066\u304f\u3060\u3055\u3044\u3002',
+      submit_success:        '\u691c\u8a3c\u3092\u6b63\u5e38\u306b\u9001\u4fe1\u3057\u307e\u3057\u305f\u3002\u3042\u308a\u304c\u3068\u3046\u3054\u3056\u3044\u307e\u3057\u305f\uff01',
+      submit_failed:         '\u9001\u4fe1\u306b\u5931\u6557\u3057\u307e\u3057\u305f (HTTP {status})\u3002\n\u30c7\u30fc\u30bf\u306f JSON \u30d5\u30a1\u30a4\u30eb\u3068\u3057\u3066\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3055\u308c\u307e\u3059\u3002\n\u7814\u7a76\u30b3\u30fc\u30c7\u30a3\u30cd\u30fc\u30bf\u30fc\u306b\u30e1\u30fc\u30eb\u3067\u9001\u4fe1\u3057\u3066\u304f\u3060\u3055\u3044\u3002',
+      submit_network_error:  '\u9001\u4fe1\u4e2d\u306b\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u30a8\u30e9\u30fc\u304c\u767a\u751f\u3057\u307e\u3057\u305f\u3002\n\u30c7\u30fc\u30bf\u306f JSON \u30d5\u30a1\u30a4\u30eb\u3068\u3057\u3066\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3055\u308c\u307e\u3059\u3002\n\u7814\u7a76\u30b3\u30fc\u30c7\u30a3\u30cd\u30fc\u30bf\u30fc\u306b\u30e1\u30fc\u30eb\u3067\u9001\u4fe1\u3057\u3066\u304f\u3060\u3055\u3044\u3002',
+      submitting:            '\u9001\u4fe1\u4e2d\u2026',
+      submit_btn:            '\u9001\u4fe1',
+      submitted_check:       '\u9001\u4fe1\u6e08\u307f \u2713',
+      reviewed:              '\u78ba\u8a8d\u6e08\u307f',
+      pending:               '\u672a\u51e6\u7406',
+      progress:              '{total} \u4ef6\u4e2d {reviewed} \u4ef6\u78ba\u8a8d\u6e08\u307f',
+      author_not_in_db:      '\u300c{name}\u300d({id}) \u306f\u307e\u3060\u30c7\u30fc\u30bf\u30d9\u30fc\u30b9\u306b\u767b\u9332\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002\n\n\u8ffd\u52a0\u3059\u308b\u306b\u306f\u3001\u8ad6\u6587\u304c Shark References (https://www.shark-references.com) \u306b\u63b2\u8f09\u3055\u308c\u3066\u3044\u308b\u3053\u3068\u3092\u78ba\u8a8d\u3057\u3001\u30d7\u30ed\u30b8\u30a7\u30af\u30c8\u30c1\u30fc\u30e0\u306b\u304a\u554f\u3044\u5408\u308f\u305b\u304f\u3060\u3055\u3044\u3002'
+    },
+    ko: {
+      submit_no_reviews:     '\uc81c\ucd9c\ud558\uae30 \uc804\uc5d0 \ucd5c\uc18c \ud55c \ud3b8\uc758 \ub17c\ubb38\uc744 \uac80\ud1a0\ud558\uc138\uc694.',
+      submit_no_endpoint:    '\uc774 \ud398\uc774\uc9c0\uc5d0 \ub300\ud55c \uc81c\ucd9c \uc5d4\ub4dc\ud3ec\uc778\ud2b8\uac00 \uad6c\uc131\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4.\n\uac80\uc99d \ub370\uc774\ud130\uac00 JSON \ud30c\uc77c\ub85c \ub2e4\uc6b4\ub85c\ub4dc\ub429\ub2c8\ub2e4.\n\uc5f0\uad6c \ucc45\uc784\uc790\uc5d0\uac8c \uc774\uba54\uc77c\ub85c \ubcf4\ub0b4\uc8fc\uc138\uc694.',
+      submit_success:        '\uac80\uc99d\uc774 \uc131\uacf5\uc801\uc73c\ub85c \uc81c\ucd9c\ub418\uc5c8\uc2b5\ub2c8\ub2e4. \uac10\uc0ac\ud569\ub2c8\ub2e4!',
+      submit_failed:         '\uc81c\ucd9c \uc2e4\ud328 (HTTP {status}).\n\ub370\uc774\ud130\uac00 JSON \ud30c\uc77c\ub85c \ub2e4\uc6b4\ub85c\ub4dc\ub429\ub2c8\ub2e4.\n\uc5f0\uad6c \ucc45\uc784\uc790\uc5d0\uac8c \uc774\uba54\uc77c\ub85c \ubcf4\ub0b4\uc8fc\uc138\uc694.',
+      submit_network_error:  '\uc81c\ucd9c \uc911 \ub124\ud2b8\uc6cc\ud06c \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.\n\ub370\uc774\ud130\uac00 JSON \ud30c\uc77c\ub85c \ub2e4\uc6b4\ub85c\ub4dc\ub429\ub2c8\ub2e4.\n\uc5f0\uad6c \ucc45\uc784\uc790\uc5d0\uac8c \uc774\uba54\uc77c\ub85c \ubcf4\ub0b4\uc8fc\uc138\uc694.',
+      submitting:            '\uc81c\ucd9c \uc911\u2026',
+      submit_btn:            '\uc81c\ucd9c',
+      submitted_check:       '\uc81c\ucd9c\ub428 \u2713',
+      reviewed:              '\uac80\ud1a0\ub428',
+      pending:               '\ub300\uae30 \uc911',
+      progress:              '{total}\uac1c \uc911 {reviewed}\uac1c \uac80\ud1a0\ub428',
+      author_not_in_db:      '"{name}" ({id})\uc740(\ub294) \uc544\uc9c1 \ub370\uc774\ud130\ubca0\uc774\uc2a4\uc5d0 \uc5c6\uc2b5\ub2c8\ub2e4.\n\n\ud3ec\ud568\ub418\ub824\uba74 \ub17c\ubb38\uc774 Shark References (https://www.shark-references.com)\uc5d0 \ub4f1\ub85d\ub418\uc5b4 \uc788\ub294\uc9c0 \ud655\uc778\ud558\uace0 \ud504\ub85c\uc81d\ud2b8 \ud300\uc5d0 \ubb38\uc758\ud558\uc138\uc694.'
+    },
+    id: {
+      submit_no_reviews:     'Harap tinjau setidaknya satu makalah sebelum mengirim.',
+      submit_no_endpoint:    'Tidak ada titik akhir pengiriman yang dikonfigurasi untuk halaman ini.\nData validasi Anda akan diunduh sebagai file JSON.\nKirim melalui e-mail kepada koordinator studi.',
+      submit_success:        'Validasi berhasil dikirim. Terima kasih!',
+      submit_failed:         'Pengiriman gagal (HTTP {status}).\nData Anda akan diunduh sebagai file JSON.\nKirim melalui e-mail kepada koordinator studi.',
+      submit_network_error:  'Terjadi kesalahan jaringan selama pengiriman.\nData Anda akan diunduh sebagai file JSON.\nKirim melalui e-mail kepada koordinator studi.',
+      submitting:            'Mengirim\u2026',
+      submit_btn:            'Kirim',
+      submitted_check:       'Terkirim \u2713',
+      reviewed:              'Ditinjau',
+      pending:               'Tertunda',
+      progress:              '{reviewed} dari {total} ditinjau',
+      author_not_in_db:      '"{name}" ({id}) belum ada dalam basis data kami.\n\nUntuk disertakan, pastikan makalah Anda terdaftar di Shark References (https://www.shark-references.com) dan hubungi tim proyek.'
+    }
+  };
+
+  function _t(key, vars) {
+    var bag = _I18N_STRINGS[_lang] || _I18N_STRINGS.en;
+    var str = (bag && bag[key] != null) ? bag[key]
+                : (_I18N_STRINGS.en[key] != null ? _I18N_STRINGS.en[key] : key);
+    if (vars) {
+      Object.keys(vars).forEach(function (k) {
+        str = str.replace(new RegExp('\\{' + k + '\\}', 'g'), String(vars[k]));
+      });
+    }
+    return str;
+  }
+
+  window.I18N = { t: _t, lang: _lang, languages: Object.keys(_I18N_STRINGS) };
+
+  // ---------------------------------------------------------------------------
   // Constants
   // ---------------------------------------------------------------------------
 
@@ -159,7 +537,7 @@
     var bar  = document.getElementById('progress-bar-fill');
     var txt  = document.getElementById('progress-text');
     if (bar) { bar.style.width = pct + '%'; }
-    if (txt) { txt.textContent = reviewed + ' of ' + total + ' reviewed'; }
+    if (txt) { txt.textContent = _t('progress', { reviewed: reviewed, total: total }); }
   }
 
   // ---------------------------------------------------------------------------
@@ -194,6 +572,153 @@
   }
 
   // ---------------------------------------------------------------------------
+  // Rules palette (collapsible) — schema description + per-column rules
+  // Tolerant of:
+  //   - schema-level meta keys prefixed with "_" (e.g. _description, _criteria)
+  //   - rules without terms/threshold (e.g. imp_direction uses sentiment cues)
+  //   - schemas with no per-column rules at all (sb_/sp_/a_/ob_/depth_)
+  // "columns" may be the triggered-column list (tier-1) or null (tag/depth).
+  // ---------------------------------------------------------------------------
+
+  function _renderRulesPalette(prefix, columns) {
+    var prefixRules = _rules[prefix];
+    if (!prefixRules || Object.keys(prefixRules).length === 0) { return ''; }
+
+    // Separate schema-level meta keys (underscore-prefixed) from per-column rules
+    var allKeys    = Object.keys(prefixRules);
+    var metaKeys   = [];
+    var ruleNames  = [];
+    for (var ki = 0; ki < allKeys.length; ki++) {
+      if (allKeys[ki].charAt(0) === '_') { metaKeys.push(allKeys[ki]); }
+      else                               { ruleNames.push(allKeys[ki]); }
+    }
+    ruleNames.sort();
+
+    // Summary: include rule count only when there are per-column rules
+    var summaryParts = [];
+    if (prefixRules._description) { summaryParts.push(escapeHtml(prefixRules._description)); }
+    else                           { summaryParts.push('Extraction criteria'); }
+    if (ruleNames.length > 0) { summaryParts.push('(' + ruleNames.length + ' rules)'); }
+
+    var html = '<details class="rules-palette">';
+    html += '<summary class="rules-palette-summary">Extraction rules &mdash; ' + summaryParts.join(' ') + '</summary>';
+    html += '<div class="rules-palette-body">';
+
+    // Schema-level criteria block
+    if (prefixRules._description || prefixRules._criteria || prefixRules.source) {
+      html += '<div class="rules-schema-meta">';
+      if (prefixRules._description) {
+        html += '<p class="rules-schema-desc">' + escapeHtml(prefixRules._description) + '</p>';
+      }
+      if (prefixRules._criteria) {
+        html += '<p class="rules-schema-criteria"><strong>Assignation criteria:</strong> ' + escapeHtml(prefixRules._criteria) + '</p>';
+      }
+      if (prefixRules.column_count || prefixRules.storage) {
+        html += '<p class="rules-schema-meta-extra">';
+        if (prefixRules.column_count) {
+          html += '<span class="rules-meta-chip">' + escapeHtml(String(prefixRules.column_count)) + ' columns</span>';
+        }
+        if (prefixRules.storage) {
+          html += ' <span class="rules-meta-chip">' + escapeHtml(String(prefixRules.storage)) + '</span>';
+        }
+        html += '</p>';
+      }
+      if (prefixRules.source) {
+        html += '<p class="rules-schema-source"><em>Source: ' + escapeHtml(prefixRules.source) + '</em></p>';
+      }
+      html += '</div>';
+    }
+
+    // Per-column rules
+    for (var ri = 0; ri < ruleNames.length; ri++) {
+      var rn   = ruleNames[ri];
+      var rule = prefixRules[rn];
+      if (!rule || typeof rule !== 'object') { continue; }
+
+      // Did this rule fire for this paper? (columns may be null for non-checkbox schemas)
+      var fired = false;
+      if (columns) {
+        for (var ci = 0; ci < columns.length; ci++) {
+          if (columns[ci].name === rn && columns[ci].triggered) { fired = true; break; }
+        }
+      }
+
+      html += '<div class="rule-entry' + (fired ? ' rule-fired' : '') + '">';
+      html += '<span class="rule-name">' + escapeHtml(rn.replace(prefix, '').replace(/_/g, ' ')) + '</span>';
+      if (rule.threshold != null) {
+        html += ' <span class="rule-threshold">thr:' + escapeHtml(String(rule.threshold)) + '</span>';
+      }
+      if (fired) { html += ' <span class="rule-badge-active">active</span>'; }
+
+      if (rule.description) {
+        html += '<p class="rule-description">' + escapeHtml(rule.description) + '</p>';
+      }
+      if (rule.method) {
+        html += '<p class="rule-method"><em>Method:</em> ' + escapeHtml(rule.method) + '</p>';
+      }
+
+      if (Array.isArray(rule.terms) && rule.terms.length > 0) {
+        html += '<div class="rule-terms">';
+        for (var ti = 0; ti < rule.terms.length; ti++) {
+          html += '<span class="rule-term">' + escapeHtml(rule.terms[ti]) + '</span>';
+        }
+        html += '</div>';
+      }
+      if (Array.isArray(rule.anchors) && rule.anchors.length > 0) {
+        html += '<div class="rule-anchors">Anchors: ';
+        for (var ai = 0; ai < rule.anchors.length; ai++) {
+          html += '<span class="rule-anchor">' + escapeHtml(rule.anchors[ai]) + '</span>';
+        }
+        html += '</div>';
+      }
+      if (Array.isArray(rule.case_sensitive_terms) && rule.case_sensitive_terms.length > 0) {
+        html += '<div class="rule-cs">Case-sensitive: ' + rule.case_sensitive_terms.map(escapeHtml).join(', ') + '</div>';
+      }
+
+      // Sentiment-cue lists (imp_direction)
+      if (Array.isArray(rule.positive_cues) && rule.positive_cues.length > 0) {
+        html += '<div class="rule-cues rule-cues-pos"><strong>Positive cues:</strong> ';
+        html += rule.positive_cues.map(function (t) {
+          return '<span class="rule-term">' + escapeHtml(t) + '</span>';
+        }).join(' ');
+        html += '</div>';
+      }
+      if (Array.isArray(rule.negative_cues) && rule.negative_cues.length > 0) {
+        html += '<div class="rule-cues rule-cues-neg"><strong>Negative cues:</strong> ';
+        html += rule.negative_cues.map(function (t) {
+          return '<span class="rule-term">' + escapeHtml(t) + '</span>';
+        }).join(' ');
+        html += '</div>';
+      }
+      // Numeric-pattern lists (imp_quantified)
+      if (Array.isArray(rule.patterns) && rule.patterns.length > 0) {
+        html += '<div class="rule-patterns"><strong>Patterns matched:</strong><ul>';
+        for (var pi = 0; pi < rule.patterns.length; pi++) {
+          html += '<li>' + escapeHtml(rule.patterns[pi]) + '</li>';
+        }
+        html += '</ul></div>';
+      }
+      // Derivation logic steps
+      if (Array.isArray(rule.logic) && rule.logic.length > 0) {
+        html += '<div class="rule-logic"><strong>Logic:</strong><ul>';
+        for (var li = 0; li < rule.logic.length; li++) {
+          html += '<li>' + escapeHtml(rule.logic[li]) + '</li>';
+        }
+        html += '</ul></div>';
+      }
+      if (rule.source) {
+        html += '<p class="rule-source"><em>Source: ' + escapeHtml(rule.source) + '</em></p>';
+      }
+
+      html += '</div>'; // .rule-entry
+    }
+
+    html += '</div>'; // .rules-palette-body
+    html += '</details>';
+    return html;
+  }
+
+  // ---------------------------------------------------------------------------
   // Rating + notes + rule feedback HTML (shared across category types)
   // ---------------------------------------------------------------------------
 
@@ -201,18 +726,21 @@
     var s      = _ensureState(paperId, prefix);
     var nameBase = 'rating_' + paperId + '_' + prefix;
     var ratings  = ['correct', 'partially_correct', 'incorrect'];
+    var variants = ['correct', 'partial', 'incorrect'];  // CSS class variants
     var labels   = ['Correct', 'Partially correct', 'Incorrect'];
 
     var html = '<div class="rating-row" style="display:flex;align-items:center;gap:1rem;margin:0.5rem 0;">';
     html += '<span class="rating-label" style="font-weight:600;font-size:0.85rem;">Rating:</span>';
     for (var i = 0; i < ratings.length; i++) {
-      var checked = s.rating === ratings[i] ? ' checked' : '';
-      html += '<label class="rating-option" style="display:inline-flex;align-items:center;gap:0.25rem;cursor:pointer;font-size:0.85rem;">';
+      var isSelected = s.rating === ratings[i];
+      var checked    = isSelected ? ' checked' : '';
+      var cls        = 'rating-option ' + variants[i] + (isSelected ? ' selected' : '');
+      html += '<label class="' + cls + '">';
       html += '<input type="radio" name="' + escapeHtml(nameBase) + '"';
       html += ' value="' + ratings[i] + '"' + checked;
       html += ' data-paper="' + escapeHtml(paperId) + '"';
       html += ' data-prefix="' + escapeHtml(prefix) + '"';
-      html += ' class="rating-radio" style="margin:0;">';
+      html += ' class="rating-radio">';
       html += ' ' + labels[i];
       html += '</label>';
     }
@@ -316,6 +844,11 @@
       var label    = colName.replace(prefix, '').replace(/_/g, ' ');
       var evidence = col.evidence || [];
 
+      // Optional derived summary value (e.g. imp_direction = "positive" /
+      // "negative" / "mixed" / "not stated"). Tier B populates col.value on
+      // the generator side; Tier A renders it gracefully when present.
+      var colValue = (col.value != null && col.value !== '') ? String(col.value) : '';
+
       html += '<div class="checkbox-item' + originalClass + addedClass + removedClass + '">';
       html += '<label>';
       html += '<input type="checkbox" id="' + escapeHtml(colId) + '"';
@@ -327,9 +860,14 @@
       if (effectiveChecked) { html += ' checked'; }
       html += '>';
       html += ' ' + escapeHtml(label);
+      if (colValue) {
+        html += ' <span class="col-value col-value-' + escapeHtml(colValue.replace(/\s+/g, '-')) + '">=&nbsp;' + escapeHtml(colValue) + '</span>';
+      }
       html += '</label>';
 
-      if (evidence.length > 0) {
+      // Show evidence (i) button whenever we have snippets OR a derived value
+      // to display (meta summary columns have a value but no snippets).
+      if (evidence.length > 0 || colValue) {
         html += ' <button class="btn-evidence" aria-label="Show evidence"';
         html += ' data-paper="' + escapeHtml(paperId) + '"';
         html += ' data-col="' + escapeHtml(colName) + '"';
@@ -340,56 +878,32 @@
     }
     html += '</div>'; // .checkbox-grid
 
-    // Evidence panels rendered below the grid (full width)
+    // Evidence panels rendered below the grid (full width). A panel is
+    // rendered if the column has snippets OR a derived summary value
+    // (e.g. imp_direction → "positive" / "negative" / "mixed" / "not stated").
     for (var j = 0; j < columns.length; j++) {
-      var evCol = columns[j];
-      if (evCol.evidence && evCol.evidence.length > 0) {
-        html += '<div class="evidence-panel" id="ev_' + escapeHtml(paperId) + '_' + escapeHtml(evCol.name) + '" hidden>';
-        html += '<div class="evidence-panel-header">' + escapeHtml(evCol.name.replace(prefix, '').replace(/_/g, ' ')) + '</div>';
-        html += _renderEvidence(evCol.evidence);
-        html += '</div>';
+      var evCol   = columns[j];
+      var evArr   = evCol.evidence || [];
+      var evValue = (evCol.value != null && evCol.value !== '') ? String(evCol.value) : '';
+      if (evArr.length === 0 && !evValue) { continue; }
+
+      html += '<div class="evidence-panel" id="ev_' + escapeHtml(paperId) + '_' + escapeHtml(evCol.name) + '" hidden>';
+      html += '<div class="evidence-panel-header">' + escapeHtml(evCol.name.replace(prefix, '').replace(/_/g, ' ')) + '</div>';
+      if (evValue) {
+        html += '<p class="evidence-value"><strong>Derived value:</strong> ';
+        html += '<span class="col-value col-value-' + escapeHtml(evValue.replace(/\s+/g, '-')) + '">' + escapeHtml(evValue) + '</span>';
+        html += '</p>';
       }
+      if (evArr.length > 0) {
+        html += _renderEvidence(evArr);
+      } else {
+        html += '<p class="evidence-empty-hint">No matched-term snippets recorded for this summary column. See the Extraction rules panel below for how the value is derived.</p>';
+      }
+      html += '</div>';
     }
 
-    // Rules palette (collapsible, shows all rules for this schema)
-    var prefixRules = _rules[prefix];
-    if (prefixRules && Object.keys(prefixRules).length > 0) {
-      html += '<details class="rules-palette">';
-      html += '<summary class="rules-palette-summary">Extraction rules (' + Object.keys(prefixRules).length + ' rules)</summary>';
-      html += '<div class="rules-palette-body">';
-      var ruleNames = Object.keys(prefixRules).sort();
-      for (var ri = 0; ri < ruleNames.length; ri++) {
-        var rn = ruleNames[ri];
-        var rule = prefixRules[rn];
-        // Check if this rule fired for this paper
-        var fired = false;
-        for (var ci = 0; ci < columns.length; ci++) {
-          if (columns[ci].name === rn && columns[ci].triggered) { fired = true; break; }
-        }
-        html += '<div class="rule-entry' + (fired ? ' rule-fired' : '') + '">';
-        html += '<span class="rule-name">' + escapeHtml(rn.replace(prefix, '').replace(/_/g, ' ')) + '</span>';
-        html += ' <span class="rule-threshold">thr:' + rule.threshold + '</span>';
-        if (fired) { html += ' <span class="rule-badge-active">active</span>'; }
-        html += '<div class="rule-terms">';
-        for (var ti = 0; ti < rule.terms.length; ti++) {
-          html += '<span class="rule-term">' + escapeHtml(rule.terms[ti]) + '</span>';
-        }
-        html += '</div>';
-        if (rule.anchors && rule.anchors.length > 0) {
-          html += '<div class="rule-anchors">Anchors: ';
-          for (var ai = 0; ai < rule.anchors.length; ai++) {
-            html += '<span class="rule-anchor">' + escapeHtml(rule.anchors[ai]) + '</span>';
-          }
-          html += '</div>';
-        }
-        if (rule.case_sensitive_terms && rule.case_sensitive_terms.length > 0) {
-          html += '<div class="rule-cs">Case-sensitive: ' + rule.case_sensitive_terms.map(escapeHtml).join(', ') + '</div>';
-        }
-        html += '</div>'; // .rule-entry
-      }
-      html += '</div>'; // .rules-palette-body
-      html += '</details>';
-    }
+    // Rules palette (collapsible, shows assignation criteria for this schema)
+    html += _renderRulesPalette(prefix, columns);
 
     html += _renderRatingRow(paperId, prefix, isTier1);
     return html;
@@ -400,9 +914,10 @@
   // ---------------------------------------------------------------------------
 
   function _renderTagCategory(paperId, prefix, catData) {
-    var s          = _ensureState(paperId, prefix);
-    var triggered  = catData.triggered  || [];
-    var allOptions = _sharedOptions[prefix] || [];
+    var s           = _ensureState(paperId, prefix);
+    var triggered   = catData.triggered   || [];
+    var frequencies = catData.frequencies || {};
+    var allOptions  = _sharedOptions[prefix] || [];
 
     // Effective tags: triggered minus removed plus added
     var effective = [];
@@ -420,14 +935,38 @@
 
     var html = '<div class="tag-section">';
 
-    // Existing tags
+    // Threshold / assignation summary — prefer the per-paper threshold embedded
+    // in PAGE_DATA (catData.trigger_threshold), fall back to the rules.json
+    // schema-level threshold, finally to any mention. This keeps the hint
+    // correct for pages generated before/after the Tier B threshold change.
+    var prefixRule = _rules[prefix];
+    var threshold  = catData.trigger_threshold
+                     || (prefixRule && prefixRule.trigger_threshold)
+                     || 1;
+    if (prefixRule && prefixRule._criteria) {
+      var labelText = prefix === 'sp_' ? 'Species trigger'
+                    : prefix === 'a_'  ? 'Technique trigger'
+                    : 'Trigger rule';
+      html += '<p class="tag-threshold-hint"><strong>' + labelText + ':</strong> ';
+      html += 'frequency \u2265 ' + threshold;
+      html += (threshold > 1
+        ? ' (mentions below threshold are available in the "Add by occurrence" dropdown). '
+        : ' \u2014 any mention counts. ');
+      html += '<span class="tag-threshold-detail">Raw mention count in full PDF text; see Extraction rules below.</span></p>';
+    }
+
+    // Existing tags — include per-tag occurrence frequency where known.
     html += '<div class="tag-list" id="tags_' + escapeHtml(paperId) + '_' + escapeHtml(prefix) + '">';
     for (i = 0; i < effective.length; i++) {
-      var tag = effective[i];
+      var tag      = effective[i];
       var tagLabel = tag.val.replace(prefix, '').replace(/_/g, ' ');
       var tagClass = tag.original ? 'tag original-tag' : 'tag added-tag';
+      var tagFreq  = frequencies[tag.val];
       html += '<span class="' + tagClass + '">';
       html += escapeHtml(tagLabel);
+      if (tagFreq != null && tagFreq > 0) {
+        html += ' <span class="tag-freq-count">(' + tagFreq + '\u00d7)</span>';
+      }
       html += '<button class="btn-remove-tag"';
       html += ' data-paper="' + escapeHtml(paperId) + '"';
       html += ' data-prefix="' + escapeHtml(prefix) + '"';
@@ -495,6 +1034,7 @@
 
     html += '</div>'; // .tag-section
 
+    html += _renderRulesPalette(prefix, null);
     html += _renderRatingRow(paperId, prefix, false);
     return html;
   }
@@ -523,6 +1063,7 @@
     html += '</label>';
     html += '</div>';
     html += '</div>'; // .depth-section
+    html += _renderRulesPalette(prefix, null);
     // No rating row for depth
     return html;
   }
@@ -553,7 +1094,7 @@
     var shortTitle = _truncate(title, 80);
     var reviewed   = _isPaperReviewed(paperId);
     var badgeClass = reviewed ? 'badge badge-reviewed' : 'badge badge-pending';
-    var badgeText  = reviewed ? 'Reviewed' : 'Pending';
+    var badgeText  = reviewed ? _t('reviewed') : _t('pending');
 
     // Gather and sort category prefixes
     var catPrefixes = Object.keys(categories);
@@ -799,6 +1340,16 @@
         var prefix  = el.dataset.prefix;
         var s       = _ensureState(paperId, prefix);
         s.rating    = el.value;
+        // Visual: mark the chosen label, clear its siblings
+        var row = el.closest('.rating-row');
+        if (row) {
+          var opts = row.querySelectorAll('.rating-option');
+          for (var oi = 0; oi < opts.length; oi++) {
+            opts[oi].classList.remove('selected');
+          }
+          var chosen = el.closest('.rating-option');
+          if (chosen) { chosen.classList.add('selected'); }
+        }
         _saveState();
         _updateBadge(paperId);
         _updateProgress();
@@ -836,10 +1387,16 @@
         s.changes_count = (s.added ? s.added.length : 0) + (s.removed ? s.removed.length : 0);
         if (!s.rating) {
           s.rating = s.changes_count > 0 ? 'partially_correct' : 'correct';
-          // Update radio button display
+          // Update radio button display + highlight chosen option
           var radios = el.closest('.category-section').querySelectorAll('.rating-radio');
           for (var ri2 = 0; ri2 < radios.length; ri2++) {
-            radios[ri2].checked = radios[ri2].value === s.rating;
+            var isChosen = radios[ri2].value === s.rating;
+            radios[ri2].checked = isChosen;
+            var lbl = radios[ri2].closest('.rating-option');
+            if (lbl) {
+              if (isChosen) { lbl.classList.add('selected'); }
+              else          { lbl.classList.remove('selected'); }
+            }
           }
         }
         // Update changes count display
@@ -1144,7 +1701,7 @@
     var badge = document.getElementById('badge_' + paperId);
     if (!badge) { return; }
     var reviewed = _isPaperReviewed(paperId);
-    badge.textContent  = reviewed ? 'Reviewed' : 'Pending';
+    badge.textContent  = reviewed ? _t('reviewed') : _t('pending');
     badge.className    = reviewed ? 'badge badge-reviewed' : 'badge badge-pending';
   }
 
