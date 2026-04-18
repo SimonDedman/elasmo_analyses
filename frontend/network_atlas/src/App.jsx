@@ -4,6 +4,7 @@ import DeckGL from '@deck.gl/react';
 import { ScatterplotLayer, LineLayer, TextLayer, IconLayer } from '@deck.gl/layers';
 import { CollisionFilterExtension } from '@deck.gl/extensions';
 import { getIconAtlas, ICON_MAPPING, pickShape } from './lib/shapes.js';
+import { getClusterIcon } from './lib/clusterIcons.js';
 import Supercluster from 'supercluster';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -446,7 +447,7 @@ export default function App() {
     }
 
     if (clusterPoints.length > 0 && clusterIndex) {
-      // Count gender per cluster via supercluster.getLeaves.
+      // Per-cluster gender tally via supercluster.getLeaves.
       const clusterStats = clusterPoints.map(c => {
         const leaves = clusterIndex.getLeaves(c.id, Infinity);
         let m = 0, f = 0, u = 0;
@@ -456,25 +457,22 @@ export default function App() {
           else if (g === 'F') f++;
           else u++;
         });
-        return { cluster: c, m, f, u, total: m + f + u };
+        return { cluster: c, m, f, u };
       });
 
-      const radiusOf = (c) => 40000 + Math.sqrt(c.properties.point_count) * 8000;
-
-      // 1. OUTER blue disc (represents M). Renders first, underneath the
-      //    grey and pink layers that partially cover it.
-      layers.push(new ScatterplotLayer({
-        id: 'clusters-outer-m',
+      // Single IconLayer. Each icon is a canvas-rendered circle with
+      // horizontal M | U | F bands proportional to count. Cached by
+      // bucketed ratio so the canvas work happens once per unique split.
+      layers.push(new IconLayer({
+        id: 'clusters',
         data: clusterStats,
         pickable: true,
-        opacity: 0.88,
-        stroked: true, filled: true,
-        radiusMinPixels: 14, radiusMaxPixels: 46,
-        lineWidthMinPixels: 1,
+        sizeUnits: 'pixels',
+        sizeMinPixels: 30,
+        sizeMaxPixels: 92,
         getPosition: d => d.cluster.geometry.coordinates,
-        getRadius:   d => radiusOf(d.cluster),
-        getFillColor: [55, 126, 184, 220],                          // blue = M
-        getLineColor: [255, 255, 255, 220],
+        getIcon:     d => getClusterIcon(d.m, d.u, d.f),
+        getSize:     d => 28 + Math.sqrt(d.cluster.properties.point_count) * 4,
         onClick: info => {
           if (!info.object || !clusterIndex) return;
           const z = clusterIndex.getClusterExpansionZoom(info.object.cluster.id);
@@ -486,32 +484,7 @@ export default function App() {
             transitionDuration: 500,
           }));
         },
-      }));
-
-      // 2. MIDDLE grey disc (F+U portion of the cluster)
-      layers.push(new ScatterplotLayer({
-        id: 'clusters-middle-u',
-        data: clusterStats.filter(d => d.u + d.f > 0),
-        pickable: false,
-        opacity: 0.92,
-        stroked: false, filled: true,
-        radiusMinPixels: 0, radiusMaxPixels: 46,
-        getPosition: d => d.cluster.geometry.coordinates,
-        getRadius:   d => radiusOf(d.cluster) * Math.sqrt((d.u + d.f) / d.total),
-        getFillColor: [140, 140, 140, 230],                         // grey = U
-      }));
-
-      // 3. INNER pink disc (F only)
-      layers.push(new ScatterplotLayer({
-        id: 'clusters-inner-f',
-        data: clusterStats.filter(d => d.f > 0),
-        pickable: false,
-        opacity: 0.95,
-        stroked: false, filled: true,
-        radiusMinPixels: 0, radiusMaxPixels: 46,
-        getPosition: d => d.cluster.geometry.coordinates,
-        getRadius:   d => radiusOf(d.cluster) * Math.sqrt(d.f / d.total),
-        getFillColor: [228, 26, 28, 240],                           // pink/red = F
+        updateTriggers: { getIcon: [clusterStats.length] },
       }));
 
       layers.push(new TextLayer({
@@ -527,7 +500,7 @@ export default function App() {
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
         outlineWidth: 4,
-        outlineColor: [30, 30, 30, 220],
+        outlineColor: [30, 30, 30, 230],
         fontSettings: { sdf: true, radius: 16 },
         fontWeight: 700,
       }));
@@ -566,6 +539,14 @@ export default function App() {
   // Author-name labels. Show only when the visible singletons are
   // few enough to read (≤20 by default) OR when a selection is active,
   // in which case we label the selected author + their coauthors.
+  //
+  // Stacking policy:
+  //   - Authors at the same lat/lon (same institution) get stacked
+  //     VERTICALLY: most-prolific on top (below the dot), then each
+  //     successive name on the next row down, 18px apart.
+  //   - Authors at different positions still use CollisionFilter —
+  //     when two groups' labels overlap, the higher-priority group's
+  //     wins. Inside a group, ALL members show (stacked) regardless.
   if (viewMode === 'authors') {
     let labelled = [];
     if (selectedRelated) {
@@ -574,29 +555,51 @@ export default function App() {
       labelled = singletons;
     }
     if (labelled.length > 0) {
+      // Group by rounded coordinates (same institution = same row stack)
+      const rowIndex = new Map();
+      const groupMax = new Map();
+      const groupKey = (f) =>
+        `${f.geometry.coordinates[0].toFixed(3)},${f.geometry.coordinates[1].toFixed(3)}`;
+      const byGroup = new Map();
+      labelled.forEach(f => {
+        const k = groupKey(f);
+        const arr = byGroup.get(k) ?? [];
+        arr.push(f);
+        byGroup.set(k, arr);
+      });
+      byGroup.forEach((group, k) => {
+        group.sort((a, b) => (b.properties.papers ?? 0) - (a.properties.papers ?? 0));
+        const maxPapers = group[0].properties.papers ?? 1;
+        group.forEach((f, i) => {
+          rowIndex.set(f.properties.id, i);
+          groupMax.set(f.properties.id, maxPapers);
+        });
+      });
+
       layers.push(new TextLayer({
         id: 'author-labels',
         data: labelled,
         pickable: false,
         getPosition: f => f.geometry.coordinates,
         getText: f => f.properties.name ?? '',
-        getSize: 17,                             // +1
+        getSize: 16,
         getColor: [15, 15, 15, 255],
-        getPixelOffset: [0, 22],
+        getPixelOffset: f => [0, 22 + (rowIndex.get(f.properties.id) ?? 0) * 18],
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'top',
-        outlineWidth: 7,                         // thicker white stroke
+        outlineWidth: 6,
         outlineColor: [255, 255, 255, 250],
         fontSettings: { sdf: true, radius: 20 },
         background: false,
-        // Collision detection: when two labels overlap, the one with
-        // higher priority wins; the other is hidden. Higher paper_count
-        // gets higher priority (so the most prolific author's name wins
-        // over an obscure co-author at the same institution).
+        // Cross-group collision: higher-paper-count group wins when two
+        // groups' columns overlap. Members of the same group all carry
+        // the same priority (their institution's top author's papers)
+        // so they travel together.
         extensions: [new CollisionFilterExtension()],
         collisionEnabled: true,
         collisionGroup: 'author-labels',
-        getCollisionPriority: f => Math.log2((f.properties.papers ?? 1) + 1),
+        getCollisionPriority: f =>
+          Math.log2((groupMax.get(f.properties.id) ?? 1) + 1),
       }));
     }
   }
