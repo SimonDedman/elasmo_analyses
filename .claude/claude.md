@@ -286,6 +286,24 @@ dbGetQuery(con, "
 
 **Additional working directory:** `/home/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel`
 
+## XLSX Output Formatting
+
+When creating any `.xlsx` file, always apply these formatting rules:
+1. **Freeze the top row** (header row stays visible when scrolling)
+2. **Bold the header row**
+3. **Add autofilter** to all columns
+4. **Auto-fit column widths** (capped at 60 characters)
+
+```python
+# openpyxl example
+from openpyxl.styles import Font
+ws = writer.sheets["sheet_name"]
+ws.freeze_panes = "A2"
+ws.auto_filter.ref = ws.dimensions
+for cell in ws[1]:
+    cell.font = Font(bold=True)
+```
+
 ## Frequent Gotchas & Reminders
 
 1. **Wide schema queries:** Always specify columns in SELECT, never use `SELECT *`
