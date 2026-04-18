@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Map as MapLibreMap } from 'react-map-gl/maplibre';
 import DeckGL from '@deck.gl/react';
-import { ScatterplotLayer, LineLayer, TextLayer, IconLayer } from '@deck.gl/layers';
+import { LineLayer, TextLayer, IconLayer } from '@deck.gl/layers';
 import { CollisionFilterExtension } from '@deck.gl/extensions';
 import { getIconAtlas, ICON_MAPPING, pickShape } from './lib/shapes.js';
 import { getClusterIcon } from './lib/clusterIcons.js';
@@ -21,7 +21,7 @@ import './App.css';
 
 // Bump on each push so the header shows a fresh build number and the
 // user can confirm they're looking at the latest code (cache bust aid).
-const VERSION = '2.3';
+const VERSION = '2.4';
 
 const INITIAL_VIEW_STATE = {
   longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
@@ -399,70 +399,65 @@ export default function App() {
     ? singletons.filter(f => selectedRelated.has(f.properties.id))
     : [];
 
-  // Individual authors — ScatterplotLayer (circles) OR IconLayer (shapes)
+  // Co-location spiral offsets. Many authors share an institution's exact
+  // lat/lng — without this, 40 authors at Hopkins Marine stack onto one
+  // pixel at any zoom and look like a cluster. Key by rounded coordinate
+  // so co-located authors get sequential spiral indices, then convert to
+  // a pixel offset (golden-angle spiral, radius ∝ √index) applied via the
+  // IconLayer getPixelOffset. Result: constant visual spread at all zooms.
+  const colocationOffsets = useMemo(() => {
+    const groups = new Map();
+    singletons.forEach(f => {
+      const k = `${f.geometry.coordinates[0].toFixed(4)},${f.geometry.coordinates[1].toFixed(4)}`;
+      const arr = groups.get(k) ?? [];
+      arr.push(f);
+      groups.set(k, arr);
+    });
+    const map = new Map();
+    groups.forEach(group => {
+      group.sort((a, b) => (b.properties.papers ?? 0) - (a.properties.papers ?? 0));
+      group.forEach((f, i) => {
+        if (i === 0) { map.set(f.properties.id, [0, 0]); return; }
+        const angle = i * 2.39996323;
+        const r = 4 * Math.sqrt(i);
+        map.set(f.properties.id, [r * Math.cos(angle), r * Math.sin(angle)]);
+      });
+    });
+    return map;
+  }, [singletons]);
+
+  // Individual authors — unified IconLayer (circle when shapeBy='none',
+  // other shapes otherwise). IconLayer is used even for the plain-circle
+  // case so we get getPixelOffset for co-location spiraling, which
+  // ScatterplotLayer cannot provide.
   if (viewMode === 'authors') {
-    if (shapeBy === 'none') {
-      layers.push(new ScatterplotLayer({
-        id: 'authors',
-        data: singletonsBelow,
-        pickable: true,
-        opacity: 0.85,
-        stroked: true,
-        filled: true,
-        radiusMinPixels: 3,
-        radiusMaxPixels: 18,
-        lineWidthMinPixels: 0.5,
-        getPosition: f => f.geometry.coordinates,
-        getRadius: f => 30000 * Math.log2((f.properties.papers ?? 1) + 1),
-        getFillColor: f => {
-          const base = pickColour(f.properties, colorBy, palettes);
-          if (selectedRelated && !selectedRelated.has(f.properties.id)) {
-            return [base[0], base[1], base[2], 40];
-          }
-          return base;
-        },
-        getLineColor: f =>
-          (selectedId && f.properties.id === selectedId)
-            ? [182, 134, 44, 255]
-            : [40, 40, 40, 180],
-        getLineWidth: f => (selectedId && f.properties.id === selectedId) ? 2.5 : 0.5,
-        lineWidthUnits: 'pixels',
-        onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
-        updateTriggers: {
-          getFillColor: [colorBy, selectedId, palettes],
-          getLineColor: [selectedId],
-          getLineWidth: [selectedId],
-        },
-      }));
-    } else {
-      // IconLayer path — procedural shape atlas, area-equivalent across
-      // circle / triangle / square. See src/lib/shapes.js.
-      layers.push(new IconLayer({
-        id: 'authors-shaped',
-        data: singletonsBelow,
-        pickable: true,
-        iconAtlas: getIconAtlas(),
-        iconMapping: ICON_MAPPING,
-        sizeUnits: 'pixels',
-        sizeMinPixels: 8,
-        sizeMaxPixels: 48,
-        getPosition: f => f.geometry.coordinates,
-        getIcon: f => pickShape(f.properties, shapeBy),
-        getSize: f => 6 + Math.log2((f.properties.papers ?? 1) + 1) * 4,
-        getColor: f => {
-          const base = pickColour(f.properties, colorBy, palettes);
-          if (selectedRelated && !selectedRelated.has(f.properties.id)) {
-            return [base[0], base[1], base[2], 40];
-          }
-          return base;
-        },
-        onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
-        updateTriggers: {
-          getColor: [colorBy, selectedId, palettes],
-          getIcon: [shapeBy],
-        },
-      }));
-    }
+    layers.push(new IconLayer({
+      id: 'authors',
+      data: singletonsBelow,
+      pickable: true,
+      iconAtlas: getIconAtlas(),
+      iconMapping: ICON_MAPPING,
+      sizeUnits: 'pixels',
+      sizeMinPixels: 6,
+      sizeMaxPixels: 44,
+      getPosition: f => f.geometry.coordinates,
+      getIcon: f => pickShape(f.properties, shapeBy),
+      getSize: f => 6 + Math.log2((f.properties.papers ?? 1) + 1) * 4,
+      getPixelOffset: f => colocationOffsets.get(f.properties.id) ?? [0, 0],
+      getColor: f => {
+        const base = pickColour(f.properties, colorBy, palettes);
+        if (selectedRelated && !selectedRelated.has(f.properties.id)) {
+          return [base[0], base[1], base[2], 40];
+        }
+        return base;
+      },
+      onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
+      updateTriggers: {
+        getColor: [colorBy, selectedId, palettes],
+        getIcon: [shapeBy],
+        getPixelOffset: [colocationOffsets],
+      },
+    }));
 
     if (clusterPoints.length > 0 && clusterIndex) {
       // Per-cluster gender tally via supercluster.getLeaves.
@@ -542,28 +537,25 @@ export default function App() {
     // Selection-related singletons rendered ABOVE the cluster bubbles so
     // you (Simon) stay visible even when sitting on top of a cluster.
     if (singletonsAbove.length > 0) {
-      layers.push(new ScatterplotLayer({
+      layers.push(new IconLayer({
         id: 'authors-above',
         data: singletonsAbove,
         pickable: true,
-        opacity: 1,
-        stroked: true,
-        filled: true,
-        radiusMinPixels: 5,
-        radiusMaxPixels: 22,
-        lineWidthMinPixels: 1,
+        iconAtlas: getIconAtlas(),
+        iconMapping: ICON_MAPPING,
+        sizeUnits: 'pixels',
+        sizeMinPixels: 8,
+        sizeMaxPixels: 52,
         getPosition: f => f.geometry.coordinates,
-        getRadius: f => 30000 * Math.log2((f.properties.papers ?? 1) + 1),
-        getFillColor: f => pickColour(f.properties, colorBy, palettes),
-        getLineColor: f => (selectedId && f.properties.id === selectedId)
-          ? [182, 134, 44, 255] : [30, 30, 30, 220],
-        getLineWidth: f => (selectedId && f.properties.id === selectedId) ? 3 : 1,
-        lineWidthUnits: 'pixels',
+        getIcon: f => pickShape(f.properties, shapeBy),
+        getSize: f => 8 + Math.log2((f.properties.papers ?? 1) + 1) * 5,
+        getPixelOffset: f => colocationOffsets.get(f.properties.id) ?? [0, 0],
+        getColor: f => pickColour(f.properties, colorBy, palettes),
         onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
         updateTriggers: {
-          getFillColor: [colorBy, palettes],
-          getLineColor: [selectedId],
-          getLineWidth: [selectedId],
+          getColor: [colorBy, palettes],
+          getIcon: [shapeBy],
+          getPixelOffset: [colocationOffsets],
         },
       }));
     }
