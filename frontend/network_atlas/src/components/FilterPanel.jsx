@@ -18,13 +18,24 @@ export default function FilterPanel({
   institutionCount,
   originRegions, palettes,
   authorNames,
+  genderCounts, regionCounts,     // {key: n, …}
+  shapeByMatrix,                  // [{attr, n_categories, top}, …]
+  zoomLevel,
 }) {
+  // Helper for "(123)" suffixes sorted by count desc
+  const sortedWithCounts = (obj, keys) =>
+    keys
+      .map(k => [k, obj[k] ?? 0])
+      .sort((a, b) => b[1] - a[1]);
   const update = (k, v) => setFilters(prev => ({ ...prev, [k]: v }));
   const topCountries = Object.entries(stats?.by_country ?? {});
 
   return (
     <div className="filter-panel">
-      <h1>Elasmobranch Author Atlas <span className="tag">v2</span></h1>
+      <h1>
+        Elasmobranch Author Atlas{' '}
+        <span className="tag">v2{zoomLevel != null ? ` · z${zoomLevel.toFixed(1)}` : ''}</span>
+      </h1>
       <div className="stats">
         {viewMode === 'authors' ? (
           <>
@@ -74,7 +85,7 @@ export default function FilterPanel({
       </div>
       <datalist id="search-list">
         {(searchTarget === 'author' ? authorNames : institutionNames)
-          .slice(0, 200).map(n => <option key={n} value={n} />)}
+          .map(n => <option key={n} value={n} />)}
       </datalist>
 
       {viewMode === 'authors' && (
@@ -90,15 +101,20 @@ export default function FilterPanel({
           <label>Gender</label>
           <select value={filters.gender} onChange={e => update('gender', e.target.value)}>
             <option value="">All</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-            <option value="Unknown">Unknown</option>
+            {sortedWithCounts(genderCounts ?? {}, ['M', 'F', 'Unknown'])
+              .map(([k, n]) => (
+                <option key={k} value={k}>
+                  {k === 'M' ? 'Male' : k === 'F' ? 'Female' : k} ({n.toLocaleString()})
+                </option>
+              ))}
           </select>
 
           <label>Origin region (NamSor)</label>
           <select value={filters.origin_region} onChange={e => update('origin_region', e.target.value)}>
             <option value="">All</option>
-            {originRegions.map(r => <option key={r} value={r}>{r}</option>)}
+            {sortedWithCounts(regionCounts ?? {}, originRegions).map(([r, n]) => (
+              <option key={r} value={r}>{r} ({n.toLocaleString()})</option>
+            ))}
           </select>
 
           <label>
@@ -122,6 +138,19 @@ export default function FilterPanel({
             <option value="none">None (all circles)</option>
             <option value="gender">Gender (M=○ F=△ Unknown=□)</option>
           </select>
+          {shapeByMatrix && shapeByMatrix.length > 0 && (
+            <div className="shape-suggest">
+              <span className="muted">Best shape-by attrs in current filter (fewest categories first):</span>
+              <ul>
+                {shapeByMatrix.map(row => (
+                  <li key={row.attr}>
+                    <strong>{row.attr}</strong>: {row.n_categories} categories
+                    {row.top.length > 0 && <> — top: {row.top.join(', ')}</>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div className="toggles">
             <label>
@@ -137,7 +166,7 @@ export default function FilterPanel({
             <label>
               <input type="checkbox" checked={aggregateEdges}
                      onChange={e => setAggregateEdges(e.target.checked)} />
-              Aggregate edges to clusters
+              Group lines per institution
             </label>
           </div>
 
