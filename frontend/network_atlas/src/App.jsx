@@ -21,7 +21,7 @@ import './App.css';
 
 // Bump on each push so the header shows a fresh build number and the
 // user can confirm they're looking at the latest code (cache bust aid).
-const VERSION = '2.4';
+const VERSION = '2.5';
 
 const INITIAL_VIEW_STATE = {
   longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
