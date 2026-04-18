@@ -24,6 +24,7 @@
 suppressPackageStartupMessages({
   library(tidyverse)
   library(jsonlite)
+  library(arrow)
 })
 
 setwd("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
@@ -197,11 +198,33 @@ nodes_focal <- focal_authors |> filter(openalex_author_id %in% connected_ids)
 cat(sprintf("Focal network: %d authors, %d edges\n",
             nrow(nodes_focal), nrow(edges_focal)))
 
+# --- Per-author year range from local parquet ----------------------------
+cat("Computing per-author year ranges...\n")
+year_ranges <- tryCatch({
+  papers_yr <- read_parquet("outputs/literature_review_enriched.parquet") |>
+    select(literature_id, year) |>
+    filter(!is.na(year), year >= 1900, year <= 2030) |>
+    mutate(literature_id = as.character(literature_id))
+  paper_authors |>
+    mutate(literature_id = as.character(literature_id)) |>
+    inner_join(papers_yr, by = "literature_id") |>
+    group_by(openalex_author_id) |>
+    summarise(year_min = min(year, na.rm = TRUE),
+              year_max = max(year, na.rm = TRUE),
+              .groups = "drop")
+}, error = function(e) {
+  cat("  parquet unavailable — skipping year enrichment\n")
+  tibble(openalex_author_id = character(),
+         year_min = integer(), year_max = integer())
+})
+cat(sprintf("  Year ranges for %d authors\n", nrow(year_ranges)))
+
 # --- GeoJSON: authors -----------------------------------------------------
 # One Point feature per author with coordinates. Drop authors without
 # institution coordinates (they have no place on a map).
 authors_geo <- nodes_focal |>
   filter(!is.na(inst_lon), !is.na(inst_lat)) |>
+  left_join(year_ranges, by = "openalex_author_id") |>
   transmute(
     id = openalex_author_id,
     name = display_name,
@@ -214,6 +237,8 @@ authors_geo <- nodes_focal |>
     origin_country = namsor_origin_country,
     origin_region  = namsor_origin_region,
     ethnicity      = namsor_ethnicity,
+    year_min = year_min,
+    year_max = year_max,
     lon = inst_lon,
     lat = inst_lat
   )
@@ -288,7 +313,11 @@ stats <- list(
   by_country = as.list(authors_geo |> count(country, sort = TRUE) |>
                        head(20) |> deframe()),
   by_gender  = as.list(authors_geo |> count(gender) |> deframe()),
-  min_papers = MIN_PAPERS
+  min_papers = MIN_PAPERS,
+  year_min = if (any(!is.na(authors_geo$year_min)))
+    min(authors_geo$year_min, na.rm = TRUE) else NA,
+  year_max = if (any(!is.na(authors_geo$year_max)))
+    max(authors_geo$year_max, na.rm = TRUE) else NA
 )
 write(toJSON(stats, auto_unbox = TRUE, pretty = TRUE, na = "null"),
       file = file.path(OUT_DIR, "stats.json"))

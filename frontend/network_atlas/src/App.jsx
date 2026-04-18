@@ -23,8 +23,11 @@ const INITIAL_VIEW_STATE = {
   longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
 };
 
-const CLUSTER_RADIUS_PX  = 50;
-const CLUSTER_MAX_ZOOM   = 8;
+const CLUSTER_RADIUS_PX  = 45;
+// Stop clustering when zoom > 5 — at z6+ the user is looking at country/
+// region scale; forcing everyone into a continental cluster hides the
+// institutional structure we want to show.
+const CLUSTER_MAX_ZOOM   = 5;
 const CLUSTER_MIN_POINTS = 3;
 
 // Zoom used when pan-to-author via search.
@@ -40,6 +43,7 @@ export default function App() {
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [filters, setFilters] = useState({
     country: '', gender: '', origin_region: '', minEdgeWeight: 2,
+    yearMin: null, yearMax: null,   // null = no filter (uses dataset range)
   });
   const [colorBy, setColorBy]           = useState('gender');
   const [shapeBy, setShapeBy]           = useState('none');
@@ -170,8 +174,13 @@ export default function App() {
     if (filters.country       && p.country       !== filters.country) return false;
     if (filters.gender        && p.gender        !== filters.gender) return false;
     if (filters.origin_region && p.origin_region !== filters.origin_region) return false;
+    // Year filter: keep if the author's active range overlaps the slider
+    // window. (author.year_max >= filter.yearMin AND author.year_min <= filter.yearMax)
+    if (filters.yearMin != null && p.year_max != null && p.year_max < filters.yearMin) return false;
+    if (filters.yearMax != null && p.year_min != null && p.year_min > filters.yearMax) return false;
     return true;
-  }), [authors, filters.country, filters.gender, filters.origin_region]);
+  }), [authors, filters.country, filters.gender, filters.origin_region,
+       filters.yearMin, filters.yearMax]);
 
   const filteredIdSet = useMemo(
     () => new Set(filteredAuthors.map(f => f.properties.id)),
