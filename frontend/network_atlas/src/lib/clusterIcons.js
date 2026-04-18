@@ -24,8 +24,10 @@ function makeIcon(mFrac, uFrac, fFrac) {
   const x1 = -R + 2 * R * mFrac;                 // M | U boundary
   const x2 = x1 + 2 * R * uFrac;                 // U | F boundary
 
-  // Draw three vertical bands, clipped to the circle
-  ctx.fillStyle = 'rgb(55, 126, 184)';           // M = blue
+  // Draw three vertical bands, clipped to the circle. Colours match
+  // GENDER_PALETTE in palettes.js — Pantone 284 C baby-blue for M,
+  // Pantone 183 C baby-pink for F.
+  ctx.fillStyle = 'rgb(130, 181, 220)';          // M = baby blue
   ctx.fillRect(cx - R, cy - R, R + x1,          2 * R);
 
   if (uFrac > 0) {
@@ -33,7 +35,7 @@ function makeIcon(mFrac, uFrac, fFrac) {
     ctx.fillRect(cx + x1, cy - R, x2 - x1,      2 * R);
   }
 
-  ctx.fillStyle = 'rgb(228, 26, 28)';            // F = red/pink
+  ctx.fillStyle = 'rgb(242, 143, 176)';          // F = baby pink
   ctx.fillRect(cx + x2, cy - R, R - x2,         2 * R);
 
   ctx.restore();

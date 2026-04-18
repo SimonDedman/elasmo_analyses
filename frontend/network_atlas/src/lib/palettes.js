@@ -1,9 +1,13 @@
 // Palettes for colour-by modes. Each palette maps a categorical value to
 // an RGBA colour array. Keys missing from a palette fall through to grey.
 
+// Classic nursery-boy / nursery-girl pantones, saturated enough to read
+// on a light basemap:
+//   M — Pantone 284 C "Baby Blue"   ≈ #82B5DC  rgb(130, 181, 220)
+//   F — Pantone 183 C "Baby Pink"   ≈ #F28FB0  rgb(242, 143, 176)
 export const GENDER_PALETTE = {
-  M: [55, 126, 184, 220],
-  F: [228, 26, 28, 220],
+  M: [130, 181, 220, 230],
+  F: [242, 143, 176, 230],
   Unknown: [150, 150, 150, 180],
 };
 
