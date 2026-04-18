@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Map as MapLibreMap } from 'react-map-gl/maplibre';
 import DeckGL from '@deck.gl/react';
 import { ScatterplotLayer, LineLayer, TextLayer, IconLayer } from '@deck.gl/layers';
+import { CollisionFilterExtension } from '@deck.gl/extensions';
 import { getIconAtlas, ICON_MAPPING, pickShape } from './lib/shapes.js';
 import Supercluster from 'supercluster';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -329,20 +330,39 @@ export default function App() {
       : filteredEdges;
     if (edgeData.length > 0) {
       const isAggregated = aggregateEdges && clusterMembership;
+      // When a selection is active, dim non-incident edges HARD to 8/255
+      // alpha so the selected author's connections read clearly through
+      // the mesh, even with aggregation on.
+      const dimAlpha  = selectedRelated ? 8   : (isAggregated ? 140 : 90);
+      const liveAlpha = selectedRelated ? 220 : (isAggregated ? 140 : 90);
       layers.push(new LineLayer({
         id: 'edges',
         data: edgeData,
         getSourcePosition: e => isAggregated ? e.fromPos : (positionById.get(e.from) ?? [0, 0]),
         getTargetPosition: e => isAggregated ? e.toPos   : (positionById.get(e.to)   ?? [0, 0]),
-        getWidth: e => Math.log2((isAggregated ? e.weight : e.weight) + 1) * 0.5,
+        getWidth: e => Math.log2(e.weight + 1) * 0.5,
         widthMinPixels: 0.4,
         widthMaxPixels: isAggregated ? 4 : 2,
         getColor: e => {
-          if (!isAggregated && selectedRelated) {
-            const incident = e.from === selectedId || e.to === selectedId;
-            return incident ? [60, 80, 105, 200] : [140, 155, 180, 20];
+          if (selectedRelated) {
+            // Determine incidence: aggregated edges store fromKey/toKey
+            // like "a:ID" or "c:clusterID"; check whether the selection's
+            // cluster (or the author itself) is at either end.
+            let incident = false;
+            if (isAggregated) {
+              const aKey = `a:${selectedId}`;
+              // Also treat a cluster containing the selected author as incident
+              const selClusterId = clusterMembership?.get(selectedId)?.id;
+              const cKey = selClusterId != null ? `c:${selClusterId}` : null;
+              incident = (e.fromKey === aKey || e.toKey === aKey ||
+                          (cKey && (e.fromKey === cKey || e.toKey === cKey)));
+            } else {
+              incident = e.from === selectedId || e.to === selectedId;
+            }
+            return incident ? [60, 80, 105, liveAlpha]
+                            : [140, 155, 180, dimAlpha];
           }
-          return [60, 80, 105, isAggregated ? 140 : 90];
+          return [60, 80, 105, liveAlpha];
         },
         updateTriggers: { getColor: [selectedId, aggregateEdges] },
         pickable: false,
@@ -350,12 +370,22 @@ export default function App() {
     }
   }
 
+  // Split singletons into "ordinary" (rendered under clusters) and
+  // "selection-related" (rendered above clusters so they stay visible
+  // even when they'd otherwise be covered by a cluster bubble).
+  const singletonsBelow = selectedRelated
+    ? singletons.filter(f => !selectedRelated.has(f.properties.id))
+    : singletons;
+  const singletonsAbove = selectedRelated
+    ? singletons.filter(f => selectedRelated.has(f.properties.id))
+    : [];
+
   // Individual authors — ScatterplotLayer (circles) OR IconLayer (shapes)
   if (viewMode === 'authors') {
     if (shapeBy === 'none') {
       layers.push(new ScatterplotLayer({
         id: 'authors',
-        data: singletons,
+        data: singletonsBelow,
         pickable: true,
         opacity: 0.85,
         stroked: true,
@@ -390,7 +420,7 @@ export default function App() {
       // circle / triangle / square. See src/lib/shapes.js.
       layers.push(new IconLayer({
         id: 'authors-shaped',
-        data: singletons,
+        data: singletonsBelow,
         pickable: true,
         iconAtlas: getIconAtlas(),
         iconMapping: ICON_MAPPING,
@@ -415,44 +445,120 @@ export default function App() {
       }));
     }
 
-    if (clusterPoints.length > 0) {
+    if (clusterPoints.length > 0 && clusterIndex) {
+      // Count gender per cluster via supercluster.getLeaves.
+      const clusterStats = clusterPoints.map(c => {
+        const leaves = clusterIndex.getLeaves(c.id, Infinity);
+        let m = 0, f = 0, u = 0;
+        leaves.forEach(l => {
+          const g = l.properties.gender;
+          if (g === 'M') m++;
+          else if (g === 'F') f++;
+          else u++;
+        });
+        return { cluster: c, m, f, u, total: m + f + u };
+      });
+
+      const radiusOf = (c) => 40000 + Math.sqrt(c.properties.point_count) * 8000;
+
+      // 1. OUTER blue disc (represents M). Renders first, underneath the
+      //    grey and pink layers that partially cover it.
       layers.push(new ScatterplotLayer({
-        id: 'clusters',
-        data: clusterPoints,
+        id: 'clusters-outer-m',
+        data: clusterStats,
         pickable: true,
         opacity: 0.88,
         stroked: true, filled: true,
         radiusMinPixels: 14, radiusMaxPixels: 46,
         lineWidthMinPixels: 1,
-        getPosition: c => c.geometry.coordinates,
-        getRadius: c => 40000 + Math.sqrt(c.properties.point_count) * 8000,
-        getFillColor: [8, 30, 63, 200],
+        getPosition: d => d.cluster.geometry.coordinates,
+        getRadius:   d => radiusOf(d.cluster),
+        getFillColor: [55, 126, 184, 220],                          // blue = M
         getLineColor: [255, 255, 255, 220],
         onClick: info => {
           if (!info.object || !clusterIndex) return;
-          const z = clusterIndex.getClusterExpansionZoom(info.object.id);
+          const z = clusterIndex.getClusterExpansionZoom(info.object.cluster.id);
           setViewState(prev => ({
             ...prev,
-            longitude: info.object.geometry.coordinates[0],
-            latitude:  info.object.geometry.coordinates[1],
+            longitude: info.object.cluster.geometry.coordinates[0],
+            latitude:  info.object.cluster.geometry.coordinates[1],
             zoom: z + 0.5,
             transitionDuration: 500,
           }));
         },
       }));
+
+      // 2. MIDDLE grey disc (F+U portion of the cluster)
+      layers.push(new ScatterplotLayer({
+        id: 'clusters-middle-u',
+        data: clusterStats.filter(d => d.u + d.f > 0),
+        pickable: false,
+        opacity: 0.92,
+        stroked: false, filled: true,
+        radiusMinPixels: 0, radiusMaxPixels: 46,
+        getPosition: d => d.cluster.geometry.coordinates,
+        getRadius:   d => radiusOf(d.cluster) * Math.sqrt((d.u + d.f) / d.total),
+        getFillColor: [140, 140, 140, 230],                         // grey = U
+      }));
+
+      // 3. INNER pink disc (F only)
+      layers.push(new ScatterplotLayer({
+        id: 'clusters-inner-f',
+        data: clusterStats.filter(d => d.f > 0),
+        pickable: false,
+        opacity: 0.95,
+        stroked: false, filled: true,
+        radiusMinPixels: 0, radiusMaxPixels: 46,
+        getPosition: d => d.cluster.geometry.coordinates,
+        getRadius:   d => radiusOf(d.cluster) * Math.sqrt(d.f / d.total),
+        getFillColor: [228, 26, 28, 240],                           // pink/red = F
+      }));
+
       layers.push(new TextLayer({
         id: 'cluster-labels',
-        data: clusterPoints,
+        data: clusterStats,
         pickable: false,
-        getPosition: c => c.geometry.coordinates,
-        getText: c => String(
-          c.properties.point_count_abbreviated ?? c.properties.point_count
+        getPosition: d => d.cluster.geometry.coordinates,
+        getText: d => String(
+          d.cluster.properties.point_count_abbreviated ?? d.cluster.properties.point_count
         ),
-        getSize: 14,
+        getSize: 16,
         getColor: [255, 255, 255, 255],
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
+        outlineWidth: 4,
+        outlineColor: [30, 30, 30, 220],
+        fontSettings: { sdf: true, radius: 16 },
         fontWeight: 700,
+      }));
+    }
+
+    // Selection-related singletons rendered ABOVE the cluster bubbles so
+    // you (Simon) stay visible even when sitting on top of a cluster.
+    if (singletonsAbove.length > 0) {
+      layers.push(new ScatterplotLayer({
+        id: 'authors-above',
+        data: singletonsAbove,
+        pickable: true,
+        opacity: 1,
+        stroked: true,
+        filled: true,
+        radiusMinPixels: 5,
+        radiusMaxPixels: 22,
+        lineWidthMinPixels: 1,
+        getPosition: f => f.geometry.coordinates,
+        getRadius: f => 30000 * Math.log2((f.properties.papers ?? 1) + 1),
+        getFillColor: f => pickColour(f.properties, colorBy, palettes),
+        getLineColor: f => (selectedId && f.properties.id === selectedId)
+          ? [182, 134, 44, 255] : [30, 30, 30, 220],
+        getLineWidth: f => (selectedId && f.properties.id === selectedId) ? 3 : 1,
+        lineWidthUnits: 'pixels',
+        onClick: info => { if (info.object) setSelectedId(info.object.properties.id); },
+        updateTriggers: {
+          getFillColor: [colorBy, palettes],
+          getLineColor: [selectedId],
+          getLineWidth: [selectedId],
+        },
       }));
     }
   }
@@ -474,15 +580,23 @@ export default function App() {
         pickable: false,
         getPosition: f => f.geometry.coordinates,
         getText: f => f.properties.name ?? '',
-        getSize: 16,                             // +3 from 13
-        getColor: [20, 20, 20, 255],
-        getPixelOffset: [0, 20],                 // below the dot
+        getSize: 17,                             // +1
+        getColor: [15, 15, 15, 255],
+        getPixelOffset: [0, 22],
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'top',
-        outlineWidth: 5,                         // thicker white stroke (3→5)
-        outlineColor: [255, 255, 255, 240],
-        fontSettings: { sdf: true, radius: 16 }, // slightly bigger sdf radius
+        outlineWidth: 7,                         // thicker white stroke
+        outlineColor: [255, 255, 255, 250],
+        fontSettings: { sdf: true, radius: 20 },
         background: false,
+        // Collision detection: when two labels overlap, the one with
+        // higher priority wins; the other is hidden. Higher paper_count
+        // gets higher priority (so the most prolific author's name wins
+        // over an obscure co-author at the same institution).
+        extensions: [new CollisionFilterExtension()],
+        collisionEnabled: true,
+        collisionGroup: 'author-labels',
+        getCollisionPriority: f => Math.log2((f.properties.papers ?? 1) + 1),
       }));
     }
   }
