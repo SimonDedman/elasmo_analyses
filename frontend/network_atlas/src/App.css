@@ -120,6 +120,28 @@ html, body, #root {
   font-style: italic;
 }
 
+.shape-suggest {
+  margin-top: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  background: #f6f8fa;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  color: #333;
+}
+.shape-suggest ul {
+  margin: 0.3rem 0 0 0;
+  padding-left: 1.1rem;
+}
+.shape-suggest li {
+  margin: 0.15rem 0;
+}
+
+/* Basemap opacity — 90% so author markers stand out more */
+.maplibregl-map,
+.maplibregl-canvas {
+  opacity: 0.90;
+}
+
 .filter-panel .toggles {
   margin-top: 0.9rem;
   padding-top: 0.7rem;

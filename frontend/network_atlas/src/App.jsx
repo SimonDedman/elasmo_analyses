@@ -58,6 +58,25 @@ export default function App() {
       .catch(err => setError(err.message));
   }, []);
 
+  // WASD panning — skip when typing in the filter panel inputs
+  useEffect(() => {
+    const handler = (ev) => {
+      const tag = ev.target?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      const key = ev.key.toLowerCase();
+      if (!'wasd'.includes(key)) return;
+      ev.preventDefault();
+      setViewState(prev => {
+        const step = 20 / Math.pow(2, prev.zoom);   // bigger step when zoomed out
+        const dx = key === 'a' ? -step : key === 'd' ? step : 0;
+        const dy = key === 'w' ?  step : key === 's' ? -step : 0;
+        return { ...prev, longitude: prev.longitude + dx, latitude: prev.latitude + dy };
+      });
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   const authors      = authorsFC?.features ?? [];
   const institutions = institutionsFC?.features ?? [];
 
@@ -77,6 +96,53 @@ export default function App() {
     authors.forEach(f => { if (f.properties.origin_region) s.add(f.properties.origin_region); });
     return Array.from(s).sort();
   }, [authors]);
+
+  // Counts for dropdown labels (post-filter so (N) reflects the remaining set)
+  const filterSample = authors.filter(f => {
+    const p = f.properties;
+    if (filters.country       && p.country       !== filters.country) return false;
+    if (filters.gender        && p.gender        !== filters.gender) return false;
+    if (filters.origin_region && p.origin_region !== filters.origin_region) return false;
+    return true;
+  });
+  const genderCounts = useMemo(() => {
+    const c = { M: 0, F: 0, Unknown: 0 };
+    filterSample.forEach(f => {
+      const g = f.properties.gender ?? 'Unknown';
+      c[g] = (c[g] ?? 0) + 1;
+    });
+    return c;
+  }, [filterSample]);
+  const regionCounts = useMemo(() => {
+    const c = {};
+    filterSample.forEach(f => {
+      const r = f.properties.origin_region ?? 'Unknown';
+      c[r] = (c[r] ?? 0) + 1;
+    });
+    return c;
+  }, [filterSample]);
+
+  // Shape-by matrix: count distinct categories for each attribute within
+  // the current filter. Fewer categories → better candidate for shape-by
+  // (currently only 'gender' is actually wired in shapes.js, but we show
+  // the matrix so the user can see which attribute would map cleanly).
+  const shapeByMatrix = useMemo(() => {
+    if (filterSample.length === 0) return [];
+    const attrs = ['gender', 'origin_region', 'country'];
+    return attrs.map(attr => {
+      const counts = {};
+      filterSample.forEach(f => {
+        const v = f.properties[attr] ?? '?';
+        counts[v] = (counts[v] ?? 0) + 1;
+      });
+      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      return {
+        attr,
+        n_categories: sorted.length,
+        top: sorted.slice(0, 3).map(([k, n]) => `${k}(${n})`),
+      };
+    }).sort((a, b) => a.n_categories - b.n_categories);
+  }, [filterSample]);
 
   // Sorted author-name list for the datalist autocomplete (unique, by papers).
   const authorNames = useMemo(() => {
@@ -173,22 +239,38 @@ export default function App() {
   };
 
   // --- Clustering ---------------------------------------------------------
+  // Exclude the selected author and their coauthors from the cluster
+  // index — they stay as individual dots even when zoomed out so the
+  // user can follow international connections without losing the people
+  // they care about.
+  const authorsToCluster = useMemo(() => {
+    if (!selectedRelated) return filteredAuthors;
+    return filteredAuthors.filter(f => !selectedRelated.has(f.properties.id));
+  }, [filteredAuthors, selectedRelated]);
+  const alwaysVisible = useMemo(() => {
+    if (!selectedRelated) return [];
+    return filteredAuthors.filter(f => selectedRelated.has(f.properties.id));
+  }, [filteredAuthors, selectedRelated]);
+
   const clusterIndex = useMemo(() => {
-    if (viewMode !== 'authors' || !showClusters || !filteredAuthors.length) return null;
+    if (viewMode !== 'authors' || !showClusters || !authorsToCluster.length) return null;
     const idx = new Supercluster({
       radius: CLUSTER_RADIUS_PX,
       maxZoom: CLUSTER_MAX_ZOOM,
       minPoints: CLUSTER_MIN_POINTS,
     });
-    idx.load(filteredAuthors);
+    idx.load(authorsToCluster);
     return idx;
-  }, [filteredAuthors, showClusters, viewMode]);
+  }, [authorsToCluster, showClusters, viewMode]);
 
   const currentPoints = useMemo(() => {
     if (viewMode !== 'authors') return [];
-    if (!clusterIndex) return filteredAuthors;
-    return clusterIndex.getClusters([-180, -85, 180, 85], Math.floor(viewState.zoom));
-  }, [clusterIndex, viewState.zoom, filteredAuthors, viewMode]);
+    const clusterResult = clusterIndex
+      ? clusterIndex.getClusters([-180, -85, 180, 85], Math.floor(viewState.zoom))
+      : authorsToCluster;
+    // Append always-visible (selection-related) authors as individuals
+    return [...clusterResult, ...alwaysVisible];
+  }, [clusterIndex, viewState.zoom, authorsToCluster, alwaysVisible, viewMode]);
 
   const singletons = useMemo(
     () => currentPoints.filter(c => !c.properties?.cluster),
@@ -392,14 +474,14 @@ export default function App() {
         pickable: false,
         getPosition: f => f.geometry.coordinates,
         getText: f => f.properties.name ?? '',
-        getSize: 13,
-        getColor: [30, 30, 30, 255],
-        getPixelOffset: [0, 18],                 // below the dot
+        getSize: 16,                             // +3 from 13
+        getColor: [20, 20, 20, 255],
+        getPixelOffset: [0, 20],                 // below the dot
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'top',
-        outlineWidth: 3,
-        outlineColor: [255, 255, 255, 230],
-        fontSettings: { sdf: true, radius: 12 },
+        outlineWidth: 5,                         // thicker white stroke (3→5)
+        outlineColor: [255, 255, 255, 240],
+        fontSettings: { sdf: true, radius: 16 }, // slightly bigger sdf radius
         background: false,
       }));
     }
@@ -515,6 +597,10 @@ export default function App() {
           originRegions={originRegions}
           palettes={palettes}
           authorNames={authorNames}
+          genderCounts={genderCounts}
+          regionCounts={regionCounts}
+          shapeByMatrix={shapeByMatrix}
+          zoomLevel={viewState.zoom}
         />
       )}
     </div>
