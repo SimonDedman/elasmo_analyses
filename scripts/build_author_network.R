@@ -23,13 +23,60 @@ library(htmlwidgets)
 setwd("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
 dir.create("docs/network", recursive = TRUE, showWarnings = FALSE)
 
+# --- Optional subset mode: --bbox=west,south,east,north ------------------------
+# Filters authors by inst_lon/inst_lat for faster iteration on a smaller set.
+# When set, output goes to docs/network/index_subset.html.
+cli_args <- commandArgs(trailingOnly = TRUE)
+bbox_arg <- cli_args[grep("^--bbox=", cli_args)]
+SUBSET_BBOX <- NULL
+OUTPUT_HTML <- "docs/network/index.html"
+if (length(bbox_arg) > 0) {
+  vals <- as.numeric(strsplit(sub("^--bbox=", "", bbox_arg[1]), ",")[[1]])
+  if (length(vals) == 4 && all(!is.na(vals))) {
+    SUBSET_BBOX <- list(west = vals[1], south = vals[2],
+                        east = vals[3], north = vals[4])
+    OUTPUT_HTML <- "docs/network/index_subset.html"
+    cat(sprintf("Subset mode: bbox=[W %.1f, S %.1f, E %.1f, N %.1f] → %s\n",
+                vals[1], vals[2], vals[3], vals[4], OUTPUT_HTML))
+  } else {
+    stop("--bbox requires 4 comma-separated numbers: west,south,east,north")
+  }
+}
+
 cat("Loading data...\n")
 authors <- read_csv("outputs/openalex_unique_authors.csv", show_col_types = FALSE)
+
+# Apply name corrections from the reviewed XLSX (if present)
+corr_path <- "outputs/author_name_corrections.csv"
+if (file.exists(corr_path)) {
+  corrections <- read_csv(corr_path, show_col_types = FALSE) |>
+    select(openalex_author_id, corrected_first_name, corrected_last_name)
+  authors <- authors |>
+    mutate(oa_id = str_remove(openalex_author_id, "https://openalex.org/")) |>
+    left_join(corrections, by = c("oa_id" = "openalex_author_id")) |>
+    mutate(
+      first_name = coalesce(corrected_first_name, first_name),
+      last_name  = coalesce(corrected_last_name,  last_name),
+      display_name = coalesce(
+        ifelse(!is.na(corrected_first_name),
+               trimws(paste(corrected_first_name, corrected_last_name)),
+               NA_character_),
+        display_name
+      )
+    ) |>
+    select(-oa_id, -corrected_first_name, -corrected_last_name)
+  cat(sprintf("  Applied %d name corrections\n",
+              sum(!is.na(corrections$corrected_first_name))))
+}
 paper_authors <- read_csv("outputs/openalex_paper_authors.csv", show_col_types = FALSE)
 namsor <- read_csv("outputs/namsor_enrichment.csv", show_col_types = FALSE)
 
 # Optional enrichment files (from scripts/enrich_author_last_institutions.py)
-last_inst_path <- "outputs/openalex_authors_last_institution.csv"
+last_inst_path <- if (file.exists("outputs/openalex_authors_last_institution.openalex_api.csv")) {
+  "outputs/openalex_authors_last_institution.openalex_api.csv"
+} else {
+  "outputs/openalex_authors_last_institution.csv"
+}
 if (file.exists(last_inst_path)) {
   last_inst <- read_csv(last_inst_path, show_col_types = FALSE) |>
     mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"))
@@ -104,6 +151,38 @@ if (!is.null(last_inst)) {
     )
 }
 
+# --- Merge author aliases (duplicate OpenAlex profiles → canonical) ---
+aliases_path <- "outputs/author_aliases.csv"
+if (file.exists(aliases_path)) {
+  aliases <- read_csv(aliases_path, show_col_types = FALSE) |>
+    select(alias_openalex_id, canonical_openalex_id)
+  cat(sprintf("  Loaded %d author aliases\n", nrow(aliases)))
+
+  remap_ids <- function(ids) {
+    hits <- aliases$canonical_openalex_id[match(ids, aliases$alias_openalex_id)]
+    coalesce(hits, ids)
+  }
+
+  paper_authors <- paper_authors |>
+    mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"),
+           openalex_author_id = remap_ids(openalex_author_id))
+
+  author_meta <- author_meta |>
+    filter(!openalex_author_id %in% aliases$alias_openalex_id)
+
+  new_counts <- paper_authors |>
+    filter(!is.na(literature_id), !is.na(openalex_author_id)) |>
+    distinct(literature_id, openalex_author_id) |>
+    count(openalex_author_id, name = "new_paper_count")
+
+  before_n <- nrow(author_meta)
+  author_meta <- author_meta |>
+    left_join(new_counts, by = "openalex_author_id") |>
+    mutate(paper_count = coalesce(new_paper_count, paper_count)) |>
+    select(-new_paper_count)
+  cat(sprintf("  After alias merge: %d authors (paper counts recomputed)\n", before_n))
+}
+
 # Build coauthor edges
 cat("Building coauthor edges...\n")
 paper_author_clean <- paper_authors |>
@@ -137,6 +216,18 @@ MIN_PAPERS <- 3
 MIN_EDGE_WEIGHT <- 1
 
 focal_authors <- author_meta |> filter(paper_count >= MIN_PAPERS)
+
+# Apply bbox filter if subset mode on — drops authors without coords AND
+# those whose institution falls outside the window.
+if (!is.null(SUBSET_BBOX)) {
+  before_n <- nrow(focal_authors)
+  focal_authors <- focal_authors |>
+    filter(!is.na(inst_lon), !is.na(inst_lat),
+           inst_lon >= SUBSET_BBOX$west,  inst_lon <= SUBSET_BBOX$east,
+           inst_lat >= SUBSET_BBOX$south, inst_lat <= SUBSET_BBOX$north)
+  cat(sprintf("Subset bbox: %d → %d authors\n", before_n, nrow(focal_authors)))
+}
+
 focal_ids <- focal_authors$openalex_author_id
 
 edges_focal <- coauthor_edges |>
@@ -254,8 +345,8 @@ vis_edges <- edges_focal |>
   rename(value = weight) |>
   mutate(
     title = sprintf("%d shared papers", value),
-    # Log-scaled width for visual clarity (many edges = thick line drowns out the rest)
-    width = log2(value + 1) * 0.8
+    # Log-scaled width — thinner overall so mesh doesn't obscure the map
+    width = log2(value + 1) * 0.5
   )
 
 # Build widget with multiple filter dimensions
@@ -278,8 +369,9 @@ vn <- visNetwork(vis_nodes, vis_edges,
   ) |>
   visEdges(
     smooth = FALSE,
-    color = list(color = "rgba(140,155,180,0.28)", highlight = "#B6862C"),
-    scaling = list(min = 0.3, max = 2.5)
+    # Darker ink, lower alpha — individual lines stay visible, mesh doesn't flood.
+    color = list(color = "rgba(60,80,105,0.35)", highlight = "#B6862C"),
+    scaling = list(min = 0.15, max = 1.2)
   ) |>
   visPhysics(
     solver = "forceAtlas2Based",
@@ -352,11 +444,11 @@ vn <- visNetwork(vis_nodes, vis_edges,
     }"
   )
 
-saveWidget(vn, "docs/network/index.html", selfcontained = TRUE,
+saveWidget(vn, OUTPUT_HTML, selfcontained = TRUE,
            title = "Elasmobranch Author Collaboration Atlas")
 
 # Post-process: inject CSS + custom filter sidebar
-html <- readLines("docs/network/index.html")
+html <- readLines(OUTPUT_HTML)
 
 # Build filter options from the data
 gender_opts <- sort(unique(vis_nodes$gender))
@@ -442,8 +534,18 @@ iso_coords_json <- jsonlite::toJSON(
 
 # ---- Map layers: country + state borders, label centroids ----
 cat("Building map layers (country/state polygons, labels)...\n")
-sf_to_rings <- function(sf_data, dp = 2) {
+sf_to_rings <- function(sf_data, dp = 2, with_extents = FALSE) {
   all_rings <- list()
+  all_extents <- numeric()
+  add_seg <- function(seg) {
+    if (nrow(seg) < 3) return(invisible())
+    pts <- round(as.matrix(seg), dp)
+    all_rings[[length(all_rings) + 1]] <<- unname(pts)
+    if (with_extents) {
+      ext <- max(diff(range(seg$X)), diff(range(seg$Y)))
+      all_extents[length(all_extents) + 1] <<- round(ext, 3)
+    }
+  }
   geoms <- sf::st_geometry(sf_data)
   for (i in seq_along(geoms)) {
     g <- geoms[[i]]
@@ -460,21 +562,15 @@ sf_to_rings <- function(sf_data, dp = 2) {
       lons <- ring$X
       breaks <- which(abs(diff(lons)) > 180)
       if (length(breaks) == 0) {
-        pts <- round(as.matrix(ring), dp)
-        all_rings[[length(all_rings) + 1]] <- unname(pts)
+        add_seg(ring)
       } else {
         starts <- c(1, breaks + 1)
         ends   <- c(breaks, nrow(ring))
-        for (k in seq_along(starts)) {
-          seg <- ring[starts[k]:ends[k], , drop = FALSE]
-          if (nrow(seg) < 3) next
-          pts <- round(as.matrix(seg), dp)
-          all_rings[[length(all_rings) + 1]] <- unname(pts)
-        }
+        for (k in seq_along(starts)) add_seg(ring[starts[k]:ends[k], , drop = FALSE])
       }
     }
   }
-  all_rings
+  if (with_extents) list(rings = all_rings, extents = all_extents) else all_rings
 }
 
 countries_sf <- ne_countries(scale = 50, returnclass = "sf") |>
@@ -509,8 +605,16 @@ if (!is.null(states_sf)) {
   states_sf <- states_sf |>
     st_make_valid() |>
     st_simplify(dTolerance = 0.1, preserveTopology = TRUE)
-  state_rings <- sf_to_rings(states_sf, dp = 2)
+  state_tmp <- sf_to_rings(states_sf, dp = 2, with_extents = TRUE)
+  state_rings <- state_tmp$rings
+  state_ring_extents <- state_tmp$extents
+  # Per-feature bbox extent (degrees) for filtering small regions at low zoom
+  state_feature_ext <- vapply(seq_along(st_geometry(states_sf)), function(i) {
+    bb <- sf::st_bbox(states_sf[i, ])
+    max(bb$xmax - bb$xmin, bb$ymax - bb$ymin)
+  }, numeric(1))
   state_labels_df <- states_sf |>
+    mutate(.row_ext = state_feature_ext) |>
     st_point_on_surface() |>
     mutate(
       lon = sapply(geometry, function(p) if (is.null(p)) NA_real_ else sf::st_coordinates(p)[1]),
@@ -524,14 +628,18 @@ if (!is.null(states_sf)) {
       d
     } }() |>
     filter(!is.na(lon), !is.na(lat), !is.na(label), nchar(label) > 0) |>
-    transmute(name = label, lon = round(lon, 2), lat = round(lat, 2))
+    transmute(name = label, lon = round(lon, 2), lat = round(lat, 2),
+              ext = round(.row_ext, 3))
 } else {
   state_rings <- list()
-  state_labels_df <- tibble::tibble(name = character(), lon = numeric(), lat = numeric())
+  state_ring_extents <- numeric()
+  state_labels_df <- tibble::tibble(name = character(), lon = numeric(),
+                                    lat = numeric(), ext = numeric())
 }
 
 country_rings_json <- jsonlite::toJSON(country_rings, auto_unbox = FALSE, digits = 3)
 state_rings_json   <- jsonlite::toJSON(state_rings,   auto_unbox = FALSE, digits = 3)
+state_ring_ext_json <- jsonlite::toJSON(state_ring_extents, auto_unbox = FALSE)
 country_labels_json <- jsonlite::toJSON(country_labels_df, dataframe = "rows", auto_unbox = FALSE)
 state_labels_json   <- jsonlite::toJSON(state_labels_df,   dataframe = "rows", auto_unbox = FALSE)
 
@@ -702,6 +810,7 @@ window.fpNodesMeta = ', nodes_json, ';
 window.fpIsoCoords = ', iso_coords_json, ';
 window.fpCountryRings  = ', country_rings_json, ';
 window.fpStateRings    = ', state_rings_json, ';
+window.fpStateRingExt  = ', state_ring_ext_json, ';
 window.fpCountryLabels = ', country_labels_json, ';
 window.fpStateLabels   = ', state_labels_json, ';
 window.fpCountryPalette = ', country_color_json, ';
@@ -714,12 +823,16 @@ window.fpDrawMap = function(ctx) {
   // Ocean
   ctx.fillStyle = "#d8e3ec";
   ctx.fillRect(-180*worldScale, -90*worldScale, 360*worldScale, 180*worldScale);
-  // Draw country polygons (filled + stroked)
-  var drawRings = function(rings, fill, stroke, lw) {
+  // Draw country polygons (filled + stroked).
+  // extents[] is optional — when given, skip rings whose on-screen extent
+  // (degrees * worldScale * scale) is below minScreenPx. This is how we
+  // hide tiny UK counties at low zoom while keeping huge US states visible.
+  var drawRings = function(rings, extents, fill, stroke, lw, minScreenPx) {
     ctx.lineWidth = lw;
     if (fill)   ctx.fillStyle   = fill;
     if (stroke) ctx.strokeStyle = stroke;
     for (var r = 0; r < rings.length; r++) {
+      if (extents && minScreenPx && (extents[r] * worldScale * s) < minScreenPx) continue;
       var ring = rings[r];
       if (!ring || ring.length < 3) continue;
       ctx.beginPath();
@@ -733,27 +846,33 @@ window.fpDrawMap = function(ctx) {
       if (stroke) ctx.stroke();
     }
   };
-  drawRings(window.fpCountryRings || [], "#e8efdb", "#8fa68f", 1.2 / s);
-  // State borders once zoomed at all (threshold 0.94 per user request)
-  if (s > 0.94) {
-    drawRings(window.fpStateRings || [], null, "#a8b8a8", 0.7 / s);
-  }
+  // Country: fill only — stroke is drawn AFTER state polygons so it stays
+  // on top and is not subsumed by state-polygon fills.
+  drawRings(window.fpCountryRings || [], null, "#e8efdb", null, 0, 0);
+  // State polygons: per-feature density filter — needs ≥30 screen px of extent
+  // to draw. So California (11° wide) shows from scale≈0.05, but a UK county
+  // (0.3° wide) only appears once scale > 1.7.
+  drawRings(window.fpStateRings || [], window.fpStateRingExt,
+            "#e8efdb", "#9fb39f", 0.4 / s, 30);
+  // Country stroke on TOP: thicker + darker, reads as a stronger boundary
+  // than the state borders inside it even after state fills paint the land.
+  drawRings(window.fpCountryRings || [], null, null, "#4a6b4a", 1.8 / s, 0);
   // Country labels — always; size counter-zooms to stay at target screen px
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = "rgba(60,80,60,0.75)";
-  ctx.font = (12 / s) + "px sans-serif";
+  ctx.fillStyle = "rgba(40,55,40,0.85)";
+  ctx.font = "600 " + (12 / s) + "px sans-serif";
   (window.fpCountryLabels || []).forEach(function(l) {
     ctx.fillText(l.name, l.lon * worldScale, -l.lat * worldScale);
   });
-  // State labels once borders appear
-  if (s > 0.94) {
-    ctx.fillStyle = "rgba(90,110,90,0.7)";
-    ctx.font = (9 / s) + "px sans-serif";
-    (window.fpStateLabels || []).forEach(function(l) {
-      ctx.fillText(l.name, l.lon * worldScale, -l.lat * worldScale);
-    });
-  }
+  // State labels — same per-feature extent filter. Threshold slightly larger
+  // than the border (50 px) so labels appear after the border, not before.
+  ctx.fillStyle = "rgba(90,110,90,0.7)";
+  ctx.font = (9 / s) + "px sans-serif";
+  (window.fpStateLabels || []).forEach(function(l) {
+    if (l.ext && (l.ext * worldScale * s) < 50) return;
+    ctx.fillText(l.name, l.lon * worldScale, -l.lat * worldScale);
+  });
   ctx.restore();
 };
 window.fpReset = function() {
@@ -806,28 +925,37 @@ window.fpSetLayout = function(mode) {
     }, delay);
   };
   if (mode === "physics") {
+    // Seed from geography where available — simulation will relax from there,
+    // but residual geographic structure persists (Europe clusters top-right,
+    // Americas top-left, etc.) so the first view is intuitive.
+    var worldScale = 60;
     var updates = meta.map(function(n) {
-      return {
-        id: n.id,
-        x: (Math.random() - 0.5) * 800,
-        y: (Math.random() - 0.5) * 800,
-        fixed: { x: false, y: false }
-      };
+      var x, y;
+      if (n.lon != null && n.lat != null) {
+        x =  n.lon * worldScale;
+        y = -n.lat * worldScale;
+      } else {
+        x = (Math.random() - 0.5) * 800;
+        y = (Math.random() - 0.5) * 800;
+      }
+      return { id: n.id, x: x, y: y, fixed: { x: false, y: false } };
     });
     nodesDS.update(updates);
+    // Lower gravity + fewer iterations preserves the geographic seed while still
+    // letting edges pull coauthors together.
     nw.setOptions({
       physics: {
         enabled: true,
         solver: "forceAtlas2Based",
-        forceAtlas2Based: { gravitationalConstant: -50, springLength: 100 },
-        stabilization: { enabled: true, iterations: 300, fit: true }
+        forceAtlas2Based: { gravitationalConstant: -30, springLength: 120 },
+        stabilization: { enabled: true, iterations: 150, fit: true }
       }
     });
     setTimeout(function() {
       nw.setOptions({ physics: false });
       nw.fit({ animation: true });
       refreshMinScale(1500);
-    }, 3000);
+    }, 2500);
     return;
   }
   // Geographic layouts
@@ -860,9 +988,9 @@ window.fpHash = function(s) {
   return h;
 };
 // Geographic positions with institution-based clustering.
-// Authors at same institution are placed in a spiral around the institution point.
-// Spiral stride is SMALL (~4 world units ≈ 7 km on the ground) so the cluster
-// stays city-scale and only spreads visibly when zoomed in past state level.
+// Authors at same institution are stacked in a VERTICAL COLUMN at the institution
+// point, ordered most-papers → fewest from top. At low zoom the column compresses
+// into a single bubble; at high zoom it fans out as a readable, non-overlapping list.
 window.fpComputePositions = function(meta, mode) {
   var positions = {};
   var scale = 60;
@@ -906,8 +1034,7 @@ window.fpComputePositions = function(meta, mode) {
       cy += (((hi >> 16) & 0xFFFF) / 0xFFFF - 0.5) * 2 * instJitter;
     }
 
-    // Place members on concentric rings. Nodes sized log2(papers+1)*3,
-    // so radius ~10-16px per node. Stride rings every ~14px.
+    // Sort most-prolific first so the top of the column gets the big names
     members.sort(function(a, b) { return b.papers - a.papers; });
 
     if (count === 1) {
@@ -915,24 +1042,12 @@ window.fpComputePositions = function(meta, mode) {
       return;
     }
 
-    // Spiral placement — stride 4 world units ≈ 7 km on the ground, so an
-    // institution with 40 authors spans ~60 km total. Overlap at zoom-out,
-    // clear separation when zoomed to street level (scale > 6).
-    var placed = 0;
-    var ring = 0;
-    var slot = 4;
-    while (placed < count) {
-      var ringRadius = ring === 0 ? 0 : slot * ring;
-      var ringCapacity = ring === 0 ? 1 : Math.max(6, Math.floor(2 * Math.PI * ringRadius / slot));
-      var toPlace = Math.min(ringCapacity, count - placed);
-      for (var i = 0; i < toPlace; i++) {
-        var angle = (2 * Math.PI * i) / toPlace + (ring * 0.5);
-        var x = cx + ringRadius * Math.cos(angle);
-        var y = cy + ringRadius * Math.sin(angle);
-        positions[members[placed].id] = { x: x, y: y };
-        placed++;
-      }
-      ring++;
+    // Vertical column: stride ~6 world units ≈ 10 km vertically. Canvas y is
+    // flipped (north is -y), so decreasing y walks up the screen. Topmost row
+    // sits at the institution point; subsequent authors stack downward.
+    var colStride = 6;
+    for (var i = 0; i < count; i++) {
+      positions[members[i].id] = { x: cx, y: cy + i * colStride };
     }
   });
 
@@ -994,14 +1109,14 @@ window.fpBuildLegend = function(attr) {
     div.style.display = "flex";
     div.style.alignItems = "center";
     div.style.marginBottom = "2px";
-    div.innerHTML = "<span style=\"display:inline-block;width:10px;height:10px;background:" +
-      palette[key] + ";border-radius:50%;margin-right:6px\"></span>" + key;
+    div.innerHTML = "<span style=\\"display:inline-block;width:10px;height:10px;background:" +
+      palette[key] + ";border-radius:50%;margin-right:6px\\"></span>" + key;
     container.appendChild(div);
   });
   var others = document.createElement("div");
   others.style.color = "#777";
   others.style.marginTop = "3px";
-  others.innerHTML = "<span style=\"display:inline-block;width:10px;height:10px;background:#cccccc;border-radius:50%;margin-right:6px\"></span>other";
+  others.innerHTML = "<span style=\\"display:inline-block;width:10px;height:10px;background:#cccccc;border-radius:50%;margin-right:6px\\"></span>other";
   container.appendChild(others);
 };
 // Single source of truth: counter-zoom by updating EVERY node explicitly.
@@ -1017,15 +1132,15 @@ window.fpApplyFont = function(scale) {
   var visibleCount = 0, totalCount = 0;
   nodesDS.forEach(function(n) { totalCount++; if (!n.hidden) visibleCount++; });
 
-  // Default label-visibility policy by how many are shown + zoom level
+  // Default label-visibility policy by how many are shown + zoom level (+2pt)
   var screenFontPx = visibleCount >= totalCount ? 0
-                   : visibleCount <= 20 ? 13
-                   : visibleCount <= 60 ? 11
-                   : visibleCount <= 200 ? 9
+                   : visibleCount <= 20 ? 15
+                   : visibleCount <= 60 ? 13
+                   : visibleCount <= 200 ? 11
                    : 0;
-  if (visibleCount >= totalCount && scale > 1.5) screenFontPx = 9;
-  if (visibleCount >= totalCount && scale > 3)   screenFontPx = 11;
-  if (visibleCount >= totalCount && scale > 5)   screenFontPx = 13;
+  if (visibleCount >= totalCount && scale > 1.5) screenFontPx = 11;
+  if (visibleCount >= totalCount && scale > 3)   screenFontPx = 13;
+  if (visibleCount >= totalCount && scale > 5)   screenFontPx = 15;
   var worldFont = screenFontPx > 0 ? screenFontPx / scale : 0;
 
   // Selection mode overrides: only labels for selected + neighbours
@@ -1039,7 +1154,7 @@ window.fpApplyFont = function(scale) {
     var labelPx;
     if (useSelection) {
       showLabel = selSet.has(n.id);
-      labelPx = showLabel ? 13 / scale : 0;
+      labelPx = showLabel ? 15 / scale : 0;
     } else {
       showLabel = worldFont > 0;
       labelPx = worldFont;
@@ -1185,6 +1300,7 @@ window.fpOnReady = function() {
   }, 600);
 };
 document.addEventListener("DOMContentLoaded", function() {
+  console.log("[fp] DOMContentLoaded — wiring filter listeners");
   ["fp-country","fp-gender","fp-region","fp-ethnicity"].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener("change", window.fpApply);
@@ -1228,8 +1344,8 @@ html <- append(html, inject_style, after = idx - 1)
 # Inject panel after <body>
 idx <- grep("<body", html, fixed = TRUE)[1]
 html <- append(html, panel_html, after = idx)
-writeLines(html, "docs/network/index.html")
+writeLines(html, OUTPUT_HTML)
 
-cat("Wrote docs/network/index.html\n")
+cat(sprintf("Wrote %s\n", OUTPUT_HTML))
 
 cat("\nDone.\n")

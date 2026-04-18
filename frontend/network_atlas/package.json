@@ -1,0 +1,27 @@
+{
+  "name": "elasmo-author-atlas",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Interactive map of elasmobranch authors — MapLibre + deck.gl + React",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "copy-data": "rm -rf public/data && mkdir -p public/data && cp ../../outputs/author_atlas/*.* public/data/"
+  },
+  "dependencies": {
+    "@deck.gl/core": "^9.1.0",
+    "@deck.gl/layers": "^9.1.0",
+    "@deck.gl/react": "^9.1.0",
+    "maplibre-gl": "^4.7.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-map-gl": "^7.1.7",
+    "supercluster": "^8.0.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.7"
+  }
+}
