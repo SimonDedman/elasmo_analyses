@@ -21,6 +21,7 @@ export default function FilterPanel({
   genderCounts, regionCounts,     // {key: n, …}
   shapeByMatrix,                  // [{attr, n_categories, top}, …]
   zoomLevel,
+  version,
 }) {
   // Helper for "(123)" suffixes sorted by count desc
   const sortedWithCounts = (obj, keys) =>
@@ -35,7 +36,7 @@ export default function FilterPanel({
       <h1>
         Elasmobranch Author Atlas{' '}
         <span className="tag">
-          v2{zoomLevel != null ? ` · z${zoomLevel.toFixed(1)}` : ''} · wasd to pan
+          v{version ?? '2'}{zoomLevel != null ? ` · z${zoomLevel.toFixed(1)}` : ''} · wasd to pan
         </span>
       </h1>
       <div className="stats">

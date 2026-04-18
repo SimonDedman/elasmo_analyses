@@ -19,15 +19,20 @@ import {
 import { BASEMAPS, DEFAULT_BASEMAP } from './lib/basemaps.js';
 import './App.css';
 
+// Bump on each push so the header shows a fresh build number and the
+// user can confirm they're looking at the latest code (cache bust aid).
+const VERSION = '2.3';
+
 const INITIAL_VIEW_STATE = {
   longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
 };
 
 const CLUSTER_RADIUS_PX  = 45;
-// Stop clustering when zoom > 5 — at z6+ the user is looking at country/
+// Stop clustering when zoom > 4 — at z5+ the user is looking at country/
 // region scale; forcing everyone into a continental cluster hides the
-// institutional structure we want to show.
-const CLUSTER_MAX_ZOOM   = 5;
+// institutional structure we want to show. Hard-guarded below the
+// supercluster call as well.
+const CLUSTER_MAX_ZOOM   = 4;
 const CLUSTER_MIN_POINTS = 3;
 
 // Zoom used when pan-to-author via search.
@@ -276,10 +281,14 @@ export default function App() {
 
   const currentPoints = useMemo(() => {
     if (viewMode !== 'authors') return [];
+    // Hard guard: above the cluster-zoom threshold, bypass supercluster
+    // entirely so nothing gets aggregated regardless of internal rounding.
+    if (viewState.zoom > CLUSTER_MAX_ZOOM) {
+      return [...authorsToCluster, ...alwaysVisible];
+    }
     const clusterResult = clusterIndex
       ? clusterIndex.getClusters([-180, -85, 180, 85], Math.floor(viewState.zoom))
       : authorsToCluster;
-    // Append always-visible (selection-related) authors as individuals
     return [...clusterResult, ...alwaysVisible];
   }, [clusterIndex, viewState.zoom, authorsToCluster, alwaysVisible, viewMode]);
 
@@ -469,6 +478,13 @@ export default function App() {
         return { cluster: c, m, f, u };
       });
 
+      // Signature of filter state — changes any time the cluster input
+      // set could have shifted. Used as an updateTriggers value so deck.gl
+      // re-runs icon / size / text accessors when filters change, even if
+      // the cluster count stays the same (e.g. same 3 blobs, different
+      // M/F/U composition).
+      const filterSig = `${filters.country}|${filters.gender}|${filters.origin_region}|${filters.yearMin}|${filters.yearMax}`;
+
       // Single IconLayer. Each icon is a canvas-rendered circle with
       // horizontal M | U | F bands proportional to count. Cached by
       // bucketed ratio so the canvas work happens once per unique split.
@@ -493,7 +509,11 @@ export default function App() {
             transitionDuration: 500,
           }));
         },
-        updateTriggers: { getIcon: [clusterStats.length] },
+        updateTriggers: {
+          getIcon: [filterSig],
+          getSize: [filterSig],
+          getPosition: [filterSig],
+        },
       }));
 
       layers.push(new TextLayer({
@@ -512,6 +532,10 @@ export default function App() {
         outlineColor: [30, 30, 30, 230],
         fontSettings: { sdf: true, radius: 16 },
         fontWeight: 700,
+        updateTriggers: {
+          getText: [filterSig],
+          getPosition: [filterSig],
+        },
       }));
     }
 
@@ -727,6 +751,7 @@ export default function App() {
           regionCounts={regionCounts}
           shapeByMatrix={shapeByMatrix}
           zoomLevel={viewState.zoom}
+          version={VERSION}
         />
       )}
     </div>
