@@ -3,7 +3,11 @@
 // Deploy via Cloudflare Dashboard > Workers > Create Worker
 //
 // Environment variables (set in Cloudflare dashboard > Worker Settings > Variables):
-//   GITHUB_PAT:     fine-grained PAT with actions:write on SimonDedman/elasmo_analyses
+//   GITHUB_PAT:     fine-grained PAT with Contents: Read and write on
+//                   SimonDedman/elasmo_analyses. GitHub's /repos/.../dispatches
+//                   endpoint requires Contents:write for fine-grained tokens
+//                   (NOT Actions:write, despite the endpoint triggering an Action).
+//                   Docs: https://docs.github.com/en/rest/repos/repos#create-a-repository-dispatch-event
 //   DISPATCH_TOKEN: shared secret that validators include in their POST body
 
 export default {
