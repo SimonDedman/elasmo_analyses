@@ -1,0 +1,1006 @@
+{
+  "author_name": "David Ruiz‐García",
+  "openalex_id": "A5009396914",
+  "page_version": "2026-04-18",
+  "papers": {
+    "28926": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Comparative analyses?",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_south_pacific"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1. Ocean Basin: INCORRECT (false negative)\nThe classification does not assign an ocean basin as there is no explicit mention of any ocean in the paper. \nTO SOLVE THIS:\n1.1. KEYWORDS: Expand detection to include indirect geographic references such as country names, regions, or well-defined seas that can be mapped to ocean basins.\n",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "No assessment should be done as there is no threat or impact.",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_south_pacific_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "31532": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_reproductive"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1. Reproductive: INCORRECT (false negative)\nThe classification fails to detect reproductive aspects, despite the presence of relevant terminology (e.g. “reproductive biology”). \nTO SOLVE THIS:\n1.1. KEYWORDS: Expand keyword set to include anatomical and physiological reproductive terms such as “reproductive system”, “reproductive status”, “gonads”, “testes”, “claspers”, “seminal vesicle”, “sperm*\"",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_demersal"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "It might be normal that demersal doesnt meet the threshold as it is a brief communication. Thershold could be considered to be weighted by word count in brief communucations and so...",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_trawl",
+          "gear_trawl_otter"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "It might be normal that it doesnt meet the threshold as it is a brief communication. Thershold could be considered to be weighted by word count in brief communucations and so...",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "If not pressure/threat is assessed, nor any impact. Then there should be not direction, confidence or quantification assessment. ",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [
+          "pr_bycatch"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Sea of Marmara is just context. Give more relevance to Methods.",
+        "rating": "incorrect",
+        "removed": [
+          "sb_sea_of_marmara"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "31729": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_fisheries"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Discipline: INCORRECT\nCHANGES TO SOLVE THIS HAS ALREADY BEEN PROPOSED.\nThe classification of disciplines is incorrect, as Biology, Conservation, and Physiology were assigned based on contextual or background mentions rather than being directly analysed within the study. Terms related to life history, conservation status, and physiological processes appear mainly in the Introduction or Discussion as general ecological context, not as core analytical components. In contrast, the study clearly focuses on fisheries-related processes (e.g. fishing impacts, gear interactions, or fishery-derived data), which were not initially captured. This highlights a mismatch between keyword-based detection and the actual analytical focus of the study. This case reinforces the need to distinguish between variables used as background or predictors and those that are explicitly analysed or interpreted, prioritising disciplines that reflect the main study objective rather than contextual framing. ",
+        "rating": "incorrect",
+        "removed": [
+          "d_biology",
+          "d_conservation",
+          "d_physiology"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_deepwater"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "CHANGES TO SOLVE THIS HAS ALREADY BEEN PROPOSED.",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_distribution"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Distribution: INCORRECT (false negative)\nThe classification fails to detect distributional changes. This is because the current rule relies on a limited set of explicit terms (e.g. “distribution shift”, “range shift”), whereas the paper describes spatial patterns using broader ecological and fisheries-related language (e.g. spatial patterns, occurrence, hotspots, gradients, depth-related patterns). As a result, distribution-related impacts are underdetected.\n\nTO SOLVE THIS:\n1.1. KEYWORDS: Expand keyword set to include broader spatial descriptors such as “spatial distribution”, “occurrence”, “presence”, “hotspot”, “aggregation”, “spatial pattern”, “depth distribution”, “bathymetric distribution”, and “geographic pattern”, IN COMBINATION TO ANCHORS:\n1.2. ANCHORS: Include generic anchors such as “shift”, “change”, “variation”, “increase”, “decrease”",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Aegean sea: INCORRECT\nThe classification of “Aegean Sea” is based on mentions in the Discussion section, where it is used only as contextual comparison (e.g. referring to other regions such as the Strait of Sicily and the Aegean Sea). \nTO SOLVE THIS:\n1.1. SECTION PRIORITY: Give higher priority to geographic mentions in Methods (and possibly Study Area sections), as these are more likely to define the actual study location.\n",
+        "rating": "incorrect",
+        "removed": [
+          "sb_aegean_sea"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [
+          "sp_chimaera_monstrosa"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Aetomylaeus bovinus and Galeus melastomus are missing from species list while meeting the same criteria as the rest.",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "32709": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_mediterranean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_toxicology"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": 675,
+        "depth_min_m": 35,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_deepwater",
+          "eco_demersal",
+          "eco_epipelagic",
+          "eco_coastal",
+          "eco_pelagic",
+          "eco_marine"
+        ],
+        "changes_count": 6,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_trawl",
+          "gear_artisanal",
+          "gear_gillnet"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [
+          "gear_trawl_otter"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_direction",
+          "imp_contamination"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [
+          "imp_physiology_stress",
+          "imp_habitat_quality"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [
+          "pr_pollution_chemical"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. ",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "It doesnt fit in any of the current categories.",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [
+          "sp_galeus_melastomus",
+          "sp_scyliorhinus_canicula",
+          "sp_chimaera_monstrosa",
+          "sp_hexanchus_griseus",
+          "sp_dasyatis_pastinaca",
+          "sp_gymnura_altavela",
+          "sp_dipturus_oxyrinchus",
+          "sp_raja_brachyura",
+          "sp_raja_clavata",
+          "sp_raja_polystigma",
+          "sp_centrophorus_uyato",
+          "sp_dalatias_licha",
+          "sp_etmopterus_spinax",
+          "sp_oxynotus_centrina",
+          "sp_torpedo_marmorata"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think something failed on the document source used? it is not normal that the assessment is incomplete. \n\nALSO Aetomylaeus bovinus is missing from the list?",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "33569": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Is it possible to?: \nProvide full transparency on: (1) the list of analytical techniques included in the taxonomy, (2) the associated keywords and synonyms used for detection, and (3) the criteria for assigning techniques. This would allow evaluation of coverage, identification of missing methods, and refinement of the extraction rules.",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_behaviour"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Reproductive: CORRECT\nBehaviour: INCORRECT \nNot sure why it didnt meet the threshold because when I click it I see: behavio*(5) [CONCLUSIONS] freq:2 thr:3. \nIsn't it thr:3?",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Ecosystem: PARTIALLY CORRECT\nThe classification of “coastal” appears to rely exclusively on keyword frequency (e.g. “continental shelf”, “nearshore”), without a clear conceptual definition. In this study, references to the continental shelf likely reflect the spatial context of sampling rather than a specific focus on coastal ecosystems. This may lead to overclassification of “coastal” in studies that are broadly marine or demersal.\n\nTO SOLVE THIS:\n1.1. DEFINITION:\nProvide a clearer conceptual definition of “coastal” (e.g. depth range, distance to shore), distinguishing it from general marine or shelf environments.\nI would suggest that a coastal is study is rather one that entails a depth <50 m, which can be obtained from the depth range cell. Some key words likely related may include estuaries, lagoons, seagrass meadows, shallow reefs\n\n",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Not sure why ghost gear is considered mitigation.",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_behaviour_change",
+          "imp_habitat_quality"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1. Behavioural change: INCORRECT\nThe classification fails to detect behavioural change, despite clear evidence in the study (e.g. “behavioral shift in oviposition substrate preferences”). This is because the current rule relies on explicit behavioural terminology, whereas the study describes behaviour using ecological and functional language (e.g. “shift”, “preference”, “substrate use”). As a result, implicit behavioural responses are not captured, leading to false negatives.\nTO SOLVE THIS:\n1.1. KEYWORDS: Expand keyword set to include ecological behaviour-related expressions such as “behavioral shift”, “habitat preference”, “habitat selection”, “habitat use”, and “substrate preference”.\n1.2. ANCHORS: Include generic anchors such as “shift”, “preference”, “selection”, and “use” combined with more general keywords instead (e.g. behaviour*, habitat, substrate)\n\n2. Habitat quality: INCORRECT\nThe classification fails to detect habitat quality impacts, despite explicit references to habitat degradation (e.g. “habitat degradation”, “decline of habitat-forming species”).\nTO SOLVE THIS:\n2.1. KEYWORDS: Expand keyword set to include ecological descriptors such as “habitat degradation”, “habitat loss”, “ecosystem degradation”, \"community decline\", \"assemblage change\".\n2.2. ANCHORS:  Include generic anchors such as “degradation\", “loss”, “decline\", \"reduction\", combined with more general keywords instead (e.g. habitat, community, assamblage, etc.)",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Aquaculture: INCORRECT\nThe classification of “aquaculture” is triggered based on a single mention (thr:1), appearing only as contextual background in the Introduction (e.g. listing human activities such as fishing, aquaculture, and navigation). In this study, aquaculture is not assessed as a pressure or threat, and its presence reflects general context rather than a focus of the research. This may lead to false positives when broad lists of anthropogenic activities are included without further analysis.\n\nTO SOLVE THIS:\n1.1. THRESHOLD:\nIncrease threshold (e.g. thr ≥ 2) to reduce classification based on single or incidental mentions.\n1.2. SECTION:\nRequire aquaculture-related terms to appear beyond the Introduction, particularly in Methods or Results, where pressures are explicitly analysed.\n1.4. KEYWORDS:\nExpand keyword set to include more specific and process-related terms, such as: pisciculture, hatchery, broodstock.\n\nChemical pollution: INCORRECT\nThe classification of “chemical pollution” relies on very broad keywords (e.g. “pollut*”), which aremay relate also to plastic pollution. This reduces specificity for the chemical part and may lead to frequent false positives, as in this case.\nTO SOLVE THIS:\n1.1. KEYWORDS: Avoid overly broad root terms such as “pollut*” as standalone triggers. Instead, prioritise more specific chemical-related terms, such as the rest of key words included. Pollution could indeed be the key words and then the rest could be anchors?\nAnother possibitily is to merge pollution studies in one category... ",
+        "rating": "partially_correct",
+        "removed": [
+          "pr_aquaculture",
+          "pr_pollution_chemical"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "34654": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1.\tBoosted regression trees: correct\n2.\tMachine learning: correct (in the sense of BRT).\n3.\tConnectivity: INCORRECT. I am not sure how this classification was done.\n4.\tReproduction: INCORRECT. I am not sure how this classification was done.\n5.\tStructure: INCORRECT. I am not sure how this classification was done.",
+        "rating": "partially_correct",
+        "removed": [
+          "a_connectivity",
+          "a_reproduction",
+          "a_structure"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "All basins use a threshold of 2, except for the Southern Ocean and the Mediterranean. In my case, all papers are Mediterranean-based, therefore, no Mediterranean-related terms have been identified as just context. However, some papers may mention the Mediterranean only as contextual information, so it might be worth double-checking whether a threshold of 2 should be consistently applied across all basins.",
+        "rating": "correct",
+        "removed": [
+          "b_indian_ocean"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": 2
+        }
+      },
+      "d_": {
+        "added": [
+          "d_fisheries"
+        ],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1. Biology: INCORRECT\nThis study uses length at maturity as a predictor in a at-vessel mortality model, and it was extracted from bibliographical review (this study does not measures length at maturity). Therefore, presence of biological terms (e.g. maturity) does not imply that a study addresses biological processes. To avoid misclassification, it is essential to distinguish between variables used as explanatory inputs in statistical models and those that are explicitly assessed.\nTO SOLVE THIS: \n1.1. SECTION: Ensure that biological terms are present beyond the Methods section, particularly in the Results or Discussion, where biological interpretation occurs.\n1.2. EXCLUSION TERMS: Is it possible to check if the terms are in a paragraph that mentions something like: “predictors included…”, “covariates were…”, “used as explanatory variable”, or directly appears in a predictor table? (IF keyword appears mainly as predictor/input → NOT topic)\n1.3. ANCHORS: Is it possible to check if the terms are directly linked to some verbs like \"assess\" OR \"analyze\" OR \"evaluate\" OR \"influence\" , etc.? (IF keyword appears as response/inference → IS topic)\n\n2. Conservation: CORRECT\nAlthough this study is correctly classified under Conservation, the current keyword-based approach may be overly permissive. Terms such as “conservation”, “IUCN”, or “Red List” are frequently used as contextual background in many studies and do not necessarily indicate a conservation-focused contribution. This should be double check in other papers.  Classification should require that the study provides well-grounded explicit conservation implications (e.g. informing management strategies), rather than merely referencing conservation status.\nTO SOLVE THIS: \n2.1. RISE THRESHOLD: Number should tested, for this case we have: conservation(18); IUCN(3); Red List(1) [METHODS] freq:12. \n2.1. INCLUDE MORE KEYWORDS: Conservation keywords could include words of applied relevance, such as references to management, mitigation measures, policy, or actionable outcomes. \n\n3. Fisheries: INCORRECT\nThis paper was not assigned to fisheries, however, this is is the main topic. Indeed it located bycatch, discarding and commercial fishing as pressures, but fisheries is also the topic to me. I think a study should be classified under Fisheries when it analyses fishing activities, gear, effort, bycatch, or fishing-induced mortality, even if traditional fisheries terms (e.g. stock assessment, MSY) are not explicitly mentioned.\nTO SOLVE THIS:\n3.1. EXPAND KEYWORDS: \nBycatch, discard, retention, non-target species\nAt-vessel mortality (AVM), post-release mortality (PRM)\nCPUE, BPUE, catch per unit effort\nfishery-dependent data, onboard observations\n3.2. EXPAND CONNECTION WITH OTHER SECTIONS? If it identifies any fisheries related pressure and/or fishing gear. \n\n4. Physiology: PARTIALLY CORRECT\nThis study was classified under Physiology; however, physiological processes are not directly assessed. Although physiological concepts (e.g. metabolic capacity, ventilation mode, or physiologically similar species) are mentioned, these are used only to interpret results and provide ecological context. The study does not include direct physiological measurements or analyses, and physiological variables are not incorporated as predictors or responses in the modeling framework. Instead, physiology is inferred indirectly from environmental and biological drivers of mortality.\nTO SOLVE THIS:\n4.1. SECTION: physiological terms should be in methods and results. Less importance should be given to intro and discussion.\n4.2. INCREASE THRESHOLD: and include more physiology related terms in that case, such as: \nblood parameters, plasma, haematology (RBC, WBC, erythrocytes, lymphocytes, granulocytes), pH, lactate, glucose, enzymes, gasometry. \n",
+        "rating": "partially_correct",
+        "removed": [
+          "d_biology",
+          "d_physiology"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_demersal"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1. Marine: CORRECT \n2. Deepwater: INCORRECT \nKeywords should include: \"deepwater\" not only deep-water.\n3. Demersal: INCORRECT\nAre keywords restricted to methods? if accounting tittle it meets the thr:2.",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_demersal"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "1.\tDemersal: INCORRECT\nIt is not assigned to demersal, but bottom trawl is the fishing gear used. Trawl emerges as a the fishing gear used with a frequency of 10, but bottom trawl is only 1.\nTO SOLVE THIS:\nCORRELATION WITH OTHER CATEGORIES + SECTION: if trawl emerges as positive and there is at least a thr:1 of bottom trawl IN METHODS. It might be correct to assign.\n2.\tTRAWL: CORRECT\n3.\tTRAWL OTTER: CORRECT",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "The current classification appears to include additional categories beyond those defined in the proposed schema (is bycatch, confidence?). Also, I think it would be worthy to align some categories categories within the schema:\n\nInjury and Physiology stress could be integrated into a broader \"Health assessment\" category, capturing both physical condition and physiological stress indicators.\nPost-release mortality and Mortality could be reorganised under a unified \"Fisheries mortality\" category, with optional subcategories (e.g. AVM, PRM) if finer resolution is needed.\n\n1. Biomass: INCORRECT\nThis study includes biomass as a predictor variable within the at-vessel mortality modelling framework, rather than as a response or outcome explicitly analysed. Therefore, the presence of biomass-related terms does not imply that the study assesses biomass dynamics or biomass-related impacts. This reflects the same issue identified under Biology: variables used as explanatory inputs in statistical models should not be interpreted as the primary focus of the study.\nTO SOLVE THIS:\n1.1. SECTION: Ensure that biomass-related terms are present beyond the Methods section, particularly in the Results or Discussion, where biomass is explicitly analysed or interpreted as an outcome.\n1.2. EXCLUSION TERMS: Is it possible to check if the terms appear in contexts such as “predictors included…”, “covariates were…”, “included as explanatory variable”, or within predictor tables? (IF keyword appears mainly as predictor/input → NOT impact)\n1.3. ANCHORS: Is it possible to check if biomass-related terms are directly linked to verbs such as “change”, “decline”, “increase”, “affect”, or “impact”? (IF keyword appears as response/outcome → IS impact)\n\n2. Mortality: CORRECT\n\n3. Direction: \nMortality is analysed against stressors. Some are significative, some are not. But the overall message is that stressing practices entail higher mortality, so I would say it is negative.",
+        "rating": "partially_correct",
+        "removed": [
+          "imp_confidence"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "CORRECT",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Classificiation is CORRECT.\nChecking discarding key words: I am not familiar to high-grading, slipping. Does it make sense?",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "The Mediterranean may be the case with most categories, but still these may not cover all the Mediterranean. At present, the classification includes (from west to east): Alboran, Ligurian, Tyrrhenian, Adriatic, Ionian, and Aegean Seas. However, this leaves some areas poorly represented. For example, the region from France to Murcia does not clearly fit within these categories, and would more appropriately correspond to the Balearic Sea or the Gulf of Lion. These terms, however, are not always consistently used. The same happens with all the African coast. \n\nI wonder whether using broader sub-basins would be more appropriate. The GFCM makes their subareas based on the following sub-basins: Western Med, Centra Med, Eastern Med and Adriatic sea (apart from the Black sea and its sub-basins...). All of them commonly used in the scientific literature (e.g., https://doi.org/10.1080/24750263.2020.1805518). \n\nI would therefore suggest simplifying the scheme to these 4 main sub-basins, while retaining the current sea names as keywords within each category:\n1. Western mediterranean: alboran sea, algeria, balearic sea, gulf of lion, corsica, ligurian sea, tyrrhenian sea, sardinia (include any derivate from western: e.g. northwestern, north-west, northwest, southwestern... mediterranean sea)\n2. Central mediterranean: ionian sea, tunisia, gulf of hammamet, gulf of gabes, malta (include any derivate from central: e.g., eastern-central, etc.)\n3. Adriatic sea: adriatic sea\n4. Eastern Mediterranean: aegean sea, crete, levant sea, cyprus\n5. Back Sea: marmara sea, black sea, azov sea. \n\nIn this way, this study would have a sub-basin classification to western mediterranean (currently none)",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [
+            "western Mediterranean",
+            "eastern Mediterranean",
+            "central Mediterranean"
+          ],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Species: Correct.\n\nNow thr:2 is implemented and it is correct. Before, it wasnt, some solutions I proposed were:\nTO SOLVE THIS:\n1.1. THRESHOLD: Increase threshold (e.g. thr ≥ 2) to reduce inclusion of species mentioned only once or in passing.\n1.2. SECTION: Prioritise species mentions in Methods and Results (e.g. sampling, modelling, analysis), rather than Introduction or Discussion.",
+        "rating": "correct",
+        "removed": [
+          "sp_centroscymnus_coelolepis"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    }
+  },
+  "papers_reviewed": 6,
+  "papers_total": 0,
+  "timestamp": "2026-04-20T20:33:50.925Z"
+}
