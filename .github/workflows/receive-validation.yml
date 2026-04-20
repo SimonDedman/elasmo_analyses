@@ -71,66 +71,134 @@ jobs:
           python3 - <<'PYEOF'
           import json, os
 
-          openalex_id   = os.environ["OPENALEX_ID"]
-          author_name   = os.environ["AUTHOR_NAME"]
+          # submit.js payload schema (docs/validate/assets/submit.js):
+          #   papers: dict keyed by paper-id -> dict keyed by schema prefix
+          #     (b_, sb_, d_, eco_, pr_, imp_, gear_, auth_, ...) -> section dict
+          #     with rating, added[], removed[], notes, rule_suggestions{},
+          #     and optional numeric fields (depth_min_m, depth_max_m, changes_count, ...).
+          #   author_corrections: optional dict, only present if non-empty.
+
+          # Canonical labels mirror docs/validate/assets/validate.js:PREFIX_LABELS
+          # so the PR summary matches what the validator saw in the UI.
+          SCHEMA_LABELS = {
+              "b_":     "Ocean Basin",
+              "sb_":    "Ocean Sub-basin",
+              "d_":     "Discipline",
+              "eco_":   "Ecosystem",
+              "pr_":    "Pressure / Threat",
+              "imp_":   "Impact / Response",
+              "gear_":  "Fishing Gear",
+              "sp_":    "Species",
+              "a_":     "Analytical Techniques",
+              "ob_":    "Ocean Basin (geographic)",
+              "depth_": "Depth",
+          }
+          META_KEYS = {"rating", "added", "removed", "notes", "rule_suggestions"}
+
+          openalex_id     = os.environ["OPENALEX_ID"]
+          author_name     = os.environ["AUTHOR_NAME"]
           papers_reviewed = os.environ["PAPERS_REVIEWED"]
-          timestamp     = os.environ["TIMESTAMP"]
-          outfile       = os.environ["OUTFILE"]
+          timestamp       = os.environ["TIMESTAMP"]
+          outfile         = os.environ["OUTFILE"]
 
           with open(outfile) as f:
               payload = json.load(f)
 
           lines = [
               f"## Validation submission: {author_name}",
-              f"",
-              f"| Field | Value |",
-              f"|---|---|",
+              "",
+              "| Field | Value |",
+              "|---|---|",
               f"| Author | {author_name} |",
               f"| OpenAlex ID | `{openalex_id}` |",
               f"| Papers reviewed | {papers_reviewed} |",
               f"| Timestamp | {timestamp} |",
-              f"",
-              f"---",
-              f"",
-              f"## Per-paper changes",
-              f"",
+              f"| Page version | {payload.get('page_version', 'unknown')} |",
+              "",
+              "---",
+              "",
+              "## Per-paper changes",
+              "",
           ]
 
-          papers = payload.get("papers", [])
+          def render_rule_suggestions(rs):
+              """Render non-empty parts of the rule_suggestions object."""
+              parts = []
+              thr = rs.get("threshold")
+              if thr is not None:
+                  parts.append(f"threshold={thr}")
+              add_terms = rs.get("add_terms") or []
+              if add_terms:
+                  parts.append("add=[" + ", ".join(str(x) for x in add_terms) + "]")
+              rem_terms = rs.get("remove_terms") or []
+              if rem_terms:
+                  parts.append("remove=[" + ", ".join(str(x) for x in rem_terms) + "]")
+              return "; ".join(parts)
+
+          papers = payload.get("papers", {}) or {}
           if not papers:
               lines.append("_No per-paper data provided._")
           else:
-              for paper in papers:
-                  lit_id = paper.get("literature_id", "unknown")
-                  title  = paper.get("title", "")
-                  header = f"### `{lit_id}`"
-                  if title:
-                      header += f" — {title}"
-                  lines.append(header)
+              for pid, sections in papers.items():
+                  lines.append(f"### `{pid}`")
                   lines.append("")
 
-                  categories = paper.get("categories", {})
-                  if not categories:
-                      lines.append("_No category changes._")
-                  else:
-                      for cat_name, cat_data in categories.items():
-                          lines.append(f"**{cat_name}**")
-                          rating = cat_data.get("rating")
-                          if rating is not None:
-                              lines.append(f"- Rating: {rating}")
-                          added = cat_data.get("added", [])
-                          if added:
-                              lines.append(f"- Added: {', '.join(str(x) for x in added)}")
-                          removed = cat_data.get("removed", [])
-                          if removed:
-                              lines.append(f"- Removed: {', '.join(str(x) for x in removed)}")
-                          notes = cat_data.get("notes", "")
-                          if notes:
-                              lines.append(f"- Notes: {notes}")
-                          rule_suggestions = cat_data.get("rule_suggestions", "")
-                          if rule_suggestions:
-                              lines.append(f"- Rule suggestions: {rule_suggestions}")
-                  lines.append("")
+                  if not isinstance(sections, dict) or not sections:
+                      lines.append("_No section data._")
+                      lines.append("")
+                      continue
+
+                  for prefix, data in sections.items():
+                      if not isinstance(data, dict):
+                          continue
+                      label = SCHEMA_LABELS.get(prefix, prefix.rstrip("_") or prefix)
+                      lines.append(f"**{label}** (`{prefix}`)")
+
+                      rating = data.get("rating") or ""
+                      if rating:
+                          lines.append(f"- Rating: {rating}")
+
+                      added = data.get("added") or []
+                      if added:
+                          lines.append(f"- Added: {', '.join(str(x) for x in added)}")
+
+                      removed = data.get("removed") or []
+                      if removed:
+                          lines.append(f"- Removed: {', '.join(str(x) for x in removed)}")
+
+                      notes = (data.get("notes") or "").strip()
+                      if notes:
+                          lines.append(f"- Notes: {notes}")
+
+                      rs = data.get("rule_suggestions") or {}
+                      rs_text = render_rule_suggestions(rs) if isinstance(rs, dict) else ""
+                      if rs_text:
+                          lines.append(f"- Rule suggestions: {rs_text}")
+
+                      # Any extra numeric / misc fields (depth_min_m, depth_max_m,
+                      # changes_count, etc.) — render as a compact line if present.
+                      extras = []
+                      for k, v in data.items():
+                          if k in META_KEYS:
+                              continue
+                          if v is None or v == "":
+                              continue
+                          extras.append(f"{k}={v}")
+                      if extras:
+                          lines.append(f"- Other: {'; '.join(extras)}")
+
+                      lines.append("")
+
+          author_corrections = payload.get("author_corrections") or {}
+          if author_corrections:
+              lines.append("---")
+              lines.append("")
+              lines.append("## Author corrections")
+              lines.append("")
+              lines.append("```json")
+              lines.append(json.dumps(author_corrections, indent=2, ensure_ascii=False))
+              lines.append("```")
+              lines.append("")
 
           with open("/tmp/pr_body.md", "w") as f:
               f.write("\n".join(lines))
