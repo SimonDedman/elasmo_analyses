@@ -190,8 +190,8 @@ Was 8 terms. Now 18:
 - Original: *life history, age and growth, growth rate, longevity, maturity, length-at-maturity, length-weight, vertebral band*
 - Added measurement terms: `vertebral count*`, `band pair*`, `gonadosomatic index`, `hepatosomatic index`, `Le Cren`, `Fulton's K`, `morphometric analysis`, `total length`, `precaudal length`, `disc width`
 
-**Design decisions** (per Simon 2026-04-20):
-- **GSI / HSI deliberately NOT added as terms** — only the spelled-out forms (`gonadosomatic index`, `hepatosomatic index`). This avoids the acronym-collision problem without needing a new "paired-match" feature in the matcher. Papers that mention these indices invariably spell them out at least once in Methods.
+**Design decisions** (per Simon 2026-04-20, revised):
+- **GSI / HSI INCLUDED** as case-sensitive terms with prerequisite-term gating. New `prerequisite_terms` field on `BinaryColumn` lets the matcher revoke the acronym's contribution unless the spelled-out form also fires. Implemented as a post-match filter that runs before threshold comparison; other terms in the column are unaffected. Smoke-tested against four scenarios (acronym alone / acronym + spelled-out / spelled-out alone / many bio terms + lone acronym) and behaves as expected. Documented in `extraction_logic.md`.
 - **"Le Cren" and "Fulton's K"** are passed as plain string terms; the matcher treats them as exact-phrase matches (apostrophe and space included). No regex escaping needed in the term list.
 - **Measurement-action anchors** (`analyzed`/`assessed`/`examined`/etc.) **not added** — they would over-fire as raw terms across ANY analytical discipline. Better as a future per-column `anchors` field if we want to require co-occurrence with measurement-action language; deferred.
 
@@ -314,10 +314,14 @@ Two layers of rule transparency now live in production:
    - Data sources: `_section_weights` and `_proposal_url` injected into `docs/validate/assets/rules.json`; rendered in `validate.js`'s `_renderRulesPalette`.
    - Visible on every validation page including Simon's: https://simondedman.github.io/elasmo_analyses/validate/A5086753224.html
 
-2. **Per-column [?] inline disclosure — design preview ready, not yet wired into production:**
+2. **Per-column [?] inline disclosure — design preview, not yet wired into production:**
    - Mockup file: [`2026-04-20_validation_ui_mockup.html`](./2026-04-20_validation_ui_mockup.html). Open in a browser; click any [?] in the right pane to see what the popover would look like.
-   - Design rationale (per Simon's "2 sounds good"): the schema-level palette requires the validator to scroll to find rule details. A per-column [?] icon answers "what does this column actually look for?" without leaving the rating row.
-   - Implementation cost: ~30 lines JS + ~40 lines CSS. No new data plumbing — same `rules.json` already feeds it.
+   - **Layout (post-Simon-feedback 2026-04-20):** popover widened to 960 px (was 640) to accommodate the section-weights matrix. The matrix has three rows:
+     - **Section weighting** — the static per-section weights from the schema definition
+     - **This paper** — the actual terms that fired in each section (e.g. "mercury ×2" under METHODS)
+     - **Total score** — the weighted score per section AND the grand total in the rightmost column, colour-coded green when ≥ threshold (FIRED) or grey when below (did not fire)
+   - Design rationale: the schema-level palette requires the validator to scroll to find rule details; the per-column [?] icon answers "what does this column actually look for, and what did it find on this paper?" without leaving the rating row.
+   - Implementation cost: ~50 lines JS + ~60 lines CSS. No new data plumbing — same `rules.json` already feeds it. Per-paper hits per section are already computed by the extractor and would need to be exposed in the per-paper data file.
    - **TO REVIEW** at meeting; if endorsed, will be wired into `_renderPaperRow()` in a follow-up commit.
 
 ## Item 15 — IMP categories (full list, for review)

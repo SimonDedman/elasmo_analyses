@@ -90,8 +90,8 @@
     .pop-backdrop.open { display: flex; }
     .pop-card {
       background: #fff;
-      width: min(640px, 90vw);
-      max-height: 80vh;
+      width: min(960px, 96vw);
+      max-height: 90vh;
       overflow-y: auto;
       border-radius: 8px;
       padding: 1.2rem 1.4rem;
@@ -138,27 +138,58 @@
       border-collapse: collapse;
       font-size: 0.75rem;
       margin: 0.4rem 0 0.2rem;
+      width: 100%;
     }
     .pop-section-table th, .pop-section-table td {
-      padding: 0.2rem 0.5rem;
+      padding: 0.25rem 0.4rem;
       border: 1px solid #e2e8f0;
       text-align: center;
+      vertical-align: middle;
     }
     .pop-section-table th { background: #f1f5f9; color: #475569; font-size: 0.7rem; font-weight: 500; }
+    .pop-section-table th.row-label {
+      text-align: left;
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 600;
+      white-space: nowrap;
+      padding-right: 0.6rem;
+    }
     .pop-section-table td.w-max  { background: #86efac; color: #14532d; font-weight: 700; }
     .pop-section-table td.w-high { background: #dcfce7; color: #14532d; font-weight: 600; }
     .pop-section-table td.w-med  { background: #fef9c3; color: #713f12; }
     .pop-section-table td.w-low  { background: #f1f5f9; color: #64748b; }
-
-    .pop-evidence {
-      margin-top: 0.6rem;
+    .pop-section-table .hit-chip {
+      display: inline-block;
+      font-family: ui-monospace, monospace;
+      font-size: 0.7rem;
+      padding: 0.05rem 0.3rem;
+      margin: 0.1rem 0.15rem 0.1rem 0;
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+      border-radius: 3px;
+    }
+    .pop-section-table .score-cell { font-weight: 600; color: #0f172a; background: #eff6ff; }
+    .pop-section-table .score-cell.zero { background: #f8fafc; color: #94a3b8; font-weight: 400; }
+    .pop-section-table .score-total {
+      background: #1e40af;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .pop-section-table .score-total.pass { background: #16a34a; }
+    .pop-section-table .score-total.fail { background: #64748b; }
+    .pop-summary {
+      margin-top: 0.7rem;
       padding: 0.5rem 0.7rem;
       background: #f8fafc;
       border-left: 3px solid #1d4ed8;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       color: #334155;
+      border-radius: 0 4px 4px 0;
     }
-    .pop-evidence em { color: #64748b; }
+    .pop-summary em { color: #64748b; }
 
     .pop-close {
       position: sticky;
@@ -250,7 +281,8 @@
   <div class="pop-backdrop" id="pop"><div class="pop-card" id="popCard"></div></div>
 
   <script>
-    /* Mock rules data — in production this would be loaded from rules.json. */
+    /* Mock rules data — in production this would be loaded from rules.json.
+       Each "hits" entry: section -> array of {term, count}. Empty/absent → no hit. */
     const MOCK_RULES = {
       "pr_bycatch": {
         label: "Bycatch",
@@ -258,8 +290,12 @@
         case_sensitive: [],
         anchors: [],
         threshold: 2,
-        fired: true,
-        evidence: "Matched in: METHODS (×3 'bycatch'), DISCUSSION (×2 'discards'). Score: 5.0 ≥ threshold 2 → FIRED.",
+        hits: {
+          TITLE:    [{term: "bycatch", count: 1}],
+          KEYWORDS: [{term: "bycatch", count: 1}],
+          METHODS:  [{term: "bycatch", count: 3}],
+          DISCUSSION: [{term: "discards", count: 2}]
+        },
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       },
       "pr_pollution_chemical": {
@@ -268,8 +304,10 @@
         case_sensitive: ["PCB", "PFAS"],
         anchors: [],
         threshold: 3,
-        fired: true,
-        evidence: "Matched in: KEYWORDS (×1 'mercury' @ weight 2.0 = 2.0), METHODS (×2 'mercury' @ weight 1.0 = 2.0). Total 4.0 ≥ threshold 3 → FIRED.",
+        hits: {
+          KEYWORDS: [{term: "mercury", count: 1}],
+          METHODS:  [{term: "mercury", count: 2}, {term: "contaminant*", count: 1}]
+        },
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       },
       "pr_aquaculture": {
@@ -278,8 +316,9 @@
         case_sensitive: [],
         anchors: [],
         threshold: 2,
-        fired: false,
-        evidence: "Matched in: INTRODUCTION (×1 'aquaculture' @ weight 1.0 = 1.0). Total 1.0 < threshold 2 → did not fire (raised from threshold 1 on 2026-04-20 to suppress single-mention false positives).",
+        hits: {
+          INTRODUCTION: [{term: "aquaculture", count: 1}]
+        },
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       },
       "pr_climate_change": {
@@ -288,8 +327,7 @@
         case_sensitive: [],
         anchors: [],
         threshold: 3,
-        fired: false,
-        evidence: "No matches found in this paper.",
+        hits: {},
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       },
       "pr_habitat_loss": {
@@ -298,8 +336,7 @@
         case_sensitive: [],
         anchors: [],
         threshold: 2,
-        fired: false,
-        evidence: "No matches found.",
+        hits: {},
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       },
       "pr_invasive": {
@@ -308,8 +345,7 @@
         case_sensitive: [],
         anchors: [],
         threshold: 1,
-        fired: false,
-        evidence: "No matches found.",
+        hits: {},
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       },
       "pr_shipping": {
@@ -318,8 +354,7 @@
         case_sensitive: [],
         anchors: [],
         threshold: 1,
-        fired: false,
-        evidence: "No matches found.",
+        hits: {},
         proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
       }
     };
@@ -339,10 +374,25 @@
       const rule = MOCK_RULES[col];
       if (!rule) return '<p>No data for ' + col + '.</p>';
       const sections = ['TITLE','KEYWORDS','ABSTRACT','INTRODUCTION','METHODS','RESULTS','RESULTS_AND_DISCUSSION','DISCUSSION','CONCLUSIONS','OTHER'];
+
+      // Compute per-section subtotal and the grand total. Subtotal in section S
+      // = sum over terms of (count × PR_WEIGHTS[S]). Round to 2 decimal places.
+      const subtotals = {};
+      let grand = 0;
+      sections.forEach(s => {
+        const hits = rule.hits[s] || [];
+        const w = PR_WEIGHTS[s] ?? 0;
+        const sub = hits.reduce((a, h) => a + h.count * w, 0);
+        subtotals[s] = sub;
+        grand += sub;
+      });
+      const fired = grand >= rule.threshold;
+
       let h = '<button class="pop-close" onclick="closePop()">&times;</button>';
       h += '<h3>' + escapeHtml(rule.label) + ' <span class="col-id">' + escapeHtml(col) + '</span>';
-      h += ' <span class="pop-fired-badge ' + (rule.fired ? 'fired' : 'unfired') + '">' + (rule.fired ? 'FIRED on this paper' : 'did not fire') + '</span>';
+      h += ' <span class="pop-fired-badge ' + (fired ? 'fired' : 'unfired') + '">' + (fired ? 'FIRED on this paper' : 'did not fire') + '</span>';
       h += '</h3>';
+
       h += '<dl class="pop-grid">';
       h += '<dt>Threshold:</dt><dd>≥ ' + rule.threshold + ' (weighted)</dd>';
       h += '<dt>Search terms:</dt><dd>';
@@ -357,20 +407,59 @@
         rule.anchors.forEach(a => h += '<span class="term-chip anch">' + escapeHtml(a) + '</span>');
         h += '<br><small style="color:#1e3a8a;">at least one anchor must co-occur in the document for the column to fire</small></dd>';
       }
-      h += '<dt>Section weighting:</dt><dd>';
+      h += '</dl>';
+
+      // Three-row matrix table — section weight, terms fired in this paper,
+      // weighted score per section. The Total column on the right is the grand sum.
       h += '<table class="pop-section-table"><thead><tr>';
+      h += '<th class="row-label">&nbsp;</th>';
       sections.forEach(s => h += '<th>' + s.replace(/_/g,' ') + '</th>');
-      h += '</tr></thead><tbody><tr>';
+      h += '<th>Total</th>';
+      h += '</tr></thead><tbody>';
+
+      // Row 1: section weighting
+      h += '<tr><th class="row-label">Section weighting</th>';
       sections.forEach(s => {
         const w = PR_WEIGHTS[s];
         const wClass = w >= 2.0 ? 'w-max' : (w >= 1.0 ? 'w-high' : (w >= 0.5 ? 'w-med' : 'w-low'));
         h += '<td class="' + wClass + '">' + w + '</td>';
       });
-      h += '</tr></tbody></table>';
-      h += '<small>A keyword hit is multiplied by the section weight; a column fires when the weighted sum ≥ its threshold.</small>';
-      h += '</dd>';
-      h += '</dl>';
-      h += '<div class="pop-evidence"><strong>This paper:</strong> ' + escapeHtml(rule.evidence) + '</div>';
+      h += '<td>—</td></tr>';
+
+      // Row 2: this paper — terms fired per section
+      h += '<tr><th class="row-label">This paper</th>';
+      sections.forEach(s => {
+        const hits = rule.hits[s] || [];
+        if (!hits.length) {
+          h += '<td>&nbsp;</td>';
+        } else {
+          let cellHtml = '';
+          hits.forEach(hit => {
+            const label = hit.count > 1 ? `${hit.term} ×${hit.count}` : hit.term;
+            cellHtml += '<span class="hit-chip">' + escapeHtml(label) + '</span>';
+          });
+          h += '<td>' + cellHtml + '</td>';
+        }
+      });
+      h += '<td>—</td></tr>';
+
+      // Row 3: total score per section + grand total
+      h += '<tr><th class="row-label">Total score</th>';
+      sections.forEach(s => {
+        const v = subtotals[s];
+        const cls = v > 0 ? 'score-cell' : 'score-cell zero';
+        h += '<td class="' + cls + '">' + (v > 0 ? v.toFixed(2).replace(/\.?0+$/, '') : '0') + '</td>';
+      });
+      const tCls = 'score-total ' + (fired ? 'pass' : 'fail');
+      h += '<td class="' + tCls + '">' + grand.toFixed(2).replace(/\.?0+$/, '') + '</td>';
+      h += '</tr>';
+      h += '</tbody></table>';
+
+      const verdictLine = fired
+        ? `<strong>${grand}</strong> ≥ threshold <strong>${rule.threshold}</strong> → <span style="color:#15803d;">column FIRED</span>.`
+        : `<strong>${grand}</strong> &lt; threshold <strong>${rule.threshold}</strong> → column did not fire.`;
+      h += '<div class="pop-summary">' + verdictLine + '<br><em>A term hit in a section contributes (count × section weight) to the column\'s total. Threshold is the minimum total score required to fire.</em></div>';
+
       h += '<p style="margin-top:0.7rem;font-size:0.8rem;"><a href="' + rule.proposal + '" target="_blank">📄 Full schema proposal</a></p>';
       return h;
     }

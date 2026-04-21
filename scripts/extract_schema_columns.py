@@ -81,6 +81,11 @@ class BinaryColumn:
     anchors: list[str] | None = None
     threshold: int = 2  # default: require ≥2 total mentions
     case_sensitive_terms: set[str] = field(default_factory=set)  # AC fix
+    # 2026-04-20: per-term prerequisites. Mapping of {term: [list of prerequisite terms]}.
+    # The keyed term's matches only count toward total_freq if at least one of its
+    # prerequisite terms also fires somewhere in the document. Used for acronym
+    # disambiguation (e.g. "GSI" only counts when "gonadosomatic index" also appears).
+    prerequisite_terms: dict[str, list[str]] = field(default_factory=dict)
 
 
 @dataclass
@@ -226,7 +231,21 @@ IMP = SchemaCategory(prefix="imp_", columns=[
 
 DISC = SchemaCategory(prefix="d_", columns=[
     # Broad disciplines — higher threshold (terms appear in passing)
-    BinaryColumn("d_biology", ["life history", "age and growth", "growth rate", "longevity", "maturity", "length-at-maturity", "length-weight", "vertebral band", "vertebral count*", "band pair*", "gonadosomatic index", "hepatosomatic index", "Le Cren", "Fulton's K", "morphometric analysis", "total length", "precaudal length", "disc width"], threshold=2),  # 2026-04-20 (DRG): biological-measurement keywords. GSI/HSI deliberately NOT included — require the spelled-out form to fire (avoids acronym false positives without needing paired-match logic)
+    BinaryColumn(
+        "d_biology",
+        ["life history", "age and growth", "growth rate", "longevity", "maturity",
+         "length-at-maturity", "length-weight", "vertebral band", "vertebral count*",
+         "band pair*", "gonadosomatic index", "hepatosomatic index",
+         "GSI", "HSI",
+         "Le Cren", "Fulton's K", "morphometric analysis", "total length",
+         "precaudal length", "disc width"],
+        threshold=2,
+        case_sensitive_terms={"GSI", "HSI"},
+        # 2026-04-20 (Simon): GSI / HSI only count when their spelled-out form
+        # also appears somewhere in the doc. Avoids acronym-collision false
+        # positives without losing the typical body-text shorthand.
+        prerequisite_terms={"GSI": ["gonadosomatic index"], "HSI": ["hepatosomatic index"]},
+    ),
     BinaryColumn("d_behaviour", ["behavio*", "behavioral ecology", "predator-prey", "diel vertical migration", "activity pattern", "social behavio*", "agonistic", "refuging"], threshold=3),
     BinaryColumn("d_trophic", ["trophic", "diet", "feeding ecology", "stomach content*", "prey composition", "stable isotope", "fatty acid", "food web"], threshold=2),
     BinaryColumn("d_genetics", ["genetic*", "genomic*", "eDNA", "environmental DNA", "microsatellite", "mitochondrial", "phylogenet*", "haplotype", "SNP", "RADseq", "population genetics"], threshold=2, case_sensitive_terms={"eDNA", "SNP"}),  # AC fix
@@ -772,6 +791,8 @@ class CompiledColumn:
     terms: list[CompiledTerm]
     anchors: list[re.Pattern[str]] | None
     threshold: int
+    # 2026-04-20: pass-through of prerequisite_terms from BinaryColumn
+    prerequisite_terms: dict[str, list[str]] = field(default_factory=dict)
 
 
 def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
@@ -798,6 +819,7 @@ def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
             terms=c_terms,
             anchors=c_anchors,
             threshold=col.threshold,
+            prerequisite_terms=dict(col.prerequisite_terms),
         ))
     return compiled
 
@@ -1532,6 +1554,37 @@ def _match_column(
         return MatchResult(binary=0, total_freq=0, raw_freq=0, term_count=0,
                            matched_terms=[], matched_anchors=[],
                            sample_context=None, primary_section="OTHER")
+
+    # 2026-04-20: filter out term contributions whose prerequisites didn't fire.
+    # Used for acronym disambiguation — e.g. "GSI" only counts toward total_freq
+    # when "gonadosomatic index" also appears somewhere in the document.
+    if col.prerequisite_terms:
+        fired_term_set = {t for t, _ in fired_terms}
+        kept: list[tuple[str, int]] = []
+        removed_raw = 0
+        # Approximation: contribution to total_freq cannot be exactly recovered
+        # per-term from the per-section weighted accumulator, so we conservatively
+        # subtract the raw count weighted at the lowest section weight (0.25 for
+        # OTHER) — enough to revoke binary=1 for acronym-only false positives
+        # without over-subtracting from legitimate co-occurring matches.
+        removed_weighted = 0.0
+        min_weight = 0.25
+        for term_raw, freq in fired_terms:
+            prereqs = col.prerequisite_terms.get(term_raw)
+            if prereqs and not any(p in fired_term_set for p in prereqs):
+                removed_raw += freq
+                removed_weighted += freq * min_weight
+                continue
+            kept.append((term_raw, freq))
+        if not kept:
+            return MatchResult(binary=0, total_freq=0, raw_freq=0, term_count=0,
+                               matched_terms=[], matched_anchors=[],
+                               sample_context=None, primary_section="OTHER")
+        fired_terms = kept
+        raw_freq_total -= removed_raw
+        total_freq -= removed_weighted
+        if total_freq < 0:
+            total_freq = 0.0
 
     # SW fix: round weighted total to nearest integer for threshold comparison
     total_freq_int = round(total_freq) if use_section_weights else int(total_freq)
