@@ -45,6 +45,13 @@ outputs/*
 !outputs/abstract_reviews/
 !outputs/figures/*.png
 !outputs/author_location_overrides.csv
+# 2026-04-20: extraction-run audit trail. Keep the small JSON summaries in git
+# so the rule-state and per-column firing counts are versioned alongside the
+# code, but ignore the per-paper binary snapshots (parquet) which are large
+# and only needed locally for diff_extraction_runs.py.
+!outputs/extraction_runs/
+outputs/extraction_runs/*/binary_classifications.parquet
+outputs/extraction_runs/*/literature_review_enriched.parquet
 outputs/candidate_database_phase1.csv
 outputs/conference_attendance_summary.csv
 outputs/analytical_techniques_by_discipline.csv

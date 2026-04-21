@@ -107,12 +107,24 @@ If adopted, would also need to consider similar consolidations (e.g. `imp_geneti
 
 ### 10. Re-extraction scheduling
 
-Once all of the above is decided:
-- Apply remaining rule changes (Mediterranean GFCM additions, conditional dependency, sp_/a_ section weights if endorsed)
-- Re-extract all ~18,000 PDFs against the updated rules
-- Estimated runtime: 6-10 h on current hardware
-- Refresh `outputs/literature_review_enriched.parquet` and `outputs/schema_extraction_evidence.csv`
-- Regenerate `extraction_review_reference.md` per-schema HTML pages
+The infrastructure now supports running extraction now AND again after the meeting decisions land — both runs are auto-snapshotted under `outputs/extraction_runs/<run_id>/` and can be diffed with `scripts/diff_extraction_runs.py`. So:
+
+- **Option A — extract now, then again post-meeting:** captures the impact of today's rule changes (TITLE+KEYWORDS, GSI/HSI prereq, expanded biology/physiology vocabulary, anchored imp_biomass, raised pr_aquaculture threshold, deepwater/d_fisheries/sp_aetomylaeus_bovinus) BEFORE we layer in the meeting decisions. Then a second post-meeting run shows the marginal impact of THOSE changes on top.
+- **Option B — wait, single extraction post-meeting:** simpler, but loses the intermediate audit point.
+
+**Recommendation: Option A.** Today's commit is a meaningful rule-set on its own; bundling it with the meeting decisions makes the diff harder to reason about. Two runs gives a clear before/after for each layer. Estimated runtime: 6–10 h on current hardware per run.
+
+**What the audit gives you:**
+- Per-column firing-count delta between any two runs
+- Per-paper sampling for top-changed columns
+- Per-schema "papers with any match" totals
+- Versioned `rules_snapshot.json` + `run_summary.json` committed to git for every run
+
+See `outputs/extraction_runs/README.md` for usage.
+
+After re-extraction:
+- Refresh `outputs/literature_review_enriched.parquet` and `outputs/schema_extraction_evidence.csv` (auto)
+- Regenerate `extraction_review_reference.md` per-schema HTML pages (manual step)
 - Update validation pages (auto-deploys on next push to main)
 
 ---
