@@ -627,7 +627,7 @@
       // Section-weight table: which paper sections count most for this schema
       if (prefixRules._section_weights) {
         var sw = prefixRules._section_weights;
-        var sectionOrder = ['ABSTRACT','INTRODUCTION','METHODS','RESULTS','RESULTS_AND_DISCUSSION','DISCUSSION','CONCLUSIONS','OTHER'];
+        var sectionOrder = ['TITLE','KEYWORDS','ABSTRACT','INTRODUCTION','METHODS','RESULTS','RESULTS_AND_DISCUSSION','DISCUSSION','CONCLUSIONS','OTHER'];
         html += '<div class="rules-section-weights"><strong>Section weighting:</strong>';
         html += '<table class="section-weights-table"><thead><tr>';
         for (var si = 0; si < sectionOrder.length; si++) {
@@ -639,7 +639,7 @@
         for (var si2 = 0; si2 < sectionOrder.length; si2++) {
           if (sw[sectionOrder[si2]] != null) {
             var w = sw[sectionOrder[si2]];
-            var wClass = w >= 1.0 ? 'w-high' : (w >= 0.5 ? 'w-med' : 'w-low');
+            var wClass = w >= 2.0 ? 'w-max' : (w >= 1.0 ? 'w-high' : (w >= 0.5 ? 'w-med' : 'w-low'));
             html += '<td class="' + wClass + '">' + escapeHtml(String(w)) + '</td>';
           }
         }

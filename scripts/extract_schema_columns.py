@@ -144,7 +144,7 @@ PR = SchemaCategory(prefix="pr_", columns=[
     # Very specific terms — low threshold
     BinaryColumn("pr_tourism", ["dive tourism", "ecotourism", "shark tourism", "provisioning", "shark feed*", "cage div*"], threshold=2),  # threshold 1→2: lone "provisioning" was false-positive (Elena issue #7)
     BinaryColumn("pr_depredation", ["depredation", "depredating", "bait loss", "catch damage"], threshold=1),
-    BinaryColumn("pr_aquaculture", ["aquaculture", "fish farm*", "mariculture"], threshold=1),
+    BinaryColumn("pr_aquaculture", ["aquaculture", "fish farm*", "mariculture"], threshold=2),  # 2026-04-20 (DRG): threshold 1→2; single-mention "aquaculture" was firing on context
     BinaryColumn("pr_invasive", ["invasive species", "non-native species", "alien species"], threshold=1),
     BinaryColumn("pr_disease", ["disease", "pathogen", "parasite", "epizootic", "infection"], threshold=3),
     BinaryColumn("pr_light", ["light pollution", "artificial light", "ALAN"], threshold=1, case_sensitive_terms={"ALAN"}),  # AC fix
@@ -202,7 +202,7 @@ IMP = SchemaCategory(prefix="imp_", columns=[
     BinaryColumn("imp_post_release", ["post-release mortality", "PRM", "delayed mortality", "post-capture survival"], threshold=1, case_sensitive_terms={"PRM"}),  # AC fix
     BinaryColumn("imp_abundance", ["abundance", "population size", "population decline", "population trend"], anchors=["population", "decline", "increase", "change", "trend", "status"], threshold=2),
     BinaryColumn("imp_cpue", ["CPUE", "catch per unit effort", "catch rate"], threshold=1, case_sensitive_terms={"CPUE"}),  # AC fix
-    BinaryColumn("imp_biomass", ["biomass", "standing stock", "spawning stock biomass", "SSB"], threshold=2, case_sensitive_terms={"SSB"}),  # AC fix
+    BinaryColumn("imp_biomass", ["biomass", "standing stock", "spawning stock biomass", "SSB"], anchors=["change", "decline", "decrease", "increase", "shift", "trend", "loss", "recovery", "fluctuat*", "depletion", "rebuild*"], threshold=2, case_sensitive_terms={"SSB"}),  # 2026-04-20 (DRG): added document-level response-language anchors so biomass-as-predictor mentions don't fire
     BinaryColumn("imp_distribution", ["distribution shift", "range shift", "range contraction", "habitat shift"], threshold=1),
     BinaryColumn("imp_behaviour_change", ["behavioural change", "behavioral change", "avoidance behaviour", "flight response", "habituation"], anchors=["change", "response"], threshold=2),
     BinaryColumn("imp_physiology_stress", ["cortisol", "lactate", "blood chemistry", "acid-base", "reflex impairment", "RAMP", "physiological stress"], threshold=1, case_sensitive_terms={"RAMP"}),  # AC fix
@@ -226,7 +226,7 @@ IMP = SchemaCategory(prefix="imp_", columns=[
 
 DISC = SchemaCategory(prefix="d_", columns=[
     # Broad disciplines — higher threshold (terms appear in passing)
-    BinaryColumn("d_biology", ["life history", "age and growth", "growth rate", "longevity", "maturity", "length-at-maturity", "length-weight", "vertebral band"], threshold=2),
+    BinaryColumn("d_biology", ["life history", "age and growth", "growth rate", "longevity", "maturity", "length-at-maturity", "length-weight", "vertebral band", "vertebral count*", "band pair*", "gonadosomatic index", "hepatosomatic index", "Le Cren", "Fulton's K", "morphometric analysis", "total length", "precaudal length", "disc width"], threshold=2),  # 2026-04-20 (DRG): biological-measurement keywords. GSI/HSI deliberately NOT included — require the spelled-out form to fire (avoids acronym false positives without needing paired-match logic)
     BinaryColumn("d_behaviour", ["behavio*", "behavioral ecology", "predator-prey", "diel vertical migration", "activity pattern", "social behavio*", "agonistic", "refuging"], threshold=3),
     BinaryColumn("d_trophic", ["trophic", "diet", "feeding ecology", "stomach content*", "prey composition", "stable isotope", "fatty acid", "food web"], threshold=2),
     BinaryColumn("d_genetics", ["genetic*", "genomic*", "eDNA", "environmental DNA", "microsatellite", "mitochondrial", "phylogenet*", "haplotype", "SNP", "RADseq", "population genetics"], threshold=2, case_sensitive_terms={"eDNA", "SNP"}),  # AC fix
@@ -238,7 +238,7 @@ DISC = SchemaCategory(prefix="d_", columns=[
     BinaryColumn("d_husbandry", ["aquarium", "captive", "husbandry", "captive breeding", "ex situ", "tank-held", "aquaria"], threshold=2),
     BinaryColumn("d_paleontology", ["fossil", "paleontol*", "palaeontol*", "Cretaceous", "Jurassic", "Miocene", "Pliocene", "Eocene", "Oligocene", "Cenozoic", "Mesozoic", "Devonian", "Carboniferous"], threshold=1),
     BinaryColumn("d_taxonomy", ["taxonom*", "new species", "sp. nov.", "new genus", "morphometric*", "meristic*", "dichotomous key", "identification key", "redescription", "synonymy", "type specimen"], threshold=1),
-    BinaryColumn("d_physiology", ["physiolog*", "metaboli*", "oxygen consumption", "ventilation rate", "blood gas", "haematocrit", "hematocrit", "osmoregulat*", "thermoregulat*", "bioenergetic*"], threshold=2),
+    BinaryColumn("d_physiology", ["physiolog*", "metaboli*", "oxygen consumption", "ventilation rate", "blood gas", "haematocrit", "hematocrit", "osmoregulat*", "thermoregulat*", "bioenergetic*", "SMR", "RMR", "MMR", "aerobic scope", "Ucrit", "U crit", "U-crit", "critical swimming speed", "heart rate", "cardiac output", "blood pressure", "plasma osmolality", "plasma cortisol", "plasma lactate", "urea", "TMAO", "trimethylamine N-oxide", "enzyme activity", "Q10", "metabolic rate"], threshold=2, case_sensitive_terms={"SMR", "RMR", "MMR", "Ucrit", "TMAO", "Q10"}),  # 2026-04-20 (DRG): physiological-measurement keywords. Acronyms case-sensitive to avoid false positives. Q10 (subscript-10 in literature) and Ucrit (subscript-crit) treated as plain ASCII — pdftotext flattens superscripts to inline characters
     BinaryColumn("d_reproductive", ["reproductive biology", "fecundity", "gestation", "embryo*", "uterine", "ovipar*", "vivipar*", "mating", "parturition", "neonat*", "litter size", "reproductive cycle"], threshold=2),
     BinaryColumn("d_biomechanics", ["biomechani*", "functional morphology", "locomot*", "kinematics", "bite force", "jaw mechanics", "hydrodynamic*", "swimming performance"], threshold=1),
     BinaryColumn("d_sensory", ["electrorecept*", "ampullae of Lorenzini", "lateral line", "mechanosens*", "olfact*", "chemosens*", "visual acuity", "magnetorecept*"], threshold=1),
@@ -563,6 +563,10 @@ def _proximity_adjusted_freq(
 # ORDER MATTERS: combined forms (e.g. "Results and Discussion") must be
 # tested before their individual components.
 _SECTION_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    # 2026-04-20: highest-signal sections — author-controlled metadata.
+    # Injected synthetically by extract_text_from_pdf / _match_paper.
+    ("TITLE",    re.compile(r"^TITLE\s*$")),
+    ("KEYWORDS", re.compile(r"^KEYWORDS\s*$")),
     ("RESULTS_AND_DISCUSSION", re.compile(
         r"^\d*\.?\s*results?\s+(?:and|&)\s+discussion", re.I)),
     ("METHODS", re.compile(
@@ -590,37 +594,44 @@ _SECTION_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
 # for each schema (values already reflect this).
 _SECTION_WEIGHTS: dict[str, dict[str, float]] = {
     "eco_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
         "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
     },
     "pr_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 1.0,
         "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.25,
     },
     "gear_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 0.25, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
         "DISCUSSION": 0.25, "CONCLUSIONS": 0.25, "OTHER": 0.25,
     },
     "imp_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 0.25, "METHODS": 0.5,
         "RESULTS": 1.0, "RESULTS_AND_DISCUSSION": 1.0,
         "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.25,
     },
     "d_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 0.5, "METHODS": 1.0,
         "RESULTS": 1.0, "RESULTS_AND_DISCUSSION": 1.0,
         "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
     },
     "b_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
         "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
     },
     # sb_ uses the same section-weight profile as b_ (geographic context)
     "sb_": {
+        "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
         "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
@@ -1205,6 +1216,27 @@ _ACK_HEADER_RE = re.compile(
 _DOI_URL_RE = re.compile(r"https?://doi\.org/|doi:", re.IGNORECASE)
 
 
+# 2026-04-20: capture the author-supplied "Keywords" block before
+# strip_non_body_sections() removes the front matter. The block is
+# re-injected as a synthetic KEYWORDS section so the matcher can apply
+# the high TITLE/KEYWORDS section weight.
+_KEYWORDS_BLOCK_RE = re.compile(
+    r"^\s*key\s*[- ]?words?\s*[:.]\s*(.+?)(?=\n\s*\n|\Z)",
+    re.IGNORECASE | re.MULTILINE | re.DOTALL,
+)
+
+
+def _extract_keywords_block(text: str) -> str:
+    """Return the comma- or semicolon-separated keyword list (without label)."""
+    m = _KEYWORDS_BLOCK_RE.search(text)
+    if not m:
+        return ""
+    raw = m.group(1).strip()
+    # Trim at the next obvious section break (just in case the regex over-ran)
+    raw = re.split(r"\n\s*(?:1\.?\s*)?(?:Introduction|INTRODUCTION|Abstract|ABSTRACT)\b", raw)[0]
+    return raw.strip()
+
+
 def strip_non_body_sections(text: str) -> str:
     """Remove header/author block, references, and acknowledgements from PDF text.
 
@@ -1289,8 +1321,16 @@ def extract_text_from_pdf(pdf_path: Path) -> str | None:
         if len(text.encode("utf-8", errors="ignore")) > MAX_TEXT_BYTES:
             text = text[:MAX_TEXT_BYTES]
 
+        # 2026-04-20: capture author-supplied keywords BEFORE the front
+        # matter is stripped. Re-injected below as a synthetic section so
+        # the matcher can apply the high KEYWORDS section weight (2.0).
+        keywords_block = _extract_keywords_block(text)
+
         # Strip non-body sections to reduce false positives
         text = strip_non_body_sections(text)
+
+        if keywords_block:
+            text = "KEYWORDS\n" + keywords_block + "\n\n" + text
 
         return text if text.strip() else None
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
@@ -1578,6 +1618,11 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
 
     # Only use PDF text — skip papers without PDFs
     full_text = "\n".join(text_parts)
+
+    # 2026-04-20: prepend title as a synthetic TITLE section. Title is
+    # author's chosen one-line summary — strongest possible topic signal.
+    if title and full_text.strip():
+        full_text = "TITLE\n" + title + "\n\n" + full_text
 
     if not full_text.strip():
         # No PDF text available — return empty result (no title/abstract fallback)

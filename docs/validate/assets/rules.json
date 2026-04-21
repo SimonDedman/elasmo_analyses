@@ -226,6 +226,8 @@
       "case_sensitive_terms": []
     },
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 1.0,
       "METHODS": 1.0,
@@ -449,7 +451,7 @@
         "fish farm*",
         "mariculture"
       ],
-      "threshold": 1,
+      "threshold": 2,
       "anchors": [],
       "case_sensitive_terms": []
     },
@@ -550,6 +552,8 @@
       "case_sensitive_terms": []
     },
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 1.0,
       "METHODS": 1.0,
@@ -917,6 +921,8 @@
       ]
     },
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 0.25,
       "METHODS": 1.0,
@@ -999,7 +1005,19 @@
         "SSB"
       ],
       "threshold": 2,
-      "anchors": [],
+      "anchors": [
+        "change",
+        "decline",
+        "decrease",
+        "increase",
+        "shift",
+        "trend",
+        "loss",
+        "recovery",
+        "fluctuat*",
+        "depletion",
+        "rebuild*"
+      ],
       "case_sensitive_terms": [
         "SSB"
       ]
@@ -1327,6 +1345,8 @@
       "source": "scripts/extract_schema_columns.py → bycatch_direction()"
     },
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 0.25,
       "METHODS": 0.5,
@@ -1350,7 +1370,17 @@
         "maturity",
         "length-at-maturity",
         "length-weight",
-        "vertebral band"
+        "vertebral band",
+        "vertebral count*",
+        "band pair*",
+        "gonadosomatic index",
+        "hepatosomatic index",
+        "Le Cren",
+        "Fulton's K",
+        "morphometric analysis",
+        "total length",
+        "precaudal length",
+        "disc width"
       ],
       "threshold": 2,
       "anchors": [],
@@ -1543,11 +1573,38 @@
         "hematocrit",
         "osmoregulat*",
         "thermoregulat*",
-        "bioenergetic*"
+        "bioenergetic*",
+        "SMR",
+        "RMR",
+        "MMR",
+        "aerobic scope",
+        "Ucrit",
+        "U crit",
+        "U-crit",
+        "critical swimming speed",
+        "heart rate",
+        "cardiac output",
+        "blood pressure",
+        "plasma osmolality",
+        "plasma cortisol",
+        "plasma lactate",
+        "urea",
+        "TMAO",
+        "trimethylamine N-oxide",
+        "enzyme activity",
+        "Q10",
+        "metabolic rate"
       ],
       "threshold": 2,
       "anchors": [],
-      "case_sensitive_terms": []
+      "case_sensitive_terms": [
+        "SMR",
+        "RMR",
+        "MMR",
+        "Ucrit",
+        "TMAO",
+        "Q10"
+      ]
     },
     "d_reproductive": {
       "terms": [
@@ -1659,6 +1716,8 @@
       "case_sensitive_terms": []
     },
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 0.5,
       "METHODS": 1.0,
@@ -1828,6 +1887,8 @@
       "case_sensitive_terms": []
     },
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 1.0,
       "METHODS": 1.0,
@@ -1845,6 +1906,8 @@
     "source": "scripts/extract_schema_columns.py",
     "column_count": 66,
     "_section_weights": {
+      "TITLE": 2.0,
+      "KEYWORDS": 2.0,
       "ABSTRACT": 0.5,
       "INTRODUCTION": 1.0,
       "METHODS": 1.0,
