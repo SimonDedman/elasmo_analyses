@@ -2,7 +2,34 @@
 
 *Technical documentation for `scripts/extract_schema_columns.py`*
 
-*Last updated: 2026-03-12*
+*Last updated: 2026-04-20*
+
+---
+
+## TITLE and KEYWORDS sections (added 2026-04-20)
+
+Two synthetic sections are injected at extraction time:
+
+- **TITLE** — the paper's full title from the bibliographic record (`literature_review.parquet:title`), prepended in `_match_paper()` as `TITLE\n<title>\n\n` before section labelling.
+- **KEYWORDS** — the author-supplied keyword block parsed from the raw PDF text BEFORE `strip_non_body_sections()` removes the front matter. `_extract_keywords_block()` finds the line matching `^\s*Key[- ]?words?\s*[:.]` and re-injects the keyword list as `KEYWORDS\n<terms>\n\n` at the top of the body text.
+
+Both receive **weight 2.0** for every schema that uses section weighting (eco_, pr_, gear_, imp_, d_, b_, sb_) — the highest weighting in the system — because they encode author intent rather than incidental mention. A single keyword-block hit (2.0 × 1) plus one body mention is enough to pass any column's threshold of 2.
+
+The `_SECTION_PATTERNS` list places the TITLE and KEYWORDS patterns BEFORE the existing section patterns so they match first. The `_SECTION_WEIGHTS` dict for every supported prefix carries `"TITLE": 2.0, "KEYWORDS": 2.0`.
+
+The validation UI's section-weights table (driven by `rules.json` → `_section_weights`) shows TITLE and KEYWORDS as the leftmost columns rendered in dark green (`w-max` CSS class).
+
+**Schemas without section weighting** (`ob_`, `sp_`, `a_`, `depth_`) do not benefit from TITLE/KEYWORDS injection. `ob_` is fed from a separate geographic pipeline; `sp_` and `a_` are integer counts not binary classifications; `depth_` is regex-extracted numeric metadata. Whether to extend section weighting to `sp_` and `a_` is an open question for the validation meeting.
+
+---
+
+## Acronym disambiguation via prerequisite_terms (added 2026-04-20)
+
+`BinaryColumn` now supports a `prerequisite_terms` mapping of `{term: [list of prerequisite terms]}`. The keyed term's matches only contribute to `total_freq` if at least one of its prerequisites also fires somewhere in the document.
+
+**Use case:** acronym disambiguation. `d_biology` includes `GSI` and `HSI` (case-sensitive) with `prerequisite_terms={"GSI": ["gonadosomatic index"], "HSI": ["hepatosomatic index"]}` — so the acronyms only contribute when their full forms also appear, eliminating acronym-collision false positives without requiring the spelled-out forms to fire alone.
+
+The filter runs after term matching and before threshold comparison. Other terms in the column are unaffected.
 
 ---
 

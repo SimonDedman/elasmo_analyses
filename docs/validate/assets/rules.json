@@ -1375,6 +1375,8 @@
         "band pair*",
         "gonadosomatic index",
         "hepatosomatic index",
+        "GSI",
+        "HSI",
         "Le Cren",
         "Fulton's K",
         "morphometric analysis",
@@ -1384,7 +1386,18 @@
       ],
       "threshold": 2,
       "anchors": [],
-      "case_sensitive_terms": []
+      "case_sensitive_terms": [
+        "GSI",
+        "HSI"
+      ],
+      "prerequisite_terms": {
+        "GSI": [
+          "gonadosomatic index"
+        ],
+        "HSI": [
+          "hepatosomatic index"
+        ]
+      }
     },
     "d_behaviour": {
       "terms": [
