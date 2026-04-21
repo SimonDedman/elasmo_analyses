@@ -101,6 +101,7 @@ scripts/.sr_sync_config.json
 *.docx
 *.xlsx
 !Example*.xlsx
+!docs/schema_proposals/ruiz_garcia_validation_master.xlsx
 
 # AI request logs
 EEA_Data_Panel_AI_requests.txt
