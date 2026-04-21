@@ -29,50 +29,25 @@ Combined picture of where the extraction pipeline is working well vs. struggling
 
 ---
 
-## 2. David's 27 proposed rule changes — by change type
+## 2. David's 27 rules — key individual items
 
-Each rule can invoke multiple mechanisms; totals sum to > 27.
-
-| Change type | # rules | Implementation cost | Database/processing impact |
-|---|---|---|---|
-| **KEYWORDS** — add/remove terms | 14 | **Low** — edit term lists in `extract_schema_columns.py` | Minimal; re-extract affected schemas |
-| **SECTION priority** — require hits in Methods/Results, not Intro/Discussion | 9 | **Medium** — section detection already exists (99.8% coverage per MEMORY, corpus-trained). Need to wire per-column section weights | Re-extract: ~18K PDFs × 123 columns. ~6–10 h on current machine. |
-| **ANCHORS** — require term + co-occurrence (e.g. "trawl" + "bottom") | 7 | **Medium** — new co-occurrence logic; would extend evidence schema | Re-extract; evidence CSV grows modestly |
-| **THRESHOLD** — raise/lower existing per-column thresholds | 5 | **Trivial** | Re-extract only |
-| **CONTEXT** — ignore background/comparison mentions | 3 | **Medium-high** — needs sentence-level context classification | Moderate processing overhead |
-| **CORRELATION** — cross-column rules (e.g. if `trawl` strong and `bottom` near → `gear_trawl_otter`) | 2 | **Medium** — new post-processing pass | Small |
-| **STRUCTURE** — merge categories (Injury + Physiological stress → "Health assessment") | 1 | **High** — schema-breaking. Affects all existing analyses | Parquet column changes; extraction_review_reference regen |
-| **DEFINITION** — narrow "coastal" to nearshore-process focus | 1 | **Medium** — requires new sub-rule | Small |
-| **SPECIES LIST** — add missing taxa (e.g. *Aetomylaeus bovinus*) | 1 | **Low** — species DB additions | Trivial |
-| **DYNAMIC THRESHOLD** — scale by document length for short-format papers | 1 | **Medium** — new extraction feature | Small; requires word-count per PDF |
-| **CONDITIONAL DEPENDENCY** — only derive direction/confidence if pressure/threat detected | 1 | **Low-medium** — post-processing gate | Small |
-
-**Breakdown of effort:**
-- **Low-cost batch (18 rules, ~45 min dev + 1 re-extract):** all KEYWORDS and THRESHOLD rules, plus SPECIES LIST addition → could be applied immediately
-- **Medium-cost batch (19 rules with overlap, ~1–2 days dev):** SECTION priority, ANCHORS, CORRELATION, DYNAMIC THRESHOLD, DEFINITION, CONDITIONAL DEPENDENCY — requires one coordinated pipeline update
-- **High-cost batch (1 rule):** STRUCTURE merge — needs team decision before implementation
-
----
-
-## 3. David's 27 rules — key individual items
-
-Priority ordering for meeting discussion. Full text in `/home/simon/Downloads/ruiz_garcia_validation_master.xlsx` (Validation_Rules sheet).
+Priority ordering for meeting discussion. Full sheet at [`ruiz_garcia_validation_master.md`](./ruiz_garcia_validation_master.md).
 
 ### Likely-adopt (low cost, clear fix)
 
-1. **`b_` threshold consistency** (xlsx row 2) — `b_mediterranean` and `b_southern_ocean` use threshold=1 while others use 2. David asks whether this is deliberate. *(Per `ocean_basin_proposal.md` it IS deliberate: these sub-sea names are unambiguous single-mention signals. Document this in the meeting notes and retain.)*
-2. **`eco_deepwater` keywords** (row 8) — add "deepwater" and "deep water" as variants alongside "deep-water"
-3. **`d_fisheries` keywords** (row 6) — expand to include "bycatch", "discard", "retention", "non-target species"
-4. **`sp_` species list** (row 23) — add *Aetomylaeus bovinus* (and likely other Mediterranean taxa missing from the dictionary)
-5. **`imp_biomass` anchor** (row 11) — require biomass co-occurrence with response-variable language, not predictor
-6. **`mit_ghost` reclassification** (row 19) — ghost gear currently under mitigation; David argues it's gear- or pressure-related
+1. **`b_` threshold consistency** (xlsx row 2) — `b_mediterranean` and `b_southern_ocean` use threshold=1 while others use 2. David asks whether this is deliberate. *(Per `ocean_basin_proposal.md` it IS deliberate: these sub-sea names are unambiguous single-mention signals. Document this in the meeting notes and retain.)* **TO REVIEW** at meeting (decision: keep current thresholds, document rationale).
+2. **`eco_deepwater` keywords** (row 8) — add "deepwater" and "deep water" as variants alongside "deep-water". **FIXED** (extract_schema_columns.py + rules.json updated 2026-04-20).
+3. **`d_fisheries` keywords** (row 6) — expand to include "bycatch", "discard", "retention", "non-target species". **FIXED** (extract_schema_columns.py + rules.json updated 2026-04-20).
+4. **`sp_` species list** (row 23) — add *Aetomylaeus bovinus* (and likely other Mediterranean taxa missing from the dictionary). **FIXED** for *bovinus* (added to species_common_lookup_cleaned.csv + options.json as `sp_aetomylaeus_bovinus` 2026-04-20). Wider audit **TO REVIEW** at meeting.
+5. **`imp_biomass` anchor** (row 11) — require biomass co-occurrence with response-variable language, not predictor. **FIXED** (added document-level anchors: change/decline/decrease/increase/shift/trend/loss/recovery/fluctuat\*/depletion/rebuild\*; biomass-only mentions no longer fire without one of these).
+6. **`mit_ghost` reclassification** (row 19) — ghost gear currently under mitigation; David argues it's gear- or pressure-related. **FIXED** (renamed `gear_mit_ghost` → `gear_ghost`, no longer in the mitigation cluster; "ghost fishing" added as keyword variant).
 
 ### Needs discussion (medium cost, design choice)
 
-7. **Mediterranean sub-basin scheme** (row 3, plus Meta_Notes) — David proposes GFCM-aligned groupings: Western / Central / Adriatic / Eastern / Black Sea. Current scheme uses individual sea names (Alboran, Ligurian, Tyrrhenian…). Proposal is to use GFCM groups as the columns while keeping the current sea-names as keywords. **Question for team:** adopt GFCM grouping as the primary axis, or retain current granularity as a supplementary set?
-8. **Section-weighted disciplines** (rows 4, 7) — `d_biology`, `d_physiology` over-fire when methodological terms appear only in literature-review context. Proposal: require Methods+Results co-presence. *(Section weighting is already trained per MEMORY; this is a matter of extending it to these columns.)*
-9. **Dynamic thresholds for short-format papers** (rows 9, 25) — brief communications fail to meet threshold=2. Proposal: scale threshold by word count.
-10. **Impact summary conditional dependency** (row 26) — don't populate `imp_direction`, `imp_quantified`, `imp_confidence` unless at least one pressure/threat or impact was detected. Simple post-processing rule.
+7. **Mediterranean sub-basin scheme** (row 3, plus Meta_Notes) — David proposes GFCM-aligned groupings: Western / Central / Adriatic / Eastern / Black Sea. Current scheme uses individual sea names (Alboran, Ligurian, Tyrrhenian…). **TO REVIEW** at meeting (resolved trade-offs below: keep both schemas in parallel; keep `sb_black_sea` as own column; roll Sea of Marmara into `sb_black_sea`).
+8. **Section-weighted disciplines** (rows 4, 7) — `d_biology`, `d_physiology` over-fire when methodological terms appear only in literature-review context. **PARTIALLY FIXED**: keyword expansion done (see §item-8 below for the resolved keyword set including measurement-action anchors, GSI/HSI spelled-out forms, "Le Cren", "Fulton's K", Ucrit + variants, TMAO/Q10 case-sensitive). Section-weighted refinement **TO REVIEW**.
+9. **Dynamic thresholds for short-format papers** (rows 9, 25) — brief communications fail to meet threshold=2. **SUPERSEDED by item §9 below** — TITLE and KEYWORDS sections now ingested with weight 2.0, which lifts brief communications above threshold without length-dependent logic. Dynamic thresholds avoided as Simon preferred.
+10. **Impact summary conditional dependency** (row 26) — don't populate `imp_direction`, `imp_quantified`, `imp_confidence` unless at least one pressure/threat or impact was detected. Simple post-processing rule. **TO REVIEW** at meeting (need to define "pressure/threat detected").
 
 ### Needs design work
 
@@ -87,18 +62,18 @@ Priority ordering for meeting discussion. Full text in `/home/simon/Downloads/ru
 
 ---
 
-## 4. Alex's submission — highlights
+## 3. Alex's submission — highlights
 
 - **Per-paper:** discipline and analytical-technique schemas dominate her "incorrect" ratings (Alex's papers span movement ecology / telemetry / behaviour). Suggests `a_` dictionary coverage is weak for newer tracking methods.
 - **Notes:** one question on taxonomy — "Does behaviour change = behavioral response?" for `imp_behaviour_change`. Action: document the intended distinction (or merge if there isn't one).
 - **Author corrections** (new data path — silently dropped by the old workflow):
   - `gender`: blank → F
   - `origin_country`: **RU** → **USA** (NamSor mis-classified her; fix upstream)
-  - `ethnicity`: British → United States (conflation issue — see §5)
+  - `ethnicity`: British → United States (conflation issue — see §4)
 
 ---
 
-## 5. Upstream data-quality issue surfaced by Alex
+## 4. Upstream data-quality issue surfaced by Alex
 
 NamSor returned `origin_country=RU` for Alexandra G. McInturf with 72% probability (alt GR). This appears to be a **rare-surname failure mode**: "McInturf" is a low-frequency Scots-Irish surname with weak surname prior in NamSor, so the model over-weights the first name "Alexandra" (strongly Russian-signalling).
 
@@ -109,10 +84,10 @@ NamSor returned `origin_country=RU` for Alexandra G. McInturf with 72% probabili
 
 ---
 
-## 6. Meeting agenda suggestions
+## 5. Meeting agenda suggestions
 
 **Tuesday** (if narrower focus):
-- Adopt the low-cost batch (§3 items 1–6) as immediate pipeline fixes — apply and re-extract
+- Adopt the low-cost batch (§2 items 1–6) as immediate pipeline fixes — apply and re-extract
 - Decide on Mediterranean sub-basin scheme (item 7) — needs full group
 
 **Wednesday** (broader strategy):
@@ -131,7 +106,7 @@ NamSor returned `origin_country=RU` for Alexandra G. McInturf with 72% probabili
 
 # Investigation results — Simon's review questions (2026-04-20)
 
-References to "§3 item N" below match the numbered list above.
+References to "§2 item N" below match the numbered list above.
 
 ## Implemented in this commit
 
@@ -198,48 +173,66 @@ Augmented with sub-area names found in the literature but missing from David's l
 | `sb_eastern_mediterranean` | **Aegean Sea**, **Sea of Crete**, **Levantine Sea**, **Cilician Sea**, Cyprus, Iskenderun Bay |
 | `sb_black_sea` | **Black Sea** (existing) + **Sea of Marmara** + Sea of Azov + Bosphorus |
 
-**Trade-offs to discuss:**
-1. **Lossy aggregation:** the current 8 sub-basin columns let analysts ask basin-specific questions (e.g. "Tyrrhenian-only papers"). Collapsing to 5 GFCM groups loses this. **Recommendation:** keep both — add the 5 GFCM columns alongside the 8 individual seas (5 new columns; minor cost). The GFCM columns become the analytical default; individual seas remain available for fine-grained queries. David's xlsx Meta_Notes already proposes "retaining current sea names as keywords" which is consistent with this approach.
-2. **Black Sea:** GFCM does not include Black Sea as a Mediterranean sub-basin (it's a separate FAO statistical area). Keep `sb_black_sea` as its own column rather than rolling into `sb_eastern_mediterranean`.
-3. **Sea of Marmara:** Mediterranean ↔ Black Sea transition. Currently its own column; GFCM treats it as part of Black Sea statistical area. Roll into `sb_black_sea`?
+**Trade-offs — RESOLVED (Simon's call 2026-04-20):**
+1. **Lossy aggregation:** the current 8 sub-basin columns let analysts ask basin-specific questions (e.g. "Tyrrhenian-only papers"). **DECISION: keep both** — add the 5 GFCM columns alongside the 8 individual seas. GFCM columns become the analytical default; individual seas remain available for fine-grained queries. David's xlsx Meta_Notes already proposes "retaining current sea names as keywords" which is consistent.
+2. **Black Sea:** GFCM does not include Black Sea as a Mediterranean sub-basin (separate FAO statistical area). **DECISION: keep `sb_black_sea` as its own column** rather than rolling into `sb_eastern_mediterranean`.
+3. **Sea of Marmara:** Mediterranean ↔ Black Sea transition. **DECISION: roll into `sb_black_sea`** (drop `sb_sea_of_marmara` as standalone; "Sea of Marmara" / "Marmara" / "Bosphorus" become keywords for `sb_black_sea`).
+
+**Implementation pending** — needs the 5 new GFCM column definitions added to `extract_schema_columns.py:SUB_BASIN`, the Marmara merge applied, and rules.json mirrored. Will commit as a separate change after meeting confirmation.
 
 ## Item 8 — SECTION priority + keyword expansion
 
 David proposes adding "effect" and "affect" as anchors/discriminators. Both are useful (often the response-variable language we lack for `imp_biomass`).
 
-**Additional analytical/measurement keywords proposed (for d_biology, item 4 in xlsx):**
+**`d_biology` keyword expansion — IMPLEMENTED 2026-04-20:**
 
-Currently `d_biology` terms are: *life history, age and growth, growth rate, longevity, maturity, length-at-maturity, length-weight, vertebral band* (8 terms). Add:
-- `analyzed`, `analysed`, `assessed`, `examined`, `investigated`, `determined`, `calculated`, `estimated`, `measured`, `quantified` — generic *measurement-action* anchors. Better as anchors than terms (would over-fire as raw terms).
-- Concrete biological measurements not currently captured: `vertebral counts`, `band pair`, `gonadosomatic index`, `GSI`, `hepatosomatic index`, `HSI`, `Le Cren`, `Fulton's K`, `morphometric analysis`, `total length`, `precaudal length`, `disc width`
+Was 8 terms. Now 18:
+- Original: *life history, age and growth, growth rate, longevity, maturity, length-at-maturity, length-weight, vertebral band*
+- Added measurement terms: `vertebral count*`, `band pair*`, `gonadosomatic index`, `hepatosomatic index`, `Le Cren`, `Fulton's K`, `morphometric analysis`, `total length`, `precaudal length`, `disc width`
 
-**Additional measurement-based keywords for d_physiology (item 7 in xlsx):**
+**Design decisions** (per Simon 2026-04-20):
+- **GSI / HSI deliberately NOT added as terms** — only the spelled-out forms (`gonadosomatic index`, `hepatosomatic index`). This avoids the acronym-collision problem without needing a new "paired-match" feature in the matcher. Papers that mention these indices invariably spell them out at least once in Methods.
+- **"Le Cren" and "Fulton's K"** are passed as plain string terms; the matcher treats them as exact-phrase matches (apostrophe and space included). No regex escaping needed in the term list.
+- **Measurement-action anchors** (`analyzed`/`assessed`/`examined`/etc.) **not added** — they would over-fire as raw terms across ANY analytical discipline. Better as a future per-column `anchors` field if we want to require co-occurrence with measurement-action language; deferred.
 
-Currently: *physiolog\*, metaboli\*, oxygen consumption, ventilation rate, blood gas, haematocrit, hematocrit, osmoregulat\*, thermoregulat\*, bioenergetic\** (10 terms). Add:
-- `SMR`, `RMR`, `MMR` (case-sensitive — standard, routine, max metabolic rate)
-- `aerobic scope`, `Ucrit`, `critical swimming speed`
-- `heart rate`, `cardiac output`, `blood pressure`, `plasma osmolality`, `plasma cortisol`, `plasma lactate`
-- `urea`, `TMAO`, `trimethylamine N-oxide`, `enzyme activity`, `Q10`, `Q\u2081\u2080`, `metabolic rate`
+**`d_physiology` keyword expansion — IMPLEMENTED 2026-04-20:**
 
-These keep the discipline narrow (measurement-based) per David's intent, rather than firing on a single Introduction reference to "physiology".
+Was 10 terms. Now 28:
+- Original: *physiolog\*, metaboli\*, oxygen consumption, ventilation rate, blood gas, haematocrit, hematocrit, osmoregulat\*, thermoregulat\*, bioenergetic\**
+- Added (case-sensitive): `SMR`, `RMR`, `MMR`, `Ucrit`, `TMAO`, `Q10`
+- Added (case-insensitive): `aerobic scope`, `U crit`, `U-crit`, `critical swimming speed`, `heart rate`, `cardiac output`, `blood pressure`, `plasma osmolality`, `plasma cortisol`, `plasma lactate`, `urea`, `trimethylamine N-oxide`, `enzyme activity`, `metabolic rate`
 
-## Item 9 — TITLE and KEYWORDS sections (key gap)
+**Design decisions** (per Simon 2026-04-20):
+- **Ucrit superscript:** `pdftotext` flattens superscripts and subscripts to inline ASCII (no special character is preserved). "Ucrit" in a PDF rendered with subscript-`crit` extracts as plain "Ucrit" — so the literal-string match works. Added two extra variants (`U crit`, `U-crit`) to catch inconsistent typesetting where the layer break inserts a space or hyphen.
+- **TMAO:** added to `case_sensitive_terms` so it doesn't match accidental capitalisation in body text.
+- **Q10 / Q₁₀:** the unicode subscript form (Q₁₀, U+2081 U+2080) is essentially never preserved by PDF text extraction — papers using subscript styling extract as plain "Q10". So we search ASCII "Q10" case-sensitive only. Confident this catches the literature; the unicode form is dropped.
 
-**Confirmed gap:** the section detector in `extract_schema_columns.py` (lines 563-583) recognises ABSTRACT, INTRODUCTION, METHODS, RESULTS, RESULTS_AND_DISCUSSION, DISCUSSION, CONCLUSIONS — and bins everything else as OTHER (weight 0.25). It does **not** have explicit patterns for **TITLE** or the author-supplied **KEYWORDS** block. Both are currently swept into OTHER (the lowest-weight bucket).
+## Item 9 — TITLE and KEYWORDS sections — IMPLEMENTED 2026-04-20
 
-**Why this matters:**
-- Author-supplied keywords are the strongest possible "author intent" signal. If a paper lists "Mediterranean" or "discard mortality" as a keyword, the topic is unambiguously central — yet our pipeline treats it the same as a footer reference.
-- Titles are similarly high-signal: the title is the author's chosen one-line summary.
+**The gap:** the section detector recognised ABSTRACT, INTRODUCTION, METHODS, RESULTS, RESULTS_AND_DISCUSSION, DISCUSSION, CONCLUSIONS — and binned everything else as OTHER (weight 0.25). TITLE and KEYWORDS were both falling into OTHER, despite being the strongest possible author-intent signals.
 
-**Proposed (avoids dynamic thresholds — Simon's preference):**
-1. Add a **TITLE** virtual section that wraps `parquet.title` text and gets weight **2.0** for ALL schemas (highest possible).
-2. Add a **KEYWORDS** section pattern matching the typical PDF block (`r"^\s*Key\s*[\- ]?words\s*[:.\-]"`) and weight **2.0** as well.
-3. Update `_SECTION_WEIGHTS` to include these two new section types for every prefix.
-4. Keep existing thresholds. The added weight should be enough that a single keyword-block hit + one body mention = passes threshold=2 for most columns.
+**What changed (this commit):**
 
-**Estimated effort:** ~1 hour code, ~6 h re-extract on full corpus.
+1. **`extract_schema_columns.py`:**
+   - New `_extract_keywords_block()` helper extracts the author-supplied keyword block from raw PDF text BEFORE `strip_non_body_sections` removes the front matter
+   - `extract_text_from_pdf()` re-injects the keyword block as a synthetic `KEYWORDS\n…\n\n` section at the top of the body text
+   - `_match_paper()` now prepends `TITLE\n<title>\n\n` from the parquet's `title` column before section labelling
+   - `_SECTION_PATTERNS` gets two new patterns: `^TITLE$` and `^KEYWORDS$` (placed at the top so they match before any other patterns)
+   - `_SECTION_WEIGHTS` now includes `"TITLE": 2.0, "KEYWORDS": 2.0` for all 7 prefixes (eco_, pr_, gear_, imp_, d_, b_, sb_)
 
-**This likely subsumes the dynamic-threshold proposal (item 9):** brief communications often have keyword sections and abstract-style titles; promoting these to weight 2.0 will let short-format papers reach threshold without introducing length-dependent logic.
+2. **`docs/validate/assets/rules.json`:** mirror of the new section weights so the validation UI reflects them.
+
+3. **`docs/validate/assets/validate.js`:** `_renderRulesPalette` now includes TITLE and KEYWORDS columns in the section-weights table; new `w-max` class for ≥2.0 (highlighted green) renders them visually as the strongest weight.
+
+4. **`docs/validate/assets/style.css`:** `.section-weights-table td.w-max` style added.
+
+**Effect:** a single keyword-block hit (weighted 2.0) plus ONE body mention (weighted 0.25-1.0) clears threshold=2 for any column. Brief communications no longer fall below threshold; this **supersedes the dynamic-threshold proposal (item 9 in §2 list above).**
+
+**Re-extraction needed.** All ~18,000 PDFs need to be re-processed for the new sections to take effect. Estimated runtime ~6-10h on current hardware (no logic changes outside the new section injection).
+
+**Documentation update needed.** `docs/schema_proposals/extraction_logic.md` and the per-schema proposal docs (`ecosystem_component_proposal.md`, etc.) should mention TITLE and KEYWORDS as the highest-weighted sections. Proposed addendum text:
+
+> Two synthetic sections are injected at extraction time: **TITLE** (the paper's full title from the bibliographic record) and **KEYWORDS** (the author-supplied keyword block parsed from the PDF after the abstract). Both receive weight **2.0** for every schema — the highest weighting in the system — because they encode author intent rather than incidental mention. A single keyword-block hit plus one body mention is sufficient to pass any column's threshold.
 
 ## Item 10 — Conditional dependency (`imp_direction`/`quantified`/`confidence`)
 
@@ -274,7 +267,7 @@ So pressures fire most readily from Introduction/Methods/Discussion. A single me
 
 **David's keywords to add:** (from xlsx row 15) — David lists `aquaculture`, `fish farm`, `mariculture` as the trigger terms (same as ours). His proposal is structural (raise threshold ≥2, require co-term), not new keywords.
 
-**Recommended:** raise threshold from 1 to 2. Keep current keyword set. (Or: keep threshold 1 but require an anchor like `impact|effect|threat|interaction|surrounding|near|adjacent` — more precise but requires anchor-co-occurrence which is the medium-cost work item.)
+**IMPLEMENTED 2026-04-20:** threshold raised 1 → 2. Combined with the new TITLE/KEYWORDS sections (item 9, also live this commit): a paper that lists "aquaculture" as a keyword (weight 2.0) plus has any body mention will now reach threshold without needing pure body-text repetition. Conversely, a paper that mentions "aquaculture" once in passing in the introduction (weight 1.0) will NOT fire — Simon's expected accuracy improvement should be substantial.
 
 ## Item 13 — `pr_pollution_chemical`: rules already in place
 
@@ -284,10 +277,17 @@ So pressures fire most readily from Introduction/Methods/Discussion. A single me
 
 **David's complaint** is that "pollution" appears in passing (e.g. "global threats include climate change, pollution, and overfishing") and fires the column. Threshold 3 mitigates but doesn't eliminate this when the paper happens to use "pollution" as a keyword more than once.
 
-**Options for meeting:**
-- Replace `pollut*` with `chemical pollut*` (much narrower)
-- Keep `pollut*` but require a specific compound anchor: `anchors=["heavy metal*", "mercury", "PCB", "PFAS", "pesticide*", "contaminant*"]`. Then "pollution" alone won't fire; needs co-occurrence with a specific compound term.
-- Raise threshold to 5 (cosmetic; doesn't fix the root issue)
+**Section weighting — yes, in use.** All `pr_*` columns share the `pr_` schema's section weights (Abstract 0.5, Intro 1.0, Methods 1.0, Results 0.5, Results+Discussion 1.0, Discussion 1.0, Conclusions 0.5, Other 0.25). With this commit's additions, TITLE and KEYWORDS get weight 2.0 too.
+
+**Will TITLE+KEYWORDS inclusion help?** Yes, considerably. Chemical-pollution papers almost always list a specific compound class ("heavy metals", "PCBs", "microplastics", "mercury", etc.) as a keyword AND in the title. With weight 2.0 each, a true chemical-pollution paper will easily clear threshold 3 from title+keywords alone. False-positive papers that mention "pollution" only in passing won't have it as a title or keyword and so won't accumulate the high-weight credit.
+
+**Recommendation:** wait and re-evaluate after the next extraction run with TITLE+KEYWORDS active. If pollut\*-only false positives persist, then add the specific-compound anchor:
+
+```python
+anchors=["heavy metal*", "mercury", "PCB", "PFAS", "pesticide*", "contaminant*", "microplastic*"]
+```
+
+**TO REVIEW** at meeting after re-extraction.
 
 ## Item 14 — Validation page mockup (rules transparency)
 
@@ -308,19 +308,17 @@ So pressures fire most readily from Introduction/Methods/Discussion. A single me
 
 **Implemented directly in the production validation pages (2026-04-20):**
 
-Rather than a standalone mockup, the transparency additions were added to `validate.js` / `rules.json` / `style.css` so every validator sees them immediately:
+Two layers of rule transparency now live in production:
 
-1. **`rules.json`** now carries, per schema prefix:
-   - `_section_weights` — the per-section multipliers used by the extractor (synced from `_SECTION_WEIGHTS` in `extract_schema_columns.py`)
-   - `_proposal_url` — canonical link to the schema-proposal doc in this repo
-2. **`validate.js` `_renderRulesPalette`** now renders:
-   - A colour-coded section-weights table (green = 1.0, yellow = 0.5, grey = 0.25) so validators can see at a glance which paper sections count most for each schema
-   - A 📄 _Full schema proposal_ link opening the relevant proposal doc in a new tab
-3. **`style.css`** has a new block for the section-weights table and the proposal link (at EOF, clearly marked with date and issue reference)
+1. **Schema-level palette** (committed in `0ca2a672e`): the existing "Extraction rules" collapsible now shows, per schema, a colour-coded section-weights table (green ≥ 1.0, yellow ≥ 0.5, grey ≤ 0.25) and a 📄 _Full schema proposal_ link. After this commit's TITLE/KEYWORDS work, the table also includes the new TITLE and KEYWORDS columns at weight 2.0 (highlighted darker green via the `w-max` class).
+   - Data sources: `_section_weights` and `_proposal_url` injected into `docs/validate/assets/rules.json`; rendered in `validate.js`'s `_renderRulesPalette`.
+   - Visible on every validation page including Simon's: https://simondedman.github.io/elasmo_analyses/validate/A5086753224.html
 
-The existing evidence panel (`_renderEvidence`) already surfaces matched terms, their frequencies, and the section they appeared in — together with the new schema-meta block, every validator now has a complete picture per column: what the rule looks for, where it looks, how much those places count, what it actually found in this paper, and a link to the authoritative proposal.
-
-Visible on Simon's page: https://simondedman.github.io/elasmo_analyses/validate/A5086753224.html (after GitHub Pages rebuilds from this commit, ~2 min).
+2. **Per-column [?] inline disclosure — design preview ready, not yet wired into production:**
+   - Mockup file: [`2026-04-20_validation_ui_mockup.html`](./2026-04-20_validation_ui_mockup.html). Open in a browser; click any [?] in the right pane to see what the popover would look like.
+   - Design rationale (per Simon's "2 sounds good"): the schema-level palette requires the validator to scroll to find rule details. A per-column [?] icon answers "what does this column actually look for?" without leaving the rating row.
+   - Implementation cost: ~30 lines JS + ~40 lines CSS. No new data plumbing — same `rules.json` already feeds it.
+   - **TO REVIEW** at meeting; if endorsed, will be wired into `_renderPaperRow()` in a follow-up commit.
 
 ## Item 15 — IMP categories (full list, for review)
 
@@ -361,7 +359,7 @@ These are computed post-extraction from the 21 binary columns + per-paper contex
 
 ---
 
-# Alex's notes (item §4)
+# Alex's notes (item §3)
 
 Easy-review surface: yes — they live inside her validation JSON's per-paper `notes` fields. I extracted them; here are the substantive ones (rather than empty strings):
 
@@ -370,37 +368,10 @@ Easy-review surface: yes — they live inside her validation JSON's per-paper `n
 
 Plus the **author_corrections** block (silently dropped by old workflow until today's fix):
 - gender: blank → F
-- origin_country: RU → USA (NamSor mis-classification; see §5 below)
+- origin_country: RU → USA (NamSor mis-classification; see §4 below)
 - ethnicity: British → United States
 
-**Posting to issue #7:** willing to post a comment summarising Alex's substantive feedback + author_corrections to https://github.com/SimonDedman/elasmo_analyses/issues/7 — but holding off until you confirm. Comment text drafted in the next section (so you can review/amend before I post).
-
-### Draft comment for issue #7
-
-```
-Validation submission received from Alexandra McInturf (2026-04-20, PR #11).
-
-**Per-paper feedback (8 papers reviewed):**
-- Mostly partially_correct/incorrect ratings on imp_, a_, ob_, and gear_ schemas.
-- Sole substantive note: "Does behaviour change = behavioral response?" on
-  imp_behaviour_change (paper literature_id 27537). Suggests we should clarify
-  the distinction (or merge if there isn't one) in extraction_review_reference.md.
-
-**Author-self-corrections** (newly captured by the validation pipeline):
-- origin_country: RU → USA (NamSor's name-only origin model misclassified
-  "Alexandra G. McInturf" as Russian — surname is rare Scots-Irish, model
-  over-weighted "Alexandra" as Russian-signalling).
-- ethnicity: British → United States (NamSor diaspora endpoint returned
-  "British" with 33% probability — likely a heritage-vs-residence taxonomy
-  conflation; flagging as a UX issue for the validation UI).
-- gender: blank → F.
-
-Action: add Alex's overrides to `outputs/author_location_overrides.csv`
-once PR #11 merges, and audit other rare-surname authors for similar
-NamSor mis-classifications.
-```
-
-# Item §5 — NamSor source: name-only or name+context?
+# Item §4 — NamSor source: name-only or name+context?
 
 Verified from `scripts/enrich_namsor.py`:
 

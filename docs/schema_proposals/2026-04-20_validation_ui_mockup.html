@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mockup — per-column rule disclosure (validation UI)</title>
+  <style>
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+      max-width: 1100px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      color: #1f2937;
+      background: #f8fafc;
+    }
+    h1 { margin-top: 0; font-size: 1.4rem; color: #0f172a; }
+    h2 { margin-top: 2rem; font-size: 1.05rem; color: #334155; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.3rem; }
+    p.note { color: #64748b; font-size: 0.9rem; }
+
+    .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+    .pane {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 1rem;
+    }
+    .pane-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #64748b;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Mock schema-row styling — mirrors the production validate.css */
+    .schema-row {
+      border-top: 1px solid #f1f5f9;
+      padding: 0.5rem 0;
+    }
+    .schema-name {
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+    }
+    .col-list { font-size: 0.82rem; line-height: 1.6; color: #334155; }
+    .col-pill {
+      display: inline-block;
+      padding: 0.1rem 0.45rem;
+      border-radius: 12px;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 0.78rem;
+      margin: 0 0.2rem 0.2rem 0;
+      border: 1px solid #c7d2fe;
+    }
+    .col-pill.fired { background: #d1fae5; color: #065f46; border-color: #6ee7b7; }
+    .col-pill.unfired { background: #f1f5f9; color: #64748b; border-color: #cbd5e0; }
+
+    /* The [?] disclosure — proposed addition */
+    .rule-disc {
+      display: inline-block;
+      width: 1.05rem;
+      height: 1.05rem;
+      line-height: 1.05rem;
+      text-align: center;
+      border-radius: 50%;
+      background: #1e40af;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: 0.15rem;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: text-top;
+      border: none;
+      padding: 0;
+    }
+    .rule-disc:hover { background: #1d4ed8; }
+
+    /* Popover overlay */
+    .pop-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .pop-backdrop.open { display: flex; }
+    .pop-card {
+      background: #fff;
+      width: min(640px, 90vw);
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 8px;
+      padding: 1.2rem 1.4rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    }
+    .pop-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: #0f172a; }
+    .pop-card .col-id { font-family: ui-monospace, monospace; font-size: 0.85rem; color: #475569; }
+    .pop-card .pop-fired-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    .pop-card .pop-fired-badge.fired   { background: #d1fae5; color: #065f46; }
+    .pop-card .pop-fired-badge.unfired { background: #f1f5f9; color: #475569; }
+    .pop-grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+      margin-top: 0.7rem;
+    }
+    .pop-grid dt { color: #64748b; font-weight: 500; }
+    .pop-grid dd { margin: 0; color: #1e293b; }
+
+    .term-chip {
+      display: inline-block;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      background: #f1f5f9;
+      color: #334155;
+      font-family: ui-monospace, monospace;
+      font-size: 0.78rem;
+      margin: 0 0.2rem 0.2rem 0;
+      border: 1px solid #e2e8f0;
+    }
+    .term-chip.cs   { background: #fef3c7; border-color: #fcd34d; color: #78350f; }
+    .term-chip.anch { background: #dbeafe; border-color: #93c5fd; color: #1e3a8a; }
+    .term-chip.matched { background: #d1fae5; border-color: #6ee7b7; color: #065f46; font-weight: 600; }
+
+    .pop-section-table {
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      margin: 0.4rem 0 0.2rem;
+    }
+    .pop-section-table th, .pop-section-table td {
+      padding: 0.2rem 0.5rem;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .pop-section-table th { background: #f1f5f9; color: #475569; font-size: 0.7rem; font-weight: 500; }
+    .pop-section-table td.w-max  { background: #86efac; color: #14532d; font-weight: 700; }
+    .pop-section-table td.w-high { background: #dcfce7; color: #14532d; font-weight: 600; }
+    .pop-section-table td.w-med  { background: #fef9c3; color: #713f12; }
+    .pop-section-table td.w-low  { background: #f1f5f9; color: #64748b; }
+
+    .pop-evidence {
+      margin-top: 0.6rem;
+      padding: 0.5rem 0.7rem;
+      background: #f8fafc;
+      border-left: 3px solid #1d4ed8;
+      font-size: 0.78rem;
+      color: #334155;
+    }
+    .pop-evidence em { color: #64748b; }
+
+    .pop-close {
+      position: sticky;
+      top: 0;
+      float: right;
+      background: transparent;
+      border: 0;
+      font-size: 1.4rem;
+      color: #64748b;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .pop-card a { color: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <h1>Validation UI mockup — per-column [?] rule disclosure</h1>
+  <p class="note">
+    This is a static design preview for item §2.14 in the
+    <a href="2026-04-20_validation_synthesis.md">2026-04-20 validation synthesis</a>.
+    The schema-level "Extraction rules" palette (with section weights and proposal links) is
+    already live in the production validation pages as of commit
+    <code>0ca2a672e</code>. What's mocked-up here is the next iteration: a small <code>[?]</code>
+    button next to each individual column name that opens a popover with the column's
+    rule details. Click any [?] below to see what the popover would look like.
+  </p>
+
+  <h2>Side-by-side comparison</h2>
+  <div class="panes">
+
+    <div class="pane">
+      <div class="pane-label">Current UI (production)</div>
+      <p class="note">Validator sees only the column names; rule details are hidden inside a separate collapsible "Extraction rules" panel below.</p>
+      <div class="schema-row">
+        <div class="schema-name">Pressure / Threat <code>pr_</code></div>
+        <div class="col-list">
+          <span class="col-pill fired">pr_bycatch</span>
+          <span class="col-pill fired">pr_pollution_chemical</span>
+          <span class="col-pill unfired">pr_aquaculture</span>
+          <span class="col-pill unfired">pr_climate_change</span>
+          <span class="col-pill unfired">pr_habitat_loss</span>
+          <span class="col-pill unfired">pr_invasive</span>
+          <span class="col-pill unfired">pr_shipping</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pane">
+      <div class="pane-label">Proposed (with [?] disclosure)</div>
+      <p class="note">A 1em [?] button next to each column name; click → popover with terms, threshold, anchors, section weights, and what actually fired (or didn't) on this paper.</p>
+      <div class="schema-row">
+        <div class="schema-name">Pressure / Threat <code>pr_</code></div>
+        <div class="col-list">
+          <span class="col-pill fired">pr_bycatch</span><button class="rule-disc" data-col="pr_bycatch">?</button>
+          <span class="col-pill fired">pr_pollution_chemical</span><button class="rule-disc" data-col="pr_pollution_chemical">?</button>
+          <span class="col-pill unfired">pr_aquaculture</span><button class="rule-disc" data-col="pr_aquaculture">?</button>
+          <span class="col-pill unfired">pr_climate_change</span><button class="rule-disc" data-col="pr_climate_change">?</button>
+          <span class="col-pill unfired">pr_habitat_loss</span><button class="rule-disc" data-col="pr_habitat_loss">?</button>
+          <span class="col-pill unfired">pr_invasive</span><button class="rule-disc" data-col="pr_invasive">?</button>
+          <span class="col-pill unfired">pr_shipping</span><button class="rule-disc" data-col="pr_shipping">?</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>Implementation notes</h2>
+  <ul style="font-size:0.9rem;color:#334155;">
+    <li><strong>Data source:</strong> the popover reads from the same
+      <code>docs/validate/assets/rules.json</code> that already feeds the schema-level palette
+      (after the <code>0ca2a672e</code> commit it carries <code>terms</code>, <code>threshold</code>,
+      <code>anchors</code>, <code>case_sensitive_terms</code>, <code>_section_weights</code>, and
+      <code>_proposal_url</code>). No new data plumbing required.</li>
+    <li><strong>Wiring:</strong> in <code>validate.js</code>, when rendering each column pill in
+      <code>_renderPaperRow()</code>, append a <code>&lt;button class="rule-disc"
+      data-col="..."&gt;?&lt;/button&gt;</code>. A single delegated click handler on the page
+      reads <code>data-col</code>, looks up the rule in <code>_rules[prefix][colName]</code>,
+      and renders the popover.</li>
+    <li><strong>Why per-column inline rather than only schema-level:</strong> the schema palette
+      requires the validator to scroll past the rating UI to see rule details. The inline
+      <code>[?]</code> answers "what does this column actually look for?" without leaving the
+      rating row.</li>
+    <li><strong>Estimated work:</strong> ~30 lines of JS, ~40 lines of CSS, no new data or
+      build pipeline changes. Could land in a follow-up commit if the meeting endorses the
+      pattern.</li>
+  </ul>
+
+  <!-- Popover backdrop (hidden by default) -->
+  <div class="pop-backdrop" id="pop"><div class="pop-card" id="popCard"></div></div>
+
+  <script>
+    /* Mock rules data — in production this would be loaded from rules.json. */
+    const MOCK_RULES = {
+      "pr_bycatch": {
+        label: "Bycatch",
+        terms: ["bycatch", "by-catch", "incidental capture", "non-target", "discards"],
+        case_sensitive: [],
+        anchors: [],
+        threshold: 2,
+        fired: true,
+        evidence: "Matched in: METHODS (×3 'bycatch'), DISCUSSION (×2 'discards'). Score: 5.0 ≥ threshold 2 → FIRED.",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      },
+      "pr_pollution_chemical": {
+        label: "Chemical pollution",
+        terms: ["pollut*", "contaminant*", "heavy metal*", "mercury", "PCB", "PFAS", "pesticide*"],
+        case_sensitive: ["PCB", "PFAS"],
+        anchors: [],
+        threshold: 3,
+        fired: true,
+        evidence: "Matched in: KEYWORDS (×1 'mercury' @ weight 2.0 = 2.0), METHODS (×2 'mercury' @ weight 1.0 = 2.0). Total 4.0 ≥ threshold 3 → FIRED.",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      },
+      "pr_aquaculture": {
+        label: "Aquaculture",
+        terms: ["aquaculture", "fish farm*", "mariculture"],
+        case_sensitive: [],
+        anchors: [],
+        threshold: 2,
+        fired: false,
+        evidence: "Matched in: INTRODUCTION (×1 'aquaculture' @ weight 1.0 = 1.0). Total 1.0 < threshold 2 → did not fire (raised from threshold 1 on 2026-04-20 to suppress single-mention false positives).",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      },
+      "pr_climate_change": {
+        label: "Climate change",
+        terms: ["climate change", "global warming", "ocean warming"],
+        case_sensitive: [],
+        anchors: [],
+        threshold: 3,
+        fired: false,
+        evidence: "No matches found in this paper.",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      },
+      "pr_habitat_loss": {
+        label: "Habitat loss",
+        terms: ["habitat loss", "habitat degradation", "coastal development", "dredg*", "mangrove loss"],
+        case_sensitive: [],
+        anchors: [],
+        threshold: 2,
+        fired: false,
+        evidence: "No matches found.",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      },
+      "pr_invasive": {
+        label: "Invasive species",
+        terms: ["invasive species", "non-native species", "alien species"],
+        case_sensitive: [],
+        anchors: [],
+        threshold: 1,
+        fired: false,
+        evidence: "No matches found.",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      },
+      "pr_shipping": {
+        label: "Shipping",
+        terms: ["ship strike", "vessel strike", "maritime traffic"],
+        case_sensitive: [],
+        anchors: [],
+        threshold: 1,
+        fired: false,
+        evidence: "No matches found.",
+        proposal: "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+      }
+    };
+
+    /* Section-weight profile for pr_ schema (from rules.json's _section_weights). */
+    const PR_WEIGHTS = {
+      TITLE: 2.0, KEYWORDS: 2.0, ABSTRACT: 0.5, INTRODUCTION: 1.0,
+      METHODS: 1.0, RESULTS: 0.5, RESULTS_AND_DISCUSSION: 1.0,
+      DISCUSSION: 1.0, CONCLUSIONS: 0.5, OTHER: 0.25
+    };
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function renderPopover(col) {
+      const rule = MOCK_RULES[col];
+      if (!rule) return '<p>No data for ' + col + '.</p>';
+      const sections = ['TITLE','KEYWORDS','ABSTRACT','INTRODUCTION','METHODS','RESULTS','RESULTS_AND_DISCUSSION','DISCUSSION','CONCLUSIONS','OTHER'];
+      let h = '<button class="pop-close" onclick="closePop()">&times;</button>';
+      h += '<h3>' + escapeHtml(rule.label) + ' <span class="col-id">' + escapeHtml(col) + '</span>';
+      h += ' <span class="pop-fired-badge ' + (rule.fired ? 'fired' : 'unfired') + '">' + (rule.fired ? 'FIRED on this paper' : 'did not fire') + '</span>';
+      h += '</h3>';
+      h += '<dl class="pop-grid">';
+      h += '<dt>Threshold:</dt><dd>≥ ' + rule.threshold + ' (weighted)</dd>';
+      h += '<dt>Search terms:</dt><dd>';
+      rule.terms.forEach(t => {
+        const cls = rule.case_sensitive.includes(t) ? 'term-chip cs' : 'term-chip';
+        h += '<span class="' + cls + '">' + escapeHtml(t) + '</span>';
+      });
+      if (rule.case_sensitive.length) h += '<br><small style="color:#78350f;">amber chips = case-sensitive (must match exact case)</small>';
+      h += '</dd>';
+      if (rule.anchors && rule.anchors.length) {
+        h += '<dt>Anchors:</dt><dd>';
+        rule.anchors.forEach(a => h += '<span class="term-chip anch">' + escapeHtml(a) + '</span>');
+        h += '<br><small style="color:#1e3a8a;">at least one anchor must co-occur in the document for the column to fire</small></dd>';
+      }
+      h += '<dt>Section weighting:</dt><dd>';
+      h += '<table class="pop-section-table"><thead><tr>';
+      sections.forEach(s => h += '<th>' + s.replace(/_/g,' ') + '</th>');
+      h += '</tr></thead><tbody><tr>';
+      sections.forEach(s => {
+        const w = PR_WEIGHTS[s];
+        const wClass = w >= 2.0 ? 'w-max' : (w >= 1.0 ? 'w-high' : (w >= 0.5 ? 'w-med' : 'w-low'));
+        h += '<td class="' + wClass + '">' + w + '</td>';
+      });
+      h += '</tr></tbody></table>';
+      h += '<small>A keyword hit is multiplied by the section weight; a column fires when the weighted sum ≥ its threshold.</small>';
+      h += '</dd>';
+      h += '</dl>';
+      h += '<div class="pop-evidence"><strong>This paper:</strong> ' + escapeHtml(rule.evidence) + '</div>';
+      h += '<p style="margin-top:0.7rem;font-size:0.8rem;"><a href="' + rule.proposal + '" target="_blank">📄 Full schema proposal</a></p>';
+      return h;
+    }
+
+    function openPop(col) {
+      const card = document.getElementById('popCard');
+      card.innerHTML = renderPopover(col);
+      document.getElementById('pop').classList.add('open');
+    }
+    function closePop() { document.getElementById('pop').classList.remove('open'); }
+
+    document.addEventListener('click', e => {
+      if (e.target.classList.contains('rule-disc')) openPop(e.target.dataset.col);
+      else if (e.target.id === 'pop') closePop();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePop(); });
+  </script>
+</body>
+</html>

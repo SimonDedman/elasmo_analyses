@@ -1399,6 +1399,7 @@ a:hover {
   color: #475569;
   font-size: 0.7rem;
 }
+.section-weights-table td.w-max  { background: #86efac; color: #14532d; font-weight: 700; }
 .section-weights-table td.w-high { background: #dcfce7; color: #14532d; font-weight: 600; }
 .section-weights-table td.w-med  { background: #fef9c3; color: #713f12; }
 .section-weights-table td.w-low  { background: #f1f5f9; color: #64748b; }
