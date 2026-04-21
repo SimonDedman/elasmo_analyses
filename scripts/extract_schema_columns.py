@@ -2025,6 +2025,13 @@ def main() -> None:
         len(new_cols),
     )
 
+    # ---- 2026-04-20: write run summary for cross-run audit ----
+    try:
+        run_id = _write_run_summary(df, results_df, binary_cols, args)
+        logger.info("Run summary saved under: outputs/extraction_runs/%s/", run_id)
+    except Exception as exc:
+        logger.warning("Failed to write run summary: %s", exc)
+
     # Write evidence table
     if not evidence_df.empty:
         evidence_df.to_csv(EVIDENCE_CSV, index=False)
@@ -2040,6 +2047,98 @@ def main() -> None:
         new_ids = {str(r["literature_id"]) for r in results}
         save_processed_ids(RESUME_FILE, processed_ids | new_ids)
         logger.info("Resume state saved: %d total processed.", len(processed_ids | new_ids))
+
+
+def _write_run_summary(df, results_df, binary_cols, args):
+    """Snapshot run metadata for cross-run audit.
+
+    Writes to outputs/extraction_runs/<run_id>/:
+      - run_summary.json      (committed: per-column firing counts, schema
+                              summary, rule fingerprint, git SHA, args)
+      - rules_snapshot.json   (committed: copy of rules.json at run time)
+      - binary_classifications.parquet  (gitignored: per-paper binary cols
+                                         only, for diff_extraction_runs.py)
+    """
+    import hashlib
+    import json
+    import shutil
+    from datetime import datetime, timezone
+
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
+    try:
+        sha = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=str(PROJECT_BASE), text=True, timeout=5,
+        ).strip()
+        dirty = bool(subprocess.check_output(
+            ["git", "status", "--porcelain"],
+            cwd=str(PROJECT_BASE), text=True, timeout=5,
+        ).strip())
+    except Exception:
+        sha, dirty = "nogit", False
+    run_id = f"{ts}_{sha}{'-dirty' if dirty else ''}"
+
+    runs_dir = PROJECT_BASE / "outputs/extraction_runs" / run_id
+    runs_dir.mkdir(parents=True, exist_ok=True)
+
+    firing_counts = {
+        col: int(df[col].sum())
+        for col in binary_cols
+        if col in df.columns
+    }
+
+    schema_summary = {}
+    for schema in ALL_SCHEMAS:
+        present = [c.name for c in schema.columns if c.name in df.columns]
+        if not present:
+            continue
+        any_match = int((df[present].sum(axis=1) > 0).sum())
+        schema_summary[schema.prefix] = {
+            "n_columns": len(present),
+            "total_firings": sum(firing_counts.get(c, 0) for c in present),
+            "papers_with_any_match": any_match,
+        }
+
+    rules_path = PROJECT_BASE / "docs/validate/assets/rules.json"
+    script_path = PROJECT_BASE / "scripts/extract_schema_columns.py"
+    def _sha256_short(p):
+        try:
+            return hashlib.sha256(p.read_bytes()).hexdigest()[:16]
+        except Exception:
+            return "missing"
+
+    summary = {
+        "run_id": run_id,
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "git_commit_sha": sha,
+        "git_dirty": dirty,
+        "rules_fingerprint": _sha256_short(rules_path),
+        "script_fingerprint": _sha256_short(script_path),
+        "n_papers_in_parquet": int(len(df)),
+        "n_papers_processed_this_run": int(len(results_df)),
+        "args": {
+            "workers": args.workers,
+            "dry_run": args.dry_run,
+            "resume": args.resume,
+            "batch_size": args.batch_size,
+        },
+        "per_schema_summary": schema_summary,
+        "per_column_firing_counts": dict(sorted(firing_counts.items())),
+    }
+
+    (runs_dir / "run_summary.json").write_text(
+        json.dumps(summary, indent=2, ensure_ascii=False)
+    )
+    if rules_path.exists():
+        shutil.copy2(rules_path, runs_dir / "rules_snapshot.json")
+
+    # Per-paper binary classifications snapshot (gitignored).
+    snap_cols = ["literature_id"] + [c for c in binary_cols if c in df.columns]
+    df[snap_cols].to_parquet(
+        runs_dir / "binary_classifications.parquet", index=False,
+    )
+
+    return run_id
 
 
 if __name__ == "__main__":
