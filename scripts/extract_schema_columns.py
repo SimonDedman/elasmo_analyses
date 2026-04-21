@@ -104,7 +104,7 @@ ECO = SchemaCategory(prefix="eco_", columns=[
     BinaryColumn("eco_demersal", ["demersal", "benthic", "bottom-dwelling", "epibenthic", "benthopelagic"], threshold=2),
     # Specific habitat terms — lower threshold
     BinaryColumn("eco_reef", ["coral reef", "reef-associated", "rocky reef"], threshold=1),
-    BinaryColumn("eco_deepwater", ["deep-sea", "deep-water", "abyssal", "hadal", "bathyal", "seamount"], threshold=2),
+    BinaryColumn("eco_deepwater", ["deep-sea", "deep-water", "deepwater", "deep water", "abyssal", "hadal", "bathyal", "seamount"], threshold=2),  # 2026-04-20 (DRG): added "deepwater"/"deep water" hyphen variants
     BinaryColumn("eco_intertidal", ["intertidal", "tide pool", "littoral"], threshold=1),
     BinaryColumn("eco_mangrove", ["mangrove"], threshold=2),
     BinaryColumn("eco_seagrass", ["seagrass", "eelgrass", "Posidonia", "Zostera", "Thalassia"], threshold=1),
@@ -189,7 +189,9 @@ GEAR = SchemaCategory(prefix="gear_", columns=[
     BinaryColumn("gear_mit_pinger", ["pinger", "acoustic alarm", "acoustic deterrent", "porpoise alerting device", "PAL"], threshold=1, case_sensitive_terms={"PAL"}),  # AC fix
     BinaryColumn("gear_mit_illumination", ["illuminat* net", "illuminat* gillnet", "LED net", "net light*", "lightstick*", "light attract*"], threshold=1),
     BinaryColumn("gear_mit_wire_leader", ["wire leader", "monofilament leader", "wire trace", "nylon leader"], threshold=1),
-    BinaryColumn("gear_mit_ghost", ["ghost gear", "ghost net", "ALDFG", "abandoned gear", "lost gear", "derelict gear", "derelict fishing"], threshold=1, case_sensitive_terms={"ALDFG"}),  # AC fix
+    # 2026-04-20 (DRG): renamed from gear_mit_ghost — ghost gear is a gear category
+    # (abandoned/lost), not a mitigation measure. Added "ghost fishing" variant.
+    BinaryColumn("gear_ghost", ["ghost gear", "ghost net", "ghost fishing", "ALDFG", "abandoned gear", "lost gear", "derelict gear", "derelict fishing"], threshold=1, case_sensitive_terms={"ALDFG"}),  # AC fix
 ])
 
 # ---- Impact schema (with scoring/anchors) ---------------------------------
@@ -229,7 +231,7 @@ DISC = SchemaCategory(prefix="d_", columns=[
     BinaryColumn("d_trophic", ["trophic", "diet", "feeding ecology", "stomach content*", "prey composition", "stable isotope", "fatty acid", "food web"], threshold=2),
     BinaryColumn("d_genetics", ["genetic*", "genomic*", "eDNA", "environmental DNA", "microsatellite", "mitochondrial", "phylogenet*", "haplotype", "SNP", "RADseq", "population genetics"], threshold=2, case_sensitive_terms={"eDNA", "SNP"}),  # AC fix
     BinaryColumn("d_movement", ["movement", "telemetry", "satellite tag*", "acoustic tag*", "archival tag*", "home range", "migration", "habitat use", "space use", "tracking"], threshold=3),
-    BinaryColumn("d_fisheries", ["stock assessment", "fisheries management", "catch data", "fishing mortality", "maximum sustainable yield", "MSY", "fishery-dependent", "fishery-independent"], threshold=2, case_sensitive_terms={"MSY"}),  # AC fix
+    BinaryColumn("d_fisheries", ["stock assessment", "fisheries management", "catch data", "fishing mortality", "maximum sustainable yield", "MSY", "fishery-dependent", "fishery-independent", "bycatch", "discard*", "retention", "non-target species", "non-target catch"], threshold=2, case_sensitive_terms={"MSY"}),  # 2026-04-20 (DRG): added bycatch/discard/retention/non-target
     BinaryColumn("d_conservation", ["conservation", "endangered", "CITES", "IUCN", "Red List", "protected area", "marine protected area", "recovery plan", "conservation status"], threshold=3, case_sensitive_terms={"CITES", "IUCN"}),  # AC fix
     BinaryColumn("d_data_science", ["machine learning", "deep learning", "neural network", "random forest", "Bayesian", "meta-analysis", "systematic review", "simulation model"], threshold=2),
     # Finer-grained disciplines — lower threshold (specific terms)
