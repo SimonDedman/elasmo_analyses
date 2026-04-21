@@ -605,7 +605,8 @@
     html += '<div class="rules-palette-body">';
 
     // Schema-level criteria block
-    if (prefixRules._description || prefixRules._criteria || prefixRules.source) {
+    if (prefixRules._description || prefixRules._criteria || prefixRules.source ||
+        prefixRules._section_weights || prefixRules._proposal_url) {
       html += '<div class="rules-schema-meta">';
       if (prefixRules._description) {
         html += '<p class="rules-schema-desc">' + escapeHtml(prefixRules._description) + '</p>';
@@ -623,8 +624,34 @@
         }
         html += '</p>';
       }
+      // Section-weight table: which paper sections count most for this schema
+      if (prefixRules._section_weights) {
+        var sw = prefixRules._section_weights;
+        var sectionOrder = ['ABSTRACT','INTRODUCTION','METHODS','RESULTS','RESULTS_AND_DISCUSSION','DISCUSSION','CONCLUSIONS','OTHER'];
+        html += '<div class="rules-section-weights"><strong>Section weighting:</strong>';
+        html += '<table class="section-weights-table"><thead><tr>';
+        for (var si = 0; si < sectionOrder.length; si++) {
+          if (sw[sectionOrder[si]] != null) {
+            html += '<th>' + escapeHtml(sectionOrder[si].replace(/_/g,' ')) + '</th>';
+          }
+        }
+        html += '</tr></thead><tbody><tr>';
+        for (var si2 = 0; si2 < sectionOrder.length; si2++) {
+          if (sw[sectionOrder[si2]] != null) {
+            var w = sw[sectionOrder[si2]];
+            var wClass = w >= 1.0 ? 'w-high' : (w >= 0.5 ? 'w-med' : 'w-low');
+            html += '<td class="' + wClass + '">' + escapeHtml(String(w)) + '</td>';
+          }
+        }
+        html += '</tr></tbody></table>';
+        html += '<p class="section-weights-note">A keyword hit in a section is multiplied by its weight; a column fires when the weighted sum of hits ≥ its threshold.</p>';
+        html += '</div>';
+      }
       if (prefixRules.source) {
         html += '<p class="rules-schema-source"><em>Source: ' + escapeHtml(prefixRules.source) + '</em></p>';
+      }
+      if (prefixRules._proposal_url) {
+        html += '<p class="rules-schema-proposal"><a href="' + escapeHtml(prefixRules._proposal_url) + '" target="_blank" rel="noopener">&#128196; Full schema proposal</a></p>';
       }
       html += '</div>';
     }
@@ -1753,7 +1780,7 @@
     var genderVal = (ac.gender && ac.gender.corrected) ? ac.gender.corrected : (ns.gender || '');
     var genderOrig = ns.gender || '';
     ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
-    ehtml += '<span title="NamSor gender inference (probability: ' + escapeHtml(ns.gender_probability || '?') + ')"><strong>Gender</strong></span>';
+    ehtml += '<span title="NamSor gender inference (probability: ' + escapeHtml(ns.gender_probability || '?') + ')"><strong>Gender*</strong></span>';
     ehtml += '<select id="namsor-gender" class="namsor-edit" data-field="gender" data-original="' + escapeHtml(genderOrig) + '">';
     var genderOptions = ['', 'M', 'F', 'Non-binary', 'Unknown'];
     var genderLabels  = ['— select —', 'M (male)', 'F (female)', 'Non-binary', 'Unknown'];
@@ -1771,7 +1798,7 @@
     var originVal = (ac.origin_country && ac.origin_country.corrected) ? ac.origin_country.corrected : (ns.origin_country || '');
     var originOrig = ns.origin_country || '';
     ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
-    ehtml += '<span title="NamSor inferred origin country"><strong>Origin country</strong>';
+    ehtml += '<span title="NamSor inferred origin country"><strong>Origin country*</strong>';
     if (ns.origin_region) { ehtml += ' <span style="font-weight:normal;color:#868e96;">(' + escapeHtml(ns.origin_region) + ')</span>'; }
     ehtml += '</span>';
     ehtml += '<input type="text" id="namsor-origin" class="namsor-edit" data-field="origin_country" data-original="' + escapeHtml(originOrig) + '"';
@@ -1785,7 +1812,7 @@
     var ethVal = (ac.ethnicity && ac.ethnicity.corrected) ? ac.ethnicity.corrected : (ns.ethnicity || '');
     var ethOrig = ns.ethnicity || '';
     ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
-    ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity / diaspora</strong></span>';
+    ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity / diaspora*</strong></span>';
     ehtml += '<input type="text" id="namsor-ethnicity" class="namsor-edit" data-field="ethnicity" data-original="' + escapeHtml(ethOrig) + '"';
     ehtml += ' list="ethnicity-list" value="' + escapeHtml(ethVal) + '" placeholder="start typing..." style="width:14rem;">';
     if (ac.ethnicity) {
@@ -1794,7 +1821,7 @@
     ehtml += '</label>';
 
     ehtml += '</div>';
-    ehtml += '<p style="margin:0.4rem 0 0;color:#868e96;font-size:0.75rem;">NamSor inference — corrections welcome. Changes saved automatically.</p>';
+    ehtml += '<p style="margin:0.4rem 0 0;color:#868e96;font-size:0.75rem;">Corrections welcome. Changes saved automatically. *NamSor inference from name &amp; country only.</p>';
 
     // Datalists for autocomplete
     ehtml += '<datalist id="origin-country-list">';

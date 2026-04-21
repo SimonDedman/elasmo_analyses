@@ -146,7 +146,21 @@ References to "§3 item N" below match the numbered list above.
 - `data/species_common_lookup_cleaned.csv` (3,016 rows) had no entry under *Aetomylaeus bovinus* OR its historical name *Pteromylaeus bovinus*. The only "bull ray" record was *Myliobatis aquila* (different genus).
 - However, `data/sharkipedia/species_match_sharkipedia_only.csv` DOES contain `Aetomylaeus bovinus` (1 trend record). This means the species exists in Sharkipedia but failed to make it into our species lookup pipeline.
 - **Likely root cause:** the `sp_` list was built from an older taxonomic snapshot when the species was still classified as *Pteromylaeus bovinus*. The 2016 revision moved it to *Aetomylaeus*; our lookup CSV did not capture this transition.
-- **Action item:** review the species-lookup build script (`scripts/clean_species_lookup.R`) and rerun against current Shark References + Sharkipedia + IUCN species lists to catch any other taxonomic-revision misses. The `species_match_sharkipedia_only` file is the audit trail — 133 species are in Sharkipedia but absent from EEA, suggesting the gap is wider than this one species.
+
+**Terminology clarification — "EEA" in this context:**
+The comparison was:
+- **"EEA list" = the `sp_*` columns in `outputs/literature_review.duckdb`** (1,308 columns, now 1,309 with bovinus). This set was originally built from the Shark References master species list; that's the de-facto EEA master.
+- **"Sharkipedia list" = `data/sharkipedia/Sharkipedia-Taxonomy-v1.0-22-01-25.csv`** (1,282 species, dated **2022-01-25** — 3+ years old).
+- `scripts/match_species_sharkipedia.py` diffs these two. Outputs land in `data/sharkipedia/species_match_{both,eea_only,sharkipedia_only}.csv`.
+
+So the figure is:
+- **1,177** species appear in both lists
+- **131** species in our `sp_` columns but not in Sharkipedia's 2022 snapshot (mostly newly-described taxa: *Acroteriobatus andysabini* named 2019, etc.)
+- **133** species in Sharkipedia's 2022 snapshot but not in our `sp_` columns (taxonomic-revision misses like *Aetomylaeus bovinus*, plus multi-species combined entries like "Alopias superciliosus,vulpinus")
+
+The 133 is against a 3-year-old Sharkipedia snapshot — a fresh pull would likely find a different figure. The real audit should be against **Shark References** (our upstream source) AND current Sharkipedia/IUCN, not against a frozen 2022 CSV.
+
+- **Action item:** run a species-list refresh against current Shark References + fresh Sharkipedia API pull + IUCN Red List species list; identify genus-revision misses and populate `sp_` accordingly.
 
 ## Item 5 — `imp_biomass`: section eligibility & co-occurrence linkage
 
@@ -292,7 +306,21 @@ So pressures fire most readily from Introduction/Methods/Discussion. A single me
 3. Also add a **"current matches" panel** showing what the matcher actually fired on (this is the existing evidence panel — already present).
 4. For columns that did NOT fire on this paper but the validator wants to know what the rule looks like, the `[?]` is the answer.
 
-**Mockup HTML:** delivered separately as `docs/schema_proposals/2026-04-20_validation_ui_mockup.html` (single-page proof-of-concept showing the proposed disclosure pattern on a sample paper). Pending request — want me to build it now or after meeting input?
+**Implemented directly in the production validation pages (2026-04-20):**
+
+Rather than a standalone mockup, the transparency additions were added to `validate.js` / `rules.json` / `style.css` so every validator sees them immediately:
+
+1. **`rules.json`** now carries, per schema prefix:
+   - `_section_weights` — the per-section multipliers used by the extractor (synced from `_SECTION_WEIGHTS` in `extract_schema_columns.py`)
+   - `_proposal_url` — canonical link to the schema-proposal doc in this repo
+2. **`validate.js` `_renderRulesPalette`** now renders:
+   - A colour-coded section-weights table (green = 1.0, yellow = 0.5, grey = 0.25) so validators can see at a glance which paper sections count most for each schema
+   - A 📄 _Full schema proposal_ link opening the relevant proposal doc in a new tab
+3. **`style.css`** has a new block for the section-weights table and the proposal link (at EOF, clearly marked with date and issue reference)
+
+The existing evidence panel (`_renderEvidence`) already surfaces matched terms, their frequencies, and the section they appeared in — together with the new schema-meta block, every validator now has a complete picture per column: what the rule looks for, where it looks, how much those places count, what it actually found in this paper, and a link to the authoritative proposal.
+
+Visible on Simon's page: https://simondedman.github.io/elasmo_analyses/validate/A5086753224.html (after GitHub Pages rebuilds from this commit, ~2 min).
 
 ## Item 15 — IMP categories (full list, for review)
 

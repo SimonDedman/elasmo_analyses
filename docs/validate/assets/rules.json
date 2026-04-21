@@ -91,6 +91,8 @@
       "terms": [
         "deep-sea",
         "deep-water",
+        "deepwater",
+        "deep water",
         "abyssal",
         "hadal",
         "bathyal",
@@ -222,7 +224,18 @@
       "threshold": 1,
       "anchors": [],
       "case_sensitive_terms": []
-    }
+    },
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 1.0,
+      "METHODS": 1.0,
+      "RESULTS": 0.5,
+      "RESULTS_AND_DISCUSSION": 0.5,
+      "DISCUSSION": 0.5,
+      "CONCLUSIONS": 0.5,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ecosystem_component_proposal.md"
   },
   "pr_": {
     "_description": "Pressure / threat — 26 binary columns covering fishing types, climate stressors, pollution, habitat loss, invasive species, bycatch, and disturbance.",
@@ -535,7 +548,18 @@
       "threshold": 1,
       "anchors": [],
       "case_sensitive_terms": []
-    }
+    },
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 1.0,
+      "METHODS": 1.0,
+      "RESULTS": 0.5,
+      "RESULTS_AND_DISCUSSION": 1.0,
+      "DISCUSSION": 1.0,
+      "CONCLUSIONS": 0.5,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
   },
   "gear_": {
     "_description": "Fishing gear — 28 binary columns covering gear types (longline, gillnet, trawl…) and BMIS-derived mitigation measures (circle hooks, leader material…).",
@@ -891,7 +915,18 @@
       "case_sensitive_terms": [
         "ALDFG"
       ]
-    }
+    },
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 0.25,
+      "METHODS": 1.0,
+      "RESULTS": 0.5,
+      "RESULTS_AND_DISCUSSION": 0.5,
+      "DISCUSSION": 0.25,
+      "CONCLUSIONS": 0.25,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/gear_proposal.md"
   },
   "imp_": {
     "_description": "Impact / response — 21 binary topic columns plus 4 meta summary columns (direction, quantified, confidence, is_bycatch).",
@@ -1290,7 +1325,18 @@
         "None  → pr_bycatch = 1 but target species unclear or is itself an elasmobranch."
       ],
       "source": "scripts/extract_schema_columns.py → bycatch_direction()"
-    }
+    },
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 0.25,
+      "METHODS": 0.5,
+      "RESULTS": 1.0,
+      "RESULTS_AND_DISCUSSION": 1.0,
+      "DISCUSSION": 1.0,
+      "CONCLUSIONS": 0.5,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/impact_proposal.md"
   },
   "d_": {
     "_description": "Discipline — 19 binary columns classifying the research area (biology, behaviour, trophic, genetics, movement, fisheries, data science, taxonomy…).",
@@ -1387,7 +1433,12 @@
         "maximum sustainable yield",
         "MSY",
         "fishery-dependent",
-        "fishery-independent"
+        "fishery-independent",
+        "bycatch",
+        "discard*",
+        "retention",
+        "non-target species",
+        "non-target catch"
       ],
       "threshold": 2,
       "anchors": [],
@@ -1606,7 +1657,18 @@
       "threshold": 2,
       "anchors": [],
       "case_sensitive_terms": []
-    }
+    },
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 0.5,
+      "METHODS": 1.0,
+      "RESULTS": 1.0,
+      "RESULTS_AND_DISCUSSION": 1.0,
+      "DISCUSSION": 0.5,
+      "CONCLUSIONS": 0.5,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/discipline_proposal.md"
   },
   "b_": {
     "_description": "Ocean basin — 9 binary columns indicating which ocean basin(s) the study covers.",
@@ -1764,13 +1826,35 @@
       "threshold": 2,
       "anchors": [],
       "case_sensitive_terms": []
-    }
+    },
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 1.0,
+      "METHODS": 1.0,
+      "RESULTS": 0.5,
+      "RESULTS_AND_DISCUSSION": 0.5,
+      "DISCUSSION": 0.5,
+      "CONCLUSIONS": 0.5,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ocean_basin_proposal.md"
   },
   "sb_": {
     "_description": "Ocean sub-basin — 66 binary columns covering finer geographic regions (Mediterranean, Gulf of Mexico, Sea of Japan, California Current, …).",
     "_criteria": "Sub-basin name or distinctive sub-region matched in full PDF text; column triggers when cumulative term frequency ≥ column threshold (typically 2). Full per-column term lists are defined in scripts/extract_schema_columns.py.",
     "source": "scripts/extract_schema_columns.py",
-    "column_count": 66
+    "column_count": 66,
+    "_section_weights": {
+      "ABSTRACT": 0.5,
+      "INTRODUCTION": 1.0,
+      "METHODS": 1.0,
+      "RESULTS": 0.5,
+      "RESULTS_AND_DISCUSSION": 0.5,
+      "DISCUSSION": 0.5,
+      "CONCLUSIONS": 0.5,
+      "OTHER": 0.25
+    },
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ocean_basin_proposal.md"
   },
   "sp_": {
     "_description": "Species — 1,308 integer columns, one per elasmobranch species or broader taxon in the Shark References database.",
@@ -1778,7 +1862,8 @@
     "source": "scripts/extract_species_techniques_from_pdfs.py",
     "column_count": 1308,
     "storage": "int16 (raw frequency)",
-    "trigger_threshold": 2
+    "trigger_threshold": 2,
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/species_proposal.md"
   },
   "a_": {
     "_description": "Analytical techniques — 215 integer columns, one per technique in the taxonomy (telemetry, isotopes, genetics, modelling…).",
@@ -1786,16 +1871,19 @@
     "source": "scripts/extract_species_techniques_from_pdfs.py",
     "column_count": 215,
     "storage": "int16 (raw frequency)",
-    "trigger_threshold": 2
+    "trigger_threshold": 2,
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/analytical_techniques_proposal.md"
   },
   "ob_": {
     "_description": "Ocean basin (geographic) — basin assignment derived from the study's reported geographic coordinates or country rather than from full-text keyword matching.",
     "_criteria": "Populated from the geographic-extraction pipeline (database/technique_taxonomy.db → paper_geography). A paper is assigned to an ocean basin when its extracted study coordinates or country fall within the basin's boundaries. Distinct from b_ which is text-based: ob_ reflects where the research actually happened, b_ reflects what basins the paper discusses.",
-    "source": "Geographic extraction pipeline — see docs/geographic/"
+    "source": "Geographic extraction pipeline — see docs/geographic/",
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ocean_basin_proposal.md"
   },
   "depth_": {
     "_description": "Depth — sampling / study depth range where reported.",
     "_criteria": "Min and max depths (in metres) extracted from the full PDF text by regex on numeric-with-unit patterns (e.g. '10-200 m', 'between 50 and 300 m'). depth_range is the combined text string; depth_min_m and depth_max_m are the parsed numeric extremes.",
-    "source": "scripts/extract_schema_columns.py"
+    "source": "scripts/extract_schema_columns.py",
+    "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/depth_proposal.md"
   }
 }

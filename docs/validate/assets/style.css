@@ -1368,3 +1368,52 @@ a:hover {
   color: #64748b;
   font-style: italic;
 }
+
+/* ============================================================================
+   Schema-level rule transparency — section weights table + proposal link
+   Added 2026-04-20 per Simon Dedman's request (item §3.14 in validation synthesis)
+   ========================================================================== */
+.rules-section-weights {
+  margin: 0.6rem 0;
+  padding: 0.5rem 0.7rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+}
+.rules-section-weights strong { display: block; margin-bottom: 0.3rem; font-size: 0.82rem; color: #334155; }
+.section-weights-table {
+  border-collapse: collapse;
+  font-size: 0.75rem;
+  margin: 0.25rem 0 0.35rem;
+}
+.section-weights-table th,
+.section-weights-table td {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  min-width: 3rem;
+}
+.section-weights-table th {
+  background: #f1f5f9;
+  font-weight: 500;
+  color: #475569;
+  font-size: 0.7rem;
+}
+.section-weights-table td.w-high { background: #dcfce7; color: #14532d; font-weight: 600; }
+.section-weights-table td.w-med  { background: #fef9c3; color: #713f12; }
+.section-weights-table td.w-low  { background: #f1f5f9; color: #64748b; }
+.section-weights-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.7rem;
+  color: #64748b;
+  font-style: italic;
+}
+.rules-schema-proposal {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+}
+.rules-schema-proposal a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+.rules-schema-proposal a:hover { text-decoration: underline; }
