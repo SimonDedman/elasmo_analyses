@@ -2,7 +2,65 @@
 
 *Technical documentation for `scripts/extract_schema_columns.py`*
 
-*Last updated: 2026-04-20*
+*Last updated: 2026-04-21*
+
+---
+
+## Synthetic-section pollution fix (added 2026-04-21)
+
+The 2026-04-20 TITLE/KEYWORDS injection (see below) had a subtle defect. After prepending `TITLE\n<title>\n\n` and `KEYWORDS\n<block>\n\n`, `_label_sections()` scans line-by-line for section-header matches. Every line between the injected header and the *next* recognised header stays attached to the injected label. For papers whose body text does not hit a detected header promptly (e.g. where Abstract is not on a line by itself, so `_ABSTRACT_RE` fails), TITLE ended up absorbing all of the author and affiliation text at weight 2.0. Paper 27537 (McInturf 2019) fired `d_conservation` with weighted score 6.0 purely from the phrase "Department of Wildlife, Fish and Conservation Biology" in the author-affiliation footnote.
+
+Three coordinated changes close this hole:
+
+1. **OTHER terminator injection.** TITLE and KEYWORDS injections now write `TITLE\n<title>\nOTHER\n\n` and `KEYWORDS\n<block>\nOTHER\n\n`. A new `("OTHER", ^OTHER\s*$)` entry sits at the bottom of `_SECTION_PATTERNS` so the terminator line is recognised as a header boundary. Both synthetic sections are now strictly one chunk wide.
+2. **OTHER weighted to zero.** `_SECTION_WEIGHTS` entries for `OTHER` were `0.25` across all seven schemas. They are now `0.0`. Text the labeller cannot attribute to a named section contributes no score — front matter, author affiliations, and any lines between detected section headers that don't form part of a labelled section.
+3. **Springer-affiliation paragraph removal.** `strip_non_body_sections()` gained a `_strip_affiliation_blocks()` pass (step 1b) that removes affiliation footnotes appearing after the Abstract. A line at the start of a paragraph matching `(?:[A-Z]\.\s*){1,3}[A-Z][a-z]{2,}(?::|·|&|;)(?:[A-Z]\.\s*){1,3}[A-Z][a-z]{2,}` (two-or-more author-initials-runs joined by `:`, `·`, `&`, or `;` — but NOT comma, to avoid matching mid-sentence citations) is treated as a candidate block start; if the block (extended to the next blank line) contains an institution keyword (`Department|Institute|School|Laboratory|Faculty|College|Aquarium|Museum|Foundation|Consultants|Centro|Istituto|Universit...`), it is removed. Verified on 27537: conservation-term occurrences drop from 4 → 1 (only the legitimate IUCN citation remains).
+
+The affiliation-block heuristic is pattern-specific to Springer-style layouts. Future layouts (Elsevier, Wiley, IEEE) may need additional patterns; extend `_SPRINGER_AFFIL_START_RE` or add layout-specific rules.
+
+---
+
+## Study-type classification (added 2026-04-21)
+
+The parquet column `study_type` was previously a hardcoded `"empirical"` default set by `shark_references_to_sql.py`. It now carries a classification into one of six mutually-exclusive labels determined at extraction time from TITLE and KEYWORDS only:
+
+| Label | Triggers (examples) |
+|---|---|
+| `corrigendum` | "corrigendum", "erratum", "correction to", "publisher's note", "retraction notice" |
+| `letter` | "letter to the editor", "reply to", "response to", "commentary on", "brief communication", "rebuttal" |
+| `review` | "systematic review", "narrative review", "literature review", "review paper/article", "comprehensive review", "mini-review", "scoping review", "meta-analysis", "umbrella review" |
+| `synthesis` | "research synthesis", "a synthesis", "synthesis of", "synthesising" |
+| `conceptual` | "conceptual framework", "methodological framework", "theoretical framework", "perspective(s) on", "opinion piece", "viewpoint" |
+| `empirical` | default if no other label matches |
+
+Priority order is most-specific-first: a corrigendum of a review still classifies as `corrigendum`; a meta-analysis that mentions "synthesis" still classifies as `review`.
+
+Body text is NOT examined because reviews are routinely cited inside empirical papers, which would trigger false-positive review classifications. Only TITLE and KEYWORDS (author-intent signals) drive the classification.
+
+Downstream analyses that want primary-data-only queries should filter `study_type == "empirical"`. Alex McInturf's 2026-04-21 feedback flagged the current (hardcoded) behaviour as a false-negative source: catch-data and review papers were inheriting every schema tag from their case-study examples. The new classification gives a single filter to exclude reviews and non-primary-data papers from trend analyses.
+
+Accuracy needs manual cross-check against known-correct labels after re-extraction.
+
+---
+
+## Depth extraction (rewritten 2026-04-21)
+
+The previous depth regex `[><~≈]?\s*(\d{1,5}(?:\.\d+)?)\s*m` had an empty-matchable prefix: the `[><~≈]?\s*` alternative allowed any number followed by `m` to match, so body-measurement values (e.g. `5–8 m` for basking shark total length) were captured as depth values.
+
+The new implementation requires a bathymetric-context word within ~60 characters before the number. `_DEPTH_CONTEXT` covers `depth(s)?`, `bathym(etric|etry)?`, `benthic`, `demersal zone`, `water column`, `sea floor`, `below (the) surface`, plus deployment/capture verbs (`caught at|in`, `captured at|in`, `collected at|in|from`, `sampled at|in|from`, `tagged at|in`, `set at|to`, `fished at|in`, `deployed at|to|in`, `hooked at`, `longline at|to`, `trawl(ed) at|between|from`, `dive(d|s) to`, `CTD`, `vertical profile`, `descended to`, `lowered to`, `down to`, `recorded at|to|from`).
+
+Two patterns:
+
+- `_DEPTH_RANGE_RE` — `<CONTEXT> ... (\d+)(-|–|—|to)(\d+) m` — depth ranges like "caught between 200 and 400 m".
+- `_DEPTH_SINGLE_RE` — `<CONTEXT> ... (\d+) m` — single values like "deployed at 50 m depth". Only tried if no range match fired, to avoid double-counting range endpoints as singles.
+
+`extract_depth()` now returns an `_evidence` key: a list of evidence-row dicts with `matched_terms`, `section`, and a 160-char `context` snippet in which the matched numeric span is bracketed (`...descended to [350 m] in the channel...`). These rows are appended to `schema_extraction_evidence.csv` during `_match_paper()` so reviewers see the same per-match evidence UI for depth as for other schemas. Previously depth emitted zero evidence rows (evidence CSV had 0 `depth_*` rows of ~260K total).
+
+Smoke-test (2026-04-21):
+
+- "Basking sharks reaching 5 to 8 m in total length" → **no depth extracted** (body measurement correctly rejected)
+- "CTD casts deployed at depths of 50-200 m" → **50–200 m** (context word `depth` + deployment verb both present)
+- "7 m basking shark diving to a maximum depth of 350 m" → **350 m** (the 7 m body size is rejected, the 350 m depth is captured)
 
 ---
 

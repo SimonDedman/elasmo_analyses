@@ -1,9 +1,9 @@
 # Proposed Schema: Depth
 
-**Status:** Active — regex extraction from full PDF text; evidence rows added 2026-04-16
+**Status:** Active — regex extraction from full PDF text; evidence rows added 2026-04-16; regex tightened 2026-04-21
 **Column prefix:** `depth_`
 **Team lead:** Chris Mull
-**Source:** Regex patterns in `scripts/extract_schema_columns.py`; evidence writing via `scripts/extract_species_techniques_from_pdfs.py`
+**Source:** Regex patterns and evidence-row emission in `scripts/extract_schema_columns.py` (moved here 2026-04-21 from the separate secondary pass)
 
 ## Purpose
 
@@ -25,29 +25,36 @@ For single-value statements (e.g., "depth of 500 m"), both `depth_min_m` and `de
 
 `scripts/extract_schema_columns.py` (regex extraction); `scripts/extract_species_techniques_from_pdfs.py` (evidence row writing, added 2026-04-16).
 
-### Regex Patterns
+### Regex Patterns (tightened 2026-04-21)
 
-Two pattern families are applied to the full PDF text:
+Both range and single-value patterns now require a bathymetric-context word within ~60 characters before the numeric match. The prior permissive prefix `[><~≈]?\s*` was empty-matchable and captured body measurements (e.g., basking-shark total length "5–8 m") as depth values.
 
-**Range pattern** — matches explicit depth ranges:
-
-```
-depths? of (\d+(?:\.\d+)?)\s*(?:to|–|-)\s*(\d+(?:\.\d+)?)\s*m
-\b(\d+(?:\.\d+)?)\s*(?:to|–|-)\s*(\d+(?:\.\d+)?)\s*m\b
-```
-
-Examples matched: "0–200 m", "depths of 150 m to 300 m", "10 to 800 m depth".
-
-**Single pattern** — matches single depth values with optional qualifiers:
+**Context prefix** (required before every match):
 
 ```
-depth[s]? of\s*([><=~≈±]?\s*\d+(?:\.\d+)?)\s*m
-\b([><=~≈±]?\s*\d+(?:\.\d+)?)\s*m depth
+depth(s)?|bathym(etric|etry)?|benthic|demersal zone|water column|
+sea floor|below (the) surface|
+caught (at|in)|captured (at|in)|collected (at|in|from)|
+sampled (at|in|from)|tagged (at|in)|set (at|to)|fished (at|in)|
+deployed (at|to|in)|submerged|lowered to|down to|
+recorded (at|to|from)|hook(s|ed) (at|to|in)|
+longline (at|to)|trawl(ed) (at|between|from)|dive(s|d) to|
+CTD|vertical profile|descended to
 ```
 
-Examples matched: "depth of 500 m", ">200 m depth", "~350 m".
+**Range pattern:** `<CONTEXT>[^.\n]{0,60}?(\d+(?:\.\d+)?)\s*(-|–|—|\s+to\s+)\s*(\d+(?:\.\d+)?)\s*(m\b|meters?\b|metres?\b)`
 
-When multiple depth values are found in a paper, `depth_min_m` takes the smallest and `depth_max_m` takes the largest. `depth_range` is set to the corresponding `"min–max m"` text (or a single value if min = max).
+**Single pattern** (only attempted if range failed, to avoid double-counting endpoints): `<CONTEXT>[^.\n]{0,60}?(\d+(?:\.\d+)?)\s*(m\b|meters?\b|metres?\b)`
+
+When multiple depth values are found in a paper, `depth_min_m` takes the smallest and `depth_max_m` takes the largest across all matches. `depth_range` is set to the corresponding `"min–max m"` text (or a single value if min = max).
+
+**Smoke-test cases (2026-04-21):**
+
+| Text | Extracted |
+|---|---|
+| "Basking sharks reaching 5 to 8 m in total length" | — (body measurement rejected) |
+| "CTD casts deployed at depths of 50–200 m" | 50–200 m |
+| "7 m basking shark diving to a maximum depth of 350 m" | 350 m (body size rejected, depth captured) |
 
 ## Evidence
 
@@ -63,7 +70,7 @@ Since 2026-04-16, every paper with a depth match generates a row in `outputs/sch
 
 ## Known Issues and Limitations
 
-1. **Ambiguous "m" unit:** The regex matches any number followed by "m" in a depth-like context. It will occasionally match non-depth uses of metres (e.g., "molecular weight of 45 m Da", transect lengths, distance travelled). No elasmobranch-proximity check is applied, unlike some other schema columns. Review the evidence `context` sentence to confirm genuine depth values.
+1. **Residual ambiguous "m":** The tightened 2026-04-21 regex requires a bathymetric-context word but false positives can still occur when a depth-sounding verb (e.g. "deployed at 10 m") refers to transect position rather than water depth. Review the evidence `context` sentence to confirm. Older papers using fathoms are not converted (see (5) below).
 2. **Depth not always stated:** Many papers do not report a study depth explicitly. These papers will have `NaN` in all three columns. A `NaN` does not imply a shallow-water study.
 3. **Relative qualifiers:** Statements like ">200 m" are captured in `depth_range` as text but `depth_min_m` and `depth_max_m` are set to the numeric value (200) without the qualifier. The qualifier is preserved only in the `depth_range` string.
 4. **Multiple study sites at different depths:** The current pipeline takes the global minimum and maximum across all depth mentions in a paper. A paper comparing 10 m and 800 m sites will yield `depth_min_m = 10`, `depth_max_m = 800` — which faithfully represents the range studied but does not distinguish between a gradient study and a comparison of discrete sites.

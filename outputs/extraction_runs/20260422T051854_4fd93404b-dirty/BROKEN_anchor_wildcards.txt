@@ -1,0 +1,1 @@
+ANCHOR_WILDCARD_BUG: this run ran with compile_schema treating * as literal in anchors (since 2026-04-20). imp_community_composition and imp_biodiversity fired 0 times. Kept for audit.

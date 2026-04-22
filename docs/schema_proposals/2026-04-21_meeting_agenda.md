@@ -29,6 +29,13 @@ These were implemented over commits `da257dd91` → `f38ecefd0` → today's comm
 | 13 | NamSor labels asterisked, footer attribution clarified | validate.js |
 | 14 | receive-validation workflow Python rewritten to match real submit.js schema; renders author_corrections | .github/workflows/receive-validation.yml |
 | 15 | Cloudflare Worker comment corrected | scripts/cloudflare-worker/worker.js |
+| 16 | Elena E1 — `imp_community_composition` anchors widened to wildcards so verb tenses fire (`chang*/shift*/impact*/alter*`) | extract_schema_columns.py + rules.json |
+| 17 | Elena E2 — `imp_biodiversity` anchors widened to wildcards + `decreas*/extinct*` added; `extinction*` also added as a term | extract_schema_columns.py + rules.json |
+| 18 | Elena E3 — `pr_ocean_acidification` threshold 1 → 2 (same class as pr_aquaculture) | extract_schema_columns.py + rules.json |
+| 19 | NamSor gender normaliser — page generator maps NamSor "male"/"female" → dropdown codes "M"/"F" so validators don't submit phantom gender corrections | generate_validation_pages.py |
+| 20 | **A1** — synthetic-section pollution fix: TITLE and KEYWORDS injections now terminate with an OTHER marker; `OTHER` pattern added to `_SECTION_PATTERNS`; OTHER weight zeroed across all 7 schemas; Springer-style affiliation paragraphs stripped from PDF text before labelling. Closes the `d_conservation` false-positive on 27537 where author affiliation text scored 6.0 in TITLE. | extract_schema_columns.py |
+| 21 | **C** — `study_type` classifier replaces hardcoded `"empirical"` default: TITLE + KEYWORDS scanned for review / synthesis / conceptual / corrigendum / letter signals, priority-ordered, mutually exclusive. | extract_schema_columns.py |
+| 22 | **D** — depth-extraction regex tightened to require a bathymetric-context word; depth evidence rows now written to `schema_extraction_evidence.csv` with ±context snippet (previously 0 depth rows of 260K). Closes Alex's basking-shark body-length-as-depth bug. | extract_schema_columns.py |
 
 ---
 
@@ -112,7 +119,7 @@ The infrastructure now supports running extraction now AND again after the meeti
 - **Option A — extract now, then again post-meeting:** captures the impact of today's rule changes (TITLE+KEYWORDS, GSI/HSI prereq, expanded biology/physiology vocabulary, anchored imp_biomass, raised pr_aquaculture threshold, deepwater/d_fisheries/sp_aetomylaeus_bovinus) BEFORE we layer in the meeting decisions. Then a second post-meeting run shows the marginal impact of THOSE changes on top.
 - **Option B — wait, single extraction post-meeting:** simpler, but loses the intermediate audit point.
 
-**Recommendation: Option A.** Today's commit is a meaningful rule-set on its own; bundling it with the meeting decisions makes the diff harder to reason about. Two runs gives a clear before/after for each layer. Estimated runtime: 6–10 h on current hardware per run.
+**Recommendation: Option A.** Today's commit is a meaningful rule-set on its own; bundling it with the meeting decisions makes the diff harder to reason about. Two runs gives a clear before/after for each layer. Measured runtime from `run_id 20260421T050413_5ca94a22d`: **1h 23m** for the full 30,558-paper corpus (wall-clock between `rules_snapshot.json` and `binary_classifications.parquet`). Subsequent runs should land in the same order of magnitude; an incremental run restricted to paper subsets runs in minutes.
 
 **What the audit gives you:**
 - Per-column firing-count delta between any two runs
