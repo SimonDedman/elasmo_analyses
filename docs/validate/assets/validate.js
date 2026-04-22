@@ -1076,9 +1076,22 @@
     var range  = catData.depth_range  || '';
     var minVal = s.depth_min_m != null ? s.depth_min_m : (catData.depth_min_m != null ? catData.depth_min_m : '');
     var maxVal = s.depth_max_m != null ? s.depth_max_m : (catData.depth_max_m != null ? catData.depth_max_m : '');
+    var evArr  = catData.evidence || [];
 
     var html = '<div class="depth-section">';
-    html += '<p class="depth-range-display">Extracted range: <strong>' + escapeHtml(range || 'not extracted') + '</strong></p>';
+    html += '<p class="depth-range-display">Extracted range: <strong>' + escapeHtml(range || 'not extracted') + '</strong>';
+    if (evArr.length > 0) {
+      html += ' <button class="btn-evidence" aria-label="Show depth context"';
+      html += ' data-paper="' + escapeHtml(paperId) + '"';
+      html += ' data-col="depth_range">&#9432;</button>';
+    }
+    html += '</p>';
+    if (evArr.length > 0) {
+      html += '<div class="evidence-panel" id="ev_' + escapeHtml(paperId) + '_depth_range" hidden>';
+      html += '<div class="evidence-panel-header">depth range context</div>';
+      html += _renderEvidence(evArr);
+      html += '</div>';
+    }
     html += '<div class="depth-inputs">';
     html += '<label>Min (m): <input type="number" class="depth-input depth-min"';
     html += ' data-paper="' + escapeHtml(paperId) + '" data-field="depth_min_m"';
