@@ -613,7 +613,7 @@ def build_page_data(
                 "trigger_threshold": TIER2_TRIGGER_THRESHOLD,
             }
 
-        # depth_
+        # depth_ (includes ±100-char context evidence from extract_schema_columns.py:871)
         depth_range = row.get("depth_range")
         depth_min = row.get("depth_min_m")
         depth_max = row.get("depth_max_m")
@@ -621,6 +621,7 @@ def build_page_data(
             "depth_range": str(depth_range) if pd.notna(depth_range) else "",
             "depth_min_m": float(depth_min) if pd.notna(depth_min) else None,
             "depth_max_m": float(depth_max) if pd.notna(depth_max) else None,
+            "evidence": paper_evidence.get("depth_range", []),
         }
 
         papers[lid] = {"meta": meta, "categories": categories}
