@@ -228,7 +228,7 @@ Was 10 terms. Now 28:
 
 **Effect:** a single keyword-block hit (weighted 2.0) plus ONE body mention (weighted 0.25-1.0) clears threshold=2 for any column. Brief communications no longer fall below threshold; this **supersedes the dynamic-threshold proposal (item 9 in §2 list above).**
 
-**Re-extraction needed.** All ~18,000 PDFs need to be re-processed for the new sections to take effect. Estimated runtime ~6-10h on current hardware (no logic changes outside the new section injection).
+**Re-extraction needed.** All ~18,000 PDFs need to be re-processed for the new sections to take effect. Measured runtime: **~1h 23m** for the full corpus (from `run_id 20260421T050413_5ca94a22d`, 30,558 papers wall-clock between `rules_snapshot.json` and `binary_classifications.parquet`).
 
 **Documentation update needed.** `docs/schema_proposals/extraction_logic.md` and the per-schema proposal docs (`ecosystem_component_proposal.md`, etc.) should mention TITLE and KEYWORDS as the highest-weighted sections. Proposed addendum text:
 
@@ -245,6 +245,27 @@ These three columns are NOT in the IMP main block (the 21 columns listed below).
 - Any `pr_*` column = 1 AND any `imp_*` column = 1 (both detected)
 
 David's proposal of "any pressure OR any impact detected" is the simplest gate. Trivial post-processing: `if (any pr_* > 0 or any imp_* > 0) then keep imp_direction/quantified/confidence else null`.
+
+## Items shipped 2026-04-21 (post-this-doc, covering Alex's feedback)
+
+**Status:** in working tree pending commit after re-extraction completes.
+
+- **A1** — TITLE/KEYWORDS synthetic-section pollution fix. Three changes:
+  1. Injections now terminate with `\nOTHER\n\n` so TITLE and KEYWORDS are strictly one chunk each.
+  2. `OTHER` weight zeroed across all 7 weighted schemas (was 0.25). Content the labeller can't attribute to a named section contributes no score.
+  3. New `_strip_affiliation_blocks()` pass in `strip_non_body_sections()` removes Springer-style author-affiliation paragraphs (e.g. "A. G. McInturf (*) : A. E. Steel : ... Department of Wildlife, Fish and Conservation Biology, University of California, Davis, CA, USA  e-mail: amcinturf@ucdavis.edu"). Pattern-specific to Springer; other journal layouts may need additional patterns as encountered.
+
+  Verified on 27537: conservation-term hits in stripped text drop 4 → 1 (only the legitimate IUCN citation remains). Closes the `d_conservation` false positive flagged in the 2026-04-21 regen commit.
+
+- **C** — `study_type` classifier. Replaces the hardcoded `"empirical"` default in `shark_references_to_sql.py`. Priority-ordered signals from TITLE + KEYWORDS only yield one of: `corrigendum`, `letter`, `review`, `synthesis`, `conceptual`, `empirical`. Addresses Alex's review-paper concern — downstream analyses can filter `study_type == 'empirical'` for primary-data-only queries.
+
+- **D** — Depth regex tightened. Previously the `[><~≈]?\s*` prefix was empty-matchable, so any "NNN m" was captured (Alex's basking-shark body lengths misread as depths). Now requires a bathymetric-context word (`depth|bathym*|benthic|water column|sea floor|deployed at|captured at|CTD|...`) within ~60 chars before the number. Depth evidence rows now land in `schema_extraction_evidence.csv` with ±context snippets (previously 0 depth rows of 260K).
+
+- **Elena E1/E2/E3** — `imp_community_composition` and `imp_biodiversity` anchors widened to wildcards so verb tenses fire; `extinction*` added to `imp_biodiversity` as both term and anchor; `pr_ocean_acidification` threshold 1 → 2.
+
+- **Gender normaliser** in `generate_validation_pages.py:load_namsor()` — NamSor's `male`/`female` → dropdown codes `M`/`F` before page rendering so validators don't submit phantom gender "corrections".
+
+---
 
 ## Item 11 — `eco_coastal` definition
 

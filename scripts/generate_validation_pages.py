@@ -281,6 +281,16 @@ def load_last_institutions() -> dict[str, dict]:
     return result
 
 
+_GENDER_TO_DROPDOWN = {"male": "M", "female": "F", "non-binary": "Non-binary"}
+
+
+def _normalise_gender(raw: str) -> str:
+    # NamSor stores full words ("male"/"female"); the validation UI dropdown
+    # uses single-letter codes, so normalise here to avoid phantom
+    # female→F / male→M "corrections" on every author.
+    return _GENDER_TO_DROPDOWN.get(raw.strip().lower(), "")
+
+
 def load_namsor() -> dict[str, dict]:
     """Load NamSor author enrichment keyed by OpenAlex author ID."""
     print("Loading NamSor enrichment…")
@@ -295,8 +305,9 @@ def load_namsor() -> dict[str, dict]:
         if not aid:
             continue
         aid = strip_openalex_prefix(aid)
+        raw_gender = str(row.get("namsor_gender", "")) if pd.notna(row.get("namsor_gender")) else ""
         result[aid] = {
-            "gender": str(row.get("namsor_gender", "")) if pd.notna(row.get("namsor_gender")) else "",
+            "gender": _normalise_gender(raw_gender),
             "gender_probability": round(float(row.get("namsor_gender_probability", 0)), 2) if pd.notna(row.get("namsor_gender_probability")) else None,
             "origin_country": str(row.get("namsor_origin_country", "")) if pd.notna(row.get("namsor_origin_country")) else "",
             "origin_region": str(row.get("namsor_origin_region", "")) if pd.notna(row.get("namsor_origin_region")) else "",

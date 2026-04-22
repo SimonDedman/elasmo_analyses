@@ -139,7 +139,7 @@ PR = SchemaCategory(prefix="pr_", columns=[
     BinaryColumn("pr_targeted_fishing", ["targeted shark fish*", "directed shark fish*", "shark fish*"], threshold=2),
     # Environmental pressures — moderate threshold (threat-list problem)
     BinaryColumn("pr_climate_change", ["climate change", "global warming", "ocean warming"], threshold=3),
-    BinaryColumn("pr_ocean_acidification", ["ocean acidification", "(acidification AND pH)", "(acidification AND pCO2)"], threshold=1),
+    BinaryColumn("pr_ocean_acidification", ["ocean acidification", "(acidification AND pH)", "(acidification AND pCO2)"], threshold=2),  # EFC fix
     BinaryColumn("pr_hypoxia", ["hypoxia", "deoxygenation", "oxygen minimum zone", "OMZ"], threshold=1, case_sensitive_terms={"OMZ"}),  # AC fix
     BinaryColumn("pr_pollution_chemical", ["pollut*", "contaminant*", "heavy metal*", "mercury", "PCB", "PFAS", "pesticide*"], threshold=3, case_sensitive_terms={"PCB", "PFAS"}),  # AC fix
     BinaryColumn("pr_pollution_plastic", ["plastic pollution", "microplastic*", "macroplastic*", "plastic ingestion", "plastic debris"], threshold=1),
@@ -221,8 +221,8 @@ IMP = SchemaCategory(prefix="imp_", columns=[
     BinaryColumn("imp_economic", ["economic value", "fishery value", "tourism revenue", "willingness to pay", "WTP"], threshold=1, case_sensitive_terms={"WTP"}),  # AC fix
     BinaryColumn("imp_social", ["livelihood", "food security", "human dimension", "attitude", "perception"], threshold=3),
     # Added 2026-03-16 following Beukhof et al. (2026) comparison
-    BinaryColumn("imp_community_composition", ["community composition", "assemblage composition", "species composition", "community structure change", "assemblage shift"], anchors=["change", "shift", "impact", "alter*"], threshold=2),
-    BinaryColumn("imp_biodiversity", ["biodiversity loss", "species richness change", "diversity index", "Shannon", "Simpson", "evenness change", "species loss"], anchors=["change", "loss", "decline", "impact"], threshold=2),
+    BinaryColumn("imp_community_composition", ["community composition", "assemblage composition", "species composition", "community structure change", "assemblage shift"], anchors=["chang*", "shift*", "impact*", "alter*"], threshold=2),  # EFC fix
+    BinaryColumn("imp_biodiversity", ["biodiversity loss", "species richness change", "diversity index", "Shannon", "Simpson", "evenness change", "species loss", "extinction*"], anchors=["chang*", "loss*", "declin*", "impact*", "decreas*", "extinct*"], threshold=2),  # EFC fix
     BinaryColumn("imp_size_structure", ["size structure", "length frequency", "age structure", "size composition", "size distribution", "mean length", "maximum length", "length at maturity shift", "truncated size"], anchors=["change", "shift", "impact", "decline", "truncat*"], threshold=2),
     BinaryColumn("imp_productivity", ["productivity", "recruitment", "yield per recruit", "spawning potential ratio", "SPR", "surplus production", "reproductive output"], anchors=["change", "decline", "impact", "reduce", "increase", "affect", "fishing", "overfishing"], threshold=2, case_sensitive_terms={"SPR"}),  # AC fix
 ])
@@ -586,6 +586,11 @@ _SECTION_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     # Injected synthetically by extract_text_from_pdf / _match_paper.
     ("TITLE",    re.compile(r"^TITLE\s*$")),
     ("KEYWORDS", re.compile(r"^KEYWORDS\s*$")),
+    # 2026-04-21: explicit OTHER marker used as a terminator so the synthetic
+    # TITLE and KEYWORDS sections can't swallow following body text when no
+    # downstream section header is detected (bug: author affiliations on
+    # 27537 were being counted as TITLE content at weight 2.0).
+    ("OTHER",    re.compile(r"^OTHER\s*$")),
     ("RESULTS_AND_DISCUSSION", re.compile(
         r"^\d*\.?\s*results?\s+(?:and|&)\s+discussion", re.I)),
     ("METHODS", re.compile(
@@ -616,44 +621,44 @@ _SECTION_WEIGHTS: dict[str, dict[str, float]] = {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
-        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
     "pr_": {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 1.0,
-        "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+        "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
     "gear_": {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 0.25, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
-        "DISCUSSION": 0.25, "CONCLUSIONS": 0.25, "OTHER": 0.25,
+        "DISCUSSION": 0.25, "CONCLUSIONS": 0.25, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
     "imp_": {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 0.25, "METHODS": 0.5,
         "RESULTS": 1.0, "RESULTS_AND_DISCUSSION": 1.0,
-        "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+        "DISCUSSION": 1.0, "CONCLUSIONS": 0.5, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
     "d_": {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 0.5, "METHODS": 1.0,
         "RESULTS": 1.0, "RESULTS_AND_DISCUSSION": 1.0,
-        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
     "b_": {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
-        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
     # sb_ uses the same section-weight profile as b_ (geographic context)
     "sb_": {
         "TITLE": 2.0, "KEYWORDS": 2.0,
         "ABSTRACT": 0.5, "INTRODUCTION": 1.0, "METHODS": 1.0,
         "RESULTS": 0.5, "RESULTS_AND_DISCUSSION": 0.5,
-        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.25,
+        "DISCUSSION": 0.5, "CONCLUSIONS": 0.5, "OTHER": 0.0,  # EFC/A1: OTHER zeroed so affiliation/front-matter text can't contribute
     },
 }
 
@@ -810,10 +815,14 @@ def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
         ]
         c_anchors = None
         if col.anchors:
-            c_anchors = [
-                re.compile(r"\b" + re.escape(a) + r"\b", re.IGNORECASE)
-                for a in col.anchors
-            ]
+            # 2026-04-21 bug fix: re.escape() turns `*` into `\*`, so the
+            # old compile here made `alter*` / `fluctuat*` / `truncat*` /
+            # `chang*` all match the literal asterisk, never firing. Use
+            # _term_to_regex() which is the same wildcard-aware compiler
+            # used for terms. Regression discovered when EFC's widened
+            # imp_community_composition/imp_biodiversity anchors dropped
+            # both columns to 0 firings in run 20260422T051854.
+            c_anchors = [_term_to_regex(a) for a in col.anchors]
         compiled.append(CompiledColumn(
             name=col.name,
             terms=c_terms,
@@ -828,49 +837,162 @@ def compile_schema(schema: SchemaCategory) -> list[CompiledColumn]:
 # Depth extraction
 # ---------------------------------------------------------------------------
 
-# Patterns like "0-200 m", "depths of 150 m", ">500 m", "shallow (<50 m)"
+# 2026-04-21 (D fix): previous regex was too permissive — the single-value
+# pattern had `[><~≈]?\s*` as an empty-matchable alternative, so any "NNN m"
+# got captured including body-measurement ranges (basking-shark 5–8 m was
+# tagged as study depth). Both patterns now require a bathymetric-context
+# word within ~60 chars before the number. Evidence rows with ±context are
+# emitted so reviewers can inspect false positives.
+_DEPTH_CONTEXT = (
+    r"(?:depth[s]?|bathym\w*|benthic|demersal\s+zone|water\s+column|"
+    r"sea\s*floor|below\s+(?:the\s+)?surface|"
+    r"caught\s+(?:at|in)|captured\s+(?:at|in)|collected\s+(?:at|in|from)|"
+    r"sampled\s+(?:at|in|from)|tagged\s+(?:at|in)|set\s+(?:at|to)|"
+    r"fished\s+(?:at|in)|deployed\s+(?:at|to|in)|submerged|"
+    r"lowered\s+to|down\s+to|recorded\s+(?:at|to|from)|"
+    r"hook(?:s|ed)?\s+(?:at|to|in)|longline\s+(?:at|to)|"
+    r"trawl(?:ed)?\s+(?:at|between|from)|dive[sd]?\s+to|"
+    r"CTD|vertical\s+profile|descended\s+to)"
+)
+
 _DEPTH_RANGE_RE = re.compile(
-    r"(\d{1,5}(?:\.\d+)?)\s*[-–—to]+\s*(\d{1,5}(?:\.\d+)?)\s*(?:m\b|meters?\b|metres?\b)",
+    _DEPTH_CONTEXT + r"[^.\n]{0,60}?"
+    r"(\d{1,5}(?:\.\d+)?)\s*(?:-|–|—|\s+to\s+)\s*(\d{1,5}(?:\.\d+)?)\s*(?:m\b|meters?\b|metres?\b)",
     re.IGNORECASE,
 )
+
 _DEPTH_SINGLE_RE = re.compile(
-    r"(?:depth[s]?\s+(?:of\s+)?|[><~≈]?\s*)(\d{1,5}(?:\.\d+)?)\s*(?:m\b|meters?\b|metres?\b)",
+    _DEPTH_CONTEXT + r"[^.\n]{0,60}?"
+    r"(\d{1,5}(?:\.\d+)?)\s*(?:m\b|meters?\b|metres?\b)",
     re.IGNORECASE,
 )
 
 
-def extract_depth(text: str) -> dict[str, Any]:
+def _depth_context_snippet(text: str, span_start: int, span_end: int) -> str:
+    """Return ±100 char context with the match bracketed, for evidence rows."""
+    pre = text[max(0, span_start - 100): span_start]
+    mid = text[span_start: span_end]
+    post = text[span_end: min(len(text), span_end + 60)]
+    snippet = f"...{pre}[{mid}]{post}..."
+    # Collapse whitespace for CSV-friendliness
+    return re.sub(r"\s+", " ", snippet).strip()[:500]
+
+
+def extract_depth(text: str, lit_id: Any = None, title: str = "") -> dict[str, Any]:
     """Extract depth range information from text.
 
-    Returns:
-        Dictionary with keys depth_range, depth_min_m, depth_max_m.
+    Returns a dict with keys ``depth_range``, ``depth_min_m``, ``depth_max_m``
+    (the summary fields historically written to the parquet) plus a new
+    ``_evidence`` list of evidence-row dicts ready to append to the main
+    evidence table.
     """
     result: dict[str, Any] = {
         "depth_range": None,
         "depth_min_m": None,
         "depth_max_m": None,
+        "_evidence": [],
     }
+    all_vals: list[float] = []
 
-    # Try range pattern first
-    ranges = _DEPTH_RANGE_RE.findall(text)
-    if ranges:
-        all_vals = []
-        for lo, hi in ranges:
-            all_vals.extend([float(lo), float(hi)])
+    # Range matches first (higher confidence — two numbers + explicit span)
+    for m in _DEPTH_RANGE_RE.finditer(text):
+        lo, hi = float(m.group(1)), float(m.group(2))
+        all_vals.extend([lo, hi])
+        result["_evidence"].append({
+            "literature_id": lit_id,
+            "title": (title or "")[:200],
+            "column": "depth_range",
+            "binary": 1,
+            "total_freq": 1,
+            "raw_freq": 1,
+            "section": "",
+            "term_count": 1,
+            "threshold": 0,
+            "matched_terms": f"{lo:g}-{hi:g} m",
+            "matched_anchors": "",
+            "context": _depth_context_snippet(text, m.start(), m.end()),
+        })
+
+    # Single-value matches only if no range matches (avoid double-counting
+    # the endpoints of a range as separate singles). If ranges DID fire, the
+    # min/max from those is used as the canonical answer.
+    if not all_vals:
+        for m in _DEPTH_SINGLE_RE.finditer(text):
+            v = float(m.group(1))
+            all_vals.append(v)
+            result["_evidence"].append({
+                "literature_id": lit_id,
+                "title": (title or "")[:200],
+                "column": "depth_range",
+                "binary": 1,
+                "total_freq": 1,
+                "raw_freq": 1,
+                "section": "",
+                "term_count": 1,
+                "threshold": 0,
+                "matched_terms": f"{v:g} m",
+                "matched_anchors": "",
+                "context": _depth_context_snippet(text, m.start(), m.end()),
+            })
+
+    if all_vals:
         result["depth_min_m"] = min(all_vals)
         result["depth_max_m"] = max(all_vals)
         result["depth_range"] = f"{result['depth_min_m']:.0f}-{result['depth_max_m']:.0f} m"
-        return result
-
-    # Fall back to individual depth mentions
-    singles = _DEPTH_SINGLE_RE.findall(text)
-    if singles:
-        vals = [float(v) for v in singles]
-        result["depth_min_m"] = min(vals)
-        result["depth_max_m"] = max(vals)
-        result["depth_range"] = f"{result['depth_min_m']:.0f}-{result['depth_max_m']:.0f} m"
 
     return result
+
+
+# ---------------------------------------------------------------------------
+# Study-type classification (replaces hardcoded 'empirical' default)
+# ---------------------------------------------------------------------------
+
+# 2026-04-21 (C fix): use the existing parquet column `study_type` for
+# mutually-exclusive paper-type labels. Detection is priority-ordered: the
+# most-specific signal wins (a corrigendum for a review still classifies as
+# "corrigendum"; a meta-analysis that mentions "synthesis" still classifies
+# as "review"). Signals drawn from TITLE + author-supplied KEYWORDS only
+# (body text would over-fire, since reviews are often cited inside empirical
+# papers).
+_STUDY_TYPE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    ("corrigendum", re.compile(
+        r"\b(?:corrigendum|corrigenda|erratum|errata|correction\s+to|"
+        r"publisher['’]s\s+note|retraction\s+(?:notice|of))\b",
+        re.IGNORECASE)),
+    ("letter", re.compile(
+        r"\b(?:letter\s+to\s+the\s+editor|reply\s+to|response\s+to|"
+        r"commentary\s+on|rebuttal\s+to|brief\s+communication)\b",
+        re.IGNORECASE)),
+    ("review", re.compile(
+        r"\b(?:systematic\s+review|narrative\s+review|literature\s+review|"
+        r"review\s+(?:paper|article|of)|comprehensive\s+review|"
+        r"mini[-\s]?review|scoping\s+review|umbrella\s+review|"
+        r"meta[-\s]?analysis|meta[-\s]?analyses|meta[-\s]?analytic)\b",
+        re.IGNORECASE)),
+    ("synthesis", re.compile(
+        r"\b(?:research\s+synthesis|a\s+synthesis|synthesis\s+of|"
+        r"synthesising|synthesizing)\b",
+        re.IGNORECASE)),
+    ("conceptual", re.compile(
+        r"\b(?:conceptual\s+framework|methodological\s+framework|"
+        r"theoretical\s+framework|perspective[s]?\s+on|opinion\s+piece|"
+        r"viewpoint)\b",
+        re.IGNORECASE)),
+]
+
+
+def classify_study_type(title: str, keywords_text: str = "") -> str:
+    """Classify a paper as one of: corrigendum, letter, review, synthesis,
+    conceptual, empirical (default).
+
+    Examines TITLE + KEYWORDS only. Returns the first matching category in
+    priority order.
+    """
+    probe = f"{title or ''}\n{keywords_text or ''}"
+    for label, pattern in _STUDY_TYPE_PATTERNS:
+        if pattern.search(probe):
+            return label
+    return "empirical"
 
 
 # ---------------------------------------------------------------------------
@@ -1238,6 +1360,74 @@ _ACK_HEADER_RE = re.compile(
 _DOI_URL_RE = re.compile(r"https?://doi\.org/|doi:", re.IGNORECASE)
 
 
+# 2026-04-21 (A1 follow-up): Springer-style author-affiliation footnotes
+# appear AFTER the Abstract on the first page, so the pre-abstract front-
+# matter trim misses them. A concrete example from paper 27537 (McInturf
+# 2019): the affiliation block "Department of Wildlife, Fish and
+# Conservation Biology, University of California, Davis, CA, USA  e-mail:
+# amcinturf@ucdavis.edu" survives the strip and causes `d_conservation`
+# to fire on "Conservation Biology". This heuristic removes entire
+# paragraphs that look like affiliation blocks. Conservative thresholds
+# — short paragraphs (≤ 8 lines) with an email signal OR an institution
+# word + author-initials run — so legitimate body paragraphs mentioning
+# e.g. "Department of Fisheries and Oceans" are not removed.
+
+_AFFIL_EMAIL_RE = re.compile(
+    r"\be-?mail\b\s*[:.]|@\w[\w.-]*\w\.\w{2,}",
+    re.IGNORECASE,
+)
+_AFFIL_INSTITUTION_RE = re.compile(
+    r"\b(?:Department|Institute|School|Laborator(?:y|ies)|Faculty|"
+    r"College|Aquarium|Museum|Foundation|Consultants|Centro|Istituto|"
+    r"Universit(?:y|é|ä|ät|atea|è|at|ad|ade))\b",
+    re.IGNORECASE,
+)
+
+# Affiliation-block START: a line whose first non-whitespace content is
+# an author-initials run (two or more ``A. B. Surname`` names joined by
+# ``:``, ``·``, ``&``, or ``;``). Springer pages use ``:`` as author
+# separator in the footer block. Comma is NOT accepted as a separator to
+# avoid matching mid-sentence citations like ``..., B. Smith, et al.``.
+_SPRINGER_AFFIL_START_RE = re.compile(
+    r"^[ \t]*"
+    r"(?:[A-Z]\.\s*){1,3}[A-Z][a-zA-Z'\-]{2,}"
+    r"(?:\s*\(\*\))?"
+    r"\s*(?::|·|&|;)\s*"
+    r"(?:[A-Z]\.\s*){1,3}[A-Z][a-zA-Z'\-]{2,}",
+    re.MULTILINE,
+)
+
+
+def _strip_affiliation_blocks(text: str) -> str:
+    """Remove Springer-style author-affiliation footnotes that appear
+    AFTER the Abstract (pre-abstract trim doesn't catch these).
+
+    Strategy: find each line that starts with an author-initials run
+    (``A. G. McInturf (*) : A. E. Steel``) and extend the candidate
+    block forward to the next blank line. If the block contains an
+    institution keyword (``Department``, ``University``, ``Institute``,
+    ``Laboratory``, ``Aquarium``, ``Museum``, etc.), delete it.
+    """
+    result: list[str] = []
+    i = 0
+    for m in _SPRINGER_AFFIL_START_RE.finditer(text):
+        start = m.start()
+        # Extend to the next blank line (double newline) or end of text.
+        blank = text.find("\n\n", m.end())
+        end = blank if blank != -1 else len(text)
+        block = text[start:end]
+        # Only remove if the block contains an institution signal —
+        # filters out legitimate cited-author runs that happen to begin
+        # a paragraph without being affiliations.
+        if _AFFIL_INSTITUTION_RE.search(block):
+            result.append(text[i:start])
+            # Keep the blank-line delimiter if present, so paragraph
+            # structure of surrounding text is preserved.
+            i = end
+    result.append(text[i:])
+    return "".join(result)
+
+
 # 2026-04-20: capture the author-supplied "Keywords" block before
 # strip_non_body_sections() removes the front matter. The block is
 # re-injected as a synthetic KEYWORDS section so the matcher can apply
@@ -1285,6 +1475,11 @@ def strip_non_body_sections(text: str) -> str:
     abstract_match = _ABSTRACT_RE.search(text)
     if abstract_match:
         text = text[abstract_match.start():]
+
+    # --- Step 1b (A1 follow-up): strip Springer-style affiliation blocks
+    # that appear AFTER the abstract (the pre-abstract trim above doesn't
+    # catch these). See _strip_affiliation_blocks() above.
+    text = _strip_affiliation_blocks(text)
 
     # --- Step 2: remove references and everything after ---
     ref_match = _REF_HEADER_RE.search(text)
@@ -1352,7 +1547,10 @@ def extract_text_from_pdf(pdf_path: Path) -> str | None:
         text = strip_non_body_sections(text)
 
         if keywords_block:
-            text = "KEYWORDS\n" + keywords_block + "\n\n" + text
+            # A1 fix: terminate the synthetic KEYWORDS section with an explicit
+            # OTHER marker so it can't absorb body text at weight 2.0 when the
+            # PDF's abstract header fails to match _SECTION_PATTERNS.
+            text = "KEYWORDS\n" + keywords_block + "\nOTHER\n\n" + text
 
         return text if text.strip() else None
     except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
@@ -1674,8 +1872,10 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
 
     # 2026-04-20: prepend title as a synthetic TITLE section. Title is
     # author's chosen one-line summary — strongest possible topic signal.
+    # A1 fix: terminate with an explicit OTHER marker so TITLE is strictly
+    # one-line and can't absorb author/affiliation text at weight 2.0.
     if title and full_text.strip():
-        full_text = "TITLE\n" + title + "\n\n" + full_text
+        full_text = "TITLE\n" + title + "\nOTHER\n\n" + full_text
 
     if not full_text.strip():
         # No PDF text available — return empty result (no title/abstract fallback)
@@ -1691,6 +1891,10 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
             "imp_is_bycatch": None,
             "imp_direction": "not stated", "imp_quantified": False,
             "imp_confidence": "{}",
+            # C fix: still classify from title alone when no PDF text is
+            # available — title-only gives a useful signal for e.g.
+            # "Corrigendum to..." or "A systematic review of...".
+            "study_type": classify_study_type(title or "", ""),
         })
         return result
 
@@ -1736,14 +1940,25 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
                     "context": mr.sample_context or "",
                 })
 
-    # Stash evidence on the result dict (collected later)
-    result["_evidence"] = evidence_rows
-
     # ---- Ecosystem guesses ----
     result.update(eco_guesses(result))
 
-    # ---- Depth extraction ----
-    result.update(extract_depth(full_text))
+    # ---- Depth extraction (D fix: stricter regex + evidence rows) ----
+    depth_result = extract_depth(full_text, lit_id=lit_id_for_evidence, title=title)
+    depth_evidence = depth_result.pop("_evidence", [])
+    result.update(depth_result)
+    evidence_rows.extend(depth_evidence)
+
+    # ---- Study-type classification (C fix) ----
+    # Use the labelled-sections parse so KEYWORDS block is cleanly isolated.
+    _keywords_text = next(
+        (chunk for label, chunk in _labelled_sections if label == "KEYWORDS"),
+        "",
+    )
+    result["study_type"] = classify_study_type(title or "", _keywords_text)
+
+    # Stash evidence on the result dict (collected later)
+    result["_evidence"] = evidence_rows
 
     # ---- Gear target species ----
     result["gear_target_species"] = extract_target_species(full_text)
