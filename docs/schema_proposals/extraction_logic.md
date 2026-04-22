@@ -20,26 +20,34 @@ The affiliation-block heuristic is pattern-specific to Springer-style layouts. F
 
 ---
 
-## Study-type classification (added 2026-04-21)
+## Study-type classification (rewritten 2026-04-22 — banner-first, PDF-only)
 
-The parquet column `study_type` was previously a hardcoded `"empirical"` default set by `shark_references_to_sql.py`. It now carries a classification into one of six mutually-exclusive labels determined at extraction time from TITLE and KEYWORDS only:
+Full documentation: [`study_type_proposal.md`](study_type_proposal.md). Audit page: [`docs/study_type_audit.html`](../study_type_audit.html).
 
-| Label | Triggers (examples) |
+The parquet column `study_type` was previously a hardcoded `"empirical"` default. It now carries one of six mutually-exclusive labels (plus `None` for non-PDF papers):
+
+| Label | Primary signal (banner on page 1 of PDF) |
 |---|---|
-| `corrigendum` | "corrigendum", "erratum", "correction to", "publisher's note", "retraction notice" |
-| `letter` | "letter to the editor", "reply to", "response to", "commentary on", "brief communication", "rebuttal" |
-| `review` | "systematic review", "narrative review", "literature review", "review paper/article", "comprehensive review", "mini-review", "scoping review", "meta-analysis", "umbrella review" |
-| `synthesis` | "research synthesis", "a synthesis", "synthesis of", "synthesising" |
-| `conceptual` | "conceptual framework", "methodological framework", "theoretical framework", "perspective(s) on", "opinion piece", "viewpoint" |
-| `empirical` | default if no other label matches |
+| `corrigendum` | `CORRIGENDUM`, `ERRATUM`, `CORRECTION TO`, `RETRACTION NOTICE`, `PUBLISHER'S NOTE` |
+| `letter` | `LETTER TO THE EDITOR`, `TECHNICAL COMMENT`, `MATTERS ARISING`, `NEWS & VIEWS`, `BRIEF/SHORT/RAPID COMMUNICATION`, `REPLY TO`, `RESPONSE TO`, `REBUTTAL TO` |
+| `review` | `REVIEW SUMMARY`, `SYSTEMATIC/NARRATIVE/LITERATURE/COMPREHENSIVE/SCOPING/UMBRELLA REVIEW`, `MINI REVIEW`, `REVIEW PAPER/ARTICLE`, `META-ANALYSIS`, `RESEARCH \| REVIEW`, plain `REVIEW` in banner zone |
+| `synthesis` | `RESEARCH SYNTHESIS`, `A SYNTHESIS`, `SYNTHESIS OF` |
+| `conceptual` | `PERSPECTIVE`, `VIEWPOINT`, `OPINION`, `POLICY FORUM/BRIEF`, `HYPOTHESIS AND THEORY`, `COMMENTARY`, framework-paper phrases |
+| `empirical` | `RESEARCH ARTICLE/PAPER`, `REGULAR ARTICLE/PAPER`, `ORIGINAL RESEARCH/ARTICLE/PAPER`, `PRIMARY RESEARCH PAPER`, `FULL PAPER`, `CASE REPORT`, or default-if-PDF-and-no-banner |
 
-Priority order is most-specific-first: a corrigendum of a review still classifies as `corrigendum`; a meta-analysis that mentions "synthesis" still classifies as `review`.
+**Priority order is most-specific-first:** a corrigendum of a review still classifies as `corrigendum`; a meta-analysis that mentions "synthesis" still classifies as `review`.
 
-Body text is NOT examined because reviews are routinely cited inside empirical papers, which would trigger false-positive review classifications. Only TITLE and KEYWORDS (author-intent signals) drive the classification.
+**Broad-scope rule (2026-04-22):** papers without an extractable PDF get `study_type = None`. No title-only fallback — matches the policy for every other extracted column.
 
-Downstream analyses that want primary-data-only queries should filter `study_type == "empirical"`. Alex McInturf's 2026-04-21 feedback flagged the current (hardcoded) behaviour as a false-negative source: catch-data and review papers were inheriting every schema tag from their case-study examples. The new classification gives a single filter to exclude reviews and non-primary-data papers from trend analyses.
+**Banner > title > keywords:** the journal-assigned type banner on page 1 is authoritative. Title + keyword regex (weaker, e.g. "A review of …") is a fallback only when the banner didn't fire. Body-text scanning is never performed.
 
-Accuracy needs manual cross-check against known-correct labels after re-extraction.
+**Pre-processing:** banner text is whitespace-collapsed; Wiley spaced letters (`B R I E F C O M M U N I C A T I O N`) are un-spaced; Wiley squashed compounds (`REGULARPAPER`) are de-squashed; and one instance of every journal-name word is stripped (so `REVIEW` inside `Reviews in Fish Biology and Fisheries` doesn't trigger a false review).
+
+Two audit columns accompany `study_type`:
+- `study_type_signal` — `banner` / `title_kw` / `default_empirical` / `no_pdf`.
+- `study_type_evidence` — the matched snippet (banner token or title phrase).
+
+Alex McInturf's 2026-04-21 feedback flagged the original hardcoded behaviour as a false-negative source: catch-data and review papers were inheriting every schema tag from their case-study examples. The classification gives a single filter to exclude reviews and non-primary-data papers from trend analyses.
 
 ---
 

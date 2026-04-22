@@ -944,55 +944,211 @@ def extract_depth(text: str, lit_id: Any = None, title: str = "") -> dict[str, A
 
 
 # ---------------------------------------------------------------------------
-# Study-type classification (replaces hardcoded 'empirical' default)
+# Study-type classification — banner-first, PDF-only
 # ---------------------------------------------------------------------------
+#
+# 2026-04-22: replaces the title-only heuristic. Extraction pipeline:
+#
+#   1. Take first _BANNER_CHARS of the PDF's page 1 (the "banner zone").
+#   2. Collapse whitespace; normalise Wiley spaced letters ("B R I E F" →
+#      "BRIEF"); de-squash Wiley compound tokens ("REGULARPAPER" →
+#      "REGULAR PAPER").
+#   3. Remove one instance of every word from the journal name (so
+#      "REVIEW" inside "Reviews in Fish Biology" doesn't misfire).
+#   4. Match priority-ordered BANNER patterns. First match wins.
+#   5. If no banner signal, fall through to TITLE + KEYWORDS (weaker but
+#      still valid for e.g. "Corrigendum to: ...").
+#
+# NO title-only classification when PDF text is absent — non-PDF papers
+# get study_type = None (see extract_columns_for_paper body).
 
-# 2026-04-21 (C fix): use the existing parquet column `study_type` for
-# mutually-exclusive paper-type labels. Detection is priority-ordered: the
-# most-specific signal wins (a corrigendum for a review still classifies as
-# "corrigendum"; a meta-analysis that mentions "synthesis" still classifies
-# as "review"). Signals drawn from TITLE + author-supplied KEYWORDS only
-# (body text would over-fire, since reviews are often cited inside empirical
-# papers).
-_STUDY_TYPE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+_BANNER_CHARS = 600
+
+# Normalise "B R I E F   C O M M U N I C A T I O N" → "BRIEF COMMUNICATION".
+# Any run of >=4 single uppercase letters separated by single spaces.
+_SPACED_LETTERS_RE = re.compile(r"(?:[A-Z]\s){3,}[A-Z]")
+
+
+def _collapse_spaced_letters(text: str) -> str:
+    def _collapse(m: re.Match) -> str:
+        return m.group(0).replace(" ", "")
+    return _SPACED_LETTERS_RE.sub(_collapse, text)
+
+
+# Wiley often squashes multi-word banners; de-squash known forms so the
+# regex library sees canonical tokens.
+_WILEY_SQUASH = {
+    "REGULARPAPER": "REGULAR PAPER",
+    "REGULARARTICLE": "REGULAR ARTICLE",
+    "RESEARCHARTICLE": "RESEARCH ARTICLE",
+    "RESEARCHPAPER": "RESEARCH PAPER",
+    "BRIEFCOMMUNICATION": "BRIEF COMMUNICATION",
+    "SHORTCOMMUNICATION": "SHORT COMMUNICATION",
+    "TECHNICALCOMMENT": "TECHNICAL COMMENT",
+    "REVIEWARTICLE": "REVIEW ARTICLE",
+    "REVIEWPAPER": "REVIEW PAPER",
+    "MINIREVIEW": "MINI REVIEW",
+    "CASEREPORT": "CASE REPORT",
+}
+
+
+def _normalise_banner(text: str, journal: str = "") -> str:
+    """Collapse whitespace, un-space Wiley letter runs, de-squash compounds,
+    and strip one instance of every journal-name word to prevent "Reviews in
+    Fish Biology" polluting the REVIEW matcher."""
+    banner = re.sub(r"\s+", " ", text[:_BANNER_CHARS]).strip()
+    banner = _collapse_spaced_letters(banner)
+    # De-squash Wiley compound banners. First replace when followed by another
+    # capital (insert a space so word-boundaries work — e.g. "BRIEFCOMMUNICATIONReview"
+    # → "BRIEF COMMUNICATION Review"); then plain-word replacement for standalone forms.
+    for squashed, expanded in _WILEY_SQUASH.items():
+        banner = re.sub(
+            rf"\b{squashed}(?=[A-Z])",
+            expanded + " ",
+            banner,
+            flags=re.IGNORECASE,
+        )
+        banner = re.sub(rf"\b{squashed}\b", expanded, banner, flags=re.IGNORECASE)
+    # Journal-name suppression: strip one instance of each word from the
+    # journal, case-insensitive, word-bounded. Include common stems so
+    # "Reviews" also strips "REVIEW" etc.
+    if journal:
+        for word in re.findall(r"\b[A-Za-z]{3,}\b", journal):
+            banner = re.sub(rf"\b{re.escape(word)}\b", "", banner, count=1, flags=re.IGNORECASE)
+            # Also strip the singular/plural stem so "Reviews" → "REVIEW" gets purged
+            if word.lower().endswith("s") and len(word) > 4:
+                stem = word[:-1]
+                banner = re.sub(rf"\b{re.escape(stem)}\b", "", banner, count=1, flags=re.IGNORECASE)
+    return banner
+
+
+# Priority-ordered banner patterns. First regex that fires wins.
+# Word-boundary \b is essential — body-text "review" must NEVER match.
+_BANNER_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    # 1. Corrigendum / erratum / retraction (most specific)
+    ("corrigendum", re.compile(
+        r"\b(?:CORRIGENDUM|CORRIGENDA|ERRATUM|ERRATA|CORRECTION\s+TO|"
+        r"PUBLISHER['’]S\s+NOTE|RETRACTION(?:\s+(?:NOTICE|OF))?)",
+        re.IGNORECASE)),
+
+    # 2. Letter-style short formats
+    ("letter", re.compile(
+        r"\b(?:LETTER\s+TO\s+THE\s+EDITOR|TECHNICAL\s+COMMENT|"
+        r"MATTERS\s+ARISING|NEWS\s*(?:AND|&)\s*VIEWS|"
+        r"BRIEF\s+COMMUNICATION|SHORT\s+COMMUNICATION|"
+        r"RAPID\s+COMMUNICATION|REPLY\s+TO|RESPONSE\s+TO|REBUTTAL\s+TO)\b",
+        re.IGNORECASE)),
+
+    # 3. Review. Deliberate order: specific variants first, plain REVIEW last.
+    ("review", re.compile(
+        r"\b(?:REVIEW\s+SUMMARY|SYSTEMATIC\s+REVIEW|SCOPING\s+REVIEW|"
+        r"NARRATIVE\s+REVIEW|LITERATURE\s+REVIEW|COMPREHENSIVE\s+REVIEW|"
+        r"UMBRELLA\s+REVIEW|MINI[-\s]?REVIEW|COLLECTION\s+REVIEW|"
+        r"REVIEW\s+PAPER|REVIEW\s+ARTICLE|META[-\s]?ANALY[SZ][IE]S|"
+        r"RESEARCH\s*\|\s*REVIEW)\b",
+        re.IGNORECASE)),
+    # Plain REVIEW in banner zone: fires if REVIEW appears within the first
+    # 300 chars (covers journal metadata blocks like "Contents lists available
+    # at ScienceDirect … journal homepage: … Review An overview of …"). Not
+    # matched when immediately followed by context words that signal body-prose
+    # phrases (review OF, review AUTHORS, review BOARD, etc.).
+    ("review", re.compile(
+        r"^.{0,300}?\bREVIEW\b"
+        r"(?!\s+(?:OF\b|AUTHORS?\b|BOARD\b|PROCESS|POLICY|FEE|"
+        r"COMMITTEE|EDITOR|PANEL|MEETING))",
+        re.IGNORECASE | re.DOTALL)),
+
+    # 4. Synthesis
+    ("synthesis", re.compile(
+        r"\b(?:RESEARCH\s+SYNTHESIS|A\s+SYNTHESIS|SYNTHESIS\s+OF|"
+        r"SYNTHESI[SZ]ING)\b",
+        re.IGNORECASE)),
+
+    # 5. Conceptual / perspective
+    ("conceptual", re.compile(
+        r"\b(?:PERSPECTIVE|VIEWPOINT|OPINION|POLICY\s+FORUM|POLICY\s+BRIEF|"
+        r"HYPOTHESIS\s+AND\s+THEORY|COMMENTARY|CONCEPTUAL\s+FRAMEWORK|"
+        r"METHODOLOGICAL\s+FRAMEWORK|THEORETICAL\s+FRAMEWORK|OPINION\s+PIECE)\b",
+        re.IGNORECASE)),
+
+    # 6. Empirical (explicit banner)
+    # "ARTICLE" alone is excluded per user request — too permissive.
+    ("empirical", re.compile(
+        r"\b(?:RESEARCH\s+ARTICLE|RESEARCH\s+PAPER|"
+        r"REGULAR\s+(?:ARTICLE|PAPER)|ORIGINAL\s+(?:RESEARCH|ARTICLE|PAPER)|"
+        r"PRIMARY\s+RESEARCH\s+PAPER|FULL\s+PAPER|CASE\s+REPORT|"
+        r"SHORT\s+REPORT|BRIEF\s+REPORT|EMPIRICAL\s+STUDY)\b",
+        re.IGNORECASE)),
+]
+
+# Fallback title/keyword patterns (used only if PDF text exists but banner
+# produced no match). Same priority order.
+_TITLE_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
     ("corrigendum", re.compile(
         r"\b(?:corrigendum|corrigenda|erratum|errata|correction\s+to|"
-        r"publisher['’]s\s+note|retraction\s+(?:notice|of))\b",
+        r"retraction\s+(?:notice|of))\b",
         re.IGNORECASE)),
     ("letter", re.compile(
         r"\b(?:letter\s+to\s+the\s+editor|reply\s+to|response\s+to|"
-        r"commentary\s+on|rebuttal\s+to|brief\s+communication)\b",
+        r"commentary\s+on|rebuttal\s+to)\b",
         re.IGNORECASE)),
     ("review", re.compile(
+        # In titles/keywords, "a review of" is a strong review signal and
+        # not the same as a stray body-text "review". Include it here.
         r"\b(?:systematic\s+review|narrative\s+review|literature\s+review|"
-        r"review\s+(?:paper|article|of)|comprehensive\s+review|"
-        r"mini[-\s]?review|scoping\s+review|umbrella\s+review|"
-        r"meta[-\s]?analysis|meta[-\s]?analyses|meta[-\s]?analytic)\b",
+        r"review\s+(?:paper|article|of)|(?:^|\W)a\s+review\s+of|"
+        r"comprehensive\s+review|mini[-\s]?review|scoping\s+review|"
+        r"umbrella\s+review|meta[-\s]?analysis|meta[-\s]?analyses|"
+        r"meta[-\s]?analytic)\b",
         re.IGNORECASE)),
     ("synthesis", re.compile(
-        r"\b(?:research\s+synthesis|a\s+synthesis|synthesis\s+of|"
-        r"synthesising|synthesizing)\b",
+        r"\b(?:research\s+synthesis|synthesi[sz]ing)\b",
         re.IGNORECASE)),
     ("conceptual", re.compile(
         r"\b(?:conceptual\s+framework|methodological\s+framework|"
-        r"theoretical\s+framework|perspective[s]?\s+on|opinion\s+piece|"
-        r"viewpoint)\b",
+        r"theoretical\s+framework)\b",
         re.IGNORECASE)),
 ]
 
 
-def classify_study_type(title: str, keywords_text: str = "") -> str:
-    """Classify a paper as one of: corrigendum, letter, review, synthesis,
-    conceptual, empirical (default).
+def classify_study_type(
+    title: str = "",
+    keywords_text: str = "",
+    full_text: str = "",
+    journal: str = "",
+) -> tuple[str | None, str, str]:
+    """Classify a paper's type from its PDF banner, falling back to
+    title/keywords for PDF'd papers only.
 
-    Examines TITLE + KEYWORDS only. Returns the first matching category in
-    priority order.
+    Returns a tuple: (label, signal, matched_snippet)
+      - label   : one of corrigendum, letter, review, synthesis, conceptual,
+                  empirical, or None if no PDF text available
+      - signal  : "banner", "title_kw", "default_empirical", or "no_pdf"
+      - snippet : the matched banner/title text, or the normalised banner
+                  for audit purposes
+
+    Non-PDF papers (full_text empty) return (None, "no_pdf", "").
     """
+    if not full_text or not full_text.strip():
+        return None, "no_pdf", ""
+
+    banner = _normalise_banner(full_text, journal=journal)
+
+    # 1) Banner match (authoritative)
+    for label, pattern in _BANNER_PATTERNS:
+        m = pattern.search(banner)
+        if m:
+            return label, "banner", m.group(0)[:80]
+
+    # 2) Title / keywords fallback (weaker but valid signal)
     probe = f"{title or ''}\n{keywords_text or ''}"
-    for label, pattern in _STUDY_TYPE_PATTERNS:
-        if pattern.search(probe):
-            return label
-    return "empirical"
+    for label, pattern in _TITLE_PATTERNS:
+        m = pattern.search(probe)
+        if m:
+            return label, "title_kw", m.group(0)[:80]
+
+    # 3) Default: empirical (no explicit signal fired, but we have a PDF)
+    return "empirical", "default_empirical", banner[:80]
 
 
 # ---------------------------------------------------------------------------
@@ -1839,6 +1995,7 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
     authors = row_dict.get("authors")
     year_raw = row_dict.get("year")
     doi = row_dict.get("doi") or ""
+    journal = row_dict.get("journal") or ""
 
     # Fallback identifier for orphan rows (no literature_id)
     if lit_id is None or (isinstance(lit_id, float) and math.isnan(lit_id)):
@@ -1891,10 +2048,12 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
             "imp_is_bycatch": None,
             "imp_direction": "not stated", "imp_quantified": False,
             "imp_confidence": "{}",
-            # C fix: still classify from title alone when no PDF text is
-            # available — title-only gives a useful signal for e.g.
-            # "Corrigendum to..." or "A systematic review of...".
-            "study_type": classify_study_type(title or "", ""),
+            # 2026-04-22: broad-scope rule — no extraction from non-PDF
+            # papers. study_type is therefore None; audit/validation surfaces
+            # filter on _pdf_found to hide these from classifier review.
+            "study_type": None,
+            "study_type_signal": "no_pdf",
+            "study_type_evidence": "",
         })
         return result
 
@@ -1949,13 +2108,21 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
     result.update(depth_result)
     evidence_rows.extend(depth_evidence)
 
-    # ---- Study-type classification (C fix) ----
+    # ---- Study-type classification (2026-04-22: banner-first, PDF-only) ----
     # Use the labelled-sections parse so KEYWORDS block is cleanly isolated.
     _keywords_text = next(
         (chunk for label, chunk in _labelled_sections if label == "KEYWORDS"),
         "",
     )
-    result["study_type"] = classify_study_type(title or "", _keywords_text)
+    _st_label, _st_signal, _st_snippet = classify_study_type(
+        title=title or "",
+        keywords_text=_keywords_text,
+        full_text=full_text,
+        journal=str(journal or ""),
+    )
+    result["study_type"] = _st_label
+    result["study_type_signal"] = _st_signal
+    result["study_type_evidence"] = _st_snippet
 
     # Stash evidence on the result dict (collected later)
     result["_evidence"] = evidence_rows

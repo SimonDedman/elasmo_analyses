@@ -79,7 +79,9 @@ These columns come from the input database (Shark-References and other sources).
 | `epoch` | Epoch | Temporal grouping | Input parquet | |
 | `country` | Country | Study country (from source database, not our extraction) | Input parquet | |
 | `superregion` | Superregion | Geographic region classification | Input parquet | |
-| `study_type` | Study type | Primary / Systematic Review / Meta-analysis | Input parquet | |
+| `study_type` | Paper type | One of `corrigendum`/`letter`/`review`/`synthesis`/`conceptual`/`empirical` (or `None` for non-PDF papers) | Banner-first classifier on page 1 of PDF | See [`study_type_proposal.md`](study_type_proposal.md) · audit page [`study_type_audit.html`](../study_type_audit.html) |
+| `study_type_signal` | Classifier signal | `banner` / `title_kw` / `default_empirical` / `no_pdf` | Classifier | Provenance of the study_type label |
+| `study_type_evidence` | Matched snippet | Banner token or title phrase that fired | Classifier | ≤80 chars |
 
 ---
 
