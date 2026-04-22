@@ -18,6 +18,7 @@ Each schema or data source has a designated lead who reviews validator feedback,
 | Discipline | `d_` | Guuske Tiktak |
 | Ocean basin (extraction) | `b_` | Simon Dedman |
 | Ocean basin (geographic pipeline) | `ob_` | Simon Dedman |
+| Paper type (study_type) | `study_type` | Simon Dedman |
 | Depth | `depth_` | Chris Mull |
 | Pressure / Threat | `pr_` | David Ruiz-Garcia |
 | Fishing gear | `gear_` | David Ruiz-Garcia |
@@ -53,6 +54,10 @@ These schemas scan PDF text for a predefined column list with frequency counting
 - [Species](species_proposal.md) — `sp_` (1,308 cols, int16 frequencies)
 - [Analytical Techniques](analytical_techniques_proposal.md) — `a_` (215 cols, int16 frequencies)
 - [Depth](depth_proposal.md) — `depth_` (3 cols: range, min, max)
+
+### Paper-level classification
+
+- [Paper Type / `study_type`](study_type_proposal.md) — banner-first classifier (corrigendum / letter / review / synthesis / conceptual / empirical / None-for-no-PDF). Audit page: [`study_type_audit.html`](../study_type_audit.html).
 
 ### External data sources
 
