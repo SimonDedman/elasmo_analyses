@@ -106,9 +106,11 @@ h1 {{ margin: 0 0 4px 0; font-size: 1.4rem; }}
 .stat-number {{ font-size:18px; font-weight:bold; color:#2c3e50; }}
 .stat-label {{ font-size:10px; color:#7f8c8d; text-transform:uppercase; }}
 table.dataTable {{ font-size:0.85rem; }}
-td.signal-banner {{ background:#d6f5d6; }}
-td.signal-title_kw {{ background:#fff4cc; }}
-td.signal-default_empirical {{ background:#f5f5f5; color:#999; }}
+.signal {{ display:inline-block; padding:1px 6px; border-radius:8px; font-size:0.72rem; }}
+.signal-banner {{ background:#d6f5d6; color:#1e6b1e; }}
+.signal-title_kw {{ background:#fff4cc; color:#8a6d00; }}
+.signal-default_empirical {{ background:#ecf0f1; color:#95a5a6; }}
+.signal-no_pdf {{ background:#f5e0e0; color:#c0392b; }}
 .type-pill {{ display:inline-block; padding:1px 7px; border-radius:10px; font-size:0.75rem; font-weight:bold; color:#fff; }}
 .type-review {{ background:#8e44ad; }}
 .type-letter {{ background:#2980b9; }}
@@ -135,50 +137,66 @@ td.signal-default_empirical {{ background:#f5f5f5; color:#999; }}
   </tr></thead>
 </table>
 <p class="updated">Updated: {pd.Timestamp.today():%Y-%m-%d} · <a href="https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/study_type_proposal.md">classifier rules</a></p>
+<p id="loading" style="color:#7f8c8d; font-size:0.8rem;">Loading…</p>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script>
-$.getJSON('study_type_audit_data.json', function(data) {{
-  // Summary stats
-  var total = data.length;
-  var bannerN = data.filter(r => r.signal === 'banner').length;
-  var titleN  = data.filter(r => r.signal === 'title_kw').length;
-  var defaultN = data.filter(r => r.signal === 'default_empirical').length;
-  var nonemp  = data.filter(r => r.type !== 'empirical').length;
-  $('#stat-total').text(total.toLocaleString());
-  $('#stat-banner').text(bannerN.toLocaleString());
-  $('#stat-title').text(titleN.toLocaleString());
-  $('#stat-default').text(defaultN.toLocaleString());
-  $('#stat-nonemp').text(nonemp.toLocaleString());
-
-  function escapeHtml(s) {{ return String(s||'').replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}}[c])); }}
-
-  var rows = data.map(r => [
-    escapeHtml(r.literature_id),
-    escapeHtml(r.year),
-    escapeHtml(r.publisher),
-    escapeHtml(r.journal),
-    '<span class="type-pill type-' + escapeHtml(r.type) + '">' + escapeHtml(r.type) + '</span>',
-    '<span class="signal-' + escapeHtml(r.signal) + '">' + escapeHtml(r.signal) + '</span>',
-    escapeHtml(r.matched),
-    r.doi
-      ? '<a href="https://doi.org/' + encodeURIComponent(r.doi) + '" target="_blank">' + escapeHtml(r.title) + '</a>'
-      : escapeHtml(r.title),
-  ]);
-
-  $('#tbl').DataTable({{
-    data: rows,
-    pageLength: 50,
-    order: [[4, 'asc'], [1, 'desc']],
-    search: {{ search: 'review|letter|corrigendum|synthesis|conceptual', regex: true, smart: false }},
-    columnDefs: [
-      {{ targets: 5, createdCell: function(td, cellData, rowData) {{
-        // Apply a signal class to colour the signal cell
-        var m = (cellData||'').match(/signal-(\\w+)/);
-        if (m) {{ td.className += ' signal-' + m[1]; }}
-      }}}},
-    ],
+function escapeHtml(s) {{
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {{
+    return {{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[c];
   }});
+}}
+
+$.ajax({{
+  url: 'study_type_audit_data.json',
+  dataType: 'json',
+  cache: true,
+  success: function(data) {{
+    try {{
+      var total = data.length;
+      var bannerN = data.filter(function(r){{ return r.signal === 'banner'; }}).length;
+      var titleN  = data.filter(function(r){{ return r.signal === 'title_kw'; }}).length;
+      var defaultN = data.filter(function(r){{ return r.signal === 'default_empirical'; }}).length;
+      var nonemp  = data.filter(function(r){{ return r.type !== 'empirical'; }}).length;
+      $('#stat-total').text(total.toLocaleString());
+      $('#stat-banner').text(bannerN.toLocaleString());
+      $('#stat-title').text(titleN.toLocaleString());
+      $('#stat-default').text(defaultN.toLocaleString());
+      $('#stat-nonemp').text(nonemp.toLocaleString());
+
+      var rows = data.map(function(r){{
+        return [
+          escapeHtml(r.literature_id),
+          escapeHtml(r.year),
+          escapeHtml(r.publisher),
+          escapeHtml(r.journal),
+          '<span class="type-pill type-' + escapeHtml(r.type) + '">' + escapeHtml(r.type) + '</span>',
+          '<span class="signal signal-' + escapeHtml(r.signal) + '">' + escapeHtml(r.signal) + '</span>',
+          escapeHtml(r.matched),
+          r.doi
+            ? '<a href="https://doi.org/' + encodeURIComponent(r.doi) + '" target="_blank">' + escapeHtml(r.title) + '</a>'
+            : escapeHtml(r.title),
+        ];
+      }});
+
+      var dt = $('#tbl').DataTable({{
+        data: rows,
+        pageLength: 50,
+        order: [[4, 'asc'], [1, 'desc']],
+      }});
+
+      // Default filter: hide empirical rows. Clear the search box to see all.
+      dt.column(4).search('^(?!empirical$).+$', true, false).draw();
+
+      $('#loading').remove();
+    }} catch (e) {{
+      $('#loading').text('Render error: ' + e.message);
+      console.error(e);
+    }}
+  }},
+  error: function(xhr, status, err) {{
+    $('#loading').text('Failed to load study_type_audit_data.json: ' + status + ' ' + err);
+  }}
 }});
 </script>
 </body></html>
