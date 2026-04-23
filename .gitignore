@@ -45,6 +45,7 @@ outputs/*
 !outputs/abstract_reviews/
 !outputs/figures/*.png
 !outputs/author_location_overrides.csv
+!outputs/namsor_overrides.csv
 # 2026-04-20: extraction-run audit trail. Keep the small JSON summaries in git
 # so the rule-state and per-column firing counts are versioned alongside the
 # code, but ignore the per-paper binary snapshots (parquet) which are large
