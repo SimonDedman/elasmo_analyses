@@ -1,0 +1,1420 @@
+{
+  "author_corrections": {
+    "ethnicity": {
+      "corrected": "United States",
+      "original": "British"
+    },
+    "gender": {
+      "corrected": "F",
+      "original": ""
+    },
+    "origin_country": {
+      "corrected": "USA",
+      "original": "RU"
+    }
+  },
+  "author_name": "Alexandra G. McInturf",
+  "openalex_id": "A5078322786",
+  "page_version": "2026-04-18",
+  "papers": {
+    "27537": {
+      "a_": {
+        "added": [
+          "a_habitat_modeling"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_north_pacific"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "d_trophic"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": 100,
+        "depth_min_m": 1,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_hook_line"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_behaviour_change"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Does behaviour change = behavioral response?",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_pacific_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [
+          "sb_california_current"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "30587": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "No stock assessment (as explicitly stated)",
+        "rating": null,
+        "removed": [
+          "a_foraging_behavior",
+          "a_stock_assessment",
+          "a_structure"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Explicitly says California Current (not N. Atlantic)",
+        "rating": "partially_correct",
+        "removed": [
+          "b_north_atlantic"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Partially correct",
+        "rating": "partially_correct",
+        "removed": [
+          "d_fisheries",
+          "d_reproductive",
+          "d_genetics"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect - did not assess fishing (but did mention gillnets as a threat?)",
+        "rating": "partially_correct",
+        "removed": [
+          "gear_gillnet"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_distribution"
+        ],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Partially correct (title says \"Spatial distribution\"). Did not assess abundance or mortality, but worth discussing whether sightings = abundance in this case",
+        "rating": "partially_correct",
+        "removed": [
+          "imp_abundance",
+          "imp_mortality"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [
+          "sb_california_current"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "As above",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "31942": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "We didn't technically conduct our own analysis",
+        "rating": "incorrect",
+        "removed": [
+          "a_photo_id",
+          "a_reproduction",
+          "a_structure",
+          "a_vision",
+          "a_social_network_analysis"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_arctic_ocean",
+          "b_southern_ocean",
+          "b_caribbean",
+          "b_indian_ocean",
+          "b_mediterranean",
+          "b_north_atlantic",
+          "b_south_atlantic"
+        ],
+        "changes_count": 7,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "To discuss: how to deal with review papers (should all of these be checked or none?)",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_genetics",
+          "d_biology"
+        ],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "d_biomechanics"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_pelagic",
+          "eco_reef"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_distribution"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "This is a bit of an unusual one - we didn't assess response, necessarily. Just classified behaviors",
+        "rating": "incorrect",
+        "removed": [
+          "imp_direction",
+          "imp_confidence",
+          "imp_quantified"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Not species specific",
+        "rating": "incorrect",
+        "removed": [
+          "sp_carcharodon_carcharias",
+          "sp_cetorhinus_maximus"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "33281": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_north_atlantic"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "No genetics; only in discussion",
+        "rating": "partially_correct",
+        "removed": [
+          "d_genetics"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": 0,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_distribution"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_pacific_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [
+          "sb_irish_sea"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Sea of the Hebrides was also listed",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "33311": {
+      "a_": {
+        "added": [
+          "a_body_measurements",
+          "a_catch_data_analysis"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [
+          "a_reproduction",
+          "a_structure"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_north_pacific"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_movement",
+          "d_biology"
+        ],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "No husbandry",
+        "rating": "partially_correct",
+        "removed": [
+          "d_husbandry"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_brackish"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_hook_line"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Consider adding drop lines under hook and line",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_distribution"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "imp_direction"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_pacific_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [
+          "sb_california_current"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "33456": {
+      "a_": {
+        "added": [
+          "a_accelerometry",
+          "a_animal_borne_cameras"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect; Did not do blood chemistry; explicitly says: \"The IMU consisted of inertial sensors (12 channels of data: tri-axial accelerometers, magnetometers and gyroscopes, depth, temperature, and light; see Chapple et al., 2015) with a towed camera\" (may be worth more heavily weighting in abstract + methods section)",
+        "rating": "incorrect",
+        "removed": [
+          "a_blood_chemistry",
+          "a_physiology"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_north_atlantic"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_biomechanics"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Missing biomechanics (maybe mentions of accelerometers, IMU, magnetometers, energetic expenditure)",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": 80,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_coastal"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Explicitly says coastal (This is in stark contrast to the pre-strike period where the animal was observed feeding along the surface in shallow coastal water for 84% of the first ~6 h) in discussion, but was missed here",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_behaviour_change"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Missed behavior change",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_atlantic_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "For depth, it does go deeper than what's said in the text, but only present in the figure. To discuss",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Partially correct - taking examples from literature (i.e. whale sharks)",
+        "rating": "partially_correct",
+        "removed": [
+          "sp_rhincodon_typus"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "34321": {
+      "a_": {
+        "added": [
+          "a_stable_isotope_analysis"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Missing SIA",
+        "rating": "incorrect",
+        "removed": [
+          "a_genetic_relatedness",
+          "a_physiology",
+          "a_reproduction",
+          "a_structure"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_north_pacific"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "I think this extracted from my catch data paper?",
+        "rating": "partially_correct",
+        "removed": [
+          "b_south_pacific"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_biology",
+          "d_trophic"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect",
+        "rating": "partially_correct",
+        "removed": [
+          "d_reproductive",
+          "d_genetics"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_coastal",
+          "eco_mesopelagic"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Partially correct, missing mesopelagic and coastal (even though both are mentioned in text)",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_trophic",
+          "imp_distribution"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Partially correct; missing distribution and trophic",
+        "rating": "partially_correct",
+        "removed": [
+          "imp_direction",
+          "imp_confidence"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_pacific_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [
+          "pr_bycatch"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect",
+        "rating": "partially_correct",
+        "removed": [
+          "pr_climate_change"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [
+          "sb_california_current"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect; Title says \"California Current\"",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [
+          "sp_lamna_ditropis"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect",
+        "rating": null,
+        "removed": [
+          "sp_carcharhinus_amblyrhynchos",
+          "sp_carcharhinus_melanopterus",
+          "sp_cetorhinus_maximus",
+          "sp_orectolobus_maculatus",
+          "sp_rhincodon_typus",
+          "sp_scyliorhinus_canicula",
+          "sp_triakis_semifasciata",
+          "sp_sphyrna_lewini",
+          "sp_urobatis_halleri"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "34379": {
+      "a_": {
+        "added": [
+          "a_behavioural_observation"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Not sure what structure means here",
+        "rating": "incorrect",
+        "removed": [
+          "a_reproduction",
+          "a_stomach_content_analysis",
+          "a_structure"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "changes_count": 0,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_biology"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "This seems largely correct - not sure if we should specify biology if it's about a specific component of life history (will have same issues with behaviors that differ with ontogeny). I wouldn't say that this paper has a physiology focus either (I only mention physiology once).\nFinally, fisheries is a loose term ; we fished for them but same comment as with physiology",
+        "rating": "correct",
+        "removed": [
+          "d_physiology"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_coastal"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Mostly correct. Would say that these nurseries occur in coastal areas (sheltered may be the term to use?). But I understand why that wasn't flagged also...not sure how to remedy",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_gillnet"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Incorrect",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "This is a hard one...we were mostly just measuring different drivers of behavior. I wouldn't say it was a behavior change because we were just observing. I think this criterion will be hard for some of our aggregation papers. Also, to me \"social\" = social behavior",
+        "rating": "incorrect",
+        "removed": [
+          "imp_direction",
+          "imp_confidence"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_south_pacific_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Correct",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "Suggest having a threshold for number of mentions. Also discussion of framework species mentioned versus species explicitly studied (perhaps if it's listed in the abstract, that would help to clarify since example species aren't usually). ",
+        "rating": "partially_correct",
+        "removed": [
+          "sp_carcharhinus_amblyrhynchos",
+          "sp_cetorhinus_maximus",
+          "sp_orectolobus_maculatus",
+          "sp_rhincodon_typus",
+          "sp_scyliorhinus_canicula",
+          "sp_sphyrna_lewini",
+          "sp_triakis_semifasciata",
+          "sp_urobatis_halleri"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    }
+  },
+  "papers_reviewed": 8,
+  "papers_total": 0,
+  "timestamp": "2026-04-20T20:20:52.846Z"
+}
