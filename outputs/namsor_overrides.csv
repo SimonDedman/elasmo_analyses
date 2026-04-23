@@ -1,0 +1,3 @@
+openalex_author_id,namsor_gender,namsor_origin_country,namsor_ethnicity,source,notes
+A5078322786,F,USA,United States,Alexandra G. McInturf,self-correction via validation page (PR #11)
+A5027778174,F,,,Elena Fernández-Corredor,self-correction (PR #13); redundant post-60078568b NamSor normaliser but kept as belt-and-braces

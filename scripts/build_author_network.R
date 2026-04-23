@@ -113,6 +113,22 @@ namsor_clean <- namsor |>
   select(openalex_author_id, namsor_gender, namsor_origin_country,
          namsor_origin_region, namsor_origin_subregion, namsor_ethnicity)
 
+ns_ov_path <- "outputs/namsor_overrides.csv"
+if (file.exists(ns_ov_path)) {
+  ns_ov <- read_csv(ns_ov_path, show_col_types = FALSE,
+                    col_types = cols(.default = col_character())) |>
+    select(openalex_author_id, any_of(c("namsor_gender", "namsor_origin_country", "namsor_ethnicity")))
+  namsor_clean <- namsor_clean |>
+    left_join(ns_ov, by = "openalex_author_id", suffix = c("", ".ov")) |>
+    mutate(
+      namsor_gender         = coalesce(na_if(namsor_gender.ov, ""),         namsor_gender),
+      namsor_origin_country = coalesce(na_if(namsor_origin_country.ov, ""), namsor_origin_country),
+      namsor_ethnicity      = coalesce(na_if(namsor_ethnicity.ov, ""),      namsor_ethnicity)
+    ) |>
+    select(-ends_with(".ov"))
+  cat(sprintf("  Applied %d NamSor overrides\n", nrow(ns_ov)))
+}
+
 author_meta <- authors |>
   mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/")) |>
   left_join(namsor_clean, by = "openalex_author_id") |>
