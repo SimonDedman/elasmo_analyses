@@ -1,0 +1,175 @@
+{
+  "author_corrections": {
+    "gender": {
+      "corrected": "F",
+      "original": "female"
+    }
+  },
+  "author_name": "Elena Fernández‐Corredor",
+  "openalex_id": "A5027778174",
+  "page_version": "2026-04-18",
+  "papers": {
+    "32524": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [
+          "gear_demersal",
+          "gear_target_species"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_community_composition",
+          "imp_biodiversity"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "The main objective of this study was to investigate the ecological role of chondrichthyans and the consequences of their extinction at the food web level. \nIt goes through changes at the community composition and biodiversity by evaluating different extinction scenarios.\ncurrent rule for community composition: Require co-occurrence with: change, shift, impact, alter*. Suggestion:  add verb tenses (is changing/shifting)\ncurrent rule for biodiversity: Require co-occurrence with: change, loss, decline, impact. Suggestion: add decrease (e.g. from paper ID 32524: alterations produced by species loss constitute a decrease in robustness...)",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "The main objective of this study was to investigate the ecological role of chondrichthyans and the consequences of their extinction at the food web level. It does not target any particular threat but mentions some of them at the introduction (including ocean acidification).\nI suggest a higher threshold for ocean acidification or threshold = 1 in abstract/methods\n",
+        "rating": "partially_correct",
+        "removed": [
+          "pr_ocean_acidification"
+        ],
+        "rule_suggestions": {
+          "add_terms": [
+            "extinction"
+          ],
+          "remove_terms": [],
+          "threshold": 1
+        }
+      },
+      "sb_": {
+        "added": [],
+        "changes_count": 0,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    }
+  },
+  "papers_reviewed": 1,
+  "papers_total": 0,
+  "timestamp": "2026-04-20T07:54:51.106Z"
+}
