@@ -162,3 +162,10 @@ docs/LLM/*.pdf
 # Generated network-viz subsets (large single-file bundles)
 docs/network/index_subset.html
 docs/network/index_subset_files/
+
+# Coauthor PDF staging areas (source libraries, synced from NAS via Synology
+# Drive; ingested into SharkPapers then deleted — never track binaries here)
+database/others_libraries/
+database/orphan_inbox/
+database/coauthor_dupe_verification.json
+database/coauthor_cleanup_plan.json
