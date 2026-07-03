@@ -152,29 +152,61 @@ def _get_paper_meta():
     return _PAPER_META
 
 
-def run(sample_df):
-    import anthropic
-    client = anthropic.Anthropic()
+def _read_cache(cache_path):
+    """Read a paper's cache file. Returns (labels_dict, (in_tok, out_tok)).
+
+    Backward-compatible with the old cache format, which was just the bare
+    labels dict with no usage recorded (treated as (0, 0) usage)."""
+    cached = json.loads(cache_path.read_text())
+    if isinstance(cached, dict) and "labels" in cached:
+        return cached["labels"], tuple(cached.get("usage", (0, 0)))
+    return cached, (0, 0)
+
+
+def _write_cache(cache_path, labels, usage):
+    cache_path.write_text(json.dumps({"labels": labels, "usage": list(usage)}))
+
+
+def run(sample_df, client=None):
+    if client is None:
+        import anthropic
+        client = anthropic.Anthropic()
     columns = _schema_column_defs()
     rows, toks = [], []
-    for lit in sample_df["literature_id"]:
-        text, sha = _pdf_text(lit)
-        if not text:
-            continue
-        cache = CACHE / f"{sha}.json"
-        if cache.exists():
-            res = json.loads(cache.read_text())
-            usage = (0, 0)
-        else:
-            res, usage = extract_paper(text, columns, client)
-            cache.write_text(json.dumps(res))
-        for col, v in res.items():
-            rows.append((lit, col, int(v["present"]), v["evidence"], v["confidence"]))
-        toks.append((lit, usage[0], usage[1]))
-    pd.DataFrame(rows, columns=["literature_id", "column", "present", "evidence", "confidence"]
-                 ).to_parquet(OUT / "fable_labels.parquet")
-    pd.DataFrame(toks, columns=["literature_id", "input_tokens", "output_tokens"]
-                 ).to_csv(OUT / "fable_token_log.csv", index=False)
+
+    def _flush():
+        # Write whatever has been accumulated so far, so an interruption
+        # (or one paper's failure) doesn't lose already-completed work.
+        if rows:
+            pd.DataFrame(rows, columns=["literature_id", "column", "present", "evidence", "confidence"]
+                         ).to_parquet(OUT / "fable_labels.parquet")
+        if toks:
+            pd.DataFrame(toks, columns=["literature_id", "input_tokens", "output_tokens"]
+                         ).to_csv(OUT / "fable_token_log.csv", index=False)
+
+    try:
+        for i, lit in enumerate(sample_df["literature_id"]):
+            lit_norm = str(int(float(lit)))
+            try:
+                text, sha = _pdf_text(lit_norm)
+                if not text:
+                    continue
+                cache = CACHE / f"{sha}.json"
+                if cache.exists():
+                    res, usage = _read_cache(cache)
+                else:
+                    res, usage = extract_paper(text, columns, client)
+                    _write_cache(cache, res, usage)
+                for col, v in res.items():
+                    rows.append((lit_norm, col, int(v["present"]), v["evidence"], v["confidence"]))
+                toks.append((lit_norm, usage[0], usage[1]))
+            except Exception as e:
+                print(f"[fable_extract] paper {lit_norm} failed, skipping: {e}", file=sys.stderr)
+                continue
+            if (i + 1) % 25 == 0:
+                _flush()
+    finally:
+        _flush()
 
 
 if __name__ == "__main__":
