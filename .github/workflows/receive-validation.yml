@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
 
     steps:
       - name: Checkout repository
@@ -38,8 +37,8 @@ jobs:
           git config user.name "Validation Bot"
           git config user.email "noreply@github.com"
 
-      - name: Create branch and commit validation file
-        id: branch
+      - name: Commit validation file to main
+        id: commit
         env:
           OPENALEX_ID: ${{ steps.extract.outputs.openalex_id }}
           AUTHOR_NAME: ${{ steps.extract.outputs.author_name }}
@@ -47,26 +46,34 @@ jobs:
           TIMESTAMP_SAFE: ${{ steps.extract.outputs.timestamp_safe }}
           PAYLOAD: ${{ toJson(github.event.client_payload) }}
         run: |
-          BRANCH="validation/${OPENALEX_ID}/${TIMESTAMP_SAFE}"
-          git checkout -b "$BRANCH"
-
+          # Commit the submission JSON directly to main. The old PR-based flow
+          # failed at `gh pr create` ("GitHub Actions is not permitted to create
+          # or approve pull requests"), silently dropping submissions. A validation
+          # JSON is an append-only data drop, so a direct commit is simpler and robust.
           OUTFILE="validations/${OPENALEX_ID}_${TIMESTAMP_SAFE}.json"
           echo "$PAYLOAD" | jq '.' > "$OUTFILE"
+          echo "outfile=$OUTFILE" >> "$GITHUB_OUTPUT"
 
           git add "$OUTFILE"
           git commit -m "validation: ${AUTHOR_NAME} (${PAPERS_REVIEWED} papers)"
-          git push origin "$BRANCH"
 
-          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
-          echo "outfile=$OUTFILE" >> "$GITHUB_OUTPUT"
+          # Rebase-retry to tolerate concurrent submissions racing on main.
+          pushed=0
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then pushed=1; break; fi
+            echo "push attempt $i failed, retrying…"; sleep 3
+          done
+          if [ "$pushed" != "1" ]; then
+            echo "::error::failed to push validation commit to main after 5 attempts"; exit 1
+          fi
 
-      - name: Generate PR summary
+      - name: Write submission summary
         env:
           OPENALEX_ID: ${{ steps.extract.outputs.openalex_id }}
           AUTHOR_NAME: ${{ steps.extract.outputs.author_name }}
           PAPERS_REVIEWED: ${{ steps.extract.outputs.papers_reviewed }}
           TIMESTAMP: ${{ steps.extract.outputs.timestamp }}
-          OUTFILE: ${{ steps.branch.outputs.outfile }}
+          OUTFILE: ${{ steps.commit.outputs.outfile }}
         run: |
           python3 - <<'PYEOF'
           import json, os
@@ -200,21 +207,11 @@ jobs:
               lines.append("```")
               lines.append("")
 
-          with open("/tmp/pr_body.md", "w") as f:
+          # Render the human-readable summary into the Action run's job summary
+          # (replaces the old PR body — the JSON is already committed to main).
+          summary_path = os.environ.get("GITHUB_STEP_SUMMARY", "/tmp/submission_summary.md")
+          with open(summary_path, "a") as f:
               f.write("\n".join(lines))
 
-          print("PR body written to /tmp/pr_body.md")
+          print(f"Submission summary written to {summary_path}")
           PYEOF
-
-      - name: Create Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AUTHOR_NAME: ${{ steps.extract.outputs.author_name }}
-          PAPERS_REVIEWED: ${{ steps.extract.outputs.papers_reviewed }}
-          BRANCH: ${{ steps.branch.outputs.branch }}
-        run: |
-          gh pr create \
-            --title "Validation: ${AUTHOR_NAME} (${PAPERS_REVIEWED} papers)" \
-            --body-file /tmp/pr_body.md \
-            --base main \
-            --head "$BRANCH"
