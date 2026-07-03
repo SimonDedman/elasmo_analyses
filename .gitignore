@@ -59,6 +59,10 @@ outputs/analytical_techniques_by_discipline.csv
 outputs/conference_texts/
 outputs/techniques_*.csv
 outputs/abstracts_technique_counts.csv
+# 2026-07-03: extraction-validation pipeline (gold labels + rule backlog) —
+# small, versioned tables consumed by later validation-pipeline tasks.
+!outputs/validation/
+!outputs/validation/*.csv
 
 # Data files (keep structure but not actual data)
 data/*.csv
