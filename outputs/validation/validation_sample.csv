@@ -1,0 +1,334 @@
+literature_id,year,title,tier
+28926,2020.0,Determining Stingray Movement Patterns in a Wave-Swept Coastal Zone Using a Blimp for Continuous Aerial Video Surveillance.,gold
+31532,2023.0,New record of Hexanchus griseus in the northwestern Mediterranean Sea with insights into its biology and feeding ecology predator or scavenger?,gold
+31729,2023.0,Spatial distribution of the demersal chondrichthyan community from the western Mediterranean trawl bycatch.,gold
+32709,2024.0,"Heavy metal concentrations in sharks, rays and chimaeras from the western Mediterranean Sea.",gold
+33569,2024.0,Adapting to a pollution hotspot? Catsharks shift to plastic substrates for oviposition.,gold
+34654,2025.0,Key drivers of at-vessel mortality in demersal sharks.,gold
+32524,2024.0,An overview of the ecological roles of Mediterranean chondrichthyans through extinction scenarios.,gold
+27537,2019.0,Use of a hydrodynamic model to examine behavioral response of broadnose sevengill sharks (Notorynchus cepedianus) to estuarine tidal flow.,gold
+30587,2022.0,"Spatial Distribution, Temporal Changes, and Knowledge Gaps in Basking Shark (Cetorhinus maximus) Sightings in the California Current Ecosystem.",gold
+31942,2023.0,A unified paradigm for defining elasmobranch aggregations.,gold
+33281,2024.0,Assessing the potential of acoustic telemetry to underpin the regional management of basking sharks (Cetorhinus maximus).,gold
+33311,2024.0,"Advancing the ecological narrative: documentation of broadnose sevengill sharks (Notorynchus cepedianus) in South Puget Sound, Washington, USA.",gold
+33456,2024.0,Behavioral response of megafauna to boat collision measured via animal-borne camera and IMU.,gold
+34321,2025.0,Ontogenetic and sex variation in the foraging ecology of the salmon shark (Lamna ditropis) in the California current ecosystem.,gold
+34379,2025.0,Catch Data Can Unravel Elasmobranch Aggregation Dynamics and Group Behaviours.,gold
+32258,2023.0,Assessing ecological connectivity of blacktip sharks (Carcharhinus limbatus) in the Gulf of Mexico using stable isotope analysis of multiple tissues.,silver
+9057,2010.0,Diel movement patterns and habitat preferences of the common thresher shark (Alopias vulpinus) in the Southern California Bight.,silver
+23110,2016.0,"Foraging mode of the grey reef shark, Carcharhinus amblyrhynchos, under two different scenarios.",silver
+30734,2022.0,"The historical and contemporary knowledge on the elasmobranchs of Cananeia and adjacent waters, a coastal marine hotspot of southeastern Brazil.",silver
+30005,2021.0,Shark behaviour and marine faunal assemblage beneath SMART drumlines.,silver
+4589,2003.0,"Seasonal and diurnal activity of sixgill sharks (Hexanchus griseus) on a shallow water reef in the Strait of Georgia, British Columbia.",silver
+26535,2018.0,"The kinematics of envenomation by the yellow stingray, Urobatis jamaicensis.",silver
+7077,1992.0,Intra and interspecific association of large pelagic fishes inferred from catch data of surface longline.,silver
+27558,2019.0,"Unravelling the foraging behavior of the southern stingray, Hypanus americanus (Myliobatiformes: Dasyatidae) in a Southwestern Atlantic MPA.",silver
+29492,2021.0,When opportunistic predators interact with swordfish harpoon fishing activities: shark depredation over catches in the Strait of Messina (central Mediterranean Sea).,silver
+22404,2015.0,Movements and foraging of predators associated with mesophotic coral reefs and their potential for linking ecological habitats.,silver
+34031,2025.0,Functional models from limited data: parametric anatomy and 3D kinematics of basking shark feeding [Abstract].,silver
+35714,,,silver
+33184,2024.0,The loss of female sperm storage ability as a potential driver for increased extinction in Chondrichthyes.,silver
+33548,2024.0,Seasonal habitat use and diel vertical migration in female spurdog in Nordic waters.,silver
+4920,2008.0,"Size at maturity of Atlantoraja platana (Günther, 1880) (Chondrichthyes: Rajidae: Arhynchobatinae) in the south-west Atlantic Ocean.",silver
+24323,2017.0,Feeding patterns of two sympatric shark predators in coastal ecosystems of an oceanic island.,silver
+22122,"literature_id
+22122    2014.0
+22122       NaN
+Name: year, dtype: float64","literature_id
+22122    Reproductive biology of the skates Sympterygia...
+22122    Reproductive biology of the skates Sympterygia...
+Name: title, dtype: object",silver
+5680,2005.0,"Homing ability of young lemon sharks, Negaprion brevirostris.",silver
+18935,2009.0,Somniosus pacificus,silver
+18014,2013.0,"A Rapid Assessment Technique to Assist Management of the White Shark (Carcharodon carcharias) Cage Dive Industry, South Australia.",silver
+12281,2008.0,Catches of Pelagic Sharks by Subsurface Longline Fisheries in the South Atlantic Ocean During the Last Century: A Review of Available Data with Emphasis on Uruguay and Brazil.,silver
+28936,2020.0,Assessing the reproductive biology of the Greenland shark (Somniosus microcephalus).,silver
+20914,2014.0,Phycotoxin detection in Australian sharks: an update on ciguatoxin and saxitoxin accumulation. Poster Abstract.,silver
+22923,2015.0,Conservation Genetics of the Scalloped Hammerhead Shark in the Pacific Coast of Colombia.,silver
+23866,2016.0,"Aspects of the reproductive biology of dusky, spinner and sandbar sharks (Family Carcharhinidae) from the Tasman Sea.",silver
+12282,2006.0,"Maturation of Squalus mitsukurii and Cirrhigaleus asper (Squalidae, Squaliformes) in the southwestern equatorial Atlantic Ocean.",silver
+15720,2012.0,Record of the goblin shark Mitsukurina owstoni (Chondrichthyes: Lamniformes: Mitsukurinidae) from the south-western Atlantic.,silver
+22376,2015.0,Jùyáo zài Táiwān (Sawfish in Taiwan). [in Taiwanese],silver
+28222,2020.0,Individual and Population Benefits of Marine Reserves for Reef Sharks.,silver
+473,1983.0,"Re-description of the external morphology of Somniosus rostratus (Risso, 1826), with special reference to its squamation and cutaneus sensory organs, and aspects of their functional morphology (Pisces Selachii Squalidae).",silver
+17191,2012.0,Shark Skin Drag Reduction.,silver
+1939,1974.0,Funktionsanpassungen in Form und Struktur an Haifischzähnen.,silver
+3427,2005.0,"Eating without hands or tongue - specialization, elaboration and the evolution of preyprocessing mechanisms in cartilaginous fishes.",silver
+14448,2011.0,Red muscle function in stiff-bodied swimmers: there and almost back again.,silver
+7645,1986.0,Functional Morphology of the Olfactory Organs in the Spiny Dogfish (Squalus acanthias L.) and the Small-spotted Catshark (Scyliorhinus canicula (L.)).,silver
+32530,2024.0,Anatomical variation between the muscles of mastication in black-tip shark (Carcharhinus limbatus) and shovelnose ray Fish (Glaucostegus typus).,silver
+30538,2022.0,A Numerical Model for the Analysis of the Locomotion of a Cownose Ray.,silver
+23022,2015.0,"Ultrastructure of dermal denticles in sharpnose shark (Rhizoprionodon lalandii) (Elasmobranchii, Carcharhinidae).",silver
+17361,2009.0,"Two juvenile Great White sharks, Carcharodon carcharias (LINNAEUS, 1758) (Chondrichthyes; Lamnidae), caught in the northeastern Aegean sea.",silver
+24245,2015.0,Imitation of the body/caudal fin undulatory swimming of a spiny dogfish (Squalus acanthias): The kinematic equation.,silver
+29159,2020.0,Centre-of-mass and minimal speed limits of the great hammerhead.,silver
+10809,1984.0,The activity of cerebellar neurones of the decerebrate dogfish Scyliorhinus during spontaneous swimming movements.,silver
+19373,2013.0,A Computational Study of the Hydrodynamics in the Nasal Region of a Hammerhead Shark (Sphyrna tudes): Implications for Olfaction.,silver
+32926,2025.0,The hammerhead shark's cephalofoil reduces fluid moments during turning motion.,silver
+33756,2024.0,"6 | International Conservation and Management Initiatives, International Treaties",silver
+20674,2015.0,Sawfish exploitation and status in Bangladesh.,silver
+31036,2022.0,"A Risk-Based Assessment to Advise the Responsible Consumption of Invertebrates, Elasmobranch, and Fishes of Commercial Interest in Mexico.",silver
+19568,2014.0,Predicting current and future global distributions of whale sharks.,silver
+34391,2025.0,"Sharks in Cabo Verde, Canarias, Madeira and Azores islands: species richness, conservation status and anthropogenic pressures (vol 12, 490317, 2025).",silver
+32945,2023.0,"Corrigendum to: Search for the vulnerable giants: the presence of giant guitarfish and wedgefish in the Karimunjawa National Park and adjacent waters (vol 74, pg 1420, 2023).",silver
+32480,2024.0,Population structure of the critically endangered Brazilian guitarfish Pseudobatos horkelii (Rhinobatidae) revealed by double-digest restriction site-associated DNA sequencing.,silver
+31024,2022.0,"Vulnerability of exploited deep-sea demersal species to ocean warming, deoxygenation, and acidification.",silver
+27112,2019.0,"Swatch-of-no-ground marine protected area for sharks, dolphins, porpoises and whales: Legal and institutional challenges.",silver
+29120,2020.0,Updating records of Squatina aculeata (Elasmobranchii: Squatiniformes: Squatinidae) in the Mediterranean Sea.,silver
+21162,2014.0,Seagrasses in the age of sea turtle conservation and shark overfishing.,silver
+24597,2016.0,The economic role of sharks in a major ecotourism archipelago in the western South Atlantic.,silver
+33972,2024.0,Structure and interannual variation of fish communities in the Wailingding marine ranching area of Zhuhai in spring.,silver
+21591,2014.0,A product of its environment: the epaulette shark (Hemiscyllium ocellatum) exhibits physiological tolerance to elevated environmental CO2.,silver
+23770,2016.0,The conservation implications of spatial and temporal variability in the diurnal use of Bahamian tidal mangrove creeks by transient predatory fishes.,silver
+27566,2019.0,Organic contaminants as an ecological tool to explore niche partitioning: a case study using three pelagic shark species.,silver
+3722,2004.0,A review of the systematics of the sleeper shark genus Somniosus with redescriptions of Somniosus (Somniosus) antarcticus and Somniosus (Rhinoscymnus) longus (Squaliformes: Somniosidae).,silver
+35545,,,silver
+33629,2024.0,An explainable Convolutional Neural Network approach to fossil shark tooth identification.,silver
+18231,2004.0,Oxynotus japonicus,silver
+31539,2022.0,Shark detection and classification with machine learning.,silver
+7494,2004.0,Estimates of Sharp Species Composition and Numbers Associated with the Shark Fin Trade Based on Hong Kong Auction Data.,silver
+19163,2004.0,Miroscyllium sheikoi,silver
+19675,2015.0,Do by-catch reduction devices in longline fisheries reduce capture of sharks and rays? A global meta-analysis.,silver
+26206,2018.0,Development and application of a machine learning algorithm for classification of elasmobranch behaviour from accelerometry data.,silver
+28875,2020.0,Worked bone and teeth from Orokolo Bay in the Papuan Gulf (Papua New Guinea).,silver
+30311,2021.0,"Elasmobranch Responses to Experimental Warming, Acidification, and Oxygen Loss-A Meta-Analysis.",silver
+32607,2023.0,Physiological responses to acute warming at the agitation temperature in a temperate shark.,silver
+28773,2020.0,On the dangers of including demographic analysis in Bayesian surplus production models: A case study for Indian Ocean blue shark.,silver
+23736,2016.0,A cross-taxa assessment of pelagic longline by-catch mitigation measures: conflicts and mutual benefits to elasmobranchs.,silver
+19719,"literature_id
+19719    2013.0
+19719       NaN
+Name: year, dtype: float64","literature_id
+19719    Whale Shark Provisioning: What do we know and ...
+19719    Whale Shark Provisioning: What do we know and ...
+Name: title, dtype: object",silver
+24325,2016.0,Population structure of a whale shark Rhincodon typus aggregation in the Red Sea.,silver
+25175,2016.0,"""Shark""",silver
+24427,2016.0,A “Shark Encounter”: Delayed Primary Closure and Prophylactic Antibiotic Treatment of a Great White Shark Bite.,silver
+21738,2014.0,"Spatial and temporal patterns of nature-based tourism interactions with whale sharks (Rhincodon typus) at Ningaloo Reef, Western Australia.",silver
+13077,2011.0,"A novel set of structures within the elasmobranch, ovarian follicle.",silver
+500283,2023.0,The role of the actors in the trade network structure of fishing products: The case of the shark market.,silver
+20208,2014.0,Long-Term Changes in Species Composition and Relative Abundances of Sharks at a Provisioning Site.,silver
+23951,2016.0,"Preparation, anti-biofouling and drag-reduction properties of a biomimetic shark skin surface.",silver
+26228,2018.0,Environmental and anthropogenic factors affecting the increasing occurrence of shark-human interactions around a fast-developing Indian Ocean island.,silver
+32279,2023.0,Predation of baitfishes associated with whale sharks at Ningaloo Reef.,silver
+28986,2020.0,The costs of cohabiting: the case of sharksuckers (Echeneis naucrates) and their hosts at shark provisioning sites.,silver
+19720,2013.0,"Describing the population structure of Rhincodon typus occurring in the waters of Oslob– Cebu, Philippines– between March 2012 and June 2013, during the provisioning interaction hours.",silver
+27428,2019.0,"Using long-term integrated research programs to improve whale shark tourism at Oslob, Philippines.",silver
+28967,2020.0,Beach-user perceptions and attitudes towards drone surveillance as a shark-bite mitigation tool.,silver
+33466,2024.0,Multimodel approach to a support stock assessment of standardized catch and effort data: A case study of blue shark (Prionace glauca) in the Indian Ocean by the Taiwanese large-scale longline fishery,silver
+500608,2007.0,Aggregations of large pelagic sharks above Seamounts.,silver
+28868,2021.0,"Polypocephalus barsami sp. nov., a New Species of Polypocephalidae Meggitt, 1924 (Lecanicephalidea) from the Persian Gulf.",silver
+500272,2024.0,"7 | Regional Overviews, Mediterranean and Black Seas, Montenegro",silver
+23832,2003.0,Limited mid-water scavenging of trawl discards.,silver
+26908,2018.0,"A case of tetrophthalmia with unilateral synophthalmia in an unborn fetus of blue shark Prionace glauca (Carcharhiniformes, Carcharhinidae).",silver
+24587,2016.0,Fishery-dependent and -independent data lead to consistent estimations of essential habitats.,silver
+20666,2014.0,Filter-feeding models predict feeding selectivity and movement in elasmobranch fishes [Abstract].,silver
+32249,2023.0,"A systematic conservation plan identifying critical areas for improved chondrichthyan protection in South Africa (vol 284, 110163, 2023).",silver
+31020,2022.0,Fisher-shark interactions: A loss of support for the Maldives shark sanctuary from reef fishers whose livelihoods are affected by shark depredation.,silver
+29548,2003.0,Revision of the records of shark and ray species from the Maltese Islands (Chordata: Chondrichthyes).,silver
+32064,2023.0,Preliminary study on antimicrobial activities of skin mucus from by-catch of Elasmobranch species.,silver
+32032,2023.0,A systematic conservation plan identifying critical areas for improved chondrichthyan protection in South Africa.,silver
+26244,2018.0,"Fishers’ ecological knowledge of sawfishes in the Sepik and Ramu rivers, northern Papua New Guinea.",silver
+25923,2017.0,Global marine protected areas to prevent extinctions.,silver
+25298,2017.0,Genome-wide SNPs reveal low effective population size within confined management units of the highly vagile Galapagos shark (Carcharhinus galapagensis).,silver
+17457,2012.0,"Population genetic structure of blue-spotted maskray Neotrygon kuhlii and two other Indo-West Pacific stingray species (Myliobatiformes: Dasyatidae), inferred from size-polymorphic intron markers.",silver
+28339,2018.0,Diversidad y estructura genético poblacional de Mustelus schmitti mediante inter simple sequence repeats (ISSR).,silver
+31730,2023.0,Stingray epidermal microbiomes are species-specific with local adaptations.,silver
+24243,2016.0,"Complete genome sequence and SNPs of Raja pulchra (Rajiformes, Rajidae) mitochondria.",silver
+17669,2012.0,Expression profile of toll-like receptor 2 mRNA in selected tissues of shark (Chiloscyllium sp.).,silver
+10964,1996.0,A new high molecular weight immunoglobulin class from the carcharhine shark: implications for the properties of the primordial immunoglobulin.,silver
+32126,2023.0,Characteristics of the spiny dogfish (Squalus acanthias) nuclear genome.,silver
+30295,2021.0,Differences in the occurrence and abundance of batoids across an oceanic archipelago using complementary data sources: Implications for conservation.,silver
+3815,2005.0,"Description of a new species of skate of the genus Malacoraja Stehmann, 1970: the first species from the southwestern Atlantic Ocean, with notes on generic monophyly and composition (Chondrichthyes: Rajidae).",silver
+25542,2017.0,"New morphological and molecular evidence confirm the presence of the Norwegian skate Dipturus nidarosiensis (Storm, 1881) in the Mediterranean Sea and extend its distribution to the western basin.",silver
+26272,2018.0,DNA barcoding of chondrichthyans in South African fisheries.,silver
+27747,2020.0,The Magellanic Province and its fish fauna (South America): Several provinces or one?,silver
+9463,2009.0,Molecular organization of 5S rDNA in sharks of the genus Rhizoprionodon: insights into the evolutionary dynamics of 5S rDNA in vertebrate genomes.,silver
+34700,2025.0,Articulated specimens provide new insights into the iconic Mesozoic shark genus Sphenodus.,silver
+30126,2021.0,Understanding the public attitude towards sharks for improving their conservation.,silver
+9635,1975.0,Shark attact in Natal.,silver
+26991,2019.0,Direct and indirect psychological impacts of shark-bite events.,silver
+21185,2014.0,Western Australia coastal shark bites: A risk assessment.,silver
+13225,1981.0,A report on an nonfatal shark attack in the Hawaiian Islands.,silver
+33749,2024.0,"4 | Socio-Economic Significance, Tourism",silver
+6885,1988.0,Shark attacks in the rivers of southern Iran.,silver
+5028,1992.0,"Protection against shark attack in South Africa, 1952-90.",silver
+26515,2018.0,Shark Related Injuries: A Case Series of Emergency Department Patients.,silver
+32963,2024.0,Moonless night sky increases Isistius species (cookiecutter shark) and live human contact.,silver
+34198,2019.0,Skin Deep: An Assessment of New Zealand Blue Whale Skin Condition.,silver
+26931,2018.0,Re: Clinical features of 27 shark attack cases on La Réunion island.,silver
+15099,2004.0,"Killer Whale (Orcinus orca) Predation on Sharks in Patagonia, Argentina: A First Report.",silver
+29162,2020.0,"Coexisting with sharks: a novel, socially acceptable and non-lethal shark mitigation approach.",silver
+21101,2014.0,"Evidence of shark attacks on Atlantic spotted dolphins (Stenella frontalis) off Bimini, The Bahamas.",silver
+12238,2010.0,Comparative punting kinematics and pelvic fin musculature of benthic batoids.,silver
+15302,2004.0,"New locality records for Dermophthirius carcharhini Mac Callum, 1926 (Monogenea: Microbothriidae) and D. maccallumi Watson and Thorson, 1976 and a list of hosts and localities for species of Dermophthirius Mac Callum, 1926.",silver
+6070,2001.0,Refractive state and accommodation in the eyes of free-swimming versus restrained juvenile lemon sharks (Negaprion brevirostris).,silver
+14438,2011.0,"Surgical removal of a gastric foreign body in a sand tiger shark, Carcharias taurus Rafinesque.",silver
+7317,2008.0,"Serum levels of reproductive steroid hormones in captive sand tiger sharks, Carcharias taurus (Rafinesque), and comments on their relation to sexual conflicts.",silver
+34895,2025.0,Trouble in the Tank: A Case Report of Fatal Scuticociliate Encephalitis in a Whitetip Reef Shark (Triaenodon obesus).,silver
+8814,2009.0,"Two new species of entobdelline skin parasites (Monogenea, Capsalidae) from the blotched fantail ray, Taeniura meyeni, in the Pacific Ocean, with comments on spermatophores and the male copulatory apparatus.",silver
+29061,2020.0,Meningoencephalitis with chondrocranial subcutaneous abscessation and septicaemia in a captive lemon shark (Negaprion brevirostris).,silver
+26982,2018.0,Reproductive hormone patterns in male and female cownose rays (Rhinoptera bonasus) in an aquarium setting and correlation to ultrasonographic staging.,silver
+13247,1991.0,"Shark bite wounds of the valvular intestine: The cause of an acute mortality syndrome of captive blacktip reef sharks, Carcharhinus melanopterus.",silver
+6916,1998.0,"Osmotic, ionic and haematological response of the Port Jackson shark Heterodontus portusjacksoni and the common stingaree Trygonoptera testacea upon exposure to diluted seawater.",silver
+27201,2019.0,"Features and Paleoecological Significance of the Shark Fauna from the Upper Cretaceous Hinoshima Formation, Himenoura Group, Southwest Japan.",silver
+24078,2016.0,The hemic response of white-spotted bamboo sharks (Chiloscyllium plagiosum) with inflammatory disease.,silver
+8346,1986.0,Lithium in marine elasmobranchs as a natural marker of rectal gland contribution in sodium balance.,silver
+25442,2017.0,Distributional shift of urea production site from the extraembryonic yolk sac membrane to the embryonic liver during the development of cloudy catshark (Scyliorhinus torazame).,silver
+9120,1985.0,"Studies on immunoglobulin and immunoglobulin-forming cells in Heterodontus japonicus, a cartilaginous fish.",silver
+9747,2008.0,"Molecular markers of cancer in cartilaginous fish: immunocytochemical study of PCNA, p-53, myc and ras expression in neoplastic and hyperplastic tissues from free ranging blue sharks, Prionace glauca (L.).",silver
+23261,2015.0,Systematic Implications of the Anterior Pectoral Basals in Squaliform Sharks (Chondrichthyes: Elasmobranchii).,silver
+30816,2022.0,Identification of Anti-TNF alpha VNAR Single Domain Antibodies from Whitespotted Bambooshark (Chiloscyllium plagiosum).,silver
+24959,1991.0,"New Calcitonin Isolated from the Ray, Dasyatis akajei.",silver
+11495,1991.0,Organization and dynamics of microtubules in Torpedo marmorata electrocyte: Selective association with specialized domains of the postsynaptic membrane.,silver
+17830,2013.0,Cellular Localization of PACAP and Its Receptors in the Ovary of the Spotted Ray Torpedo marmorata Risso 1880 (Elasmobranchii: Torpediniformes).,silver
+9542,1996.0,Estrogen Receptors in the Stingray (Dasyatis akajei) Ultimobranchial Gland.,silver
+8719,1987.0,Development of the electromotor system of Torpedo marmorata: Distribution of extracellular matrix and cytoskeletal components during acetylcholine receptor focalization.,silver
+9631,1998.0,Shark complement: an assessment.,silver
+8526,1989.0,"Gastrin/CCK-like peptides in the spiny dogfish, Squalus acanthias; concentrations and actions in the gut.",silver
+10582,1995.0,"Marginal cells in the spinal cord of four elasmobranchs (Torpedo marmorata, T. torpedo, Raja undulata and Scyliorhinus canicula): evidence for homology with lamprey intraspinal stretch receptor neurons.",silver
+26789,2018.0,Multiple Sources for Sertoli Cells and Two Sertoli Phenotypes in the Adult Elasmobranch Testis: Insight from Two Species Belonging to Different Orders.,silver
+8387,2008.0,"Study of the potential spermatogonial stem cell compartment in dogfish testis, Scyliorhinus canicula L.",silver
+22610,2015.0,Tetanus after envenomations caused by freshwater stingrays.,silver
+4998,1982.0,"A note on catches of basking sharks, Cetorhinus maximus (Gunnerus), off Norway and their relation to possible migration paths.",silver
+34204,2025.0,Advancing Management of the Main Predatory Sharks Along the Argentine Coast: Leveraging Habitat Use Knowledge and Historical Catch Data.,silver
+29342,2020.0,Repeatability of baited remote underwater video station (BRUVS) results within and between seasons.,silver
+34271,2025.0,Insights into spinetail devil ray spatial ecology in the Mediterranean Sea through satellite telemetry.,silver
+33767,2024.0,"7 | Regional Overviews, Central America And The Caribbean, Costa Rica",silver
+22166,2015.0,Conservation challenges of sharks with continental scale migrations.,silver
+6492,2009.0,A basking shark (Cetorhinus maximus) tracked by satellite together with simultaneous remote sensing II: New analysis reveals orientation to a thermal front.,silver
+27704,2020.0,Adrenocorticotropic Hormone and Cyclic Adenosine Monophosphate are Involved in the Control of Shark Bioluminescence.,silver
+32492,2024.0,"Movement pathways and habitat use of blue sharks (Prionace glauca) in the Western Mediterranean Sea: Distribution in relation to environmental factors, reproductive biology, and conservation issues.",silver
+25812,2017.0,"Diel habitat use patterns of a marine apex predator (tiger shark, Galeocerdo cuvier) at a high use area exposed to dive tourism.",silver
+16138,2012.0,Accuracy of Using Visual Identification of White Sharks to Estimate Residency Patterns.,silver
+27120,2019.0,Population connectivity of pelagic megafauna in the Cuba-Mexico-United States triangle.,silver
+15178,2012.0,"Population estimates of Alfred mantas (Manta alfredi) in central Maldives atolls: North Male, Ari and Baa.",silver
+27873,2020.0,"Observing post-release mortality for dusky sharks, Carcharhinus obscurus, captured in the US pelagic longline fishery.",silver
+30710,2022.0,Bycatch of a Critically Endangered Shark Glyphis glyphis in a Crab Pot Fishery: Implications for Management.,silver
+26969,2017.0,"Fossil shark teeth from the collections of the Museum of Natural Sciences, Mureș.",silver
+21657,2014.0,Fossil Fishes from the Jetmore Chalk Member (Lower Turonian) of the Upper Cretaceous Greenhorn Limestone in North-Central Kansas.,silver
+1242,,,silver
+15565,2004.0,"Freshwater Stingrays from the Miocene of South America with comments on the rise of potamotrygonids (Batoidea, Myliobatiformes).",silver
+10632,1983.0,"Immunohistochemical studies on the distribution and origin of candidate peptidergic primary afferent neurotransmitters in the spinal cord of an elasmobranch fish, the Atlantic stingray (Dasyatis sabina).",silver
+32332,1999.0,Chapter 12 – British Jurassic fossil fishes sites.,silver
+4499,2008.0,Strontium isotopic signatures in the enameloid and dentine of upper Cretaceous shark teeth from western Alabama: paleoecologic and geochronologic implications.,silver
+17240,2012.0,"Origin, palaeoecology and stratigraphic significance of bored and encrusted concretions from the Upper Cretaceous (Santonian) of southern Israel.",silver
+17725,2006.0,"Early Eocene (Ypresian) continental vertebrate assemblage from India, with description of a new anthracobunid (Mammalia, Tethytheria).",silver
+23933,2016.0,New data on the cow shark teeth (Hexanchiformes) from the Cretaceous deposits of Sakhalin Island (Russia).,silver
+25860,2017.0,"Taxonomy and morphological study on the vertebrate remains of Shark and rays fauna from the Middle and Late Eocene succession, Fayoum Depression, Egypt.",silver
+30924,2022.0,Revisiting the chondrichthyan egg capsules inventory from the Pennsylvanian (Carboniferous) of Belgium: new data and perspectives.,silver
+4746,,,silver
+3284,2008.0,Dental structure of the Giant lantern shark Etmopterus baxteri (Chondrichthyes: Squaliformes) and its taxonomic implications.,silver
+23624,2016.0,"First record of Lagarodus (Chondrichthyes: Euchondrocephali) from the Carboniferous of Svalbard, Arctic Norway.",silver
+9112,2006.0,Antibody repertoire development in cartilaginous fish.,silver
+11014,1966.0,Respiratory function in the elasmobranch Squalus suckleyi G.,silver
+23611,2015.0,"The peripheral olfactory organ in the Greenland shark Somniosus microcephalus (Bloch and Schneider, 1801) [Abstract].",silver
+25342,1972.0,"The role of intestinal bacteria in urea metabolism by the skate, Raja erinacea.",silver
+24022,1990.0,"Taurine accumulation by the heart of embryonic skates, Raja eglanteria.",silver
+8554,1997.0,Jaws: The Inside Story. The Metabolism of Elasmobranch Fishes.,silver
+24156,2016.0,Neuro-oxidative damage and aerobic potential loss of sharks under elevated CO2 and warming.,silver
+10799,1974.0,"Mechanism of anion permeation through the muscle fibre membrane of an elasmobranch fish, Taeniura lymma.",silver
+9083,2002.0,Effect of water washing of shark (Scoliodon laticaudus) meat on the properties of proteins with special reference to gelation.,silver
+8679,1976.0,"Transport and metabolism of purines by isolated choroid plexus, liver and brain in the spiny dogfish, Squalus acanthias.",silver
+1064,2004.0,Temperature and depth associations of porbeagle shark (Lamna nasus) in the northwest Atlantic.,silver
+8571,1978.0,Na+-K+ ATPase in elasmobranch intestinal brush borders.,silver
+8344,2004.0,Lamprey parasitism of sharks and teleosts: high capacity urea excretion in an extant vertebrate relic.,silver
+8450,1980.0,"Bilirubin conjugation in the spiny dogfish, Squalus acanthias, the small skate, Raja erinacea and the winter flounder, Pseudopleuronectes americanas.",silver
+10875,2008.0,"Purification, structural characterization, and myotropic activity of a peptide related to des-Arg(9)-bradykinin from an elasmobranch fish, the little skate, Leucoraja erinacea.",silver
+27322,2019.0,"The Synarcual of the Little Skate, Leucoraja erinacea: Novel Development Among the Vertebrates.",silver
+8029,2008.0,The accumulation of lead and mercury from seawater and their depuration by eggs of the spotted dogfish Scyliorhinus canicula (Chondrichthys).,silver
+17975,2012.0,"Development of head and trunk mesoderm in the dogfish, Scyliorhinus torazame: I. Embryology and morphology of the head cavities and related structures.",silver
+9654,2007.0,Dogfish egg case structural studies by ATR FT-IR and FT-Raman spectroscopy.,silver
+6828,1993.0,Uterogestation and Placentation in Elasmobranchs.,silver
+4939,2006.0,Morphological abnormalities in a blue shark Prionace glauca (Chondrichthyes: Carcharhinidae) foetus from southern Brazil.,silver
+7453,1980.0,Development of dentition and dermal skeleton in embryonic Scyliorhinus canicula.,silver
+4942,2006.0,"Embryos of common thresher shark Alopias vulpinus in southern Brazil, South Atlantic Ocean.",silver
+11926,,,silver
+19664,2013.0,Variability in the Reproductive Biology of the Atlantic Sharpnose Shark in the Gulf of Mexico.,silver
+23317,2000.0,Catch Per Unit Effort of deep-sea species off the continental slope to the west of British Isles.,silver
+22753,2015.0,"Ontogeny of digestive organs during early developmental stages of the tropical whitespotted bamboo shark, Chiloscyllium plagiosum – a histological study.",silver
+26952,2019.0,Embryonic expression of encephalopsin supports bioluminescence perception in lanternshark photophores.,silver
+29722,2021.0,What is your diagnosis? Reproductive tract fluid from a radiated tortoise (Astrochelys radiata) and southern stingray (Hypanus americanus).,silver
+22978,2015.0,Total mercury in female Pacific sharpnose sharks Rhizoprionodon longurio and their embryos.,silver
+5288,1972.0,"Mode of operation of ampullae of Lorenzini of the skate, Raja.",silver
+31150,2022.0,"Anatomy of the neurocranium, encephalon, and main sensory organs of the roundel skate, Rostroraja texana (Rajiformes: Rajidae) [Anatomía del neurocráneo, encéfalo y principales órganos sensoriales de la raya Rostroraja texana (Rajiformes: Rajidae)].",silver
+7361,2006.0,Na+/K+ATPase immunoreactivity in olfactory epithelium of small-spotted catshark Scyliorhinus canicula (L.): possible presence of ion exchanging cells?,silver
+10493,2006.0,Observations of crypt neuron-like cells in the olfactory epithelium of a cartilaginous fish.,silver
+8573,1972.0,New insights into the organization of the shark brain.,silver
+23772,2016.0,Complex flow in the nasal region of guitarfishes.,silver
+13584,1989.0,"Fusarium solani isolated from newborn bonnethead sharks, Sphyrna tiburo (L.).",silver
+9727,1987.0,"The lateral line mechanoreceptive mesencephalic, diencephalic, and telencephalic regions in the thornback ray, Platyrhinoidis triseriata (Elasmobranchii).",silver
+8199,1969.0,Inhibition of Purkinje cells in the cerebellum of elasmobranch fishes.,silver
+6642,1996.0,"A role for GABAergic inhibition in electrosensory processing and common mode rejection in the dorsal nucleus of the little skate, Raja erinacea.",silver
+10738,2007.0,Dipole hearing measurements in elasmobranch fishes.,silver
+32624,2023.0,"Expression of dendrin, neurofilament and glial fibrillary acidic protein in the brain of the dogfish Scyliorhinus canicula L.",silver
+19571,2008.0,Scaling laws of marine predator search behaviour.,silver
+8031,2009.0,Immunolocalization of G-protein alpha subunits in the olfactory system of the cartilaginous fish Scyliorhinus canicula.,silver
+27952,2019.0,"Fotogids mesopelagische vissen: Noordoost Atlantische Oceaan. [Photo guide meso pelagic fish, North East Atlantic Ocean].",silver
+31132,2022.0,Phage Diving: An Exploration of the Carcharhinid Shark Epidermal Virome.,silver
+16777,2012.0,"Okamejei n. sp., a new deep-water skate (Elasmobranchii, Rajidae) from the northwestern Indian Ocean off the Sokotra Islands, with comments on congeners in the area [Abstract].",silver
+20557,2014.0,"Review of the genus Eutetrarhynchus Pintner, 1913 (Trypanorhyncha: Eutetrarhynchidae), with the description of Eutetrarhynchus beveridgei n. sp.",silver
+3753,1988.0,"Records of Apristurus herklotsi (Lamniformes, Scyliorhinidae) and discussion of its taxonomic relationships.",silver
+11095,2005.0,"The spiny dogfish (Squalus cubensis/megalops group): The envenoming of a fisherman, with taxonomic and toxinological comments on the Squalus genus.",silver
+21264,2007.0,Hemoflagellates of oregon marine fishes with the description of new species of Trypanosoma and Trypanoplasma.,silver
+22852,2015.0,"Sexual dimorphism based on body proportions and ontogenetic changes in the Brazilian electric ray Narcine brasiliensis (von Olfers, 1831) (Chondrichthyes: Narcinidae)",silver
+1150,1999.0,"The occurrence, distribution and pathology associated with gnathiid isopod larvae infecting the epaulette shark, Hemiscyllium ocellatum.",silver
+27150,2019.0,Checklist of marine elasmobranchs of Colombia.,silver
+3385,2004.0,Rhinobatos sainsburyi n. sp. and Aptychotrema timorensis n. sp. - two new shovelnose Rays (Batoidea: Rhinobatidae) from the Eastern Indian Ocean.,silver
+30582,2021.0,The whale shark genome reveals patterns of vertebrate gene family evolution.,silver
+3714,1998.0,"The leopard Chimaera, a new species of chimaeroid fish from New Zealand (Holocephali, Chimaeriformes, Chimaeridae).",silver
+2066,"literature_id
+2066    2008.0
+2066    2008.0
+Name: year, dtype: float64","literature_id
+2066    Potamotrygon boesemani (Chondrichthyes: Myliob...
+2066    Potamotrygon boesemani (Chondrichthyes: Myliob...
+Name: title, dtype: object",silver
+23601,1976.0,"On Micropharynx parasitica Jägerskiöld, a marine planarian ectoparasitic on thorny skate, Raja radiata Donovan, from the North Atlantic Ocean.",silver
+24315,2016.0,Strontium mineralization of shark vertebrae.,silver
+10166,2009.0,"Perfluorinated organic contaminants in sediment and aquatic wildlife, including sharks, from Georgia, USA.",silver
+24071,1994.0,Mercury concentrations in stomach contents and muscle of five fish species from the north east coast of England.,silver
+11956,,,silver
+8148,1999.0,Purification and characterisation of a minor low-sulphated dermatan sulphate-proteoglycan from ray skin.,silver
+11084,2007.0,The organic anion transport polypeptide 1d1 (Oatp1d1) mediates hepatocellular uptake of phalloidin and microcystin into skate liver.,silver
+8277,2009.0,"Content of lead and cadmium in barred hogfish, Bodianus scrofa, island grouper, Mycteroperca fusca, and Portuguese dogfish, Centroscymnus coelolepis, from Canary Islands, Spain.",silver
+34070,2024.0,A systematic review of reports on aquatic envenomation: are there global hot spots and vulnerable populations?,silver
+23024,2015.0,"Influence of bioaccessibility of total mercury, methyl-mercury and selenium on the risk/benefit associated to the consumption of raw and cooked blue shark (Prionace glauca).",silver
+13468,1979.0,Mercury content of shark from South-Western Australian waters.,silver
+23459,1991.0,Relationships between heavy metal content and body weight of fish from the Kelang estuary Malaysia.,silver
+23271,1979.0,Mercury in Marine and Freshwater Fish of Papua New Guinea.,silver
+10508,1980.0,Cholinergic synaptic vesicles isolated from Torpedo marmorata: Demonstration of acetylcholine and choline uptake in an in vitro system.,silver
+9740,2006.0,Mercury toxicity in the shark (Squalus acanthias) rectal gland: apical CFTR chloride channels are inhibited by mercuric chloride.,silver
+21689,2014.0,"Shark fin, a symbol of wealth and good fortune may pose health risks: the case of mercury.",silver
+11486,1991.0,Trace metal levels in sharks from British and Atlantic waters.,silver
+33291,2024.0,"Tooth marks of the Great White Shark from a Pliocene outcrop of the Northern Apennines (Castell'Arquato, Italy).",silver
+13731,2001.0,Analisi preliminare dei selaci registrati presso il mercato ittico di Milano (aprile-settembre 2000).,silver
+6432,2007.0,"Biophysical correlates of relative abundances of marine megafauna at Ningaloo Reef, Western Australia.",silver
+25663,2017.0,Association of whale sharks (Rhincodon typus) with thermo-biological frontal systems of the eastern tropical Pacific.,silver
+11339,2005.0,Increase in bone mineral density through oral administration of shark gelatin to ovariectomized rats.,silver
+31059,2022.0,Using Compound-Specific Carbon Stable Isotope Analysis of Squalene to Establish Provenance and Ensure Sustainability for the Deep-Water Shark Liver Oil Industry.,silver
+295,1998.0,Sharks and their relatives. Ecology and conservation.,silver
+9378,1976.0,In vitro trophic action of ACTH and insulin upon adrenocortical enzymes of the squaliform elasmobranch Ginglymostoma cirratum (Bonnaterre).,silver
+27075,2019.0,Running scared: when predators become prey.,silver
+20153,2014.0,"Defining shark ecological specialisation: concepts, context, and examples.",silver
+20992,2014.0,Feeding comparisons of four batoids (Elasmobranchii) in coastal waters of southern Brazil.,silver
+25173,2017.0,An evaluation of mercury offloading in two Central California elasmobranchs.,silver
+25058,2017.0,"Combined gut-content and stable isotope trophic analysis of the pelagic stingray Pteroplaytrygon violacea (Bonaparte, 1832) diet from the western North Atlantic Ocean.",silver
+21592,2014.0,In cold blood: evidence of Pacific sleeper shark (Somniosus pacificus) predation on Steller sea lions (Eumetopias jubatus) in the Gulf of Alaska.,silver
+33125,2024.0,Metabolic organization of pregnant freshwater stingray and their offspring.,silver
+25888,2017.0,"A first record of the Smallfin Gulper Shark Centrophorus moluccensis Bleeker, 1860 (Chondrichthyes: Squaliformes: Centrophoridae) from the Andaman & Nicobar waters, Indian EEZ.",silver
+7816,1996.0,Tagging techniques for the underwater identification of sharks [Abstract].,silver
+10336,,,silver
+1512,2004.0,"Recent occurrence of the smalltooth sawfish, Pristis pectinata (Elasmobranchiomorphi: Pristidae), in Florida Bay and the Florida Keys, with comments on sawfish ecology.",silver
+13458,1989.0,"An abnormal embryo of the reef shark, Carcharhinus perezi (Poey), from Yucatan, Mexico.",silver
+501120,1996.0,Late Devonian vertebrates of the Timan.,silver
+15505,2008.0,"Occurrence report of the goblin shark, Mitsukurina owstoni Jordan, 1898 (Lamniformes: Mitsukurinidae), off northern Brazil. (Registro da ocorrência do tubarão-duende, Mitsukurina owstoni Jordan, 1898 (Lamniformes: Mitsukurinidae) na Região Norte do Brasil).",silver
+32751,2003.0,Late Eocene Elasmobranchii in the Pleistocene Fluvial Taphocenosis in the Мiddle Trans-Ural: Biostratigraphic and Paleogeographic Importans [in russian].,silver
+15255,2012.0,Sharks that eat sharks: opportunistic predation by wobbegongs.,silver
+8888,2000.0,"First record of a Tiger Shark Galeocerdo cuvier (Peron & le Seur, 1822) in the Italian waters.",silver
+502112,1967.0,Class selachii.,silver
+10807,1980.0,"Responses of rod-bipolar cells in the dark-adapted retina of the dogfish, Scyliorhinus canicula.",silver
+16296,1979.0,On a new cestode Yorkeria southwelli (Cestoda: Onchobothriidae) from a marine fish.,silver
+13001,2005.0,Species accounts: Carcharhinus obscurus,silver
+10020,,,silver
