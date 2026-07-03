@@ -1,6 +1,7 @@
 """Deterministic stratified sample: all gold papers + n_silver papers chosen to
-spread across disciplines and to include both fired and non-fired papers per
-column (exposing false negatives)."""
+spread across disciplines, bucketing each candidate paper by its first-firing
+d_ discipline column (or 'none') so silver papers are drawn evenly across
+disciplines."""
 import random, sys
 from pathlib import Path
 import pandas as pd
@@ -32,7 +33,18 @@ def select_sample(n_silver: int = 300) -> pd.DataFrame:
     rng = random.Random(20260707)
     df = pd.read_parquet(ROOT / "outputs/literature_review_enriched.parquet")
     df["literature_id"] = df["literature_id"].apply(lambda v: str(int(float(v))))
-    gold_ids = pd.read_csv(OUT / "gold_labels.csv", dtype={"literature_id": str})["literature_id"].unique().tolist()
+    # Dedupe on literature_id BEFORE building the pool and the meta lookup,
+    # so both stay consistent and meta.loc[id, col] always returns a scalar
+    # (duplicate ids in the parquet otherwise make .loc return a 2+ row
+    # Series, which gets stringified into the CSV as garbage).
+    df = df.drop_duplicates(subset="literature_id", keep="first")
+
+    gold_ids = (
+        pd.read_csv(OUT / "gold_labels.csv", dtype={"literature_id": str})["literature_id"]
+        .apply(lambda v: str(int(float(v))))
+        .unique()
+        .tolist()
+    )
 
     # discipline strata: d_* columns present in the parquet
     dcols = [c for c in df.columns if c.startswith("d_")]
@@ -53,12 +65,16 @@ def select_sample(n_silver: int = 300) -> pd.DataFrame:
         ids = grp["literature_id"].tolist()
         rng.shuffle(ids)
         picked += ids[:per]
-    # top up / trim to exactly n_silver
+    # top up / trim to exactly n_silver. Trimming uses an unbiased seeded
+    # random sample rather than a head-slice, so quota overflow (when
+    # nstrata > n_silver, per*nstrata can exceed n_silver) doesn't silently
+    # favour early-alphabet strata.
     remaining = [i for i in pool["literature_id"] if i not in set(picked)]
     rng.shuffle(remaining)
     while len(picked) < n_silver and remaining:
         picked.append(remaining.pop())
-    picked = picked[:n_silver]
+    if len(picked) > n_silver:
+        picked = rng.sample(picked, n_silver)
 
     meta = df.set_index("literature_id")
     rows = [(g, meta.loc[g, "year"] if g in meta.index else None,
