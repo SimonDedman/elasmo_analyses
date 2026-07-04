@@ -93,7 +93,18 @@ def _extract_sample_column(rules_obj, column, sample_ids):
 
 
 def _apply_proposal(rules_obj, p):
-    r = rules_obj.setdefault(p["column"], {})
+    """Mutate `rules_obj` in place per `p` (a row from rule_proposals.csv).
+
+    `rules_obj` is prefix-nested (rules_obj[prefix][column]), matching
+    docs/validate/assets/rules.json -- see current_rule() in
+    validation.propose_rules for the same prefix derivation. Writing a flat
+    rules_obj[column] key here would be invisible to current_rule() (and
+    therefore to _extract_sample_column()), silently no-opping every
+    "applied" change.
+    """
+    col = p["column"]
+    prefix = col.split("_", 1)[0] + "_"
+    r = rules_obj.setdefault(prefix, {}).setdefault(col, {})
     ct, detail = p["change_type"], str(p["detail"])
     if ct == "add_terms":
         r.setdefault("terms", []).extend(t.strip() for t in detail.split(",") if t.strip())
@@ -109,6 +120,7 @@ def _apply_proposal(rules_obj, p):
 
 
 def run():
+    from validation.propose_rules import current_rule
     from validation.score import per_column_metrics
 
     proposals = pd.read_csv(OUT / "rule_proposals.csv")
@@ -124,7 +136,7 @@ def run():
     working = json.loads(json.dumps(base_rules))  # deep copy accumulator
     for _, p in proposals.iterrows():
         col = p["column"]
-        if col not in working:
+        if not current_rule(working, col):
             continue
         before = _extract_sample_column(working, col, sample_ids)
         f1_before = per_column_metrics(before, fab[fab.column == col][["literature_id", "column", "value"]]).f1.mean()
