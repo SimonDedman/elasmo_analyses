@@ -44,19 +44,29 @@ def _prompt(text, columns):
     defs = "\n".join(f"- {c['name']}: {c['description']}" for c in columns)
     return (f"You are auditing a shark-research paper. For EACH column below, decide if the "
             f"paper's own study (not its references/background) provides evidence for it. "
-            f"Return every column.\n\nCOLUMNS:\n{defs}\n\nPAPER TEXT:\n{text[:120000]}")
+            f"Return every column. To save output tokens, when a column is NOT present leave "
+            f"'evidence' as an empty string rather than explaining the absence.\n\n"
+            f"COLUMNS:\n{defs}\n\nPAPER TEXT:\n{text[:120000]}")
 
 
-def extract_paper(text, columns, client=None):
+def extract_paper(text, columns, client=None, paper_id=None):
     if client is None:
         import anthropic
         client = anthropic.Anthropic()
     msg = client.messages.create(
-        model=MODEL, max_tokens=8000, tools=[TOOL],
+        model=MODEL, max_tokens=16000, tools=[TOOL],
         tool_choice={"type": "tool", "name": "record_columns"},
         messages=[{"role": "user", "content": _prompt(text, columns)}])
     usage = (msg.usage.input_tokens, msg.usage.output_tokens)
-    block = next(b for b in msg.content if b.type == "tool_use")
+    try:
+        block = next(b for b in msg.content if b.type == "tool_use")
+    except StopIteration:
+        stop_reason = getattr(msg, "stop_reason", "?")
+        raise RuntimeError(
+            f"fable_extract: no tool_use block in response for paper "
+            f"{paper_id!r} (stop_reason={stop_reason!r}); the forced tool call was "
+            f"likely truncated or refused"
+        ) from None
     return parse_tool_response(block.input), usage
 
 
@@ -173,6 +183,9 @@ def run(sample_df, client=None):
         client = anthropic.Anthropic()
     columns = _schema_column_defs()
     rows, toks = [], []
+    n_ok = 0
+    n_failed = 0
+    n_skipped_no_pdf = 0
 
     def _flush():
         # Write whatever has been accumulated so far, so an interruption
@@ -190,23 +203,36 @@ def run(sample_df, client=None):
             try:
                 text, sha = _pdf_text(lit_norm)
                 if not text:
+                    n_skipped_no_pdf += 1
                     continue
                 cache = CACHE / f"{sha}.json"
                 if cache.exists():
                     res, usage = _read_cache(cache)
                 else:
-                    res, usage = extract_paper(text, columns, client)
+                    res, usage = extract_paper(text, columns, client, paper_id=lit_norm)
                     _write_cache(cache, res, usage)
                 for col, v in res.items():
                     rows.append((lit_norm, col, int(v["present"]), v["evidence"], v["confidence"]))
                 toks.append((lit_norm, usage[0], usage[1]))
+                n_ok += 1
             except Exception as e:
+                n_failed += 1
                 print(f"[fable_extract] paper {lit_norm} failed, skipping: {e}", file=sys.stderr)
                 continue
             if (i + 1) % 25 == 0:
                 _flush()
     finally:
         _flush()
+
+    print(f"fable_extract: {n_ok} ok, {n_failed} failed, {n_skipped_no_pdf} skipped-no-pdf",
+          file=sys.stderr)
+
+    if n_ok == 0:
+        raise RuntimeError(
+            f"fable_extract: 0/{len(sample_df)} papers succeeded "
+            f"({n_failed} failed, {n_skipped_no_pdf} skipped-no-pdf) — refusing to "
+            f"leave a missing/empty fable_labels.parquet for score.run to trip over later"
+        )
 
 
 if __name__ == "__main__":

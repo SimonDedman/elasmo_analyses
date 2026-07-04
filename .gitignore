@@ -63,6 +63,14 @@ outputs/abstracts_technique_counts.csv
 # small, versioned tables consumed by later validation-pipeline tasks.
 !outputs/validation/
 !outputs/validation/*.csv
+# Build artifacts under outputs/validation/ must NOT be tracked (large/binary/
+# regeneratable): fable_extract.py's on-disk response cache, generated
+# figures, parquet extractions, the dashboard, and the A/B viability memo.
+outputs/validation/.fable_cache/
+outputs/validation/figures/
+outputs/validation/*.parquet
+outputs/validation/dashboard.html
+outputs/validation/ab_viability.md
 
 # Data files (keep structure but not actual data)
 data/*.csv

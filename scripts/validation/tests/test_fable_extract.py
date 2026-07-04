@@ -232,6 +232,37 @@ def test_run_builds_rows_skips_unresolved_and_normalises_id(tmp_path, monkeypatc
     assert list(toks["literature_id"]) == ["10"]
 
 
+def test_run_raises_when_zero_papers_succeed(tmp_path, monkeypatch):
+    """If every paper in the sample is unresolvable (no PDF), run() must
+    still write whatever partial output exists (none, here) but raise a
+    RuntimeError rather than silently leaving no/empty fable_labels.parquet
+    for score.run to trip over later."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import pandas as pd
+    import pytest
+    import validation.fable_extract as fe
+
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    monkeypatch.setattr(fe, "CACHE", cache_dir)
+    monkeypatch.setattr(fe, "OUT", tmp_path)
+    monkeypatch.setattr(fe, "_schema_column_defs", lambda: [{"name": "d_movement", "description": "x"}])
+
+    def fake_pdf_text(lit_id):
+        return (None, None)  # every paper unresolvable
+
+    monkeypatch.setattr(fe, "_pdf_text", fake_pdf_text)
+
+    client = _StubClient(_FakeMessage([]))  # must not be called
+    sample = pd.DataFrame({"literature_id": ["1", "2", "3"]})
+
+    with pytest.raises(RuntimeError, match="0/3 papers succeeded"):
+        fe.run(sample, client=client)
+
+    assert client.messages.calls == 0
+    assert not (tmp_path / "fable_labels.parquet").exists()
+
+
 def test_run_continues_after_one_paper_raises(tmp_path, monkeypatch):
     """A per-paper exception (e.g. a broken PDF resolution) must not abort
     the whole run — the remaining papers should still be processed and
