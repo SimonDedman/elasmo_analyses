@@ -42,11 +42,11 @@ SEMANTIC_SCHOLAR_DELAY = 1.5  # seconds
 REQUEST_TIMEOUT = 15  # seconds
 
 # Matching thresholds
-MIN_TITLE_SIMILARITY = 0.85  # Minimum similarity to consider a match
+MIN_TITLE_SIMILARITY = 0.70  # Minimum similarity to consider a match
 MIN_YEAR_DIFF = 2  # Maximum year difference to accept
 
 # User agents
-USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) SharkReferences/1.0 (mailto:your@email.com)"
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64) SharkReferences/1.0 (mailto:simondedman@gmail.com)"
 
 # Setup logging
 logging.basicConfig(

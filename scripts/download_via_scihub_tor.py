@@ -51,8 +51,8 @@ SCIHUB_TOR_LOG = BASE_DIR / "logs/scihub_tor_download_log.csv"
 
 # Sci-Hub mirrors (prioritized by speed/reliability)
 SCIHUB_MIRRORS = [
-    "https://sci-hub.se",
     "https://sci-hub.ru",
+    "https://sci-hub.se",
     "https://sci-hub.wf",
     "https://sci-hub.st",
     "https://sci-hub.cat",
@@ -64,8 +64,8 @@ SCIHUB_MIRROR = SCIHUB_MIRRORS[0]
 
 # Tor configuration
 TOR_PROXY_HOST = "localhost"
-TOR_PROXY_PORT = 9050
-TOR_CONTROL_PORT = 9051
+TOR_PROXY_PORT = 9150
+TOR_CONTROL_PORT = 9151
 
 # Rate limiting (more conservative with Tor)
 DELAY_BETWEEN_REQUESTS = 5.0  # seconds (slower for safety)
