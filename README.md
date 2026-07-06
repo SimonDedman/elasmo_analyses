@@ -10,14 +10,16 @@
 
 This repository contains materials for the **"New Frontiers in Elasmobranch Data Analysis"** project, initially presented at the European Elasmobranch Association (EEA) Conference 2025 in Rotterdam, Netherlands.
 
-**Project Status:** Analysis & validation phase (April 2026) — Extraction complete, author enrichment done, building interactive validation UI
+**Project Status:** Validation & analysis phase (July 2026) — Extraction complete, author enrichment done, automated validation + rule-improvement loop built and its first round complete, acquisition automation (Shark-References sync, OA trawl) running
 
 **Original Session (EEA 2025):**
 - **Date:** Thursday, 30 October 2025
 - **Format:** 45 minutes of discipline panel reviews + 50 minutes of oral presentations
 - **Organizers:** Dr. Simon Dedman & Dr. Guuske Tiktak
 
-**Current Scale:** 30,553 papers | 18,065 PDFs acquired | 123 extraction columns (6 schemas) | 28,953 unique authors | 1,308 species columns
+**Current Scale:** 31,648 papers | 20,046 PDFs acquired | 123 extraction columns (6 schemas) | 28,334 unique authors | 1,308 species columns
+
+**Results index:** [docs/results.html](docs/results.html) — live links to the Author Atlas, collaboration network, validation UI, key figures, and the validation/rule-improvement report
 
 ---
 
@@ -153,6 +155,12 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 - Ingested batches from Jürgen (1,361), David (89), Elena (316), Guuske (19)
 - Automated monthly Shark-References sync via anacron
 
+**✅ Validation Loop + First Rule-Improvement Round Complete** (July 2026)
+- Automated pipeline scores the 123-column rule-based extractor against 15 human-reviewed ("gold") papers and a Claude/Fable oracle run across 291 papers spanning 166 columns ("silver")
+- Rules vs human macro-F1 0.429 baseline; diagnosed as under-detection (precision 0.68, recall 0.49), not false positives
+- Self-verifying auto-test loop mined synonyms from Fable evidence quotes, re-scored each change, and kept 9/10 proposed fixes (macro-F1 0.16 → 0.43 on the worst 10 columns)
+- Full report: [docs/validation_and_rule_improvement_report.md](docs/validation_and_rule_improvement_report.md)
+
 **🔨 Interactive Validation UI** (April 2026, in progress)
 - Static HTML pages on GitHub Pages, one per author (28,952 pages)
 - Structured validation inputs replacing free-text XLSX approach
@@ -199,12 +207,12 @@ This repository contains materials for the **"New Frontiers in Elasmobranch Data
 
 | Metric | Value |
 |--------|-------|
-| Papers in database | 30,553 |
-| PDFs acquired | 18,065 |
+| Papers in database | 31,648 |
+| PDFs acquired | 20,046 |
 | Extraction columns | 123 (6 schemas) |
 | Evidence rows | 247,131 |
 | Papers with evidence | 18,202 |
-| Unique authors (OpenAlex) | 28,953 |
+| Unique authors (OpenAlex) | 28,334 |
 | Species columns | 1,308 |
 | Analytical technique columns | 215 |
 
@@ -410,5 +418,5 @@ This project builds upon:
 
 ---
 
-*Last updated: 2026-04-16*
-*Version: 4.0 — Validation & analysis phase*
+*Last updated: 2026-07-06*
+*Version: 4.1 — Validation loop + first rule-improvement round complete*

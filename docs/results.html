@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results Index — Elasmobranch Analytical Methods Review</title>
+<style>
+  :root {
+    --blue: #081E3F;
+    --blue-soft: #12305c;
+    --gold: #B6862C;
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #4b5566;
+    --border: #dde2e8;
+    --shadow: rgba(8, 30, 63, 0.10);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1420;
+    --surface: #161f30;
+    --text: #e8ecf3;
+    --text-muted: #a7b1c2;
+    --border: #2a3550;
+    --shadow: rgba(0, 0, 0, 0.35);
+    --blue-soft: #1c3868;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1420;
+      --surface: #161f30;
+      --text: #e8ecf3;
+      --text-muted: #a7b1c2;
+      --border: #2a3550;
+      --shadow: rgba(0, 0, 0, 0.35);
+      --blue-soft: #1c3868;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header.page-head {
+    background: linear-gradient(135deg, var(--blue), var(--blue-soft));
+    color: #fff;
+    padding: 2.25rem 1.5rem 2rem;
+  }
+  header.page-head .inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  header.page-head h1 {
+    margin: 0 0 0.35rem;
+    font-size: 1.7rem;
+    letter-spacing: 0.01em;
+  }
+  header.page-head p.subtitle {
+    margin: 0;
+    color: #d9e0ec;
+    font-size: 1rem;
+    max-width: 62ch;
+  }
+  header.page-head .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #cfe0ff;
+  }
+
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.9rem;
+    margin: -3.25rem auto 2.5rem;
+    max-width: 1080px;
+    padding: 0 1.5rem;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 6px 16px var(--shadow);
+  }
+  .stat-tile .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-tile .label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+  }
+
+  section { margin-bottom: 2.75rem; }
+  section h2 {
+    font-size: 1.15rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.1rem;
+  }
+  section > p.lede {
+    color: var(--text-muted);
+    margin-top: -0.5rem;
+    margin-bottom: 1.25rem;
+    max-width: 75ch;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.15rem 1.25rem;
+    box-shadow: 0 2px 8px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 1.02rem;
+  }
+  .card h3 a { color: var(--text); }
+  .card h3 a:hover { color: var(--gold); }
+  .card p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .card .tag {
+    align-self: flex-start;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--blue-soft);
+    color: #fff;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    margin-bottom: 0.15rem;
+  }
+
+  .fig-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .fig-gallery figure {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .fig-gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #fff;
+  }
+  .fig-gallery figcaption {
+    padding: 0.7rem 0.9rem 0.9rem;
+  }
+  .fig-gallery figcaption .fig-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+  .fig-gallery figcaption .fig-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .fig-cat {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+    font-weight: 700;
+    margin: 1.5rem 0 0.6rem;
+  }
+  .fig-cat:first-of-type { margin-top: 0; }
+
+  footer {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 3rem;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div class="inner">
+    <a class="back-link" href="https://github.com/SimonDedman/elasmo_analyses">&larr; Project README</a>
+    <h1>Elasmobranch Analytical Methods Review — Results Index</h1>
+    <p class="subtitle">
+      A signpost to the project's live tools, snapshot figures, and validation results.
+      Systematic review of analytical techniques across elasmobranch (shark, ray &amp; chimaera)
+      research, 1950&ndash;2026.
+    </p>
+  </div>
+</header>
+
+<div class="stats-row">
+  <div class="stat-tile"><div class="value">31,648</div><div class="label">Papers in database</div></div>
+  <div class="stat-tile"><div class="value">20,046</div><div class="label">PDFs on disk</div></div>
+  <div class="stat-tile"><div class="value">28,334</div><div class="label">Unique authors (OpenAlex)</div></div>
+  <div class="stat-tile"><div class="value">123</div><div class="label">Extraction columns (6 schemas)</div></div>
+</div>
+
+<main>
+
+  <section id="tools">
+    <h2>Live tools</h2>
+    <p class="lede">Interactive pages, built from the current corpus snapshot and served directly from this site.</p>
+    <div class="card-grid">
+
+      <div class="card">
+        <span class="tag">Network</span>
+        <h3><a href="network_atlas/">Author Atlas v2</a></h3>
+        <p>Interactive deck.gl map of ~28,000 authors: geographic clustering, collaboration links, and search by name or institution.</p>
+      </div>
+
+      <div class="card">
+        <span class="tag">Network</span>
+        <h3><a href="network/">Collaboration Graph v1</a></h3>
+        <p>Earlier static collaboration-network build (18,633 authors) with a filtered subset view for faster loading.</p>
+      </div>
+
+      <div class="card">
+        <span class="tag">Validation</span>
+        <h3><a href="validate/">Validation UI</a></h3>
+        <p>Search-by-name author pages (28,952) where researchers can review and correct their own papers' automated extractions.</p>
+      </div>
+
+      <div class="card">
+        <span class="tag">Report</span>
+        <h3><a href="https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/validation_and_rule_improvement_report.md">Validation &amp; Rule-Improvement Report</a></h3>
+        <p>How the rule-based extractor was scored against human and Claude/Fable-oracle reference labels, and how a self-verifying loop improved it (macro-F1 0.16 &rarr; 0.43 on the worst columns).</p>
+      </div>
+
+      <div class="card">
+        <span class="tag">Acquisition</span>
+        <h3><a href="https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/team_download_task.md">Team Download Task</a></h3>
+        <p>Instructions for collaborators to claim publisher batches of the 1,530 remaining paywalled papers via institutional library access.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="figures">
+    <h2>Key figures</h2>
+    <p class="lede">A snapshot gallery of the headline analysis figures. Full-resolution PDFs and the complete figure set (160+ plots) live in <code>outputs/figures/</code> in the repository.</p>
+
+    <p class="fig-cat">Acquisition backlog</p>
+    <div class="fig-gallery">
+      <figure>
+        <img src="results_figures/download_backlog_sankey.png" alt="Sankey diagram of the download backlog, showing paper flow from total corpus through DOI availability to acquisition routes">
+        <figcaption>
+          <span class="fig-title">Download backlog Sankey</span>
+          <span class="fig-desc">Flow of the ~13,700 remaining papers from total queue &rarr; DOI status &rarr; acquisition route (open-access, paywalled/team task, or no-DOI long tail).</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="fig-cat">Temporal trends</p>
+    <div class="fig-gallery">
+      <figure>
+        <img src="results_figures/B1_temporal_papers_year_discipline.png" alt="Line chart of papers published per year, coloured by research discipline">
+        <figcaption>
+          <span class="fig-title">Papers per year, by discipline</span>
+          <span class="fig-desc">Growth of the elasmobranch literature since 1950, split across the 8 project disciplines.</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="results_figures/B6_temporal_discipline_proportions.png" alt="Stacked area chart of the proportional share of each discipline over time">
+        <figcaption>
+          <span class="fig-title">Discipline share over time</span>
+          <span class="fig-desc">Proportional shift in research emphasis across disciplines decade by decade.</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="fig-cat">Geographic</p>
+    <div class="fig-gallery">
+      <figure>
+        <img src="results_figures/A4_spatial_parachute_science.png" alt="World map highlighting countries with mismatched author origin vs study location, indicating parachute science">
+        <figcaption>
+          <span class="fig-title">Parachute science map</span>
+          <span class="fig-desc">Mismatch between researchers' home institution country and their study region, flagging "parachute research" patterns.</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="results_figures/A5_spatial_gender_map.png" alt="World map of author gender distribution by country">
+        <figcaption>
+          <span class="fig-title">Author gender by country</span>
+          <span class="fig-desc">Geographic distribution of author gender balance, by country of primary institution.</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="fig-cat">Gender &amp; diversity</p>
+    <div class="fig-gallery">
+      <figure>
+        <img src="results_figures/D6_bars_gender_summary.png" alt="Bar chart summarising author gender balance across the corpus">
+        <figcaption>
+          <span class="fig-title">Gender summary</span>
+          <span class="fig-desc">Overall male/female/unknown author split (NamSor + genderize.io enrichment, 86.9% resolved).</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="results_figures/N4_ethnicity_diversity.png" alt="Trend line of author ethnic-origin diversity index over time">
+        <figcaption>
+          <span class="fig-title">Ethnicity diversity trend</span>
+          <span class="fig-desc">Change in author diaspora/ethnicity diversity index across publication years.</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="fig-cat">Discipline</p>
+    <div class="fig-gallery">
+      <figure>
+        <img src="results_figures/D2_bars_discipline_comparison.png" alt="Bar chart comparing paper counts across the 8 research disciplines">
+        <figcaption>
+          <span class="fig-title">Discipline comparison</span>
+          <span class="fig-desc">Relative size of each of the 8 project disciplines across the full corpus.</span>
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="results_figures/C2_corr_discipline_cooccurrence.png" alt="Heatmap of co-occurrence between pairs of research disciplines within the same paper">
+        <figcaption>
+          <span class="fig-title">Discipline co-occurrence</span>
+          <span class="fig-desc">Heatmap of how often two disciplines are addressed within the same paper.</span>
+        </figcaption>
+      </figure>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  <p>Elasmobranch Analytical Methods Review &mdash; European Elasmobranch Association (EEA) 2025 data panel project.
+  Source: <a href="https://github.com/SimonDedman/elasmo_analyses">github.com/SimonDedman/elasmo_analyses</a>.
+  Last updated 2026-07-06.</p>
+</footer>
+
+</body>
+</html>
