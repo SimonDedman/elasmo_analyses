@@ -265,6 +265,7 @@ if (length(gender_col) == 0 || length(country_col) == 0) {
 
   gender_summary <- df |>
     select(country = all_of(country_col), gender = all_of(gender_col)) |>
+    mutate(gender = str_to_lower(gender)) |>
     filter(!is.na(country), gender %in% c("female", "male")) |>
     count(country, gender) |>
     pivot_wider(names_from = gender, values_from = n, values_fill = 0) |>
@@ -273,7 +274,7 @@ if (length(gender_col) == 0 || length(country_col) == 0) {
     filter(total >= 5)
 
   world_gender <- world |>
-    left_join(gender_summary, by = c("name_long" = "country"))
+    left_join(gender_summary, by = c("iso_a2" = "country"))
 
   p_a5 <- ggplot(world_gender) +
     geom_sf(aes(fill = pct_female), colour = "grey60", linewidth = 0.15) +
