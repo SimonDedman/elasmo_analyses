@@ -8,6 +8,7 @@ suppressPackageStartupMessages({
   library(patchwork)
   library(sf)
   library(rnaturalearth)
+  library(ggrepel)
 })
 
 base_dir <- "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
@@ -115,13 +116,54 @@ p_d6b <- ggplot(trend, aes(x = year_bin, y = pct, colour = gender, group = gende
   theme_eea +
   guides(colour = guide_legend(title = "Gender"))
 
+# --------------------------------------------------------------------------
+# Overlay: 2026 conference-attendance reference points (AES2026, SI2026)
+# Data-driven from outputs/conference_gender.csv, produced by
+# scripts/compute_conference_gender.py (AES: parsed JMIH agenda "Speaker:"
+# lines, gender via genderize cache + infer_author_gender.py; SI2026:
+# reused from SI2026_authors_long.xlsx first-author gender split).
+# --------------------------------------------------------------------------
+conf_gender_path <- file.path(base_dir, "outputs/conference_gender.csv")
+if (file.exists(conf_gender_path)) {
+  conf_gender <- read_csv(conf_gender_path, show_col_types = FALSE)
+
+  conf_shapes <- c(AES2026 = 17, SI2026 = 18)  # filled triangle / diamond
+
+  conf_female_labels <- conf_gender |>
+    filter(gender == "Female") |>
+    mutate(label = sprintf("%s presenters: %.1f%% F (n=%d)", conference, pct, n_known))
+
+  p_d6b <- p_d6b +
+    geom_point(data = conf_gender,
+               aes(x = year, y = pct, colour = gender, shape = conference),
+               size = 5, stroke = 1, show.legend = c(shape = TRUE, colour = FALSE)) +
+    scale_shape_manual(values = conf_shapes, name = "2026 conference") +
+    ggrepel::geom_text_repel(
+      data = conf_female_labels,
+      aes(x = year, y = pct, label = label),
+      inherit.aes = FALSE, colour = "grey20", fontface = "bold", size = 3,
+      nudge_x = -6, direction = "y", segment.size = 0.3, seed = 1
+    )
+
+  cat("\n  Overlaid conference gender dots:\n")
+  print(conf_gender |> select(conference, gender, n, n_known, pct))
+} else {
+  cat("\n  Skipped conference overlay: outputs/conference_gender.csv not found ",
+      "(run scripts/compute_conference_gender.py first)\n")
+}
+
 p_d6 <- (p_d6a | p_d6b) +
   plot_annotation(
     title    = "First author gender in elasmobranch research",
-    subtitle = "Left: total counts | Right: % by 5-year period (NamSor-enriched)"
+    subtitle = "Left: total counts | Right: % by 5-year period (NamSor-enriched) + 2026 conference presenters"
   ) +
   plot_layout(widths = c(1, 2))
 save_plot(p_d6, "D6_bars_gender_summary", w = 14, h = 6)
+
+# Also refresh the slide-deck-facing "SI_" filename this figure is known by
+# (outputs/figures/SI_D6_gender_trend.png), so the deck's existing image
+# reference stays in sync without a rename.
+save_plot(p_d6, "SI_D6_gender_trend", w = 14, h = 6)
 
 
 # ==========================================================================
