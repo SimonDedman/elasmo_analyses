@@ -1342,6 +1342,9 @@ def main():
     if "--no-ocr" in args:
         OCR_ENABLED = False
         args = [a for a in args if a != "--no-ocr"]
+    recursive = "--recursive" in args
+    if recursive:
+        args = [a for a in args if a != "--recursive"]
     if "--no-dedup-check" in args:
         DEDUP_CHECK_ENABLED = False
         args = [a for a in args if a != "--no-dedup-check"]
@@ -1355,6 +1358,7 @@ def main():
         print("  --check            Dry run: check matches without copying or updating")
         print("  --no-ocr           Disable OCR fallback on image-only PDFs")
         print("  --no-dedup-check   Skip flagging possible duplicates of existing library files")
+        print("  --recursive        Walk subdirectories for PDFs (default: top level only)")
         print("  Provide one or more directories or PDF file paths to ingest.")
         sys.exit(0)
 
@@ -1362,9 +1366,12 @@ def main():
     for arg in args:
         p = Path(arg)
         if p.is_dir():
-            pdf_paths.extend(sorted(p.glob("*.pdf")))
+            # --recursive walks subfolders (e.g. topic-organised libraries); default
+            # is top-level only, preserving prior behaviour.
+            globber = p.rglob if recursive else p.glob
+            pdf_paths.extend(sorted(globber("*.pdf")))
             # Also pick up .PDF extension
-            pdf_paths.extend(sorted(p.glob("*.PDF")))
+            pdf_paths.extend(sorted(globber("*.PDF")))
         elif p.is_file() and p.suffix.lower() == ".pdf":
             pdf_paths.append(p)
         else:

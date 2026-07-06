@@ -30,7 +30,7 @@ LOG_FILE = BASE_DIR / "logs/unpaywall_download_log.csv"
 
 # Unpaywall API configuration
 # Email is required by Unpaywall API (for courtesy contact, not authentication)
-UNPAYWALL_EMAIL = "your-email@example.com"  # TODO: Update with your email
+UNPAYWALL_EMAIL = "simondedman@gmail.com"
 UNPAYWALL_BASE_URL = "https://api.unpaywall.org/v2"
 
 # Rate limiting (Unpaywall recommends max 100k requests/day)

@@ -33,8 +33,15 @@ BASE_DIR = Path(__file__).parent.parent
 OUTPUT_DIR = Path("/home/simon/Documents/Si Work/Papers & Books/SharkPapers")
 CACHE_LOG = BASE_DIR / "logs/firefox_cache_monitor.csv"
 
-# Firefox cache location (snap installation)
-FIREFOX_CACHE = Path.home() / "snap/firefox/common/.cache/mozilla/firefox"
+# Firefox cache roots, in priority order (DEB/apt first, then snap, then flatpak).
+# The correct one is auto-detected in find_cache_dir(); override with --cache-dir.
+FIREFOX_CACHE_ROOTS = [
+    Path.home() / ".cache/mozilla/firefox",                                  # DEB/apt (default here)
+    Path.home() / "snap/firefox/common/.cache/mozilla/firefox",              # snap
+    Path.home() / ".var/app/org.mozilla.firefox/cache/mozilla/firefox",      # flatpak
+]
+# Back-compat: first existing root (used only if --cache-dir not given).
+FIREFOX_CACHE = next((r for r in FIREFOX_CACHE_ROOTS if r.exists()), FIREFOX_CACHE_ROOTS[0])
 
 # ============================================================================
 # PDF DETECTION
@@ -96,15 +103,26 @@ def get_pdf_metadata(file_path):
 # ============================================================================
 
 def find_cache_dir():
-    """Find Firefox cache directory."""
-    profiles = list(FIREFOX_CACHE.glob("*/cache2/entries"))
+    """Find the active Firefox cache 'entries' dir across all install types.
+
+    Scans every candidate root (DEB/snap/flatpak) for profiles, then picks the
+    profile whose cache2 was modified most recently i.e. the one actually in use
+    (a machine can have several profiles; the first glob hit is often stale)."""
+    profiles = []
+    for root in FIREFOX_CACHE_ROOTS:
+        if root.exists():
+            profiles.extend(root.glob("*/cache2/entries"))
 
     if not profiles:
-        print(f"❌ Firefox cache not found in: {FIREFOX_CACHE}")
+        roots = "\n  ".join(str(r) for r in FIREFOX_CACHE_ROOTS)
+        print(f"❌ Firefox cache not found in any of:\n  {roots}")
+        print("   (pass --cache-dir /path/to/.cache if your profile lives elsewhere)")
         return None
 
-    # Use first profile (usually the default one)
-    cache_dir = profiles[0]
+    # Most recently modified cache2 = the active profile.
+    cache_dir = max(profiles, key=lambda p: p.parent.stat().st_mtime)
+    if len(profiles) > 1:
+        print(f"ℹ️  {len(profiles)} Firefox profiles found; using most recent.")
     print(f"✅ Found cache directory: {cache_dir}")
     return cache_dir
 

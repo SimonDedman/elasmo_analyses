@@ -2,9 +2,21 @@
 """
 Monthly Shark-References sync.
 
-Crawls the A-Z bibliography pages (~5 min), diffs against our known papers,
-fetches details for genuinely new papers, downloads available PDFs, and
-notifies via ntfy.sh + Gmail.
+Phases:
+  0. (opt-in) Stage orphan PDFs from `database/orphan_inbox/` (or a path
+     given via --orphan-inbox). Each PDF's DOI is extracted, looked up on
+     Crossref, and a new row is appended to the master CSV with id ≥ 600000.
+     Their DOIs land in the "known" set before Phase 2's diff, so SR re-finding
+     them in the next monthly crawl will not produce a duplicate insert.
+  1. Crawl SR A-Z list pages (~5 min)
+  2. Diff against our known papers (parquet + papers_data.json + orphan stage)
+  3. Fetch SR detail pages for genuinely new papers
+  4. Download PDFs (where SR has a link)
+  5. Update master CSV + papers_data.json
+  5b. (opt-out) Append new SR rows to the base parquet, then run incremental
+      schema extraction on every newly-downloaded ID — keeps the enriched
+      parquet in lockstep with the master CSV.
+  6. Notify via ntfy.sh + Gmail
 
 Usage:
     python3 scripts/sync_shark_references.py                # full run (auto-resumes if checkpoint exists)
@@ -12,9 +24,12 @@ Usage:
     python3 scripts/sync_shark_references.py --no-notify    # skip notifications
     python3 scripts/sync_shark_references.py --no-resume    # ignore checkpoint, start fresh
     python3 scripts/sync_shark_references.py --verbose       # debug logging
+    python3 scripts/sync_shark_references.py --orphan-inbox /path/to/folder
+    python3 scripts/sync_shark_references.py --no-orphan-scan
+    python3 scripts/sync_shark_references.py --no-extract    # skip Phase 5b
 
 Author: Simon Dedman
-Date: 2026-04-06
+Date: 2026-04-06; updated 2026-04-27 (orphan staging + post-sync extraction)
 """
 
 import argparse
@@ -41,6 +56,7 @@ from bs4 import BeautifulSoup
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PDF_BASE = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers")
 PARQUET = PROJECT_ROOT / "outputs/literature_review_enriched.parquet"
+BASE_PARQUET = PROJECT_ROOT / "outputs/literature_review.parquet"
 PAPERS_DATA = PROJECT_ROOT / "docs/papers_data.json"
 MASTER_CSV_DIR = PROJECT_ROOT / "outputs/shark_references_bulk"
 LOG_DIR = PROJECT_ROOT / "logs"
@@ -48,6 +64,7 @@ CONFIG_FILE = Path(__file__).resolve().parent / ".sr_sync_config.json"
 LOCK_FILE = Path("/tmp/sr_sync.lock")
 CHECKPOINT_FILE = PROJECT_ROOT / "outputs/.sr_sync_checkpoint.json"
 FEEDBACK_CSV = PROJECT_ROOT / "outputs/sr_suggested_pdf_links.csv"
+DEFAULT_ORPHAN_INBOX = PROJECT_ROOT / "database/orphan_inbox"
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -723,6 +740,175 @@ def notify_gmail(config: dict, subject: str, body: str):
         logging.getLogger("sr_sync").warning(f"Gmail notification failed: {e}")
 
 
+# ---------------------------------------------------------------------------
+# Phase 0 (orphan staging) and Phase 5b (parquet propagation + extraction)
+# ---------------------------------------------------------------------------
+
+def stage_orphan_inbox(inbox: Path, log) -> dict:
+    """Run stage_orphan_pdfs against an inbox folder. Returns its stats dict.
+
+    Imports lazily so the dependency is only required when the user opts in
+    via --orphan-inbox.
+    """
+    if not inbox.exists() or not inbox.is_dir():
+        log.info(f"  Orphan inbox {inbox} does not exist — skipping")
+        return {"staged": 0, "failed": 0, "new_ids": [], "log_lines": []}
+
+    pdfs = sorted(inbox.glob("*.pdf"))
+    if not pdfs:
+        log.info(f"  No PDFs in orphan inbox {inbox}")
+        return {"staged": 0, "failed": 0, "new_ids": [], "log_lines": []}
+
+    log.info(f"  Staging {len(pdfs)} PDFs from {inbox}")
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from stage_orphan_pdfs import stage_pdfs  # local import; large dependency
+    result = stage_pdfs(pdfs, no_network=False)
+    log.info(f"  Orphan staging: {result['staged']} new master rows, "
+             f"{result['failed']} unresolved")
+    for line in result["log_lines"]:
+        log.info(f"    {line}")
+    return result
+
+
+def propagate_to_base_parquet(new_papers: list[dict], log) -> int:
+    """Append new SR-sync-discovered papers to ``literature_review.parquet``.
+
+    The base parquet has 1500+ technique columns from earlier extraction
+    work — those stay NaN/zero for new rows and are filled in by the
+    follow-up incremental extraction step. Returns the number of rows
+    actually appended (after dedup by literature_id).
+    """
+    if not BASE_PARQUET.exists():
+        log.warning(f"  Base parquet {BASE_PARQUET} not found — cannot propagate")
+        return 0
+
+    df_base = pd.read_parquet(BASE_PARQUET)
+    df_base["literature_id"] = df_base["literature_id"].astype(str)
+    existing_ids = set(df_base["literature_id"].dropna())
+
+    # Build new rows. Keep only the columns the base parquet has.
+    base_cols = list(df_base.columns)
+    new_rows = []
+    for p in new_papers:
+        lid = str(p.get("literature_id", "")).strip()
+        if not lid or lid in existing_ids:
+            continue
+        # Copy across whatever overlapping fields we have; rest default to NA.
+        row = {col: p.get(col, "") for col in base_cols if col in p}
+        row["literature_id"] = lid
+        new_rows.append(row)
+
+    if not new_rows:
+        log.info("  No new rows to add to base parquet (all already present)")
+        return 0
+
+    df_new = pd.DataFrame(new_rows)
+    # Add any missing columns expected by the base parquet schema
+    for col in base_cols:
+        if col not in df_new.columns:
+            df_new[col] = pd.NA
+    df_new = df_new[base_cols]
+
+    df_combined = pd.concat([df_base, df_new], ignore_index=True)
+    df_combined.to_parquet(BASE_PARQUET, index=False)
+    log.info(f"  Base parquet: appended {len(df_new)} rows "
+             f"({len(df_base)} → {len(df_combined)})")
+    return len(df_new)
+
+
+def run_incremental_extraction(target_ids: set[str], log) -> int:
+    """Invoke extract_incremental's main logic on a set of literature_ids.
+
+    Returns the number of papers processed (papers with PDF text). On
+    error the exception is logged but not re-raised — extraction failure
+    should never abort the SR sync (the next run will retry).
+    """
+    if not target_ids:
+        return 0
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        # Lazy import to avoid pulling extraction deps when --no-extract is set
+        from extract_schema_columns import (
+            ALL_SCHEMAS, OUTPUT_PARQUET, EVIDENCE_CSV, PDF_BASE as EXTRACT_PDF_BASE,
+            build_pdf_index, init_worker, process_paper,
+        )
+    except Exception as e:
+        log.error(f"  Incremental extraction unavailable (import error): {e}")
+        return 0
+
+    try:
+        df_input = pd.read_parquet(BASE_PARQUET)
+        df_input["literature_id"] = df_input["literature_id"].astype(str)
+        needed = ["literature_id", "title", "abstract", "authors", "year", "doi"]
+        rows = df_input.loc[df_input["literature_id"].isin(target_ids), needed]
+        rows = rows.to_dict("records")
+        if not rows:
+            log.warning(f"  No matching rows in base parquet for {len(target_ids)} IDs")
+            return 0
+
+        log.info(f"  Building PDF index for incremental extraction...")
+        pdf_index = build_pdf_index(EXTRACT_PDF_BASE)
+        init_worker(pdf_index)
+
+        results = []
+        for r in rows:
+            results.append(process_paper(r))
+        evidence = []
+        for r in results:
+            evidence.extend(r.pop("_evidence", []))
+        results_df = pd.DataFrame(results)
+        with_pdf = int(results_df.get("_pdf_found", pd.Series([], dtype=bool)).sum())
+        results_df = results_df.drop(columns=["_pdf_found"], errors="ignore")
+
+        # Patch enriched parquet
+        df_enr = pd.read_parquet(OUTPUT_PARQUET)
+        df_enr["literature_id"] = df_enr["literature_id"].astype(str)
+        results_df["literature_id"] = results_df["literature_id"].astype(str)
+
+        # Existing rows update + brand-new rows append
+        existing = set(df_enr["literature_id"])
+        update_mask = results_df["literature_id"].isin(existing)
+        update_df = results_df[update_mask]
+        append_df = results_df[~update_mask]
+
+        if len(update_df):
+            lookup = dict(zip(update_df["literature_id"], update_df.index))
+            new_cols = [c for c in update_df.columns if c != "literature_id"]
+            for idx, lid in enumerate(df_enr["literature_id"]):
+                if lid in lookup:
+                    src = update_df.loc[lookup[lid]]
+                    for col in new_cols:
+                        df_enr.at[idx, col] = src[col]
+        if len(append_df):
+            df_enr = pd.concat([df_enr, append_df], ignore_index=True)
+
+        binary_cols = [c.name for s in ALL_SCHEMAS for c in s.columns]
+        for c in binary_cols:
+            if c in df_enr.columns:
+                df_enr[c] = df_enr[c].fillna(0).astype(int)
+        df_enr.to_parquet(OUTPUT_PARQUET, index=False)
+        log.info(f"  Enriched parquet: updated {len(update_df)}, "
+                 f"appended {len(append_df)} (total {len(df_enr)})")
+
+        # Append evidence rows (replacing any prior rows for these IDs)
+        if evidence:
+            evidence_df = pd.DataFrame(evidence)
+            if EVIDENCE_CSV.exists():
+                existing_ev = pd.read_csv(EVIDENCE_CSV)
+                existing_ev["literature_id"] = existing_ev["literature_id"].astype(str)
+                existing_ev = existing_ev[~existing_ev["literature_id"].isin(target_ids)]
+                combined = pd.concat([existing_ev, evidence_df], ignore_index=True)
+                combined.to_csv(EVIDENCE_CSV, index=False)
+            else:
+                evidence_df.to_csv(EVIDENCE_CSV, index=False)
+            log.info(f"  Evidence: +{len(evidence_df)} rows")
+
+        return with_pdf
+    except Exception as e:
+        log.error(f"  Incremental extraction failed: {e}", exc_info=True)
+        return 0
+
+
 def build_summary(stats: dict) -> tuple[str, str]:
     """Build short (ntfy) and long (email) summaries from run stats."""
     short = (
@@ -730,6 +916,10 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"{stats['pdfs_downloaded']} PDFs downloaded, "
         f"{stats['pdf_failures']} failures"
     )
+    if stats.get("orphans_staged"):
+        short += f", {stats['orphans_staged']} orphans staged"
+    if stats.get("extracted"):
+        short += f", {stats['extracted']} extracted"
 
     lines = [
         f"Shark-References Monthly Sync — {datetime.now():%Y-%m-%d %H:%M}",
@@ -738,6 +928,11 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"Papers on SR:         {stats['sr_total']:,}",
         f"Known in our DB:      {stats['known_total']:,}",
         f"Still need PDFs:      {stats['needs_pdf_total']:,}",
+        f"",
+        f"--- Orphan staging (Phase 0) ---",
+        f"Orphan PDFs scanned:  {stats.get('orphans_scanned', 0)}",
+        f"Orphan rows staged:   {stats.get('orphans_staged', 0)}",
+        f"Orphans unresolved:   {stats.get('orphans_failed', 0)}",
         f"",
         f"--- New papers ---",
         f"New papers found:     {stats['new_found']}",
@@ -753,6 +948,10 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"Appended to CSV:      {stats['csv_appended']}",
         f"Removed from JSON:    {stats['json_removed']}",
         f"SR feedback entries:  {stats['feedback_count']}",
+        f"",
+        f"--- Parquet propagation (Phase 5b) ---",
+        f"Base parquet added:   {stats.get('base_parquet_added', 0)}",
+        f"Incremental extract:  {stats.get('extracted', 0)} (with PDF text)",
         f"",
         f"Crawl errors:         {stats['crawl_errors']}",
         f"Runtime:              {stats['runtime']}",
@@ -792,6 +991,13 @@ def main():
                         help="Debug-level logging")
     parser.add_argument("--no-resume", action="store_true",
                         help="Ignore any existing checkpoint and start fresh")
+    parser.add_argument("--orphan-inbox", type=str, default=None,
+                        help=f"Folder of orphan PDFs to stage before crawling SR. "
+                        f"Defaults to {DEFAULT_ORPHAN_INBOX} if it exists.")
+    parser.add_argument("--no-orphan-scan", action="store_true",
+                        help="Skip Phase 0 orphan staging even if inbox exists")
+    parser.add_argument("--no-extract", action="store_true",
+                        help="Skip Phase 5b parquet propagation + incremental extraction")
     args = parser.parse_args()
 
     log = setup_logging(args.verbose)
@@ -811,8 +1017,11 @@ def main():
         "pdfs_downloaded": 0, "pdfs_new": 0, "pdfs_known": 0,
         "pdf_failures": 0, "csv_appended": 0, "json_removed": 0,
         "feedback_count": 0, "crawl_errors": 0,
+        "orphans_scanned": 0, "orphans_staged": 0, "orphans_failed": 0,
+        "base_parquet_added": 0, "extracted": 0,
         "new_paper_list": [], "errors": [], "runtime": "",
     }
+    orphan_new_ids: set[str] = set()
 
     try:
         log.info("=" * 60)
@@ -820,6 +1029,25 @@ def main():
         log.info(f"Started: {start_time:%Y-%m-%d %H:%M:%S}")
         log.info(f"Mode: {'DRY RUN' if args.dry_run else 'LIVE'}")
         log.info("=" * 60)
+
+        # --- Phase 0: Stage orphan PDFs (opt-in) ---
+        # Runs before the crawl so any newly-staged DOIs get included in the
+        # "known" set when diffing against SR — preventing duplicate inserts.
+        if not args.no_orphan_scan:
+            inbox_path = Path(args.orphan_inbox) if args.orphan_inbox \
+                else DEFAULT_ORPHAN_INBOX
+            if inbox_path.exists():
+                log.info("")
+                log.info(f"Phase 0: Scanning orphan inbox {inbox_path}")
+                orphan_pdfs_found = list(inbox_path.glob("*.pdf"))
+                stats["orphans_scanned"] = len(orphan_pdfs_found)
+                if args.dry_run:
+                    log.info(f"  DRY RUN: would stage {len(orphan_pdfs_found)} orphan PDFs")
+                else:
+                    o_stats = stage_orphan_inbox(inbox_path, log)
+                    stats["orphans_staged"] = o_stats["staged"]
+                    stats["orphans_failed"] = o_stats["failed"]
+                    orphan_new_ids = set(str(i) for i in o_stats["new_ids"])
 
         # --- Load our state ---
         log.info("Loading known papers...")
@@ -975,6 +1203,46 @@ def main():
 
         feedback_count = generate_feedback_report(sr_papers, known_ids, needs_pdf_ids, log)
         stats["feedback_count"] = feedback_count
+
+        # --- Phase 5b: Propagate to base parquet + incremental extraction ---
+        # Skipped under --dry-run or --no-extract. Pulls together all IDs
+        # touched in this run (new SR papers, freshly downloaded known
+        # papers, and orphan-staged entries from Phase 0) so the enriched
+        # parquet stays current with the master CSV.
+        if not args.dry_run and not args.no_extract:
+            log.info("")
+            log.info("Phase 5b: Propagating to base parquet + extracting...")
+
+            ids_to_propagate = set(orphan_new_ids)
+            for p in new_papers:
+                lid = str(p.get("literature_id", "")).strip()
+                if lid and lid in downloaded_ids:
+                    ids_to_propagate.add(lid)
+
+            if new_papers:
+                added = propagate_to_base_parquet(
+                    [p for p in new_papers
+                     if str(p.get("literature_id", "")) in ids_to_propagate],
+                    log,
+                )
+                stats["base_parquet_added"] = added
+
+            ids_to_extract = set(orphan_new_ids)
+            for p in new_papers:
+                lid = str(p.get("literature_id", "")).strip()
+                if lid and lid in downloaded_ids:
+                    ids_to_extract.add(lid)
+            for p in needs_pdf_papers:
+                lid = str(p.get("literature_id", "")).strip()
+                if lid and lid in downloaded_ids:
+                    ids_to_extract.add(lid)
+
+            if ids_to_extract:
+                log.info(f"  Extracting {len(ids_to_extract)} papers...")
+                extracted = run_incremental_extraction(ids_to_extract, log)
+                stats["extracted"] = extracted
+            else:
+                log.info("  No new IDs to extract this run")
 
         # --- Phase 6: Notify ---
         elapsed = datetime.now() - start_time

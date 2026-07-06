@@ -151,7 +151,9 @@ def build_page(publisher, papers):
             i += 1
             lid = p.get("literature_id"); doi = str(p.get("doi", "")).strip()
             url = f"https://doi.org/{doi}"
-            raw_title = p.get("title") or ""
+            # Strip terminal period(s)/whitespace — a trailing "." breaks JSTOR/FIU/
+            # Scholar title lookups, so remove it for both display and search URLs.
+            raw_title = (p.get("title") or "").strip().rstrip(".").strip()
             enc = urllib.parse.quote(raw_title, safe="")
             fiu_q = urllib.parse.quote("any,contains," + raw_title, safe="")
             jstor = f"https://www.jstor.org/action/doBasicSearch?Query={enc}&so=rel"
