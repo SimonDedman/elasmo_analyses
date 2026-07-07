@@ -237,33 +237,54 @@ p_h3 <- ggplot(parachute_country, aes(x = geo_study_country, y = pct_parachute))
 save_plot(p_h3, "H3_parachute_science_top_countries", w = 12, h = 9)
 
 # ---------------------------------------------------------------------------
-# H4. Author -> study-country flow (alluvial), top 10 per axis + "Other"
+# H4. Author -> study-country flow (alluvial): cross-border ("parachute-style")
+# flows only. Same-country pairs are self-loops (most research is done locally
+# - not interesting) and are dropped; the traditional first-world research
+# hubs are dropped from the RIGHT (study-country) side only, so the figure
+# highlights who is doing foreign-led research, not who receives it.
 # ---------------------------------------------------------------------------
-cat("\nBuilding H4: author -> study country flow...\n")
+cat("\nBuilding H4: author -> study country flow (cross-border only)...\n")
+
+# Country strings as they appear in geo_study_country. Both "USA"/"United
+# States" and "UK"/"United Kingdom" spellings are matched for robustness, but
+# the corpus currently uses "USA"/"UK". Edit this vector to change which
+# destinations are excluded from the RIGHT axis; these countries are still
+# allowed on the LEFT (author) axis.
+h4_excluded_destinations <- c("USA", "United States", "Australia",
+                               "UK", "United Kingdom", "Canada", "Japan")
+h4_excluded_display <- c("USA", "Australia", "UK", "Canada", "Japan")  # for the caption, deduped
+
+norm_country <- function(x) str_squish(str_to_lower(x))
+h4_excluded_norm <- norm_country(h4_excluded_destinations)
 
 flow_raw <- df |>
   filter(!is.na(geo_first_author_country), !is.na(geo_study_country)) |>
+  mutate(
+    author_norm = norm_country(geo_first_author_country),
+    study_norm  = norm_country(geo_study_country)
+  ) |>
+  filter(author_norm != study_norm) |>                       # drop same-country self-loops
+  filter(!study_norm %in% h4_excluded_norm) |>                # drop major-hub destinations
   count(geo_first_author_country, geo_study_country, name = "freq")
 
 n_h4_pairs <- sum(flow_raw$freq)
+n_h4_unique_pairs <- nrow(flow_raw)
 
-top_author <- flow_raw |> group_by(geo_first_author_country) |>
-  summarise(n = sum(freq), .groups = "drop") |> slice_max(n, n = 10, with_ties = FALSE) |>
-  pull(geo_first_author_country)
-top_study <- flow_raw |> group_by(geo_study_country) |>
-  summarise(n = sum(freq), .groups = "drop") |> slice_max(n, n = 10, with_ties = FALSE) |>
-  pull(geo_study_country)
+# Every ribbon must land on a NAMED author country and a NAMED study country -
+# no "Other" catch-all bucket. We keep every cross-border flow at or above a
+# minimum paper count, tuned to keep the figure legible (~25-40 named flows).
+# Raise this threshold if the alluvial gets too dense; do not re-introduce
+# an "Other" node.
+h4_min_flow <- 6
 
 flow_df <- flow_raw |>
-  mutate(
-    Author = if_else(geo_first_author_country %in% top_author, geo_first_author_country, "Other"),
-    Study  = if_else(geo_study_country %in% top_study, geo_study_country, "Other")
-  ) |>
-  count(Author, Study, wt = freq, name = "freq") |>
-  filter(freq >= 3)
+  filter(freq >= h4_min_flow) |>
+  transmute(Author = geo_first_author_country, Study = geo_study_country, freq)
 
 n_h4 <- sum(flow_df$freq)
-cat("  H4 flows after filtering (freq >= 3):", nrow(flow_df), "| papers covered:", n_h4, "\n")
+cat("  H4 named cross-border flows (freq >=", h4_min_flow, "):", nrow(flow_df),
+    "| papers covered:", n_h4, "of", comma(n_h4_pairs), "cross-border pairs |",
+    n_distinct(flow_df$Author), "author x", n_distinct(flow_df$Study), "study countries\n")
 
 alluv_df <- flow_df |>
   to_lodes_form(axes = 1:2, key = "axis", value = "stratum", id = "alluvium") |>
@@ -271,7 +292,6 @@ alluv_df <- flow_df |>
 
 strata <- sort(unique(alluv_df$stratum))
 pal_h4 <- setNames(scales::hue_pal()(length(strata)), strata)
-pal_h4[["Other"]] <- "grey70"
 
 p_h4 <- ggplot(alluv_df,
                aes(x = axis_label, stratum = stratum, alluvium = alluvium,
@@ -282,10 +302,12 @@ p_h4 <- ggplot(alluv_df,
   scale_fill_manual(values = pal_h4) +
   scale_x_discrete(expand = c(0.08, 0.08)) +
   labs(
-    title    = "Who studies where: first-author country -> study country",
+    title    = "Parachute science: cross-border first-author -> study-country flows",
     subtitle = paste0(
-      "Top 10 countries on each axis (rest collapsed to \"Other\"); flows with >=3 papers shown ",
-      "(n = ", comma(n_h4), " of ", comma(n_h4_pairs), " geo-tagged author-study pairs)"
+      "Same-country (locally-led) pairs excluded; major-hub destinations (",
+      paste(h4_excluded_display, collapse = ", "), ") excluded from the study-country axis.\n",
+      "Every named country pair with >=", h4_min_flow, " papers shown (", nrow(flow_df),
+      " flows, no \"Other\" bucket); n = ", comma(n_h4), " cross-border, non-hub-destination papers"
     ),
     x = NULL, y = "Number of papers"
   ) +
