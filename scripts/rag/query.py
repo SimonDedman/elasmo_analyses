@@ -8,16 +8,35 @@ Run with the fashion-clip venv (has sentence-transformers/faiss):
         "What techniques are used for age determination in deep-sea sharks?"
 
 Flags:
-    --top-k N        number of chunks to retrieve (default 8)
+    --top-k N        number of chunks to keep after re-ranking (default 8)
+    --retrieve-n N   number of FAISS candidates to pull before re-ranking
+                     (default 20; must be >= --top-k)
+    --no-rerank      skip the cross-encoder stage, use raw FAISS cosine order
+                     and the old absolute-cosine claim-strength (for A/B
+                     comparison only — this reintroduces the over-reporting
+                     bug, see docs/LLM/rag_prototype_status.md)
     --no-generate    skip the LLM call, print the ranked cited context only
     --json           print machine-readable JSON instead of formatted text
 
-Pipeline: embed question (BGE query prefix) -> FAISS cosine retrieval over
-outputs/rag/index.faiss -> build a cited context block -> (if Ollama is
-reachable) generate an answer instructed to cite [literature_id] inline ->
-compute a claim-strength rating from retrieval agreement, independent of
-whatever the LLM says (LLMs are not a trustworthy source of their own
-confidence, so this is scored programmatically from the retrieved evidence).
+Pipeline: embed question (BGE query prefix) -> FAISS cosine retrieval of the
+top --retrieve-n candidates over outputs/rag/index.faiss -> CROSS-ENCODER
+RE-RANK those candidates by directly scoring (question, chunk_text) pairs
+(scripts/rag/rerank.py) -> keep top --top-k -> build a cited context block ->
+(if Ollama is reachable) generate an answer instructed to cite
+[literature_id] inline -> compute a claim-strength rating from the
+cross-encoder scores, independent of whatever the LLM says (LLMs are not a
+trustworthy source of their own confidence, so this is scored
+programmatically from the retrieved evidence).
+
+Why the cross-encoder stage exists: BGE cosine similarity runs high in
+absolute terms and cannot separate on-topic from merely topic-adjacent
+passages (an out-of-sample probe, "CRISPR gene editing protocols for shark
+embryos" — no such papers in the corpus — still scored ~0.80 cosine on
+shark-genomics papers and was labelled WELL-SUPPORTED). The cross-encoder
+scores the full (query, passage) pair with cross-attention rather than
+comparing two independently-embedded vectors, so its scores are much better
+calibrated to actual relevance — see rerank.py and
+docs/LLM/rag_prototype_status.md for detail and the before/after numbers.
 """
 
 from __future__ import annotations
@@ -37,14 +56,32 @@ from common import (  # noqa: E402
     BGE_QUERY_PREFIX, CHUNKS_JSONL, EMBED_MODEL_NAME, EMBEDDINGS_NPY,
     FAISS_INDEX_PATH, OLLAMA_HOST, OLLAMA_MODEL,
 )
+from rerank import rerank as cross_encode_rerank  # noqa: E402
 
-# Claim-strength thresholds on cosine similarity (BGE-small, normalized
-# embeddings -> inner product == cosine, range roughly 0.3-0.9 in practice
-# for this corpus). These are heuristic cut-offs calibrated by eyeballing
-# retrieval scores during prototyping, not a validated statistical model —
-# see docs/LLM/rag_prototype_status.md "Limitations".
-SIM_CONCORDANT = 0.55   # a hit this strong "counts" as real supporting evidence
-SIM_WEAK = 0.40         # below this, a hit is noise, not evidence
+# --- Legacy (pre-rerank) claim-strength thresholds on absolute cosine ------
+# Kept only for --no-rerank A/B comparison; this is the miscalibrated
+# heuristic documented as over-reporting in docs/LLM/rag_prototype_status.md.
+SIM_CONCORDANT = 0.55
+SIM_WEAK = 0.40
+
+# --- Cross-encoder claim-strength thresholds -------------------------------
+# cross-encoder/ms-marco-MiniLM-L-6-v2 outputs an UNBOUNDED LOGIT, not a
+# 0-1 probability. Calibrated empirically against this corpus/index (2026-07)
+# by running the actual queries and reading off scores:
+#   - in-domain probe ("How is age and growth determined in sharks using
+#     vertebral analysis?"): 6 distinct papers in the top-8, ce_score range
+#     +1.48 to +4.73 — ALL positive.
+#   - out-of-domain probe ("CRISPR gene editing protocols for shark
+#     embryos" — no such papers in the corpus): top ce_score -1.89, every
+#     retrieved chunk negative (-1.89 to -4.32) even though FAISS cosine on
+#     the same chunks was still ~0.76-0.80.
+# There is a clean sign flip between the two cases at this corpus size, so
+# the floor sits at 0.0 (comfortably inside the gap, not at either extreme)
+# and CE_STRONG is set low enough (1.0) to count all 6 of the genuinely
+# on-topic papers above, not just the single best chunk.
+CE_FLOOR = 0.0      # below this, top hit is not meaningfully relevant -> unresolved
+CE_STRONG = 1.0      # a hit this strong "counts" as real supporting evidence
+CE_MIN_CONCORDANT_PAPERS = 3   # distinct papers >= CE_STRONG for well-supported
 
 
 def load_index():
@@ -65,10 +102,11 @@ def embed_query(question: str) -> np.ndarray:
     return vec
 
 
-def retrieve(question: str, top_k: int) -> list[dict]:
+def retrieve(question: str, retrieve_n: int) -> list[dict]:
+    """FAISS cosine retrieval of the top retrieve_n candidates (pre-rerank)."""
     index, chunks = load_index()
     qvec = embed_query(question)
-    scores, idxs = index.search(qvec, top_k)
+    scores, idxs = index.search(qvec, retrieve_n)
     hits = []
     for score, idx in zip(scores[0], idxs[0]):
         if idx < 0:
@@ -79,14 +117,9 @@ def retrieve(question: str, top_k: int) -> list[dict]:
     return hits
 
 
-def claim_strength(hits: list[dict]) -> dict:
-    """Derive a claim-strength label from retrieval agreement.
-
-    Heuristic, not a semantic-agreement/contradiction detector: it only
-    measures how much of the retrieved evidence, across how many distinct
-    papers, sits above a similarity bar — a proxy for "multiple independent
-    sources say something relevant to this question", not for "multiple
-    sources agree on the same claim". See docs for caveats.
+def claim_strength_legacy(hits: list[dict]) -> dict:
+    """Old absolute-cosine heuristic — kept only for --no-rerank A/B
+    comparison. Documented as over-reporting; do not use for real output.
     """
     by_paper = defaultdict(list)
     for h in hits:
@@ -128,6 +161,66 @@ def claim_strength(hits: list[dict]) -> dict:
     }
 
 
+def claim_strength(hits: list[dict]) -> dict:
+    """Derive a claim-strength label from cross-encoder relevance scores.
+
+    Unlike absolute BGE cosine (which runs high even for topic-adjacent,
+    off-topic passages — see docs "Limitations"), the cross-encoder scores
+    each (question, chunk) pair directly, so its top score is a much more
+    honest signal of whether the corpus actually contains relevant evidence.
+    Still a heuristic, not a semantic-agreement/contradiction detector: it
+    measures how much retrieved evidence, across how many distinct papers,
+    clears a relevance bar — a proxy for "the corpus has on-topic material",
+    not for "independent sources agree on the same specific claim".
+    """
+    if not hits or hits[0].get("ce_score") is None:
+        # No cross-encoder scores available (e.g. --no-rerank) — caller
+        # should use claim_strength_legacy instead; guard defensively.
+        return claim_strength_legacy(hits)
+
+    by_paper = defaultdict(list)
+    for h in hits:
+        by_paper[h["literature_id"]].append(h["ce_score"])
+
+    concordant_papers = [
+        lit_id for lit_id, scores in by_paper.items()
+        if max(scores) >= CE_STRONG
+    ]
+    above_floor_papers = [
+        lit_id for lit_id, scores in by_paper.items()
+        if max(scores) >= CE_FLOOR
+    ]
+    top_score = max((h["ce_score"] for h in hits), default=-999.0)
+
+    if top_score < CE_FLOOR:
+        label = "unresolved"
+        reason = (f"top cross-encoder relevance score {top_score:.2f} is "
+                   f"below the floor ({CE_FLOOR}) — nothing retrieved is "
+                   f"actually relevant to the question, regardless of "
+                   f"cosine similarity; the corpus likely has no evidence "
+                   f"on this topic")
+    elif len(concordant_papers) >= CE_MIN_CONCORDANT_PAPERS:
+        label = "well-supported"
+        reason = (f"{len(concordant_papers)} distinct papers with strong "
+                   f"cross-encoder relevance (>= {CE_STRONG}) to the "
+                   f"question")
+    else:
+        label = "limited"
+        reason = (f"{len(concordant_papers)} strong + "
+                   f"{len(above_floor_papers) - len(concordant_papers)} "
+                   f"above-floor-but-not-strong independent sources — some "
+                   f"relevant evidence but not broad corroboration")
+
+    return {
+        "label": label,
+        "reason": reason,
+        "n_distinct_papers_retrieved": len(by_paper),
+        "n_concordant_papers": len(concordant_papers),
+        "n_above_floor_papers": len(above_floor_papers),
+        "top_ce_score": round(top_score, 3),
+    }
+
+
 def format_citation(hit: dict) -> str:
     authors = (hit.get("authors") or "").split("&")[0].strip().rstrip(",")
     year = hit.get("year")
@@ -142,8 +235,11 @@ def build_context_block(hits: list[dict], max_chars_per_chunk: int = 900) -> str
     lines = []
     for h in hits:
         snippet = h["text"][:max_chars_per_chunk]
+        score_bit = f"cosine={h['score']:.2f}"
+        if h.get("ce_score") is not None:
+            score_bit += f", relevance={h['ce_score']:.2f}"
         lines.append(
-            f"SOURCE {format_citation(h)} (similarity={h['score']:.2f})\n{snippet}\n"
+            f"SOURCE {format_citation(h)} ({score_bit})\n{snippet}\n"
         )
     return "\n---\n".join(lines)
 
@@ -189,7 +285,13 @@ def generate_answer(question: str, hits: list[dict]) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("question")
-    ap.add_argument("--top-k", type=int, default=8)
+    ap.add_argument("--top-k", type=int, default=8,
+                    help="chunks to keep after re-ranking (default 8)")
+    ap.add_argument("--retrieve-n", type=int, default=20,
+                    help="FAISS candidates pulled before re-ranking (default 20)")
+    ap.add_argument("--no-rerank", action="store_true",
+                    help="skip the cross-encoder stage (A/B comparison only; "
+                         "reinstates the over-reporting absolute-cosine bug)")
     ap.add_argument("--no-generate", action="store_true")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
@@ -198,8 +300,15 @@ def main() -> None:
         sys.exit("No index found — run build_index.py first "
                   "(outputs/rag/index.faiss missing).")
 
-    hits = retrieve(args.question, args.top_k)
-    strength = claim_strength(hits)
+    retrieve_n = max(args.retrieve_n, args.top_k)
+    candidates = retrieve(args.question, retrieve_n)
+
+    if args.no_rerank:
+        hits = candidates[:args.top_k]
+        strength = claim_strength_legacy(hits)
+    else:
+        hits = cross_encode_rerank(args.question, candidates, args.top_k)
+        strength = claim_strength(hits)
 
     have_llm = (not args.no_generate) and ollama_available()
     if have_llm:
@@ -212,6 +321,7 @@ def main() -> None:
     result = {
         "question": args.question,
         "mode": mode,
+        "reranked": not args.no_rerank,
         "answer": answer,
         "claim_strength": strength,
         "retrieved": [
@@ -220,7 +330,8 @@ def main() -> None:
                 "title": h["title"],
                 "authors": h["authors"],
                 "year": h["year"],
-                "score": round(h["score"], 3),
+                "cosine_score": round(h["score"], 3),
+                "ce_score": round(h["ce_score"], 3) if h.get("ce_score") is not None else None,
                 "chunk_index": h["chunk_index"],
                 "text_preview": h["text"][:220].replace("\n", " ") + "...",
             }
@@ -232,23 +343,35 @@ def main() -> None:
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return
 
+    def _score_str(h: dict) -> str:
+        s = f"cosine={h['score']:.2f}"
+        if h.get("ce_score") is not None:
+            s += f" relevance={h['ce_score']:.2f}"
+        return s
+
     print(f"\nQ: {args.question}")
-    print(f"   [answer mode: {mode}]\n")
+    print(f"   [answer mode: {mode}; "
+          f"{'cross-encoder re-ranked' if not args.no_rerank else 'NO RERANK (raw cosine order)'}]\n")
     if answer:
         print(answer)
     else:
         print("(No local LLM reachable — showing ranked cited evidence instead of a generated answer.)")
         for h in hits:
-            print(f"  - {format_citation(h)}  (sim={h['score']:.2f})")
+            print(f"  - {format_citation(h)}  ({_score_str(h)})")
 
     print(f"\nClaim strength: {strength['label'].upper()}  — {strength['reason']}")
-    print(f"  distinct papers retrieved: {strength['n_distinct_papers_retrieved']}, "
-          f"concordant (sim>={SIM_CONCORDANT}): {strength['n_concordant_papers']}, "
-          f"top similarity: {strength['top_similarity']}")
+    if not args.no_rerank:
+        print(f"  distinct papers retrieved: {strength['n_distinct_papers_retrieved']}, "
+              f"strong (relevance>={CE_STRONG}): {strength['n_concordant_papers']}, "
+              f"top relevance score: {strength['top_ce_score']}")
+    else:
+        print(f"  distinct papers retrieved: {strength['n_distinct_papers_retrieved']}, "
+              f"concordant (sim>={SIM_CONCORDANT}): {strength['n_concordant_papers']}, "
+              f"top similarity: {strength['top_similarity']}")
 
     print("\nTop sources:")
     for h in hits[:min(args.top_k, 6)]:
-        print(f"  {format_citation(h)}  (sim={h['score']:.2f})")
+        print(f"  {format_citation(h)}  ({_score_str(h)})")
 
 
 if __name__ == "__main__":
