@@ -5,7 +5,10 @@
 ## for its own fields and reports n in the subtitle/caption.
 ##
 ##   H1  spatial_study_location_choropleth  - where research was DONE (geo_study_country)
-##   H2  spatial_study_site_density         - hex/point map of raw study lat/lon
+##   H2  spatial_study_site_density         - country-level study-effort bubble map
+##                                             (geo_study_country centroids; geo_study_latitude/
+##                                             longitude are corrupt - see H2 section below - and
+##                                             are never used for plotting)
 ##   H3  parachute_science_top_countries    - top study countries by % foreign-first-author
 ##   H4  author_to_study_country_flow       - alluvial: author country -> study country
 ##   H5  study_basin_geo_vs_textmined       - geo_study_ocean_basin vs text-mined b_ columns
@@ -148,44 +151,52 @@ p_h1 <- ggplot(world_h1) +
 save_plot(p_h1, "H1_spatial_study_location_choropleth", w = 14, h = 8)
 
 # ---------------------------------------------------------------------------
-# H2. Study-site density map — hotspots and gaps (raw lat/lon)
+# H2. Study-effort hotspot map — proportional-symbol (bubble) map by country
 # ---------------------------------------------------------------------------
-cat("\nBuilding H2: study-site density map...\n")
+# DATA-QUALITY NOTE (verified 2026-07-06): geo_study_latitude / geo_study_longitude
+# are CORRUPT and must NEVER be used for plotting. All 914 non-NA values are
+# positive (lat range 0-89, lon range 0-176) with arbitrary magnitudes - e.g.
+# Australia is recorded at lat 13/lon 30, Brazil at lat 15/lon 16. This is not
+# a salvageable sign-flip (Southern Hemisphere countries just need lat*-1):
+# the magnitudes themselves bear no relation to the true location, so every
+# "study site" collapses into the +lat/+lon quadrant regardless of the
+# country's real hemisphere. H2 is therefore built from geo_study_country
+# instead (reliable, n ~ 3,650 - the same field H1 uses), geocoded to each
+# country's polygon centroid and sized proportionally to paper count.
+cat("\nBuilding H2: study-effort hotspot bubble map (by geo_study_country)...\n")
 
-pts_h2 <- df |> filter(!is.na(geo_study_latitude), !is.na(geo_study_longitude))
-n_h2 <- nrow(pts_h2)
+# Reuses study_counts / adm0_a3 matching already computed for H1 above.
+n_h2 <- n_h1
 
-neg_lat <- sum(pts_h2$geo_study_latitude < 0, na.rm = TRUE)
-neg_lon <- sum(pts_h2$geo_study_longitude < 0, na.rm = TRUE)
-cat("  NOTE: negative latitudes =", neg_lat, "/ negative longitudes =", neg_lon,
-    "out of", n_h2, "- see caption caveat.\n")
-
-world_4326 <- st_transform(world, 4326)
+centroids_h2 <- suppressWarnings(
+  world |>
+    inner_join(study_counts |> select(adm0_a3, n), by = "adm0_a3") |>
+    st_centroid()
+)
 
 p_h2 <- ggplot() +
-  geom_sf(data = world_4326, fill = "grey85", colour = "grey65", linewidth = 0.15) +
-  stat_bin_hex(data = pts_h2, aes(x = geo_study_longitude, y = geo_study_latitude),
-               bins = 40, alpha = 0.85) +
-  geom_point(data = pts_h2, aes(x = geo_study_longitude, y = geo_study_latitude),
-             size = 0.6, colour = "grey15", alpha = 0.35) +
-  scale_fill_viridis_c(option = "inferno", name = "Studies\n(hex count)", labels = comma) +
-  coord_sf(crs = 4326, expand = FALSE) +
+  geom_sf(data = world, fill = "grey85", colour = "grey65", linewidth = 0.15) +
+  geom_sf(data = centroids_h2, aes(size = n), shape = 21, fill = "#d6604d",
+          colour = "grey15", alpha = 0.75, stroke = 0.3) +
+  scale_size_area(max_size = 18, name = "Papers", labels = comma) +
+  coord_sf(crs = robinson) +
   labs(
-    title    = "Study-site hotspots and gaps (extracted coordinates)",
-    subtitle = paste0("n = ", comma(n_h2), " papers with an extracted lat/lon (",
-                      round(100 * n_h2 / n_total, 1), "% of ", comma(n_total), ")"),
+    title    = "Study-effort hotspots: papers per study-site country",
+    subtitle = paste0(
+      "Bubble area = papers by STUDY-SITE country (geo_study_country), plotted at each country's ",
+      "polygon centroid - not exact site coordinates. n = ", comma(n_h2),
+      " papers with a known study country (",
+      round(100 * n_h2 / n_total, 1), "% of ", comma(n_total), ")"
+    ),
     caption  = str_wrap(paste0(
-      "CAUTION - data quality: 0 of ", comma(n_h2), " rows have a negative latitude and only ",
-      neg_lon, " have a negative longitude, despite Southern-Hemisphere-heavy study countries ",
-      "(Australia, Brazil, South Africa, etc.) appearing throughout the same rows. This is ",
-      "consistent with a text-extraction artefact (magnitude captured, hemisphere sign lost), ",
-      "not verified true coordinates. Treat as illustrative only; H1 (country-level) is the ",
-      "reliable location figure."
+      "Country-level hotspot map (bubbles at country centroids, not true study-site points). ",
+      "Raw extracted study-site coordinates (geo_study_latitude/geo_study_longitude) are a known ",
+      "text-extraction artefact - all values positive with arbitrary magnitude (e.g. Australia at ",
+      "lat 13/lon 30) - and are not usable; this figure uses geo_study_country instead. See H1 for ",
+      "the equivalent choropleth."
     ), width = 150)
   ) +
-  theme_eea_map +
-  theme(axis.text = element_text(size = 8, colour = "grey40"),
-        axis.ticks = element_line(colour = "grey60"))
+  theme_eea_map
 
 save_plot(p_h2, "H2_spatial_study_site_density", w = 14, h = 9)
 
