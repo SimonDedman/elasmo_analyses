@@ -671,9 +671,25 @@ export default function App() {
   };
   const getTooltip = ({ object }) => {
     if (!object) return null;
-    if (object.properties?.cluster) {
+    // ROOT CAUSE of the "megacluster never splits" bug: the 'clusters'
+    // IconLayer's data items are { cluster, m, f, u } wrapper objects (see
+    // clusterStats above), NOT bare GeoJSON features — there is no
+    // object.properties on them at all. This branch used to check
+    // `object.properties?.cluster`, which was always undefined for a
+    // hovered cluster, so it fell through to the final `p.name` access
+    // below with p===undefined and threw. That throw happens INSIDE
+    // deck.gl's own per-frame render/pick callback (Deck._onRenderFrame),
+    // and because the cursor typically sits on the very cluster the user
+    // is zooming into, it re-threw on every subsequent animation frame —
+    // permanently halting layerManager.updateLayers() for the rest of the
+    // session. React state (viewState.zoom, clusterPoints) kept updating
+    // fine, which is why the header zoom read correctly while the GPU-
+    // rendered layers stayed frozen at whatever they were the instant
+    // before the crash (a single big cluster that then "never split").
+    if (object.cluster) {
+      const cp = object.cluster.properties;
       return {
-        text: `${object.properties.point_count_abbreviated ?? object.properties.point_count} authors · click to zoom in`,
+        text: `${cp.point_count_abbreviated ?? cp.point_count} authors · click to zoom in`,
         style: tipBase,
       };
     }
@@ -689,6 +705,11 @@ export default function App() {
       };
     }
     const p = object.properties;
+    // Defensive fallback: never let an unrecognised/stale picked object
+    // (e.g. a transient picking-buffer/data race on any other layer)
+    // throw inside deck.gl's render loop — that would silently and
+    // permanently freeze all GPU-rendered layers, exactly as above.
+    if (!p) return null;
     return {
       html:
         `<strong>${p.name}</strong><br/>` +
