@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "copy-data": "rm -rf public/data && mkdir -p public/data && cp ../../outputs/author_atlas/*.* public/data/"
+    "copy-data": "rm -rf public/data && mkdir -p public/data && cp ../../outputs/author_atlas/*.* public/data/ && node scripts/dodge-data.mjs"
   },
   "dependencies": {
     "@deck.gl/core": "^9.1.0",
