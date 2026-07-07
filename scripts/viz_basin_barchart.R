@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
   library(viridis)
 })
 
-base_dir <- "C:/Users/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
+base_dir <- "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
 fig_dir  <- file.path(base_dir, "outputs/figures")
 dir.create(fig_dir, showWarnings = FALSE, recursive = TRUE)
 
