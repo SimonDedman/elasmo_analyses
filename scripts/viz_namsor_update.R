@@ -109,7 +109,7 @@ p_d6b <- ggplot(trend, aes(x = year_bin, y = pct, colour = gender, group = gende
             show.legend = FALSE) +
   scale_colour_manual(values = gender_cols) +
   scale_size_continuous(range = c(1.5, 5), name = "Papers") +
-  scale_x_continuous(breaks = seq(1950, 2030, 10), limits = c(NA, 2030)) +
+  scale_x_continuous(breaks = seq(1950, 2030, 10), limits = c(NA, 2033)) +
   scale_y_continuous(labels = scales::percent_format(scale = 1)) +
   labs(title = "Trend over time", x = "Year (5-year bins)",
        y = "% first author") +
@@ -127,20 +127,36 @@ conf_gender_path <- file.path(base_dir, "outputs/conference_gender.csv")
 if (file.exists(conf_gender_path)) {
   conf_gender <- read_csv(conf_gender_path, show_col_types = FALSE)
 
+  # AES2026 and SI2026 are both ~2026 and only ~2 months apart, so at the
+  # true x = 2026 the two conferences' dots sit on top of each other. Dodge
+  # AES2026 to the right so it reads as its own independent point; SI2026
+  # keeps its true x = 2026.
+  conf_gender <- conf_gender |>
+    mutate(year_plot = if_else(conference == "AES2026", year + 3, year))
+
   conf_shapes <- c(AES2026 = 17, SI2026 = 18)  # filled triangle / diamond
+  # Filled diamond (pch 18) reads visually smaller than filled triangle
+  # (pch 17) at the same ggplot `size`, so the diamond is up-sized here to
+  # area-match the triangle rather than mapping size to data.
+  conf_point_size <- c(AES2026 = 5, SI2026 = 6.5)
 
   conf_female_labels <- conf_gender |>
     filter(gender == "Female") |>
     mutate(label = sprintf("%s presenters: %.1f%% F (n=%d)", conference, pct, n_known))
 
   p_d6b <- p_d6b +
-    geom_point(data = conf_gender,
-               aes(x = year, y = pct, colour = gender, shape = conference),
-               size = 5, stroke = 1, show.legend = c(shape = TRUE, colour = FALSE)) +
+    geom_point(data = filter(conf_gender, conference == "AES2026"),
+               aes(x = year_plot, y = pct, colour = gender, shape = conference),
+               size = conf_point_size[["AES2026"]], stroke = 1,
+               show.legend = c(shape = TRUE, colour = FALSE)) +
+    geom_point(data = filter(conf_gender, conference == "SI2026"),
+               aes(x = year_plot, y = pct, colour = gender, shape = conference),
+               size = conf_point_size[["SI2026"]], stroke = 1,
+               show.legend = c(shape = TRUE, colour = FALSE)) +
     scale_shape_manual(values = conf_shapes, name = "2026 conference") +
     ggrepel::geom_text_repel(
       data = conf_female_labels,
-      aes(x = year, y = pct, label = label),
+      aes(x = year_plot, y = pct, label = label),
       inherit.aes = FALSE, colour = "grey20", fontface = "bold", size = 3,
       nudge_x = -6, direction = "y", segment.size = 0.3, seed = 1
     )
@@ -297,10 +313,18 @@ overall_pct <- df |>
   summarise(pct = 100 * mean(tolower(gender_first_author) == "female")) |>
   pull(pct)
 
-p_c5 <- ggplot(gender_disc, aes(x = pct_female, y = disc_label, size = n_total)) +
+p_c5 <- ggplot(gender_disc, aes(x = pct_female, y = disc_label, size = n_total,
+                                 colour = pct_female)) +
   geom_vline(xintercept = overall_pct, linetype = "dashed", colour = "grey50") +
-  geom_point(colour = "#d6604d", alpha = 0.85) +
+  geom_point(alpha = 0.85) +
   scale_size_continuous(name = "Papers", range = c(3, 12)) +
+  # Diverging pink (100% female) -> grey (parity) -> blue (100% male), so a
+  # mostly-male discipline renders blue and a near-balanced one (e.g.
+  # toxicology) sits near the neutral grey midpoint. Colours match the
+  # Female/Male palette used elsewhere in the deck (gender_cols).
+  scale_colour_gradient2(low = "#4393c3", mid = "grey80", high = "#e91e8d",
+                         midpoint = 50, limits = c(0, 100),
+                         name = "% Female\nfirst author") +
   annotate("text", x = overall_pct + 0.5, y = 1.3,
            label = sprintf("Overall: %.1f%%", overall_pct),
            hjust = 0, colour = "grey40", size = 3.5) +

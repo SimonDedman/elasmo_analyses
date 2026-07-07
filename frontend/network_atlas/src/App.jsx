@@ -16,23 +16,29 @@ import {
 import {
   loadAuthors, loadEdges, loadStats, loadInstitutions,
 } from './lib/dataLoaders.js';
+import { dodgeCoincidentAuthors } from './lib/geoDodge.js';
 import { BASEMAPS, DEFAULT_BASEMAP } from './lib/basemaps.js';
 import './App.css';
 
 // Bump on each push so the header shows a fresh build number and the
 // user can confirm they're looking at the latest code (cache bust aid).
-const VERSION = '2.6';
+const VERSION = '2.7';
 
 const INITIAL_VIEW_STATE = {
   longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
 };
 
-const CLUSTER_RADIUS_PX  = 45;
-// Stop clustering when zoom > 4 — at z5+ the user is looking at country/
-// region scale; forcing everyone into a continental cluster hides the
-// institutional structure we want to show. Hard-guarded below the
-// supercluster call as well.
-const CLUSTER_MAX_ZOOM   = 4;
+const CLUSTER_RADIUS_PX  = 40;
+// maxZoom = 16 (supercluster's own default): keep clustering active across
+// the whole practical zoom range instead of hard-cutting at a low zoom.
+// Previously this was 4, which — combined with co-located authors sharing
+// identical coordinates (see geoDodge.js) — meant a mega-cluster could
+// never split into sub-clusters; it just jumped from "one blob" straight
+// to "every member visible at once" the moment zoom crossed 4. Now that
+// geoDodge.js gives co-located authors distinct coordinates before this
+// index is built, supercluster can genuinely split large clusters into
+// smaller ones as zoom increases, so maxZoom can (and should) stay high.
+const CLUSTER_MAX_ZOOM   = 16;
 const CLUSTER_MIN_POINTS = 3;
 
 // Zoom used when pan-to-author via search.
@@ -64,7 +70,11 @@ export default function App() {
   useEffect(() => {
     Promise.all([loadAuthors(), loadEdges(), loadStats(), loadInstitutions()])
       .then(([a, e, s, i]) => {
-        setAuthorsFC(a); setEdgesList(e); setStats(s); setInstitutionsFC(i);
+        // Give co-located authors (same institution geocode) distinct
+        // coordinates BEFORE anything clusters them — see geoDodge.js for
+        // why this must happen at data-prep time, not at render time.
+        setAuthorsFC(dodgeCoincidentAuthors(a));
+        setEdgesList(e); setStats(s); setInstitutionsFC(i);
       })
       .catch(err => setError(err.message));
   }, []);
@@ -281,8 +291,9 @@ export default function App() {
 
   const currentPoints = useMemo(() => {
     if (viewMode !== 'authors') return [];
-    // Hard guard: above the cluster-zoom threshold, bypass supercluster
-    // entirely so nothing gets aggregated regardless of internal rounding.
+    // Safety net: above maxZoom, bypass supercluster entirely (it would
+    // clamp internally anyway, but this avoids relying on that). With
+    // maxZoom=16 this essentially never triggers in normal use.
     if (viewState.zoom > CLUSTER_MAX_ZOOM) {
       return [...authorsToCluster, ...alwaysVisible];
     }
@@ -399,12 +410,15 @@ export default function App() {
     ? singletons.filter(f => selectedRelated.has(f.properties.id))
     : [];
 
-  // Co-location spiral offsets. Many authors share an institution's exact
-  // lat/lng — without this, 40 authors at Hopkins Marine stack onto one
-  // pixel at any zoom and look like a cluster. Key by rounded coordinate
-  // so co-located authors get sequential spiral indices, then convert to
-  // a pixel offset (golden-angle spiral, radius ∝ √index) applied via the
-  // IconLayer getPixelOffset. Result: constant visual spread at all zooms.
+  // Co-location pixel-offset safety net. The real fix for coincident
+  // authors is geoDodge.js (dodgeCoincidentAuthors), applied once at data
+  // load time so supercluster itself can split co-located groups apart —
+  // that's what makes megaclusters actually break down on zoom. This
+  // pixel-space pass is now mostly a no-op (post-dodge coordinates are
+  // already distinct at 4dp) but is kept as a defensive fallback for any
+  // residual exact-duplicate coordinates (e.g. a group of exactly 1, or
+  // author records missing lat/lon that default to the same fallback
+  // point) so two icons never render on the literal same pixel.
   const colocationOffsets = useMemo(() => {
     const groups = new Map();
     singletons.forEach(f => {
