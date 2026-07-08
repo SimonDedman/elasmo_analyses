@@ -67,6 +67,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import time
 import urllib.parse
@@ -411,6 +412,172 @@ def append_log_rows(rows: list, log_path: Optional[Path] = None) -> None:
 # CLI
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Finalize: file downloaded PDFs into the corpus, delete verified staging
+# copies, and run incremental schema extraction. Mirrors sync_shark_references
+# Phase 5b for the cascade path. See
+# docs/superpowers/specs/2026-07-07-cascade-finalize-ingest-extract-design.md
+# ---------------------------------------------------------------------------
+
+def _norm_id(x) -> str:
+    """Normalise a literature_id for comparison (strip a trailing '.0')."""
+    s = str(x).strip()
+    return s[:-2] if s.endswith(".0") else s
+
+
+def _staged_pdfs() -> list:
+    """All staged download PDFs awaiting ingestion, from both source dirs."""
+    staged: list = []
+    for d in (BHL_DOWNLOAD_DIR, OA_DOWNLOAD_DIR):
+        if d.exists():
+            staged.extend(sorted(d.glob("*.pdf")))
+            staged.extend(sorted(d.glob("*.PDF")))
+    return staged
+
+
+def delete_verified_staging(staged: list, copied_ids: set,
+                            pdf_names: dict, pdf_base: Path,
+                            filed_map: dict | None = None) -> tuple:
+    """Delete staged PDFs that are provably filed in the library.
+
+    A staged file is deleted only if ALL gates pass:
+      1. it resolves to a corpus id that was filed this run --
+         via filed_map[str(path)] if available (authoritative: the id ingest
+         actually filed it under), else the filename stem (fallback).
+      2. pdf_base / pdf_names[id] exists on disk
+      3. that dest is a valid, non-empty PDF (> 1 KB)
+    Everything else is KEPT (unmatched, dedup-flagged, dest missing, etc.).
+    A manifest of intended deletions is written BEFORE any unlink. Returns
+    (deleted, kept, freed_bytes).
+
+    Preferring filed_map over the stem catches files that matched the corpus by
+    title (so their filed id differs from the '<download_id>.pdf' name) -- these
+    are provably in the library and safe to remove, but the stem-only gate would
+    conservatively keep them.
+    """
+    staging_dirs = {BHL_DOWNLOAD_DIR.resolve(), OA_DOWNLOAD_DIR.resolve()}
+    copied_norm = {_norm_id(x) for x in copied_ids}
+    names_norm = {_norm_id(k): v for k, v in pdf_names.items()}
+
+    to_delete = []   # (staged_path, dest_rel, staged_size, dest_size)
+    kept = 0
+    for p in staged:
+        # Guard: only ever consider files physically inside a staging dir.
+        if p.resolve().parent not in staging_dirs:
+            kept += 1
+            continue
+        # Authoritative id from ingest if available, else the filename stem.
+        if filed_map is not None and str(p) in filed_map:
+            lid = _norm_id(filed_map[str(p)])
+        else:
+            lid = _norm_id(p.stem)
+        if lid not in copied_norm:
+            kept += 1
+            continue
+        dest_rel = names_norm.get(lid)
+        if not dest_rel:
+            kept += 1
+            continue
+        dest = pdf_base / dest_rel
+        if not dest.exists() or dest.stat().st_size <= 1024:
+            print(f"  KEEP (dest missing/too small): {p.name} -> {dest_rel}")
+            kept += 1
+            continue
+        to_delete.append((p, dest_rel, p.stat().st_size, dest.stat().st_size))
+
+    # Pre-delete manifest (audit trail + re-download list) -- written FIRST.
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    manifest = BASE / f"outputs/cascade_finalize_manifest_{ts}.csv"
+    with open(manifest, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["staged_path", "dest_rel", "staged_bytes", "dest_bytes", "size_match"])
+        for p, dest_rel, ssz, dsz in to_delete:
+            w.writerow([str(p), dest_rel, ssz, dsz, ssz == dsz])
+    print(f"\nFinalize: {len(to_delete)} verified for deletion, {kept} kept.")
+    print(f"Manifest -> {manifest}")
+
+    freed = deleted = 0
+    for p, _dest_rel, ssz, _dsz in to_delete:
+        # Belt-and-braces containment re-check immediately before unlink.
+        if p.resolve().parent not in staging_dirs:
+            continue
+        try:
+            p.unlink()
+            deleted += 1
+            freed += ssz
+        except OSError as e:
+            print(f"  ERROR deleting {p.name}: {e}")
+    return deleted, kept, freed
+
+
+def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
+                          dry_run: bool = False, skip_books: bool = True) -> None:
+    """Ingest staged downloads into the corpus, delete verified staging copies,
+    then run incremental schema extraction on the newly-filed ids.
+
+    ``skip_books`` (default True): detected books (>200pp scanned volumes) are
+    EXCLUDED from ingestion and left untouched in staging. Filing a multi-chapter
+    volume whole under one literature_id would bury the other shark chapters it
+    contains -- those are handled by the separate book-chapter-mining subproject
+    (see docs/superpowers/specs/2026-07-07-book-chapter-mining-design.md). Pass
+    skip_books=False (CLI --include-books) only once that pipeline exists.
+    """
+    import ingest_pdfs as ing            # heavy deps loaded only when finalizing
+    staged = _staged_pdfs()
+    if skip_books:
+        before = len(staged)
+        staged = [p for p in staged if not ing.detect_book(p)]
+        print(f"  skip_books: excluded {before - len(staged)} detected books "
+              f"(left untouched in staging for book-mining).")
+    print(f"\n{'=' * 70}\n  FINALIZE: {len(staged)} staged PDFs "
+          f"(skip_books={skip_books})\n{'=' * 70}")
+    if not staged:
+        print("  Nothing to finalize; skipping.")
+        return
+
+    all_rows, doi_lookup, ay_lookup = ing.load_database()
+
+    if dry_run:
+        ing.check_source("cascade-finalize", staged, doi_lookup, ay_lookup, all_rows)
+        print("\n[DRY RUN] No files ingested, deleted, or extracted.")
+        return
+
+    filed_map: dict = {}
+    copied_ids, copied_dois, pdf_names, _log = ing.ingest_source(
+        "cascade-finalize", staged, doi_lookup, ay_lookup, all_rows,
+        filed_map=filed_map)
+
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    n_json = ing.update_papers_data_json(copied_ids, copied_dois, ts, "cascade-finalize")
+    print(f"  papers_data.json: {n_json} entries removed (no longer missing)")
+    ing.update_tracking_dbs(copied_ids, pdf_names, ts, "cascade-finalize")
+
+    if keep_staging:
+        print("  --keep-staging set: staging copies retained.")
+    else:
+        deleted, kept, freed = delete_verified_staging(
+            staged, copied_ids, pdf_names, ing.PDF_BASE, filed_map=filed_map)
+        print(f"  Deleted {deleted} staged copies ({freed / 1e9:.2f} GB freed); "
+              f"{kept} kept for review.")
+
+    if do_extract and copied_ids:
+        ids_csv = BASE / f"outputs/.cascade_finalize_ids_{ts}.csv"
+        with open(ids_csv, "w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            w.writerow(["literature_id"])
+            for x in sorted({_norm_id(v) for v in copied_ids}):
+                w.writerow([x])
+        print(f"\n  Running incremental extraction on {len(copied_ids)} ids...")
+        rc = subprocess.run(
+            [sys.executable,
+             str(Path(__file__).parent / "extract_incremental.py"), str(ids_csv)],
+            cwd=str(BASE),
+        ).returncode
+        print(f"  extract_incremental.py exit code: {rc}")
+    elif do_extract:
+        print("  No ids ingested; extraction skipped.")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(
         description="Unified per-paper acquisition cascade for the EEA download queue.",
@@ -426,7 +593,24 @@ def main() -> int:
                      help="Flush the queue + log to disk every N papers")
     ap.add_argument("--sleep", type=float, default=0.3,
                      help="Seconds to sleep between papers (politeness)")
+    ap.add_argument("--finalize-only", action="store_true",
+                     help="Skip the download loop; only ingest staged PDFs, "
+                          "delete verified staging copies, and extract.")
+    ap.add_argument("--keep-staging", action="store_true",
+                     help="During finalize, do NOT delete staged PDFs after ingest.")
+    ap.add_argument("--no-extract", action="store_true",
+                     help="During finalize, skip incremental schema extraction.")
+    ap.add_argument("--include-books", action="store_true",
+                     help="During finalize, INCLUDE detected books (>200pp volumes). "
+                          "Default excludes them; only enable once book-chapter mining exists.")
     args = ap.parse_args()
+
+    if args.finalize_only:
+        finalize_acquisitions(keep_staging=args.keep_staging,
+                              do_extract=not args.no_extract,
+                              dry_run=args.dry_run,
+                              skip_books=not args.include_books)
+        return 0
 
     queue = load_queue(QUEUE)
     pool = select_pool(queue, recheck=args.recheck)
@@ -490,6 +674,12 @@ def main() -> int:
     if not args.dry_run:
         print(f"\nQueue written back to: {QUEUE}")
         print(f"Log appended to:       {LOG}")
+
+    # After downloading, file everything into the corpus and extract.
+    finalize_acquisitions(keep_staging=args.keep_staging,
+                          do_extract=not args.no_extract,
+                          dry_run=args.dry_run,
+                          skip_books=not args.include_books)
     return 0
 
 
