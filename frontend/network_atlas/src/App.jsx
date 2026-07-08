@@ -537,9 +537,9 @@ export default function App() {
         getColor: [255, 255, 255, 255],
         getTextAnchor: 'middle',
         getAlignmentBaseline: 'center',
-        outlineWidth: 4,
-        outlineColor: [30, 30, 30, 230],
-        fontSettings: { sdf: true, radius: 16 },
+        outlineWidth: 8,
+        outlineColor: [0, 0, 0, 255],
+        fontSettings: { sdf: true, radius: 24 },
         fontWeight: 700,
         updateTriggers: {
           getText: [filterSig],
