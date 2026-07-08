@@ -1101,9 +1101,16 @@ def update_tracking_dbs(copied_ids: set, pdf_names: dict, timestamp: str, source
 
 def ingest_source(label: str, pdf_paths: list[Path],
                   doi_lookup: dict, author_year_lookup: dict,
-                  all_rows: list[dict]) -> tuple[set, set, dict, list[str]]:
+                  all_rows: list[dict],
+                  filed_map: dict | None = None) -> tuple[set, set, dict, list[str]]:
     """
     Ingest a list of PDFs. Returns (copied_ids, copied_dois, pdf_names, log_lines).
+
+    ``filed_map`` (optional): if a dict is passed, it is populated in-place with
+    ``{str(source_pdf_path): literature_id}`` for every matched PDF. Lets callers
+    map a *specific input file* to the corpus id it was filed under -- e.g. so a
+    staged '<download_id>.pdf' that matched the corpus by title (under a different
+    id) can still be identified and its staging copy safely removed.
     """
     log_lines = []
     copied = 0
@@ -1204,6 +1211,9 @@ def ingest_source(label: str, pdf_paths: list[Path],
         # Prefer OCR'd version for the library so future extraction has text
         file_src = text_path if text_path != pdf_path else pdf_path
         _file_one(file_src, row, method)
+        if filed_map is not None:
+            # Map the ORIGINAL input path (not the OCR cache) to its corpus id.
+            filed_map[str(pdf_path)] = row["literature_id"]
 
     print(f"\n  Summary for {label}:")
     print(f"    Copied (new):    {copied}")
