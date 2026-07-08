@@ -1,7 +1,7 @@
 openalex_author_id,last_institution_name,last_institution_city,last_institution_region,last_institution_country,last_institution_lat,last_institution_lon,notes
 A5089408999,,Frutigen,,CH,46.5954,7.6497,Vital Heim (user override)
 A5086753224,,San Carlos,California,US,37.5072,-122.2605,Simon Dedman (user override)
-A5011480148,,Beverly Beach,Maryland,US,38.6740,-76.5335,Bryan Keller (user override)
+A5011480148,,Beverly Beach,Maryland,US,38.674,-76.5335,Bryan Keller (user override)
 A5018496471,,'s-Hertogenbosch,,NL,51.6978,5.3037,Maurits van Zinnicq Bergmann (user override)
 A5003627676,,'s-Hertogenbosch,,NL,51.6978,5.3037,MPM Van Zinnicq Bergmann (user override; dup of A5018496471)
 A5004789455,University of Washington,Seattle,Washington,US,47.6553,-122.3035,Naomi F. Farabaugh (user override)
@@ -16,7 +16,7 @@ A5083266790,Global Fishing Watch,Washington,District of Columbia,US,38.9072,-77.
 A5029057419,Global Fishing Watch,Washington,District of Columbia,US,38.9072,-77.0369,T D White / Terry White (user override; OpenAlex labelled 'World Water Watch' in error)
 A5080755723,Global Fishing Watch,Washington,District of Columbia,US,38.9072,-77.0369,Tyler Clavelle (user override; OpenAlex labelled 'World Water Watch' in error)
 A5052794511,Florida International University,Miami,Florida,US,25.7586,-80.3738,Emily Spurgeon (moved from CSULB to FIU; user override)
-A5062301987,"University of California, Santa Barbara",Santa Barbara,California,US,34.4140,-119.8489,Emily N. Meese (Caselle lab UCSB; user override)
+A5062301987,"University of California, Santa Barbara",Santa Barbara,California,US,34.414,-119.8489,Emily N. Meese (Caselle lab UCSB; user override)
 A5061328467,Atlantic White Shark Conservancy,Chatham,Massachusetts,US,41.6762,-69.9595,Patrick T. Rex (moved from CSULB to AWSC; user override)
 A5037429073,Hopkins Marine Station (Stanford),Pacific Grove,California,US,36.6219,-121.9042,Jeremy A. Goldbogen (user override; Stanford Hopkins whale biomechanics)
 A5031110017,Hopkins Marine Station (Stanford),Pacific Grove,California,US,36.6219,-121.9042,Fiorenza Micheli (user override; Stanford Hopkins; OpenAlex mislabelled 'Pacific University/Research Institute')
@@ -31,3 +31,10 @@ A5025546985,Havenworth Coastal Conservation,Cortez,Florida,US,27.4722,-82.6845,A
 A5047686032,Havenworth Coastal Conservation,Cortez,Florida,US,27.4722,-82.6845,Tonya R. Wiley (moved from Palm Research Center OpenAlex error)
 A5011283318,Save Our Seas Foundation D'Arros Research Centre,D'Arros Island,,SC,-5.4167,53.2833,Robert Bullock (SOSF Seychelles branch)
 A5025185039,Save Our Seas Foundation D'Arros Research Centre,D'Arros Island,,SC,-5.4167,53.2833,Henriette Grimmel (SOSF Seychelles branch)
+A5035810829,Hopkins Marine Station (Stanford),Pacific Grove,California,US,36.6219,-121.9042,Michael Castleton (user override; belongs at Stanford Hopkins per lead; OpenAlex 'last known institution' API returned Stanford University main campus I97018004 instead)
+A5070586795,Hopkins Marine Station (Stanford),Pacific Grove,California,US,36.6219,-121.9042,"Robert J. Schallert (user override; belongs at Stanford Hopkins per lead. NB: lead named 'Luke Schallert' -- no such author exists in the dataset, only Robert J. Schallert at Stanford; confirm name before deploying. OpenAlex returned Stanford University main campus I97018004 instead)"
+A5103098022,,San Francisco,California,US,37.7699,-122.4661,"Douglas J. Long (user override; institution name already correct [California Academy of Sciences] but OpenAlex geo I2803094215 is a generic San Francisco city point 37.77493/-122.41942, ~4.1km from the real Golden Gate Park campus, and is bit-identical to SFSU's geo below -- fixing coord only)"
+A5072677791,,San Francisco,California,US,37.7699,-122.4661,Luiz A. Rocha (user override; same California Academy of Sciences city-level geo fix as Douglas Long -- see notes there)
+A5035984085,,San Francisco,California,US,37.7699,-122.4661,Tyson R. Roberts (user override; same California Academy of Sciences city-level geo fix as Douglas Long -- see notes there)
+A5028598484,,San Francisco,California,US,37.7699,-122.4661,Anna B. Sellas (user override; same California Academy of Sciences city-level geo fix as Douglas Long -- see notes there)
+A5055719824,,San Francisco,California,US,37.7241,-122.4799,"Karen D. Crow (user override; institution name already correct [San Francisco State University] but OpenAlex geo I71838634 is a generic San Francisco city point 37.77493/-122.41942, identical to Cal Academy's geo, ~7.7km from the real SFSU campus -- fixing coord only)"

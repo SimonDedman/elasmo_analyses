@@ -72,6 +72,26 @@ last_inst_path <- if (file.exists("outputs/openalex_authors_last_institution.ope
 last_inst <- if (file.exists(last_inst_path)) {
   x <- read_csv(last_inst_path, show_col_types = FALSE) |>
     mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"))
+
+  # Precise-geocode corrections for institutions OpenAlex placed at a
+  # generic city centroid (see scripts/geocode_institutions.py). Applied
+  # BEFORE the per-author manual overrides below, so a manual override
+  # (reviewed by a human) always wins over an automated re-geocode.
+  geo_path <- "outputs/institution_geocode_corrections.csv"
+  if (file.exists(geo_path)) {
+    geo <- read_csv(geo_path, show_col_types = FALSE) |>
+      filter(status == "geocoded") |>
+      select(last_institution_id = institution_id, geo_lat = new_lat, geo_lon = new_lon)
+    x <- x |>
+      left_join(geo, by = "last_institution_id") |>
+      mutate(
+        last_institution_lat = coalesce(geo_lat, last_institution_lat),
+        last_institution_lon = coalesce(geo_lon, last_institution_lon)
+      ) |>
+      select(-geo_lat, -geo_lon)
+    cat(sprintf("  Applied %d precise-geocode institution corrections\n", nrow(geo)))
+  }
+
   ov_path <- "outputs/author_location_overrides.csv"
   if (file.exists(ov_path)) {
     ov <- read_csv(ov_path, show_col_types = FALSE) |>
@@ -163,9 +183,12 @@ if (file.exists(aliases_path)) {
     mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/"),
            openalex_author_id = remap_ids(openalex_author_id))
 
-  # Pick up expanded canonical_name for canonicals touched by an expansion-merge
+  # Pick up expanded canonical_name for canonicals touched by an expansion-merge.
+  # .keep_all = TRUE pins each canonical_openalex_id to a SINGLE alias row
+  # (the first one, by CSV order) so conflicting alias canonical_name values
+  # can't re-fan-out one author into multiple map points.
   canonical_name_map <- aliases |>
-    distinct(canonical_openalex_id, canonical_name_override)
+    distinct(canonical_openalex_id, .keep_all = TRUE)
 
   author_meta <- author_meta |>
     filter(!openalex_author_id %in% aliases$alias_openalex_id) |>
