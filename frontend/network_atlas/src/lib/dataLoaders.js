@@ -9,7 +9,10 @@ const DATA_BASE = `${import.meta.env.BASE_URL}data`;
 const DATA_VERSION = 'dodge-20260707';
 
 export async function loadJSON(path) {
-  const res = await fetch(`${DATA_BASE}/${path}?v=${DATA_VERSION}`, { cache: 'no-cache' });
+  // In dev, bust the cache on every load so re-dodged/rebuilt data always shows;
+  // in prod, a stable version string (bump on data change) keeps normal caching.
+  const v = import.meta.env.DEV ? Date.now() : DATA_VERSION;
+  const res = await fetch(`${DATA_BASE}/${path}?v=${v}`, { cache: 'no-cache' });
   if (!res.ok) throw new Error(`${path}: ${res.status} ${res.statusText}`);
   return res.json();
 }

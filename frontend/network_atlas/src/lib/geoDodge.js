@@ -1,3 +1,5 @@
+// DISABLED — no longer imported anywhere (kept for reference/history only).
+//
 // Co-location dodge for the author point layer.
 //
 // ROOT CAUSE (see docs/SubProjects/author_atlas_v2_open_questions.md and the
@@ -28,9 +30,23 @@
 // higher zoom, while the dense core (large index, tightly packed) keeps
 // clustering a little longer. This must run BEFORE the Supercluster index
 // is built (i.e. in the data-prep step), not at render time.
+//
+// SUPERSEDED (2026-07-07): geographic offsets are fixed in DEGREES, so their
+// on-screen pixel size grows without bound as you zoom in — co-located
+// authors kept visually drifting further apart the more you zoomed, instead
+// of settling into a stable fixed layout. Replaced by a fixed-PIXEL
+// "spiderfy" fan-out applied at render time (see `colocationOffsets` in
+// App.jsx): authors keep their true, identical institution coordinate;
+// supercluster merges them into one cluster node below CLUSTER_MAX_ZOOM;
+// above it they fan out to phyllotaxis-packed pixel offsets that do NOT
+// change with zoom. `scripts/dodge-data.mjs` is now a no-op and this
+// function is no longer called from App.jsx.
 
 const GOLDEN_ANGLE = 2.39996323; // radians — avoids any two spiral steps aligning
-const BASE_DEG = 0.012;          // ~1.3 km of latitude per unit of sqrt(index)
+const BASE_DEG = 0.0003;         // ~33 m/unit — pack an institution tight enough that it
+                                 // stays ONE cluster until CLUSTER_MAX_ZOOM, then all its
+                                 // authors reveal together via the bypass (no sub-clusters).
+                                 // Top author on the true point, others dodged right in.
 
 // Round to 4dp (~11 m at the equator) to catch true float-identical
 // geocodes (same institution) without merging genuinely distinct nearby
