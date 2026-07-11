@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SharkPapers RAG</title>
+<title>SharkOracle</title>
 <style>
   :root {
     --bg:#0e1116; --panel:#161b22; --panel2:#1c232d; --line:#2a333f;
@@ -51,6 +51,10 @@
   .qbar button { padding:0 22px; font-size:15px; font-weight:650; background:var(--accent); color:#04222c;
                  border:none; border-radius:9px; cursor:pointer; }
   .qbar button:disabled { opacity:.5; cursor:default; }
+  .examples { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+  .ex { font-size:12.5px; color:var(--ink); background:var(--panel2); border:1px solid var(--line);
+        border-radius:16px; padding:5px 12px; cursor:pointer; transition:.15s; }
+  .ex:hover { border-color:var(--accent); color:var(--accent); }
   .meta { color:var(--dim); font-size:12px; margin-bottom:16px; }
   .answer { background:var(--panel); border:1px solid var(--line); border-radius:11px;
             padding:18px 20px; font-size:15px; line-height:1.65; margin-bottom:8px; }
@@ -72,7 +76,7 @@
 </head>
 <body>
 <header>
-  <h1>🦈 SharkPapers <span>RAG</span></h1>
+  <h1>🦈 Shark<span>Oracle</span></h1>
   <div class="status" id="status">connecting…<div class="bar"><i id="barfill"></i></div></div>
 </header>
 <div class="layout">
@@ -83,6 +87,7 @@
              value="What techniques are used to determine age and growth in sharks?">
       <button id="go">Ask</button>
     </div>
+    <div class="examples" id="examples"></div>
     <div class="meta" id="qmeta"></div>
     <div id="results"><div class="empty">Ask a question to search the corpus. Add filters on the left to narrow it.</div></div>
   </main>
@@ -209,6 +214,13 @@ function collectFilters(){
 }
 
 const STR = {'well-supported':'--green','limited':'--amber','unresolved':'--grey','':'--grey'};
+function citeLabel(s){
+  const first=(s.authors||'').split('&')[0].trim();
+  const surname=(first.split(',')[0].trim())||(s.authors||'')||'?';
+  const etal=(s.authors||'').includes('&')?' et al':'';
+  const yr=s.year!=null?String(s.year).replace(/\.0$/,''):'';
+  return `${surname}${etal}${yr?', '+yr:''}: ${s.title||''}`;
+}
 function linkifyCitations(text, srcById){
   return text.replace(/\[(\d+)\]/g, (m,id)=>{
     const t=(srcById[id]||'').replace(/"/g,'');
@@ -227,7 +239,7 @@ async function ask(){
         body:JSON.stringify(body)})).json(); }
   catch(e){ $('#results').innerHTML='<div class="empty">request failed</div>'; $('#go').disabled=false; return; }
 
-  const srcById={}; (r.retrieved||[]).forEach(s=>srcById[s.literature_id]=s.title);
+  const srcById={}; (r.retrieved||[]).forEach(s=>srcById[s.literature_id]=citeLabel(s));
   const cs=r.claim_strength||{}; const col=`var(${STR[cs.label]||'--grey'})`;
   let mline=`mode: ${r.mode}`;
   if(r.n_papers_matching_filter!=null) mline+=` · ${r.n_papers_matching_filter.toLocaleString()} papers match filters`;
@@ -259,7 +271,23 @@ async function ask(){
 $('#go').onclick=ask;
 $('#q').addEventListener('keydown',e=>{ if(e.key==='Enter') ask(); });
 
+const EXAMPLES = [
+  "What methods are used to determine age and growth in sharks?",
+  "How does bycatch in commercial fisheries affect elasmobranch populations?",
+  "How is environmental DNA (eDNA) used to detect and monitor sharks?",
+  "What do stable isotope analyses reveal about shark trophic ecology?",
+  "How are acoustic telemetry and satellite tags used to track shark movement?",
+  "What are the effects of climate change on the distribution of rays and skates?",
+];
+function renderExamples(){
+  $('#examples').innerHTML = EXAMPLES.map(q=>`<span class="ex">${q}</span>`).join('');
+  $('#examples').querySelectorAll('.ex').forEach(el=>el.onclick=()=>{
+    $('#q').value = el.textContent; ask();
+  });
+}
+
 (async function init(){
+  renderExamples();
   await loadStatus();
   try { const f=await (await fetch('/api/filters')).json(); renderFilters(f.families); }
   catch(e){ $('#filters').innerHTML='<div class="empty">filters unavailable</div>'; }

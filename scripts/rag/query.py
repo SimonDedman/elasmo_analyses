@@ -273,7 +273,10 @@ def generate_answer(question: str, hits: list[dict]) -> str:
     try:
         r = requests.post(
             f"{OLLAMA_HOST}/api/generate",
-            json={"model": OLLAMA_MODEL, "prompt": prompt, "stream": False},
+            json={"model": OLLAMA_MODEL, "prompt": prompt, "stream": False,
+                  # Deterministic decoding: same question + same retrieved
+                  # context -> identical answer (greedy, fixed seed).
+                  "options": {"temperature": 0, "seed": 7}},
             timeout=120,
         )
         r.raise_for_status()
