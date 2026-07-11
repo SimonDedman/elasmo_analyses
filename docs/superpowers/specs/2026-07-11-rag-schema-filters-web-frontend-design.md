@@ -229,8 +229,14 @@ merely in a past plot. Consequences documented in the UI and here:
 - Requesting a Southern/Western range will match nothing.
 
 The filter is wired so that a corrected/signed coordinate source (re-extraction) is a
-drop-in replacement for the column with no other changes. If the user prefers, the geo
-range filter can be withheld until coordinates are re-extracted with signs.
+drop-in replacement for the column with no other changes.
+
+**Decision (2026-07-11): include the geo range filter now, caveated.** Separately,
+**an upstream fix is required**: the coordinate extraction that populates
+`geo_study_latitude` / `geo_study_longitude` must be corrected to preserve the
+hemisphere sign (S negative latitude, W negative longitude). Tracked as a follow-up
+action outside this spec's scope; once fixed and the parquet re-merged, the geo range
+filter becomes correct with no code change (rebuild the sidecar only).
 
 ## Author-filter coverage caveat
 
