@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SharkPapers RAG</title>
+<style>
+  :root {
+    --bg:#0e1116; --panel:#161b22; --panel2:#1c232d; --line:#2a333f;
+    --ink:#e6edf3; --dim:#9aa7b4; --accent:#3fb6d3; --accent2:#2b7fa6;
+    --green:#2ea043; --amber:#d29922; --grey:#6e7681; --red:#da3633;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+         background:var(--bg); color:var(--ink); }
+  header { display:flex; align-items:center; gap:16px; padding:12px 20px;
+           background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+  header h1 { font-size:16px; margin:0; font-weight:650; letter-spacing:.2px; }
+  header h1 span { color:var(--accent); }
+  .status { margin-left:auto; font-size:12px; color:var(--dim); text-align:right; min-width:230px; }
+  .bar { height:5px; background:var(--panel2); border-radius:3px; overflow:hidden; margin-top:4px; }
+  .bar > i { display:block; height:100%; background:var(--accent); width:0; transition:width .6s; }
+  .layout { display:grid; grid-template-columns:320px 1fr; gap:0; height:calc(100vh - 54px); }
+  aside { background:var(--panel); border-right:1px solid var(--line); overflow-y:auto; padding:14px; }
+  main { overflow-y:auto; padding:22px 26px; }
+  .fam { border:1px solid var(--line); border-radius:8px; margin-bottom:8px; background:var(--panel2); }
+  .fam > summary { cursor:pointer; padding:9px 11px; font-weight:600; font-size:13px;
+                   list-style:none; display:flex; align-items:center; gap:8px; }
+  .fam > summary::-webkit-details-marker { display:none; }
+  .fam > summary .chev { color:var(--dim); transition:transform .2s; }
+  .fam[open] > summary .chev { transform:rotate(90deg); }
+  .fam .badge { margin-left:auto; font-size:11px; color:var(--bg); background:var(--accent);
+                border-radius:10px; padding:1px 7px; font-weight:700; display:none; }
+  .fam .body { padding:4px 11px 11px; }
+  .search { width:100%; padding:6px 8px; margin-bottom:6px; background:var(--bg);
+            border:1px solid var(--line); border-radius:6px; color:var(--ink); }
+  .opts { max-height:220px; overflow-y:auto; }
+  label.opt { display:flex; align-items:center; gap:7px; padding:2px 0; font-size:13px; cursor:pointer; }
+  label.opt .cnt { margin-left:auto; color:var(--dim); font-size:11px; }
+  .range { display:flex; gap:8px; align-items:center; }
+  .range input { width:100%; padding:6px; background:var(--bg); border:1px solid var(--line);
+                 border-radius:6px; color:var(--ink); }
+  .note { font-size:11px; color:var(--amber); margin:4px 0 2px; }
+  .chips { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
+  .chip { background:var(--accent2); color:#fff; border-radius:12px; padding:2px 9px; font-size:12px;
+          display:flex; gap:6px; align-items:center; }
+  .chip b { cursor:pointer; }
+  .qbar { display:flex; gap:10px; margin-bottom:8px; }
+  .qbar input { flex:1; padding:12px 14px; font-size:15px; background:var(--panel); color:var(--ink);
+                border:1px solid var(--line); border-radius:9px; }
+  .qbar button { padding:0 22px; font-size:15px; font-weight:650; background:var(--accent); color:#04222c;
+                 border:none; border-radius:9px; cursor:pointer; }
+  .qbar button:disabled { opacity:.5; cursor:default; }
+  .meta { color:var(--dim); font-size:12px; margin-bottom:16px; }
+  .answer { background:var(--panel); border:1px solid var(--line); border-radius:11px;
+            padding:18px 20px; font-size:15px; line-height:1.65; margin-bottom:8px; }
+  .answer a.cite { color:var(--accent); text-decoration:none; font-weight:600; white-space:nowrap; }
+  .strength { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:650;
+              padding:5px 12px; border-radius:20px; margin-bottom:18px; }
+  .dot { width:9px; height:9px; border-radius:50%; }
+  .src { border:1px solid var(--line); border-left:3px solid var(--accent); border-radius:8px;
+         padding:11px 14px; margin-bottom:9px; background:var(--panel); }
+  .src h4 { margin:0 0 3px; font-size:14px; }
+  .src .sm { color:var(--dim); font-size:12px; }
+  .src .prev { margin-top:6px; font-size:12.5px; color:#c4cfda; }
+  .src .scores { float:right; font-size:11px; color:var(--dim); }
+  .empty { color:var(--dim); padding:40px; text-align:center; }
+  .spin { display:inline-block; width:15px; height:15px; border:2px solid var(--line);
+          border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px;}
+  @keyframes sp { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+<header>
+  <h1>🦈 SharkPapers <span>RAG</span></h1>
+  <div class="status" id="status">connecting…<div class="bar"><i id="barfill"></i></div></div>
+</header>
+<div class="layout">
+  <aside id="filters"><div class="empty">loading filters…</div></aside>
+  <main>
+    <div class="qbar">
+      <input id="q" placeholder="Ask a question about elasmobranch science…"
+             value="What techniques are used to determine age and growth in sharks?">
+      <button id="go">Ask</button>
+    </div>
+    <div class="meta" id="qmeta"></div>
+    <div id="results"><div class="empty">Ask a question to search the corpus. Add filters on the left to narrow it.</div></div>
+  </main>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const state = { families:[], sel:{}, authors:{} };  // sel[key] -> Set or {min,max}; authors[id]=name
+
+async function loadStatus() {
+  try {
+    const s = await (await fetch('/api/status')).json();
+    const b = s.build || {};
+    const tgt = b.target_papers || s.index_papers;
+    const pct = tgt ? Math.round(100 * s.index_papers / tgt) : 0;
+    $('#barfill').style.width = pct + '%';
+    if (b.complete) $('#status').firstChild.textContent =
+      `${s.index_papers.toLocaleString()} papers indexed`;
+    else $('#status').firstChild.textContent =
+      `indexing ${s.index_papers.toLocaleString()} / ${tgt.toLocaleString()} papers`;
+  } catch(e) { $('#status').firstChild.textContent = 'server offline'; }
+}
+
+function famBadge(key){ const b=document.getElementById('badge-'+key); if(!b)return;
+  const v=state.sel[key]; let n=0;
+  if(v instanceof Set) n=v.size; else if(v && (v.min!=null||v.max!=null)) n=1;
+  else if(key==='author') n=Object.keys(state.authors).length;
+  b.style.display=n?'inline-block':'none'; b.textContent=n; }
+
+function renderFilters(fams){
+  state.families = fams;
+  const host = $('#filters'); host.innerHTML='';
+  fams.forEach((f,i)=>{
+    const big = f.widget==='search-multiselect' || (f.options && f.options.length>14);
+    const d=document.createElement('details'); d.className='fam'; d.open = i<3 && !big;
+    const opts = f.options||[];
+    d.innerHTML = `<summary><span class="chev">▸</span>${f.label}
+        <span class="badge" id="badge-${f.key}"></span></summary><div class="body"></div>`;
+    const body=d.querySelector('.body');
+    if(f.note) body.insertAdjacentHTML('beforeend',`<div class="note">${f.note}</div>`);
+
+    if(f.kind==='author'){
+      body.insertAdjacentHTML('beforeend',
+        `<input class="search" id="au-in" placeholder="type an author name…">
+         <div id="au-sug" class="opts"></div><div class="chips" id="au-chips"></div>`);
+    } else if(f.kind==='range'){
+      const mn=f.min!=null?Math.floor(f.min):'', mx=f.max!=null?Math.ceil(f.max):'';
+      body.insertAdjacentHTML('beforeend',
+        `<div class="range"><input type="number" placeholder="min ${mn}" data-k="${f.key}" data-b="min">
+         <span>–</span><input type="number" placeholder="max ${mx}" data-k="${f.key}" data-b="max"></div>`);
+    } else {
+      if(big) body.insertAdjacentHTML('beforeend',
+        `<input class="search" placeholder="filter ${opts.length} options…" data-f="${f.key}">`);
+      const wrap=document.createElement('div'); wrap.className='opts'; wrap.id='opts-'+f.key;
+      opts.forEach(o=>{
+        const l=document.createElement('label'); l.className='opt';
+        l.dataset.lab=(o.label||'').toLowerCase();
+        l.innerHTML=`<input type="checkbox" value="${o.value}"><span>${o.label}</span><span class="cnt">${o.count??''}</span>`;
+        wrap.appendChild(l);
+      });
+      body.appendChild(wrap);
+    }
+    host.appendChild(d);
+  });
+  wireFilters();
+}
+
+function wireFilters(){
+  $('#filters').addEventListener('change', e=>{
+    const cb=e.target;
+    if(cb.matches('.opts input[type=checkbox]')){
+      const key=cb.closest('.fam').querySelector('.badge').id.replace('badge-','');
+      state.sel[key]=state.sel[key]||new Set();
+      cb.checked?state.sel[key].add(cb.value):state.sel[key].delete(cb.value);
+      if(!state.sel[key].size) delete state.sel[key];
+      famBadge(key);
+    }
+    if(cb.matches('input[type=number]')){
+      const k=cb.dataset.k; state.sel[k]=state.sel[k]||{min:null,max:null};
+      state.sel[k][cb.dataset.b]= cb.value===''?null:parseFloat(cb.value);
+      if(state.sel[k].min==null&&state.sel[k].max==null) delete state.sel[k];
+      famBadge(k);
+    }
+  });
+  $('#filters').addEventListener('input', e=>{
+    if(e.target.matches('.search[data-f]')){
+      const f=e.target.dataset.f, n=e.target.value.toLowerCase();
+      document.querySelectorAll('#opts-'+f+' .opt').forEach(l=>
+        l.style.display=l.dataset.lab.includes(n)?'':'none');
+    }
+    if(e.target.id==='au-in') authorSuggest(e.target.value);
+  });
+}
+
+let auTimer;
+function authorSuggest(qv){
+  clearTimeout(auTimer);
+  if(qv.trim().length<2){ $('#au-sug').innerHTML=''; return; }
+  auTimer=setTimeout(async()=>{
+    const r=await (await fetch('/api/authors?q='+encodeURIComponent(qv))).json();
+    $('#au-sug').innerHTML = r.suggestions.map(s=>
+      `<label class="opt" data-id="${s.id}" data-nm="${s.display_name.replace(/"/g,'')}">
+        <span>${s.display_name}</span><span class="cnt">${s.paper_count}</span></label>`).join('');
+  },180);
+}
+document.addEventListener('click', e=>{
+  const l=e.target.closest('#au-sug .opt');
+  if(l){ state.authors[l.dataset.id]=l.dataset.nm; $('#au-in').value=''; $('#au-sug').innerHTML='';
+         renderAuChips(); famBadge('author'); }
+  const rm=e.target.closest('#au-chips .chip b');
+  if(rm){ delete state.authors[rm.dataset.id]; renderAuChips(); famBadge('author'); }
+});
+function renderAuChips(){ const c=$('#au-chips'); if(!c)return;
+  c.innerHTML=Object.entries(state.authors).map(([id,nm])=>
+    `<span class="chip">${nm}<b data-id="${id}">✕</b></span>`).join(''); }
+
+function collectFilters(){
+  const out={};
+  for(const [k,v] of Object.entries(state.sel)){
+    if(v instanceof Set) out[k]=[...v];
+    else out[k]=v;
+  }
+  const au=Object.keys(state.authors); if(au.length) out.author=au;
+  return out;
+}
+
+const STR = {'well-supported':'--green','limited':'--amber','unresolved':'--grey','':'--grey'};
+function linkifyCitations(text, srcById){
+  return text.replace(/\[(\d+)\]/g, (m,id)=>{
+    const t=(srcById[id]||'').replace(/"/g,'');
+    return `<a class="cite" href="#src-${id}" title="${t}">[${id}]</a>`;
+  });
+}
+
+async function ask(){
+  const question=$('#q').value.trim(); if(!question) return;
+  $('#go').disabled=true;
+  $('#results').innerHTML='<div class="empty"><span class="spin"></span> searching & generating…</div>';
+  $('#qmeta').textContent='';
+  const body={question, filters:collectFilters(), top_k:8, retrieve_n:30, generate:true};
+  let r;
+  try { r=await (await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(body)})).json(); }
+  catch(e){ $('#results').innerHTML='<div class="empty">request failed</div>'; $('#go').disabled=false; return; }
+
+  const srcById={}; (r.retrieved||[]).forEach(s=>srcById[s.literature_id]=s.title);
+  const cs=r.claim_strength||{}; const col=`var(${STR[cs.label]||'--grey'})`;
+  let mline=`mode: ${r.mode}`;
+  if(r.n_papers_matching_filter!=null) mline+=` · ${r.n_papers_matching_filter.toLocaleString()} papers match filters`;
+  $('#qmeta').textContent=mline;
+
+  let html='';
+  if(r.mode==='no-match'){
+    html=`<div class="empty">No indexed papers match the selected filters yet.<br>
+          (The index is still growing — try again shortly, or loosen filters.)</div>`;
+  } else {
+    if(r.answer) html+=`<div class="answer">${linkifyCitations(r.answer,srcById)}</div>`;
+    html+=`<div class="strength" style="background:${col}22;color:${col};border:1px solid ${col}55">
+             <span class="dot" style="background:${col}"></span>
+             ${(cs.label||'').toUpperCase()} — ${cs.reason||''}</div>`;
+    const seen=new Set();
+    const uniqSrc=(r.retrieved||[]).filter(s=>{ if(seen.has(s.literature_id))return false; seen.add(s.literature_id); return true; });
+    html+=`<div class="meta">${uniqSrc.length} source papers</div><div>`+ uniqSrc.map(s=>`
+      <div class="src" id="src-${s.literature_id}">
+        <span class="scores">cos ${s.cosine_score}${s.ce_score!=null?' · rel '+s.ce_score:''}</span>
+        <h4>[${s.literature_id}] ${s.title||''}</h4>
+        <div class="sm">${(s.authors||'').split('&')[0]} · ${s.year||''} · ${s.journal||''}</div>
+        <div class="prev">${s.text_preview||''}</div>
+      </div>`).join('') + '</div>';
+  }
+  $('#results').innerHTML=html;
+  $('#go').disabled=false;
+}
+
+$('#go').onclick=ask;
+$('#q').addEventListener('keydown',e=>{ if(e.key==='Enter') ask(); });
+
+(async function init(){
+  await loadStatus();
+  try { const f=await (await fetch('/api/filters')).json(); renderFilters(f.families); }
+  catch(e){ $('#filters').innerHTML='<div class="empty">filters unavailable</div>'; }
+  setInterval(loadStatus, 20000);
+})();
+</script>
+</body>
+</html>
