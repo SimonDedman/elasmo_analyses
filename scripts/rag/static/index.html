@@ -222,9 +222,16 @@ function citeLabel(s){
   return `${surname}${etal}${yr?', '+yr:''}: ${s.title||''}`;
 }
 function linkifyCitations(text, srcById){
-  return text.replace(/\[(\d+)\]/g, (m,id)=>{
-    const t=(srcById[id]||'').replace(/"/g,'');
-    return `<a class="cite" href="#src-${id}" title="${t}">[${id}]</a>`;
+  // Handles single [123] and grouped [1, 2, 3] citation blocks — each id
+  // becomes its own blue, hoverable link; brackets/commas stay plain.
+  return text.replace(/\[([\d\s,]+)\]/g, (m, inner)=>{
+    const ids = inner.split(',').map(s=>s.trim()).filter(s=>/^\d+$/.test(s));
+    if(!ids.length) return m;
+    const links = ids.map(id=>{
+      const t=(srcById[id]||('paper '+id)).replace(/"/g,'');
+      return `<a class="cite" href="#src-${id}" title="${t}">${id}</a>`;
+    });
+    return '[' + links.join(', ') + ']';
   });
 }
 
