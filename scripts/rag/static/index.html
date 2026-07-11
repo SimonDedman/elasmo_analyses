@@ -267,7 +267,7 @@ async function ask(){
       <div class="src" id="src-${s.literature_id}">
         <span class="scores">cos ${s.cosine_score}${s.ce_score!=null?' · rel '+s.ce_score:''}</span>
         <h4>[${s.literature_id}] ${s.title||''}</h4>
-        <div class="sm">${(s.authors||'').split('&')[0]} · ${s.year||''} · ${s.journal||''}</div>
+        <div class="sm">${(s.authors||'').replace(/\s*&\s*/g,', ')} · ${s.year||''} · ${s.journal||''}</div>
         <div class="prev">${s.text_preview||''}</div>
       </div>`).join('') + '</div>';
   }
