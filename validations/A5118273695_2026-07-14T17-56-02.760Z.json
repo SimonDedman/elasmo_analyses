@@ -1,0 +1,204 @@
+{
+  "author_corrections": {
+    "gender": {
+      "corrected": "M",
+      "original": "male"
+    },
+    "institution": {
+      "corrected": "Eckerd College",
+      "original": "University of Miami"
+    },
+    "origin_country": {
+      "corrected": "US",
+      "original": "IE"
+    }
+  },
+  "author_name": "John F. Hlavin",
+  "openalex_id": "A5118273695",
+  "page_version": "2026-04-18",
+  "papers": {
+    "34660": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "a_permanova"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "b_caribbean"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_movement"
+        ],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "d_taxonomy",
+          "d_husbandry"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": 30,
+        "depth_min_m": 3,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_reef"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [
+          "gear_survey"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [
+            "drum line"
+          ],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_trophic",
+          "imp_behaviour_change"
+        ],
+        "changes_count": 3,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "imp_is_bycatch"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_atlantic_ocean"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "pr_depredation"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [
+          "sb_bahamas",
+          "sb_persian_gulf"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    }
+  },
+  "papers_reviewed": 1,
+  "papers_total": 0,
+  "timestamp": "2026-07-14T17:56:02.760Z"
+}
