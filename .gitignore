@@ -67,6 +67,10 @@ outputs/abstracts_technique_counts.csv
 # regeneratable): fable_extract.py's on-disk response cache, generated
 # figures, parquet extractions, the dashboard, and the A/B viability memo.
 outputs/validation/.fable_cache/
+outputs/validation/.fable_corpus_cache/
+outputs/validation/.fable_texts/
+outputs/validation/fable_corpus_worklist.json
+outputs/validation/fable_token_log.csv
 outputs/validation/figures/
 outputs/validation/*.parquet
 outputs/validation/dashboard.html
