@@ -470,6 +470,9 @@ p_regional <- ggplot(data = world_data) +
     force = 2,
     lineheight = 0.8
   ) +
+  # Crop the empty Southern Ocean / Antarctica and the polar-ocean margins so
+  # the populated landmasses fill the panel; expand = FALSE trims panel padding.
+  coord_sf(ylim = c(-58, 85), expand = FALSE) +
   labs(
     title = "Global Distribution of Shark Research Papers",
     subtitle = paste0("Global North: ", region_summary$papers[region_summary$region == "Global North"],
@@ -478,11 +481,19 @@ p_regional <- ggplot(data = world_data) +
                      " papers (", region_summary$pct[region_summary$region == "Global South"], "%) | Grey = no papers"),
     caption = "Source: shark-references.com database (n = 6,183 papers)"
   ) +
+  # Single-row legend along the bottom, pulled tight to the plot.
+  guides(fill = guide_legend(nrow = 1, label.position = "right")) +
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 16, face = "bold"),
-    plot.subtitle = element_text(size = 12),
-    legend.position = "bottom"
+    plot.title    = element_text(size = 16, face = "bold", margin = margin(b = 1)),
+    plot.subtitle = element_text(size = 12, margin = margin(t = 1, b = 2)),
+    plot.caption  = element_text(size = 9, colour = "grey40", margin = margin(t = 2)),
+    axis.title    = element_blank(),
+    legend.position    = "bottom",
+    legend.margin      = margin(t = 0, b = 0),
+    legend.box.spacing = unit(0.1, "cm"),
+    legend.key.height  = unit(0.35, "cm"),
+    plot.margin        = margin(4, 6, 2, 6)
   )
 
 ggsave("outputs/figures/regional_map_papers_by_country.png", p_regional, width = 16, height = 10, dpi = 150)

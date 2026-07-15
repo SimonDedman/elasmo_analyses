@@ -1,0 +1,11 @@
+column,change,detail,f1_before,f1_after,result
+imp_behaviour_change,add_terms,"behavioural shift,behavioral shift,altered behavio",0.105,0.19,ACCEPT
+imp_economic,add_terms,"revenue,price per kg,market trend,economic profit,",0.111,0.381,ACCEPT
+imp_trophic,add_terms,"trophic cascade,cascade effect,ontogenetic dietary",0.143,0.5,ACCEPT
+eco_pupping,add_terms,"parturition,parturition season,pupping site,spawni",0.154,0.452,ACCEPT
+gear_survey,add_terms,"BRUV,baited remote underwater video,aerial survey,",0.163,0.516,ACCEPT
+imp_post_release,add_terms,"post-release survival,post-release survivorship,po",0.167,0.143,reject
+imp_size_structure,add_terms,"length-frequency,size class,catch size distributio",0.174,0.414,ACCEPT
+gear_mit_circle_hook,add_terms,"circular hook,circle hooks,Mustad circle,non-offse",0.2,0.8,ACCEPT
+imp_injury,add_terms,"abrasion,lesion,laceration,amputation,bite mark,ra",0.2,0.417,ACCEPT
+gear_hook_line,add_terms,"dropline,angling,baited hook,hand line,rod and lin",0.211,0.52,ACCEPT

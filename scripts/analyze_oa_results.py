@@ -12,7 +12,11 @@ from datetime import datetime
 PROJECT_DIR = Path(__file__).parent.parent
 OUTPUT_DIR = PROJECT_DIR / "outputs"
 RESULTS_FILE = OUTPUT_DIR / "unpaywall_oa_by_doi.csv"
-SHARK_REF_CSV = OUTPUT_DIR / "shark_references_bulk" / "shark_references_complete_2025_to_1950_20251021.csv"
+# Resolve the latest master bulk CSV rather than a fixed old snapshot (the
+# Oct-2021 file has since been superseded/removed).
+_MASTER_GLOB = sorted((OUTPUT_DIR / "shark_references_bulk").glob("shark_references_complete_*.csv"))
+SHARK_REF_CSV = _MASTER_GLOB[-1] if _MASTER_GLOB else (
+    OUTPUT_DIR / "shark_references_bulk" / "shark_references_complete_2025_to_1950_20251021.csv")
 
 
 def analyze_oa_results():

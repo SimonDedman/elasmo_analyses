@@ -154,6 +154,13 @@ if (file.exists(conf_gender_path)) {
                size = conf_point_size[["SI2026"]], stroke = 1,
                show.legend = c(shape = TRUE, colour = FALSE)) +
     scale_shape_manual(values = conf_shapes, name = "2026 conference") +
+    # The on-plot markers area-match via conf_point_size (diamond up-sized to
+    # match the triangle). The shape legend ignores those per-geom sizes and
+    # drew both keys at one size, so the pch-17 triangle read larger than the
+    # pch-18 diamond. Re-apply the same area-matched sizes to the legend keys
+    # (breaks are alphabetical: AES2026 then SI2026) so the two glyphs match.
+    guides(shape = guide_legend(override.aes = list(
+      size = c(conf_point_size[["AES2026"]], conf_point_size[["SI2026"]])))) +
     ggrepel::geom_text_repel(
       data = conf_female_labels,
       aes(x = year_plot, y = pct, label = label),
