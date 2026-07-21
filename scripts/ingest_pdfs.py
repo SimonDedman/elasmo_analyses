@@ -56,7 +56,7 @@ except Exception as _e:
     _DEDUP_OK = False
     _DEDUP_IMPORT_ERR = str(_e)
 OCR_MIN_ALPHA = 50  # page 1 alphabetic-char threshold below which we OCR
-OCR_LANGS = "eng"  # extend with +fra+deu+spa+por+ita once those tesseract packs are installed
+OCR_LANGS = "eng+fra+deu+spa+por+ita"  # Latin-script European packs installed 2026-07-21; ingest has no per-file lang detection, so these cover the bulk of the corpus. CJK/Cyrillic omitted here to avoid slowing every OCR call.
 
 
 # ---------------------------------------------------------------------------
@@ -913,8 +913,30 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
                         best = c
                 if best and best_score >= 2:
                     return best, f"Author+year+title from filename ({best_score} words matched)"
-            # If only 2-3 candidates and no title words, still ambiguous
-            return None, f"AMBIGUOUS: {len(candidates)} candidates for {finfo['author']} {finfo['year']}"
+            # Filename gave no usable title words (common for journal-helper
+            # names like Author-Title-Year): disambiguate the candidates using
+            # the PDF's own title text rather than giving up.
+            text = extract_text_for_matching(text_path)
+            pdf_words = _title_words(text[:2000])
+            if len(pdf_words) >= 3:
+                best = None
+                best_score = 0.0
+                best_overlap = 0
+                for c in candidates:
+                    rtw = _title_words(c["title"])
+                    if len(rtw) < 2:
+                        continue
+                    overlap = len(pdf_words & rtw)
+                    if overlap < 4:
+                        continue
+                    score = overlap / len(rtw)
+                    if score > best_score or (score == best_score and overlap > best_overlap):
+                        best_score, best_overlap, best = score, overlap, c
+                if best and best_score >= 0.6:
+                    return best, (f"Author+year, disambiguated by PDF title "
+                                  f"({best_overlap} words, {best_score:.0%} of title)")
+            # Could not disambiguate against the candidate set — fall through to
+            # the broader title-from-text strategy below instead of giving up.
 
     # Strategy 4: if we have a year and title words from filename, try broader match
     if finfo["year"] and finfo["title_words"] and len(finfo["title_words"]) >= 3:
