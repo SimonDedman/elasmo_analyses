@@ -1,581 +1,239 @@
-# OCR Processing Guide
+# PDF Text Extraction & OCR Pipeline
 
-**Script:** `scripts/ocr_missing_pdfs.py`
-**Purpose:** Automatically OCR PDFs lacking searchable text and replace originals
+**Last updated:** 2026-07-21
 
----
+This guide covers how PDFs in the SharkPapers library are made
+text-searchable so the schema-extraction pipeline can read them. Every
+downstream step (the 123-column extraction in
+`scripts/extract_schema_columns.py`) reads text via `pdftotext` only —
+there is no title/abstract fallback — so a scan with no text layer is
+invisible to the analysis. OCR is what brings image-only and historical
+scans into the analysable corpus.
 
-## Quick Start
-
-### 1. Test Run (Recommended First Step)
-
-```bash
-cd "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
-
-# Test on 10 random PDFs
-./venv/bin/python scripts/ocr_missing_pdfs.py --test
-```
-
-### 2. Dry Run (See What Will Happen)
-
-```bash
-# Analyze all PDFs without processing
-./venv/bin/python scripts/ocr_missing_pdfs.py --dry-run
-```
-
-**This will show:**
-- How many PDFs need OCR
-- How many already have text
-- How many were already processed
-- Estimated time to complete
-
-### 3. Full Run
-
-```bash
-# Process all PDFs (uses CPU count - 1 cores)
-./venv/bin/python scripts/ocr_missing_pdfs.py
-
-# Or specify number of parallel jobs
-./venv/bin/python scripts/ocr_missing_pdfs.py --jobs 4
-```
+> The legacy `ocr_missing_pdfs.py` workflow (backup-and-replace, single
+> English model) is superseded and archived at
+> `docs/archive/ocr_processing_guide_LEGACY_ocr_missing_pdfs_2025-10-24.md`.
+> Use the pipeline below.
 
 ---
 
-## Features
+## Tools
 
-### ✅ Smart Processing
+| Tool | Role |
+|------|------|
+| `pdftotext` (Poppler) | Extract text; also the *test* for whether a PDF is already searchable. |
+| `ocrmypdf` | Add a searchable text layer to image-only PDFs. Only *adds* a layer — page images are preserved. |
+| Tesseract | The OCR engine `ocrmypdf` drives, with per-language models. |
+| Ghostscript | PDF rasterising/repair (used by `ocrmypdf` and by `ocr_gs_repair.py`). |
 
-- **Checks for text first:** Only OCRs PDFs that lack searchable text
-- **Skips already done:** Maintains log of processed files
-- **Safe replacement:** Backs up originals before replacing
-- **Parallel processing:** Uses multiple CPU cores for speed
-- **Resumable:** Can stop and restart without reprocessing
-
-### 📝 Logging
-
-**Log file:** `logs/ocr_processing_log.csv`
-
-**Columns:**
-- `file_path` - Full path to PDF
-- `filename` - PDF filename
-- `status` - Processing status
-- `backup_path` - Location of backup (if OCR'd)
-- `error` - Error message (if failed)
-- `timestamp` - When processed
-
-**Status values:**
-- `success` - OCR'd and replaced original
-- `skipped_has_text` - Already has searchable text
-- `skipped_already_done` - Previously processed
-- `failed` - OCR failed (see error column)
-
-### 💾 Backups
-
-**All originals backed up to:**
-```
-backups/pre_ocr/
-```
-
-**Restore a backup:**
-```bash
-# If you need to restore an original
-cp "backups/pre_ocr/filename.pdf" "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/YYYY/filename.pdf"
-```
+**Installed Tesseract language packs** (as of 2026-07-21):
+`eng deu fra spa por ita nld rus jpn chi_sim chi_tra kor Fraktur`
+(+ `osd` orientation/script detection). `Fraktur` is the blackletter
+model (`tesseract-ocr-script-frak`) for old German type. To add more:
+`sudo apt install tesseract-ocr-<code>` then confirm with
+`tesseract --list-langs`.
 
 ---
 
-## Command-Line Options
+## The pipeline: screen → OCR → verify
+
+### 1. Screen — `scripts/find_non_extractable_pdfs.py`
+
+Scans every PDF in the library, runs `pdftotext -l 1` on page 1, and
+flags any with fewer than **50 alphabetic characters** (`MIN_ALPHA`) as
+non-extractable. It also runs lightweight language detection (stopword +
+accent/script matching) so OCR can pick the right model.
+
+- **Output:** `outputs/non_extractable_pdfs.xlsx` — columns
+  `year, filename, title_language, open_file`.
+- Page-1 test is a fast *screen* for candidates, not a verdict — see
+  Verify below.
 
 ```bash
-# Show help
-./venv/bin/python scripts/ocr_missing_pdfs.py --help
-
-# Test mode (10 PDFs only)
-./venv/bin/python scripts/ocr_missing_pdfs.py --test
-
-# Dry run (no changes)
-./venv/bin/python scripts/ocr_missing_pdfs.py --dry-run
-
-# Custom number of parallel jobs
-./venv/bin/python scripts/ocr_missing_pdfs.py --jobs 8
-
-# Combine options
-./venv/bin/python scripts/ocr_missing_pdfs.py --test --dry-run
+./venv/bin/python scripts/find_non_extractable_pdfs.py
 ```
 
----
+### 2. OCR — `scripts/ocr_library.py`
 
-## Usage Workflow
+Reads the report and runs `ocrmypdf` on each flagged file. Language is
+chosen per file from the `title_language` column via `LANG_MAP`,
+falling back to `eng` when the required pack is not installed. Output
+goes to a tempfile and is **atomically renamed** over the original, so a
+crash never leaves a half-written PDF.
 
-### Day 1: Initial OCR Run
+- Default mode: `--skip-text` (OCR only image-only pages), falling back
+  to `--force-ocr` if that bails on mixed content.
+- The page-1 re-check skips any file that already gained text from a
+  partial previous run.
+- **Logging is incremental** (per file, flushed), so a kill mid-run
+  leaves an accurate record of what completed — essential for long runs.
+
+Options:
+
+| Flag | Effect |
+|------|--------|
+| `--dry-run` | List targets, OCR nothing. |
+| `--limit N` | Process only the first N (testing). |
+| `--languages A,B` | Only files whose `title_language` is in the list. |
+| `--redo` | Re-OCR pages that already have text (`--redo-ocr`), to correct wrong-language OCR. Bypasses the has-text skip. |
+| `--report PATH` | Use a different report XLSX — for resuming a partial run from a filtered list. |
+| `--timeout N` | Per-file `ocrmypdf` timeout in seconds (default 600). Raise for multi-hundred-page volumes. |
+
+**Per-report logs:** with `--report`, the log is named
+`logs/ocr_library_log_<report_stem>.txt`, so concurrent or sequential
+runs on different reports don't clobber each other. The default run uses
+`logs/ocr_library_log.txt`.
 
 ```bash
-cd "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
-
-# 1. Dry run to see what needs OCR
-./venv/bin/python scripts/ocr_missing_pdfs.py --dry-run
-
-# Output example:
-# Total PDFs: 13,357
-# Already processed: 0
-# Has text (skip): 13,090
-# Needs OCR: 267
-# Estimated time: 1.7 hours (8 parallel jobs)
-
-# 2. Run the OCR
-./venv/bin/python scripts/ocr_missing_pdfs.py
-
-# 3. Check results
-cat logs/ocr_processing_log.csv | tail -20
+./venv/bin/python scripts/ocr_library.py --dry-run          # list targets
+./venv/bin/python scripts/ocr_library.py --limit 10         # test on 10
+./venv/bin/python scripts/ocr_library.py                    # full run
 ```
 
-### Day 2: After Sci-Hub Downloads
+**Fraktur routing (old German).** Many pre-~1940 German scientific texts
+are set in Fraktur (blackletter), which the roman-type `deu` model reads
+poorly. When a file is German and its year (from the path's year folder)
+predates 1940, `ocr_one` OCRs it with combined **`deu+Fraktur`** (`deu`
+kept first). It is combined rather than Fraktur-only because the era is
+mixed — by ~1900 many journals had switched to roman (Antiqua) type — and
+A/B tests showed `deu+Fraktur` never does worse than `deu` on roman
+pages while adding the blackletter option. Note Fraktur cannot rescue
+degraded/low-quality scans; it only helps genuine blackletter.
+
+### 3. Verify — whole-document `pdftotext`
+
+Judge OCR success with a **whole-document** `pdftotext` call, *not* the
+page-1 screen. Historical taxonomy scans (Linné 1758, Gmelin 1789, etc.)
+routinely have an image-only title page followed by hundreds of good
+OCR'd pages: a page-1 test returns ~0 chars and falsely reads as
+failure. Threshold whole-doc alpha at **≥200** for a real verdict.
 
 ```bash
-# New PDFs from Sci-Hub download: ~5,000-7,000
-
-# Run OCR again (only new PDFs will be processed)
-./venv/bin/python scripts/ocr_missing_pdfs.py
-
-# The script will:
-# - Check all PDFs in collection
-# - Skip already processed (from log)
-# - Skip PDFs with text
-# - OCR only new PDFs lacking text
-```
-
-**Automatic skipping:**
-- PDFs already in log with `status=success` → skipped
-- PDFs with searchable text → skipped
-- Only new PDFs lacking text → processed
-
-### Day 3+: Ongoing Maintenance
-
-```bash
-# Just run the script periodically
-./venv/bin/python scripts/ocr_missing_pdfs.py
-
-# Could even add to cron for daily runs:
-# 0 3 * * * cd "/path/to/project" && ./venv/bin/python scripts/ocr_missing_pdfs.py >> logs/ocr_cron.log 2>&1
+# whole-doc, not -l 1
+pdftotext "path/to/file.pdf" - | tr -cd '[:alpha:]' | wc -c
 ```
 
 ---
 
-## Expected Output
+## Language handling
 
-### Dry Run Output
+Two independent knobs, because the batch and inline paths differ:
 
-```
-================================================================================
-PDF OCR PROCESSOR
-================================================================================
+- **Batch (`ocr_library.py`)** does per-file language selection from the
+  detector's `title_language`, mapped through `LANG_MAP`. Multi-model
+  codes are supported (e.g. CJK maps to `jpn+chi_sim+chi_tra` because
+  the detector cannot disambiguate Japanese from Chinese); `ocr_one`
+  filters each `+`-joined code against installed packs.
+- **Inline ingest (`ingest_pdfs.py`)** has *no* per-file detection — it
+  applies one fixed string, `OCR_LANGS = "eng+fra+deu+spa+por+ita"`, to
+  every OCR call. CJK/Cyrillic are deliberately left out here to avoid
+  slowing every ingest and risking misreads on English scans; those are
+  handled by the batch path.
 
-🔍 Checking dependencies...
-  ✅ pdftotext found
-  ✅ ocrmypdf found
+### Resolving language from the filename — `resolve_pdf_language.py`
 
-📋 Loading existing OCR log...
-  ✅ Found 267 previously processed PDFs
+The screen's `title_language` is detected from page-1 OCR text, which for
+scanned/historical volumes is blank or garbage — so languages are
+frequently wrong (a German volume mislabelled French will then be OCR'd
+with the wrong model). `scripts/resolve_pdf_language.py` re-derives a
+better `title_language` from cleaner signals, in priority order:
 
-  Previous processing summary:
-    success                  :    250
-    failed                   :     15
-    skipped_has_text         :      2
+1. the **filename title fragment** (always present, human-typed —
+   `"…Systematischen Verzeichniss der Versteinerungen…"` reads as German),
+2. the **corpus title + journal name**, when the file matches a
+   `viz_data.csv` entry by first-author surname + year ±1 + title-word
+   overlap.
 
-🔍 Finding all PDFs in /media/simon/data/.../SharkPapers...
-  ✅ Found 13,357 PDFs
+Both beat page-1 OCR text. It also records the filename year (used for
+Fraktur routing). Note the corpus has **no** language field and most old
+no-DOI volumes aren't in it (~14% match), so the filename fragment is the
+primary signal. In practice it corrects ~5–25% of labels (all observed
+errors were German wrongly tagged French).
 
-⚠️  DRY RUN MODE - No files will be modified
-
-⚙️  Configuration:
-  Parallel jobs: 8
-  Min text length: 100 characters
-  Test pages: 2
-  Timeout per PDF: 300 seconds
-  Backup directory: backups/pre_ocr
-
-📊 Analysis (dry run)...
-Analyzing: 100%|██████████| 13357/13357 [02:15<00:00, 98.4it/s]
-
-📊 Dry run results:
-  Total PDFs: 13,357
-  Already processed: 250
-  Has text (skip): 13,090
-  Needs OCR: 17
-
-  Estimated time: 0.1 hours (8 parallel jobs)
-  Estimated disk usage (temp): 164.2 MB
-
-  Run without --dry-run to process files
+```bash
+# produce a language-corrected report, then OCR from it
+./venv/bin/python scripts/resolve_pdf_language.py \
+    --report outputs/non_extractable_pdfs.xlsx \
+    --out    outputs/non_extractable_resolved.xlsx
+./venv/bin/python scripts/ocr_library.py --report outputs/non_extractable_resolved.xlsx
 ```
 
-### Full Run Output
+The resolved report carries extra columns (`resolved_year`,
+`lang_source`); `ocr_library.py` reads only the first three, so it
+consumes either the standard or the resolved report.
 
+### Correcting wrong-language OCR (`--redo`)
+
+Files OCR'd before the correct pack was installed (or under a wrong
+language label) carry a bad text layer. `--skip-text` will not overwrite
+it, so re-run with `--redo` (uses `ocrmypdf --redo-ocr`, replacing the
+existing OCR layer, with a `--force-ocr` fallback). Combine with a
+resolved report so the corrected languages are used:
+
+```bash
+./venv/bin/python scripts/ocr_library.py \
+    --report outputs/non_extractable_resolved.xlsx --redo --timeout 3600
 ```
-================================================================================
-PDF OCR PROCESSOR
-================================================================================
 
-[dependency checks...]
-[configuration...]
-
-🚀 Processing PDFs...
-  (PDFs with text will be skipped automatically)
-
-Processing: 100%|██████████| 13357/13357 [1:45:23<00:00, 2.1it/s]
-
-💾 Saving results...
-  ✅ Results saved to logs/ocr_processing_log.csv
-
-================================================================================
-PROCESSING COMPLETE
-================================================================================
-
-Total PDFs processed: 13,357
-Elapsed time: 1:45:23
-
-Status breakdown:
-  success                  :    267 (  2.0%)
-  skipped_has_text         : 13,088 ( 98.0%)
-  skipped_already_done     :      0 (  0.0%)
-  failed                   :      2 (  0.0%)
-
-✅ Successfully OCR'd 267 PDFs
-  Originals backed up to: backups/pre_ocr
-  Average time: 23.6 seconds per PDF
-
-❌ Failed to OCR 2 PDFs
-
-  Common errors:
-    Timeout after 300 seconds                                   :   1
-    pdftotext error: Syntax Warning                            :   1
-
-⏭️  Skipped 13,088 PDFs (already have text)
-
-================================================================================
-
-💡 Next steps:
-  1. Check log: cat logs/ocr_processing_log.csv
-  2. Backups at: backups/pre_ocr
-  3. Run again tomorrow to OCR new PDFs from Sci-Hub downloads
-  4. To restore a backup: cp backups/pre_ocr/filename.pdf <original_location>
-
-================================================================================
-```
+`--redo` bypasses the "already has text" skip check, since the whole
+point is to reprocess files that already have (wrong) text.
 
 ---
 
-## Monitoring Progress
+## Inline OCR during ingestion — `scripts/ingest_pdfs.py`
 
-### While Running
+New PDFs entering the corpus are OCR'd on the fly rather than waiting for
+a batch pass. During ingest, `ensure_text_extractable()`:
 
-**In another terminal:**
+1. Checks page-1 alpha against `OCR_MIN_ALPHA` (50); returns the
+   original path if it already has text.
+2. Otherwise runs `ocrmypdf` (`--skip-text`, then `--force-ocr`) into a
+   cache at `outputs/.ocr_cache/`, keyed by the source **SHA1** so
+   re-runs reuse prior work.
+3. The OCR'd copy is preferred for the library so downstream extraction
+   has text. OCR failure is **non-fatal** (the original is kept).
 
-```bash
-# Watch the log file grow
-tail -f logs/ocr_processing_log.csv
-
-# Count successful OCRs
-grep "success" logs/ocr_processing_log.csv | wc -l
-
-# Count failures
-grep "failed" logs/ocr_processing_log.csv | wc -l
-
-# Watch backup directory
-watch -n 10 'ls -lh backups/pre_ocr/ | tail -20'
-
-# Monitor system resources
-htop
-```
-
-### After Completion
-
-```bash
-# View summary from log
-cd "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel"
-
-# Count by status
-awk -F',' 'NR>1 {print $3}' logs/ocr_processing_log.csv | sort | uniq -c
-
-# Success rate
-total=$(wc -l < logs/ocr_processing_log.csv)
-success=$(grep -c "success" logs/ocr_processing_log.csv)
-echo "Success rate: $((success * 100 / total))%"
-
-# Failed PDFs
-awk -F',' '$3=="failed" {print $2, $5}' logs/ocr_processing_log.csv
-
-# Size of backup directory
-du -sh backups/pre_ocr/
-```
+Disable with `--no-ocr`. Language is `OCR_LANGS` (see above).
 
 ---
 
-## Troubleshooting
+## Retry / repair scripts
 
-### Script Won't Start
+For residuals the main pass cannot handle:
 
-**Problem:** "pdftotext not found"
-```bash
-sudo apt-get update
-sudo apt-get install poppler-utils
-```
-
-**Problem:** "ocrmypdf not found"
-```bash
-sudo apt-get update
-sudo apt-get install ocrmypdf tesseract-ocr tesseract-ocr-eng
-```
-
-### OCR Taking Too Long
-
-**Solution 1:** Reduce parallel jobs (less CPU intensive)
-```bash
-./venv/bin/python scripts/ocr_missing_pdfs.py --jobs 2
-```
-
-**Solution 2:** Increase timeout for large PDFs
-Edit script:
-```python
-OCRMYPDF_TIMEOUT = 600  # Change from 300 to 600 seconds
-```
-
-**Solution 3:** Run in background
-```bash
-nohup ./venv/bin/python scripts/ocr_missing_pdfs.py > logs/ocr_run.log 2>&1 &
-
-# Monitor progress
-tail -f logs/ocr_run.log
-```
-
-### Disk Space Running Out
-
-**Check space:**
-```bash
-df -h /media/simon/data/
-```
-
-**Free up space:**
-```bash
-# Remove backup directory (if satisfied with OCR results)
-rm -rf backups/pre_ocr/
-
-# Compress backups instead
-tar -czf backups/pre_ocr_$(date +%Y%m%d).tar.gz backups/pre_ocr/
-rm -rf backups/pre_ocr/
-```
-
-### Failed PDFs
-
-**Check failures:**
-```bash
-# List failed PDFs
-awk -F',' '$3=="failed" {print $2}' logs/ocr_processing_log.csv
-
-# See error messages
-awk -F',' '$3=="failed" {print $2 " : " $5}' logs/ocr_processing_log.csv
-```
-
-**Common failures:**
-- **Timeout:** PDF too large/complex - increase timeout
-- **Corrupted PDF:** Original file damaged - skip or re-download
-- **OCR error:** Incompatible format - may need manual processing
-
-**Retry failed PDFs:**
-```bash
-# Remove failed entries from log
-grep -v "failed" logs/ocr_processing_log.csv > logs/ocr_processing_log_cleaned.csv
-mv logs/ocr_processing_log_cleaned.csv logs/ocr_processing_log.csv
-
-# Run again
-./venv/bin/python scripts/ocr_missing_pdfs.py
-```
+| Script | Purpose |
+|--------|---------|
+| `ocr_gs_repair.py` | Ghostscript pre-repair of malformed PDFs before OCR. |
+| `ocr_footer_retry.py` | Retry with footer/margin handling. |
+| `ocr_retry_residuals.py` | Re-attempt files that failed the main pass. |
+| `ocr_missing_pdfs.py` | Legacy standalone OCR (superseded; kept for reference). |
+| `analyze_pdf_ocr_status.py` | Report OCR status across the library. |
+| `apply_ocr_residual_decisions.py` | Apply manual triage decisions to residuals. |
 
 ---
 
-## Performance Tuning
-
-### Optimal Parallel Jobs
-
-**Find your CPU count:**
-```bash
-nproc
-# Output: 8 (for example)
-```
-
-**Recommendations:**
-- **Light use:** `--jobs 2` (50% CPU, system responsive)
-- **Normal use:** `--jobs 6` (75% CPU, default behavior)
-- **Heavy use:** `--jobs 8` (100% CPU, fastest)
-- **Background:** `--jobs 1` (minimal impact, slowest)
-
-**Test different settings:**
-```bash
-# Time a test run with different job counts
-time ./venv/bin/python scripts/ocr_missing_pdfs.py --test --jobs 1
-time ./venv/bin/python scripts/ocr_missing_pdfs.py --test --jobs 4
-time ./venv/bin/python scripts/ocr_missing_pdfs.py --test --jobs 8
-```
-
-### Speed vs Quality
-
-The script uses balanced ocrmypdf settings:
-- `--deskew` - Straighten pages (adds time but improves accuracy)
-- `--rotate-pages` - Auto-rotate (adds time but necessary)
-- `--clean` - Remove artifacts (adds time but cleaner output)
-- `--optimize 1` - Light optimization (fast)
-
-**For faster processing** (edit script):
-```python
-# Remove these lines in ocr_pdf() function:
-'--deskew',
-'--clean',
-```
-
-**For better quality** (edit script):
-```python
-# Change:
-'--optimize', '1',
-# To:
-'--optimize', '3',
-```
-
----
-
-## Integration with Download Pipeline
-
-### Automated Workflow
-
-**Option 1: Sequential (download then OCR)**
-```bash
-# Start downloads
-bash scripts/run_integrated_pipeline.sh
-
-# When downloads complete (~24 hours), run OCR
-./venv/bin/python scripts/ocr_missing_pdfs.py
-```
-
-**Option 2: Concurrent (OCR while downloading)**
-```bash
-# Terminal 1: Start downloads
-bash scripts/run_integrated_pipeline.sh
-
-# Terminal 2: Run OCR every hour
-while true; do
-  ./venv/bin/python scripts/ocr_missing_pdfs.py
-  sleep 3600  # Wait 1 hour
-done
-```
-
-**Option 3: Cron job (daily OCR)**
-```bash
-# Add to crontab
-crontab -e
-
-# Add line (runs daily at 3am):
-0 3 * * * cd "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel" && ./venv/bin/python scripts/ocr_missing_pdfs.py >> logs/ocr_daily.log 2>&1
-```
-
----
-
-## File Structure
-
-```
-Project/
-├── scripts/
-│   └── ocr_missing_pdfs.py          # Main OCR script
-├── logs/
-│   └── ocr_processing_log.csv       # Processing log (persistent)
-├── backups/
-│   └── pre_ocr/                     # Original PDFs before OCR
-│       ├── filename1.pdf
-│       ├── filename2.pdf
-│       └── ...
-└── /media/.../SharkPapers/          # PDF collection
-    ├── 2025/
-    │   ├── paper1.pdf               # Original replaced with OCR'd version
-    │   └── ...
-    ├── 2024/
-    └── ...
-```
-
----
-
-## FAQ
-
-### Q: What happens if I run it twice?
-
-**A:** Perfectly safe! PDFs already in the log are skipped automatically.
-
-### Q: Can I stop it mid-run?
-
-**A:** Yes! Press Ctrl+C. Progress is saved to log. Next run will skip completed PDFs.
-
-### Q: Will it OCR PDFs that already have text?
-
-**A:** No. Script checks for text first and skips if found.
-
-### Q: How do I undo the OCR?
-
-**A:** Restore from backups:
-```bash
-cp backups/pre_ocr/filename.pdf "/media/simon/data/.../SharkPapers/YYYY/"
-```
-
-### Q: Can I delete the backups?
-
-**A:** Yes, once you're satisfied with OCR results. Or compress them:
-```bash
-tar -czf backups_$(date +%Y%m%d).tar.gz backups/pre_ocr/
-rm -rf backups/pre_ocr/
-```
-
-### Q: How accurate is the OCR?
-
-**A:** Tesseract/ocrmypdf typically achieves 95-98% accuracy on clean scans. Quality varies with scan quality.
-
-### Q: Will this work on non-English PDFs?
-
-**A:** Partially. Script uses English OCR by default. For better results on other languages, install additional Tesseract language packs:
-```bash
-# German
-sudo apt-get install tesseract-ocr-deu
-
-# French
-sudo apt-get install tesseract-ocr-fra
-
-# Spanish
-sudo apt-get install tesseract-ocr-spa
-```
-
-Then edit script to add language detection.
-
----
-
-## Summary
-
-**Quick commands:**
+## Quick reference
 
 ```bash
-# See what will happen
-./venv/bin/python scripts/ocr_missing_pdfs.py --dry-run
+# 1. Find non-extractable PDFs
+./venv/bin/python scripts/find_non_extractable_pdfs.py
 
-# Process everything
-./venv/bin/python scripts/ocr_missing_pdfs.py
+# 2. (optional) correct languages from filename + corpus before OCR
+./venv/bin/python scripts/resolve_pdf_language.py \
+    --report outputs/non_extractable_pdfs.xlsx \
+    --out    outputs/non_extractable_resolved.xlsx
 
-# Run daily to catch new downloads
-# (add to cron or run manually)
-./venv/bin/python scripts/ocr_missing_pdfs.py
+# 3. OCR them (per-file language incl. deu+Fraktur for old German, in place)
+./venv/bin/python scripts/ocr_library.py --report outputs/non_extractable_resolved.xlsx
+
+# 4. Re-OCR files done under the wrong language/model
+./venv/bin/python scripts/ocr_library.py --report outputs/non_extractable_resolved.xlsx --redo --timeout 3600
+
+# 5. Verify a file (whole-doc, not page 1)
+pdftotext "file.pdf" - | tr -cd '[:alpha:]' | wc -c   # want >= 200
 ```
 
-**Key features:**
-- ✅ Only OCRs PDFs lacking text
-- ✅ Skips already processed PDFs
-- ✅ Backs up originals automatically
-- ✅ Maintains log for repeatability
-- ✅ Parallel processing for speed
-- ✅ Safe to run multiple times
-
----
-
-**Last Updated:** 2025-10-24
+**Key thresholds:** page-1 screen `< 50` alpha → OCR candidate;
+whole-doc `>= 200` alpha → OCR verified.
+**Related:** `docs/database/ocr_resource_requirements.md` (CPU/time
+estimates), `docs/archive/pdf_ocr_status_report.md` (historical status).

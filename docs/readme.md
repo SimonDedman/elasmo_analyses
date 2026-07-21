@@ -1,105 +1,77 @@
-# EEA Data Panel Documentation Index
+# Documentation Index
 
-## Documentation Structure
+**Last updated:** 2026-07-21
 
-```
-docs/
-├── abstract/           # Abstract-related documents (November 2024)
-├── archive/            # Archived/historical documents
-├── candidates/         # Panel candidate documentation
-├── core/               # Core project documentation
-├── database/           # Database and paper acquisition docs
-├── geographic/         # Geographic analysis (Phase 3-4)
-├── LLM/                # LLM integration & conversational AI (NEW!)
-├── species/            # Species database documentation
-├── technical/          # Technical implementation docs
-└── techniques/         # Technique taxonomy documentation
-```
+Documentation for the **Elasmobranch Analytical Methods Review**. New
+here? Read the [front-page README](../README.md) first, then the
+[pipeline overview](core/pipeline_overview.md).
+
+Historical and superseded material has been moved under
+[`archive/`](archive/) — if you are looking for old download/Sci-Hub/Tor
+guides, the EEA-2025 abstract, or dated build logs, they live there.
 
 ---
 
-## Core Documentation (`core/`)
-- `eea2025_data_panel_comprehensive_plan.md` - Master project plan (67K)
-- `eea2025_data_panel_program_timeline_personnel.md` - Timeline and personnel
-- `project_completion_summary.md` - Project completion overview
-- `project_status_comprehensive.md` - Comprehensive status report
-- `visualization_summary.md` - Visualization planning and results
+## Start here
 
-## Abstract Documentation (`abstract/`)
-- `ABSTRACT_READY_FOR_SUBMISSION.md` - Final abstract text
-- `ABSTRACT_FINAL_STATISTICS_2025-11-24.md` - Statistics for abstract
-- `COMPLETE_FINAL_STATISTICS_2025-11-24.md` - Complete statistics
-- `abstract_revised_draft.md` - Draft revisions
-- `CODE_CHANGES_DOCUMENTATION.md` - Code changes log
+- **[../README.md](../README.md)** — what the project is, corpus at a glance, the 8 disciplines.
+- **[core/pipeline_overview.md](core/pipeline_overview.md)** — the as-built pipeline (acquire → OCR → extract → enrich → analyse → ask) with current figures and the script owning each stage.
+- **[results.html](results.html)** — live links to the Author Atlas, collaboration network, figures, and validation UI.
+- **[core/eea2025_data_panel_comprehensive_plan.md](core/eea2025_data_panel_comprehensive_plan.md)** — the master plan / protocol (authoritative, long).
 
-## Geographic Analysis (`geographic/`)
-- `GEOGRAPHIC_ANALYSIS_COMPLETE_SUMMARY_2025-11-24.md` - Complete analysis
-- `PHASE_4_FINAL_RESULTS.md` - Final Phase 4 results
-- `PHASE_4_STUDY_LOCATION_GUIDE.md` - Study location methodology
-- `PARACHUTE_RESEARCH_ANALYSIS_SUMMARY.md` - Parachute research findings
-- `DATABASE_QUERY_REFERENCE.md` - SQL query reference
-- `SQL_QUERIES_TEMPORAL_ANALYSIS.md` - Temporal analysis queries
+## The analytical design (schema & extraction)
 
-## Database Documentation (`database/`)
-- `database_schema_design.md` - Complete schema documentation
-- `technique_taxonomy_database_design.md` - Taxonomy design
-- `SHARK_REFERENCES_TOTAL_CORPUS.md` - Corpus analysis (12,240 papers)
-- `extraction_script_guide.md` - Extraction methodology
-- `pdf_acquisition_complete_summary.md` - PDF acquisition status
+- **[schema_proposals/](schema_proposals/)** — the design core. Per-schema column proposals (`discipline`, `ecosystem`, `pressure`, `gear`, `impact`, `ocean_basin`, plus `species`, `depth`, `analytical_techniques`), the [extraction logic](schema_proposals/extraction_logic.md), and the [false-positive catalogue](schema_proposals/extraction_quality_issues.md).
+- **[techniques/](techniques/)** — technique classification schema and the 8-discipline structure.
+- **[database/technique_taxonomy_database_design.md](database/technique_taxonomy_database_design.md)** — the 208-technique taxonomy DB.
 
-### Paper Acquisition Guides
-- `DOWNLOAD_TOOLS_GUIDE.md` - Overview of download tools
-- `DOWNTHEMALL_BULK_DOWNLOAD_GUIDE.md` - DownThemAll usage
-- `README_DOWNTHEMALL_QUICKSTART.md` - Quick start guide
-- `INSTITUTIONAL_ACCESS_WORKFLOW.md` - Institutional access setup
-- `PUBLISHER_ACCESS_GUIDE.md` - Publisher-specific access
+## Current design specs
 
-### Technical Guides
-- `tor_setup_guide.md` - Tor configuration
-- `ocr_processing_guide.md` - OCR processing
-- `duplicate_removal_final_guide.md` - Duplicate handling
+- **[superpowers/specs/](superpowers/specs/)** — the up-to-date design specs:
+  - `2026-07-07-cascade-finalize-ingest-extract-design.md` — the unified `acquire_cascade.py` acquisition pipeline.
+  - `2026-07-11-rag-schema-filters-web-frontend-design.md` — RAG web frontend.
+  - `2026-07-03-extraction-validation-loop-design.md` — the validation loop.
+  - `2026-07-07-book-chapter-mining-design.md`, `2026-07-07-fable-corpus-extraction-design.md`.
 
-## LLM Integration (`LLM/`) - NEW!
-- `llm_integration_roadmap.md` - LLM integration overview and roadmap
-- `notebooklm_alternatives_summary.md` - Comprehensive comparison of:
-  - Google NotebookLM limitations
-  - Open-source alternatives (AnythingLLM, PrivateGPT, Open WebUI)
-  - Custom RAG pipeline recommendations
-  - Hardware requirements for 13,000+ PDFs
+## Data, database & PDFs
 
-## Candidate Documentation (`candidates/`)
-- `candidate_database_phase1_report.md` - Phase 1 results
-- `candidate_search_protocol.md` - Search methodology
-- `expert_recommendations_comprehensive.md` - Expert recommendations
-- `readme_for_panelists.md` - Panelist instructions
-- `panelist_distribution_checklist.md` - Distribution checklist
+- **[database/database_schema_design.md](database/database_schema_design.md)** — schema documentation.
+- **[database/ocr_processing_guide.md](database/ocr_processing_guide.md)** — the PDF text-extraction / OCR pipeline.
+- **[database/shark_references_to_sql_mapping.md](database/shark_references_to_sql_mapping.md)**, **[database/techniques_snapshot_strategy.md](database/techniques_snapshot_strategy.md)**.
+- **[species/](species/)** — species database & Shark-References automation.
 
-## Technique Documentation (`techniques/`)
-- `discipline_structure_analysis.md` - Discipline analysis
-- `discipline_population_report.md` - Population analysis
-- `technique_classification_schema_proposal.md` - Classification schema
-- `master_techniques_list_for_population.md` - Master technique list
-- `database_implementation_complete.md` - Implementation status
+## Enrichment & integrations
 
-## Species Documentation (`species/`)
-- `shark_references_automation_workflow.md` - Automation workflow
-- `shark_references_species_database_extraction.md` - Extraction docs
-- `species_database_readme.md` - Species database guide
-- `bulk_download_quickstart.md` - Bulk download guide
+- **[schema_proposals/author_enrichment.md](schema_proposals/author_enrichment.md)**, **[schema_proposals/altmetric.md](schema_proposals/altmetric.md)**, **[schema_proposals/journal_quality.md](schema_proposals/journal_quality.md)**, **[schema_proposals/open_access.md](schema_proposals/open_access.md)**.
+- **[integrations/](integrations/)** — [Sharkipedia](integrations/sharkipedia_integration.md), [MegaMove/GSMP](integrations/megamove_integration.md).
 
-## Technical Documentation (`technical/`)
-- `external_database_integration_analysis.md` - Integration analysis
-- `final_data_cleaning_report.md` - Data cleaning report
-- `visualization_strategy.md` - Visualization planning
-- `shark_references_search_script_guide.md` - Search script guide
+## Validation
 
-## Archive (`archive/`)
-Contains 30+ historical documents including:
-- Old status summaries and progress reports
-- Superseded documentation
-- Development notes and decision logs
-- Session summaries from October-November 2024
+- **[validation_and_rule_improvement_report.md](validation_and_rule_improvement_report.md)** — extractor accuracy vs gold/LLM-oracle labels; first rule-improvement round.
+- **[technical/2026-04-16-validation-ui-design.md](technical/2026-04-16-validation-ui-design.md)** — community validation UI design.
+
+## Geographic
+
+- **[schema_proposals/geographic_extraction.md](schema_proposals/geographic_extraction.md)** — geographic extraction design.
+- **[geographic/DATABASE_QUERY_REFERENCE.md](geographic/DATABASE_QUERY_REFERENCE.md)**, **[geographic/SQL_QUERIES_TEMPORAL_ANALYSIS.md](geographic/SQL_QUERIES_TEMPORAL_ANALYSIS.md)** — reusable query references.
+
+## LLM / RAG
+
+- **[LLM/rag_prototype_status.md](LLM/rag_prototype_status.md)** — the built RAG stack (BGE-small + FAISS + Ollama, CPU-local).
+
+## Other current
+
+- **[no_doi_papers_analysis.md](no_doi_papers_analysis.md)** — profile of no-DOI papers.
+- **[team_download_task.md](team_download_task.md)**, **[SETUP_GOOGLE_SHEET.md](SETUP_GOOGLE_SHEET.md)** — crowdsourced acquisition task setup.
+- **[technical/external_database_integration_analysis.md](technical/external_database_integration_analysis.md)**.
 
 ---
 
-*Last updated: January 2026*
+## Archive
+
+[`archive/`](archive/) holds superseded and point-in-time material,
+grouped: `acquisition/` (pre-cascade download guides + status snapshots),
+`abstract_2025/` (EEA-2025 conference abstract), `geographic_phases/`
+(dated build logs), `techniques_population/`, `candidates_preconf/`,
+`core_status/`, `schema_snapshots/`, and `llm_planning/`. Kept for
+provenance; not current.
