@@ -78,6 +78,47 @@ Options:
 | `--redo` | Re-OCR pages that already have text (`--redo-ocr`), to correct wrong-language OCR. Bypasses the has-text skip. |
 | `--report PATH` | Use a different report XLSX — for resuming a partial run from a filtered list. |
 | `--timeout N` | Per-file `ocrmypdf` timeout in seconds (default 600). Raise for multi-hundred-page volumes. |
+| `--tmpdir PATH` | Where ocrmypdf renders pages. See the disk-space and AppArmor notes below — the path is constrained. |
+
+### Temp space and the AppArmor constraint (read before setting `--tmpdir`)
+
+`ocrmypdf` rasterises **every page to PNG at 400 DPI** before OCR, so one
+400–1000 page volume can need several GB of scratch at once. Two traps:
+
+1. **A full temp dir fails everything, silently.** If the temp filesystem
+   fills, Ghostscript fails at *startup* and every subsequent file fails
+   fast with an empty/garbled error and idle CPU. The usual cause is
+   orphaned `ocrmypdf.io.*` dirs left by `kill -9`'d runs — ocrmypdf
+   cleans up on normal completion but not when killed. `ocr_library.py`
+   now clears these at startup when `--tmpdir` is set; otherwise clean
+   manually: `rm -rf /tmp/ocrmypdf.io.*`.
+
+2. **Ghostscript is AppArmor-confined.** `/etc/apparmor.d/gs` restricts
+   `gs` to `/tmp`, `/var/tmp`, and `$HOME` (via `abstractions/user-tmp`).
+   Pointing `--tmpdir` at anything else — notably `/media/**` — makes
+   *every* file fail with:
+
+   ```
+   Last OS error: Permission denied
+   Could not open the scratch file /media/.../gs_XXXXXX
+   SubprocessOutputError: Ghostscript rasterizing failed
+   ```
+
+   Note this is invisible in the log, because `ocr_one` truncates stderr
+   to 200 chars and the Ghostscript banner fills it. To diagnose, run
+   `ocrmypdf` directly on one file and read the full stderr.
+
+**Use `/var/tmp/ocr_scratch`** (permitted, disk-backed rather than the
+RAM-backed `/tmp`). To use a larger disk, add an AppArmor exception
+first:
+
+```bash
+sudo tee /etc/apparmor.d/local/gs >/dev/null <<'EOF'
+owner /media/simon/data/ocr_scratch/** rwk,
+/media/simon/data/ocr_scratch/ r,
+EOF
+sudo apparmor_parser -r /etc/apparmor.d/gs
+```
 
 **Per-report logs:** with `--report`, the log is named
 `logs/ocr_library_log_<report_stem>.txt`, so concurrent or sequential
