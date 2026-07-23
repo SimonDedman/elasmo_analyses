@@ -7,7 +7,7 @@ editor_options:
 # Species Common Name Lookup - Analysis & Cleaning Summary
 
 **Date:** 2025-10-02
-**File Analyzed:** `data/species_common_lookup.csv`
+**File Analysed:** `data/species_common_lookup.csv`
 **Cleaned Output:** `data/species_common_lookup_cleaned.csv`
 
 ---
@@ -28,7 +28,7 @@ editor_options:
 
 ### ✅ Quality Checks PASSED
 
-All major quality checks passed with flying colors:
+All major quality checks passed with flying colours:
 
 | Check | Result | Status |
 |-------|--------|--------|
@@ -59,21 +59,21 @@ All major quality checks passed with flying colors:
 
 ---
 
-#### 2. Spelling Variants Standardized
+#### 2. Spelling Variants Standardised
 
 **Gray vs Grey:**
 - Original: 139 "gray" variants, 40 "grey" variants
-- **Decision:** Standardized to "gray" (American English, more common)
+- **Decision:** Standardised to "gray" (American English, more common)
 - **Action:** All "grey" → "gray"
 
 **Whipray:**
 - Original: 19 "whipray" (one word), 6 "whip ray" (two words)
-- **Decision:** Standardized to "whipray" (one word, more common)
+- **Decision:** Standardised to "whipray" (one word, more common)
 - **Action:** All "whip ray" → "whipray"
 
 **Eagle Ray:**
 - Original: 47 "eagle ray" (two words), 3 "eagleray" (one word)
-- **Decision:** Standardized to "eagle ray" (two words, more common)
+- **Decision:** Standardised to "eagle ray" (two words, more common)
 - **Action:** All "eagleray" → "eagle ray"
 
 ---
@@ -106,7 +106,7 @@ All major quality checks passed with flying colors:
 
 #### 2. Suspicious Similar Species Names (5 pairs)
 
-These species have very similar names (edit distance ≤ 2). Verify they are distinct species:
+These species have very similar names (edit distance ≤ 2). Verify they're distinct species:
 
 | Species 1 | Species 2 | Edit Distance | Likely Explanation |
 |-----------|-----------|---------------|-------------------|
@@ -167,7 +167,7 @@ These species have very similar names (edit distance ≤ 2). Verify they are dis
 **File:** `data/species_common_lookup_cleaned.csv`
 **Changes:**
 - Fixed 5 typos
-- Standardized gray/grey, whipray/whip ray, eagleray/eagle ray
+- Standardised gray/grey, whipray/whip ray, eagleray/eagle ray
 - Removed 11 duplicate rows
 - **Rows:** 3,016 (down from 3,027)
 - **Species:** 1,030 (unchanged)
@@ -187,7 +187,7 @@ Rscript scripts/analyze_species_lookup.R
 
 ### 2. Cleaning Script
 **File:** `scripts/clean_species_lookup.R`
-**Purpose:** Fix typos and standardize spelling
+**Purpose:** Fix typos and standardise spelling
 **Usage:**
 ```r
 Rscript scripts/clean_species_lookup.R

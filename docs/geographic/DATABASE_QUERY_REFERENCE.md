@@ -2,7 +2,7 @@
 
 **Database**: `database/technique_taxonomy.db`
 **Last Updated**: 2025-11-24
-**Purpose**: Quick reference for analyzing shark research papers with geographic data
+**Purpose**: Quick reference for analysing shark research papers with geographic data
 
 ---
 
@@ -383,7 +383,7 @@ sqlite3 -header -csv database/technique_taxonomy.db \
 
 1. **Index usage**: Tables have indexes on primary keys and foreign keys
 2. **Filter early**: Use `WHERE` clauses to reduce result sets before JOINs
-3. **COUNT(*) optimization**: Use subqueries for denominator in percentages
+3. **COUNT(*) optimisation**: Use subqueries for denominator in percentages
 4. **EXPLAIN QUERY PLAN**: Prefix queries to see execution plan
 
 **Example**:

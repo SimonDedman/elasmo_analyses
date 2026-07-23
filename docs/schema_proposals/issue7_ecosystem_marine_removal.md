@@ -2,7 +2,7 @@
 
 ## Summary
 
-`eco_marine` should be removed from the ecosystem schema because it is the uninformative default for elasmobranch research. Nearly all papers about sharks, rays, and chimaeras are marine by definition, making this category add no discriminatory power.
+`eco_marine` should be removed from the ecosystem schema because it's the uninformative default for elasmobranch research. Nearly all papers about sharks, rays, and chimaeras are marine by definition, making this category add no discriminatory power.
 
 ## Current State
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Comprehensive analysis of all EEA 2025 conference presentation abstracts, contextualizing each against recent shark research literature (2020-2025) and linking to relevant panel member and attendee expertise.
+Comprehensive analysis of all EEA 2025 conference presentation abstracts, contextualising each against recent shark research literature (2020-2025) and linking to relevant panel member and attendee expertise.
 
 **Date Completed**: 2025-10-26
 **Total Abstracts Processed**: 109
@@ -92,7 +92,7 @@ Minor SQL syntax error in list comprehension doesn't affect output quality - all
 
 **Example Questions**:
 - **Genetics**: "What sequencing platform/depth are you using? Have you considered population structure effects?"
-- **Movement**: "How are you handling detection gaps and autocorrelation? What spatial scale are you analyzing?"
+- **Movement**: "How are you handling detection gaps and autocorrelation? What spatial scale are you analysing?"
 - **Conservation**: "How are you integrating stakeholder input? What management recommendations emerge?"
 
 **Results**:
@@ -154,7 +154,7 @@ Minor SQL syntax error in list comprehension doesn't affect output quality - all
 
 **Common Combinations**:
 - Conservation + Biology (species-specific conservation)
-- Movement + Data Science (spatial modeling)
+- Movement + Data Science (spatial modelling)
 - Genetics + Conservation (population genetics for management)
 - Trophic Ecology + Biology (diet and health)
 - Fisheries + Data Science (stock assessment models)
@@ -162,7 +162,7 @@ Minor SQL syntax error in list comprehension doesn't affect output quality - all
 **Emerging Themes**:
 - Increased use of DATA methods across all disciplines
 - eDNA/metabarcoding in Genetics and Trophic Ecology
-- Machine learning for photo-ID and behavior analysis
+- Machine learning for photo-ID and behaviour analysis
 - Integrative conservation approaches combining multiple disciplines
 
 ### Novel Research Directions
@@ -203,7 +203,7 @@ These represent either:
 
 ## Applications
 
-### For Conference Organizers
+### For Conference Organisers
 
 **Session Planning**:
 - Group presentations by discipline overlap
@@ -242,7 +242,7 @@ These represent either:
 **Presentation Preparation**:
 - Address discussion questions proactively
 - Reference recent literature developments
-- Emphasize novelty/innovation
+- Emphasise novelty/innovation
 - Prepare for methodological questions
 
 ---
@@ -390,11 +390,11 @@ docs/database/
 - Create literature summary per discipline
 - **Tool**: Updated `analyze_eea_abstracts.py`
 
-**4. Panel Assignment Optimization**:
+**4. Panel Assignment Optimisation**:
 - Match abstracts to optimal panel configuration
 - Identify gaps in panel coverage
 - Suggest additional panel members
-- **Tool**: Optimization algorithm (e.g., linear assignment)
+- **Tool**: Optimisation algorithm (e.g., linear assignment)
 
 **5. Presenter Networking Suggestions**:
 - Generate pairwise similarity scores
@@ -418,7 +418,7 @@ The abstract analysis successfully:
 **Key Outcomes**:
 - Panel members have tailored discussion prompts
 - Presenters can anticipate questions
-- Conference organizers can optimize sessions
+- Conference organisers can optimise sessions
 - Attendees can identify networking opportunities
 
 **Quality**: High-quality, actionable reviews suitable for immediate use at EEA 2025 conference.

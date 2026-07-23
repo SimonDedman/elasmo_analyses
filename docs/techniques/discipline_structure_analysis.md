@@ -9,12 +9,12 @@ editor_options:
 ## Refined Structure for EEA 2025 Data Panel
 
 **Date:** 2025-10-01 **Analysts:** Simon Dedman & Claude Code
-**Purpose:** Refine discipline categorization for systematic review
+**Purpose:** Refine discipline categorisation for systematic review
 panel
 
 ------------------------------------------------------------------------
 
-## Sources Analyzed
+## Sources Analysed
 
 ### 1. Carrier et al. (2019) - Shark Research: Emerging Technologies and Applications
 
@@ -91,7 +91,7 @@ status - Conservation biology
 5.  **Movement & Space Use** *(Partially covered by Spatial)*
     -   Currently split between "Spatial" (SDM) and implied elsewhere
     -   Movement ecology dominates conferences (AES dedicated session)
-    -   Distinct from habitat modeling: telemetry, satellite tracking,
+    -   Distinct from habitat modelling: telemetry, satellite tracking,
         movement models
 6.  **Citizen Science & Social Science** *(Missing but in Carrier)*
     -   Dedicated section in Carrier et al. (2019)
@@ -135,9 +135,9 @@ status - Conservation biology
 6.  **Movement & Telemetry**
     -   Acoustic/satellite tracking, state-space models
     -   Home range, migration, connectivity
-7.  **Spatial Ecology & Habitat Modeling**
+7.  **Spatial Ecology & Habitat Modelling**
     -   SDMs, MPA design, critical habitat
-    -   Spatial prioritization, forecasting
+    -   Spatial prioritisation, forecasting
 8.  **Fisheries & Stock Assessment**
     -   Population dynamics, CPUE, bycatch
     -   Data-poor methods, close-kin mark-recapture
@@ -177,13 +177,13 @@ many for 50-minute panel; expert recruitment challenging; overlap issues
     -   eDNA (detection, diet), genomic SDMs
     -   *Rationale:* eDNA fits genetics; integrated analytical
         approaches
-5.  **Movement, Space Use, & Habitat Modeling**
+5.  **Movement, Space Use, & Habitat Modelling**
     -   Telemetry, satellite tracking, SDMs, MPA design
     -   State-space models, habitat suitability, forecasting
     -   *Rationale:* Movement and habitat strongly linked; shared
         methods
 6.  **Fisheries, Stock Assessment, & Management**
-    -   Population dynamics, CPUE standardization, bycatch
+    -   Population dynamics, CPUE standardisation, bycatch
     -   Data-poor methods, ecosystem-based management
     -   *Rationale:* Applied conservation; fisheries-focused
 7.  **Conservation Policy & Human Dimensions**
@@ -193,8 +193,8 @@ many for 50-minute panel; expert recruitment challenging; overlap issues
         sci is tool
 8.  **Data Science & Integrative Methods**
     -   Cross-dataset integration, AI/ML, Bayesian approaches
-    -   General statistics, reproducibility, visualization
-    -   Climate change modeling (cross-cutting)
+    -   General statistics, reproducibility, visualisation
+    -   Climate change modelling (cross-cutting)
     -   *Rationale:* Emerging critical area; spans all disciplines
 
 **Pros:** Manageable for panel; logical groupings; expert availability
@@ -213,7 +213,7 @@ definition
     -   DNA forensics, metabarcoding
 3.  **Movement & Spatial Ecology**
     -   Telemetry, satellite tracking, SDMs
-    -   MPA design, habitat modeling, forecasting
+    -   MPA design, habitat modelling, forecasting
 4.  **Fisheries & Stock Assessment**
     -   Population dynamics, CPUE, bycatch assessment
     -   Data-poor methods, management strategies
@@ -222,7 +222,7 @@ definition
     -   Human-shark conflict, citizen science, social science
 6.  **Data Science & Analytical Methods** *(new)*
     -   AI/ML, data integration, general statistics
-    -   Climate change modeling, reproducibility
+    -   Climate change modelling, reproducibility
 
 **Pros:** Closest to current structure; minimal disruption; fits 50-min
 panel **Cons:** Very broad disciplines; may lack analytical specificity;
@@ -332,16 +332,16 @@ Lab-on-a-chip: **INCLUDE** rapid genetic ID
 
 ------------------------------------------------------------------------
 
-#### 5. Movement, Space Use, & Habitat Modeling
+#### 5. Movement, Space Use, & Habitat Modelling
 
 **INCLUDE:** - Acoustic telemetry (network analysis, residence,
-detection modeling) - Satellite tracking (PSAT, SPOT tags,
+detection modelling) - Satellite tracking (PSAT, SPOT tags,
 geolocation) - Movement models (HMM, SSM, step-selection, circuit
-theory) - Home range (KDE, Brownian bridge, utilization distributions) -
+theory) - Home range (KDE, Brownian bridge, utilisation distributions) -
 Connectivity, migration patterns, movement persistence - SDMs (all
 algorithms: GLM, GAM, BRT, MaxEnt, RF, ensemble) - MPA design, critical
 habitat identification - Habitat suitability, ecological niche
-modeling - Spatiotemporal forecasting, climate projections
+modelling - Spatiotemporal forecasting, climate projections
 
 **EXCLUDE:** - Behavioural observations without telemetry → Behaviour -
 Population structure → Genetics - Fisheries CPUE spatial models →
@@ -357,8 +357,8 @@ networks
 #### 6. Fisheries, Stock Assessment, & Management
 
 **INCLUDE:** - Stock assessment (age-structured, surplus production,
-integrated models) - CPUE standardization (GLM, GAM, delta-lognormal,
-standardization methods) - Bycatch estimation, discard mortality,
+integrated models) - CPUE standardisation (GLM, GAM, delta-lognormal,
+standardisation methods) - Bycatch estimation, discard mortality,
 post-release survival - Mark-recapture (traditional, CKMR for
 abundance) - Data-poor assessment methods (Catch-MSY, DCAC, etc.) -
 Fishery-independent surveys, gear selectivity - Ecosystem models
@@ -366,7 +366,7 @@ Fishery-independent surveys, gear selectivity - Ecosystem models
 Co-management, stakeholder engagement
 
 **EXCLUDE:** - Conservation policy → Policy discipline - Pure biology
-(growth, reproduction) → Biology - Habitat modeling for non-fishery
+(growth, reproduction) → Biology - Habitat modelling for non-fishery
 purposes → Spatial
 
 **BOUNDARY CASES:** - Essential Fish Habitat: **Spatial** if SDM-based;
@@ -384,14 +384,14 @@ certifications - Human-shark conflict, bite mitigation - Tourism
 impacts, ecotourism management - Citizen science (methods, data quality,
 engagement) - Social science (surveys, interviews, participatory
 approaches) - Environmental education, outreach effectiveness -
-Conservation prioritization (policy, not spatial algorithms)
+Conservation prioritisation (policy, not spatial algorithms)
 
 **EXCLUDE:** - MPA spatial design → Spatial discipline - Stock
 assessment for management → Fisheries - Genetics for forensics → include
 forensic applications here; genetic methods in Genetics
 
 **BOUNDARY CASES:** - Shark sanctuaries: **INCLUDE** policy; **Spatial**
-if spatial prioritization - Bycatch mitigation: **Fisheries** for
+if spatial prioritisation - Bycatch mitigation: **Fisheries** for
 assessment; **INCLUDE** for policy/regulation
 
 ------------------------------------------------------------------------
@@ -405,8 +405,8 @@ learning) - Bayesian methods (JAGS, Stan, INLA) - Data integration
 selection, validation, cross-validation - Dealing with data imbalance,
 rare species - Spatial autocorrelation methods - Time series analysis -
 Reproducibility (R Markdown, version control, code sharing) -
-Visualization, dashboards - AI applications across disciplines - Climate
-change modeling approaches (SDM projections, vulnerability
+Visualisation, dashboards - AI applications across disciplines - Climate
+change modelling approaches (SDM projections, vulnerability
 assessments) - Programming environments (R vs Python, cloud computing,
 HPC)
 
@@ -437,13 +437,13 @@ reproduction timing - Thermal tolerance, metabolic impacts -
 Distributional shifts affecting life history strategies - Methods:
 Climate-mediated demographic models, thermal performance curves
 
-**Behaviour & Sensory Ecology:** - Behavioral plasticity to
+**Behaviour & Sensory Ecology:** - Behavioural plasticity to
 temperature/oxygen changes - Climate-driven shifts in activity patterns,
-habitat use - Methods: Experimental approaches, long-term behavioral
+habitat use - Methods: Experimental approaches, long-term behavioural
 datasets
 
 **Trophic & Community Ecology:** - Climate impacts on prey availability,
-trophic interactions - Ecosystem reorganization, trophic cascades -
+trophic interactions - Ecosystem reorganisation, trophic cascades -
 Methods: Time-series analysis, food web models with climate forcing
 
 **Genetics, Genomics, & eDNA:** - Adaptive potential to climate change -
@@ -463,9 +463,9 @@ detection
 MPA design - Methods: Climate vulnerability assessments, adaptive
 management frameworks
 
-**Data Science:** - Climate change modeling techniques (GCMs,
+**Data Science:** - Climate change modelling techniques (GCMs,
 downscaling) - Uncertainty propagation in climate projections - Methods:
-Ensemble modeling, scenario analysis, climate analog approaches
+Ensemble modelling, scenario analysis, climate analog approaches
 
 ### Panel Implementation
 
@@ -496,7 +496,7 @@ allows cross-cutting climate theme
 intro):** 1. Biology, Life History, & Health (6 min) 2. Behaviour &
 Sensory Ecology (6 min) 3. Trophic & Community Ecology (6 min) 4.
 Genetics, Genomics, & eDNA (6 min) 5. Movement, Space Use, & Habitat
-Modeling (6 min) 6. Fisheries, Stock Assessment, & Management (6 min) 7.
+Modelling (6 min) 6. Fisheries, Stock Assessment, & Management (6 min) 7.
 Conservation Policy & Human Dimensions (6 min) 8. Data Science &
 Integrative Methods (6 min)
 
@@ -533,7 +533,7 @@ experts
 2.  **Expert Briefing (Week 2):**
     -   Provide discipline-specific inclusion/exclusion guidance
     -   Share climate change integration framework
-    -   Emphasize analytical methods focus (not just topic areas)
+    -   Emphasise analytical methods focus (not just topic areas)
 3.  **Methodology Refinement:**
     -   Add discipline boundary definitions to expert briefing materials
     -   Create decision tree for edge cases
@@ -559,7 +559,7 @@ Movement ecology & telemetry - Population genetics & genomics -
 Fisheries & stock assessment - Conservation biology & policy -
 Behavioural ecology - Physiology & ecophysiology - Reproductive biology
 
-### Literature Review Categorizations
+### Literature Review Categorisations
 
 **Brazilian Amazon Coast 4-Decade Review (identified subtopics):** -
 Taxonomy, Phylogeny, Paleobiology - Genetics, Physiology, Parasites -

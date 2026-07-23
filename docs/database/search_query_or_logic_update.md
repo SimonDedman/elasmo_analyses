@@ -110,7 +110,7 @@ Both scripts:
 
 - Old columns (`search_query`, `search_query_alt`) retained for reference
 - Can be removed once new queries validated
-- Search queries only used for local paper categorization (not for
+- Search queries only used for local paper categorisation (not for
   Shark-References API calls)
 
 ---

@@ -15,7 +15,7 @@ Measure the online attention each paper has received beyond traditional citation
 - **Output file:** `outputs/altmetric_scores.csv`
 - **Coverage:** 10,897 papers with Altmetric records (65.5 % hit rate across the full database)
 
-Papers without an Altmetric record receive no score; a score of zero is not assigned — the row is simply absent from the output file.
+Papers without an Altmetric record receive no score; a score of zero isn't assigned — the row is simply absent from the output file.
 
 ## Fields
 
@@ -53,9 +53,9 @@ For descriptive summaries and figures, the composite AAS is grouped into six cat
 
 1. **Hit rate variation by era:** Altmetric coverage drops steeply for papers published before 2012, when social media uptake in academia was low. Pre-2012 papers with zero social trace will be absent from the output.
 2. **Twitter/X data gaps:** Post-2023 tweet counts may be incomplete owing to API access changes following ownership change of the platform.
-3. **DOI dependency:** Papers without a DOI (primarily older conference proceedings) cannot be matched to Altmetric records.
-4. **Mendeley reader count:** Represents library saves rather than full reads; it is a readership proxy, not a citation count.
-5. **Score inflation for controversy:** A high AAS does not necessarily indicate scientific impact; controversial or sensational papers can score highly on social media without peer uptake.
+3. **DOI dependency:** Papers without a DOI (primarily older conference proceedings) can't be matched to Altmetric records.
+4. **Mendeley reader count:** Represents library saves rather than full reads; it's a readership proxy, not a citation count.
+5. **Score inflation for controversy:** A high AAS doesn't necessarily indicate scientific impact; controversial or sensational papers can score highly on social media without peer uptake.
 
 ## Validation
 

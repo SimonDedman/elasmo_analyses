@@ -40,8 +40,8 @@ All return the same Cloudflare challenge page with no actual content.
 1. **Cloudflare Bot Management**: Sophisticated detection of automated browsers
 2. **JavaScript Challenge**: Requires solving crypto challenge before access
 3. **WebDriver Detection**: Identifies Selenium `navigator.webdriver` property
-4. **TLS Fingerprinting**: Analyzes TLS handshake to detect automation
-5. **Browser Behavior Analysis**: Monitors mouse movement, timing patterns
+4. **TLS Fingerprinting**: Analyses TLS handshake to detect automation
+5. **Browser Behaviour Analysis**: Monitors mouse movement, timing patterns
 
 ### What Doesn't Work
 
@@ -98,7 +98,7 @@ All return the same Cloudflare challenge page with no actual content.
 - Constantly in arms race with Cloudflare updates
 - May break unexpectedly
 - Slower than standard Selenium
-- Ethical gray area (bypassing protection)
+- Ethical grey area (bypassing protection)
 
 **Implementation:**
 ```python
@@ -231,7 +231,7 @@ Given the constraints, I recommend a **hybrid approach**:
 **Outcome:** ~370-450 PDFs
 
 ### Phase 4: Manual Fallback (If Needed)
-1. Generate prioritized list of high-value species
+1. Generate prioritised list of high-value species
 2. User manually downloads top priority PDFs
 3. Focus on recent assessments (2016-2017)
 

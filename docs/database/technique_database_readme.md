@@ -87,7 +87,7 @@ With populated database:
 - Behaviour & Sensory Ecology
 - Trophic & Community Ecology
 - Genetics, Genomics, & eDNA
-- Movement, Space Use, & Habitat Modeling
+- Movement, Space Use, & Habitat Modelling
 - Fisheries, Stock Assessment, & Management
 - Conservation Policy & Human Dimensions
 - Data Science & Integrative Methods
@@ -161,21 +161,21 @@ Example categories:
 
 *Biology:* Telomere studies, Endocrinology, Metabolic studies, Bomb radiocarbon, NIRS ageing, Ultrasound
 
-*Behaviour:* Electroreception, Olfaction, Magnetoreception, Predation behavior specifics, Animal-borne cameras
+*Behaviour:* Electroreception, Olfaction, Magnetoreception, Predation behaviour specifics, Animal-borne cameras
 
-*Trophic:* Food web modeling, Energy flow, Niche partitioning, Fatty acid analysis
+*Trophic:* Food web modelling, Energy flow, Niche partitioning, Fatty acid analysis
 
 *Genetics:* SNPs (explicit), Transcriptomics, Conservation genetics, RAD-seq, Ancient DNA
 
 *Movement:* Satellite tracking (PSAT, SPOT), Home range methods (KDE, Brownian bridge), State-space models, Circuit theory
 
-*Fisheries:* Stock assessment (all sub-methods), CPUE standardization, Surplus production models, Integrated models, Mark-recapture (traditional), Close-kin mark-recapture, Ecosystem models (Ecopath, Atlantis), Gear selectivity, Fisher interviews
+*Fisheries:* Stock assessment (all sub-methods), CPUE standardisation, Surplus production models, Integrated models, Mark-recapture (traditional), Close-kin mark-recapture, Ecosystem models (Ecopath, Atlantis), Gear selectivity, Fisher interviews
 
 *Conservation:* Stakeholder engagement, Ecosystem services, MPA policy evaluation, Shark sanctuaries, Bycatch mitigation policy
 
-*Data Science:* Neural networks, Deep learning, GAM (explicit), Ensemble modeling, GAMM, Hierarchical models, INLA, Stan
+*Data Science:* Neural networks, Deep learning, GAM (explicit), Ensemble modelling, GAMM, Hierarchical models, INLA, Stan
 
-**Decision:** ALL planned techniques will be included. Conference snapshot should not limit systematic literature review.
+**Decision:** ALL planned techniques will be included. Conference snapshot shouldn't limit systematic literature review.
 
 ---
 

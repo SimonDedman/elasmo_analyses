@@ -30,7 +30,7 @@ FAISS embedding index. This is the central design constraint.
 These are **future** requirements the user has stated (shareable, served online,
 multi-user, some auth to prevent abuse, query-history persistence). The design
 therefore builds *seams* for each so they can be added later without a rewrite, but
-does not implement them. Everything runs locally for solo testing to begin with.
+doesn't implement them. Everything runs locally for solo testing to begin with.
 
 ## Central idea: decouple filtering from embedding
 
@@ -95,7 +95,7 @@ default. Discovery rules:
 - **Author family** — special `author-autocomplete` type (see component 4).
 - **Exclusion list** — identifiers/free-text never offered as filters: `title`,
   `abstract`, `doi`, `pdf_url`, `date_added`, chunk/embedding internals. (`authors` is
-  **not** excluded — it is served via the author-autocomplete family instead of the raw
+  **not** excluded — it's served via the author-autocomplete family instead of the raw
   free-text column.)
 
 Each family entry: `key`, `label`, `type`
@@ -143,7 +143,7 @@ ranked by `paper_count` desc, capped (e.g. top 20). 29,930 authors fit in memory
 
 A minimal `generate(prompt) -> str` interface with an `OllamaBackend` implementation
 (the current `generate_answer` logic, moved here) selected by `RAG_LLM_BACKEND`.
-Generation is the real scaling bottleneck (one local Ollama on a GTX 1080 Ti will not
+Generation is the real scaling bottleneck (one local Ollama on a GTX 1080 Ti won't
 serve many concurrent users); this seam lets a hosted API or larger shared model drop in
 later without touching the pipeline. Only `ollama` is implemented now.
 
@@ -152,7 +152,7 @@ later without touching the pipeline. Only `ollama` is implemented now.
 Runs user-local via `uvicorn` (no Docker, no sudo). **Models and indexes load once at
 startup** into app state via the lifespan handler — BGE embedder, cross-encoder, FAISS
 index, chunk metadata, filter sidecar, author index. (Today `query.py` reloads the
-embedding model on every call; that is fine for CLI but fatal for a server — this is the
+embedding model on every call; that's fine for CLI but fatal for a server — this is the
 single most important multi-user change.)
 
 Endpoints:
@@ -167,7 +167,7 @@ Endpoints:
 - `GET /` → serves the static single-page app.
 
 **Auth seam**: a FastAPI dependency `require_access` gated by `RAG_AUTH_MODE`. In `open`
-(local default) it is a no-op. It is the single place to later add an API key or
+(local default) it's a no-op. It's the single place to later add an API key or
 per-key rate-limit. No auth logic implemented now.
 
 **History seam**: `record_query(question, filters, result_summary)` with a local JSONL
@@ -242,7 +242,7 @@ filter becomes correct with no code change (rebuild the sidecar only).
 
 Author filtering reaches only papers with OpenAlex author records
 (`openalex_paper_authors.csv`, 74,153 author-paper rows over ~half the corpus — OpenAlex
-DOI-matched ~15,780 of 30,553 papers). Papers without OpenAlex records will not match an
+DOI-matched ~15,780 of 30,553 papers). Papers without OpenAlex records won't match an
 author selection. Surfaced in the UI near the author box.
 
 ## Testing

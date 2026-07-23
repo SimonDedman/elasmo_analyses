@@ -69,7 +69,7 @@ Downloads are validated before keeping:
 | Magic bytes | Starts with `%PDF` | Rejects HTML error pages served as .pdf |
 | HTTP status | 200 | Rejects redirects to login walls |
 
-Failed downloads are logged with the reason but do not abort the run.
+Failed downloads are logged with the reason but don't abort the run.
 
 ### Failure resistance
 
@@ -83,7 +83,7 @@ Failed downloads are logged with the reason but do not abort the run.
 - **Top-level exception handler**: any uncaught error still triggers
   failure notifications before exit.
 - **Idempotent**: re-running the script is safe. Already-known papers
-  are skipped; already-downloaded PDFs are not re-downloaded.
+  are skipped; already-downloaded PDFs aren't re-downloaded.
 
 ### Scheduling: anacron
 

@@ -17,7 +17,7 @@ IUCN Red List assessments are publicly available conservation status evaluations
 From our database of 1,133 IUCN-related papers:
 
 1. **Individual Species Assessments** (~900 papers)
-   - Title format: Just the species name (e.g., "Carcharodon carcharias", "Planonasus parini")
+   - Title format: Just the species name (e.g., "*Carcharodon carcharias*", "*Planonasus parini*")
    - Year: Mostly 2016-2017 (mass reassessment period)
    - Source: IUCN Red List website
 

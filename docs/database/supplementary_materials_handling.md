@@ -170,7 +170,7 @@ With SM: GAM, GLM, PERMANOVA all recorded ✓
 
 ### Scenario: Panel Analysis
 
-When analyzing technique trends over time:
+When analysing technique trends over time:
 
 **Without SM:**
 ```
@@ -248,7 +248,7 @@ Author.2020.Paper.pdf     (missing - failed download)
 **Handling:**
 - Flag for review
 - Attempt to re-download main paper
-- If main paper cannot be obtained, keep SM and treat as standalone
+- If main paper can't be obtained, keep SM and treat as standalone
 
 ### Case 3: Reply Papers with SM
 

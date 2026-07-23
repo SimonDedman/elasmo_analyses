@@ -13,8 +13,8 @@ full ~19-20k corpus and the structured-filter search from GitHub Issue #2.
 | PDF text extraction | `pdftotext` (poppler-utils), same approach as `extract_schema_columns.py` | Already proven on this corpus; no new dependency |
 | Chunking | Word-based sliding window, ~650 words (~850-900 tokens) / 100-word overlap | Simple, fast, no tokenizer dependency; good enough for a first pass |
 | Embeddings | `BAAI/bge-small-en-v1.5` (33M params, 384-dim), CPU, via `sentence-transformers` | Retrieval-tuned (asymmetric query/passage training), small enough to embed thousands of chunks on CPU in seconds; the GTX 1080 Ti (Pascal, sm_61) can't run modern CUDA torch wheels, so embedding is CPU-only by design |
-| Vector store | **FAISS** `IndexFlatIP` (flat, exact cosine via normalized vectors) | No server, no Docker, pip-installable; exact search is fine at this scale (a few thousand chunks) — Qdrant/HNSW only pays off once the corpus is much bigger (see scaling notes) |
-| Re-ranker | **`cross-encoder/ms-marco-MiniLM-L-6-v2`** (~23M params), CPU, via `sentence-transformers.CrossEncoder` | Scores each `(query, chunk_text)` pair directly with cross-attention rather than comparing two independently-embedded vectors, so its scores are calibrated to actual relevance in a way BGE's absolute cosine is not (see "Claim-strength" below and the before/after in Limitations). Small enough to score the FAISS top-20 shortlist per query in ~8-10s on CPU — no GPU needed |
+| Vector store | **FAISS** `IndexFlatIP` (flat, exact cosine via normalised vectors) | No server, no Docker, pip-installable; exact search is fine at this scale (a few thousand chunks) — Qdrant/HNSW only pays off once the corpus is much bigger (see scaling notes) |
+| Re-ranker | **`cross-encoder/ms-marco-MiniLM-L-6-v2`** (~23M params), CPU, via `sentence-transformers.CrossEncoder` | Scores each `(query, chunk_text)` pair directly with cross-attention rather than comparing two independently-embedded vectors, so its scores are calibrated to actual relevance in a way BGE's absolute cosine isn't (see "Claim-strength" below and the before/after in Limitations). Small enough to score the FAISS top-20 shortlist per query in ~8-10s on CPU — no GPU needed |
 | LLM | **Ollama 0.31.1**, model `qwen2.5:3b-instruct` | Neither Ollama nor Qdrant were pre-installed. Ollama was installed **without sudo**: the release tarball was downloaded and extracted straight into `~/.local/share/ollama-rag/` (binary + model store), and `ollama serve` runs as a plain user process on a non-default port (`127.0.0.1:11435`), so it never touches system paths or systemd. Ollama auto-detected the 1080 Ti and is running its **Vulkan** compute backend (not CUDA — Vulkan compute isn't gated by the sm_61/cu128 cutoff that blocks PyTorch), giving ~3-4s generations for a 3B model instead of a much slower CPU fallback. |
 | Interface | CLI (`scripts/rag/query.py`) | Sufficient for a first prototype; Open WebUI (per the roadmap doc) is a follow-on step once the pipeline is proven |
 
@@ -41,7 +41,7 @@ installed for embeddings or re-ranking**; both run on CPU as required.
 2. **Extraction + chunking**: `pdftotext` per matched PDF, chunked into
    ~650-word / 100-word-overlap pieces.
 3. **Embedding**: `BAAI/bge-small-en-v1.5` on CPU, batch size 32,
-   normalized vectors.
+   normalised vectors.
 4. **Indexing**: chunks + metadata (`literature_id`, title, authors, year,
    journal, DOI, chunk_id) written to
    `outputs/rag/chunks_meta.jsonl` + `outputs/rag/embeddings.npy`; FAISS
@@ -59,7 +59,7 @@ installed for embeddings or re-ranking**; both run on CPU as required.
 7. **Generation**: if Ollama is reachable, builds a citation-constrained
    prompt (every source is presented as `SOURCE [literature_id] Author et
    al. Year — Title`) and asks the model to end every factual sentence
-   with its `[literature_id]` citation. If Ollama is not reachable, falls
+   with its `[literature_id]` citation. If Ollama isn't reachable, falls
    back to printing the ranked, cited evidence chunks directly (no
    generation) — retrieval and citation are the part that must never
    silently fail.
@@ -181,14 +181,14 @@ even with no model server running.
 
 - **300 of ~20,000 PDFs indexed (~1.5%).** Most questions about niche
   topics will correctly come back "unresolved" simply because the sample
-  doesn't contain relevant papers yet — that is expected at this stage,
+  doesn't contain relevant papers yet — that's expected at this stage,
   not a bug in retrieval.
 - **Claim-strength over-reporting on absolute cosine — FIXED 2026-07-07
   by adding a cross-encoder re-ranker** (`scripts/rag/rerank.py`,
   `cross-encoder/ms-marco-MiniLM-L-6-v2`). The old heuristic counted how
   many *distinct papers* cleared an *absolute* cosine-similarity bar for
   the *question*; two problems were observed and are now addressed:
-  1. **BGE-small ran high absolute cosine, and did not separate on-topic
+  1. **BGE-small ran high absolute cosine, and didn't separate on-topic
      from topic-adjacent.** On this corpus genuinely on-topic hits scored
      ~0.77-0.87 cosine, but the out-of-sample "CRISPR gene editing
      protocols for shark embryos" probe still pulled shark-genomics papers
@@ -205,7 +205,7 @@ even with no model server running.
      the exact threshold values as a reasonable first cut, not tuned
      statistics.
   2. **It is still agreement-of-topic, not agreement-of-claim** — this part
-     is *not* fixed by the re-ranker. It does not
+     is *not* fixed by the re-ranker. It doesn't
      check whether the retrieved papers agree with *each other* on a
      specific finding, or whether one contradicts the others — two papers
      with opposite conclusions both count as "support". Fixing this needs
@@ -221,15 +221,15 @@ even with no model server running.
 - **Chunking is naive** (fixed word count, no section/heading awareness).
   Extraction pipeline already has section-aware logic
   (`strip_non_body_sections` in `extract_schema_columns.py`) that RAG
-  chunking does not yet reuse — a chunk can straddle e.g. an abstract and
+  chunking doesn't yet reuse — a chunk can straddle e.g. an abstract and
   results section boundary.
 - **PDF→literature_id matching is heuristic** (surname + year ± 1 + title
   word overlap ≥ 0.25). At 300-paper scale this measured 86% match rate
   with 0 observed false positives on manual spot-check of the sample, but
-  it has not been validated at the full-corpus scale where more
+  it hasn't been validated at the full-corpus scale where more
   near-duplicate titles/authors exist.
 - **`qwen2.5:3b-instruct` is small.** It follows the citation-per-sentence
-  instruction well in testing but is not a strong reasoner; a larger model
+  instruction well in testing but isn't a strong reasoner; a larger model
   (7B-14B) would likely produce better synthesis if CPU/Vulkan throughput
   allows it — worth trying now that Ollama+Vulkan on the 1080 Ti is
   confirmed working.
