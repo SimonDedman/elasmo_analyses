@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-This document synthesizes three data sources to create a comprehensive, hierarchical database of analytical techniques in elasmobranch research:
+This document synthesises three data sources to create a comprehensive, hierarchical database of analytical techniques in elasmobranch research:
 
 1. **EEA 2025 Conference Data** (`techniques_from_titles_abstracts.csv`) - 135 technique applications from 68 presentations
 2. **Discipline Structure Analysis** (Option B: 8 disciplines with inclusion/exclusion boundaries)
@@ -125,7 +125,7 @@ This document synthesizes three data sources to create a comprehensive, hierarch
 ```
 
 **✅ Well Covered:**
-- Social behavior, cognition, sensory biology
+- Social behaviour, cognition, sensory biology
 
 **⚠️ Gaps in Planned Searches:**
 - Video analysis (add: `+video +analysis` or `+UAV +drone`)
@@ -133,7 +133,7 @@ This document synthesizes three data sources to create a comprehensive, hierarch
 
 **⚠️ Missing from EEA but in Planned:**
 - Specific sensory modalities (electro, olfaction, magnetoreception)
-- Predation behavior
+- Predation behaviour
 
 **Recommendation:** Add video/drone search term; maintain sensory specifics.
 
@@ -160,10 +160,10 @@ This document synthesizes three data sources to create a comprehensive, hierarch
 
 **✅ Excellent Coverage:**
 - All EEA techniques directly represented
-- Good hierarchical organization (diet → stomach/DNA/isotopes)
+- Good hierarchical organisation (diet → stomach/DNA/isotopes)
 
 **⚠️ Missing from EEA but in Planned:**
-- Food web modeling, energy flow (theoretical, less common in conference)
+- Food web modelling, energy flow (theoretical, less common in conference)
 - Niche partitioning
 
 **Recommendation:** Maintain current search terms; strong alignment.
@@ -348,7 +348,7 @@ This document synthesizes three data sources to create a comprehensive, hierarch
 **⚠️ Missing from EEA but in Planned:**
 - Neural networks (likely too cutting-edge for 2025 conference)
 - GAM (common but perhaps not highlighted in titles/abstracts)
-- Ensemble modeling
+- Ensemble modelling
 
 **Recommendation:** Add meta-analysis and time series; maintain AI/ML breadth.
 
@@ -396,13 +396,13 @@ These are validated by conference presentations and should be considered:
 These may be important for literature but weren't conference topics:
 
 **Biology:** Telomere studies, Endocrinology, Metabolic studies
-**Behaviour:** Electroreception, Olfaction, Magnetoreception, Predation behavior specifics
-**Trophic:** Food web modeling, Energy flow, Niche partitioning
+**Behaviour:** Electroreception, Olfaction, Magnetoreception, Predation behaviour specifics
+**Trophic:** Food web modelling, Energy flow, Niche partitioning
 **Genetics:** SNPs (specific), Transcriptomics, Conservation genetics (as category)
 **Movement:** Satellite tracking, Home range estimation methods
-**Fisheries:** Stock assessment (all sub-methods), CPUE standardization, Surplus production
+**Fisheries:** Stock assessment (all sub-methods), CPUE standardisation, Surplus production
 **Conservation:** Stakeholder engagement, Ecosystem services
-**Data Science:** Neural networks, GAM, Ensemble modeling
+**Data Science:** Neural networks, GAM, Ensemble modelling
 
 **Decision:**
 - **KEEP ALL** - These represent established or emerging methods in literature
@@ -807,7 +807,7 @@ INSERT INTO categories (discipline_id, category_name, category_description, sort
 
 **Process:**
 1. Load CSV into temporary table
-2. Match technique names to `techniques` table (normalize for matching)
+2. Match technique names to `techniques` table (normalise for matching)
 3. Aggregate by technique: COUNT presentations, COLLECT presentation_ids
 4. INSERT into `eea_evidence` table
 
@@ -1167,7 +1167,7 @@ print("\n✓ Batch search execution complete")
 10. **Expert Review Preparation:**
     - Generate discipline-specific reports
     - Export reference lists
-    - Create summary visualizations
+    - Create summary visualisations
 
 ---
 

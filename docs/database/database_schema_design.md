@@ -8,7 +8,7 @@ editor_options:
 
 ## Overview
 
-This document analyzes the database requirements for the EEA 2025 Data
+This document analyses the database requirements for the EEA 2025 Data
 Panel systematic literature review, evaluates the proposed wide-sparse
 schema design, and recommends optimal database format and structure.
 
@@ -125,7 +125,7 @@ d_data_science BOOLEAN DEFAULT FALSE
 
 **Alternatives Considered:**
 
-1.  **Normalized table:**
+1.  **Normalised table:**
     `discipline_assignments(study_id, discipline_id)`
     -   ❌ More complex queries (requires JOINs)
     -   ❌ Less intuitive for reviewers
@@ -208,7 +208,7 @@ def classify_study_type(title, abstract):
 
 **Prefix:** `auth_` for "author institution"
 
--   One binary column per UN-recognized nation (\~197 countries)
+-   One binary column per UN-recognised nation (\~197 countries)
 -   Captures multi-national collaborations
 -   Enables research capacity analysis
 
@@ -271,7 +271,7 @@ b_caribbean_sea BOOLEAN
 
 -   **IHO Sea Areas** (International Hydrographic Organization)
 -   Available via VLIZ Marine Regions: <https://www.marineregions.org/>
--   Standardized geographic boundaries
+-   Standardised geographic boundaries
 
 #### Schema C: Sub-Basins (Optional)
 
@@ -381,11 +381,11 @@ WHERE EXISTS (
 
 ### 2.7 species
 
-**Decision:** ⚠️ **BINARIZE WIDE WITH STANDARDIZED NOMENCLATURE**
+**Decision:** ⚠️ **BINARIZE WIDE WITH STANDARDISED NOMENCLATURE**
 
 **Rationale:**
 
--   \~1,200+ chondrichthyan species (sharks, rays, skates, chimaeras)
+-   \~1,200+ chondrichthyan species (sharks, rays, skates, and chimaeras)
 -   Papers commonly study multiple species
 -   Enables species-specific trend analysis
 -   Supports taxonomic aggregation (genus, family, order)
@@ -445,7 +445,7 @@ def extract_species_binomials(text):
 
 -   1,200 boolean columns ≈ 1,200 bits = 150 bytes per row (sparse)
 -   For 10,000 studies: 150 bytes \* 10,000 = 1.5 MB (trivial)
--   Modern databases optimize sparse boolean columns efficiently
+-   Modern databases optimise sparse boolean columns efficiently
 
 ### 2.8 method_families & analysis_approach
 
@@ -499,9 +499,9 @@ st_microsatellites BOOLEAN DEFAULT FALSE
 -- ... (to be determined from Phase 2 review)
 ```
 
-**Hierarchical Method Categorization:**
+**Hierarchical Method Categorisation:**
 
-Based on `outputs/method_hierarchy_table.csv`, methods are organized as:
+Based on `outputs/method_hierarchy_table.csv`, methods are organised as:
 
 ```
 discipline → method_family → parent_technique → subtechnique
@@ -521,7 +521,7 @@ Data science methods (e.g., Machine Learning, Bayesian Methods, Time Series) are
 1.  **Phase 1** (Exploratory review, n=50-100 per discipline):
     -   Manually extract methods from papers
     -   Create initial method vocabulary
-    -   Standardize naming conventions
+    -   Standardise naming conventions
 2.  **Phase 2** (Main review):
     -   Use Phase 1 vocabulary as binary columns
     -   Add new methods as discovered
@@ -584,7 +584,7 @@ CREATE TABLE paper_disciplines_techniques (
 **Pros:**
 - ✅ Maintains "one row = one paper" in main table
 - ✅ No duplicate metadata
-- ✅ Normalized database design
+- ✅ Normalised database design
 
 **Cons:**
 - ❌ Requires JOINs for most queries (slower, more complex)
@@ -907,7 +907,7 @@ Parquet.
     -   Native Parquet support
     -   R integration via `{duckdb}` and `{duckplyr}`
     -   Python integration via `duckdb` package
-    -   OLAP-optimized (analytics, not transactions)
+    -   OLAP-optimised (analytics, not transactions)
     -   Zero configuration for collaborators
 2.  **Parquet:**
     -   Columnar storage format
@@ -1005,7 +1005,7 @@ git push
 #### Phase 4: Analysis & Reporting (duckplyr)
 
 -   Use `{duckplyr}` for dplyr-compatible DuckDB queries
--   Automatic query optimization
+-   Automatic query optimisation
 -   Works seamlessly with existing dplyr code
 
 ``` r
@@ -1184,7 +1184,7 @@ ORDER BY num_countries DESC;
 1.  **Phase 1:** Start with CSV template for reviewers
 2.  **Phase 2:** Import to DuckDB, export to Parquet
 3.  **Phase 3:** Distribute Parquet via Git LFS
-4.  **Phase 4:** Analyze with duckplyr/duckdb
+4.  **Phase 4:** Analyse with duckplyr/duckdb
 
 ### 🎯 Key Advantages
 

@@ -912,7 +912,7 @@ cat(sprintf("Influential citations: %d\n",
 ### Step-by-Step Process
 
 1.  **Preparation** (Week 1)
-    -   Finalize discipline-method search terms matrix
+    -   Finalise discipline-method search terms matrix
     -   Set up Python/R environment with required packages
     -   Create database schema
     -   Test single search manually to verify CSV format
@@ -1110,7 +1110,7 @@ Institution: Zoologische Staatssammlung München (ZSM)
 +conservation +genetic*
 ```
 
-### 5. Movement, Space Use, & Habitat Modeling
+### 5. Movement, Space Use, & Habitat Modelling
 
 ```         
 +telemetry +acoustic

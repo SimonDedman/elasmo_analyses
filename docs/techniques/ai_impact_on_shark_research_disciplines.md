@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Artificial Intelligence is rapidly transforming shark research across all eight core disciplines. This report analyzes current AI adoption and projects future impacts for each discipline, based on the EEA 2025 Data Panel analysis of 208 techniques across 4,543 papers.
+Artificial Intelligence is rapidly transforming shark research across all eight core disciplines. This report analyses current AI adoption and projects future impacts for each discipline, based on the EEA 2025 Data Panel analysis of 208 techniques across 4,543 papers.
 
 **Key Finding**: DATA discipline techniques (machine learning, neural networks, deep learning) are penetrating all disciplines, but adoption rates vary significantly by field.
 
@@ -38,21 +38,21 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 **Common AI Applications:**
 1. **Image Recognition** - Photo-ID, species classification, behaviour analysis
 2. **Pattern Detection** - Acoustic telemetry, movement patterns, habitat use
-3. **Predictive Modeling** - Stock assessment, population projections, climate impacts
+3. **Predictive Modelling** - Stock assessment, population projections, climate impacts
 4. **Natural Language Processing** - Literature mining, database construction, metadata extraction
 5. **Automated Data Processing** - Video analysis, acoustic processing, genomic pipelines
 
 ### Key Drivers
 
 **Technology:**
-- Cloud computing democratizes access to GPU resources
+- Cloud computing democratises access to GPU resources
 - Pre-trained models (transfer learning) reduce training data needs
 - AutoML tools lower technical barriers
 - Edge computing enables real-time field deployments
 
 **Data:**
 - Growing datasets (biologging, video, genomics)
-- Standardization of data formats
+- Standardisation of data formats
 - Open science movement
 - Citizen science contributions
 
@@ -69,7 +69,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 3. **Data Quality** - AI requires large, clean datasets
 4. **Computational Resources** - Not all institutions have GPU access
 5. **Validation** - Difficult to verify AI outputs in novel scenarios
-6. **Funding** - AI development costly, grant systems favor traditional methods
+6. **Funding** - AI development costly, grant systems favour traditional methods
 
 ---
 
@@ -123,7 +123,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **3. Automated Ethogram Generation**
 - **Technology**: Self-supervised learning
-- **Impact**: Discover behaviours without human labeling
+- **Impact**: Discover behaviours without human labelling
 - **Timeline**: 3-5 years
 - **Barrier**: Validation against expert observations
 
@@ -156,7 +156,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 **Immediate (2025-2026):**
 1. **Adopt pose estimation tools** (DeepLabCut) for video analysis
 2. **Pre-label datasets** for future AI training
-3. **Standardize video formats** for cross-study comparisons
+3. **Standardise video formats** for cross-study comparisons
 4. **Learn Python** and basic computer vision
 
 **Medium-term (2026-2028):**
@@ -209,7 +209,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Technology**: Computer vision, object detection
 - **Impact**: Rapid morphometric data collection
 - **Timeline**: 2-3 years
-- **Barrier**: Standardized imaging protocols needed
+- **Barrier**: Standardised imaging protocols needed
 
 **2. Predictive Growth Models**
 - **Technology**: Neural ODEs, physics-informed ML
@@ -221,7 +221,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Technology**: Convolutional neural networks
 - **Impact**: Automated tissue classification, maturity staging
 - **Timeline**: 2-4 years
-- **Barrier**: Expert-labeled training datasets needed
+- **Barrier**: Expert-labelled training datasets needed
 
 #### Medium Probability (50-75%)
 
@@ -232,7 +232,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Barrier**: Mechanistic understanding needed
 
 **5. Health Index Automation**
-- **Technology**: Multi-modal learning (images + blood + behavior)
+- **Technology**: Multi-modal learning (images + blood + behaviour)
 - **Impact**: Rapid health assessment
 - **Timeline**: 4-6 years
 - **Barrier**: Comprehensive health datasets rare
@@ -250,9 +250,9 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 ### Recommendations for BIO Researchers
 
 **Immediate (2025-2026):**
-1. **Digitize specimens** - High-resolution photos for future analysis
-2. **Standardize imaging** - Consistent protocols across studies
-3. **Create reference collections** - Expert-labeled training data
+1. **Digitise specimens** - High-resolution photos for future analysis
+2. **Standardise imaging** - Consistent protocols across studies
+3. **Create reference collections** - Expert-labelled training data
 4. **Adopt ImageJ/FIJI** with AI plugins
 
 **Medium-term (2026-2028):**
@@ -273,9 +273,9 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 ### Current Techniques (9 techniques, 1,074 papers)
 
 **AI-Ready:**
-- Tourism (775 papers) - Sentiment analysis, predictive modeling
+- Tourism (775 papers) - Sentiment analysis, predictive modelling
 - Vulnerability Assessment (49 papers) - **HIGH AI POTENTIAL**
-- MPA Effectiveness (12 papers) - Spatial modeling
+- MPA Effectiveness (12 papers) - Spatial modelling
 
 **Traditional:**
 - IUCN Red List, Stakeholder Engagement, Policy Evaluation
@@ -301,17 +301,17 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Technology**: Rule-based AI + expert systems
 - **Impact**: Rapid assessment of data-deficient species
 - **Timeline**: 2-3 years
-- **Barrier**: IUCN criteria formalization
+- **Barrier**: IUCN criteria formalisation
 
-**2. Predictive Threat Modeling**
+**2. Predictive Threat Modelling**
 - **Technology**: Random forests, gradient boosting
 - **Impact**: Identify emerging threats before population declines
 - **Timeline**: 2-4 years
 - **Barrier**: Requires long-term monitoring data
 
-**3. MPA Optimization**
-- **Technology**: Spatial optimization algorithms, reinforcement learning
-- **Impact**: Design MPAs that maximize conservation outcomes
+**3. MPA Optimisation**
+- **Technology**: Spatial optimisation algorithms, reinforcement learning
+- **Impact**: Design MPAs that maximise conservation outcomes
 - **Timeline**: 3-5 years
 - **Barrier**: Multiple competing objectives
 
@@ -330,7 +330,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Barrier**: Incomplete conflict reporting
 
 **6. Policy Impact Prediction**
-- **Technology**: Causal inference, counterfactual modeling
+- **Technology**: Causal inference, counterfactual modelling
 - **Impact**: Forecast policy outcomes before implementation
 - **Timeline**: 5+ years
 - **Barrier**: Few controlled experiments in conservation
@@ -341,14 +341,14 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 |----------------------|----------------|--------|--------|
 | IUCN Assessment | Automated criteria application | **MEDIUM** | Assess 1000s of species rapidly |
 | Vulnerability Assessment | Predictive threat models | **HIGH** | Proactive conservation |
-| MPA Design | Spatial optimization | **HIGH** | Maximize conservation ROI |
+| MPA Design | Spatial optimisation | **HIGH** | Maximise conservation ROI |
 | Stakeholder Engagement | Sentiment analysis | **MEDIUM** | Real-time feedback |
-| Tourism Impact | Predictive modeling | **MEDIUM** | Sustainable tourism planning |
+| Tourism Impact | Predictive modelling | **MEDIUM** | Sustainable tourism planning |
 
 ### Recommendations for CON Researchers
 
 **Immediate (2025-2026):**
-1. **Digitize conservation data** - Species observations, threats, policies
+1. **Digitise conservation data** - Species observations, threats, policies
 2. **Adopt GIS + ML tools** (QGIS, R spatial, GeoPandas)
 3. **Collaborate with data scientists** for predictive models
 4. **Use LLMs** (ChatGPT, Claude) for literature synthesis
@@ -407,10 +407,10 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Technology**: Embedding ecological/physical laws in NNs
 - **Impact**: Better predictions with less data, interpretable models
 - **Timeline**: 2-4 years
-- **Barrier**: Formalizing ecological theory for AI
+- **Barrier**: Formalising ecological theory for AI
 
 **3. Automated ML (AutoML)**
-- **Technology**: Neural architecture search, hyperparameter optimization
+- **Technology**: Neural architecture search, hyperparameter optimisation
 - **Impact**: Non-experts can build custom models
 - **Timeline**: 1-3 years (tools exist, adoption lagging)
 - **Barrier**: Trust and understanding
@@ -442,7 +442,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 2. **Transformers** - For time series, sequences
 3. **Diffusion Models** - For data augmentation, simulation
 4. **Federated Learning** - Privacy-preserving multi-institution learning
-5. **Active Learning** - Efficient labeling strategies
+5. **Active Learning** - Efficient labelling strategies
 
 ### Recommendations for DATA Researchers
 
@@ -471,8 +471,8 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **AI-Ready:**
 - Stock Assessment (984 papers) - **HIGH AI POTENTIAL**
-- CPUE Standardization (21 papers) - ML models
-- Bycatch Assessment (23 papers) - Predictive modeling
+- CPUE Standardisation (21 papers) - ML models
+- Bycatch Assessment (23 papers) - Predictive modelling
 
 **Traditional:**
 - Yield per Recruit, Virtual Population Analysis, Surplus Production Models
@@ -501,7 +501,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **2. Predictive Bycatch Models**
 - **Technology**: Ensemble methods, deep learning
-- **Impact**: Dynamic closures to minimize bycatch
+- **Impact**: Dynamic closures to minimise bycatch
 - **Timeline**: 2-4 years
 - **Barrier**: Real-time data streams needed
 
@@ -515,11 +515,11 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **4. Catch Forecasting**
 - **Technology**: Recurrent neural networks, transformers
-- **Impact**: Predict future catch rates, optimize effort
+- **Impact**: Predict future catch rates, optimise effort
 - **Timeline**: 3-5 years
 - **Barrier**: Non-stationary environments (climate change)
 
-**5. Fleet Behavior Modeling**
+**5. Fleet Behaviour Modelling**
 - **Technology**: Agent-based models + reinforcement learning
 - **Impact**: Predict fishing effort under policy scenarios
 - **Timeline**: 4-6 years
@@ -536,16 +536,16 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 | Traditional Technique | AI Enhancement | Effort | Impact |
 |----------------------|----------------|--------|--------|
 | Stock Assessment | ML-augmented age-structured models | **HIGH** | Handle data gaps |
-| CPUE Standardization | Neural networks | **MEDIUM** | Capture non-linearities |
+| CPUE Standardisation | Neural networks | **MEDIUM** | Capture non-linearities |
 | Bycatch Assessment | Predictive spatiotemporal models | **MEDIUM** | Real-time risk maps |
-| Yield per Recruit | RL-optimized harvest strategies | **HIGH** | Adaptive management |
+| Yield per Recruit | RL-optimised harvest strategies | **HIGH** | Adaptive management |
 | Fisher Interviews | NLP for qualitative data | **MEDIUM** | Systematic analysis |
 
 ### Recommendations for FISH Researchers
 
 **Immediate (2025-2026):**
-1. **Adopt ML for CPUE standardization** (random forests, boosted trees)
-2. **Digitize catch logs** for future AI applications
+1. **Adopt ML for CPUE standardisation** (random forests, boosted trees)
+2. **Digitise catch logs** for future AI applications
 3. **Implement electronic monitoring** on vessels
 4. **Collaborate with computer vision experts**
 
@@ -721,7 +721,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **6. Automated Acoustic Array Design**
 - **Technology**: Reinforcement learning
-- **Impact**: Optimize receiver placement for coverage
+- **Impact**: Optimise receiver placement for coverage
 - **Timeline**: 3-5 years
 - **Barrier**: Deployment costs
 
@@ -730,7 +730,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 | Traditional Technique | AI Enhancement | Effort | Impact |
 |----------------------|----------------|--------|--------|
 | State-Space Models | Deep learning SSMs | **HIGH** | Handle irregular sampling, non-linearity |
-| Hidden Markov Models | Neural HMMs | **MEDIUM** | More complex behaviors |
+| Hidden Markov Models | Neural HMMs | **MEDIUM** | More complex behaviours |
 | Species Distribution Model | Neural networks, ensemble | **HIGH** | Better predictions, interactions |
 | Network Analysis | Graph neural networks | **HIGH** | Dynamic networks |
 | Home Range | Automated boundary detection | **MEDIUM** | Objective delineation |
@@ -752,7 +752,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 **Long-term (2028+):**
 1. **AI-powered dynamic MPAs** adjusting in real-time
 2. **Generative models** for scenario testing
-3. **Causal models** linking environment to behavior
+3. **Causal models** linking environment to behaviour
 
 ---
 
@@ -774,7 +774,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **Low-Medium (2020-2025):**
 1. **ML for DNA Metabarcoding** - Taxonomic classification
-2. **Food Web Modeling** - Network analysis with ML
+2. **Food Web Modelling** - Network analysis with ML
 3. **Isotope Mixing Models** - Bayesian + ML hybrids
 
 **Why Lower Than Expected?**
@@ -818,11 +818,11 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - **Timeline**: 3-5 years
 - **Barrier**: Ground truth difficult to establish
 
-**6. Foraging Behavior Prediction**
+**6. Foraging Behaviour Prediction**
 - **Technology**: Combining movement + environment + prey
 - **Impact**: Predict where sharks feed
 - **Timeline**: 4-6 years
-- **Barrier**: Linking behavior to actual feeding
+- **Barrier**: Linking behaviour to actual feeding
 
 #### Technique Transformations
 
@@ -831,13 +831,13 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 | Stomach Content Analysis | Computer vision for prey ID | **HIGH** | 10-100x speedup |
 | DNA Metabarcoding | Automated taxonomic assignment | **MEDIUM** | Eliminate manual BLAST |
 | Stable Isotope Analysis | Predictive models | **MEDIUM** | Reduce sampling costs |
-| NMDS | Neural embeddings | **LOW** | Better visualization |
+| NMDS | Neural embeddings | **LOW** | Better visualisation |
 | Food Web Models | Graph neural networks | **HIGH** | Dynamic food webs |
 
 ### Recommendations for TRO Researchers
 
 **Immediate (2025-2026):**
-1. **Digitize stomach contents** - High-res photos for future AI
+1. **Digitise stomach contents** - High-res photos for future AI
 2. **Adopt ML for metabarcoding** pipelines
 3. **Use ensemble models** for isotope mixing
 4. **Compile isotope databases** for AI training
@@ -870,7 +870,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **Conceptual:**
 1. **When to use AI** vs. traditional methods
-2. **Model Validation** - Overfitting, generalization, cross-validation
+2. **Model Validation** - Overfitting, generalisation, cross-validation
 3. **Interpretability** - Understanding predictions, SHAP values
 4. **Ethics** - Bias, fairness, privacy, reproducibility
 5. **Communication** - Explaining AI to non-experts
@@ -898,7 +898,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **Priority Areas:**
 1. **Training Programs** - Workshops, bootcamps, fellowships
-2. **Benchmark Datasets** - Curated, expert-labeled data
+2. **Benchmark Datasets** - Curated, expert-labelled data
 3. **Computational Resources** - Cloud credits, GPU access
 4. **Interdisciplinary Teams** - Ecologists + data scientists
 5. **Software Infrastructure** - Maintain critical tools (QIIME, DADA2, etc.)
@@ -916,7 +916,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 **Infrastructure:**
 1. **HPC Access** - University clusters, cloud partnerships
 2. **Data Storage** - Institutional repositories, data management plans
-3. **Software Licenses** - MATLAB, ArcGIS, specialized tools
+3. **Software Licences** - MATLAB, ArcGIS, specialised tools
 4. **Training** - Workshops, short courses, online resources
 
 **Support:**
@@ -936,7 +936,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **New Article Types:**
 1. **Negative Results** - When AI doesn't work
-2. **Benchmarks** - Standardized datasets for comparisons
+2. **Benchmarks** - Standardised datasets for comparisons
 3. **Software Papers** - Credit for tool development
 4. **Replication Studies** - Verify published AI methods
 
@@ -956,7 +956,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 - Conservation, Biology, Trophic Ecology lagging but catching up
 
 **3. Technical barriers are falling**
-- Pre-trained models democratize AI
+- Pre-trained models democratise AI
 - AutoML lowers expertise requirements
 - Cloud computing removes hardware barriers
 
@@ -974,7 +974,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 
 **2025-2026 (Immediate):**
 - Adopt existing AI tools (computer vision, ML classification)
-- Digitize data for future AI applications
+- Digitise data for future AI applications
 - Learn Python and basic ML
 
 **2026-2028 (Near-term):**
@@ -990,7 +990,7 @@ Artificial Intelligence is rapidly transforming shark research across all eight 
 ### The Bottom Line
 
 **AI will not replace shark researchers** - it will amplify their capabilities. Those who embrace AI early will:
-- Analyze 10-100x more data
+- Analyse 10-100x more data
 - Discover patterns humans miss
 - Make faster, data-driven conservation decisions
 - Collaborate globally via shared models/datasets
@@ -1015,7 +1015,7 @@ This report provides a roadmap. The future of shark research is AI-augmented, in
 ### BEH
 - DeepLabCut, SLEAP (pose estimation)
 - YOLO, Faster R-CNN (object detection)
-- BORIS + AI plugins (behavior annotation)
+- BORIS + AI plugins (behaviour annotation)
 - igraph, networkX (social networks)
 
 ### BIO
@@ -1026,7 +1026,7 @@ This report provides a roadmap. The future of shark research is AI-augmented, in
 
 ### CON
 - MaxEnt, SDM (species distribution)
-- Marxan + ML (MPA optimization)
+- Marxan + ML (MPA optimisation)
 - spaCy, NLTK (sentiment analysis)
 - QGIS + ML plugins (spatial analysis)
 

@@ -8,12 +8,12 @@
 
 ## Synthetic-section pollution fix (added 2026-04-21)
 
-The 2026-04-20 TITLE/KEYWORDS injection (see below) had a subtle defect. After prepending `TITLE\n<title>\n\n` and `KEYWORDS\n<block>\n\n`, `_label_sections()` scans line-by-line for section-header matches. Every line between the injected header and the *next* recognised header stays attached to the injected label. For papers whose body text does not hit a detected header promptly (e.g. where Abstract is not on a line by itself, so `_ABSTRACT_RE` fails), TITLE ended up absorbing all of the author and affiliation text at weight 2.0. Paper 27537 (McInturf 2019) fired `d_conservation` with weighted score 6.0 purely from the phrase "Department of Wildlife, Fish and Conservation Biology" in the author-affiliation footnote.
+The 2026-04-20 TITLE/KEYWORDS injection (see below) had a subtle defect. After prepending `TITLE\n<title>\n\n` and `KEYWORDS\n<block>\n\n`, `_label_sections()` scans line-by-line for section-header matches. Every line between the injected header and the *next* recognised header stays attached to the injected label. For papers whose body text doesn't hit a detected header promptly (e.g. where Abstract isn't on a line by itself, so `_ABSTRACT_RE` fails), TITLE ended up absorbing all of the author and affiliation text at weight 2.0. Paper 27537 (McInturf 2019) fired `d_conservation` with weighted score 6.0 purely from the phrase "Department of Wildlife, Fish and Conservation Biology" in the author-affiliation footnote.
 
 Three coordinated changes close this hole:
 
 1. **OTHER terminator injection.** TITLE and KEYWORDS injections now write `TITLE\n<title>\nOTHER\n\n` and `KEYWORDS\n<block>\nOTHER\n\n`. A new `("OTHER", ^OTHER\s*$)` entry sits at the bottom of `_SECTION_PATTERNS` so the terminator line is recognised as a header boundary. Both synthetic sections are now strictly one chunk wide.
-2. **OTHER weighted to zero.** `_SECTION_WEIGHTS` entries for `OTHER` were `0.25` across all seven schemas. They are now `0.0`. Text the labeller cannot attribute to a named section contributes no score — front matter, author affiliations, and any lines between detected section headers that don't form part of a labelled section.
+2. **OTHER weighted to zero.** `_SECTION_WEIGHTS` entries for `OTHER` were `0.25` across all seven schemas. They are now `0.0`. Text the labeller can't attribute to a named section contributes no score — front matter, author affiliations, and any lines between detected section headers that don't form part of a labelled section.
 3. **Springer-affiliation paragraph removal.** `strip_non_body_sections()` gained a `_strip_affiliation_blocks()` pass (step 1b) that removes affiliation footnotes appearing after the Abstract. A line at the start of a paragraph matching `(?:[A-Z]\.\s*){1,3}[A-Z][a-z]{2,}(?::|·|&|;)(?:[A-Z]\.\s*){1,3}[A-Z][a-z]{2,}` (two-or-more author-initials-runs joined by `:`, `·`, `&`, or `;` — but NOT comma, to avoid matching mid-sentence citations) is treated as a candidate block start; if the block (extended to the next blank line) contains an institution keyword (`Department|Institute|School|Laboratory|Faculty|College|Aquarium|Museum|Foundation|Consultants|Centro|Istituto|Universit...`), it is removed. Verified on 27537: conservation-term occurrences drop from 4 → 1 (only the legitimate IUCN citation remains).
 
 The affiliation-block heuristic is pattern-specific to Springer-style layouts. Future layouts (Elsevier, Wiley, IEEE) may need additional patterns; extend `_SPRINGER_AFFIL_START_RE` or add layout-specific rules.
@@ -85,7 +85,7 @@ The `_SECTION_PATTERNS` list places the TITLE and KEYWORDS patterns BEFORE the e
 
 The validation UI's section-weights table (driven by `rules.json` → `_section_weights`) shows TITLE and KEYWORDS as the leftmost columns rendered in dark green (`w-max` CSS class).
 
-**Schemas without section weighting** (`ob_`, `sp_`, `a_`, `depth_`) do not benefit from TITLE/KEYWORDS injection. `ob_` is fed from a separate geographic pipeline; `sp_` and `a_` are integer counts not binary classifications; `depth_` is regex-extracted numeric metadata. Whether to extend section weighting to `sp_` and `a_` is an open question for the validation meeting.
+**Schemas without section weighting** (`ob_`, `sp_`, `a_`, `depth_`) don't benefit from TITLE/KEYWORDS injection. `ob_` is fed from a separate geographic pipeline; `sp_` and `a_` are integer counts not binary classifications; `depth_` is regex-extracted numeric metadata. Whether to extend section weighting to `sp_` and `a_` is an open question for the validation meeting.
 
 ---
 
@@ -240,7 +240,7 @@ All categories now use **universal frequency-based scoring** with per-column con
 
 All schema categories use `findall()` frequency counting rather than simple presence/absence. Each column has a configurable **threshold** — the minimum total mention count (summed across all matching terms) required for binary=1.
 
-**Rationale:** A single mention of "marine" in a freshwater stingray paper should not trigger `eco_marine=1`. Generic terms (marine, fishing, behaviour) get higher thresholds (3+); specific terms (depredation, coral reef, ampullae of Lorenzini) get threshold=1.
+**Rationale:** A single mention of "marine" in a freshwater stingray paper shouldn't trigger `eco_marine=1`. Generic terms (marine, fishing, behaviour) get higher thresholds (3+); specific terms (depredation, coral reef, ampullae of Lorenzini) get threshold=1.
 
 **Decision rules:**
 

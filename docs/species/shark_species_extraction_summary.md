@@ -74,7 +74,7 @@ Total: 1,311 species across 19 alphabetical categories
    - Habitat description
    - Depth range
    - Maximum size, weight, and age
-   - Biology (reproduction, diet, behavior)
+   - Biology (reproduction, diet, behaviour)
    - Human uses & conservation status
 
 5. **Additional Information:**
@@ -408,7 +408,7 @@ ALTER TABLE literature_review ADD COLUMN IF NOT EXISTS sp_prionace_glauca BOOLEA
 
 ---
 
-## Acknowledgments
+## Acknowledgements
 
 **Data Source:** Shark-References (https://shark-references.com)
 **Maintainers:** Zoologische Staatssammlung München (ZSM)

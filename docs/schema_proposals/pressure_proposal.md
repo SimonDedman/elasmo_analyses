@@ -52,7 +52,7 @@ Classify each paper by the pressure/threat type(s) it addresses. Enables analyse
 
 1. **Granularity:** Level 1 is sufficient. Gear sub-types (trawl, longline, gillnet) are covered in the separate Gear proposal.
 2. **"No pressure" papers:** Leave all pr\_ columns as 0 rather than marking explicitly.
-3. **Emerging threats:** Include electromagnetic, noise, light — even if rare now, they are growing and the columns cost nothing.
+3. **Emerging threats:** Include electromagnetic, noise, light — even if rare now, they're growing and the columns cost nothing.
 4. **Finning vs targeted:** Split into `pr_shark_finning` (finning specifically) and `pr_targeted_fishing` (directed shark fisheries for meat, liver oil, etc.). Finning can occur in both targeted and bycatch contexts.
 5. **Depredation:** Added as separate category (`pr_depredation`). Not a human pressure per se but a human-induced shark behaviour. Relevant to recreational fishing, commercial fishing, and tourism/provisioning contexts. Keeping it separate avoids forcing it into an ill-fitting category.
 6. **False-positive-prone terms:** SST, dissolved oxygen, pH, "debris", "shipping", "boat", "range expansion" removed or tightened with anchor terms to reduce false positives.

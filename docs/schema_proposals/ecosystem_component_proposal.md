@@ -71,7 +71,7 @@ LLM-based extraction (Phase 2) will supplement keyword matching to catch implici
 
 ## Confidence / Guess Columns
 
-When the extraction process cannot confidently assign an ecosystem level, a guess system is used rather than leaving data blank:
+When the extraction process can't confidently assign an ecosystem level, a guess system is used rather than leaving data blank:
 
 | Column | Type | Description |
 |--------|------|-------------|
@@ -88,7 +88,7 @@ When the extraction process cannot confidently assign an ecosystem level, a gues
 
 1. **Multiple habitats per paper:** Papers often span habitats (e.g., "movement between reef and pelagic zones"). Binary columns handle this naturally.
 2. **Level 3 depth zones vs. numeric depth:** Depth zones provide quick filtering; `depth_range`/`depth_min_m`/`depth_max_m` provide precise data. Both are useful.
-3. **"Not stated":** All eco\_ columns default to 0 when habitat is not stated. No guessing into binary columns. Guesses go to `eco_N_guess` text columns only.
+3. **"Not stated":** All eco\_ columns default to 0 when habitat isn't stated. No guessing into binary columns. Guesses go to `eco_N_guess` text columns only.
 
 ## Expected Coverage
 

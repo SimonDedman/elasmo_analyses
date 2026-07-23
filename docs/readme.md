@@ -7,7 +7,7 @@ here? Read the [front-page README](../README.md) first, then the
 [pipeline overview](core/pipeline_overview.md).
 
 Historical and superseded material has been moved under
-[`archive/`](archive/) — if you are looking for old download/Sci-Hub/Tor
+[`archive/`](archive/) — if you're looking for old download/Sci-Hub/Tor
 guides, the EEA-2025 abstract, or dated build logs, they live there.
 
 ---

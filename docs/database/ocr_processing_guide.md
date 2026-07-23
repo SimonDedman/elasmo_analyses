@@ -6,7 +6,7 @@ This guide covers how PDFs in the SharkPapers library are made
 text-searchable so the schema-extraction pipeline can read them. Every
 downstream step (the 123-column extraction in
 `scripts/extract_schema_columns.py`) reads text via `pdftotext` only —
-there is no title/abstract fallback — so a scan with no text layer is
+there's no title/abstract fallback — so a scan with no text layer is
 invisible to the analysis. OCR is what brings image-only and historical
 scans into the analysable corpus.
 
@@ -57,7 +57,7 @@ accent/script matching) so OCR can pick the right model.
 
 Reads the report and runs `ocrmypdf` on each flagged file. Language is
 chosen per file from the `title_language` column via `LANG_MAP`,
-falling back to `eng` when the required pack is not installed. Output
+falling back to `eng` when the required pack isn't installed. Output
 goes to a tempfile and is **atomically renamed** over the original, so a
 crash never leaves a half-written PDF.
 
@@ -94,10 +94,10 @@ runs on different reports don't clobber each other. The default run uses
 are set in Fraktur (blackletter), which the roman-type `deu` model reads
 poorly. When a file is German and its year (from the path's year folder)
 predates 1940, `ocr_one` OCRs it with combined **`deu+Fraktur`** (`deu`
-kept first). It is combined rather than Fraktur-only because the era is
+kept first). It's combined rather than Fraktur-only because the era is
 mixed — by ~1900 many journals had switched to roman (Antiqua) type — and
 A/B tests showed `deu+Fraktur` never does worse than `deu` on roman
-pages while adding the blackletter option. Note Fraktur cannot rescue
+pages while adding the blackletter option. Note Fraktur can't rescue
 degraded/low-quality scans; it only helps genuine blackletter.
 
 ### 3. Verify — whole-document `pdftotext`
@@ -122,7 +122,7 @@ Two independent knobs, because the batch and inline paths differ:
 - **Batch (`ocr_library.py`)** does per-file language selection from the
   detector's `title_language`, mapped through `LANG_MAP`. Multi-model
   codes are supported (e.g. CJK maps to `jpn+chi_sim+chi_tra` because
-  the detector cannot disambiguate Japanese from Chinese); `ocr_one`
+  the detector can't disambiguate Japanese from Chinese); `ocr_one`
   filters each `+`-joined code against installed packs.
 - **Inline ingest (`ingest_pdfs.py`)** has *no* per-file detection — it
   applies one fixed string, `OCR_LANGS = "eng+fra+deu+spa+por+ita"`, to
@@ -165,7 +165,7 @@ consumes either the standard or the resolved report.
 ### Correcting wrong-language OCR (`--redo`)
 
 Files OCR'd before the correct pack was installed (or under a wrong
-language label) carry a bad text layer. `--skip-text` will not overwrite
+language label) carry a bad text layer. `--skip-text` won't overwrite
 it, so re-run with `--redo` (uses `ocrmypdf --redo-ocr`, replacing the
 existing OCR layer, with a `--force-ocr` fallback). Combine with a
 resolved report so the corrected languages are used:
@@ -199,7 +199,7 @@ Disable with `--no-ocr`. Language is `OCR_LANGS` (see above).
 
 ## Retry / repair scripts
 
-For residuals the main pass cannot handle:
+For residuals the main pass can't handle:
 
 | Script | Purpose |
 |--------|---------|

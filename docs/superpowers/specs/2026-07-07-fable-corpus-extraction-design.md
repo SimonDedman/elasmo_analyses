@@ -34,7 +34,7 @@ output — **resumable across nights** until access expires.
 
 **No `ANTHROPIC_API_KEY` exists on this machine** (checked env, `.env`,
 dotfiles, `~/.anthropic`, claude settings). Fable is available only as a **model
-inside Claude Code**. Therefore the burn cannot use the standalone
+inside Claude Code**. Therefore the burn can't use the standalone
 `fable_extract.py` (which calls `anthropic.Anthropic()`); the Fable inference
 must come from **Claude Code subagents** running under a Fable session. A
 Claude Code **Workflow** launched from a Fable-model session fans out subagents

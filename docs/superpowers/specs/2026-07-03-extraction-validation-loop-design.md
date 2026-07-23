@@ -9,7 +9,7 @@
 
 ## 1. Purpose
 
-The 123-column rule-based extractor (`scripts/extract_schema_columns.py`) has **never had its accuracy measured against human labels**. Every "fixed" claim to date rests on firing-count deltas and single-paper spot-checks. There is currently no number that can be put on a slide.
+The 123-column rule-based extractor (`scripts/extract_schema_columns.py`) has **never had its accuracy measured against human labels**. Every "fixed" claim to date rests on firing-count deltas and single-paper spot-checks. There's currently no number that can be put on a slide.
 
 This subproject delivers:
 
@@ -96,10 +96,10 @@ stratified corpus ───────┘                              │
                               dashboard / ggplot figures ─► slide
 ```
 
-## 6. Rigor / guards
+## 6. Rigour / guards
 
 - Fable output cached by PDF hash → cheap, repeatable, near-deterministic reruns.
-- Accepted rule changes stay on a **branch**; the production extractor is not overwritten until the batch is user-approved.
+- Accepted rule changes stay on a **branch**; the production extractor isn't overwritten until the batch is user-approved.
 - Silver overfitting guarded by reporting the gold-15 rules-vs-human score alongside every loop iteration.
 - Token cost logged exactly; 40k extrapolation explicitly caveated (OCR %, length distribution, model/pricing snapshot).
 - Language/tooling: **R for the figures/dashboard**; Python for the Fable/extraction automation (per project convention).
@@ -107,7 +107,7 @@ stratified corpus ───────┘                              │
 ## 7. Out of scope (explicit)
 
 - Re-labelling the full parquet from corrections (merge-back pipeline) — future work.
-- Expanding human ground truth via more coauthor review before Tuesday (slow; the silver bridge removes the dependency). May run as a parallel team-delegation thread but is not on the critical path.
+- Expanding human ground truth via more coauthor review before Tuesday (slow; the silver bridge removes the dependency). May run as a parallel team-delegation thread but isn't on the critical path.
 - Switching the production pipeline to LLM extraction — the A/B **informs** that decision; it does not execute it.
 
 ## 8. Success criteria

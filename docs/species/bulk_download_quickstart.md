@@ -9,7 +9,7 @@
 ✅ **Natural checkpointing** - Resume by year if interrupted
 ✅ **Easy updates** - In 6 months, just download 2025-2026
 ✅ **Graceful degradation** - If stopped early, you still have what matters most
-✅ **Sorted output** - Papers organized chronologically
+✅ **Sorted output** - Papers organised chronologically
 
 ---
 

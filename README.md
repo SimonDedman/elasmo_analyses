@@ -38,9 +38,13 @@ The work began as a panel session at the **European Elasmobranch Association (EE
 
 The project is an as-built data pipeline. Each stage has a dedicated script; the arrows show the flow from a bare citation to an answerable question.
 
+[![The researcher data pipeline: from a bare citation through acquisition, OCR, extraction, enrichment, and analysis to a natural-language query](docs/results_figures/researcher_data_pipeline_infographic.png)](docs/results_figures/researcher_data_pipeline_infographic.pdf)
+
+*The pipeline at a glance ([PDF](docs/results_figures/researcher_data_pipeline_infographic.pdf), [SVG](docs/results_figures/researcher_data_pipeline_infographic.svg)). The stages below expand each step.*
+
 **1. Acquire.** `scripts/acquire_cascade.py` is the unified acquisition entry point. Given a paper, it tries each source in turn (open-access resolvers, DOI recovery, the Biodiversity Heritage Library, Unpaywall) until it finds the PDF. `finalize_acquisitions()` then chains ingest → verified-delete → incremental extraction so a newly-found paper flows straight into the database. Monthly top-ups come from `scripts/sync_shark_references.py` (an anacron job that crawls Shark-References, downloads new papers, and re-extracts).
 
-> This unifies what used to be dozens of per-source download scripts. If you find older `download_*` / manual-download / Sci-Hub / Tor guides under `docs/database/`, they are superseded by the cascade — see the design spec at [`docs/superpowers/specs/2026-07-07-cascade-finalize-ingest-extract-design.md`](docs/superpowers/specs/2026-07-07-cascade-finalize-ingest-extract-design.md).
+> This unifies what used to be dozens of per-source download scripts. If you find older `download_*` / manual-download / Sci-Hub / Tor guides under `docs/database/`, they're superseded by the cascade — see the design spec at [`docs/superpowers/specs/2026-07-07-cascade-finalize-ingest-extract-design.md`](docs/superpowers/specs/2026-07-07-cascade-finalize-ingest-extract-design.md).
 
 **2. OCR.** Scanned and historical PDFs are made text-searchable so the extractor can read them: screen (`find_non_extractable_pdfs.py`) → OCR (`ocr_library.py`, per-file language) → verify. See the [OCR pipeline guide](docs/database/ocr_processing_guide.md).
 
@@ -106,7 +110,7 @@ data/            Input & integration data (Sharkipedia, SCImago)
 
 **Phase: validation & analysis** (2026). Acquisition, OCR, schema extraction, and author/citation/geography enrichment are complete and running on a monthly cycle. Current focus:
 
-- **Validation** — an automated loop scores the rule-based extractor against human-reviewed and LLM-oracle labels; the first rule-improvement round is complete ([report](docs/validation_and_rule_improvement_report.md)). A community validation UI is in progress.
+- **Validation** — an automated loop scores the rule-based extractor against human-reviewed and LLM-oracle labels; the first rule-improvement round is complete ([report](docs/validation_and_rule_improvement_report.md)). The community validation UI is live: **[search for your papers and review the extraction](https://simondedman.github.io/elasmo_analyses/validate/)**.
 - **Analysis** — temporal trends, discipline × pressure heatmaps, geographic and parachute-science dashboards, species × discipline gaps.
 - **RAG frontend** — natural-language querying of the corpus (prototype live).
 - **Next** — methods manuscript and public database release.
@@ -117,7 +121,7 @@ data/            Input & integration data (Sharkipedia, SCImago)
 
 Contributions from the elasmobranch research community are welcome:
 
-1. **Validate extraction results** — check false positives/negatives (validation UI coming).
+1. **Validate extraction results** — search for your papers on the [validation site](https://simondedman.github.io/elasmo_analyses/validate/) and check false positives/negatives; each correction opens a pull request for the schema lead to review.
 2. **Review schema columns** — suggest rule changes for missed or over-called techniques.
 3. **Share missing papers** — contribute PDFs via [Shark-References](https://shark-references.com/).
 
@@ -144,7 +148,7 @@ Rotterdam, Netherlands. https://github.com/SimonDedman/elasmo_analyses
 
 ---
 
-## License & acknowledgements
+## Licence & acknowledgements
 
 Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
