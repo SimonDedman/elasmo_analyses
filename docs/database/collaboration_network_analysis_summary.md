@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document summarizes the collaboration network analysis (Phase 3 - Option D) completed for the EEA 2025 Data Panel project.
+This document summarises the collaboration network analysis (Phase 3 - Option D) completed for the EEA 2025 Data Panel project.
 
 **Date**: 2025-10-26
 **Status**: ✅ Complete
@@ -25,7 +25,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 **Key Findings**:
 - Highly connected network with most researchers in single large component
 - Average ~18 collaborations per author
-- Some extraction artifacts removed (date words, location names, etc.)
+- Some extraction artefacts removed (date words, location names, etc.)
 
 **Output**: `outputs/analysis/coauthor_network_degrees.csv`
 
@@ -47,7 +47,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 **Output**: `outputs/analysis/institution_collaboration_network.csv`
 
-**Note**: Institution names need normalization (Phase 3 Option A) for more accurate analysis.
+**Note**: Institution names need normalisation (Phase 3 Option A) for more accurate analysis.
 
 ---
 
@@ -84,7 +84,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 ---
 
-## Visualizations Created
+## Visualisations Created
 
 ### 1. Top Country Partnerships Bar Chart ✅
 
@@ -100,7 +100,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 **File**: `outputs/figures/country_collaboration_metrics.png/pdf`
 
-**Description**: Bar chart showing total international collaborative papers by country, color-coded by collaboration rate (% of papers that are international).
+**Description**: Bar chart showing total international collaborative papers by country, colour-coded by collaboration rate (% of papers that are international).
 
 **Key Insights**:
 - USA and Australia have highest absolute collaboration counts
@@ -113,7 +113,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 **File**: `outputs/figures/country_collaboration_network.png`
 
-**Description**: Network visualization showing top 50 country partnerships. Node size represents total international collaborations, edge width represents partnership strength.
+**Description**: Network visualisation showing top 50 country partnerships. Node size represents total international collaborations, edge width represents partnership strength.
 
 **Key Insights**:
 - USA, Australia, UK, and Canada form central hub
@@ -138,13 +138,13 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 ---
 
-### Visualization Script
+### Visualisation Script
 **File**: `scripts/visualize_collaboration_networks.R`
 
 **Functions**:
 - Creates top partnerships bar chart
 - Creates collaboration metrics chart
-- Creates network graph visualization
+- Creates network graph visualisation
 - Exports PNG and PDF formats
 
 **Runtime**: ~1 minute
@@ -194,9 +194,9 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 1. **Institution name variants**: Same institution appears with multiple names (e.g., "University of Queensland", "UQ", "Univ. Queensland")
    - **Impact**: Underestimates true collaboration between specific institutions
-   - **Solution**: Phase 3 Option A (Institution Normalization)
+   - **Solution**: Phase 3 Option A (Institution Normalisation)
 
-2. **Author extraction artifacts**: Some non-authors extracted (dates, locations)
+2. **Author extraction artefacts**: Some non-authors extracted (dates, locations)
    - **Impact**: Minimal after cleaning, but may affect individual author metrics
    - **Solution**: Manual curation of top collaborators list
 
@@ -230,7 +230,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 2. **Conservation focus**: International collaborations often involve shared species or migratory routes
 
-3. **Methodological specialization**: Countries specialize (e.g., Australia in tagging, US in genetics) leading to collaboration
+3. **Methodological specialisation**: Countries specialise (e.g., Australia in tagging, US in genetics) leading to collaboration
 
 ---
 
@@ -240,7 +240,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 **Potential sections**:
 1. **Methods**: "Collaboration Network Analysis"
-2. **Results**: "Global shark research is characterized by..."
+2. **Results**: "Global shark research is characterised by..."
 3. **Discussion**: "International partnerships concentrate in..."
 4. **Figures**: Network graphs, collaboration metrics
 
@@ -267,7 +267,7 @@ This document summarizes the collaboration network analysis (Phase 3 - Option D)
 
 ## Future Enhancements (Optional)
 
-### Option A: Institution Normalization (Recommended next)
+### Option A: Institution Normalisation (Recommended next)
 **What**: Consolidate institution name variants
 **Benefit**: More accurate institution collaboration metrics
 **Effort**: 1-2 days for top 100 institutions
@@ -301,7 +301,7 @@ outputs/analysis/
 └── country_collaboration_metrics.csv      # 19 countries with metrics
 ```
 
-### Visualizations
+### Visualisations
 ```
 outputs/figures/
 ├── top_country_partnerships.png/pdf       # Bar chart of top 20 partnerships
@@ -329,9 +329,9 @@ scripts/
 
 ### Data Cleaning Steps
 
-1. Removed non-author artifacts (dates, locations, section headings)
+1. Removed non-author artefacts (dates, locations, section headings)
 2. Filtered to reasonable name lengths (3-50 characters)
-3. Standardized country names (USA/United States → USA, UK/United Kingdom → UK)
+3. Standardised country names (USA/United States → USA, UK/United Kingdom → UK)
 4. Removed isolated nodes (single-author papers)
 
 ### Network Metrics
@@ -346,19 +346,19 @@ scripts/
 
 ## Conclusion
 
-The collaboration network analysis reveals a **highly connected global shark research community** characterized by:
+The collaboration network analysis reveals a **highly connected global shark research community** characterised by:
 
-1. **Strong international partnerships** centered on USA, Australia, and UK
+1. **Strong international partnerships** centred on USA, Australia, and UK
 2. **Widespread institutional collaboration** (56.6% of papers)
 3. **Regional clustering** with clear Anglo-American, European, and Asia-Pacific groups
 4. **Field-driven patterns** where countries with shark biodiversity act as collaboration hubs
 
 The analysis provides:
 - **4 CSV datasets** for further analysis
-- **3 publication-ready visualizations**
+- **3 publication-ready visualisations**
 - **Quantitative metrics** for manuscript/grant applications
 
-**Next steps**: Consider implementing Phase 3 Option A (Institution Normalization) to refine institution-level collaboration metrics.
+**Next steps**: Consider implementing Phase 3 Option A (Institution Normalisation) to refine institution-level collaboration metrics.
 
 ---
 

@@ -4,15 +4,15 @@ editor_options:
     wrap: 72
 ---
 
-# Visualization Strategy for EEA 2025 Data Panel
+# Visualisation Strategy for EEA 2025 Data Panel
 
 ## Overview
 
-This document outlines visualization approaches for presenting analytical
+This document outlines visualisation approaches for presenting analytical
 method trends over time, including interactive branching timelines and
 design-focused graphics for the panel presentation.
 
-**Primary Goal:** Create compelling visualizations showing the evolution
+**Primary Goal:** Create compelling visualisations showing the evolution
 and adoption of analytical methods across disciplines (2000-2025).
 
 ---
@@ -25,7 +25,7 @@ and adoption of analytical methods across disciplines (2000-2025).
 - **Branches** = Analytical methods within each discipline
 - **Branch thickness** = Number of papers using that method (by year)
 - **Flow direction** = Time progression (2000 → 2025)
-- **Color** = Discipline category
+- **Colour** = Discipline category
 
 **Example:**
 ```
@@ -161,7 +161,7 @@ saveNetwork(network, "figures/movement_methods_network.html")
 
 **Pros:**
 - ✅ Interactive (zoom, pan, hover for details)
-- ✅ Self-organizing layout
+- ✅ Self-organising layout
 - ✅ Variable edge thickness
 - ✅ Can embed in GitHub Pages
 
@@ -263,7 +263,7 @@ orca(fig, "figures/movement_methods_timeline.png", width = 1400, height = 900)
 ```
 
 **Pros:**
-- ✅ **Highly customizable** (exact branching layout control)
+- ✅ **Highly customisable** (exact branching layout control)
 - ✅ **Interactive HTML** for GitHub Pages
 - ✅ **Static PNG export** for slides (via `orca` or `kaleido`)
 - ✅ **Variable line thickness** directly represents paper counts
@@ -276,7 +276,7 @@ orca(fig, "figures/movement_methods_timeline.png", width = 1400, height = 900)
 
 ---
 
-#### Option D: D3.js Custom Visualization (Most Flexible)
+#### Option D: D3.js Custom Visualisation (Most Flexible)
 
 **Best for:** Ultimate control, publication-quality interactive graphics
 
@@ -725,7 +725,7 @@ method_summary <- dbGetQuery(con, "
 write_csv(method_summary, "data/method_trends_for_design.csv")
 ```
 
-**Step 2: Generate Base Visualizations in R (Claude generates code)**
+**Step 2: Generate Base Visualisations in R (Claude generates code)**
 
 ```r
 # High-quality static plots
@@ -739,7 +739,7 @@ htmlwidgets::saveWidget(fig, "figures/interactive/timeline.html")
 
 1. Import PNG/SVG from R
 2. Add backgrounds, icons, branding
-3. Adjust colors, fonts, layouts
+3. Adjust colours, fonts, layouts
 4. Export final graphics (PNG/PDF for slides)
 
 **Step 4: Host Interactive Versions on GitHub Pages (Claude generates)**
@@ -811,12 +811,12 @@ quarto render presentation.qmd
 **Recommended Stack:**
 
 1. **Data Processing:** R + DuckDB (Claude generates)
-2. **Base Visualizations:** R `{plotly}` (Claude generates)
+2. **Base Visualisations:** R `{plotly}` (Claude generates)
 3. **Interactive Hosting:** GitHub Pages (Claude generates HTML)
 4. **Static Slides:** Export PNG from Plotly (Claude generates export code)
 5. **Design Polish:** Manual in Canva (you do this)
 
-**Visualization Priority:**
+**Visualisation Priority:**
 
 1. **Branching timeline with variable thickness** (plotly) - CRITICAL
 2. **Method co-occurrence network** (networkD3) - HIGH
@@ -826,7 +826,7 @@ quarto render presentation.qmd
 ### Claude Code's Role
 
 **CAN DO:**
-- ✅ Generate all R visualization code
+- ✅ Generate all R visualisation code
 - ✅ Create interactive HTML (plotly, networkD3, D3.js)
 - ✅ Export high-res PNG/SVG for Canva import
 - ✅ Set up GitHub Pages hosting
@@ -840,7 +840,7 @@ quarto render presentation.qmd
 - ❌ Generate graphics without R/Python code
 
 **Workflow:**
-1. Claude generates R code → High-quality visualizations
+1. Claude generates R code → High-quality visualisations
 2. You import to Canva → Add design polish
 3. Claude generates GitHub Pages → Host interactive versions
 
@@ -850,7 +850,7 @@ quarto render presentation.qmd
 
 1. **Complete database** (Phases 1-4)
 2. **Extract method counts** by year and discipline (Phase 5)
-3. **Generate visualizations** using code in this doc (Phase 5)
+3. **Generate visualisations** using code in this doc (Phase 5)
 4. **Host on GitHub Pages** (Phase 5)
 5. **Import to Canva** for final slide design (Phase 6)
 6. **Embed in presentation** (Phase 6-7)

@@ -9,7 +9,7 @@ Record whether each paper is freely available to readers without a paywall, and 
 
 ## Data Source
 
-[Unpaywall](https://unpaywall.org/) maintains a database of legal free-to-read versions of scholarly articles, matched by DOI. It is a non-profit service that indexes OA repositories, publisher OA journals, and hybrid OA papers.
+[Unpaywall](https://unpaywall.org/) maintains a database of legal free-to-read versions of scholarly articles, matched by DOI. It's a non-profit service that indexes OA repositories, publisher OA journals, and hybrid OA papers.
 
 - **Output file:** `outputs/unpaywall_oa_by_doi.csv` (16,651 rows)
 - **Matching key:** `doi` (joined to main database via `literature_id`)
@@ -41,10 +41,10 @@ Record whether each paper is freely available to readers without a paywall, and 
 
 ## Known Issues
 
-1. **DOI dependency:** Papers without a DOI cannot be matched. Older conference proceedings and grey literature are likely absent.
+1. **DOI dependency:** Papers without a DOI can't be matched. Older conference proceedings and grey literature are likely absent.
 2. **Bronze instability:** Bronze OA papers are free at the time of lookup but can be moved behind a paywall without notice. Dates of retrieval should be recorded for reproducibility.
-3. **Green version currency:** Repository copies are not always the final published version. The `oa_version` field distinguishes preprints, accepted manuscripts, and published versions.
-4. **DOAJ coverage:** Not all legitimate OA journals are listed in DOAJ; `oa_journal_is_in_doaj = FALSE` does not mean the journal is not OA.
+3. **Green version currency:** Repository copies aren't always the final published version. The `oa_version` field distinguishes preprints, accepted manuscripts, and published versions.
+4. **DOAJ coverage:** Not all legitimate OA journals are listed in DOAJ; `oa_journal_is_in_doaj = FALSE` doesn't mean the journal isn't OA.
 5. **Unpaywall update lag:** Newly published OA papers can take weeks to be indexed by Unpaywall.
 
 ## Validation

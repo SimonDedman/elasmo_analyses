@@ -1,6 +1,6 @@
 # Temporal Analysis SQL Queries - Parachute Research
 
-**Purpose**: Analyze parachute research trends over time (1990-2024)
+**Purpose**: Analyse parachute research trends over time (1990-2024)
 **Database**: `database/technique_taxonomy.db`
 **Tables**: `paper_geography`, `extraction_log`
 
@@ -348,7 +348,7 @@ print(f"Results saved to: {OUTPUT_DIR}/")
 
 ---
 
-## Visualization Ideas (For May 2025 Presentation)
+## Visualisation Ideas (For May 2025 Presentation)
 
 ### 1. Line Plot - Parachute Research Rate Over Time
 - X-axis: Year (1990-2024)
@@ -365,21 +365,21 @@ print(f"Results saved to: {OUTPUT_DIR}/")
 ### 3. Heatmap - Top Country Pairs Over Time
 - Rows: Source countries (USA, UK, Australia, etc.)
 - Columns: Sink countries (Mexico, Ecuador, Indonesia, etc.)
-- Color intensity: Number of parachute papers
+- Colour intensity: Number of parachute papers
 - **Message**: Geographic patterns in parachute research
 
 ### 4. Network Diagram - Parachute Research Flows
 - Nodes: Countries (size = total papers)
 - Edges: Parachute research flows (thickness = number of papers)
-- Colors: Global North (blue) vs Global South (orange)
-- **Message**: Visualize North → South research dominance
+- Colours: Global North (blue) vs Global South (orange)
+- **Message**: Visualise North → South research dominance
 
 ---
 
 ## Abstract Text (Add After FIXED Results)
 
 **Current abstract paragraph** (author country data):
-> "Geographic analysis of 6,183 papers (50.5% of analyzed corpus) shows that 34.6% were led by institutions in the USA (n = 2,137), 13.7% in Australia (n = 849), and 11.5% in the UK (n = 708). Regional analysis reveals that 88.7% of studies were led by institutions in the Global North (high-income countries in North America, Europe, and Australia/New Zealand), while only 11.3% originated from the Global South."
+> "Geographic analysis of 6,183 papers (50.5% of analysed corpus) shows that 34.6% were led by institutions in the USA (n = 2,137), 13.7% in Australia (n = 849), and 11.5% in the UK (n = 708). Regional analysis reveals that 88.7% of studies were led by institutions in the Global North (high-income countries in North America, Europe, and Australia/New Zealand), while only 11.3% originated from the Global South."
 
 **Add parachute research paragraph** (after FIXED Phase 4):
 > "Analysis of study locations (n = [TOTAL] papers with extractable field sites) identified parachute research patterns in approximately [%] of papers (n = [COUNT]), where author institution country differed from study location country. Major 'sink' countries (study locations with disproportionately low local research capacity) include [TOP 3], while major 'source' countries (researchers predominantly studying abroad) include [TOP 3]. Temporal analysis (1990-2024) reveals [TREND: increasing/decreasing/stable] parachute research rates over time."

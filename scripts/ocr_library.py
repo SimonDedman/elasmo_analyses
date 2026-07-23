@@ -18,6 +18,7 @@ Usage:
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -40,9 +41,15 @@ LANG_MAP = {
     "Spanish": "spa",
     "Portuguese": "por",
     "Italian": "ita",
+    "Dutch": "nld",
     "Czech/Slovak/Croatian": "ces",
     "Russian": "rus",
-    "Japanese/Chinese": "jpn",
+    # The find_non_extractable detector emits the combined "Japanese/Chinese"
+    # label (script is CJK, can't disambiguate), so try all three models.
+    # Separate keys cover any detector that does distinguish them.
+    "Japanese/Chinese": "jpn+chi_sim+chi_tra",
+    "Japanese": "jpn",
+    "Chinese": "chi_sim+chi_tra",
     "Korean": "kor",
     "Arabic": "ara",
     "Hindi": "hin",
@@ -64,16 +71,21 @@ def installed_tesseract_langs() -> set[str]:
         return set()
 
 
-def read_flagged_pdfs() -> list[tuple[str, Path]]:
+def read_flagged_pdfs(report: Path = REPORT) -> list[tuple[str, Path]]:
     """Return list of (language, path) tuples for flagged PDFs.
 
     Reconstructs path from year + filename cols rather than the hyperlink
     cell, since openpyxl read-only mode does not expose hyperlinks.
     """
-    wb = load_workbook(REPORT, read_only=True, data_only=True)
+    wb = load_workbook(report, read_only=True, data_only=True)
     ws = wb.active
     rows = []
-    for year, fname, lang, _ in ws.iter_rows(min_row=2, values_only=True):
+    # Index rather than unpack: the standard report has 4 cols, but a
+    # language-resolved report (resolve_pdf_language.py) carries extra
+    # columns (resolved_year, lang_source). Cols 0-2 are year, filename, lang.
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        year, fname = row[0], row[1]
+        lang = row[2] if len(row) > 2 else None
         if not year or not fname:
             continue
         path = PDF_ROOT / str(year) / str(fname)
@@ -82,8 +94,15 @@ def read_flagged_pdfs() -> list[tuple[str, Path]]:
     return rows
 
 
-def ocr_one(pdf_path: Path, lang: str, available: set[str]) -> tuple[bool, str]:
-    """OCR one PDF in place. Returns (success, message)."""
+def ocr_one(pdf_path: Path, lang: str, available: set[str],
+            redo: bool = False, timeout: int = 600) -> tuple[bool, str]:
+    """OCR one PDF in place. Returns (success, message).
+
+    redo=True re-OCRs pages that already carry a text layer (via
+    ``--redo-ocr``), used to correct files OCR'd earlier under the wrong
+    language model. Default (``--skip-text``) only OCRs image-only pages.
+    Both modes fall back to ``--force-ocr`` if the first pass bails.
+    """
     if not pdf_path.exists():
         return False, "file missing"
 
@@ -91,15 +110,30 @@ def ocr_one(pdf_path: Path, lang: str, available: set[str]) -> tuple[bool, str]:
     tlang = LANG_MAP.get(lang, "eng")
     parts = tlang.split("+")
     usable = [p for p in parts if p in available] or ["eng"]
+    # Fraktur (blackletter) routing: many pre-~1940 German scientific texts
+    # are set in Fraktur, which the roman-type `deu` model reads poorly. But
+    # the era is mixed — by ~1900 many journals had switched to roman
+    # (Antiqua) — so we ADD Fraktur as a combined "deu+Fraktur" (deu kept
+    # first) rather than replacing deu. A/B tests showed this never hurts
+    # roman pages (deu+Fraktur == deu) while giving tesseract the Fraktur
+    # option for genuine blackletter. Year comes from the path's year folder.
+    if "deu" in usable and "Fraktur" in available:
+        try:
+            year = int(re.match(r"(\d{4})", pdf_path.parent.name).group(1))
+        except (AttributeError, ValueError):
+            year = 9999
+        if year < 1940:
+            usable = [p for p in usable if p != "Fraktur"] + ["Fraktur"]
     tlang_used = "+".join(usable)
 
+    first_mode = "--redo-ocr" if redo else "--skip-text"
     tmp_path = pdf_path.with_suffix(".ocr.tmp.pdf")
     try:
         result = subprocess.run(
-            ["ocrmypdf", "--skip-text", "--output-type", "pdf",
+            ["ocrmypdf", first_mode, "--output-type", "pdf",
              "--language", tlang_used, "--quiet",
              str(pdf_path), str(tmp_path)],
-            capture_output=True, timeout=600,
+            capture_output=True, timeout=timeout,
         )
         if result.returncode != 0 or not tmp_path.exists() or tmp_path.stat().st_size == 0:
             # --skip-text may bail when all pages already have text (shouldn't
@@ -139,18 +173,50 @@ def main():
                     help="list what would run, no OCR")
     ap.add_argument("--skip-already-text", action="store_true", default=True,
                     help="skip PDFs that now have text (from partial runs)")
+    ap.add_argument("--languages", default="",
+                    help="comma-separated title_language labels to include "
+                         "(e.g. 'German,French,Spanish'); default all")
+    ap.add_argument("--redo", action="store_true",
+                    help="re-OCR pages that already have a text layer "
+                         "(--redo-ocr); use to correct wrong-language OCR. "
+                         "Bypasses the 'already has text' skip check.")
+    ap.add_argument("--report", default="",
+                    help="override the input report XLSX (default: the "
+                         "standard non_extractable_pdfs.xlsx). Use a filtered "
+                         "report to resume a partial run.")
+    ap.add_argument("--timeout", type=int, default=600,
+                    help="per-file ocrmypdf timeout in seconds (default 600). "
+                         "Raise for very large multi-hundred-page volumes.")
+    ap.add_argument("--tmpdir", default="",
+                    help="directory for ocrmypdf's page-render temp files. "
+                         "Set to a large disk — a big volume can render several "
+                         "GB and the default /tmp is often a small tmpfs that "
+                         "fills up and makes every subsequent file fail.")
     args = ap.parse_args()
 
-    if not REPORT.exists():
-        print(f"ERROR: report not found: {REPORT}")
+    # Point ocrmypdf's temp at a roomy disk (inherited by the subprocess env).
+    if args.tmpdir:
+        os.makedirs(args.tmpdir, exist_ok=True)
+        os.environ["TMPDIR"] = args.tmpdir
+        os.environ["TMP"] = args.tmpdir
+        os.environ["TEMP"] = args.tmpdir
+        print(f"Temp dir for OCR: {args.tmpdir}")
+
+    report_path = Path(args.report) if args.report else REPORT
+    if not report_path.exists():
+        print(f"ERROR: report not found: {report_path}")
         print("Run: python scripts/find_non_extractable_pdfs.py")
         sys.exit(1)
 
     available = installed_tesseract_langs()
     print(f"Installed tesseract languages: {sorted(available)}")
 
-    flagged = read_flagged_pdfs()
+    flagged = read_flagged_pdfs(report_path)
     print(f"Flagged PDFs in report: {len(flagged)}")
+    if args.languages:
+        wanted = {s.strip() for s in args.languages.split(",") if s.strip()}
+        flagged = [(lang, p) for lang, p in flagged if lang in wanted]
+        print(f"Filtered to languages {sorted(wanted)}: {len(flagged)}")
     if args.limit:
         flagged = flagged[: args.limit]
         print(f"Limiting to first {args.limit}")
@@ -163,33 +229,47 @@ def main():
         return
 
     LOG_DIR.mkdir(exist_ok=True)
+    # Per-report log so concurrent/sequential runs on different reports don't
+    # clobber each other's record (the default full-run keeps the base name).
+    log_file = (LOG_DIR / f"ocr_library_log_{report_path.stem}.txt"
+                if args.report else LOG_FILE)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ok_count = fail_count = skipped = 0
-    log_lines = [f"OCR library run: {ts}", f"Tesseract langs: {sorted(available)}", ""]
+    # Incremental append-logging: write each result as it happens and flush,
+    # so a kill mid-run leaves an accurate record of what completed.
+    logf = open(log_file, "w")
+    def logline(s: str) -> None:
+        logf.write(s + "\n")
+        logf.flush()
+    logline(f"OCR library run: {ts}")
+    logline(f"Tesseract langs: {sorted(available)}")
+    logline(f"Report: {report_path}  redo={args.redo}  n={len(flagged)}\n")
 
     for i, (lang, path) in enumerate(flagged, 1):
         # Optional: re-check extractability (skip if a partial previous run
-        # already OCR'd this file)
-        try:
-            result = subprocess.run(
-                ["pdftotext", "-l", "1", str(path), "-"],
-                capture_output=True, timeout=15,
-            )
-            alpha = sum(1 for c in result.stdout.decode("utf-8", errors="replace")
-                        if c.isalpha())
-            if alpha >= 50:
-                skipped += 1
-                log_lines.append(f"SKIP (now has text): {path.name}")
-                if i % 50 == 0:
-                    print(f"  [{i}/{len(flagged)}] skipped {path.name}")
-                continue
-        except Exception:
-            pass
+        # already OCR'd this file). In --redo mode we deliberately reprocess
+        # files that already have text, so this skip check is bypassed.
+        if not args.redo:
+            try:
+                result = subprocess.run(
+                    ["pdftotext", "-l", "1", str(path), "-"],
+                    capture_output=True, timeout=15,
+                )
+                alpha = sum(1 for c in result.stdout.decode("utf-8", errors="replace")
+                            if c.isalpha())
+                if alpha >= 50:
+                    skipped += 1
+                    logline(f"SKIP (now has text): {path.name}")
+                    if i % 50 == 0:
+                        print(f"  [{i}/{len(flagged)}] skipped {path.name}")
+                    continue
+            except Exception:
+                pass
 
-        ok, msg = ocr_one(path, lang, available)
+        ok, msg = ocr_one(path, lang, available, redo=args.redo, timeout=args.timeout)
         status = "OK " if ok else "FAIL"
         print(f"  [{i}/{len(flagged)}] {status} [{lang}] {path.name} — {msg}")
-        log_lines.append(f"{status}: {path.name} [{lang}] — {msg}")
+        logline(f"{status}: {path.name} [{lang}] — {msg}")
         if ok:
             ok_count += 1
         else:
@@ -201,10 +281,9 @@ def main():
                f"  Skipped:       {skipped}\n"
                f"  Failed:        {fail_count}\n")
     print(summary)
-    log_lines.append(summary)
-    with open(LOG_FILE, "w") as f:
-        f.write("\n".join(log_lines))
-    print(f"Log: {LOG_FILE}")
+    logline(summary)
+    logf.close()
+    print(f"Log: {log_file}")
 
 
 if __name__ == "__main__":

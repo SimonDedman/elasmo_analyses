@@ -352,15 +352,26 @@ def prepare_authors(df: pd.DataFrame, resume_cache: dict, endpoint: str) -> list
 
 
 def save_results(results: list[dict], path: Path, fieldnames: list[str]) -> None:
-    """Write results list to CSV."""
+    """Write results to CSV, MERGING with any existing rows by the key column
+    (fieldnames[0], = 'id'). A ``--resume`` run only queries newly-seen authors,
+    so writing just those rows in "w" mode would drop every previously-enriched
+    author. Merging keeps the full set; new rows for the same id win."""
     if not results:
         logger.warning("No results to save to %s", path.name)
         return
-    with open(path, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
-        writer.writeheader()
-        writer.writerows(results)
-    logger.info("Saved %d rows to %s", len(results), path.name)
+    key = fieldnames[0]
+    new_df = pd.DataFrame(results)
+    new_df = new_df[[c for c in fieldnames if c in new_df.columns]]
+    if path.exists():
+        prev = pd.read_csv(path, dtype={key: str})
+        new_df[key] = new_df[key].astype(str)
+        retained = prev[~prev[key].astype(str).isin(set(new_df[key]))]
+        merged = pd.concat([retained, new_df], ignore_index=True)
+    else:
+        merged = new_df
+    merged.to_csv(path, index=False)
+    logger.info("Saved %d new (+%d retained) rows to %s",
+                len(new_df), len(merged) - len(new_df), path.name)
 
 
 def merge_to_combined(gender_results, origin_results, diaspora_results) -> pd.DataFrame:
@@ -501,6 +512,13 @@ def main() -> None:
     # Merge all results into combined CSV
     combined = merge_to_combined(gender_results, origin_results, diaspora_results)
     if not combined.empty:
+        # Merge with the existing combined table so incremental runs never drop
+        # previously-enriched authors (see save_results for the same rationale).
+        if NAMSOR_COMBINED_CSV.exists():
+            prev = pd.read_csv(NAMSOR_COMBINED_CSV, dtype={"id": str})
+            combined["id"] = combined["id"].astype(str)
+            retained = prev[~prev["id"].astype(str).isin(set(combined["id"]))]
+            combined = pd.concat([retained, combined], ignore_index=True)
         combined.to_csv(NAMSOR_COMBINED_CSV, index=False)
         logger.info("Combined enrichment saved: %d rows to %s", len(combined), NAMSOR_COMBINED_CSV.name)
 

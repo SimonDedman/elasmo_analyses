@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1000" viewBox="0 0 1680 1000" font-family="DejaVu Sans, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#546e7a"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1680" height="1000" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="840" y="66" text-anchor="middle" font-size="40" font-weight="700" fill="#1a1a1a">How the researcher data flows: all public, all looked up</text>
+  <text x="840" y="112" text-anchor="middle" font-size="21" fill="#555555">Nothing shown is newly created or proprietary: it is public data cross-referenced against public services.</text>
+
+  <!-- ================= PUBLIC LOOKUP SERVICES container (the excursion) ================= -->
+  <rect x="480" y="300" width="720" height="215" rx="16" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="840" y="338" text-anchor="middle" font-size="21" font-weight="700" fill="#1b5e20">PUBLIC LOOKUP SERVICES</text>
+  <text x="840" y="360" text-anchor="middle" font-size="14" fill="#2e7d32">run by others, free to query — they return best-guess inferences, not facts</text>
+
+  <!-- chips -->
+  <g font-size="12" fill="#1b5e20">
+    <rect x="500" y="378" width="155" height="112" rx="10" fill="#ffffff" stroke="#2e7d32" stroke-width="1.6"/>
+    <text x="577" y="408" text-anchor="middle" font-size="16" font-weight="700">OpenAlex</text>
+    <text x="577" y="432" text-anchor="middle">DOI &#8594; author names</text>
+    <text x="577" y="450" text-anchor="middle">&amp; affiliations</text>
+
+    <rect x="675" y="378" width="155" height="112" rx="10" fill="#ffffff" stroke="#2e7d32" stroke-width="1.6"/>
+    <text x="752" y="408" text-anchor="middle" font-size="16" font-weight="700">NamSor</text>
+    <text x="752" y="432" text-anchor="middle">name &#8594; likely gender,</text>
+    <text x="752" y="450" text-anchor="middle">origin, ethnicity</text>
+
+    <rect x="850" y="378" width="155" height="112" rx="10" fill="#ffffff" stroke="#2e7d32" stroke-width="1.6"/>
+    <text x="927" y="408" text-anchor="middle" font-size="16" font-weight="700">Genderize.io</text>
+    <text x="927" y="432" text-anchor="middle">first name &#8594;</text>
+    <text x="927" y="450" text-anchor="middle">likely gender</text>
+
+    <rect x="1025" y="378" width="155" height="112" rx="10" fill="#ffffff" stroke="#2e7d32" stroke-width="1.6"/>
+    <text x="1102" y="405" text-anchor="middle" font-size="15" font-weight="700">gender-guesser</text>
+    <text x="1102" y="432" text-anchor="middle">offline name</text>
+    <text x="1102" y="450" text-anchor="middle">dictionary</text>
+  </g>
+
+  <!-- ================= main spine ================= -->
+  <!-- A: public papers -->
+  <rect x="60" y="640" width="300" height="150" rx="16" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="210" y="672" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#2e7d32">PUBLIC SOURCE</text>
+  <text x="210" y="704" text-anchor="middle" font-size="23" font-weight="700" fill="#1b5e20">Published papers</text>
+  <text x="210" y="734" text-anchor="middle" font-size="15" fill="#33691e">Titles, authors, DOIs</text>
+  <text x="210" y="756" text-anchor="middle" font-size="15" fill="#33691e">(already public)</text>
+
+  <!-- B: our corpus -->
+  <rect x="480" y="640" width="300" height="150" rx="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="2.5"/>
+  <text x="630" y="672" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#1565c0">OUR DATABASE</text>
+  <text x="630" y="704" text-anchor="middle" font-size="23" font-weight="700" fill="#0d47a1">Paper corpus</text>
+  <text x="630" y="734" text-anchor="middle" font-size="15" fill="#1565c0">A compiled list of papers</text>
+  <text x="630" y="756" text-anchor="middle" font-size="15" fill="#1565c0">keyed by DOI</text>
+
+  <!-- D: researcher atlas -->
+  <rect x="900" y="640" width="300" height="150" rx="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="2.5"/>
+  <text x="1050" y="672" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#1565c0">OUR DATABASE</text>
+  <text x="1050" y="704" text-anchor="middle" font-size="23" font-weight="700" fill="#0d47a1">Researcher atlas</text>
+  <text x="1050" y="734" text-anchor="middle" font-size="15" fill="#1565c0">Public names + public</text>
+  <text x="1050" y="756" text-anchor="middle" font-size="15" fill="#1565c0">inferences, merged</text>
+
+  <!-- E: public outputs -->
+  <rect x="1320" y="640" width="300" height="150" rx="16" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="1470" y="672" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="1.5" fill="#2e7d32">PUBLIC OUTPUT</text>
+  <text x="1470" y="700" text-anchor="middle" font-size="20" font-weight="700" fill="#1b5e20">Map &amp; validation pages</text>
+  <text x="1470" y="732" text-anchor="middle" font-size="15" fill="#33691e">Anyone can view, or</text>
+  <text x="1470" y="754" text-anchor="middle" font-size="15" fill="#33691e">request a correction</text>
+
+  <!-- ================= arrows ================= -->
+  <!-- A -> B -->
+  <line x1="360" y1="715" x2="470" y2="715" stroke="#546e7a" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="415" y="702" text-anchor="middle" font-size="13" fill="#546e7a">compile</text>
+
+  <!-- B -> C (up/out) -->
+  <path d="M 660 640 C 690 570, 700 545, 715 517" fill="none" stroke="#546e7a" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="590" y="560" text-anchor="middle" font-size="13" fill="#546e7a">send DOIs &amp; names</text>
+
+  <!-- C -> D (down/back) -->
+  <path d="M 965 517 C 980 545, 1010 575, 1035 640" fill="none" stroke="#546e7a" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1110" y="560" text-anchor="middle" font-size="13" fill="#546e7a">receive inferences</text>
+
+  <!-- D -> E -->
+  <line x1="1200" y1="715" x2="1310" y2="715" stroke="#546e7a" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="1255" y="702" text-anchor="middle" font-size="13" fill="#546e7a">publish</text>
+
+  <!-- ================= legend ================= -->
+  <rect x="330" y="852" width="26" height="26" rx="5" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="366" y="871" font-size="16" fill="#333333">Public / external: published papers, public lookup services, public web outputs</text>
+
+  <rect x="330" y="890" width="26" height="26" rx="5" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <text x="366" y="909" font-size="16" fill="#333333">Our compiled database: a list and cross-reference of public data (never a source of truth)</text>
+
+  <!-- ================= footer message ================= -->
+  <text x="840" y="962" text-anchor="middle" font-size="16" font-style="italic" fill="#444444">Every gender, origin, and ethnicity value is an inference returned by a public service, not a fact asserted by this project.</text>
+</svg>

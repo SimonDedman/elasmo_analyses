@@ -95,11 +95,11 @@ Three of our six schemas have no counterpart in Schiffman:
 - **Pressure (`pr_`)**: 23 threat columns. No equivalent.
 - **Gear (`gear_`)**: 18 fishing gear and mitigation device columns. No equivalent.
 
-These schemas were designed to answer questions Schiffman's system was not built for: which habitats are understudied, which pressures dominate the literature, and which gear types receive the most research attention.
+These schemas were designed to answer questions Schiffman's system wasn't built for: which habitats are understudied, which pressures dominate the literature, and which gear types receive the most research attention.
 
 ### 5. Metadata differences
 
-Schiffman coded author gender and institution type (academic, government, NGO, private). We did not initially capture these but are now adding them via OpenAlex institutional data and gender-guesser for first-name inference. Their geographic scope variable (ocean basin) maps to our `b_*` columns.
+Schiffman coded author gender and institution type (academic, government, NGO, private). We didn't initially capture these but are now adding them via OpenAlex institutional data and gender-guesser for first-name inference. Their geographic scope variable (ocean basin) maps to our `b_*` columns.
 
 ### 6. Source text quality
 
@@ -115,13 +115,13 @@ The 2,701 coded abstracts represent a ready-made gold standard for the disciplin
 
 **What would require care.** The 8 categories that split across schemas need manual mapping rules before comparison. "Conservation" abstracts, for instance, should probably count as correct if any of `d_conservation`, `pr_*`, or `gear_mit_*` fires. "Population" abstracts should count as correct if any of `imp_abundance`, `imp_mortality`, or `imp_cpue` fires. These mapping rules need to be agreed by the team before running validation.
 
-**What would not transfer.** Schiffman coded conference abstracts; our pipeline processes journal papers. The populations differ: AES conference abstracts skew North American, younger-career, and shorter. Journal papers are global, peer-reviewed, and full-length. Performance on Schiffman's corpus may not generalise to the broader literature. Still, it is the best available labelled dataset for this domain.
+**What would not transfer.** Schiffman coded conference abstracts; our pipeline processes journal papers. The populations differ: AES conference abstracts skew North American, younger-career, and shorter. Journal papers are global, peer-reviewed, and full-length. Performance on Schiffman's corpus may not generalise to the broader literature. Still, it's the best available labelled dataset for this domain.
 
 ---
 
 ## Practical Next Steps
 
-1. **Obtain the coded dataset.** We have asked David Schiffman for the spreadsheet of 2,701 abstracts with category codes. Without the raw data, validation cannot proceed.
+1. **Obtain the coded dataset.** We have asked David Schiffman for the spreadsheet of 2,701 abstracts with category codes. Without the raw data, validation can't proceed.
 2. **Match abstracts to our corpus.** Cross-reference by DOI where available, otherwise by author-year-title fuzzy matching. Many AES abstracts may not have corresponding journal publications.
 3. **Define mapping rules.** For the 8 split categories, write explicit rules specifying which combination of EEA columns constitutes a match. Document these in a validation protocol.
 4. **Run per-category recall analysis.** For matched papers, compute recall and "primary label hit rate" for each of the 22 categories.

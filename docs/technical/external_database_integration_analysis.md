@@ -8,7 +8,7 @@ editor_options:
 
 ## Overview
 
-This document analyzes the roles, content, and integration opportunities
+This document analyses the roles, content, and integration opportunities
 between **Shark-References**, **Sharkipedia**, and the **EEA 2025 Data
 Panel Literature Review Database**.
 
@@ -63,7 +63,7 @@ Panel Literature Review Database**.
 - No API for programmatic access
 - 3-letter indexing (search precision limited)
 - 2,000 reference download limit
-- No method/technology categorization
+- No method/technology categorisation
 - No multi-label paper classification
 
 ---
@@ -86,15 +86,15 @@ Panel Literature Review Database**.
 - Multi-paper synthesis (stores best estimates, not all studies)
 
 **Strengths:**
-- Trait-focused (enables modeling, conservation planning)
+- Trait-focused (enables modelling, conservation planning)
 - Community contribution model
-- Standardized trait schema
+- Standardised trait schema
 - Ecological role evidence (Effect Size + Strength of Evidence)
 - Web UI + planned API
 
 **Limitations:**
 - Requires manual trait extraction from papers
-- No method/technology categorization
+- No method/technology categorisation
 - Limited to species-level data (no multi-species comparisons)
 - Reference tracking minimal (DOI or short code)
 
@@ -142,7 +142,7 @@ Panel Literature Review Database**.
 - Multi-label classification (papers span multiple disciplines/methods)
 - Method-focused (unique niche)
 - Temporal trend analysis
-- Wide sparse schema optimized for cross-cutting queries
+- Wide sparse schema optimised for cross-cutting queries
 - Potential for ecological role evidence tracking
 
 **Limitations:**
@@ -295,7 +295,7 @@ write_csv(sharkipedia_upload, "sharkipedia_upload_eea2025.csv")
 
 ### 4.1 Synergies (Mutually Beneficial)
 
-1.  **Species Taxonomy Standardization**
+1.  **Species Taxonomy Standardisation**
 
     -   **Pull from:** Sharkipedia species list
     -   **Use in:** EEA database `sp_*` columns
@@ -334,7 +334,7 @@ write_csv(sharkipedia_upload, "sharkipedia_upload_eea2025.csv")
 | **Comprehensive bibliography** | ✅ Primary | ❌ | ❌ Subset only |
 | **Trait data** | ❌ | ✅ Primary | ❌ |
 | **Ecological role evidence** | ❌ | ✅ Primary | 🔄 Can contribute |
-| **Method categorization** | ❌ | ⚠️ Minimal | ✅ Primary |
+| **Method categorisation** | ❌ | ⚠️ Minimal | ✅ Primary |
 | **Temporal trends** | ⚠️ Metadata only | ❌ | ✅ Primary |
 | **Multi-label classification** | ❌ | ❌ | ✅ Primary |
 | **Research capacity mapping** | ❌ | ❌ | ✅ Primary |
@@ -398,7 +398,7 @@ covered by existing databases.
 2.  **Contact Shark-References maintainers** (SD)
     -   Request automation permission
     -   Acknowledge in all outputs
-    -   Offer to share method categorization back (if useful)
+    -   Offer to share method categorisation back (if useful)
 3.  **Pull species taxonomy** from Sharkipedia
     -   Generate `sp_*` columns
     -   Create species → common name lookup
@@ -411,7 +411,7 @@ covered by existing databases.
     -   CSV import to DuckDB
     -   Link to Shark-Refs IDs (`shark_refs_id` column)
 5.  **Create separate annotations table** for ecological role evidence
-    -   Modeled after EROS project structure
+    -   Modelled after EROS project structure
     -   Fields: `study_id`, `trait_name`, `effect_size`,
         `strength_of_evidence`, `method_used`
 6.  **Enable manual annotation** during review
@@ -439,7 +439,7 @@ covered by existing databases.
 ### To Shark-References
 
 -   **Minimal direct benefit** (they're already comprehensive)
--   **Potential:** Method categorization could be added to their
+-   **Potential:** Method categorisation could be added to their
     database (if they want it)
 -   **Acknowledgment:** Increased visibility via our conference
     presentation and publication
@@ -583,7 +583,7 @@ fallbacks only.
 > I'd love to discuss integration opportunities:
 >
 > 1.  **Pull from Sharkipedia:** Could we use your species list
->     (taxonomy, common names) to standardize our species columns?
+>     (taxonomy, common names) to standardise our species columns?
 > 2.  **Push to Sharkipedia:** Our reviewers will annotate papers for
 >     ecological role evidence (effect size, strength of evidence). We
 >     could contribute this to Sharkipedia via your upload template,
@@ -607,7 +607,7 @@ Panel
 
 > Dear Shark-References Team,
 >
-> I'm organizing a Data Panel for the American Elasmobranch Society 2025
+> I'm organising a Data Panel for the American Elasmobranch Society 2025
 > conference on emerging technologies in shark research. We're
 > conducting a systematic literature review of \~5,000-10,000 papers
 > focused on analytical methods.
@@ -627,7 +627,7 @@ Panel
 > **Benefits to Shark-References:**
 >
 > -   Increased visibility via conference presentation and publication
-> -   Potential contribution of method categorization back to your
+> -   Potential contribution of method categorisation back to your
 >     database (if useful)
 >
 > Could you advise on acceptable rate limits and any restrictions? We're

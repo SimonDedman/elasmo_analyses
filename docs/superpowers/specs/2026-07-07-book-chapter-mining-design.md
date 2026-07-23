@@ -10,7 +10,7 @@ The BHL/archive.org fetch (`fetch_bhl_archive.py`) downloads whole scanned
 volumes (e.g. *Records of the Australian Museum*, *Studies in Ichthyology*)
 because **one** target chapter matched a corpus paper. These volumes (105 in the
 current staging, ~6.8 GB, each >200 pp) contain **many** articles — and some are
-shark/elasmo papers that were never in SharkRefs. Today they are neither filed
+shark/elasmo papers that were never in SharkRefs. Today they're neither filed
 nor mined: the cascade's `--skip-books` guard correctly leaves them untouched
 (filing a volume whole under one `literature_id` would bury the other chapters).
 

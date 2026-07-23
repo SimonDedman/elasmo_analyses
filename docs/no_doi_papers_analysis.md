@@ -1,10 +1,10 @@
 # The No-DOI Long Tail — Profile of the 10,386 Hardest-to-Acquire Papers
 
-**Date:** 2026-07-04. Papers in the download queue with **no DOI** — 81% of the remaining 12,789. These cannot be queried against Unpaywall/OpenAlex/CrossRef by identifier, so they resist all our automated channels. This profiles them to find patterns and a smarter strategy than "keep clicking."
+**Date:** 2026-07-04. Papers in the download queue with **no DOI** — 81% of the remaining 12,789. These can't be queried against Unpaywall/OpenAlex/CrossRef by identifier, so they resist all our automated channels. This profiles them to find patterns and a smarter strategy than "keep clicking."
 
 ## Headline: this is not one problem, it's four
 
-The 10,386 no-DOI papers break down into distinct, differently-tractable classes — and **a large share are not full papers at all.** Treating them as one undifferentiated "download backlog" overstates the real acquisition target.
+The 10,386 no-DOI papers break down into distinct, differently-tractable classes — and **a large share aren't full papers at all.** Treating them as one undifferentiated "download backlog" overstates the real acquisition target.
 
 ## 1. Year distribution — old-skewed, but not only old
 
@@ -15,7 +15,7 @@ The 10,386 no-DOI papers break down into distinct, differently-tractable classes
 | 2000s | 2,374 (23%) | **recent but DOI-less → grey literature** |
 | 2010s–2020s | 1,970 (19%) | recent DOI-less → abstracts, reports |
 
-**Median year 1996; 58% pre-2000.** The pre-2000 half is genuinely pre-digital (title-search + archive work). But **42% are 2000+** — recent papers *without* DOIs, which almost always means they are **not journal articles**: conference abstracts, reports, regional-journal pieces.
+**Median year 1996; 58% pre-2000.** The pre-2000 half is genuinely pre-digital (title-search + archive work). But **42% are 2000+** — recent papers *without* DOIs, which almost always means they're **not journal articles**: conference abstracts, reports, regional-journal pieces.
 
 ## 2. Top journals — the abstract problem is enormous
 
@@ -64,4 +64,4 @@ The queue is fragmented across **3,786 distinct journals** (top 20 = only 18%) �
 | Regional/language sources (co-author help) | ~1,100 | high | low |
 | Declare the obscure residual out-of-scope | ~5,000 | — | closes the backlog honestly |
 
-**Bottom line:** the no-DOI 10,386 is not a wall of downloadable papers — it's ~2k abstracts (not papers), ~0.5k bulk-scrapable, ~1.5k free-in-BHL, ~1k non-English, and a ~5k obscure residual best declared out-of-scope. The *acquirable* fraction is a few thousand via targeted automation, not manual clicking.
+**Bottom line:** the no-DOI 10,386 isn't a wall of downloadable papers — it's ~2k abstracts (not papers), ~0.5k bulk-scrapable, ~1.5k free-in-BHL, ~1k non-English, and a ~5k obscure residual best declared out-of-scope. The *acquirable* fraction is a few thousand via targeted automation, not manual clicking.

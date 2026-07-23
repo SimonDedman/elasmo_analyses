@@ -252,28 +252,40 @@ def ollama_available() -> bool:
         return False
 
 
+# Editable project-context / behaviour document, loaded as the Ollama system
+# prompt (claude.md-style). Edit scripts/rag/sharkoracle_context.md to change
+# SharkOracle's grounding, citation, anti-misattribution and style rules — no
+# code change needed. Restart the server to pick up edits.
+CONTEXT_PATH = Path(__file__).resolve().parent / "sharkoracle_context.md"
+
+
+def load_system_context() -> str:
+    try:
+        return CONTEXT_PATH.read_text(encoding="utf-8").strip()
+    except OSError:
+        return ("You are SharkOracle. Answer using ONLY the sources; cite every "
+                "sentence with its [literature_id]; never attribute work to a "
+                "person absent from the sources' author lists.")
+
+
 def generate_answer(question: str, hits: list[dict]) -> str:
     context = build_context_block(hits)
     prompt = textwrap.dedent(f"""\
-        You are a research assistant answering questions about elasmobranch
-        (shark/ray) science using ONLY the sources below. Every factual
-        sentence you write must end with the bracketed literature_id
-        citation(s) it is based on, e.g. [23522]. Do not cite a source you
-        did not use. If the sources do not answer the question, say so
-        plainly instead of guessing. Do not invent a confidence/strength
-        rating yourself — that is computed separately.
-
         QUESTION: {question}
 
         SOURCES:
         {context}
 
-        Write a concise, well-cited answer (3-6 sentences):
+        Write a concise, well-cited answer following your instructions:
         """)
     try:
         r = requests.post(
             f"{OLLAMA_HOST}/api/generate",
-            json={"model": OLLAMA_MODEL, "prompt": prompt, "stream": False},
+            json={"model": OLLAMA_MODEL, "prompt": prompt,
+                  "system": load_system_context(), "stream": False,
+                  # Deterministic decoding: same question + same retrieved
+                  # context -> identical answer (greedy, fixed seed).
+                  "options": {"temperature": 0, "seed": 7}},
             timeout=120,
         )
         r.raise_for_status()

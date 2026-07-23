@@ -2,7 +2,7 @@
 ## EEA 2025 Panel - Comprehensive Plan & Systematic Review Protocol
 
 **Panel Leaders:** Simon Dedman & Guuske Tiktak
-**Co-organizers:** Irene Kingma, Paddy Walker
+**Co-organisers:** Irene Kingma, Paddy Walker
 **Date:** Thursday, 30 October 2025, 11:15 AM
 **Duration:** 50 minutes talks, 45 minutes panel sessions
 **Conference:** European Elasmobranch Association Conference, Rotterdam, Netherlands
@@ -28,7 +28,7 @@
 
 ### Rationale
 
-Elasmobranch research has experienced rapid methodological evolution across multiple disciplines. From traditional life history studies to cutting-edge genomics, spatial modeling, and citizen science initiatives, the field continues to expand and diversify. However, several challenges have emerged:
+Elasmobranch research has experienced rapid methodological evolution across multiple disciplines. From traditional life history studies to cutting-edge genomics, spatial modelling, and citizen science initiatives, the field continues to expand and diversify. However, several challenges have emerged:
 
 1. **Information Fragmentation:** Practitioners struggle to stay current across multiple analytical domains
 2. **Method Accessibility Gap:** Uncertainty about which new techniques are robust vs. experimental
@@ -100,14 +100,14 @@ Following Grant and Booth (2009), our approach is a **mixed-method umbrella/scop
 
 **Umbrella Review Component:**
 - Compiling existing systematic reviews across disciplines
-- Synthesizing meta-analytical findings where available
+- Synthesising meta-analytical findings where available
 
 **Scoping Review Component:**
 - Mapping extent and nature of analytical literature
 - Identifying knowledge gaps requiring supplementary primary research
 
 **State-of-the-Art Component:**
-- Emphasizing current and emerging techniques
+- Emphasising current and emerging techniques
 - Expert perspective on future trajectories
 
 **Justification:** Full systematic reviews are impractical given timeline; meta-analyses unnecessary for technique cataloguing. We follow **PRISMA-SCR guidelines** (Tricco et al., 2018), which permit single-source use and methodological flexibility.
@@ -119,14 +119,14 @@ Following Grant and Booth (2009), our approach is a **mixed-method umbrella/scop
 **Step 1.1: Define Discipline Boundaries**
 - *Timeline:* Week 1 (by 2025-10-03)
 - *Responsibility:* SD & GT
-- *Output:* Finalized list of disciplines with clear definitions
+- *Output:* Finalised list of disciplines with clear definitions
 - *Method:*
   - Review current list (Biology/Ecology, Genetics/Genomics, Spatial, Fisheries, Policy/Conservation, Statistics)
   - Consult with Irene on EEA abstract trends
   - Identify gaps (e.g., climate change integration needed)
   - Define inclusion boundaries for each discipline
 
-**Step 1.2: Develop Standardized Spreadsheet Template**
+**Step 1.2: Develop Standardised Spreadsheet Template**
 - *Timeline:* Week 1 (by 2025-10-03)
 - *Responsibility:* GT (lead), SD (review)
 - *Output:* Template spreadsheet with justified column structure
@@ -139,7 +139,7 @@ Following Grant and Booth (2009), our approach is a **mixed-method umbrella/scop
   - **Resources:** Code repositories, protocol links, key practitioners
   - **Expert Notes:** Specialist perspectives, caveats, recommendations
 
-**Step 1.3: Formalize Search Strategy**
+**Step 1.3: Formalise Search Strategy**
 - *Timeline:* Week 1 (by 2025-10-03)
 - *Responsibility:* SD & GT
 - *Output:* Written search protocol document
@@ -169,7 +169,7 @@ Following Grant and Booth (2009), our approach is a **mixed-method umbrella/scop
 
 #### PHASE 2: EXPERT ENGAGEMENT
 
-**Step 2.1: Finalize Expert Panel**
+**Step 2.1: Finalise Expert Panel**
 - *Timeline:* Week 1 (by 2025-10-03)
 - *Responsibility:* SD & GT
 - *Output:* Confirmed list with roles (leads vs. assistants)
@@ -182,14 +182,14 @@ Following Grant and Booth (2009), our approach is a **mixed-method umbrella/scop
 **Step 2.2: Prepare Expert Briefing Materials**
 - *Timeline:* Week 1-2 (by 2025-10-05)
 - *Responsibility:* GT & SD
-- *Output:* Standardized briefing package
+- *Output:* Standardised briefing package
 - *Contents:*
   - Panel overview and objectives
   - Systematic review methodology explanation
   - Their specific discipline scope
   - Template spreadsheet + example (completed by GT/SD trial)
   - Timeline and time commitment estimate
-  - Authorship/acknowledgment plan for outputs
+  - Authorship/acknowledgement plan for outputs
   - Request for phonetic name pronunciation
 
 **Step 2.3: Conduct Trial Review**
@@ -212,7 +212,7 @@ Following Grant and Booth (2009), our approach is a **mixed-method umbrella/scop
   - CC relevant assistants and speakers (loop entire discipline team)
   - Attach briefing materials
   - Set deadline for initial review draft
-  - Emphasize speakers can integrate findings into their talks
+  - Emphasise speakers can integrate findings into their talks
 
 #### PHASE 3: LITERATURE REVIEW EXECUTION
 
@@ -336,7 +336,7 @@ Inclusion: Must demonstrate technique application to Chondrichthyans
 - **Emerging:** Recent development, growing adoption
 - **Cutting-Edge:** Very recent, experimental, limited application
 - **Declining:** Formerly common, now superseded
-- **Niche:** Specialized application, stable limited use
+- **Niche:** Specialised application, stable limited use
 
 **Step 4.3: Identify Best Practices & Caveats**
 - *Timeline:* Week 5 (by 2025-10-24)
@@ -356,13 +356,13 @@ Inclusion: Must demonstrate technique application to Chondrichthyans
 - *Format Options:*
   - Traditional hierarchical mind map (e.g., XMind, FreeMind)
   - Network diagram (showing technique relationships)
-  - Timeline visualization (showing technique evolution)
+  - Timeline visualisation (showing technique evolution)
   - Prezi presentation (zoomable, linkable)
 - *Content:*
   - Central node: Discipline name
   - Primary branches: Subdisciplines or major technique categories
   - Secondary branches: Specific techniques
-  - Color coding: Trend classification (classic/emerging/declining)
+  - Colour coding: Trend classification (classic/emerging/declining)
   - Embedded links: To key papers, code repositories
   - Photos/names: Key practitioners (if permissions obtained)
 
@@ -383,7 +383,7 @@ Inclusion: Must demonstrate technique application to Chondrichthyans
 - *Responsibility:* SD & GT (coordination), Leads (discipline slides)
 - *Output:* Unified slide deck for panel
 - *Per Discipline (6 minutes presentation):*
-  - Mind map visualization (1-2 slides)
+  - Mind map visualisation (1-2 slides)
   - Temporal trends graph (1 slide)
   - Highlight 2-3 "hot" emerging techniques
   - Note 1-2 declining methods and why
@@ -393,20 +393,20 @@ Inclusion: Must demonstrate technique application to Chondrichthyans
 - *Timeline:* Week 6 (by 2025-10-28)
 - *Responsibility:* SD & GT
 - *Output:* Opening remarks content
-- *Analyze:*
+- *Analyse:*
   - Common techniques used across multiple disciplines
-  - Discipline-specific specialization vs. methodological convergence
+  - Discipline-specific specialisation vs. methodological convergence
   - Overall trends in elasmobranch research trajectory
   - Emerging cross-disciplinary opportunities
 
-**Step 5.4: Finalize Open Forum Questions**
+**Step 5.4: Finalise Open Forum Questions**
 - *Timeline:* Week 6 (by 2025-10-28)
 - *Responsibility:* SD, GT, all leads
 - *Output:* Structured discussion prompts
 - *Potential Topics:*
   - Most impactful methodological advancement in last 5 years?
   - Biggest barrier to adopting new techniques in your work?
-  - Underutilized methods that deserve more attention?
+  - Underutilised methods that deserve more attention?
   - Techniques that are overhyped relative to their utility?
   - Future game-changers on the horizon?
   - How to improve cross-discipline collaboration?
@@ -434,7 +434,7 @@ Inclusion: Must demonstrate technique application to Chondrichthyans
   - Full database/spreadsheet
   - Mind maps (downloadable formats)
   - Methodology documentation
-  - Contributor acknowledgments
+  - Contributor acknowledgements
   - Citation instructions
 
 **Step 6.3: Develop Automated Update Pipeline**
@@ -445,7 +445,7 @@ Inclusion: Must demonstrate technique application to Chondrichthyans
   - R/Python scripts for Shark-Ref CSV processing
   - Automated trend analysis and plotting
   - Template for new technique addition
-  - Dashboard visualization (if web-hosted)
+  - Dashboard visualisation (if web-hosted)
 
 ---
 
@@ -501,7 +501,7 @@ trends <- deduped %>%
   theme_minimal()
 ```
 
-**Step 4: Visualization**
+**Step 4: Visualisation**
 - Publications per technique per year
 - Proportional adoption (technique / total discipline papers)
 - Regional breakdowns (if location data available)
@@ -544,11 +544,11 @@ Following comprehensive analysis of Carrier et al. (2019), AES 2024 conference p
 6. Statistics (General Methods)
 
 **Refined 8 Disciplines (Analytical-Methods-Focused):**
-1. **Biology, Life History, & Health** (expanded to include disease, parasites, telomere aging)
+1. **Biology, Life History, & Health** (expanded to include disease, parasites, telomere ageing)
 2. **Behaviour & Sensory Ecology** (NEW - separated from Ecology; substantial AES presence)
 3. **Trophic & Community Ecology** (NEW - separated from general Ecology; distinct methods)
 4. **Genetics, Genomics, & eDNA** (retained, eDNA explicitly included)
-5. **Movement, Space Use, & Habitat Modeling** (expanded from "Spatial" to emphasize movement ecology)
+5. **Movement, Space Use, & Habitat Modelling** (expanded from "Spatial" to emphasise movement ecology)
 6. **Fisheries, Stock Assessment, & Management** (retained)
 7. **Conservation Policy & Human Dimensions** (expanded to include citizen/social science)
 8. **Data Science & Integrative Methods** (expanded to include data integration, AI/ML)
@@ -560,7 +560,7 @@ Following comprehensive analysis of Carrier et al. (2019), AES 2024 conference p
 - **Health added** to Biology → Telomere studies, disease, parasites emerging at conferences
 - **Movement** added to Spatial → Movement ecology dominates conferences; telemetry ≠ SDMs
 - **Human Dimensions** added to Policy → Social science, citizen science, tourism have unique methods
-- **Data Integration** emphasized in Data Science → AES 2024 symposium; emerging critical field
+- **Data Integration** emphasised in Data Science → AES 2024 symposium; emerging critical field
 
 **Climate Change Integration:**
 - **NOT a standalone discipline** but cross-cutting theme
@@ -585,7 +585,7 @@ Each discipline follows the systematic review protocol above, with these specifi
 - **Ecology Subdisciplines:** Diet/feeding, trophic ecology, habitat use, community ecology, predator-prey dynamics
 - **Key Methods to Review:**
   - Age determination techniques (vertebrae, dorsal spines, bomb radiocarbon)
-  - Growth modeling (VBGF, multi-model approaches)
+  - Growth modelling (VBGF, multi-model approaches)
   - Reproductive assessments (histology, ultrasound, hormone assays)
   - Stable isotope analysis (bulk vs. compound-specific)
   - Stomach content analysis (traditional vs. DNA-based)
@@ -624,30 +624,30 @@ Each discipline follows the systematic review protocol above, with these specifi
 **Speaker:** Edward Lavender - *"Statistical tools for tracking elasmobranchs and advancing conservation"*
 
 **Scope:**
-- **SDM (Species Distribution Modeling):**
+- **SDM (Species Distribution Modelling):**
   - Presence-only models (MaxEnt, etc.)
   - Presence-absence models (GLM, GAM, BRT, Random Forest)
   - Ensemble models
   - Climate change projections
 - **Movement/Tracking:**
   - Acoustic telemetry analysis (network analysis, residence indices)
-  - Satellite tagging (state-space models, behavioral classification)
+  - Satellite tagging (state-space models, behavioural classification)
   - Archival tags (geolocation methods)
-  - Accelerometry (behavioral classification, Dead Reckoning)
+  - Accelerometry (behavioural classification, Dead Reckoning)
 - **Marine Protected Areas:**
   - Home range estimation (KDE, Brownian Bridge)
   - Critical habitat identification
   - MPA effectiveness assessment
-  - Spatial prioritization (Marxan, Zonation)
+  - Spatial prioritisation (Marxan, Zonation)
 
 **Key Methods to Review:**
 - SDM algorithms (GLM, GAM, BRT, MaxEnt, RF, ensemble)
 - Movement models (HMM, SSM, step-selection functions)
-- Space use metrics (KDE, Brownian Bridge, utilization distributions)
+- Space use metrics (KDE, Brownian Bridge, utilisation distributions)
 - Network analysis for connectivity
-- Spatiotemporal modeling approaches
+- Spatiotemporal modelling approaches
 
-**Trend Focus:** Machine learning adoption in SDM; hidden Markov models for behavioral state classification; integrated SDM + movement approaches
+**Trend Focus:** Machine learning adoption in SDM; hidden Markov models for behavioural state classification; integrated SDM + movement approaches
 
 #### 4. Fisheries & Stock Assessment
 
@@ -655,7 +655,7 @@ Each discipline follows the systematic review protocol above, with these specifi
 **Assistants:** Sonja Fordham (?)
 **Scope:**
 - Stock assessment models (age-structured, surplus production)
-- Catch per unit effort (CPUE) standardization
+- Catch per unit effort (CPUE) standardisation
 - Bycatch estimation and mitigation
 - Socio-economic analysis
 - Fishery-independent surveys
@@ -665,7 +665,7 @@ Each discipline follows the systematic review protocol above, with these specifi
 - Stock synthesis and integrated models
 - Bayesian state-space models
 - Catch-MSY and data-limited approaches
-- CPUE standardization (GLM, GAM, delta-lognormal)
+- CPUE standardisation (GLM, GAM, delta-lognormal)
 - Mark-recapture (traditional and close-kin)
 - Ecosystem models (Ecopath, Atlantis)
 
@@ -679,10 +679,10 @@ Each discipline follows the systematic review protocol above, with these specifi
 
 **Scope:**
 - IUCN Red List assessments
-- Extinction risk modeling
+- Extinction risk modelling
 - Trade analysis (CITES)
 - Policy effectiveness evaluation
-- Conservation prioritization
+- Conservation prioritisation
 - Human-wildlife conflict mitigation
 - Citizen science integration
 
@@ -706,7 +706,7 @@ Each discipline follows the systematic review protocol above, with these specifi
 - Statistical frameworks applicable across disciplines
 - Machine learning and AI applications
 - Bayesian methods
-- Data imbalance and rare species modeling
+- Data imbalance and rare species modelling
 - Model validation and selection
 - R vs. Python ecosystem comparison
 
@@ -810,7 +810,7 @@ Based on comprehensive discipline analysis (see Discipline_Structure_Analysis.md
 2. **Behaviour & Sensory Ecology** (5 min if expert available)
 3. **Trophic & Community Ecology** (5 min if expert available)
 4. **Genetics, Genomics, & eDNA** (5 min if expert available)
-5. **Movement, Space Use, & Habitat Modeling** (5 min if expert available)
+5. **Movement, Space Use, & Habitat Modelling** (5 min if expert available)
 6. **Fisheries, Stock Assessment, & Management** (5 min if expert available)
 7. **Conservation Policy & Human Dimensions** (5 min if expert available)
 8. **Data Science & Integrative Methods** (5 min if expert available)
@@ -829,7 +829,7 @@ Based on comprehensive discipline analysis (see Discipline_Structure_Analysis.md
 4. **Nicholas Dulvy** - *"Sharks, rays, and chimaeras reveal a more just and equitable view of global fisheries"*
 5. **Maria Dolores Riesgo** - *"Trust your model: unbalanced data from rare species does not imply unreliable predictions"*
 
-**NOTE:** Confirm final speaker list and topics with Irene. Presentation order can be optimized to align with panel review sequence if using Option B.
+**NOTE:** Confirm final speaker list and topics with Irene. Presentation order can be optimised to align with panel review sequence if using Option B.
 
 ### Interaction Strategies
 
@@ -867,13 +867,13 @@ Based on discipline analysis incorporating:
 
 #### 1. Biology, Life History, & Health
 
-**Scope:** Age/growth, reproduction, physiology, anatomy, disease, parasites, health indices, telomere aging
+**Scope:** Age/growth, reproduction, physiology, anatomy, disease, parasites, health indices, telomere ageing
 
 **Lead (Tentative):**
 - Dr. David Jiménez Alvarado (biology specialist)
 
 **High-Priority Recruits:**
-- **Rachel Hornfeck** (AES 2024) - Telomere aging, MPA impacts on health
+- **Rachel Hornfeck** (AES 2024) - Telomere ageing, MPA impacts on health
 - **Brian Moe** (AES 2024) - Life history, reproduction
 - **Dr. Chris Mull** - Biology/ecology, Sharkipedia collaboration
 
@@ -890,17 +890,17 @@ Based on discipline analysis incorporating:
 
 #### 2. Behaviour & Sensory Ecology
 
-**Scope:** Behavioral observation, social structure, sensory biology (electro, olfaction, vision, hearing), network analysis, animal-borne tech
+**Scope:** Behavioural observation, social structure, sensory biology (electro, olfaction, vision, hearing), network analysis, animal-borne tech
 
 **Lead: NEED TO RECRUIT**
 
 **Tier 1 Priority Candidates (AES 2024):**
-- **Caroline Sullivan** (FAU) - Acoustic behavior, far-field sound detection, macula neglecta
+- **Caroline Sullivan** (FAU) - Acoustic behaviour, far-field sound detection, macula neglecta
 - **Andrew Nosal** (Point Loma) - Automated visual tracking, drone + computer vision, TRex Python
 
 **Strong Additional Candidates:**
-- Marianne Porter (FAU, AES 2024) - Biomechanics, swimming behavior
-- James Kilfoil (AES 2024) - Olfactory learning, habituation/sensitization
+- Marianne Porter (FAU, AES 2024) - Biomechanics, swimming behaviour
+- James Kilfoil (AES 2024) - Olfactory learning, habituation/sensitisation
 - Cecilia Hampton (FAU, AES 2024) - Acoustic ecology, feeding sound differentiation
 - Nicholas Whitney (Carrier book) - Biologgers, accelerometry
 - Yannis Papastamatiou (Carrier book, FIU) - Animal-borne cameras
@@ -943,7 +943,7 @@ Based on discipline analysis incorporating:
 - Marcela Alvarenga
 
 **High-Priority Additional Recruits (AES 2024):**
-- **Anna Weber** (Florida Tech) - Genomic SDMs, ecotype modeling, virtualspecies validation
+- **Anna Weber** (Florida Tech) - Genomic SDMs, ecotype modelling, virtualspecies validation
 - **Eloise Cave** (Florida Tech) - Population genomics, climate adaptation, genomic offset
 - Shannon Barry (Florida Tech) - Genetic adaptation to climate, nursery fidelity
 - Dom Swift (AES 2024) - Local adaptation, philopatry, portfolio effect
@@ -957,7 +957,7 @@ Based on discipline analysis incorporating:
 
 ---
 
-#### 5. Movement, Space Use, & Habitat Modeling
+#### 5. Movement, Space Use, & Habitat Modelling
 
 **Scope:** Acoustic/satellite telemetry, movement models (HMM, SSM), SDMs, MPA design, home range, connectivity, forecasting
 
@@ -968,7 +968,7 @@ Based on discipline analysis incorporating:
 - Professor Alen Soldo - MPA specialist
 - Mauritz van Zinnicq Bergmann
 - Dr. Steph Brodie - SDMs, climate projections
-- Dr. Elliott Hazen - Spatiotemporal modeling
+- Dr. Elliott Hazen - Spatiotemporal modelling
 - Naomi Frances Farabaugh
 
 **High-Priority Additional Recruits (AES 2024):**
@@ -990,7 +990,7 @@ Based on discipline analysis incorporating:
 
 #### 6. Fisheries, Stock Assessment, & Management
 
-**Scope:** Stock assessment, CPUE standardization, bycatch, data-poor methods, CKMR, ecosystem models, socio-economics
+**Scope:** Stock assessment, CPUE standardisation, bycatch, data-poor methods, CKMR, ecosystem models, socio-economics
 
 **Leads (Tentative):**
 - Dr. Manuel Dureuil
@@ -1058,8 +1058,8 @@ Based on discipline analysis incorporating:
 
 ### General Assistants / Advisors
 
-- **Irene Kingma** (conference organizer, EEA trend insights)
-- **Paddy Walker** (conference organizer)
+- **Irene Kingma** (conference organiser, EEA trend insights)
+- **Paddy Walker** (conference organiser)
 - **Dovi Kacev** (general expertise)
 - **Chris Mull** (Sharkipedia collaboration potential)
 - **Mo [last name?]** (general expertise)
@@ -1099,10 +1099,10 @@ Based on discipline analysis incorporating:
 - Loop relevant oral presentation speakers with discipline leads
 - Allows integration of panel findings into presentations
 
-**Customization by Source:**
+**Customisation by Source:**
 - **AES 2024 attendees:** Mention Pittsburgh meeting, reference their specific talk
 - **Carrier book authors:** Reference their chapter, frame as updating 2019 work
-- **EEA attendees:** Emphasize Rotterdam participation, European perspective
+- **EEA attendees:** Emphasise Rotterdam participation, European perspective
 
 **Information Requested:**
 - Participation confirmation and preferred role (lead vs. assistant)
@@ -1118,7 +1118,7 @@ Based on discipline analysis incorporating:
 
 ---
 
-*For complete expert details including contact information, specific expertise, AES presentation notes, and tier-based recruitment prioritization, see Expert_Recommendations_Comprehensive.md*
+*For complete expert details including contact information, specific expertise, AES presentation notes, and tier-based recruitment prioritisation, see Expert_Recommendations_Comprehensive.md*
 
 ---
 
@@ -1135,12 +1135,12 @@ Based on discipline analysis incorporating:
   - *Dependency:* None
   - *Blocks:* 2.1
 
-- [ ] **1.3** [SD & GT] Review and finalize discipline list *(DUE: 2025-10-03)*
+- [ ] **1.3** [SD & GT] Review and finalise discipline list *(DUE: 2025-10-03)*
   - *Dependency:* None
   - *Blocks:* 1.4, 1.5, 2.1
 
 #### Priority 2 - Protocol Development (Dependent on Priority 1)
-- [ ] **1.4** [GT lead, SD review] Create standardized spreadsheet template with example tab *(DUE: 2025-10-03)*
+- [ ] **1.4** [GT lead, SD review] Create standardised spreadsheet template with example tab *(DUE: 2025-10-03)*
   - *Dependency:* 1.3
   - *Blocks:* 1.6, 2.2
 
@@ -1157,7 +1157,7 @@ Based on discipline analysis incorporating:
 ### PHASE 2: EXPERT RECRUITMENT (Week 2, Due: 2025-10-08)
 
 #### Priority 1 - Expert Identification
-- [ ] **2.1** [SD & GT] Finalize expert panel (leads + assistants) *(DUE: 2025-10-05)*
+- [ ] **2.1** [SD & GT] Finalise expert panel (leads + assistants) *(DUE: 2025-10-05)*
   - *Dependency:* 1.1, 1.2, 1.3
   - *Blocks:* 2.2, 2.3
 
@@ -1237,7 +1237,7 @@ Based on discipline analysis incorporating:
   - *Dependency:* 6.1
   - *Blocks:* Conference panel
 
-- [ ] **6.3** [All leads] Finalize 6-minute discipline presentations *(DUE: 2025-10-28)*
+- [ ] **6.3** [All leads] Finalise 6-minute discipline presentations *(DUE: 2025-10-28)*
   - *Dependency:* 4.4, 6.1
   - *Blocks:* Conference panel
 
@@ -1302,7 +1302,7 @@ Based on discipline analysis incorporating:
 - [ ] **B.1** [SD] Review and approve systematic review methodology justification *(DUE: 2025-10-03)*
   - *Output:* Written rationale for mixed-method umbrella/scoping/state-of-art approach
 
-- [ ] **B.2** [GT & SD] Finalize spreadsheet column structure with justifications *(DUE: 2025-10-03)*
+- [ ] **B.2** [GT & SD] Finalise spreadsheet column structure with justifications *(DUE: 2025-10-03)*
   - *Output:* Justification tab in template explaining each column's purpose
 
 #### External Infrastructure Research
@@ -1346,7 +1346,7 @@ Based on discipline analysis incorporating:
 
 **Option 3: Sharkipedia Integration**
 - Pros: Established infrastructure, trusted platform, existing audience
-- Cons: Dependency on external organization, potential scope mismatch
+- Cons: Dependency on external organisation, potential scope mismatch
 - Requires: Discussion with Chris Mull on fit and feasibility
 
 **Option 4: Shark-References Integration**
@@ -1357,7 +1357,7 @@ Based on discipline analysis incorporating:
 **Option 5: Standalone Website**
 - Pros: Complete control, custom features, professional presence
 - Cons: Hosting costs, maintenance burden, traffic generation needed
-- Structure: Searchable database, interactive visualizations, auto-updating trends
+- Structure: Searchable database, interactive visualisations, auto-updating trends
 
 **Search Interface Requirements (all options):**
 Whichever hosting option is chosen, the search interface should support:
@@ -1387,7 +1387,7 @@ See also: `docs/LLM/llm_integration_roadmap.md` for detailed requirements.
 
 **Incentive Structure:**
 - Authorship on annual data papers
-- Acknowledgment on website/database
+- Acknowledgement on website/database
 - Conference recognition
 - Professional networking opportunities
 - CV-building for early-career researchers
@@ -1395,11 +1395,11 @@ See also: `docs/LLM/llm_integration_roadmap.md` for detailed requirements.
 **Funding Strategies to Explore:**
 
 1. **Conference Integration:** Modest registration fee allocation from EEA/AES
-2. **Conservation Organization Support:** Ocean Conservancy, Shark Trust, PEW, etc.
+2. **Conservation Organisation Support:** Ocean Conservancy, Shark Trust, PEW, etc.
 3. **Foundation Grants:** Small grants for database maintenance (e.g., Sloan, Moore)
-4. **Institutional Hosting:** University library or research center support
+4. **Institutional Hosting:** University library or research centre support
 5. **Crowdfunding:** Community-supported infrastructure (Patreon model)
-6. **In-Kind Contributions:** Labor, server space, software from various organizations
+6. **In-Kind Contributions:** Labour, server space, software from various organisations
 
 **Comparative Models:**
 - **FishBase:** Supported by multiple institutions, EU funding, volunteer contributors
@@ -1563,22 +1563,22 @@ Simon Dedman
 **Technique Assessment Questions:**
 1. In your view, what has been the most impactful methodological advancement in elasmobranch research in the last 5 years?
 2. Are there techniques you consider overhyped relative to their actual utility or accessibility?
-3. What underutilized methods deserve more attention from the community?
+3. What underutilised methods deserve more attention from the community?
 
 **Accessibility & Training:**
 4. What are the biggest barriers preventing researchers from adopting new analytical techniques?
 5. How can we better support training and capacity building for complex methods?
-6. Should we prioritize simpler, more accessible techniques over cutting-edge but complex approaches?
+6. Should we prioritise simpler, more accessible techniques over cutting-edge but complex approaches?
 
 **Future Outlook:**
 7. What emerging techniques do you predict will be game-changers in the next 5-10 years?
 8. How will AI and machine learning realistically impact elasmobranch research (beyond the hype)?
-9. Are there analytical gaps—questions we can't currently answer with existing tools?
+9. Are there analytical gaps — questions we can't currently answer with existing tools?
 
 **Cross-Discipline Collaboration:**
 10. Where do you see opportunities for cross-discipline methodological exchange?
 11. How can we better connect practitioners across subfields?
-12. Should we be promoting more standardization or embracing methodological diversity?
+12. Should we be promoting more standardisation or embracing methodological diversity?
 
 **Resource & Database:**
 13. What would make this database most useful to you in your work?
@@ -1601,4 +1601,4 @@ Simon Dedman
 
 ---
 
-*This document synthesizes planning from "EEA2025 Data panel.docx" and incorporates Shark-References integration strategy from "Si Jurgen SharkReferences chat.docx". It provides a complete blueprint for executing the systematic review, delivering the panel session, and developing long-term sustainable infrastructure for ongoing updates.*
+*This document synthesises planning from "EEA2025 Data panel.docx" and incorporates Shark-References integration strategy from "Si Jurgen SharkReferences chat.docx". It provides a complete blueprint for executing the systematic review, delivering the panel session, and developing long-term sustainable infrastructure for ongoing updates.*

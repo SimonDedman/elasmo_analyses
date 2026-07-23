@@ -97,16 +97,16 @@ Interested in joining future panel sessions at EEA or AES conferences?
 - **Credit:** Acknowledge contributions appropriately
 - **Inclusive:** Welcome diverse perspectives and backgrounds
 
-### Unacceptable Behavior
+### Unacceptable Behaviour
 
 - Harassment or discrimination of any kind
 - Plagiarism or failure to cite sources
 - Deliberate misinformation
-- Disrespect toward other researchers or methods
+- Disrespect towards other researchers or methods
 
 ### Reporting
 
-If you experience or witness unacceptable behavior, contact panel leaders privately.
+If you experience or witness unacceptable behaviour, contact panel leaders privately.
 
 ---
 
@@ -177,10 +177,10 @@ If you experience or witness unacceptable behavior, contact panel leaders privat
 **Major Contributors (≥10 hours):**
 - Listed as co-authors on panel summary papers
 - Acknowledged in presentation slides
-- Listed in README acknowledgments section
+- Listed in README acknowledgements section
 
 **Minor Contributors (<10 hours):**
-- Listed in README acknowledgments section
+- Listed in README acknowledgements section
 - Credited in specific files they contributed to
 - Thanked in presentations
 
@@ -207,7 +207,7 @@ When contributing, please indicate your preferred attribution:
 - **4 weeks before:** Technique inventories due
 - **3 weeks before:** Literature review drafts due
 - **2 weeks before:** Final revisions due
-- **1 week before:** Presentation materials finalized
+- **1 week before:** Presentation materials finalised
 
 ### Post-Conference
 

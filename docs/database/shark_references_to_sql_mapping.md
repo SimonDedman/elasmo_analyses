@@ -451,7 +451,7 @@ def get_author_affiliations(doi):
 
 **Impact:**
 - Can populate high-level techniques (`a_satellite_tracking`)
-- Cannot populate subtechniques (`st_argos_tags`, `st_kalman_filter`)
+- Can't populate subtechniques (`st_argos_tags`, `st_kalman_filter`)
 
 **Recommendation:**
 - **Phase 1:** Populate parent techniques from abstracts
@@ -746,7 +746,7 @@ If below thresholds, iterate on extraction logic.
 7. Generate quality report
 
 **Expected Output:**
-- `outputs/literature_review.parquet` (DuckDB-optimized)
+- `outputs/literature_review.parquet` (DuckDB-optimised)
 - `outputs/literature_review.duckdb` (SQL database)
 - `outputs/literature_review.csv` (for manual review)
 - `outputs/extraction_quality_report.md` (validation metrics)

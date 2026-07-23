@@ -22,7 +22,7 @@ editor_options:
 - ✅ **Structured:** Consistent data fields across all species
 - ✅ **Current:** Actively maintained and updated
 - ✅ **Rich metadata:** Includes common names, distribution, taxonomy, habitat, size, biology
-- ✅ **Well-organized:** Alphabetical listing with clear URLs
+- ✅ **Well-organised:** Alphabetical listing with clear URLs
 - ✅ **Open access:** All species information publicly available
 
 **Current Database Requirements:**
@@ -97,7 +97,7 @@ Acroteriobatus andysabini (Last, Séret & Naylor, 2016)
   - 🇵🇹 Portuguese (por)
   - Other languages as available
 
-**Example (Carcharodon carcharias):**
+**Example (*Carcharodon carcharias*):**
 - English: Great white shark, White pointer, White shark, Man-eater
 - German: Weißer Hai, Weißhai, Menschenhai
 - Spanish: Tiburón blanco, Jaquetón blanco
@@ -109,7 +109,7 @@ Acroteriobatus andysabini (Last, Séret & Naylor, 2016)
 - **Distribution** (geographic range by ocean basin)
 - **Habitat** (depth range, habitat type)
 - **Size / Weight / Age** (maximum size, weight, age)
-- **Biology** (reproductive mode, diet, behavior)
+- **Biology** (reproductive mode, diet, behaviour)
 - **Human uses** (fisheries, conservation status)
 
 #### Additional Information
@@ -498,7 +498,7 @@ species_df.to_csv('data/shark_species_cleaned.csv', index=False)
 
 ### Option B: Semi-Automated (Hybrid Approach)
 
-**Best for:** If full automation is not permitted or feasible
+**Best for:** If full automation isn't permitted or feasible
 
 **Workflow:**
 1. Use automated script to extract species list only (26 pages)
@@ -690,7 +690,7 @@ print(f"Generated SQL for {len(sql_statements)} species")
    - Manually add critical missing species
    - Defer comprehensive extraction to future work
 
-### 5.2 Prioritization Strategy
+### 5.2 Prioritisation Strategy
 
 **Critical (Must Have):**
 - ✅ Binomial names (genus + species)
@@ -794,7 +794,7 @@ ALTER TABLE species_taxonomy ADD COLUMN extraction_method VARCHAR(50);  -- 'auto
 | Shark-Refs denies automation permission | Low | Medium | Use semi-automated for species list only, manual for gaps |
 | Website structure changes during extraction | Low | Medium | Save intermediate results, implement error handling |
 | Missing species not in Shark-References | Medium | Low | Cross-reference with Weigmann + FishBase |
-| Common names inconsistent across sources | High | Low | Prioritize Shark-Refs, document conflicts |
+| Common names inconsistent across sources | High | Low | Prioritise Shark-Refs, document conflicts |
 | Extraction takes longer than expected | Medium | Low | Start with species list only, defer full extraction |
 
 ### 7.2 Contingency Plans
@@ -810,7 +810,7 @@ ALTER TABLE species_taxonomy ADD COLUMN extraction_method VARCHAR(50);  -- 'auto
 - Document species source in database
 
 **If extraction reveals major taxonomy conflicts:**
-- Prioritize most recent source (Shark-References likely most current)
+- Prioritise most recent source (Shark-References likely most current)
 - Document conflicts in `species_taxonomy` table remarks field
 - Consult taxonomic experts if critical discrepancies found
 
@@ -914,7 +914,7 @@ ALTER TABLE species_taxonomy ADD COLUMN extraction_method VARCHAR(50);  -- 'auto
 
 **Recommended immediate action:** Use existing 1,030 species to unblock database setup, then contact Shark-References for permission to extract the complete species list. Cross-reference with Weigmann's updated list (when received) to ensure completeness.
 
-**Expected outcome:** Master species database with 1,200+ chondrichthyan species, including binomial names, common names, taxonomic hierarchy, and basic ecological data—meeting all requirements for the EEA 2025 Data Panel project.
+**Expected outcome:** Master species database with 1,200+ chondrichthyan species, including binomial names, common names, taxonomic hierarchy, and basic ecological data — meeting all requirements for the EEA 2025 Data Panel project.
 
 ---
 

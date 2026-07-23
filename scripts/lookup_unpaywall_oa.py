@@ -33,7 +33,14 @@ MAX_RETRIES = 3
 # Paths
 PROJECT_DIR = Path(__file__).parent.parent
 DB_PATH = PROJECT_DIR / "database" / "technique_taxonomy.db"
-CSV_PATH = PROJECT_DIR / "outputs" / "shark_references_bulk" / "shark_references_complete_2025_to_1950_20251021.csv"
+# Resolve the LATEST master bulk CSV rather than a fixed old snapshot, so new
+# papers (and their DOIs) are reached by the incremental OA lookup. Falls back
+# to the historical Oct-2021 file if no newer master is present.
+_MASTER_GLOB = sorted((PROJECT_DIR / "outputs" / "shark_references_bulk").glob(
+    "shark_references_complete_*.csv"))
+CSV_PATH = _MASTER_GLOB[-1] if _MASTER_GLOB else (
+    PROJECT_DIR / "outputs" / "shark_references_bulk" /
+    "shark_references_complete_2025_to_1950_20251021.csv")
 OUTPUT_DIR = PROJECT_DIR / "outputs"
 LOG_DIR = PROJECT_DIR / "logs"
 

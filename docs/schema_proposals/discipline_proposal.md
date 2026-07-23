@@ -11,7 +11,7 @@ Classify each paper into the research discipline(s) it represents. A paper can b
 
 ## Extraction Method
 
-Search terms are matched against the **full text** of each PDF. A frequency-based scoring system is used: a column is set to `1` only when the cumulative term frequency across the document meets or exceeds the column's threshold. Higher thresholds guard against incidental mentions of discipline-adjacent terminology (e.g., a paper mentioning movement once in its introduction does not become a movement paper).
+Search terms are matched against the **full text** of each PDF. A frequency-based scoring system is used: a column is set to `1` only when the cumulative term frequency across the document meets or exceeds the column's threshold. Higher thresholds guard against incidental mentions of discipline-adjacent terminology (e.g., a paper mentioning movement once in its introduction doesn't become a movement paper).
 
 Case-sensitive terms (e.g., acronyms such as `IUCN`, `eDNA`, `MSY`) are matched exactly; all other terms use case-insensitive matching. Wildcard (`*`) terms match any suffix (e.g., `behavio*` matches both `behaviour` and `behavioral`).
 
@@ -45,7 +45,7 @@ Case-sensitive terms (e.g., acronyms such as `IUCN`, `eDNA`, `MSY`) are matched 
 
 **`d_behaviour`** — Threshold of 3 guards against papers that mention behaviour incidentally. Captures both field-based observational studies and laboratory behavioural experiments.
 
-**`d_conservation`** — Threshold of 3 ensures that papers merely citing a species' IUCN status in passing do not receive this flag. Papers must engage substantively with conservation topics.
+**`d_conservation`** — Threshold of 3 ensures that papers merely citing a species' IUCN status in passing don't receive this flag. Papers must engage substantively with conservation topics.
 
 **`d_data_science`** — Covers methodological papers that apply advanced computational or statistical methods. Includes meta-analyses and systematic reviews, which synthesise literature rather than generating new field data.
 
@@ -71,9 +71,9 @@ Replace `{openalex_id}` with the paper's OpenAlex identifier (e.g., `W2164874137
 
 ## Known Issues
 
-1. **`d_paleontology` (9.6% prevalence):** Geological epoch names (e.g., "Miocene", "Cretaceous") appear in biogeographic and evolutionary biology papers that are not primarily palaeontological. Review of flagged papers suggested the prevalence is broadly correct and these epoch references reflect genuine palaeontological content or explicit evolutionary context.
+1. **`d_paleontology` (9.6% prevalence):** Geological epoch names (e.g., "Miocene", "Cretaceous") appear in biogeographic and evolutionary biology papers that aren't primarily palaeontological. Review of flagged papers suggested the prevalence is broadly correct and these epoch references reflect genuine palaeontological content or explicit evolutionary context.
 
-2. **`d_husbandry` (4.9% prevalence):** A small number of false positives arise from captive-experiment physiology or behaviour papers that are not primarily about husbandry practice. This is acceptable given that such papers do involve captive animals.
+2. **`d_husbandry` (4.9% prevalence):** A small number of false positives arise from captive-experiment physiology or behaviour papers that aren't primarily about husbandry practice. This is acceptable given that such papers do involve captive animals.
 
 3. **`d_taxonomy` (22.1% prevalence):** High apparent prevalence is expected given the volume of taxonomic and morphological description papers in the elasmobranch literature, particularly for older decades. Threshold-1 columns are most susceptible to false positives; spot-checks are recommended when subsetting for this discipline.
 

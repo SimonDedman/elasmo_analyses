@@ -129,7 +129,7 @@ Saves updated files:
 - `distribution` - Geographic distribution text
 - `habitat` - Habitat description with depth range
 - `size_weight_age` - Maximum size, weight, age data
-- `biology` - Reproductive mode, diet, behavior
+- `biology` - Reproductive mode, diet, behaviour
 - `short_description` - Brief species overview
 - `human_uses` - Fisheries, conservation status
 - `remarks` - Taxonomic notes
@@ -306,7 +306,7 @@ Still much faster than full re-scrape (65+ minutes)!
 
 **Cause:** First run or `shark_references_species_list.csv` missing
 
-**Solution:** Script automatically performs full extraction. This is expected behavior.
+**Solution:** Script automatically performs full extraction. This is expected behaviour.
 
 ### Error: HTTP errors or timeouts
 

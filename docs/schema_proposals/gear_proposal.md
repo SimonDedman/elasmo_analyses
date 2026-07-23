@@ -112,7 +112,7 @@ New gear types from ISSCFG classification and mitigation devices from BMIS (Byca
 
 - **`gear_survey`**: Now also includes "diving survey" and "diver transect" as search terms, covering in-water visual survey methods alongside drone, ROV, and vessel-based surveys.
 
-**Rationale:** Dredge and trawl subtypes fill gaps in gear resolution identified via ISSCFG cross-referencing. The seven new mitigation columns cover the most commonly studied bycatch mitigation approaches catalogued in BMIS that were not already captured by `gear_mit_circle_hook`, `gear_mit_brd`, `gear_mit_deterrent`, `gear_mit_time_area`, or `gear_mit_handling`.
+**Rationale:** Dredge and trawl subtypes fill gaps in gear resolution identified via ISSCFG cross-referencing. The seven new mitigation columns cover the most commonly studied bycatch mitigation approaches catalogued in BMIS that weren't already captured by `gear_mit_circle_hook`, `gear_mit_brd`, `gear_mit_deterrent`, `gear_mit_time_area`, or `gear_mit_handling`.
 
 ---
 *Draft created: 2026-03-10, revised with team feedback*

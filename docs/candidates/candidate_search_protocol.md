@@ -46,7 +46,7 @@
 
 ### Phase 3: Web Search Strategy
 
-#### Search Prioritization
+#### Search Prioritisation
 
 **Priority 1: Underrepresented Disciplines**
 - 2. Behaviour & Sensory Ecology (2 presentations)
@@ -154,7 +154,7 @@
 - **Focus:** Recent publications (last 5 years preferred)
 - **Geographic diversity:** Aim for 2-3 candidates per underrepresented region
 - **Career diversity:** Include early-career researchers (PhD/postdoc)
-- **Quality over quantity:** Prioritize well-documented candidates over incomplete profiles
+- **Quality over quantity:** Prioritise well-documented candidates over incomplete profiles
 
 ---
 
