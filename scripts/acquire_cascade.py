@@ -511,7 +511,8 @@ def delete_verified_staging(staged: list, copied_ids: set,
 
 
 def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
-                          dry_run: bool = False, skip_books: bool = True) -> None:
+                          dry_run: bool = False, skip_books: bool = True,
+                          do_enrich: bool = True) -> None:
     """Ingest staged downloads into the corpus, delete verified staging copies,
     then run incremental schema extraction on the newly-filed ids.
 
@@ -577,6 +578,21 @@ def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
     elif do_extract:
         print("  No ids ingested; extraction skipped.")
 
+    # Enrich the corpus (OpenAlex/NamSor/Altmetric/Unpaywall) + refresh the
+    # derived tables the figures read. The chain is incremental, so newly-filed
+    # papers get gender/origin/ethnicity/OA/altmetric coverage instead of the NA
+    # they used to carry until a manual enrichment pass. Steady-state cost is
+    # tiny (only the new DOIs/authors are queried).
+    if do_enrich and copied_ids:
+        print(f"\n  Running enrichment chain on the refreshed corpus...")
+        rc = subprocess.run(
+            [sys.executable, str(Path(__file__).parent / "enrich_new_papers.py")],
+            cwd=str(BASE),
+        ).returncode
+        print(f"  enrich_new_papers.py exit code: {rc}")
+    elif do_enrich:
+        print("  No ids ingested; enrichment skipped.")
+
 
 def main() -> int:
     ap = argparse.ArgumentParser(
@@ -600,6 +616,9 @@ def main() -> int:
                      help="During finalize, do NOT delete staged PDFs after ingest.")
     ap.add_argument("--no-extract", action="store_true",
                      help="During finalize, skip incremental schema extraction.")
+    ap.add_argument("--no-enrich", action="store_true",
+                     help="During finalize, skip the OpenAlex/NamSor/Altmetric/"
+                          "Unpaywall enrichment chain.")
     ap.add_argument("--include-books", action="store_true",
                      help="During finalize, INCLUDE detected books (>200pp volumes). "
                           "Default excludes them; only enable once book-chapter mining exists.")
@@ -609,7 +628,8 @@ def main() -> int:
         finalize_acquisitions(keep_staging=args.keep_staging,
                               do_extract=not args.no_extract,
                               dry_run=args.dry_run,
-                              skip_books=not args.include_books)
+                              skip_books=not args.include_books,
+                              do_enrich=not args.no_enrich)
         return 0
 
     queue = load_queue(QUEUE)

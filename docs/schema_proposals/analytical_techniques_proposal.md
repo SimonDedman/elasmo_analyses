@@ -71,8 +71,8 @@ Every technique column that fires (count > 0) generates a row in `outputs/schema
 
 ## Known Issues and Limitations
 
-1. **Technique name overlap:** Some technique names are substrings of others (e.g., "model" appears in many technique names). Word-boundary matching reduces but does not eliminate this; review the evidence sentences for borderline cases.
-2. **Generic methodology terms:** Broad terms such as "analysis", "model", or "survey" are not used as standalone search terms; they appear only as part of longer technique phrases to avoid noise.
+1. **Technique name overlap:** Some technique names are substrings of others (e.g., "model" appears in many technique names). Word-boundary matching reduces but doesn't eliminate this; review the evidence sentences for borderline cases.
+2. **Generic methodology terms:** Broad terms such as "analysis", "model", or "survey" aren't used as standalone search terms; they appear only as part of longer technique phrases to avoid noise.
 3. **Evolving taxonomy:** The technique taxonomy database is actively maintained. Columns added or renamed in the database after 2026-04-16 will require an incremental re-extraction pass.
 4. **Pre-2026-04-16 values were metadata-only** and should not be used for technique-level analyses without re-extraction.
 5. **Methods vs. cited mentions:** A paper may mention a technique in a literature review without applying it. Frequency and the evidence context sentence should be used to distinguish applied vs. cited techniques.

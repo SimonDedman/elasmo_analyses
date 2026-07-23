@@ -73,7 +73,7 @@ Binary columns (0/1) indicating which ocean basin(s) a study covers. Nine basins
 
 ## Known Issues
 
-1. **Coverage gap:** 6,183 of ~18,200 papers with extracted data (34 %) have geographic records. Papers extracted via PDF but without institutional data or clear study location references are not covered.
+1. **Coverage gap:** 6,183 of ~18,200 papers with extracted data (34 %) have geographic records. Papers extracted via PDF but without institutional data or clear study location references aren't covered.
 2. **Multi-country studies:** Papers spanning several countries receive multiple `study_country` values as a semicolon-delimited string; parse carefully before aggregating.
 3. **Institutional ambiguity:** Authors at institutions with campuses in multiple countries (e.g. international research stations) may be assigned the headquarters country rather than the campus country.
 4. **Historical boundary changes:** Country ISO codes reflect current boundaries. Papers from before 1993 citing "Czechoslovakia" or "USSR" are mapped to successor states where possible.

@@ -2,7 +2,7 @@
 
 **Date:** 2025-10-26
 **Status:** Design Phase
-**Priority:** HIGH - Solves geographic visualization requirement
+**Priority:** HIGH - Solves geographic visualisation requirement
 
 ---
 
@@ -16,7 +16,7 @@ Building a comprehensive researcher database will enable geographic analysis of 
 
 **Current Situation:**
 - Have 4,545 papers with techniques and disciplines classified
-- Need geographic visualizations showing disciplines/techniques by location
+- Need geographic visualisations showing disciplines/techniques by location
 - No paper-location linkages exist
 
 **Proposed Solution:**
@@ -26,7 +26,7 @@ Building a comprehensive researcher database will enable geographic analysis of 
 - Link papers → authors → institutions → geographic locations
 
 **Benefits:**
-1. ✅ Solves geographic visualization requirement
+1. ✅ Solves geographic visualisation requirement
 2. ✅ Enables collaboration network analysis
 3. ✅ Tracks researcher productivity over time
 4. ✅ Identifies institutional research strengths
@@ -260,12 +260,12 @@ CREATE TABLE researcher_orcid_cache (
 
 ---
 
-### Phase 3: Institution Normalization & Geocoding (Medium Effort)
+### Phase 3: Institution Normalisation & Geocoding (Medium Effort)
 **Effort:** Medium (3-5 hours)
 **Data:** Deduplicated institutions with coordinates
 
 **Steps:**
-1. Normalize institution names:
+1. Normalise institution names:
    - "Univ. of California" → "University of California"
    - "MIT" → "Massachusetts Institute of Technology"
 2. Use ROR (Research Organization Registry) API for lookups
@@ -303,7 +303,7 @@ CREATE TABLE researcher_orcid_cache (
 
 **Rate limiting strategy:**
 - Batch queries (24/second limit)
-- Prioritize recent/prolific authors
+- Prioritise recent/prolific authors
 - Cache all results for reuse
 
 **Output:**
@@ -315,7 +315,7 @@ CREATE TABLE researcher_orcid_cache (
 
 ---
 
-### Phase 5: Geographic Analysis & Visualization (Low Effort)
+### Phase 5: Geographic Analysis & Visualisation (Low Effort)
 **Effort:** Low (2-3 hours) - Once data exists
 **Requires:** Phases 1-3 complete
 
@@ -326,7 +326,7 @@ CREATE TABLE researcher_orcid_cache (
 4. Collaboration networks (inter-country)
 5. Institutional productivity rankings
 
-**Visualizations:**
+**Visualisations:**
 1. **Choropleth map** - Papers per country
 2. **Bubble map** - Institution sizes by paper count
 3. **Flow map** - International collaborations
@@ -335,7 +335,7 @@ CREATE TABLE researcher_orcid_cache (
 
 **Output:**
 - Maps matching colleague's request (guuske map1/map2 style)
-- R visualizations using: sf, rnaturalearth, ggplot2
+- R visualisations using: sf, rnaturalearth, ggplot2
 - Interactive maps using: leaflet (optional)
 
 **Scripts:**
@@ -459,7 +459,7 @@ def geocode_institution(institution_name):
 ### Quality Metrics
 
 1. **Filename Parsing Success Rate**
-   - Target: >99% (filenames are standardized)
+   - Target: >99% (filenames are standardised)
    - Validation: Manual check of 100 random samples
 
 2. **PDF Author Extraction Success Rate**
@@ -523,7 +523,7 @@ ORDER BY paper_count DESC;
 | Phase 2: PDF extraction | Medium | 1-2 days | Phase 1 |
 | Phase 3: Geocoding | Medium | 1 day | Phase 2 |
 | Phase 4: ORCID (optional) | High | 2-3 days | Phases 1-3 |
-| Phase 5: Visualization | Low | 4-6 hours | Phase 3 |
+| Phase 5: Visualisation | Low | 4-6 hours | Phase 3 |
 | **Total (Phases 1-3, 5)** | - | **3-4 days** | - |
 | **Total (All phases)** | - | **5-7 days** | - |
 
@@ -555,7 +555,7 @@ outputs/analysis/
 └── collaboration_networks.csv
 ```
 
-### Visualizations
+### Visualisations
 ```
 outputs/figures/
 ├── world_map_papers_by_country.png/pdf
@@ -597,7 +597,7 @@ This gives best coverage with reasonable effort.
 | Risk | Impact | Mitigation |
 |------|--------|------------|
 | Poor PDF quality (OCR errors) | Medium | Focus on recent papers first, validate extraction rates |
-| Institution name variations | High | Use ROR API for normalization, manual review of top 100 |
+| Institution name variations | High | Use ROR API for normalisation, manual review of top 100 |
 | Geocoding failures | Medium | Fallback to country-level if city fails |
 | ORCID low match rate | Low | Make Phase 4 optional, use OpenAlex alternative |
 | API rate limits | Low | Implement caching, batch processing, delays |
@@ -612,7 +612,7 @@ This gives best coverage with reasonable effort.
 - ✅ Extract full author lists from >80% of papers
 - ✅ Geocode >70% of institutions to country level
 - ✅ Create world map showing papers per country
-- ✅ Create discipline distribution by country visualization
+- ✅ Create discipline distribution by country visualisation
 
 **Stretch Goals (Phase 4):**
 - ✅ ORCID matches for >30% of researchers

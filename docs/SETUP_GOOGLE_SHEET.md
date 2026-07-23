@@ -142,4 +142,4 @@ var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/YOUR_ID_HERE/exec';
 -   The Google Sheet is the **shared click log**, not the master list
 -   Papers are only **officially removed** from `papers_data.json` after Simon ingests the PDFs
 -   Team members should upload downloaded PDFs to the shared NAS
--   The click log helps avoid duplicate effort — it does not confirm acquisition
+-   The click log helps avoid duplicate effort — it doesn't confirm acquisition

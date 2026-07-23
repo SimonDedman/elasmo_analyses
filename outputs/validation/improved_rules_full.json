@@ -1,0 +1,2046 @@
+{
+ "eco_": {
+  "_description": "Ecosystem component \u2014 20 binary columns covering realm (marine/freshwater/brackish), zone (pelagic/coastal/demersal/\u2026), and habitat (reef, mangrove, kelp, nursery\u2026).",
+  "_criteria": "Keyword frequency in full PDF text; triggered when cumulative matches \u2265 column threshold. Elasmobranch-proximity check applied to some eco_ columns to avoid false positives from unrelated habitat mentions.",
+  "eco_marine": {
+   "terms": [
+    "marine",
+    "ocean",
+    "sea",
+    "saltwater"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_freshwater": {
+   "terms": [
+    "freshwater",
+    "freshwater river",
+    "river shark",
+    "river system",
+    "riverine",
+    "lake",
+    "estuarine",
+    "estuarin*",
+    "brackish"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_brackish": {
+   "terms": [
+    "estuar*",
+    "brackish",
+    "lagoon",
+    "mangrove"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_pelagic": {
+   "terms": [
+    "pelagic",
+    "open ocean",
+    "oceanic",
+    "epipelagic",
+    "mesopelagic",
+    "bathypelagic"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_coastal": {
+   "terms": [
+    "coastal",
+    "neritic",
+    "inshore",
+    "nearshore",
+    "continental shelf"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_demersal": {
+   "terms": [
+    "demersal",
+    "benthic",
+    "bottom-dwelling",
+    "epibenthic",
+    "benthopelagic"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_reef": {
+   "terms": [
+    "coral reef",
+    "reef-associated",
+    "rocky reef"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_deepwater": {
+   "terms": [
+    "deep-sea",
+    "deep-water",
+    "deepwater",
+    "deep water",
+    "abyssal",
+    "hadal",
+    "bathyal",
+    "seamount"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_intertidal": {
+   "terms": [
+    "intertidal",
+    "tide pool",
+    "littoral"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_mangrove": {
+   "terms": [
+    "mangrove"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_seagrass": {
+   "terms": [
+    "seagrass",
+    "eelgrass",
+    "Posidonia",
+    "Zostera",
+    "Thalassia"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_kelp": {
+   "terms": [
+    "kelp forest",
+    "kelp bed",
+    "macroalgal"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_polar": {
+   "terms": [
+    "polar",
+    "arctic",
+    "antarctic",
+    "ice-edge",
+    "sea ice"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_riverine": {
+   "terms": [
+    "river shark",
+    "freshwater stingray",
+    "bull shark river"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_nursery": {
+   "terms": [
+    "nursery habitat",
+    "nursery ground",
+    "nursery area",
+    "essential fish habitat",
+    "juvenile habitat"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_pupping": {
+   "terms": [
+    "pupping ground",
+    "pupping area",
+    "parturition site",
+    "birthing ground",
+    "parturition",
+    "parturition season",
+    "pupping site",
+    "spawning site",
+    "birthing area",
+    "egg-laying habitat",
+    "egg case nursery"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_epipelagic": {
+   "terms": [
+    "epipelagic",
+    "surface waters",
+    "surface layer",
+    "photic zone"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_mesopelagic": {
+   "terms": [
+    "mesopelagic",
+    "twilight zone"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_bathypelagic": {
+   "terms": [
+    "bathypelagic",
+    "deep scattering layer"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "eco_abyssal": {
+   "terms": [
+    "abyssal",
+    "hadal"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 1.0,
+   "METHODS": 1.0,
+   "RESULTS": 0.5,
+   "RESULTS_AND_DISCUSSION": 0.5,
+   "DISCUSSION": 0.5,
+   "CONCLUSIONS": 0.5,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ecosystem_component_proposal.md"
+ },
+ "pr_": {
+  "_description": "Pressure / threat \u2014 26 binary columns covering fishing types, climate stressors, pollution, habitat loss, invasive species, bycatch, and disturbance.",
+  "_criteria": "Keyword frequency in full PDF text; triggered when cumulative matches \u2265 column threshold. Reference and acknowledgement sections are stripped before matching to reduce citation-driven false positives.",
+  "pr_fishing_commercial": {
+   "terms": [
+    "commercial fish*",
+    "industrial fish*",
+    "fishing pressure",
+    "fishing mortality",
+    "exploitation"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_fishing_artisanal": {
+   "terms": [
+    "artisanal",
+    "small-scale fish*",
+    "subsistence fish*",
+    "traditional fish*"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_fishing_recreational": {
+   "terms": [
+    "recreational fish*",
+    "sport fish*",
+    "game fish*",
+    "catch-and-release",
+    "angling",
+    "angler",
+    "anglers"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_fishing_iuu": {
+   "terms": [
+    "illegal fish*",
+    "unreported",
+    "unregulated",
+    "IUU",
+    "poach*"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "IUU"
+   ]
+  },
+  "pr_bycatch": {
+   "terms": [
+    "bycatch",
+    "by-catch",
+    "incidental capture",
+    "non-target",
+    "discards"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_shark_finning": {
+   "terms": [
+    "shark fin*",
+    "finning",
+    "fin trade"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_targeted_fishing": {
+   "terms": [
+    "targeted shark fish*",
+    "directed shark fish*",
+    "shark fish*"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_climate_change": {
+   "terms": [
+    "climate change",
+    "global warming",
+    "ocean warming"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_ocean_acidification": {
+   "terms": [
+    "ocean acidification",
+    "(acidification AND pH)",
+    "(acidification AND pCO2)"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_hypoxia": {
+   "terms": [
+    "hypoxia",
+    "deoxygenation",
+    "oxygen minimum zone",
+    "OMZ"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "OMZ"
+   ]
+  },
+  "pr_pollution_chemical": {
+   "terms": [
+    "pollut*",
+    "contaminant*",
+    "heavy metal*",
+    "mercury",
+    "PCB",
+    "PFAS",
+    "pesticide*"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "PCB",
+    "PFAS"
+   ]
+  },
+  "pr_pollution_plastic": {
+   "terms": [
+    "plastic pollution",
+    "microplastic*",
+    "macroplastic*",
+    "plastic ingestion",
+    "plastic debris"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_pollution_noise": {
+   "terms": [
+    "noise pollution",
+    "anthropogenic noise",
+    "shipping noise",
+    "sonar",
+    "acoustic disturbance"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_habitat_loss": {
+   "terms": [
+    "habitat loss",
+    "habitat degradation",
+    "coastal development",
+    "dredg*",
+    "mangrove loss"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_shipping": {
+   "terms": [
+    "ship strike",
+    "vessel strike",
+    "maritime traffic"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_tourism": {
+   "terms": [
+    "dive tourism",
+    "ecotourism",
+    "shark tourism",
+    "provisioning",
+    "shark feed*",
+    "cage div*"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_depredation": {
+   "terms": [
+    "depredation",
+    "depredating",
+    "bait loss",
+    "catch damage"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_aquaculture": {
+   "terms": [
+    "aquaculture",
+    "fish farm*",
+    "mariculture"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_invasive": {
+   "terms": [
+    "invasive species",
+    "non-native species",
+    "alien species"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_disease": {
+   "terms": [
+    "disease",
+    "pathogen",
+    "parasite",
+    "epizootic",
+    "infection"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_light": {
+   "terms": [
+    "light pollution",
+    "artificial light",
+    "ALAN"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "ALAN"
+   ]
+  },
+  "pr_electromagnetic": {
+   "terms": [
+    "electromagnetic field",
+    "EMF",
+    "submarine cable",
+    "electroreception interference"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "EMF"
+   ]
+  },
+  "pr_cumulative": {
+   "terms": [
+    "cumulative impact",
+    "multiple stressor*",
+    "synergistic",
+    "additive effect"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_discarding": {
+   "terms": [
+    "discard*",
+    "discarding practice*",
+    "high-grading",
+    "slipping"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_seabed_disturbance": {
+   "terms": [
+    "seabed disturbance",
+    "bottom disturbance",
+    "benthic disturbance",
+    "physical disturbance of the seabed",
+    "sediment resuspension",
+    "trawl impact on seabed",
+    "habitat scraping"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "pr_visual_disturbance": {
+   "terms": [
+    "visual disturbance",
+    "vessel presence",
+    "diver disturbance",
+    "boat disturbance",
+    "swimmer disturbance",
+    "shadow effect"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 1.0,
+   "METHODS": 1.0,
+   "RESULTS": 0.5,
+   "RESULTS_AND_DISCUSSION": 1.0,
+   "DISCUSSION": 1.0,
+   "CONCLUSIONS": 0.5,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/pressure_proposal.md"
+ },
+ "gear_": {
+  "_description": "Fishing gear \u2014 28 binary columns covering gear types (longline, gillnet, trawl\u2026) and BMIS-derived mitigation measures (circle hooks, leader material\u2026).",
+  "_criteria": "Keyword frequency in full PDF text; triggered when cumulative matches \u2265 column threshold. Target-species extraction runs alongside to inform imp_is_bycatch.",
+  "gear_longline": {
+   "terms": [
+    "longline",
+    "long-line",
+    "pelagic longline",
+    "demersal longline",
+    "bottom longline"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_gillnet": {
+   "terms": [
+    "gillnet",
+    "gill net",
+    "trammel net",
+    "entangling net",
+    "drift net",
+    "driftnet"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_trawl": {
+   "terms": [
+    "trawl",
+    "bottom trawl",
+    "demersal trawl",
+    "pelagic trawl",
+    "otter trawl",
+    "beam trawl",
+    "shrimp trawl"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_purse_seine": {
+   "terms": [
+    "purse seine",
+    "purse-seine",
+    "ring net"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_seine": {
+   "terms": [
+    "beach seine",
+    "Danish seine",
+    "seine net"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_hook_line": {
+   "terms": [
+    "hook and line",
+    "handline",
+    "rod and reel",
+    "trolling",
+    "jigging",
+    "pole and line",
+    "dropline",
+    "angling",
+    "baited hook",
+    "hand line",
+    "rod and line",
+    "trap and line",
+    "fly rod",
+    "shark hook",
+    "hooked"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_trap": {
+   "terms": [
+    "trap",
+    "pot",
+    "fish trap",
+    "drumline",
+    "SMART drumline"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_net_other": {
+   "terms": [
+    "cast net",
+    "lift net",
+    "scoop net",
+    "fyke net",
+    "pound net",
+    "weir"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "weir"
+   ]
+  },
+  "gear_harpoon": {
+   "terms": [
+    "harpoon",
+    "spearfish*",
+    "spear gun"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_dredge": {
+   "terms": [
+    "dredge",
+    "towed dredge",
+    "scallop dredge",
+    "clam dredge",
+    "oyster dredge",
+    "hydraulic dredge"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_trawl_beam": {
+   "terms": [
+    "beam trawl",
+    "beam-trawl"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_trawl_otter": {
+   "terms": [
+    "otter trawl",
+    "otter-trawl"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_survey": {
+   "terms": [
+    "research vessel",
+    "survey trawl",
+    "BRUVs",
+    "longline survey",
+    "fishery-independent survey",
+    "drone survey",
+    "UAV survey",
+    "ROV",
+    "submersible",
+    "diving survey",
+    "diver transect",
+    "BRUV",
+    "baited remote underwater video",
+    "aerial survey",
+    "aerial video surveillance",
+    "bottom trawl survey",
+    "fishery-independent sampling",
+    "fisheries-independent survey",
+    "sampling cruise",
+    "underwater videography",
+    "visual survey",
+    "vessel transect"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "BRUVs",
+    "UAV",
+    "ROV"
+   ]
+  },
+  "gear_pelagic": {
+   "terms": [
+    "pelagic longline",
+    "pelagic trawl",
+    "midwater trawl"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_demersal": {
+   "terms": [
+    "demersal longline",
+    "bottom trawl",
+    "demersal trawl",
+    "bottom longline"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_artisanal": {
+   "terms": [
+    "artisanal",
+    "traditional gear",
+    "small-scale",
+    "hand-operated"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_mit_circle_hook": {
+   "terms": [
+    "circle hook",
+    "non-offset hook",
+    "circular hook",
+    "circle hooks",
+    "Mustad circle",
+    "non-offset circle hook",
+    "circle vs J"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_mit_brd": {
+   "terms": [
+    "bycatch reduction device",
+    "BRD",
+    "turtle excluder",
+    "TED"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "BRD",
+    "TED"
+   ]
+  },
+  "gear_mit_deterrent": {
+   "terms": [
+    "shark deterrent",
+    "SharkGuard",
+    "shark guard",
+    "electropositive",
+    "Rare Earth",
+    "EPM",
+    "LED deterrent",
+    "magnetic deterrent"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "EPM"
+   ]
+  },
+  "gear_mit_time_area": {
+   "terms": [
+    "time-area closure",
+    "spatial closure",
+    "fishing closure",
+    "seasonal closure",
+    "MPA"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "MPA"
+   ]
+  },
+  "gear_mit_handling": {
+   "terms": [
+    "safe release",
+    "handling practice*",
+    "live release",
+    "post-release mortality",
+    "PRM"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "PRM"
+   ]
+  },
+  "gear_mit_weak_hook": {
+   "terms": [
+    "weak hook",
+    "corrodible hook",
+    "designed to straighten"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_mit_line_weight": {
+   "terms": [
+    "line weight*",
+    "weighted branchline",
+    "leaded swivel",
+    "sliding lead",
+    "lumo lead",
+    "sink rate"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_mit_setting": {
+   "terms": [
+    "night set*",
+    "deep set*",
+    "deep-set buoy gear",
+    "side-set*",
+    "underwater set*"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_mit_pinger": {
+   "terms": [
+    "pinger",
+    "acoustic alarm",
+    "acoustic deterrent",
+    "porpoise alerting device",
+    "PAL"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "PAL"
+   ]
+  },
+  "gear_mit_illumination": {
+   "terms": [
+    "illuminat* net",
+    "illuminat* gillnet",
+    "LED net",
+    "net light*",
+    "lightstick*",
+    "light attract*"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_mit_wire_leader": {
+   "terms": [
+    "wire leader",
+    "monofilament leader",
+    "wire trace",
+    "nylon leader"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "gear_ghost": {
+   "terms": [
+    "ghost gear",
+    "ghost net",
+    "ghost fishing",
+    "ALDFG",
+    "abandoned gear",
+    "lost gear",
+    "derelict gear",
+    "derelict fishing"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "ALDFG"
+   ]
+  },
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 0.25,
+   "METHODS": 1.0,
+   "RESULTS": 0.5,
+   "RESULTS_AND_DISCUSSION": 0.5,
+   "DISCUSSION": 0.25,
+   "CONCLUSIONS": 0.25,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/gear_proposal.md"
+ },
+ "imp_": {
+  "_description": "Impact / response \u2014 21 binary topic columns plus 4 meta summary columns (direction, quantified, confidence, is_bycatch).",
+  "_criteria": "Topic columns (imp_mortality, imp_cpue, \u2026) use keyword frequency in full PDF text; triggered when cumulative matches \u2265 column threshold. Meta summary columns use derived logic \u2014 see the individual meta entries below.",
+  "imp_mortality": {
+   "terms": [
+    "mortality",
+    "survival rate",
+    "lethality",
+    "dead on arrival",
+    "DOA",
+    "at-vessel mortality",
+    "AVM"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "DOA",
+    "AVM"
+   ]
+  },
+  "imp_post_release": {
+   "terms": [
+    "post-release mortality",
+    "PRM",
+    "delayed mortality",
+    "post-capture survival"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "PRM"
+   ]
+  },
+  "imp_abundance": {
+   "terms": [
+    "abundance",
+    "population size",
+    "population decline",
+    "population trend"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "population",
+    "decline",
+    "increase",
+    "change",
+    "trend",
+    "status"
+   ],
+   "case_sensitive_terms": []
+  },
+  "imp_cpue": {
+   "terms": [
+    "CPUE",
+    "catch per unit effort",
+    "catch rate"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "CPUE"
+   ]
+  },
+  "imp_biomass": {
+   "terms": [
+    "biomass",
+    "standing stock",
+    "spawning stock biomass",
+    "SSB"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "change",
+    "decline",
+    "decrease",
+    "increase",
+    "shift",
+    "trend",
+    "loss",
+    "recovery",
+    "fluctuat*",
+    "depletion",
+    "rebuild*"
+   ],
+   "case_sensitive_terms": [
+    "SSB"
+   ]
+  },
+  "imp_distribution": {
+   "terms": [
+    "distribution shift",
+    "range shift",
+    "range contraction",
+    "habitat shift"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_behaviour_change": {
+   "terms": [
+    "behavioural change",
+    "behavioral change",
+    "avoidance behaviour",
+    "flight response",
+    "habituation",
+    "behavioural shift",
+    "behavioral shift",
+    "altered behaviour",
+    "altered behavior",
+    "flight behaviour",
+    "flight behavior",
+    "avoidance",
+    "novel behaviour",
+    "behavioural consequence",
+    "scaring away"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "change",
+    "response"
+   ],
+   "case_sensitive_terms": []
+  },
+  "imp_physiology_stress": {
+   "terms": [
+    "cortisol",
+    "lactate",
+    "blood chemistry",
+    "acid-base",
+    "reflex impairment",
+    "RAMP",
+    "physiological stress"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "RAMP"
+   ]
+  },
+  "imp_injury": {
+   "terms": [
+    "injury",
+    "hooking injury",
+    "scarring",
+    "body condition index",
+    "entanglement",
+    "entangled",
+    "gear interaction",
+    "net mark*",
+    "abrasion",
+    "lesion",
+    "laceration",
+    "amputation",
+    "bite mark",
+    "rake mark",
+    "wound",
+    "tissue damage",
+    "perforated",
+    "ulceration"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_reproduction": {
+   "terms": [
+    "reproductive output",
+    "fecundity change",
+    "reproductive failure"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_growth": {
+   "terms": [
+    "growth rate",
+    "von Bertalanffy",
+    "growth curve",
+    "somatic growth",
+    "condition factor",
+    "Fulton",
+    "length-weight",
+    "stunting",
+    "growth overfishing"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "change",
+    "impact",
+    "decline",
+    "reduce",
+    "affect",
+    "alter",
+    "slow",
+    "decrease",
+    "increase"
+   ],
+   "case_sensitive_terms": []
+  },
+  "imp_genetic": {
+   "terms": [
+    "genetic diversity",
+    "effective population size",
+    "bottleneck",
+    "inbreeding"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_trophic": {
+   "terms": [
+    "trophic level change",
+    "dietary shift",
+    "prey depletion",
+    "mesopredator release",
+    "trophic cascade",
+    "cascade effect",
+    "ontogenetic dietary shift",
+    "ontogenetic shift in diet",
+    "dietary flexibility",
+    "trophic plasticity",
+    "predation pressure",
+    "predator-prey",
+    "forage for dependent species"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_habitat_quality": {
+   "terms": [
+    "habitat quality",
+    "habitat suitability",
+    "degradation index"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_contamination": {
+   "terms": [
+    "contaminant load",
+    "bioaccumulation",
+    "biomagnification",
+    "tissue concentration"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_economic": {
+   "terms": [
+    "economic value",
+    "fishery value",
+    "tourism revenue",
+    "willingness to pay",
+    "WTP",
+    "revenue",
+    "price per kg",
+    "market trend",
+    "economic profit",
+    "net profit",
+    "income loss",
+    "monetary contribution",
+    "economic cost",
+    "high prices",
+    "commodity value"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "WTP"
+   ]
+  },
+  "imp_social": {
+   "terms": [
+    "livelihood",
+    "food security",
+    "human dimension",
+    "attitude",
+    "perception"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "imp_community_composition": {
+   "terms": [
+    "community composition",
+    "assemblage composition",
+    "species composition",
+    "community structure change",
+    "assemblage shift"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "chang*",
+    "shift*",
+    "impact*",
+    "alter*"
+   ],
+   "case_sensitive_terms": []
+  },
+  "imp_biodiversity": {
+   "terms": [
+    "biodiversity loss",
+    "species richness change",
+    "diversity index",
+    "Shannon",
+    "Simpson",
+    "evenness change",
+    "species loss",
+    "extinction*"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "chang*",
+    "loss*",
+    "declin*",
+    "impact*",
+    "decreas*",
+    "extinct*"
+   ],
+   "case_sensitive_terms": []
+  },
+  "imp_size_structure": {
+   "terms": [
+    "size structure",
+    "length frequency",
+    "age structure",
+    "size composition",
+    "size distribution",
+    "mean length",
+    "maximum length",
+    "length at maturity shift",
+    "truncated size",
+    "length-frequency",
+    "size class",
+    "catch size distribution",
+    "biomass size spectrum",
+    "size spectrum",
+    "smaller and younger",
+    "length-converted catch curve"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "change",
+    "shift",
+    "impact",
+    "decline",
+    "truncat*"
+   ],
+   "case_sensitive_terms": []
+  },
+  "imp_productivity": {
+   "terms": [
+    "productivity",
+    "recruitment",
+    "yield per recruit",
+    "spawning potential ratio",
+    "SPR",
+    "surplus production",
+    "reproductive output"
+   ],
+   "threshold": 2,
+   "anchors": [
+    "change",
+    "decline",
+    "impact",
+    "reduce",
+    "increase",
+    "affect",
+    "fishing",
+    "overfishing"
+   ],
+   "case_sensitive_terms": [
+    "SPR"
+   ]
+  },
+  "imp_direction": {
+   "description": "Overall direction of reported impact (positive / negative / mixed / not stated).",
+   "method": "Sentiment-cue counting across the full PDF text.",
+   "positive_cues": [
+    "increase[sd]?",
+    "recover\\w*",
+    "improve\\w*",
+    "growth",
+    "positive",
+    "restor\\w+",
+    "enhance\\w*",
+    "higher",
+    "gain",
+    "benefit",
+    "proliferat\\w*"
+   ],
+   "negative_cues": [
+    "decline[sd]?",
+    "decrease[sd]?",
+    "loss",
+    "reduce[sd]?",
+    "reduction",
+    "deplet\\w+",
+    "degrad\\w+",
+    "lower",
+    "negative",
+    "threat",
+    "endanger",
+    "extinct",
+    "collapse[sd]?",
+    "diminish\\w*",
+    "worsen\\w*"
+   ],
+   "logic": [
+    "neg > 2 \u00d7 pos \u2192 'negative'",
+    "pos > 2 \u00d7 neg \u2192 'positive'",
+    "both present, neither dominant \u2192 'mixed'",
+    "only negative cues \u2192 'negative'",
+    "only positive cues \u2192 'positive'",
+    "neither present \u2192 'not stated'"
+   ],
+   "source": "scripts/extract_schema_columns.py \u2192 assess_impact_direction()"
+  },
+  "imp_quantified": {
+   "description": "Whether the paper provides any quantitative impact measure.",
+   "method": "Regex scan of full PDF text for numeric / statistical markers.",
+   "patterns": [
+    "N.N% (percentages)",
+    "decimal numbers (e.g. 0.42)",
+    "CI / confidence interval with : or =",
+    "p < 0.NN / p = 0.NN (p-values)",
+    "\u00b1 N (plus-minus notation)"
+   ],
+   "logic": [
+    "True if any pattern matches anywhere in the PDF text; False otherwise."
+   ],
+   "source": "scripts/extract_schema_columns.py \u2192 assess_impact_quantified()"
+  },
+  "imp_confidence": {
+   "description": "Heuristic confidence score for the impact-section extraction.",
+   "method": "Derived from the number of imp_ topic columns that triggered and the presence of imp_quantified evidence.",
+   "logic": [
+    "Currently a triggered-flag set when any imp_ topic column fires; will be replaced with a numeric 0\u20131 score in a future pass.",
+    "Low confidence \u2192 impact discussed in passing; high confidence \u2192 impact is a primary finding."
+   ],
+   "source": "scripts/extract_schema_columns.py"
+  },
+  "imp_is_bycatch": {
+   "description": "Whether the paper treats elasmobranchs as bycatch rather than as the directly targeted catch.",
+   "method": "Joint check of pr_bycatch flag and target-species extraction from gear context.",
+   "logic": [
+    "True  \u2192 pr_bycatch = 1 AND a non-elasmobranch target species (e.g. 'tuna fishery') is extracted.",
+    "False \u2192 pr_bycatch = 0.",
+    "None  \u2192 pr_bycatch = 1 but target species unclear or is itself an elasmobranch."
+   ],
+   "source": "scripts/extract_schema_columns.py \u2192 bycatch_direction()"
+  },
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 0.25,
+   "METHODS": 0.5,
+   "RESULTS": 1.0,
+   "RESULTS_AND_DISCUSSION": 1.0,
+   "DISCUSSION": 1.0,
+   "CONCLUSIONS": 0.5,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/impact_proposal.md"
+ },
+ "d_": {
+  "_description": "Discipline \u2014 19 binary columns classifying the research area (biology, behaviour, trophic, genetics, movement, fisheries, data science, taxonomy\u2026).",
+  "_criteria": "Keyword frequency in full PDF text weighted by section (Abstract / Methods / Results / Discussion carry higher weight than References); triggered when weighted cumulative frequency \u2265 column threshold.",
+  "d_biology": {
+   "terms": [
+    "life history",
+    "age and growth",
+    "growth rate",
+    "longevity",
+    "maturity",
+    "length-at-maturity",
+    "length-weight",
+    "vertebral band",
+    "vertebral count*",
+    "band pair*",
+    "gonadosomatic index",
+    "hepatosomatic index",
+    "GSI",
+    "HSI",
+    "Le Cren",
+    "Fulton's K",
+    "morphometric analysis",
+    "total length",
+    "precaudal length",
+    "disc width"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "GSI",
+    "HSI"
+   ],
+   "prerequisite_terms": {
+    "GSI": [
+     "gonadosomatic index"
+    ],
+    "HSI": [
+     "hepatosomatic index"
+    ]
+   }
+  },
+  "d_behaviour": {
+   "terms": [
+    "behavio*",
+    "behavioral ecology",
+    "predator-prey",
+    "diel vertical migration",
+    "activity pattern",
+    "social behavio*",
+    "agonistic",
+    "refuging"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_trophic": {
+   "terms": [
+    "trophic",
+    "diet",
+    "feeding ecology",
+    "stomach content*",
+    "prey composition",
+    "stable isotope",
+    "fatty acid",
+    "food web"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_genetics": {
+   "terms": [
+    "genetic*",
+    "genomic*",
+    "eDNA",
+    "environmental DNA",
+    "microsatellite",
+    "mitochondrial",
+    "phylogenet*",
+    "haplotype",
+    "SNP",
+    "RADseq",
+    "population genetics"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "eDNA",
+    "SNP"
+   ]
+  },
+  "d_movement": {
+   "terms": [
+    "movement",
+    "telemetry",
+    "satellite tag*",
+    "acoustic tag*",
+    "archival tag*",
+    "home range",
+    "migration",
+    "habitat use",
+    "space use",
+    "tracking"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_fisheries": {
+   "terms": [
+    "stock assessment",
+    "fisheries management",
+    "catch data",
+    "fishing mortality",
+    "maximum sustainable yield",
+    "MSY",
+    "fishery-dependent",
+    "fishery-independent",
+    "bycatch",
+    "discard*",
+    "retention",
+    "non-target species",
+    "non-target catch"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "MSY"
+   ]
+  },
+  "d_conservation": {
+   "terms": [
+    "conservation",
+    "endangered",
+    "CITES",
+    "IUCN",
+    "Red List",
+    "protected area",
+    "marine protected area",
+    "recovery plan",
+    "conservation status"
+   ],
+   "threshold": 3,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "CITES",
+    "IUCN"
+   ]
+  },
+  "d_data_science": {
+   "terms": [
+    "machine learning",
+    "deep learning",
+    "neural network",
+    "random forest",
+    "Bayesian",
+    "meta-analysis",
+    "systematic review",
+    "simulation model"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_husbandry": {
+   "terms": [
+    "aquarium",
+    "captive",
+    "husbandry",
+    "captive breeding",
+    "ex situ",
+    "tank-held",
+    "aquaria"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_paleontology": {
+   "terms": [
+    "fossil",
+    "paleontol*",
+    "palaeontol*",
+    "Cretaceous",
+    "Jurassic",
+    "Miocene",
+    "Pliocene",
+    "Eocene",
+    "Oligocene",
+    "Cenozoic",
+    "Mesozoic",
+    "Devonian",
+    "Carboniferous"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_taxonomy": {
+   "terms": [
+    "taxonom*",
+    "new species",
+    "sp. nov.",
+    "new genus",
+    "morphometric*",
+    "meristic*",
+    "dichotomous key",
+    "identification key",
+    "redescription",
+    "synonymy",
+    "type specimen"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_physiology": {
+   "terms": [
+    "physiolog*",
+    "metaboli*",
+    "oxygen consumption",
+    "ventilation rate",
+    "blood gas",
+    "haematocrit",
+    "hematocrit",
+    "osmoregulat*",
+    "thermoregulat*",
+    "bioenergetic*",
+    "SMR",
+    "RMR",
+    "MMR",
+    "aerobic scope",
+    "Ucrit",
+    "U crit",
+    "U-crit",
+    "critical swimming speed",
+    "heart rate",
+    "cardiac output",
+    "blood pressure",
+    "plasma osmolality",
+    "plasma cortisol",
+    "plasma lactate",
+    "urea",
+    "TMAO",
+    "trimethylamine N-oxide",
+    "enzyme activity",
+    "Q10",
+    "metabolic rate"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": [
+    "SMR",
+    "RMR",
+    "MMR",
+    "Ucrit",
+    "TMAO",
+    "Q10"
+   ]
+  },
+  "d_reproductive": {
+   "terms": [
+    "reproductive biology",
+    "fecundity",
+    "gestation",
+    "embryo*",
+    "uterine",
+    "ovipar*",
+    "vivipar*",
+    "mating",
+    "parturition",
+    "neonat*",
+    "litter size",
+    "reproductive cycle"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_biomechanics": {
+   "terms": [
+    "biomechani*",
+    "functional morphology",
+    "locomot*",
+    "kinematics",
+    "bite force",
+    "jaw mechanics",
+    "hydrodynamic*",
+    "swimming performance"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_sensory": {
+   "terms": [
+    "electrorecept*",
+    "ampullae of Lorenzini",
+    "lateral line",
+    "mechanosens*",
+    "olfact*",
+    "chemosens*",
+    "visual acuity",
+    "magnetorecept*"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_ecotourism": {
+   "terms": [
+    "ecotourism",
+    "dive tourism",
+    "shark tourism",
+    "shark watching",
+    "whale shark tourism",
+    "shark encounter",
+    "provisioning"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_human_dimensions": {
+   "terms": [
+    "human dimension*",
+    "social science",
+    "stakeholder",
+    "perception",
+    "attitude*",
+    "willingness to pay",
+    "WTP",
+    "shark bite",
+    "shark attack",
+    "shark repellent"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_immunology": {
+   "terms": [
+    "immun*",
+    "antibod*",
+    "complement system",
+    "innate immun*",
+    "adaptive immun*",
+    "leukocyte",
+    "lymphocyte"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "d_toxicology": {
+   "terms": [
+    "toxicolog*",
+    "contaminant*",
+    "bioaccumulation",
+    "biomagnification",
+    "heavy metal*",
+    "mercury",
+    "methylmercury",
+    "tissue concentration"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 0.5,
+   "METHODS": 1.0,
+   "RESULTS": 1.0,
+   "RESULTS_AND_DISCUSSION": 1.0,
+   "DISCUSSION": 0.5,
+   "CONCLUSIONS": 0.5,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/discipline_proposal.md"
+ },
+ "b_": {
+  "_description": "Ocean basin \u2014 9 binary columns indicating which ocean basin(s) the study covers.",
+  "_criteria": "Basin name or distinctive sub-region (e.g. 'Bay of Biscay' for North Atlantic) matched in full PDF text; column triggers when cumulative term frequency \u2265 column threshold. Higher thresholds guard against papers merely comparing findings to another basin in a discussion section.",
+  "b_north_atlantic": {
+   "terms": [
+    "North Atlantic",
+    "Northwest Atlantic",
+    "Northeast Atlantic",
+    "NW Atlantic",
+    "NE Atlantic",
+    "North Sea",
+    "Bay of Biscay",
+    "Celtic Sea",
+    "Norwegian Sea",
+    "Barents Sea",
+    "Baltic Sea",
+    "Gulf of Mexico",
+    "Sargasso Sea",
+    "Azores"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_south_atlantic": {
+   "terms": [
+    "South Atlantic",
+    "Southwest Atlantic",
+    "Southeast Atlantic",
+    "SW Atlantic",
+    "SE Atlantic",
+    "Benguela",
+    "Patagoni*",
+    "South Africa*",
+    "Namibia*",
+    "Brazilian coast"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_north_pacific": {
+   "terms": [
+    "North Pacific",
+    "Northwest Pacific",
+    "Northeast Pacific",
+    "NW Pacific",
+    "NE Pacific",
+    "Bering Sea",
+    "Sea of Japan",
+    "East China Sea",
+    "South China Sea",
+    "Yellow Sea",
+    "California Current",
+    "Kuroshio",
+    "Sea of Okhotsk",
+    "Gulf of Alaska",
+    "Hawaiian"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_south_pacific": {
+   "terms": [
+    "South Pacific",
+    "Southwest Pacific",
+    "Southeast Pacific",
+    "SW Pacific",
+    "SE Pacific",
+    "Coral Sea",
+    "Tasman Sea",
+    "Great Barrier Reef",
+    "New Zealand*",
+    "Fiji*",
+    "French Polynesia",
+    "Humboldt Current"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_indian_ocean": {
+   "terms": [
+    "Indian Ocean",
+    "Bay of Bengal",
+    "Arabian Sea",
+    "Mozambique Channel",
+    "Red Sea",
+    "Persian Gulf",
+    "Andaman Sea",
+    "Madagascar",
+    "Maldives",
+    "Seychelles",
+    "Western Indian Ocean",
+    "Eastern Indian Ocean"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_southern_ocean": {
+   "terms": [
+    "Southern Ocean",
+    "Antarctic",
+    "sub-Antarctic",
+    "Kerguelen",
+    "South Georgia",
+    "Patagonian shelf"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_arctic_ocean": {
+   "terms": [
+    "Arctic Ocean",
+    "Arctic",
+    "Greenland Sea",
+    "Beaufort Sea",
+    "Chukchi Sea",
+    "Canadian Arctic"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_mediterranean": {
+   "terms": [
+    "Mediterranean",
+    "Adriatic",
+    "Aegean",
+    "Tyrrhenian",
+    "Ionian Sea",
+    "Ligurian Sea",
+    "Alboran Sea",
+    "Strait of Gibraltar",
+    "Strait of Sicily"
+   ],
+   "threshold": 1,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "b_caribbean": {
+   "terms": [
+    "Caribbean",
+    "Gulf of Mexico",
+    "Bahamas",
+    "Belize",
+    "Mesoamerican Reef",
+    "Antilles",
+    "West Indies"
+   ],
+   "threshold": 2,
+   "anchors": [],
+   "case_sensitive_terms": []
+  },
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 1.0,
+   "METHODS": 1.0,
+   "RESULTS": 0.5,
+   "RESULTS_AND_DISCUSSION": 0.5,
+   "DISCUSSION": 0.5,
+   "CONCLUSIONS": 0.5,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ocean_basin_proposal.md"
+ },
+ "sb_": {
+  "_description": "Ocean sub-basin \u2014 66 binary columns covering finer geographic regions (Mediterranean, Gulf of Mexico, Sea of Japan, California Current, \u2026).",
+  "_criteria": "Sub-basin name or distinctive sub-region matched in full PDF text; column triggers when cumulative term frequency \u2265 column threshold (typically 2). Full per-column term lists are defined in scripts/extract_schema_columns.py.",
+  "source": "scripts/extract_schema_columns.py",
+  "column_count": 66,
+  "_section_weights": {
+   "TITLE": 2.0,
+   "KEYWORDS": 2.0,
+   "ABSTRACT": 0.5,
+   "INTRODUCTION": 1.0,
+   "METHODS": 1.0,
+   "RESULTS": 0.5,
+   "RESULTS_AND_DISCUSSION": 0.5,
+   "DISCUSSION": 0.5,
+   "CONCLUSIONS": 0.5,
+   "OTHER": 0.0
+  },
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ocean_basin_proposal.md"
+ },
+ "sp_": {
+  "_description": "Species \u2014 1,308 integer columns, one per elasmobranch species or broader taxon in the Shark References database.",
+  "_criteria": "Value = raw mention count across the full PDF text (binomial and/or common-name terms from the species taxonomy). A species is considered triggered when raw frequency \u2265 2; mentions \u2265 1 but below threshold appear in the 'Add by occurrence' dropdown so the reviewer can promote them manually. Raising the threshold from \u2265 1 suppresses incidental passing mentions (e.g. a single citation reference) while keeping the full mention list accessible.",
+  "source": "scripts/extract_species_techniques_from_pdfs.py",
+  "column_count": 1308,
+  "storage": "int16 (raw frequency)",
+  "trigger_threshold": 2,
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/species_proposal.md"
+ },
+ "a_": {
+  "_description": "Analytical techniques \u2014 215 integer columns, one per technique in the taxonomy (telemetry, isotopes, genetics, modelling\u2026).",
+  "_criteria": "Value = raw mention count across the full PDF text using primary name + synonym list from the technique taxonomy. A technique is considered triggered when raw frequency \u2265 2; mentions \u2265 1 but below threshold appear in the 'Add by occurrence' dropdown so the reviewer can promote them manually. Per analytical_techniques_proposal.md, a threshold of \u2265 2 better distinguishes papers that genuinely apply a technique from those that cite it in passing.",
+  "source": "scripts/extract_species_techniques_from_pdfs.py",
+  "column_count": 215,
+  "storage": "int16 (raw frequency)",
+  "trigger_threshold": 2,
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/analytical_techniques_proposal.md"
+ },
+ "ob_": {
+  "_description": "Ocean basin (geographic) \u2014 basin assignment derived from the study's reported geographic coordinates or country rather than from full-text keyword matching.",
+  "_criteria": "Populated from the geographic-extraction pipeline (database/technique_taxonomy.db \u2192 paper_geography). A paper is assigned to an ocean basin when its extracted study coordinates or country fall within the basin's boundaries. Distinct from b_ which is text-based: ob_ reflects where the research actually happened, b_ reflects what basins the paper discusses.",
+  "source": "Geographic extraction pipeline \u2014 see docs/geographic/",
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/ocean_basin_proposal.md"
+ },
+ "depth_": {
+  "_description": "Depth \u2014 sampling / study depth range where reported.",
+  "_criteria": "Min and max depths (in metres) extracted from the full PDF text by regex on numeric-with-unit patterns (e.g. '10-200 m', 'between 50 and 300 m'). depth_range is the combined text string; depth_min_m and depth_max_m are the parsed numeric extremes.",
+  "source": "scripts/extract_schema_columns.py",
+  "_proposal_url": "https://github.com/SimonDedman/elasmo_analyses/blob/main/docs/schema_proposals/depth_proposal.md"
+ }
+}

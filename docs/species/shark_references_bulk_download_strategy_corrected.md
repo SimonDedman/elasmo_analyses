@@ -257,7 +257,7 @@ Storage: 200 MB (but keep everything)
 3. **Zero redundant downloads** (vs 360,000 duplicates)
 4. **Future queries are instant** (vs 6 minutes each)
 5. **Complete dataset** (vs only queried techniques)
-6. **Better organized** (one complete DB + filtered by technique)
+6. **Better organised** (one complete DB + filtered by technique)
 7. **More maintainable** (update once, query forever)
 
 ---

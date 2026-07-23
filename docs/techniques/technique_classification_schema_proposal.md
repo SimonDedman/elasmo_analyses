@@ -71,8 +71,8 @@ Each technique can be tagged with **one or more** of the following types:
 **Rationale:** These entries represent specific probability distributions, likelihood structures, or statistical frameworks. They have mathematical definitions.
 
 **Examples:**
-- ✓ GLM (generalized linear models - formal statistical framework)
-- ✓ GAM (generalized additive models - specific model class)
+- ✓ GLM (generalised linear models - formal statistical framework)
+- ✓ GAM (generalised additive models - specific model class)
 - ✓ Hidden Markov Models (formal stochastic process model)
 - ✓ State-Space Models (formal time series model)
 - ✓ GAMLSS (specific model family)
@@ -135,7 +135,7 @@ Each technique can be tagged with **one or more** of the following types:
 **Rationale:** Software is distinct from the methods it implements. The same method might be implemented in multiple software packages.
 
 **Examples:**
-- ✓ Marxan (spatial prioritization software)
+- ✓ Marxan (spatial prioritisation software)
 - ✓ STRUCTURE (Bayesian clustering software)
 - ✓ Stan (probabilistic programming language)
 - ✓ R-INLA (Bayesian inference via INLA)
@@ -154,7 +154,7 @@ Each technique can be tagged with **one or more** of the following types:
 #### 6. **CONCEPTUAL_FIELD** (Anouk's "theoretical concepts")
 **Definition:** Broad research areas, conceptual frameworks, or domains of study that encompass multiple specific techniques
 
-**Rationale:** These are "umbrella terms" that organize related methods. They're useful for literature search but aren't specific techniques.
+**Rationale:** These are "umbrella terms" that organise related methods. They're useful for literature search but aren't specific techniques.
 
 **Examples:**
 - ✓ Population Genetics (broad field containing FST, STRUCTURE, microsatellites, etc.)
@@ -310,13 +310,13 @@ is_conceptual_field              (TRUE/FALSE)
 
 ### For Database Integrity
 - **Explicit mixing:** Makes the multi-type nature of entries transparent
-- **Queryable:** Easy to filter and analyze by type
+- **Queryable:** Easy to filter and analyse by type
 - **Documentation:** Future users understand what each entry represents
 
 ### For Future Expansion
 - **New dimensions:** Can add new classification types if needed
 - **Refinement:** Can split categories if they become too broad
-- **Analysis:** Can analyze distribution of types across disciplines
+- **Analysis:** Can analyse distribution of types across disciplines
 
 ---
 

@@ -504,7 +504,7 @@ print(f"  Testing mode: {len(df_shark)} papers (2020-2025)")
 
 ---
 
-## Performance Optimization
+## Performance Optimisation
 
 ### Parallel Processing
 

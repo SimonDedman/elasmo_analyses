@@ -105,7 +105,7 @@ ocrmypdf (8 cores):
 **Why:**
 - Original scanned PDFs: Just images (large)
 - OCR'd PDFs: Images + compressed text layer (smaller overall)
-- ocrmypdf applies image optimization during OCR
+- ocrmypdf applies image optimisation during OCR
 
 **Size changes from sample analysis:**
 
@@ -361,7 +361,7 @@ done
 
 ---
 
-## Performance Optimization
+## Performance Optimisation
 
 ### Parallel Processing
 

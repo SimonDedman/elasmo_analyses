@@ -16,12 +16,12 @@ Consequences:
 - Staged PDFs are never filed into the library automatically.
 - `ingest_pdfs.py` **copies** (never moves), so staging disk is never reclaimed
   even after a manual ingest — it grew to ~9.3 GB (8.8 GB BHL + 0.47 GB OA).
-- The enriched parquet is not updated for newly-acquired papers until a separate
+- The enriched parquet isn't updated for newly-acquired papers until a separate
   extraction run.
 
 `sync_shark_references.py` already chains all of this (Phase 5b: post-download
 ingest + incremental schema extraction). The cascade is the only acquisition
-path that does not. This spec closes that gap.
+path that doesn't. This spec closes that gap.
 
 ## Workflow-composition review
 
@@ -114,7 +114,7 @@ duplicate; corrupt/OCR-failed. Every failure mode resolves toward *keep*.
    `unlink`. Audit trail and re-download list.
 4. **Two opt-outs** — `--keep-staging`, `--dry-run`.
 5. **Recoverable by construction** — staged files are re-downloadable public
-   PDFs; even a defeated gate is not data loss (backstop, not primary reliance).
+   PDFs; even a defeated gate isn't data loss (backstop, not primary reliance).
 
 ## Tonight's runbook (build + one-off run)
 

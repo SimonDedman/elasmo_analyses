@@ -70,11 +70,11 @@ Since 2026-04-16, every paper with a depth match generates a row in `outputs/sch
 
 ## Known Issues and Limitations
 
-1. **Residual ambiguous "m":** The tightened 2026-04-21 regex requires a bathymetric-context word but false positives can still occur when a depth-sounding verb (e.g. "deployed at 10 m") refers to transect position rather than water depth. Review the evidence `context` sentence to confirm. Older papers using fathoms are not converted (see (5) below).
-2. **Depth not always stated:** Many papers do not report a study depth explicitly. These papers will have `NaN` in all three columns. A `NaN` does not imply a shallow-water study.
+1. **Residual ambiguous "m":** The tightened 2026-04-21 regex requires a bathymetric-context word but false positives can still occur when a depth-sounding verb (e.g. "deployed at 10 m") refers to transect position rather than water depth. Review the evidence `context` sentence to confirm. Older papers using fathoms aren't converted (see (5) below).
+2. **Depth not always stated:** Many papers don't report a study depth explicitly. These papers will have `NaN` in all three columns. A `NaN` doesn't imply a shallow-water study.
 3. **Relative qualifiers:** Statements like ">200 m" are captured in `depth_range` as text but `depth_min_m` and `depth_max_m` are set to the numeric value (200) without the qualifier. The qualifier is preserved only in the `depth_range` string.
-4. **Multiple study sites at different depths:** The current pipeline takes the global minimum and maximum across all depth mentions in a paper. A paper comparing 10 m and 800 m sites will yield `depth_min_m = 10`, `depth_max_m = 800` — which faithfully represents the range studied but does not distinguish between a gradient study and a comparison of discrete sites.
-5. **Unit conversion:** All depths are assumed to be in metres. Fathom or foot units are not currently converted. These are rare in modern elasmobranch literature but may occur in older papers.
+4. **Multiple study sites at different depths:** The current pipeline takes the global minimum and maximum across all depth mentions in a paper. A paper comparing 10 m and 800 m sites will yield `depth_min_m = 10`, `depth_max_m = 800` — which faithfully represents the range studied but doesn't distinguish between a gradient study and a comparison of discrete sites.
+5. **Unit conversion:** All depths are assumed to be in metres. Fathom or foot units aren't currently converted. These are rare in modern elasmobranch literature but may occur in older papers.
 
 ## Relationship to `eco_` Depth Zone Columns
 
@@ -89,7 +89,7 @@ Based on the elasmobranch literature:
 
 - Tagging, telemetry, and habitat use papers routinely report depth ranges — expected high `depth_*` coverage (~30–50% of papers).
 - Fisheries and bycatch papers often report gear set depth rather than species depth — these will be captured but represent gear depth, not habitat depth.
-- Taxonomy, genetics, and review papers often do not report a study depth — `NaN` is expected for these.
+- Taxonomy, genetics, and review papers often don't report a study depth — `NaN` is expected for these.
 
 ## Validation
 

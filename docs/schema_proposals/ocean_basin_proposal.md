@@ -102,7 +102,7 @@ Replace `{openalex_id}` with the paper's OpenAlex identifier (e.g., `W2164874137
 
 2. **Southern Ocean / South Atlantic overlap:** "Patagonian shelf" appears in both `b_south_atlantic` and `b_southern_ocean` term lists. Papers on Patagonian elasmobranch populations may flag both columns depending on the geographic framing used.
 
-3. **`b_arctic_ocean` false positives:** *Somniosus microcephalus* (Greenland shark) literature regularly discusses Arctic distribution even when study sites are sub-Arctic or subarctic. Threshold of 2 mitigates but does not eliminate this.
+3. **`b_arctic_ocean` false positives:** *Somniosus microcephalus* (Greenland shark) literature regularly discusses Arctic distribution even when study sites are sub-Arctic or subarctic. Threshold of 2 mitigates but doesn't eliminate this.
 
 4. **`ob_` pipeline coverage:** As of 2026-04-16, the geographic pipeline has been run on approximately 6,000–18,000 papers. Coverage will improve as the pipeline is re-run on the complete corpus. See `docs/geographic/GEOGRAPHIC_EXTRACTION_STATUS.md` for current status.
 

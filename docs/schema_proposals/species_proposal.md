@@ -30,7 +30,7 @@ Columns are populated by scanning the **full text** of each PDF for:
 1. The species binomial (e.g., *Carcharodon carcharias*)
 2. The primary common name, where one is recorded in the Shark References database (e.g., "white shark", "great white shark")
 
-Matching is **case-insensitive** with **word-boundary enforcement** to avoid partial matches (e.g., "carcharias" will not match "epicarcharias"). Both Latin binomial and common name hits contribute to the frequency count for the same column.
+Matching is **case-insensitive** with **word-boundary enforcement** to avoid partial matches (e.g., "carcharias" won't match "epicarcharias"). Both Latin binomial and common name hits contribute to the frequency count for the same column.
 
 ### Script
 
@@ -60,9 +60,9 @@ Every species column that fires (count > 0) generates a row in `outputs/schema_e
 
 ## Known Issues and Limitations
 
-1. **Common name ambiguity:** Common names such as "hammerhead" or "shark" are not used as matching terms because they resolve to multiple species. Only unambiguous common names from the Shark References database are used.
+1. **Common name ambiguity:** Common names such as "hammerhead" or "shark" aren't used as matching terms because they resolve to multiple species. Only unambiguous common names from the Shark References database are used.
 2. **Genus-level papers:** Papers studying *Sphyrna* spp. without naming a specific species will score 0 on all `sp_sphyrna_*` columns. Genus-level coverage is handled by a separate grouping step at analysis time, not at extraction.
-3. **Spelling variants and hyphens:** The extractor normalises whitespace and hyphens but does not currently handle OCR-introduced errors in older scanned PDFs.
+3. **Spelling variants and hyphens:** The extractor normalises whitespace and hyphens but doesn't currently handle OCR-introduced errors in older scanned PDFs.
 4. **Non-elasmobranch species mentions:** If a prey species' name happens to match an elasmobranch binomial, a false positive can result. Frequency thresholds and the evidence context sentence help identify these cases.
 5. **Pre-2026-04-16 values were metadata-only** and should not be used for any species-level analyses. The full-text re-extraction supersedes all prior values.
 

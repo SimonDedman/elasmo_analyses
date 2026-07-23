@@ -16,9 +16,9 @@ The 123-column rule-based extractor that classifies every paper in the database 
 
 ### 2.1 The gold + silver bridge
 
-Human review of extraction output is slow (three reviewers — David Ruiz-García, Alex McInturf, Elena Fernández-Corredor — produced 190 column-level corrections across 15 papers). That is a solid but small sample. To get usable statistics on rare columns, we added a "silver" layer: Fable (Claude) was run as an extraction oracle across a stratified sample of 300 papers plus the 15 gold papers (315 sampled; 291 successfully processed — 24 had no extractable PDF text and were skipped), covering 166 schema columns.
+Human review of extraction output is slow (three reviewers — David Ruiz-García, Alex McInturf, Elena Fernández-Corredor — produced 190 column-level corrections across 15 papers). That's a solid but small sample. To get usable statistics on rare columns, we added a "silver" layer: Fable (Claude) was run as an extraction oracle across a stratified sample of 300 papers plus the 15 gold papers (315 sampled; 291 successfully processed — 24 had no extractable PDF text and were skipped), covering 166 schema columns.
 
-The bridge that licenses this substitution is simple: on the 15 gold papers, **Fable agrees with the human reviewers 80% of the time** (macro-F1 0.796). That is high enough to treat Fable's labels as a usable, non-gold "silver" reference for the other 276 papers where no human review exists, while still reporting every headline number against the true gold set as well.
+The bridge that licenses this substitution is simple: on the 15 gold papers, **Fable agrees with the human reviewers 80% of the time** (macro-F1 0.796). That's high enough to treat Fable's labels as a usable, non-gold "silver" reference for the other 276 papers where no human review exists, while still reporting every headline number against the true gold set as well.
 
 ### 2.2 Fable as oracle and critic
 
@@ -28,7 +28,7 @@ Where the rules and Fable/human disagreed on a column, Fable was asked a second 
 
 ### 2.3 The self-verifying auto-test loop
 
-The critical design choice is that no proposed rule change is trusted on Fable's say-so. Each proposal is applied to an isolated copy of the rule set, the regex extractor is re-run on the sample, and the column's precision/recall/F1 is re-scored against the same reference labels used before the change. A change is **kept only if it measurably improves F1**; otherwise it is discarded. This turns "the LLM thinks this rule is better" into "we measured that this rule is better," which is the whole point of using an LLM to improve a deterministic system rather than replace it — the rules stay auditable, fast, and free, and every change to them is backed by a before/after number, not a plausible-sounding suggestion.
+The critical design choice is that no proposed rule change is trusted on Fable's say-so. Each proposal is applied to an isolated copy of the rule set, the regex extractor is re-run on the sample, and the column's precision/recall/F1 is re-scored against the same reference labels used before the change. A change is **kept only if it measurably improves F1**; otherwise it's discarded. This turns "the LLM thinks this rule is better" into "we measured that this rule is better," which is the whole point of using an LLM to improve a deterministic system rather than replace it — the rules stay auditable, fast, and free, and every change to them is backed by a before/after number, not a plausible-sounding suggestion.
 
 ---
 
@@ -42,11 +42,11 @@ The critical design choice is that no proposed rule change is trusted on Fable's
 | Rules vs human (gold — the real headline) | 15 | 55 | **0.429** |
 | Rules vs Fable (silver, at scale) | 291 | 166 | **0.533** |
 
-Averaged across the 166 silver columns, the rules run at **precision 0.68 / recall 0.49** — they are more often right than wrong when they *do* fire, but they miss roughly half of the true positives.
+Averaged across the 166 silver columns, the rules run at **precision 0.68 / recall 0.49** — they're more often right than wrong when they *do* fire, but they miss roughly half of the true positives.
 
 ### 3.2 The diagnosis: under-detection, not over-detection
 
-That precision/recall split is the key diagnostic finding: **the rules under-detect.** They are not raising a flood of false positives (which would point to a logic problem — rules firing on the wrong context) — they are staying silent on cases a human or Fable would call positive, because the keyword list simply does not contain the words the paper actually used. This is a vocabulary problem, and vocabulary problems are exactly what an LLM is good at fixing.
+That precision/recall split is the key diagnostic finding: **the rules under-detect.** They aren't raising a flood of false positives (which would point to a logic problem — rules firing on the wrong context) — they're staying silent on cases a human or Fable would call positive, because the keyword list simply doesn't contain the words the paper actually used. This is a vocabulary problem, and vocabulary problems are exactly what an LLM is good at fixing.
 
 The worst-performing columns illustrate this starkly — high precision, near-zero recall, dominated by false negatives:
 
@@ -63,7 +63,7 @@ The worst-performing columns illustrate this starkly — high precision, near-ze
 | `gear_mit_circle_hook` | 1 | 0 | 8 | 1.00 | 0.11 | 0.20 |
 | `imp_post_release` | 1 | 2 | 8 | 0.33 | 0.11 | 0.17 |
 
-`gear_survey` missed BRUV/aerial-survey papers because its terms only covered a couple of phrasings; `gear_hook_line` missed dropline, angling and hand-line studies; `imp_behaviour_change` missed papers describing "behavioural shift" or "altered behaviour" rather than the exact terms the rule was looking for.
+`gear_survey` missed BRUV/aerial-survey papers because its terms only covered a couple of phrasings; `gear_hook_line` missed dropline, angling, and hand-line studies; `imp_behaviour_change` missed papers describing "behavioural shift" or "altered behaviour" rather than the exact terms the rule was looking for.
 
 ### 3.3 Round 1 of rule improvement: before → after
 
@@ -82,7 +82,7 @@ Fable's evidence quotes for these ten worst columns were mined for the synonyms 
 | `imp_behaviour_change` | behavioural shift, behavioral shift, altered behaviour… | 0.11 | **0.19** | ACCEPT |
 | `imp_post_release` | post-release survival, post-release survivorship… | 0.17 | 0.14 | **reject** |
 
-**9 of 10 proposed changes were accepted; macro-F1 across these ten columns rose from 0.163 to 0.433** (all figures per `outputs/validation/improvement_log.csv` and `autotest_full.log`). The single rejection — `imp_post_release`, where the new terms actually *lowered* F1 from 0.17 to 0.14 — is not a failure of the method; it is proof the guardrail works: a plausible-looking, LLM-proposed change was tested, found to make things worse (probably by introducing false positives elsewhere), and discarded automatically without a human having to notice.
+**9 of 10 proposed changes were accepted; macro-F1 across these ten columns rose from 0.163 to 0.433** (all figures per `outputs/validation/improvement_log.csv` and `autotest_full.log`). The single rejection — `imp_post_release`, where the new terms actually *lowered* F1 from 0.17 to 0.14 — isn't a failure of the method; it's proof the guardrail works: a plausible-looking, LLM-proposed change was tested, found to make things worse (probably by introducing false positives elsewhere), and discarded automatically without a human having to notice.
 
 ### 3.4 Model choice: is Fable overkill?
 
@@ -94,11 +94,11 @@ As a side experiment, we re-ran the oracle role on the 15 gold papers using chea
 | Sonnet | 0.73 | **0.60** (34 / 8 / 38) |
 | Haiku | 0.62 | 0.38 (20 / 13 / 52) |
 
-The key point: **Fable and Sonnet are statistically indistinguishable on this gold set** — pooled, they produce the *identical* true-positive/false-positive/false-negative counts, so the small "0.80 vs 0.73" macro gap is per-column averaging noise on only 15 papers, not a real quality difference. **Haiku is genuinely lossier** (recall 0.28 vs 0.47 — it misses far more). So the honest ordering is Fable ≈ Sonnet ≫ Haiku. For this project we use **Fable** for extraction (quality is the priority, and where two models are indistinguishable there is nothing to lose by choosing the stronger one); Haiku is not trustworthy enough to adjudicate rule quality.
+The key point: **Fable and Sonnet are statistically indistinguishable on this gold set** — pooled, they produce the *identical* true-positive/false-positive/false-negative counts, so the small "0.80 vs 0.73" macro gap is per-column averaging noise on only 15 papers, not a real quality difference. **Haiku is genuinely lossier** (recall 0.28 vs 0.47 — it misses far more). So the honest ordering is Fable ≈ Sonnet ≫ Haiku. For this project we use **Fable** for extraction (quality is the priority, and where two models are indistinguishable there's nothing to lose by choosing the stronger one); Haiku is not trustworthy enough to adjudicate rule quality.
 
 ### 3.5 Cost of the oracle at scale
 
-Fable used a mean of ~8,305 input / ~400 output tokens per paper. Extrapolated to the full ~40,000-PDF corpus at $1.00/$5.00 per 1M in/out tokens, that is **~$412** (excludes OCR and retries) — cheap enough to run the whole diagnostic loop repeatedly, but this is precisely why the plan is to use the LLM to *improve the free rules* rather than to run it on every paper in production.
+Fable used a mean of ~8,305 input / ~400 output tokens per paper. Extrapolated to the full ~40,000-PDF corpus at $1.00/$5.00 per 1M in/out tokens, that's **~$412** (excludes OCR and retries) — cheap enough to run the whole diagnostic loop repeatedly, but this is precisely why the plan is to use the LLM to *improve the free rules* rather than to run it on every paper in production.
 
 ---
 
@@ -122,18 +122,18 @@ The loop is designed to be re-run indefinitely, each time picking off the next t
 1. **Re-score** the current rule set against the silver set (`scripts/validation/score.py`) to get fresh per-column F1s — the ten columns fixed in round 1 will have moved off the "worst" list, revealing the next ten.
 2. **Propose** — feed the new worst columns' evidence quotes and current rules back to Fable (`scripts/validation/propose_rules.py`) for a fresh batch of `add_terms` / threshold / section-weighting proposals.
 3. **Auto-test** each proposal (`scripts/validation/autotest_rules.py`): apply → re-run the sample → re-score → keep only if F1 improves, exactly as in round 1.
-4. **Report the gold-15 rules-vs-human score alongside every round** as the un-gameable overfitting check — silver-set gains that do not show up (or that regress) on the untouched gold set are a warning sign the rules are overfitting to Fable's idiosyncrasies rather than genuinely improving.
+4. **Report the gold-15 rules-vs-human score alongside every round** as the un-gameable overfitting check — silver-set gains that don't show up (or that regress) on the untouched gold set are a warning sign the rules are overfitting to Fable's idiosyncrasies rather than genuinely improving.
 5. Repeat until the marginal round stops moving the needle, or until rules-vs-human on gold closes most of the way to Fable-vs-human on gold (0.796) — at that point the rule-based extractor is doing almost as well as the LLM oracle, and production extraction across the full corpus can continue to run on the free deterministic rules with confidence, with no LLM call required at inference time.
 
-Every accepted change stays on an isolated branch (`outputs/validation/improved_rules/`) until a human approves merging it into the production rule set — the auto-test loop earns trust for a candidate change, it does not by itself deploy it.
+Every accepted change stays on an isolated branch (`outputs/validation/improved_rules/`) until a human approves merging it into the production rule set — the auto-test loop earns trust for a candidate change, it doesn't by itself deploy it.
 
 ---
 
 ## 6. Limitations and caveats
 
 - **The gold set is small.** 15 papers, 3 reviewers, 190 corrections. Per-column statistics on gold are noisy, especially for rare columns (many gold columns have only 1-6 supporting rows — see the 52-column coverage gap noted in `ab_viability.md`). Treat the gold headline (0.429) as directionally right, not precise to the third decimal.
-- **Gold labels are corrections-only.** Reviewers logged where the rules were wrong, not a full independent re-labelling of every column for every paper. This structurally depresses the rules-vs-human number relative to the true agreement rate (see lesson 4 above) — it is a defensible pessimistic bound, not a ceiling.
-- **The silver set is LLM-adjudicated, not human-verified.** The 291-paper, 166-column scale figures (rules-vs-Fable, 0.533) inherit whatever blind spots Fable itself has. The gold bridge (0.796 Fable-vs-human) is the only check on Fable's own reliability, and it is itself built on only 15 papers.
+- **Gold labels are corrections-only.** Reviewers logged where the rules were wrong, not a full independent re-labelling of every column for every paper. This structurally depresses the rules-vs-human number relative to the true agreement rate (see lesson 4 above) — it's a defensible pessimistic bound, not a ceiling.
+- **The silver set is LLM-adjudicated, not human-verified.** The 291-paper, 166-column scale figures (rules-vs-Fable, 0.533) inherit whatever blind spots Fable itself has. The gold bridge (0.796 Fable-vs-human) is the only check on Fable's own reliability, and it's itself built on only 15 papers.
 - **24 of 315 sampled papers had no extractable text** and were dropped from the silver set entirely (291 processed of 315 sampled), which may under-represent scanned/older PDFs relative to the full corpus.
 - **The model comparison rests on a small sample.** It scored all 15 gold papers but only ~105 human-labelled (paper × column) pairs, so the exact F1 values are noisy — treat the ordering (Fable ≈ Sonnet ≫ Haiku, with Fable and Sonnet indistinguishable at the pooled level) as more reliable than the precise numbers, and re-run on a larger human-labelled set before quoting single figures.
 - **Cost extrapolation is a snapshot.** The $412/40k-PDF Fable estimate uses a fixed pricing snapshot, excludes OCR and retry overhead, and assumes the sampled papers' token/length distribution is representative of the full corpus.

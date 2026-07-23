@@ -7,7 +7,7 @@
 ## 1. Why v2
 
 The current build (`scripts/build_author_network.R` → `docs/network/index.html`) is
-a vis-network widget bent into doing two jobs it was not designed for: a
+a vis-network widget bent into doing two jobs it wasn't designed for: a
 geographic atlas AND a force-directed collaboration graph. The geographic mode
 keeps hitting the same walls — label collision, cluster expansion, map rendering
 at multiple zooms, dateline wrap, density-aware border drawing. Each fix unlocks
@@ -56,7 +56,7 @@ This document concerns the Atlas. The Graph stays.
 
 ### Edges
 
-- Thinner but **darker** — individual edges visible, mesh does not flood
+- Thinner but **darker** — individual edges visible, mesh doesn't flood
   large regions when many are present.
 - Log-scaled by shared-paper count.
 - Fade (not hide) when a slider threshold is active.
@@ -109,7 +109,7 @@ publication-quality visuals.
 
 ### Layer 2: author overlay — deck.gl
 
-[deck.gl](https://deck.gl/) sits on top of MapLibre. It is the Uber-built,
+[deck.gl](https://deck.gl/) sits on top of MapLibre. It's the Uber-built,
 GPU-accelerated visualisation layer that owns the multi-zoom-point-cloud
 problem. Specifically:
 
@@ -162,7 +162,7 @@ This is where v1 fails and v2 must win.
 | 10+ (city) | All individual bubbles. Labels for all, leader-lined into whitespace. |
 | All | Selected author + coauthors always labelled, regardless of zoom. |
 
-Leader-line placement: deck.gl does not ship this out of the box, but
+Leader-line placement: deck.gl doesn't ship this out of the box, but
 [d3-label-placement](https://github.com/tinker10/d3-label-placement) or
 [labella.js](https://twitter.github.io/labella.js/) plug into a custom layer.
 
