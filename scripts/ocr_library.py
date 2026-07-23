@@ -20,6 +20,7 @@ import argparse
 import os
 import re
 import subprocess
+import shutil
 import sys
 from pathlib import Path
 from datetime import datetime
@@ -200,6 +201,11 @@ def main():
         os.environ["TMPDIR"] = args.tmpdir
         os.environ["TMP"] = args.tmpdir
         os.environ["TEMP"] = args.tmpdir
+        # Clear stale ocrmypdf temp orphans from prior killed runs. A full
+        # temp dir makes Ghostscript fail at startup, silently failing every
+        # file; runs are sequential so any ocrmypdf.io.* here is a leftover.
+        for stale in Path(args.tmpdir).glob("ocrmypdf.io.*"):
+            shutil.rmtree(stale, ignore_errors=True)
         print(f"Temp dir for OCR: {args.tmpdir}")
 
     report_path = Path(args.report) if args.report else REPORT
