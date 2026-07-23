@@ -187,7 +187,20 @@ def main():
     ap.add_argument("--timeout", type=int, default=600,
                     help="per-file ocrmypdf timeout in seconds (default 600). "
                          "Raise for very large multi-hundred-page volumes.")
+    ap.add_argument("--tmpdir", default="",
+                    help="directory for ocrmypdf's page-render temp files. "
+                         "Set to a large disk — a big volume can render several "
+                         "GB and the default /tmp is often a small tmpfs that "
+                         "fills up and makes every subsequent file fail.")
     args = ap.parse_args()
+
+    # Point ocrmypdf's temp at a roomy disk (inherited by the subprocess env).
+    if args.tmpdir:
+        os.makedirs(args.tmpdir, exist_ok=True)
+        os.environ["TMPDIR"] = args.tmpdir
+        os.environ["TMP"] = args.tmpdir
+        os.environ["TEMP"] = args.tmpdir
+        print(f"Temp dir for OCR: {args.tmpdir}")
 
     report_path = Path(args.report) if args.report else REPORT
     if not report_path.exists():
