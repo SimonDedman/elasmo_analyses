@@ -20,6 +20,7 @@ import argparse
 import os
 import re
 import subprocess
+import shutil
 import sys
 from pathlib import Path
 from datetime import datetime
@@ -94,6 +95,30 @@ def read_flagged_pdfs(report: Path = REPORT) -> list[tuple[str, Path]]:
     return rows
 
 
+# Ghostscript reprints a multi-line version/copyright banner on every
+# retry. That noise used to fill the old 200-char error cap and hide the
+# actual failure (e.g. an AppArmor "Permission denied" on the temp dir),
+# which made whole-run failures effectively undiagnosable from the log.
+_GS_BANNER_RX = re.compile(
+    r"^(\d+\s+)?(GPL Ghostscript [\d.]+ \(|Copyright \(C\)"
+    r"|This software is supplied|see the file COPYING"
+    r"|Current allocation mode|--dict:)"
+)
+
+
+def clean_stderr(raw: bytes, limit: int = 2000) -> str:
+    """Condense ocrmypdf/Ghostscript stderr down to the informative part.
+
+    Strips the repeated Ghostscript banner and keeps the *tail*, since the
+    conclusive error (e.g. "SubprocessOutputError: Ghostscript rasterizing
+    failed") comes last.
+    """
+    text = raw.decode("utf-8", errors="replace")
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+    lines = [l for l in lines if not _GS_BANNER_RX.match(l)]
+    return " | ".join(lines)[-limit:]
+
+
 def ocr_one(pdf_path: Path, lang: str, available: set[str],
             redo: bool = False, timeout: int = 600) -> tuple[bool, str]:
     """OCR one PDF in place. Returns (success, message).
@@ -147,10 +172,11 @@ def ocr_one(pdf_path: Path, lang: str, available: set[str],
                 capture_output=True, timeout=600,
             )
             if result.returncode != 0 or not tmp_path.exists() or tmp_path.stat().st_size == 0:
-                err = result.stderr.decode("utf-8", errors="replace")[:200]
+                err = clean_stderr(result.stderr)
                 if tmp_path.exists():
                     tmp_path.unlink()
-                return False, f"ocrmypdf failed ({tlang_used}): {err}"
+                return False, (f"ocrmypdf failed ({tlang_used}, rc="
+                               f"{result.returncode}): {err}")
 
         # Atomic replace
         os.replace(tmp_path, pdf_path)
@@ -191,7 +217,13 @@ def main():
                     help="directory for ocrmypdf's page-render temp files. "
                          "Set to a large disk — a big volume can render several "
                          "GB and the default /tmp is often a small tmpfs that "
-                         "fills up and makes every subsequent file fail.")
+                         "fills up and makes every subsequent file fail. "
+                         "MUST be a path Ghostscript's AppArmor profile allows "
+                         "(/tmp, /var/tmp, $HOME — see /etc/apparmor.d/gs). "
+                         "/media/** is DENIED by default: gs then fails with "
+                         "'Permission denied ... Ghostscript rasterizing "
+                         "failed' on every file. To use another disk, add an "
+                         "/etc/apparmor.d/local/gs exception first.")
     args = ap.parse_args()
 
     # Point ocrmypdf's temp at a roomy disk (inherited by the subprocess env).
@@ -200,6 +232,11 @@ def main():
         os.environ["TMPDIR"] = args.tmpdir
         os.environ["TMP"] = args.tmpdir
         os.environ["TEMP"] = args.tmpdir
+        # Clear stale ocrmypdf temp orphans from prior killed runs. A full
+        # temp dir makes Ghostscript fail at startup, silently failing every
+        # file; runs are sequential so any ocrmypdf.io.* here is a leftover.
+        for stale in Path(args.tmpdir).glob("ocrmypdf.io.*"):
+            shutil.rmtree(stale, ignore_errors=True)
         print(f"Temp dir for OCR: {args.tmpdir}")
 
     report_path = Path(args.report) if args.report else REPORT
