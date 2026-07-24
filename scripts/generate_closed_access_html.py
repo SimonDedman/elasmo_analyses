@@ -20,7 +20,9 @@ from datetime import datetime
 BASE = Path(__file__).parent.parent
 QUEUE = BASE / "docs/papers_data.json"
 UW_LOG = BASE / "logs/unpaywall_download_log.csv"
-OUT = BASE / "outputs/manual_downloads/closed_access"
+# Published under docs/ so the team can actually reach these pages: anything in
+# outputs/ is gitignored and therefore never reaches GitHub Pages.
+OUT = BASE / "docs/closed_access"
 MONITOR = (BASE / "scripts/monitor_firefox_pdfs.py").resolve()
 
 # DOI prefix -> publisher (for the many queue rows with a blank publisher field)
@@ -89,22 +91,107 @@ CSS = """
     .instructions { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
     .instructions h3 { margin-top: 0; color: #856404; }
     .progress { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold; color: #27ae60; position: sticky; top: 0; z-index: 10; }
+    .controls { background: #eaf2f8; border: 1px solid #d4e6f1; padding: 12px 15px; border-radius: 8px; margin: 20px 0; }
+    .controls select, .controls input, .controls button { font-size: 0.9em; padding: 3px 8px; border-radius: 4px; border: 1px solid #bdc3c7; }
+    .controls button { cursor: pointer; background: #fff; }
+    .controls button:hover { background: #d6eaf8; }
 """
 
+# Kept in step with the YOU dropdown in docs/remaining_downloads.html; the
+# selection is shared through the same localStorage key.
+TEAM = ["Alex", "Andrew", "Carylanne", "Chiara", "Chris", "David RG", "David S",
+        "Deven", "Dovi", "Elena", "Emily", "Guuske", "Lola", "Nathan", "Nick",
+        "Rima", "Ryan", "Simon", "Sophia", "Tobi-Dawne", "Ulrich", "Other"]
+USER_OPTIONS = '<option value="">--</option>' + "".join(
+    f'<option value="{n}">{n}</option>' for n in TEAM)
+
 JS = """
+    // Same Apps Script endpoint as docs/remaining_downloads.html, so progress made
+    // here lands in the shared record instead of being trapped in one browser.
+    const SHEET = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
+
     let clicked = new Set();
     const KEY = 'clicked_' + document.title;
+
+    function paint(id) {
+        const el = document.getElementById('paper-' + id);
+        if (el) { el.style.opacity = '0.5'; el.style.borderLeftColor = '#95a5a6'; }
+    }
+    function refreshCount() { document.getElementById('count').textContent = clicked.size; }
+
     if (localStorage.getItem(KEY)) {
         clicked = new Set(JSON.parse(localStorage.getItem(KEY)));
-        document.getElementById('count').textContent = clicked.size;
-        clicked.forEach(id => { const el = document.getElementById('paper-' + id); if (el) { el.style.opacity='0.5'; el.style.borderLeftColor='#95a5a6'; } });
+        refreshCount(); clicked.forEach(paint);
     }
+
+    // Pull the shared record so a paper someone else already did shows as done.
+    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
+        const done = new Set((res.data || []).map(x => (x.doi || '').trim().toLowerCase()));
+        document.querySelectorAll('.paper').forEach(el => {
+            const d = (el.dataset.doi || '').trim().toLowerCase();
+            if (d && done.has(d)) { clicked.add(el.id.replace('paper-', '')); paint(el.id.replace('paper-', '')); }
+        });
+        localStorage.setItem(KEY, JSON.stringify([...clicked]));
+        refreshCount();
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Synced with the shared record';
+    }).catch(() => {
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Offline — progress saved locally only';
+    });
+
     function markClicked(id) {
         if (!clicked.has(id)) {
-            clicked.add(id); document.getElementById('count').textContent = clicked.size;
+            clicked.add(id); refreshCount();
             localStorage.setItem(KEY, JSON.stringify([...clicked]));
-            const el = document.getElementById('paper-' + id); if (el) { el.style.opacity='0.5'; el.style.borderLeftColor='#95a5a6'; }
+            paint(id);
         }
+        // Push to the shared record. no-cors: this is a blind write, we only need it to land.
+        const el = document.getElementById('paper-' + id);
+        const doi = el && el.dataset.doi;
+        if (SHEET && doi) {
+            fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                action: 'markClicked', doi: doi, title: (el.dataset.title || ''),
+                by: (localStorage.getItem('eea_username') || 'Anon'),
+                at: new Date().toISOString()})}).catch(() => {});
+        }
+    }
+
+    // Who am I — shares the eea_username key with the main download helper.
+    function initUser() {
+        const sel = document.getElementById('userName');
+        if (!sel) return;
+        const saved = localStorage.getItem('eea_username');
+        if (saved) sel.value = saved;
+        sel.addEventListener('change', () => localStorage.setItem('eea_username', sel.value));
+    }
+
+    // The library link defaults to FIU, which is no use to anyone else, so let
+    // each person store their own institution's search URL with a {TITLE} slot.
+    const LIBKEY = 'eea_library_url';
+    const LIB_FIU = 'https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any,contains,{TITLE}&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0';
+    const LIB_WORLDCAT = 'https://search.worldcat.org/search?q={TITLE}';
+    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_FIU; }
+    function applyLibrary() {
+        const tpl = libTemplate();
+        document.querySelectorAll('a.alt-fiu').forEach(a => {
+            const p = a.closest('.paper');
+            const t = (p && p.dataset.title) || '';
+            a.href = tpl.replace('{TITLE}', encodeURIComponent(t));
+            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch'
+                          : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
+        });
+        const inp = document.getElementById('libUrl');
+        if (inp) inp.value = tpl;
+    }
+    function saveLibrary() {
+        const v = document.getElementById('libUrl').value.trim();
+        if (v) localStorage.setItem(LIBKEY, v); else localStorage.removeItem(LIBKEY);
+        applyLibrary();
+    }
+    function presetLibrary(which) {
+        localStorage.setItem(LIBKEY, which === 'worldcat' ? LIB_WORLDCAT : LIB_FIU);
+        applyLibrary();
     }
     // Route tracker: record which access route worked for each paper (last wins),
     // so the FIU access-map can be reconstructed from an exported routes JSON.
@@ -120,6 +207,9 @@ JS = """
         a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '_routes.json'; a.click();
     }
     document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='r') { if (confirm('Reset progress?')) { localStorage.removeItem(KEY); localStorage.removeItem(RKEY); location.reload(); } } });
+
+    initUser();
+    applyLibrary();
 """
 
 def build_page(publisher, papers):
@@ -142,6 +232,19 @@ def build_page(publisher, papers):
 <li>When you finish a page or pause, click <strong>⬇ Export routes</strong> and send the JSON: that reveals which journals/years need the library fallback vs. work direct.</li>
 <li>Journals are ordered alphabetically; clear a whole journal before moving on. Pause every ~25.</li>
 </ol></div>
+<div class="controls">
+<label><strong>You:</strong>
+<select id="userName">{USER_OPTIONS}</select></label>
+&nbsp;<span id="syncStatus" style="color:#7f8c8d;font-size:0.85em;">Connecting to the shared record…</span>
+<div style="margin-top:8px;font-size:0.85em;">
+<strong>Library link:</strong>
+<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;"
+ title="Your library's search URL. Put {{TITLE}} where the paper title goes.">
+<button onclick="saveLibrary()">Save</button>
+<button onclick="presetLibrary('fiu')">FIU</button>
+<button onclick="presetLibrary('worldcat')">WorldCat</button>
+<br><em>Not at FIU? Paste your own library search URL with <code>{{TITLE}}</code> where the title goes; it's remembered on this browser.</em>
+</div></div>
 <div class="progress">Progress: <span id="count">0</span> / {n} papers clicked
 <button class="export-btn" onclick="exportRoutes()">⬇ Export routes</button></div><div id="papers">"""]
     i = 0
@@ -162,7 +265,8 @@ def build_page(publisher, papers):
             scholar = f"https://scholar.google.com/scholar?q={enc}"
             title = raw_title.replace("<", "&lt;").replace(">", "&gt;")
             authors = (p.get("authors") or "").replace("<", "&lt;").replace(">", "&gt;")
-            parts.append(f"""<div class="paper" id="paper-{lid}"><span class="paper-number">{i}</span>
+            title_attr = title.replace('"', "&quot;")
+            parts.append(f"""<div class="paper" id="paper-{lid}" data-doi="{doi}" data-title="{title_attr}"><span class="paper-number">{i}</span>
 <span class="paper-id">ID: {lid}</span><span class="doi">{doi}</span>
 <div class="title">{title}</div><div class="authors">{authors}</div><div class="year">Year: {p.get('year','')}</div>
 <a href="{url}" class="url-link" target="_blank" onclick="useRoute('{lid}','doi')">📥 Download PDF (DOI)</a>

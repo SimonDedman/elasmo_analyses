@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closed-access downloads: Cambridge University Press</title><style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    .journal-header { background: #2c3e50; color: #fff; padding: 10px 15px; border-radius: 6px; margin: 28px 0 8px; font-size: 1.05em; }
+    .stats { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .paper { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3498db; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+    .paper:hover { transform: translateX(5px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    .paper-number { display: inline-block; background: #3498db; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+    .paper-id { color: #7f8c8d; font-size: 0.9em; margin-left: 10px; }
+    .title { font-weight: bold; color: #2c3e50; margin: 8px 0; }
+    .authors { color: #34495e; font-size: 0.95em; margin: 5px 0; }
+    .year { color: #7f8c8d; font-size: 0.9em; }
+    .url-link { display: inline-block; background: #27ae60; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 10px; font-weight: bold; }
+    .url-link:hover { background: #229954; }
+    .alt-link { display: inline-block; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; margin: 10px 0 0 8px; font-size: 0.85em; font-weight: bold; }
+    .alt-jstor { background: #b03a2e; } .alt-jstor:hover { background: #922b21; }
+    .alt-fiu   { background: #1f618d; } .alt-fiu:hover   { background: #154360; }
+    .alt-schol { background: #7d6608; } .alt-schol:hover { background: #5b4a06; }
+    .export-btn { background: #8e44ad; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; margin-left: 16px; font-size: 0.85em; }
+    .doi { color: #7f8c8d; font-size: 0.85em; margin-left: 12px; }
+    .instructions { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    .instructions h3 { margin-top: 0; color: #856404; }
+    .progress { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold; color: #27ae60; position: sticky; top: 0; z-index: 10; }
+    .controls { background: #eaf2f8; border: 1px solid #d4e6f1; padding: 12px 15px; border-radius: 8px; margin: 20px 0; }
+    .controls select, .controls input, .controls button { font-size: 0.9em; padding: 3px 8px; border-radius: 4px; border: 1px solid #bdc3c7; }
+    .controls button { cursor: pointer; background: #fff; }
+    .controls button:hover { background: #d6eaf8; }
+</style></head><body>
+<h1>🔒 Closed-access manual downloads: Cambridge University Press</h1>
+<div class="stats"><strong>Publisher:</strong> Cambridge University Press<br><strong>Total papers:</strong> 31
+&nbsp;across&nbsp;13 journal(s)<br><strong>Generated:</strong> 2026-07-23 19:41</div>
+<div class="instructions"><h3>📋 Instructions</h3><ol>
+<li><strong>Log in once</strong> to your publisher/library access (VPN, FIU OneSearch, JSTOR) before starting.</li>
+<li>Per paper, try routes in order: <strong>Download PDF (DOI)</strong> first; if no access, <strong>JSTOR</strong> → <strong>FIU OneSearch</strong> → <strong>Scholar</strong>. Save the PDF to your Downloads folder (it will be batch-ingested later).</li>
+<li>Clicking any route greys the paper and records <em>which route worked</em> — this feeds the FIU access-map.</li>
+<li>When you finish a page or pause, click <strong>⬇ Export routes</strong> and send the JSON: that reveals which journals/years need the library fallback vs. work direct.</li>
+<li>Journals are ordered alphabetically; clear a whole journal before moving on. Pause every ~25.</li>
+</ol></div>
+<div class="controls">
+<label><strong>You:</strong>
+<select id="userName"><option value="">--</option><option value="Alex">Alex</option><option value="Andrew">Andrew</option><option value="Carylanne">Carylanne</option><option value="Chiara">Chiara</option><option value="Chris">Chris</option><option value="David RG">David RG</option><option value="David S">David S</option><option value="Deven">Deven</option><option value="Dovi">Dovi</option><option value="Elena">Elena</option><option value="Emily">Emily</option><option value="Guuske">Guuske</option><option value="Lola">Lola</option><option value="Nathan">Nathan</option><option value="Nick">Nick</option><option value="Rima">Rima</option><option value="Ryan">Ryan</option><option value="Simon">Simon</option><option value="Sophia">Sophia</option><option value="Tobi-Dawne">Tobi-Dawne</option><option value="Ulrich">Ulrich</option><option value="Other">Other</option></select></label>
+&nbsp;<span id="syncStatus" style="color:#7f8c8d;font-size:0.85em;">Connecting to the shared record…</span>
+<div style="margin-top:8px;font-size:0.85em;">
+<strong>Library link:</strong>
+<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;"
+ title="Your library's search URL. Put {TITLE} where the paper title goes.">
+<button onclick="saveLibrary()">Save</button>
+<button onclick="presetLibrary('fiu')">FIU</button>
+<button onclick="presetLibrary('worldcat')">WorldCat</button>
+<br><em>Not at FIU? Paste your own library search URL with <code>{TITLE}</code> where the title goes; it's remembered on this browser.</em>
+</div></div>
+<div class="progress">Progress: <span id="count">0</span> / 31 papers clicked
+<button class="export-btn" onclick="exportRoutes()">⬇ Export routes</button></div><div id="papers"><div class="journal-header">📚 Earth and Environmental Science Transactions of The Royal Society of Edinburgh , in press &nbsp;(1)</div><div class="paper" id="paper-35038" data-doi="10.1017/S1755691025100777" data-title="Cynopodius, a long-toothed chondrichthyan from the Carboniferous of Scotland and the USA"><span class="paper-number">1</span>
+<span class="paper-id">ID: 35038</span><span class="doi">10.1017/S1755691025100777</span>
+<div class="title">Cynopodius, a long-toothed chondrichthyan from the Carboniferous of Scotland and the USA</div><div class="authors">Burrow, C.J. & Turner, S. & Itano, W.M. & Den Blaauwen, J.L. & Stewart, S. (2025)</div><div class="year">Year: 2025</div>
+<a href="https://doi.org/10.1017/S1755691025100777" class="url-link" target="_blank" onclick="useRoute('35038','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Cynopodius%2C%20a%20long-toothed%20chondrichthyan%20from%20the%20Carboniferous%20of%20Scotland%20and%20the%20USA&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35038','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CCynopodius%2C%20a%20long-toothed%20chondrichthyan%20from%20the%20Carboniferous%20of%20Scotland%20and%20the%20USA&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35038','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Cynopodius%2C%20a%20long-toothed%20chondrichthyan%20from%20the%20Carboniferous%20of%20Scotland%20and%20the%20USA" class="alt-link alt-schol" target="_blank" onclick="useRoute('35038','scholar')">Scholar</a></div><div class="journal-header">📚 Geological Magazine &nbsp;(1)</div><div class="paper" id="paper-6728" data-doi="10.1017/S0016756800095212" data-title="On the structure and affinities of the Carboniferous cochliodont Helodus simplex"><span class="paper-number">2</span>
+<span class="paper-id">ID: 6728</span><span class="doi">10.1017/S0016756800095212</span>
+<div class="title">On the structure and affinities of the Carboniferous cochliodont Helodus simplex</div><div class="authors">Moy-Thomas, J.A. (1936)</div><div class="year">Year: 1936</div>
+<a href="https://doi.org/10.1017/S0016756800095212" class="url-link" target="_blank" onclick="useRoute('6728','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=On%20the%20structure%20and%20affinities%20of%20the%20Carboniferous%20cochliodont%20Helodus%20simplex&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('6728','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COn%20the%20structure%20and%20affinities%20of%20the%20Carboniferous%20cochliodont%20Helodus%20simplex&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('6728','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=On%20the%20structure%20and%20affinities%20of%20the%20Carboniferous%20cochliodont%20Helodus%20simplex" class="alt-link alt-schol" target="_blank" onclick="useRoute('6728','scholar')">Scholar</a></div><div class="journal-header">📚 Geological Magazine, decade 4 &nbsp;(1)</div><div class="paper" id="paper-28643" data-doi="10.1017/S0016756800181336" data-title="II.—On the Genus Peripristis, St. John"><span class="paper-number">3</span>
+<span class="paper-id">ID: 28643</span><span class="doi">10.1017/S0016756800181336</span>
+<div class="title">II.—On the Genus Peripristis, St. John</div><div class="authors">Eastman, C.R. (1902)</div><div class="year">Year: 1902</div>
+<a href="https://doi.org/10.1017/S0016756800181336" class="url-link" target="_blank" onclick="useRoute('28643','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=II.%E2%80%94On%20the%20Genus%20Peripristis%2C%20St.%20John&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('28643','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CII.%E2%80%94On%20the%20Genus%20Peripristis%2C%20St.%20John&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('28643','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=II.%E2%80%94On%20the%20Genus%20Peripristis%2C%20St.%20John" class="alt-link alt-schol" target="_blank" onclick="useRoute('28643','scholar')">Scholar</a></div><div class="journal-header">📚 Journal of Helminthology &nbsp;(1)</div><div class="paper" id="paper-15075" data-doi="10.1017/S0022149X00029795" data-title="A new species of Phyllobothrium van Ben., from an Alaska Dog Salmon with a note on the occurrence of Crossobothrium angustum Linton, in the Thresher Shark"><span class="paper-number">4</span>
+<span class="paper-id">ID: 15075</span><span class="doi">10.1017/S0022149X00029795</span>
+<div class="title">A new species of Phyllobothrium van Ben., from an Alaska Dog Salmon with a note on the occurrence of Crossobothrium angustum Linton, in the Thresher Shark</div><div class="authors">Canavan, W.P. (1928)</div><div class="year">Year: 1928</div>
+<a href="https://doi.org/10.1017/S0022149X00029795" class="url-link" target="_blank" onclick="useRoute('15075','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20new%20species%20of%20Phyllobothrium%20van%20Ben.%2C%20from%20an%20Alaska%20Dog%20Salmon%20with%20a%20note%20on%20the%20occurrence%20of%20Crossobothrium%20angustum%20Linton%2C%20in%20the%20Thresher%20Shark&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('15075','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20new%20species%20of%20Phyllobothrium%20van%20Ben.%2C%20from%20an%20Alaska%20Dog%20Salmon%20with%20a%20note%20on%20the%20occurrence%20of%20Crossobothrium%20angustum%20Linton%2C%20in%20the%20Thresher%20Shark&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('15075','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20new%20species%20of%20Phyllobothrium%20van%20Ben.%2C%20from%20an%20Alaska%20Dog%20Salmon%20with%20a%20note%20on%20the%20occurrence%20of%20Crossobothrium%20angustum%20Linton%2C%20in%20the%20Thresher%20Shark" class="alt-link alt-schol" target="_blank" onclick="useRoute('15075','scholar')">Scholar</a></div><div class="journal-header">📚 Journal of Paleontology &nbsp;(5)</div><div class="paper" id="paper-10306" data-doi="10.1017/s0022336000022678" data-title="Xenacanthid shark teeth in Middle Devonian limestones of the Rhenish Schiefergebirge, West Germany"><span class="paper-number">5</span>
+<span class="paper-id">ID: 10306</span><span class="doi">10.1017/s0022336000022678</span>
+<div class="title">Xenacanthid shark teeth in Middle Devonian limestones of the Rhenish Schiefergebirge, West Germany</div><div class="authors">Stritzke, R. (1986)</div><div class="year">Year: 1986</div>
+<a href="https://doi.org/10.1017/s0022336000022678" class="url-link" target="_blank" onclick="useRoute('10306','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Xenacanthid%20shark%20teeth%20in%20Middle%20Devonian%20limestones%20of%20the%20Rhenish%20Schiefergebirge%2C%20West%20Germany&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10306','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CXenacanthid%20shark%20teeth%20in%20Middle%20Devonian%20limestones%20of%20the%20Rhenish%20Schiefergebirge%2C%20West%20Germany&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10306','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Xenacanthid%20shark%20teeth%20in%20Middle%20Devonian%20limestones%20of%20the%20Rhenish%20Schiefergebirge%2C%20West%20Germany" class="alt-link alt-schol" target="_blank" onclick="useRoute('10306','scholar')">Scholar</a></div><div class="paper" id="paper-13156" data-doi="10.1017/s0022336000030213" data-title="Early devonian vertebrate microfossils from the Simpson Park Range, Eureka County, Nevada"><span class="paper-number">6</span>
+<span class="paper-id">ID: 13156</span><span class="doi">10.1017/s0022336000030213</span>
+<div class="title">Early devonian vertebrate microfossils from the Simpson Park Range, Eureka County, Nevada</div><div class="authors">Turner, S. & Murphy, M.A. (1988)</div><div class="year">Year: 1988</div>
+<a href="https://doi.org/10.1017/s0022336000030213" class="url-link" target="_blank" onclick="useRoute('13156','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Early%20devonian%20vertebrate%20microfossils%20from%20the%20Simpson%20Park%20Range%2C%20Eureka%20County%2C%20Nevada&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13156','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CEarly%20devonian%20vertebrate%20microfossils%20from%20the%20Simpson%20Park%20Range%2C%20Eureka%20County%2C%20Nevada&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13156','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Early%20devonian%20vertebrate%20microfossils%20from%20the%20Simpson%20Park%20Range%2C%20Eureka%20County%2C%20Nevada" class="alt-link alt-schol" target="_blank" onclick="useRoute('13156','scholar')">Scholar</a></div><div class="paper" id="paper-22220" data-doi="10.1017/s0022336000038208" data-title="The first record of spiral coprolites from the Dinosaur Park Formation (Judith River Group, Upper Cretaceous) southern Alberta, Canada"><span class="paper-number">7</span>
+<span class="paper-id">ID: 22220</span><span class="doi">10.1017/s0022336000038208</span>
+<div class="title">The first record of spiral coprolites from the Dinosaur Park Formation (Judith River Group, Upper Cretaceous) southern Alberta, Canada</div><div class="authors">Coy, C.E. (1995)</div><div class="year">Year: 1995</div>
+<a href="https://doi.org/10.1017/s0022336000038208" class="url-link" target="_blank" onclick="useRoute('22220','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20first%20record%20of%20spiral%20coprolites%20from%20the%20Dinosaur%20Park%20Formation%20%28Judith%20River%20Group%2C%20Upper%20Cretaceous%29%20southern%20Alberta%2C%20Canada&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('22220','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20first%20record%20of%20spiral%20coprolites%20from%20the%20Dinosaur%20Park%20Formation%20%28Judith%20River%20Group%2C%20Upper%20Cretaceous%29%20southern%20Alberta%2C%20Canada&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('22220','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20first%20record%20of%20spiral%20coprolites%20from%20the%20Dinosaur%20Park%20Formation%20%28Judith%20River%20Group%2C%20Upper%20Cretaceous%29%20southern%20Alberta%2C%20Canada" class="alt-link alt-schol" target="_blank" onclick="useRoute('22220','scholar')">Scholar</a></div><div class="paper" id="paper-13161" data-doi="10.1017/s0022336000034922" data-title="The problem of vast numbers of cladodont shark denticles in the Pennsylvanian Excello Shale of Pike County, Indiana"><span class="paper-number">8</span>
+<span class="paper-id">ID: 13161</span><span class="doi">10.1017/s0022336000034922</span>
+<div class="title">The problem of vast numbers of cladodont shark denticles in the Pennsylvanian Excello Shale of Pike County, Indiana</div><div class="authors">Zangerl, R. (1995)</div><div class="year">Year: 1995</div>
+<a href="https://doi.org/10.1017/s0022336000034922" class="url-link" target="_blank" onclick="useRoute('13161','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20problem%20of%20vast%20numbers%20of%20cladodont%20shark%20denticles%20in%20the%20Pennsylvanian%20Excello%20Shale%20of%20Pike%20County%2C%20Indiana&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13161','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20problem%20of%20vast%20numbers%20of%20cladodont%20shark%20denticles%20in%20the%20Pennsylvanian%20Excello%20Shale%20of%20Pike%20County%2C%20Indiana&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13161','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20problem%20of%20vast%20numbers%20of%20cladodont%20shark%20denticles%20in%20the%20Pennsylvanian%20Excello%20Shale%20of%20Pike%20County%2C%20Indiana" class="alt-link alt-schol" target="_blank" onclick="useRoute('13161','scholar')">Scholar</a></div><div class="paper" id="paper-3510" data-doi="10.1017/s0022336000028006" data-title="An elasmobranch assemblage from the terrestrial-marine transitional Lethbridge Coal Zone (Dinosaur Park Formation: Upper Campanian), Alberta, Canada"><span class="paper-number">9</span>
+<span class="paper-id">ID: 3510</span><span class="doi">10.1017/s0022336000028006</span>
+<div class="title">An elasmobranch assemblage from the terrestrial-marine transitional Lethbridge Coal Zone (Dinosaur Park Formation: Upper Campanian), Alberta, Canada</div><div class="authors">Beavan, N.R. & Russell, A.P. (1999)</div><div class="year">Year: 1999</div>
+<a href="https://doi.org/10.1017/s0022336000028006" class="url-link" target="_blank" onclick="useRoute('3510','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=An%20elasmobranch%20assemblage%20from%20the%20terrestrial-marine%20transitional%20Lethbridge%20Coal%20Zone%20%28Dinosaur%20Park%20Formation%3A%20Upper%20Campanian%29%2C%20Alberta%2C%20Canada&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('3510','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAn%20elasmobranch%20assemblage%20from%20the%20terrestrial-marine%20transitional%20Lethbridge%20Coal%20Zone%20%28Dinosaur%20Park%20Formation%3A%20Upper%20Campanian%29%2C%20Alberta%2C%20Canada&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('3510','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=An%20elasmobranch%20assemblage%20from%20the%20terrestrial-marine%20transitional%20Lethbridge%20Coal%20Zone%20%28Dinosaur%20Park%20Formation%3A%20Upper%20Campanian%29%2C%20Alberta%2C%20Canada" class="alt-link alt-schol" target="_blank" onclick="useRoute('3510','scholar')">Scholar</a></div><div class="journal-header">📚 Journal of the Marine Biological Association of the United Kingdom &nbsp;(9)</div><div class="paper" id="paper-12145" data-doi="10.1017/S0025315400001715" data-title="Note on a specimen of Echinorhinus spinosus"><span class="paper-number">10</span>
+<span class="paper-id">ID: 12145</span><span class="doi">10.1017/S0025315400001715</span>
+<div class="title">Note on a specimen of Echinorhinus spinosus</div><div class="authors">Stead, F.B. (1896)</div><div class="year">Year: 1896</div>
+<a href="https://doi.org/10.1017/S0025315400001715" class="url-link" target="_blank" onclick="useRoute('12145','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Note%20on%20a%20specimen%20of%20Echinorhinus%20spinosus&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('12145','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CNote%20on%20a%20specimen%20of%20Echinorhinus%20spinosus&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('12145','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Note%20on%20a%20specimen%20of%20Echinorhinus%20spinosus" class="alt-link alt-schol" target="_blank" onclick="useRoute('12145','scholar')">Scholar</a></div><div class="paper" id="paper-14543" data-doi="10.1017/S0025315400010730" data-title="The &quot;bottle-nose ray&quot; (?R. alba, Lacep.) and its egg-purse"><span class="paper-number">11</span>
+<span class="paper-id">ID: 14543</span><span class="doi">10.1017/S0025315400010730</span>
+<div class="title">The "bottle-nose ray" (?R. alba, Lacep.) and its egg-purse</div><div class="authors">Holt, E.W.L. (1898)</div><div class="year">Year: 1898</div>
+<a href="https://doi.org/10.1017/S0025315400010730" class="url-link" target="_blank" onclick="useRoute('14543','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20%22bottle-nose%20ray%22%20%28%3FR.%20alba%2C%20Lacep.%29%20and%20its%20egg-purse&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('14543','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20%22bottle-nose%20ray%22%20%28%3FR.%20alba%2C%20Lacep.%29%20and%20its%20egg-purse&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('14543','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20%22bottle-nose%20ray%22%20%28%3FR.%20alba%2C%20Lacep.%29%20and%20its%20egg-purse" class="alt-link alt-schol" target="_blank" onclick="useRoute('14543','scholar')">Scholar</a></div><div class="paper" id="paper-2908" data-doi="10.1017/S0025315400006317" data-title="A contribution to our knowledge of the life-histories of the dogfishes landed at Plymouth"><span class="paper-number">12</span>
+<span class="paper-id">ID: 2908</span><span class="doi">10.1017/S0025315400006317</span>
+<div class="title">A contribution to our knowledge of the life-histories of the dogfishes landed at Plymouth</div><div class="authors">Ford, E. (1921)</div><div class="year">Year: 1921</div>
+<a href="https://doi.org/10.1017/S0025315400006317" class="url-link" target="_blank" onclick="useRoute('2908','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20contribution%20to%20our%20knowledge%20of%20the%20life-histories%20of%20the%20dogfishes%20landed%20at%20Plymouth&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('2908','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20contribution%20to%20our%20knowledge%20of%20the%20life-histories%20of%20the%20dogfishes%20landed%20at%20Plymouth&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('2908','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20contribution%20to%20our%20knowledge%20of%20the%20life-histories%20of%20the%20dogfishes%20landed%20at%20Plymouth" class="alt-link alt-schol" target="_blank" onclick="useRoute('2908','scholar')">Scholar</a></div><div class="paper" id="paper-5103" data-doi="10.1017/S002531540000967X" data-title="Rays and skates (Raiae) No. 1. Egg capsules and young"><span class="paper-number">13</span>
+<span class="paper-id">ID: 5103</span><span class="doi">10.1017/S002531540000967X</span>
+<div class="title">Rays and skates (Raiae) No. 1. Egg capsules and young</div><div class="authors">Clark, R.S. (1922)</div><div class="year">Year: 1922</div>
+<a href="https://doi.org/10.1017/S002531540000967X" class="url-link" target="_blank" onclick="useRoute('5103','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Rays%20and%20skates%20%28Raiae%29%20No.%201.%20Egg%20capsules%20and%20young&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('5103','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CRays%20and%20skates%20%28Raiae%29%20No.%201.%20Egg%20capsules%20and%20young&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('5103','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Rays%20and%20skates%20%28Raiae%29%20No.%201.%20Egg%20capsules%20and%20young" class="alt-link alt-schol" target="_blank" onclick="useRoute('5103','scholar')">Scholar</a></div><div class="paper" id="paper-12147" data-doi="10.1017/S0025315400072933" data-title="A contribution towards the life-history of the spur-dog"><span class="paper-number">14</span>
+<span class="paper-id">ID: 12147</span><span class="doi">10.1017/S0025315400072933</span>
+<div class="title">A contribution towards the life-history of the spur-dog</div><div class="authors">Hickling, C.F. (1930)</div><div class="year">Year: 1930</div>
+<a href="https://doi.org/10.1017/S0025315400072933" class="url-link" target="_blank" onclick="useRoute('12147','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20contribution%20towards%20the%20life-history%20of%20the%20spur-dog&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('12147','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20contribution%20towards%20the%20life-history%20of%20the%20spur-dog&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('12147','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20contribution%20towards%20the%20life-history%20of%20the%20spur-dog" class="alt-link alt-schol" target="_blank" onclick="useRoute('12147','scholar')">Scholar</a></div><div class="paper" id="paper-12146" data-doi="10.1017/S0025315400072945" data-title="A note on the formation of the egg case of the skate"><span class="paper-number">15</span>
+<span class="paper-id">ID: 12146</span><span class="doi">10.1017/S0025315400072945</span>
+<div class="title">A note on the formation of the egg case of the skate</div><div class="authors">Hobson, A.D. (1930)</div><div class="year">Year: 1930</div>
+<a href="https://doi.org/10.1017/S0025315400072945" class="url-link" target="_blank" onclick="useRoute('12146','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20note%20on%20the%20formation%20of%20the%20egg%20case%20of%20the%20skate&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('12146','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20note%20on%20the%20formation%20of%20the%20egg%20case%20of%20the%20skate&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('12146','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20note%20on%20the%20formation%20of%20the%20egg%20case%20of%20the%20skate" class="alt-link alt-schol" target="_blank" onclick="useRoute('12146','scholar')">Scholar</a></div><div class="paper" id="paper-19885" data-doi="10.1017/s0025315400043940" data-title="Some records of Parasitic Worms from Marine Fishes at Plymouth"><span class="paper-number">16</span>
+<span class="paper-id">ID: 19885</span><span class="doi">10.1017/s0025315400043940</span>
+<div class="title">Some records of Parasitic Worms from Marine Fishes at Plymouth</div><div class="authors">Baylis, H.A. & Jones, E.I. (1933)</div><div class="year">Year: 1933</div>
+<a href="https://doi.org/10.1017/s0025315400043940" class="url-link" target="_blank" onclick="useRoute('19885','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Some%20records%20of%20Parasitic%20Worms%20from%20Marine%20Fishes%20at%20Plymouth&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('19885','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CSome%20records%20of%20Parasitic%20Worms%20from%20Marine%20Fishes%20at%20Plymouth&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('19885','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Some%20records%20of%20Parasitic%20Worms%20from%20Marine%20Fishes%20at%20Plymouth" class="alt-link alt-schol" target="_blank" onclick="useRoute('19885','scholar')">Scholar</a></div><div class="paper" id="paper-12148" data-doi="10.1017/S0025315400043939" data-title="Rays and skates of Devon and Cornwall. III. The proportions of the sexes in nature and in commercial landings, and their significance to the fishery"><span class="paper-number">17</span>
+<span class="paper-id">ID: 12148</span><span class="doi">10.1017/S0025315400043939</span>
+<div class="title">Rays and skates of Devon and Cornwall. III. The proportions of the sexes in nature and in commercial landings, and their significance to the fishery</div><div class="authors">Steven, G.A. (1933)</div><div class="year">Year: 1933</div>
+<a href="https://doi.org/10.1017/S0025315400043939" class="url-link" target="_blank" onclick="useRoute('12148','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Rays%20and%20skates%20of%20Devon%20and%20Cornwall.%20III.%20The%20proportions%20of%20the%20sexes%20in%20nature%20and%20in%20commercial%20landings%2C%20and%20their%20significance%20to%20the%20fishery&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('12148','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CRays%20and%20skates%20of%20Devon%20and%20Cornwall.%20III.%20The%20proportions%20of%20the%20sexes%20in%20nature%20and%20in%20commercial%20landings%2C%20and%20their%20significance%20to%20the%20fishery&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('12148','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Rays%20and%20skates%20of%20Devon%20and%20Cornwall.%20III.%20The%20proportions%20of%20the%20sexes%20in%20nature%20and%20in%20commercial%20landings%2C%20and%20their%20significance%20to%20the%20fishery" class="alt-link alt-schol" target="_blank" onclick="useRoute('12148','scholar')">Scholar</a></div><div class="paper" id="paper-23811" data-doi="10.1017/S0025315400017823" data-title="The structure of stretch receptor endings in the fin muscles of rays"><span class="paper-number">18</span>
+<span class="paper-id">ID: 23811</span><span class="doi">10.1017/S0025315400017823</span>
+<div class="title">The structure of stretch receptor endings in the fin muscles of rays</div><div class="authors">Bone, Q. & Chubb, A.D. (1975)</div><div class="year">Year: 1975</div>
+<a href="https://doi.org/10.1017/S0025315400017823" class="url-link" target="_blank" onclick="useRoute('23811','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20structure%20of%20stretch%20receptor%20endings%20in%20the%20fin%20muscles%20of%20rays&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('23811','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20structure%20of%20stretch%20receptor%20endings%20in%20the%20fin%20muscles%20of%20rays&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('23811','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20structure%20of%20stretch%20receptor%20endings%20in%20the%20fin%20muscles%20of%20rays" class="alt-link alt-schol" target="_blank" onclick="useRoute('23811','scholar')">Scholar</a></div><div class="journal-header">📚 Journal of Zoology &nbsp;(1)</div><div class="paper" id="paper-35565" data-doi="10.1017/S0952836998001083" data-title="Intraspecific scarring in odontocete cetaceans: An indicator of male “quality” in aggressive social interactions?"><span class="paper-number">19</span>
+<span class="paper-id">ID: 35565</span><span class="doi">10.1017/S0952836998001083</span>
+<div class="title">Intraspecific scarring in odontocete cetaceans: An indicator of male “quality” in aggressive social interactions?</div><div class="authors">MacLeod, C.D. (1998)</div><div class="year">Year: 1998</div>
+<a href="https://doi.org/10.1017/S0952836998001083" class="url-link" target="_blank" onclick="useRoute('35565','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Intraspecific%20scarring%20in%20odontocete%20cetaceans%3A%20An%20indicator%20of%20male%20%E2%80%9Cquality%E2%80%9D%20in%20aggressive%20social%20interactions%3F&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35565','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CIntraspecific%20scarring%20in%20odontocete%20cetaceans%3A%20An%20indicator%20of%20male%20%E2%80%9Cquality%E2%80%9D%20in%20aggressive%20social%20interactions%3F&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35565','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Intraspecific%20scarring%20in%20odontocete%20cetaceans%3A%20An%20indicator%20of%20male%20%E2%80%9Cquality%E2%80%9D%20in%20aggressive%20social%20interactions%3F" class="alt-link alt-schol" target="_blank" onclick="useRoute('35565','scholar')">Scholar</a></div><div class="journal-header">📚 M. Kowalewski and P. H. Kelley(eds.) &nbsp;(1)</div><div class="paper" id="paper-17274" data-doi="10.1017/s108933260000108x" data-title="Post-Paleozoic patterns in marine predation: was there a Mesozoic and Cenozoic marine predatory revolution?"><span class="paper-number">20</span>
+<span class="paper-id">ID: 17274</span><span class="doi">10.1017/s108933260000108x</span>
+<div class="title">Post-Paleozoic patterns in marine predation: was there a Mesozoic and Cenozoic marine predatory revolution?</div><div class="authors">Walker, S.E. & Brett, C.E. (2002)</div><div class="year">Year: 2002</div>
+<a href="https://doi.org/10.1017/s108933260000108x" class="url-link" target="_blank" onclick="useRoute('17274','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Post-Paleozoic%20patterns%20in%20marine%20predation%3A%20was%20there%20a%20Mesozoic%20and%20Cenozoic%20marine%20predatory%20revolution%3F&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('17274','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CPost-Paleozoic%20patterns%20in%20marine%20predation%3A%20was%20there%20a%20Mesozoic%20and%20Cenozoic%20marine%20predatory%20revolution%3F&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('17274','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Post-Paleozoic%20patterns%20in%20marine%20predation%3A%20was%20there%20a%20Mesozoic%20and%20Cenozoic%20marine%20predatory%20revolution%3F" class="alt-link alt-schol" target="_blank" onclick="useRoute('17274','scholar')">Scholar</a></div><div class="journal-header">📚 Marine Biodiversity Records &nbsp;(3)</div><div class="paper" id="paper-35597" data-doi="10.1017/S1755267207009840" data-title="A case study of a lone humpback whale calf (Megaptera novaeangliae) inside Baía de Todos os Santos, Bahia State, north-eastern Brazil, with implications for rescue procedures"><span class="paper-number">21</span>
+<span class="paper-id">ID: 35597</span><span class="doi">10.1017/S1755267207009840</span>
+<div class="title">A case study of a lone humpback whale calf (Megaptera novaeangliae) inside Baía de Todos os Santos, Bahia State, north-eastern Brazil, with implications for rescue procedures</div><div class="authors">Neto, E.S. & Rossi-Santos, M.R. & Baracho, C.G. & Cipolotti, S.R. & Sampaio, C.L.S. & Sá Velozo, R. & Souto, L.R.A. (2008)</div><div class="year">Year: 2008</div>
+<a href="https://doi.org/10.1017/S1755267207009840" class="url-link" target="_blank" onclick="useRoute('35597','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20case%20study%20of%20a%20lone%20humpback%20whale%20calf%20%28Megaptera%20novaeangliae%29%20inside%20Ba%C3%ADa%20de%20Todos%20os%20Santos%2C%20Bahia%20State%2C%20north-eastern%20Brazil%2C%20with%20implications%20for%20rescue%20procedures&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35597','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20case%20study%20of%20a%20lone%20humpback%20whale%20calf%20%28Megaptera%20novaeangliae%29%20inside%20Ba%C3%ADa%20de%20Todos%20os%20Santos%2C%20Bahia%20State%2C%20north-eastern%20Brazil%2C%20with%20implications%20for%20rescue%20procedures&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35597','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20case%20study%20of%20a%20lone%20humpback%20whale%20calf%20%28Megaptera%20novaeangliae%29%20inside%20Ba%C3%ADa%20de%20Todos%20os%20Santos%2C%20Bahia%20State%2C%20north-eastern%20Brazil%2C%20with%20implications%20for%20rescue%20procedures" class="alt-link alt-schol" target="_blank" onclick="useRoute('35597','scholar')">Scholar</a></div><div class="paper" id="paper-35599" data-doi="10.1017/S1755267207007282" data-title="Bryde’s whales, Balaenoptera edeni, observed in the Azores: a new species record for the region"><span class="paper-number">22</span>
+<span class="paper-id">ID: 35599</span><span class="doi">10.1017/S1755267207007282</span>
+<div class="title">Bryde’s whales, Balaenoptera edeni, observed in the Azores: a new species record for the region</div><div class="authors">Steiner, L. & Silva, M.A. & Zereba, J. & Leal, M.J. (2008)</div><div class="year">Year: 2008</div>
+<a href="https://doi.org/10.1017/S1755267207007282" class="url-link" target="_blank" onclick="useRoute('35599','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Bryde%E2%80%99s%20whales%2C%20Balaenoptera%20edeni%2C%20observed%20in%20the%20Azores%3A%20a%20new%20species%20record%20for%20the%20region&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35599','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CBryde%E2%80%99s%20whales%2C%20Balaenoptera%20edeni%2C%20observed%20in%20the%20Azores%3A%20a%20new%20species%20record%20for%20the%20region&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35599','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Bryde%E2%80%99s%20whales%2C%20Balaenoptera%20edeni%2C%20observed%20in%20the%20Azores%3A%20a%20new%20species%20record%20for%20the%20region" class="alt-link alt-schol" target="_blank" onclick="useRoute('35599','scholar')">Scholar</a></div><div class="paper" id="paper-35602" data-doi="10.1017/S1755267209000980" data-title="Analysis of subantarctic fur seal (Arctocephalus tropicalis) records in Bahia and Sergipe, north-eastern Brazil"><span class="paper-number">23</span>
+<span class="paper-id">ID: 35602</span><span class="doi">10.1017/S1755267209000980</span>
+<div class="title">Analysis of subantarctic fur seal (Arctocephalus tropicalis) records in Bahia and Sergipe, north-eastern Brazil</div><div class="authors">Velozo, R.S. & Schiavetti, A. & Dórea-Reis, L.W. (2009)</div><div class="year">Year: 2009</div>
+<a href="https://doi.org/10.1017/S1755267209000980" class="url-link" target="_blank" onclick="useRoute('35602','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Analysis%20of%20subantarctic%20fur%20seal%20%28Arctocephalus%20tropicalis%29%20records%20in%20Bahia%20and%20Sergipe%2C%20north-eastern%20Brazil&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35602','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAnalysis%20of%20subantarctic%20fur%20seal%20%28Arctocephalus%20tropicalis%29%20records%20in%20Bahia%20and%20Sergipe%2C%20north-eastern%20Brazil&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35602','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Analysis%20of%20subantarctic%20fur%20seal%20%28Arctocephalus%20tropicalis%29%20records%20in%20Bahia%20and%20Sergipe%2C%20north-eastern%20Brazil" class="alt-link alt-schol" target="_blank" onclick="useRoute('35602','scholar')">Scholar</a></div><div class="journal-header">📚 Paleobiology &nbsp;(1)</div><div class="paper" id="paper-5119" data-doi="10.1017/s0094837300012690" data-title="Quaternary colonization of Paleogene persistence?: historical biogeography of skates (Chondrichthyes: Rajidae) in the Antarctic ichthyofauna"><span class="paper-number">24</span>
+<span class="paper-id">ID: 5119</span><span class="doi">10.1017/s0094837300012690</span>
+<div class="title">Quaternary colonization of Paleogene persistence?: historical biogeography of skates (Chondrichthyes: Rajidae) in the Antarctic ichthyofauna</div><div class="authors">Long, D.J. (1994)</div><div class="year">Year: 1994</div>
+<a href="https://doi.org/10.1017/s0094837300012690" class="url-link" target="_blank" onclick="useRoute('5119','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Quaternary%20colonization%20of%20Paleogene%20persistence%3F%3A%20historical%20biogeography%20of%20skates%20%28Chondrichthyes%3A%20Rajidae%29%20in%20the%20Antarctic%20ichthyofauna&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('5119','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CQuaternary%20colonization%20of%20Paleogene%20persistence%3F%3A%20historical%20biogeography%20of%20skates%20%28Chondrichthyes%3A%20Rajidae%29%20in%20the%20Antarctic%20ichthyofauna&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('5119','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Quaternary%20colonization%20of%20Paleogene%20persistence%3F%3A%20historical%20biogeography%20of%20skates%20%28Chondrichthyes%3A%20Rajidae%29%20in%20the%20Antarctic%20ichthyofauna" class="alt-link alt-schol" target="_blank" onclick="useRoute('5119','scholar')">Scholar</a></div><div class="journal-header">📚 Parasitology &nbsp;(4)</div><div class="paper" id="paper-17920" data-doi="10.1017/S0031182000005151" data-title="Onchocotyle somniosi n. sp., an ectoparasitic trematode of the sleeper shark (Somniosus microcephalus)"><span class="paper-number">25</span>
+<span class="paper-id">ID: 17920</span><span class="doi">10.1017/S0031182000005151</span>
+<div class="title">Onchocotyle somniosi n. sp., an ectoparasitic trematode of the sleeper shark (Somniosus microcephalus)</div><div class="authors">Causey, D. (1926)</div><div class="year">Year: 1926</div>
+<a href="https://doi.org/10.1017/S0031182000005151" class="url-link" target="_blank" onclick="useRoute('17920','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Onchocotyle%20somniosi%20n.%20sp.%2C%20an%20ectoparasitic%20trematode%20of%20the%20sleeper%20shark%20%28Somniosus%20microcephalus%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('17920','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COnchocotyle%20somniosi%20n.%20sp.%2C%20an%20ectoparasitic%20trematode%20of%20the%20sleeper%20shark%20%28Somniosus%20microcephalus%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('17920','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Onchocotyle%20somniosi%20n.%20sp.%2C%20an%20ectoparasitic%20trematode%20of%20the%20sleeper%20shark%20%28Somniosus%20microcephalus%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('17920','scholar')">Scholar</a></div><div class="paper" id="paper-28859" data-doi="10.1017/S0031182000022265" data-title="Chloromyxum pristiophori, a New Species of Myxosporidia Parasitic in the Gall-Bladder of Pristiophorus cirratus (Saw-Shark)"><span class="paper-number">26</span>
+<span class="paper-id">ID: 28859</span><span class="doi">10.1017/S0031182000022265</span>
+<div class="title">Chloromyxum pristiophori, a New Species of Myxosporidia Parasitic in the Gall-Bladder of Pristiophorus cirratus (Saw-Shark)</div><div class="authors">Woolcock, V. (1936)</div><div class="year">Year: 1936</div>
+<a href="https://doi.org/10.1017/S0031182000022265" class="url-link" target="_blank" onclick="useRoute('28859','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Chloromyxum%20pristiophori%2C%20a%20New%20Species%20of%20Myxosporidia%20Parasitic%20in%20the%20Gall-Bladder%20of%20Pristiophorus%20cirratus%20%28Saw-Shark%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('28859','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CChloromyxum%20pristiophori%2C%20a%20New%20Species%20of%20Myxosporidia%20Parasitic%20in%20the%20Gall-Bladder%20of%20Pristiophorus%20cirratus%20%28Saw-Shark%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('28859','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Chloromyxum%20pristiophori%2C%20a%20New%20Species%20of%20Myxosporidia%20Parasitic%20in%20the%20Gall-Bladder%20of%20Pristiophorus%20cirratus%20%28Saw-Shark%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('28859','scholar')">Scholar</a></div><div class="paper" id="paper-11700" data-doi="10.1017/S0031182000013329" data-title="The anatomy of Phyllobothrium dohrnii (Oerley) from Hexanchus griseus (Gmelin)"><span class="paper-number">27</span>
+<span class="paper-id">ID: 11700</span><span class="doi">10.1017/S0031182000013329</span>
+<div class="title">The anatomy of Phyllobothrium dohrnii (Oerley) from Hexanchus griseus (Gmelin)</div><div class="authors">Rees, G. (1946)</div><div class="year">Year: 1946</div>
+<a href="https://doi.org/10.1017/S0031182000013329" class="url-link" target="_blank" onclick="useRoute('11700','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20anatomy%20of%20Phyllobothrium%20dohrnii%20%28Oerley%29%20from%20Hexanchus%20griseus%20%28Gmelin%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('11700','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20anatomy%20of%20Phyllobothrium%20dohrnii%20%28Oerley%29%20from%20Hexanchus%20griseus%20%28Gmelin%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('11700','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20anatomy%20of%20Phyllobothrium%20dohrnii%20%28Oerley%29%20from%20Hexanchus%20griseus%20%28Gmelin%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('11700','scholar')">Scholar</a></div><div class="paper" id="paper-15248" data-doi="10.1017/S0031182000069183" data-title="The biology of Leptocotyl minor, a skin parasite of the dogfish, Scyliorhinus canicula"><span class="paper-number">28</span>
+<span class="paper-id">ID: 15248</span><span class="doi">10.1017/S0031182000069183</span>
+<div class="title">The biology of Leptocotyl minor, a skin parasite of the dogfish, Scyliorhinus canicula</div><div class="authors">Kearn, G.C. (1965)</div><div class="year">Year: 1965</div>
+<a href="https://doi.org/10.1017/S0031182000069183" class="url-link" target="_blank" onclick="useRoute('15248','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20biology%20of%20Leptocotyl%20minor%2C%20a%20skin%20parasite%20of%20the%20dogfish%2C%20Scyliorhinus%20canicula&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('15248','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20biology%20of%20Leptocotyl%20minor%2C%20a%20skin%20parasite%20of%20the%20dogfish%2C%20Scyliorhinus%20canicula&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('15248','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20biology%20of%20Leptocotyl%20minor%2C%20a%20skin%20parasite%20of%20the%20dogfish%2C%20Scyliorhinus%20canicula" class="alt-link alt-schol" target="_blank" onclick="useRoute('15248','scholar')">Scholar</a></div><div class="journal-header">📚 The Mosasaur &nbsp;(1)</div><div class="paper" id="paper-35060" data-doi="10.1017/s0022336000029942" data-title="Late Cretaceous fossils from the Blufftown Formation (Campanian) in western Georgia"><span class="paper-number">29</span>
+<span class="paper-id">ID: 35060</span><span class="doi">10.1017/s0022336000029942</span>
+<div class="title">Late Cretaceous fossils from the Blufftown Formation (Campanian) in western Georgia</div><div class="authors">Schwimmer, D.R. (1986)</div><div class="year">Year: 1986</div>
+<a href="https://doi.org/10.1017/s0022336000029942" class="url-link" target="_blank" onclick="useRoute('35060','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Late%20Cretaceous%20fossils%20from%20the%20Blufftown%20Formation%20%28Campanian%29%20in%20western%20Georgia&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35060','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CLate%20Cretaceous%20fossils%20from%20the%20Blufftown%20Formation%20%28Campanian%29%20in%20western%20Georgia&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35060','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Late%20Cretaceous%20fossils%20from%20the%20Blufftown%20Formation%20%28Campanian%29%20in%20western%20Georgia" class="alt-link alt-schol" target="_blank" onclick="useRoute('35060','scholar')">Scholar</a></div><div class="journal-header">📚 Transactions of the Royal Society of Edinburgh &nbsp;(2)</div><div class="paper" id="paper-17713" data-doi="10.1017/S0080456800011558" data-title="The Lateral Sense Organs of Elasmobranchs: The Ampullary Canals of the Genus Raia"><span class="paper-number">30</span>
+<span class="paper-id">ID: 17713</span><span class="doi">10.1017/S0080456800011558</span>
+<div class="title">The Lateral Sense Organs of Elasmobranchs: The Ampullary Canals of the Genus Raia</div><div class="authors">Lamont, A. (1917)</div><div class="year">Year: 1917</div>
+<a href="https://doi.org/10.1017/S0080456800011558" class="url-link" target="_blank" onclick="useRoute('17713','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20Lateral%20Sense%20Organs%20of%20Elasmobranchs%3A%20The%20Ampullary%20Canals%20of%20the%20Genus%20Raia&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('17713','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20Lateral%20Sense%20Organs%20of%20Elasmobranchs%3A%20The%20Ampullary%20Canals%20of%20the%20Genus%20Raia&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('17713','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20Lateral%20Sense%20Organs%20of%20Elasmobranchs%3A%20The%20Ampullary%20Canals%20of%20the%20Genus%20Raia" class="alt-link alt-schol" target="_blank" onclick="useRoute('17713','scholar')">Scholar</a></div><div class="paper" id="paper-17714" data-doi="10.1017/S0080456800012199" data-title="The Morphology of the Prosencephalon of Spinax as a type of Elasmobranch Fore-brain"><span class="paper-number">31</span>
+<span class="paper-id">ID: 17714</span><span class="doi">10.1017/S0080456800012199</span>
+<div class="title">The Morphology of the Prosencephalon of Spinax as a type of Elasmobranch Fore-brain</div><div class="authors">Thomson, J.S. (1919)</div><div class="year">Year: 1919</div>
+<a href="https://doi.org/10.1017/S0080456800012199" class="url-link" target="_blank" onclick="useRoute('17714','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20Morphology%20of%20the%20Prosencephalon%20of%20Spinax%20as%20a%20type%20of%20Elasmobranch%20Fore-brain&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('17714','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20Morphology%20of%20the%20Prosencephalon%20of%20Spinax%20as%20a%20type%20of%20Elasmobranch%20Fore-brain&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('17714','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20Morphology%20of%20the%20Prosencephalon%20of%20Spinax%20as%20a%20type%20of%20Elasmobranch%20Fore-brain" class="alt-link alt-schol" target="_blank" onclick="useRoute('17714','scholar')">Scholar</a></div></div><script>
+    // Same Apps Script endpoint as docs/remaining_downloads.html, so progress made
+    // here lands in the shared record instead of being trapped in one browser.
+    const SHEET = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
+
+    let clicked = new Set();
+    const KEY = 'clicked_' + document.title;
+
+    function paint(id) {
+        const el = document.getElementById('paper-' + id);
+        if (el) { el.style.opacity = '0.5'; el.style.borderLeftColor = '#95a5a6'; }
+    }
+    function refreshCount() { document.getElementById('count').textContent = clicked.size; }
+
+    if (localStorage.getItem(KEY)) {
+        clicked = new Set(JSON.parse(localStorage.getItem(KEY)));
+        refreshCount(); clicked.forEach(paint);
+    }
+
+    // Pull the shared record so a paper someone else already did shows as done.
+    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
+        const done = new Set((res.data || []).map(x => (x.doi || '').trim().toLowerCase()));
+        document.querySelectorAll('.paper').forEach(el => {
+            const d = (el.dataset.doi || '').trim().toLowerCase();
+            if (d && done.has(d)) { clicked.add(el.id.replace('paper-', '')); paint(el.id.replace('paper-', '')); }
+        });
+        localStorage.setItem(KEY, JSON.stringify([...clicked]));
+        refreshCount();
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Synced with the shared record';
+    }).catch(() => {
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Offline — progress saved locally only';
+    });
+
+    function markClicked(id) {
+        if (!clicked.has(id)) {
+            clicked.add(id); refreshCount();
+            localStorage.setItem(KEY, JSON.stringify([...clicked]));
+            paint(id);
+        }
+        // Push to the shared record. no-cors: this is a blind write, we only need it to land.
+        const el = document.getElementById('paper-' + id);
+        const doi = el && el.dataset.doi;
+        if (SHEET && doi) {
+            fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                action: 'markClicked', doi: doi, title: (el.dataset.title || ''),
+                by: (localStorage.getItem('eea_username') || 'Anon'),
+                at: new Date().toISOString()})}).catch(() => {});
+        }
+    }
+
+    // Who am I — shares the eea_username key with the main download helper.
+    function initUser() {
+        const sel = document.getElementById('userName');
+        if (!sel) return;
+        const saved = localStorage.getItem('eea_username');
+        if (saved) sel.value = saved;
+        sel.addEventListener('change', () => localStorage.setItem('eea_username', sel.value));
+    }
+
+    // The library link defaults to FIU, which is no use to anyone else, so let
+    // each person store their own institution's search URL with a {TITLE} slot.
+    const LIBKEY = 'eea_library_url';
+    const LIB_FIU = 'https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any,contains,{TITLE}&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0';
+    const LIB_WORLDCAT = 'https://search.worldcat.org/search?q={TITLE}';
+    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_FIU; }
+    function applyLibrary() {
+        const tpl = libTemplate();
+        document.querySelectorAll('a.alt-fiu').forEach(a => {
+            const p = a.closest('.paper');
+            const t = (p && p.dataset.title) || '';
+            a.href = tpl.replace('{TITLE}', encodeURIComponent(t));
+            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch'
+                          : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
+        });
+        const inp = document.getElementById('libUrl');
+        if (inp) inp.value = tpl;
+    }
+    function saveLibrary() {
+        const v = document.getElementById('libUrl').value.trim();
+        if (v) localStorage.setItem(LIBKEY, v); else localStorage.removeItem(LIBKEY);
+        applyLibrary();
+    }
+    function presetLibrary(which) {
+        localStorage.setItem(LIBKEY, which === 'worldcat' ? LIB_WORLDCAT : LIB_FIU);
+        applyLibrary();
+    }
+    // Route tracker: record which access route worked for each paper (last wins),
+    // so the FIU access-map can be reconstructed from an exported routes JSON.
+    let routes = {};
+    const RKEY = 'routes_' + document.title;
+    if (localStorage.getItem(RKEY)) { try { routes = JSON.parse(localStorage.getItem(RKEY)); } catch(e) {} }
+    function useRoute(id, route) {
+        routes[id] = route; localStorage.setItem(RKEY, JSON.stringify(routes)); markClicked(id);
+    }
+    function exportRoutes() {
+        const blob = new Blob([JSON.stringify(routes, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '_routes.json'; a.click();
+    }
+    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='r') { if (confirm('Reset progress?')) { localStorage.removeItem(KEY); localStorage.removeItem(RKEY); location.reload(); } } });
+
+    initUser();
+    applyLibrary();
+</script></body></html>

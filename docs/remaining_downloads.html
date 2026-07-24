@@ -192,7 +192,15 @@
     }
     function applyClickedState(){
         if(!dataTable)return;
-        $('#stat-clicked').text(Object.keys(clickedDois).length);
+        // Count only clicks on papers still in the queue. The shared record keeps
+        // every click ever made, but ~97% of those papers have since been acquired
+        // and removed, so the raw total reads as a far bigger backlog than exists.
+        var live=0;
+        if(paperData&&paperData.length){
+            var q={};paperData.forEach(function(r){if(r.doi)q[String(r.doi).trim().toLowerCase()]=1;});
+            Object.keys(clickedDois).forEach(function(d){if(q[String(d).trim().toLowerCase()])live++;});
+        }
+        $('#stat-clicked').text(live);
         dataTable.rows().every(function(){
             var d=this.data(),doi=$(d[0]).text()||'',n=this.node();
             if(clickedDois[doi]){$(n).addClass('clicked-row');var i=clickedDois[doi];
