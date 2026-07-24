@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Helper Index — Publishers &amp; Journals</title>
+<meta name="description" content="Every publisher and journal with papers still to download, each linking
+ to a pre-filtered view of the download helper.">
+<style>
+  :root {
+    --blue: #081E3F; --blue-soft: #12305c; --gold: #B6862C;
+    --bg: #f4f6f8; --surface: #ffffff; --text: #1a1a2e;
+    --text-muted: #4b5566; --border: #dde2e8; --shadow: rgba(8,30,63,0.10);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1420; --surface: #161f30; --text: #e8ecf3;
+    --text-muted: #a7b1c2; --border: #2a3550; --shadow: rgba(0,0,0,0.35);
+    --blue-soft: #1c3868;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1420; --surface: #161f30; --text: #e8ecf3;
+      --text-muted: #a7b1c2; --border: #2a3550; --shadow: rgba(0,0,0,0.35);
+      --blue-soft: #1c3868;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.55;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header.page-head {
+    background: linear-gradient(135deg, var(--blue), var(--blue-soft));
+    color: #fff; padding: 2.25rem 1.5rem 5rem;
+  }
+  header.page-head .inner { max-width: 1080px; margin: 0 auto; }
+  header.page-head h1 { margin: 0 0 0.35rem; font-size: 1.7rem; }
+  header.page-head p.subtitle { margin: 0; color: #d9e0ec; max-width: 64ch; }
+  header.page-head .back-link {
+    display: inline-block; margin-bottom: 1rem; font-size: 0.85rem; color: #cfe0ff;
+  }
+  .actions { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .actions a {
+    display: inline-block; background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.28); color: #fff;
+    padding: 0.45rem 0.9rem; border-radius: 6px; font-size: 0.86rem;
+  }
+  .actions a:hover { background: rgba(255,255,255,0.2); text-decoration: none; }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 0.9rem; margin: -3.25rem auto 2.5rem; max-width: 1080px; padding: 0 1.5rem;
+  }
+  .stat-tile {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.1rem; box-shadow: 0 6px 16px var(--shadow);
+  }
+  .stat-tile .value {
+    font-size: 1.5rem; font-weight: 700; color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-tile .label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  p.lede { color: var(--text-muted); max-width: 78ch; }
+
+  .searchwrap { margin: 1.5rem 0 1rem; }
+  #q {
+    width: 100%; max-width: 30rem; padding: 0.6rem 0.8rem; font-size: 0.95rem;
+    border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--text);
+  }
+
+  .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tabs button {
+    background: var(--surface); border: 1px solid var(--border); color: var(--text);
+    padding: 0.45rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+  }
+  .tabs button.on { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  table { border-collapse: collapse; width: 100%; background: var(--surface); font-size: 0.92rem; }
+  th, td { border-bottom: 1px solid var(--border); padding: 0.5rem 0.7rem; text-align: left; }
+  th { background: var(--blue); color: #fff; position: sticky; top: 0; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tbody tr:hover { background: rgba(182,134,44,0.08); }
+  .wrap { border: 1px solid var(--border); border-radius: 10px; overflow: auto; max-height: 34rem;
+          box-shadow: 0 6px 16px var(--shadow); }
+  .oa { color: var(--text-muted); font-size: 0.85em; }
+  .hidden { display: none; }
+  #status { color: var(--text-muted); margin: 1rem 0; }
+  footer {
+    border-top: 1px solid var(--border); margin-top: 2.5rem; padding: 1.5rem;
+    text-align: center; font-size: 0.85rem; color: var(--text-muted);
+  }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div class="inner">
+    <a class="back-link" href="https://github.com/SimonDedman/elasmo_analyses">&larr; Project README</a>
+    <h1>Download helper: publishers &amp; journals</h1>
+    <p class="subtitle">
+      Every publisher and journal with papers still missing from the corpus. Each row opens the
+      download helper already filtered to that slice, so you can work through one source you have
+      institutional access to without wading through the full queue.
+    </p>
+    <div class="actions">
+      <a href="../remaining_downloads.html">Full download helper</a>
+      <a href="../results.html">Results index</a>
+      <a href="../slides/">Slide deck</a>
+    </div>
+  </div>
+</header>
+
+<div class="stats-row">
+  <div class="stat-tile"><div class="value" id="s-total">…</div><div class="label">Papers remaining</div></div>
+  <div class="stat-tile"><div class="value" id="s-pub">…</div><div class="label">Publishers</div></div>
+  <div class="stat-tile"><div class="value" id="s-jrn">…</div><div class="label">Journals</div></div>
+  <div class="stat-tile"><div class="value" id="s-oa">…</div><div class="label">Open access available</div></div>
+</div>
+
+<main>
+  <p class="lede">
+    Counts are read live from the same <a href="../papers_data.json">papers_data.json</a> that drives
+    the helper, so this page never goes stale: when papers are ingested and the queue is regenerated,
+    these numbers follow. <strong>Open access rows are the quickest wins</strong> — those PDFs are
+    free to fetch, they just haven't been collected yet.
+  </p>
+
+  <div class="tabs">
+    <button id="tab-pub" class="on" onclick="show('pub')">By publisher</button>
+    <button id="tab-jrn" onclick="show('jrn')">By journal</button>
+  </div>
+
+  <div class="searchwrap">
+    <input id="q" type="search" placeholder="Filter by name…" oninput="render()">
+  </div>
+
+  <div id="status">Loading…</div>
+
+  <div class="wrap"><table>
+    <thead><tr><th>Name</th><th class="n">Remaining</th><th class="n">OA available</th><th>Open</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+</main>
+
+<footer>
+  Elasmobranch Analytical Methods Review &middot;
+  <a href="https://github.com/SimonDedman/elasmo_analyses">github.com/SimonDedman/elasmo_analyses</a>
+</footer>
+
+<script>
+var OA_OPEN = ['gold','green','hybrid','bronze'];
+var pub = [], jrn = [], mode = 'pub';
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+function tally(data, keyFn){
+  var m = {};
+  data.forEach(function(r){
+    var k = keyFn(r);
+    if(!k) return;
+    if(!m[k]) m[k] = {name:k, n:0, oa:0};
+    m[k].n++;
+    if(OA_OPEN.indexOf(r.oa_status) >= 0) m[k].oa++;
+  });
+  return Object.keys(m).map(function(k){return m[k];})
+                .sort(function(a,b){return b.n - a.n || a.name.localeCompare(b.name);});
+}
+
+function show(which){
+  mode = which;
+  document.getElementById('tab-pub').className = which === 'pub' ? 'on' : '';
+  document.getElementById('tab-jrn').className = which === 'jrn' ? 'on' : '';
+  render();
+}
+
+function render(){
+  var q = document.getElementById('q').value.trim().toLowerCase();
+  var list = (mode === 'pub' ? pub : jrn).filter(function(r){
+    return !q || r.name.toLowerCase().indexOf(q) >= 0;});
+  var param = mode === 'pub' ? 'publisher' : 'journal';
+  document.getElementById('rows').innerHTML = list.map(function(r){
+    var url = '../remaining_downloads.html?' + param + '=' + encodeURIComponent(r.name);
+    return '<tr><td>' + esc(r.name) + '</td>' +
+           '<td class="n">' + r.n.toLocaleString() + '</td>' +
+           '<td class="n oa">' + (r.oa ? r.oa.toLocaleString() : '—') + '</td>' +
+           '<td><a href="' + url + '">Open &rarr;</a></td></tr>';
+  }).join('') || '<tr><td colspan="4">No matches.</td></tr>';
+  document.getElementById('status').textContent =
+    list.length.toLocaleString() + ' ' + (mode === 'pub' ? 'publishers' : 'journals') +
+    (q ? ' matching "' + q + '"' : '') + '.';
+}
+
+fetch('../papers_data.json').then(function(r){return r.json();}).then(function(data){
+  pub = tally(data, function(r){return (r.publisher || '').trim();});
+  // the helper filters on journal_clean when present, so key on the same field
+  jrn = tally(data, function(r){return (r.journal_clean || r.journal || '').trim();});
+  document.getElementById('s-total').textContent = data.length.toLocaleString();
+  document.getElementById('s-pub').textContent = pub.length.toLocaleString();
+  document.getElementById('s-jrn').textContent = jrn.length.toLocaleString();
+  document.getElementById('s-oa').textContent =
+    data.filter(function(r){return OA_OPEN.indexOf(r.oa_status) >= 0;}).length.toLocaleString();
+  render();
+}).catch(function(e){
+  document.getElementById('status').textContent = 'Could not load papers_data.json: ' + e;
+});
+</script>
+</body>
+</html>
