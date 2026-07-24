@@ -57,6 +57,12 @@ def build_pdf_index() -> dict[tuple[str, str], list[set[str]]]:
 def filter_queue(queue: list[dict], pdf_idx: dict) -> tuple[list[dict], list[dict]]:
     kept, removed = [], []
     for entry in queue:
+        # Abstracts scraped as text (scrape_aes_abstracts.py -> outputs/aes_abstracts/)
+        # are held, but never as a PDF in the library, so the surname/year match below
+        # can never clear them and they sat in the queue indefinitely. Trust the flag.
+        if entry.get("triage") == "abstract_acquired":
+            removed.append(entry)
+            continue
         surname = surname_from_authors(entry.get("authors", ""))
         year = str(entry.get("year", "")).strip()
         if year.endswith(".0"):

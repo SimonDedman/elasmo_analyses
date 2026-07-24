@@ -150,6 +150,7 @@
   </div>
 
   <div id="status">Loading…</div>
+  <div id="absnote" style="color:var(--text-muted);font-size:0.87rem;margin:-0.5rem 0 1rem;"></div>
 
   <div class="wrap"><table>
     <thead><tr><th>Name</th><th class="n">Remaining</th><th class="n">OA available</th><th>Open</th></tr></thead>
@@ -206,7 +207,14 @@ function render(){
     (q ? ' matching "' + q + '"' : '') + '.';
 }
 
-fetch('../papers_data.json').then(function(r){return r.json();}).then(function(data){
+fetch('../papers_data.json').then(function(r){return r.json();}).then(function(all){
+  // Match the helper: conference abstracts aren't downloadable work, so they're
+  // excluded from every count here rather than inflating publisher totals.
+  var data = all.filter(function(r){return r.triage !== 'conference_abstract';});
+  var nAbs = all.length - data.length;
+  var note = document.getElementById('absnote');
+  if (note && nAbs) note.textContent =
+    nAbs.toLocaleString() + ' conference abstracts are excluded from these counts.';
   pub = tally(data, function(r){return (r.publisher || '').trim();});
   // the helper filters on journal_clean when present, so key on the same field
   jrn = tally(data, function(r){return (r.journal_clean || r.journal || '').trim();});
