@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide Deck &amp; Speaker Notes — Elasmobranch Analytical Methods Review</title>
+<meta name="description" content="The elasmo_analyses talk, slide by slide, with the full
+ speaker notes: how the corpus is built, extracted, enriched, and queried.">
+<style>
+  :root {
+    --blue: #081E3F;
+    --blue-soft: #12305c;
+    --gold: #B6862C;
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --text-muted: #4b5566;
+    --border: #dde2e8;
+    --shadow: rgba(8, 30, 63, 0.10);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d1420;
+    --surface: #161f30;
+    --text: #e8ecf3;
+    --text-muted: #a7b1c2;
+    --border: #2a3550;
+    --shadow: rgba(0, 0, 0, 0.35);
+    --blue-soft: #1c3868;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1420;
+      --surface: #161f30;
+      --text: #e8ecf3;
+      --text-muted: #a7b1c2;
+      --border: #2a3550;
+      --shadow: rgba(0, 0, 0, 0.35);
+      --blue-soft: #1c3868;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header.page-head {
+    background: linear-gradient(135deg, var(--blue), var(--blue-soft));
+    color: #fff;
+    /* generous bottom padding so the action buttons clear the
+       stats row, which pulls itself up over the header edge */
+    padding: 2.25rem 1.5rem 5rem;
+  }
+  header.page-head .inner { max-width: 1080px; margin: 0 auto; }
+  header.page-head h1 { margin: 0 0 0.35rem; font-size: 1.7rem; letter-spacing: 0.01em; }
+  header.page-head p.subtitle {
+    margin: 0; color: #d9e0ec; font-size: 1rem; max-width: 62ch;
+  }
+  header.page-head .back-link {
+    display: inline-block; margin-bottom: 1rem; font-size: 0.85rem; color: #cfe0ff;
+  }
+  .actions { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .actions a {
+    display: inline-block; background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.28); color: #fff;
+    padding: 0.45rem 0.9rem; border-radius: 6px; font-size: 0.86rem;
+  }
+  .actions a:hover { background: rgba(255,255,255,0.2); text-decoration: none; }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.9rem; margin: -3.25rem auto 2.5rem; max-width: 1080px; padding: 0 1.5rem;
+  }
+  .stat-tile {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.1rem; box-shadow: 0 6px 16px var(--shadow);
+  }
+  .stat-tile .value {
+    font-size: 1.5rem; font-weight: 700; color: var(--gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-tile .label { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+  .lede { color: var(--text-muted); max-width: 75ch; margin: 0 0 2rem; }
+
+  nav.toc {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1.1rem 1.3rem; margin-bottom: 2.5rem; box-shadow: 0 6px 16px var(--shadow);
+  }
+  nav.toc h2 {
+    margin: 0 0 0.7rem; font-size: 0.95rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-muted);
+  }
+  nav.toc ol { margin: 0; padding: 0; list-style: none;
+    columns: 2; column-gap: 2rem; }
+  nav.toc li { margin-bottom: 0.3rem; break-inside: avoid; font-size: 0.9rem; }
+  nav.toc a { color: var(--text); }
+  nav.toc a:hover { color: var(--gold); }
+  .tocn {
+    display: inline-block; min-width: 1.6em; color: var(--gold);
+    font-variant-numeric: tabular-nums; font-weight: 600;
+  }
+  @media (max-width: 640px) { nav.toc ol { columns: 1; } }
+
+  section.slide {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1.4rem 1.5rem 1.6rem; margin-bottom: 2rem;
+    box-shadow: 0 6px 16px var(--shadow); scroll-margin-top: 1rem;
+  }
+  section.slide h2 {
+    margin: 0 0 1rem; font-size: 1.12rem; display: flex; gap: 0.7rem;
+    align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 0.6rem;
+  }
+  section.slide h2 .num {
+    color: var(--gold); font-variant-numeric: tabular-nums; font-weight: 700;
+    flex: 0 0 auto;
+  }
+  .shot { display: block; }
+  .shot img {
+    width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--border);
+    display: block;
+  }
+  .notes { margin-top: 1.2rem; }
+  .notes h3 {
+    margin: 0 0 0.5rem; font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--text-muted);
+  }
+  .notes p { margin: 0 0 0.75rem; max-width: 78ch; }
+  .notes p:last-child { margin-bottom: 0; }
+  .notes .nonotes { color: var(--text-muted); font-style: italic; }
+
+  footer {
+    border-top: 1px solid var(--border); margin-top: 1rem; padding: 1.5rem;
+    text-align: center; font-size: 0.85rem; color: var(--text-muted);
+  }
+  .totop { display: block; text-align: right; font-size: 0.8rem; margin-top: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <div class="inner">
+    <a class="back-link" href="https://github.com/SimonDedman/elasmo_analyses">&larr; Project README</a>
+    <h1>Slide deck &amp; speaker notes</h1>
+    <p class="subtitle">
+      The elasmo_analyses talk, slide by slide, with the full speaker notes: how a
+      near-complete corpus of shark, ray, and chimaera literature is acquired, read,
+      enriched, and turned into an answerable question. As presented at the American
+      Elasmobranch Society meeting, JMIH 2026, New Orleans.
+    </p>
+    <div class="actions">
+      <a href="elasmo_analyses_slides.pdf">Download the slides (PDF)</a>
+      <a href="../results.html">Results index</a>
+      <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub repository</a>
+    </div>
+  </div>
+</header>
+
+<div class="stats-row">
+  <div class="stat-tile"><div class="value">17</div><div class="label">Slides</div></div>
+  <div class="stat-tile"><div class="value">16</div><div class="label">With speaker notes</div></div>
+  <div class="stat-tile"><div class="value">~30,500</div><div class="label">Papers in the corpus</div></div>
+  <div class="stat-tile"><div class="value">1,725</div><div class="label">Extraction columns (8 schemas)</div></div>
+</div>
+
+<main>
+
+  <p class="lede">
+    Each slide below is followed by the notes spoken alongside it, so the argument reads
+    end to end without the talk. Click any slide for the full-resolution image, or take
+    the whole deck as a <a href="elasmo_analyses_slides.pdf">PDF</a>.
+  </p>
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#slide-1"><span class="tocn">1</span>elasmo_analyses: a Comprehensive Living Database of Elasmobranch…</a></li>
+      <li><a href="#slide-2"><span class="tocn">2</span>Publish &gt; SharkRefs &gt; Download &gt; Rules &gt; Extract</a></li>
+      <li><a href="#slide-3"><span class="tocn">3</span>Keyword rules &gt; 8 Schema Groups, 1,725 Columns</a></li>
+      <li><a href="#slide-4"><span class="tocn">4</span>Author &amp; journal info enrichment</a></li>
+      <li><a href="#slide-5"><span class="tocn">5</span>1. Meta-paper: the full systematic review &amp; pipeline</a></li>
+      <li><a href="#slide-6"><span class="tocn">6</span>Species &amp; Habitat Bias</a></li>
+      <li><a href="#slide-7"><span class="tocn">7</span>Global North dominates chondrichthyan research</a></li>
+      <li><a href="#slide-8"><span class="tocn">8</span>More research effort in the North Atlantic &amp; Med</a></li>
+      <li><a href="#slide-9"><span class="tocn">9</span>Key collaborations between Global North</a></li>
+      <li><a href="#slide-10"><span class="tocn">10</span>Ethnic diversity of 1st authors is increasing!</a></li>
+      <li><a href="#slide-11"><span class="tocn">11</span>Gender gap has closed!</a></li>
+      <li><a href="#slide-12"><span class="tocn">12</span>Open Access has increased: win for data transparency and global…</a></li>
+      <li><a href="#slide-13"><span class="tocn">13</span>Early results! Biases &amp; challenges remain</a></li>
+      <li><a href="#slide-14"><span class="tocn">14</span>Improvements, but gap remains!</a></li>
+      <li><a href="#slide-15"><span class="tocn">15</span>Validate your data</a></li>
+      <li><a href="#slide-16"><span class="tocn">16</span>What&#x27;s next for elasmo_analyses?</a></li>
+      <li><a href="#slide-17"><span class="tocn">17</span>Thank You</a></li>
+    </ol>
+  </nav>
+
+    <section class="slide" id="slide-1">
+      <h2><span class="num">1</span>elasmo_analyses: a Comprehensive Living Database of Elasmobranch Research for Literature Reviews, Research Geography, and Conservation Prioritisation</h2>
+      <a href="img/slide-01.png" class="shot">
+        <img src="img/slide-01.png" loading="lazy"
+             alt="Slide 1: elasmo_analyses: a Comprehensive Living Database of Elasmobranch Research for Literature Reviews, Research Geography, and Conservation Prioritisation">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p class="nonotes">No speaker notes for this slide.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-2">
+      <h2><span class="num">2</span>Publish &gt; SharkRefs &gt; Download &gt; Rules &gt; Extract</h2>
+      <a href="img/slide-02.png" class="shot">
+        <img src="img/slide-02.png" loading="lazy"
+             alt="Slide 2: Publish &gt; SharkRefs &gt; Download &gt; Rules &gt; Extract">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We publish papers, books, and reports, which are indexed by SharkReferences.com; sign up for their newsletter and check your work is already indexed, and share it with them if it isn’t. They have over 30 thousand entries since the 1800s. We’ve downloaded most of them, and plan to get all of them. Instead of web of science or google scholar where a search for “rays” will give you a load of false positives for “xrays”, starting from sharkreferences means we’re picking from a pre-filtered clean list. Then we’ve designed a collection of text extraction rules: more than just the presence of keywords, we can set a threshold for the number of times those words need to occur before they ‘count’ as being a focus of the paper, we can require local anchors so for example ‘abundance’ needs to be mentioned near shark words, so we’re not capturing the abundance of boats or whatever.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-3">
+      <h2><span class="num">3</span>Keyword rules &gt; 8 Schema Groups, 1,725 Columns</h2>
+      <a href="img/slide-03.png" class="shot">
+        <img src="img/slide-03.png" loading="lazy"
+             alt="Slide 3: Keyword rules &gt; 8 Schema Groups, 1,725 Columns">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>These and various other keyword rules result in loads of database columns like:</p>
+          <p>ecosystem, habitat, depth; major &amp; minor ocean basin; all chondrichthyan species &amp; families; the pressures ON sharks by overfishing, climate change, etc; any fishing gear involved; the impacts TO chondrichthyan: populations, diversity, size; the discipline of the study; and the analytical techniques used. We know we haven’t captured everything, and we invite your participation. This database allows anyone to search any combination of these elements, so you can quickly see what’s been published, and what HASN’T, which can suggest study and funding priorities.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-4">
+      <h2><span class="num">4</span>Author &amp; journal info enrichment</h2>
+      <a href="img/slide-04.png" class="shot">
+        <img src="img/slide-04.png" loading="lazy"
+             alt="Slide 4: Author &amp; journal info enrichment">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We can also use the author and journal details to enrich the database with author publication history, institution details, gender, and ethnicity; and journal quality, open access status, and social media impacts.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-5">
+      <h2><span class="num">5</span>1. Meta-paper: the full systematic review &amp; pipeline</h2>
+      <a href="img/slide-05.png" class="shot">
+        <img src="img/slide-05.png" loading="lazy"
+             alt="Slide 5: 1. Meta-paper: the full systematic review &amp; pipeline">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We’ll write a paper about the methodology, and then the results in individual project papers: about geographic bias, gender, social media coverage, fishing pressure and impacts, species and habitats, and social aggregations.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-6">
+      <h2><span class="num">6</span>Species &amp; Habitat Bias</h2>
+      <a href="img/slide-06.png" class="shot">
+        <img src="img/slide-06.png" loading="lazy"
+             alt="Slide 6: Species &amp; Habitat Bias">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>There are research biases towards charismatic coastal shark species, while families of rays and chimaeras could have up to 30% of their species with NO published papers.</p>
+          <p>Other members of this community are doing great work exposing these biases in species &amp; fisheries research… but do we know whether biases exist within who’s leading research and where?</p>
+          <p>We don’t have all the answers yet, but we’re adding to a discussion that is already evident at recent conferences and science in general.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-7">
+      <h2><span class="num">7</span>Global North dominates chondrichthyan research</h2>
+      <a href="img/slide-07.png" class="shot">
+        <img src="img/slide-07.png" loading="lazy"
+             alt="Slide 7: Global North dominates chondrichthyan research">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We&#x27;ve mapped all the chondrichthyan studies and have seen that 87% are from the Global North, revealing MAJOR gaps in Asia, Africa and S America. This further validates that the issue isn&#x27;t limited to just one journal, but affects a large proportion if not the majority of Chon. Science.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-8">
+      <h2><span class="num">8</span>More research effort in the North Atlantic &amp; Med</h2>
+      <a href="img/slide-08.png" class="shot">
+        <img src="img/slide-08.png" loading="lazy"
+             alt="Slide 8: More research effort in the North Atlantic &amp; Med">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>So then when we look at WHERE the research is conducted, it’s mostly carried out in the North Atlantic and Med, which border North America and Europe. The gap looks smaller but the Global North researchers are often LEADING the work in the Global South</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-9">
+      <h2><span class="num">9</span>Key collaborations between Global North</h2>
+      <a href="img/slide-09.png" class="shot">
+        <img src="img/slide-09.png" loading="lazy"
+             alt="Slide 9: Key collaborations between Global North">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>Key collaborations are within the top Global North countries as we saw before, and this is concentrated among four countries.</p>
+          <p>Biodiversity is concentrated in the Global South, but the research is generated in the Global North.</p>
+          <p>Therefore, scientific attention more closely traces macroeconomic wealth than the latitudinal gradients of biodiversity it seeks to protect.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-10">
+      <h2><span class="num">10</span>Ethnic diversity of 1st authors is increasing!</h2>
+      <a href="img/slide-10.png" class="shot">
+        <img src="img/slide-10.png" loading="lazy"
+             alt="Slide 10: Ethnic diversity of 1st authors is increasing!">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We’ve seen a lot negative declines, but here we found a positive trend, that diversity of 1st author ethnicity is increasing!</p>
+          <p>At Sharks International, 84 countries were represented, evermore highlighting this increase, and giving hope for the future of elasmobranch science.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-11">
+      <h2><span class="num">11</span>Gender gap has closed!</h2>
+      <a href="img/slide-11.png" class="shot">
+        <img src="img/slide-11.png" loading="lazy"
+             alt="Slide 11: Gender gap has closed!">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>In other good news, the gender gap is closing: at Sharks International and AES this year there have been more women than men, at 51.9 and 51.2% respectively.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-12">
+      <h2><span class="num">12</span>Open Access has increased: win for data transparency and global reach… But!</h2>
+      <a href="img/slide-12.png" class="shot">
+        <img src="img/slide-12.png" loading="lazy"
+             alt="Slide 12: Open Access has increased: win for data transparency and global reach… But!">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We also looked at open access journal publication rate within Chondrichthyan research and found that open access rates are climbing. This is a positive step that allows governments, NGO’s and local researchers to read and use the latest science for free. This enables the sharing of conservation data that can reach the people on the ground, such as policy makers.</p>
+          <p>But, there are inherit problems within open access: Free to read doesn’t necessarily mean free to publish. Someone still has to pay the fees, and this creates a bias towards institutions that can afford these high fees, which may exclude local governments, institutions, and researchers from leading the conversation, even when the study is in their own waters.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-13">
+      <h2><span class="num">13</span>Early results! Biases &amp; challenges remain</h2>
+      <a href="img/slide-13.png" class="shot">
+        <img src="img/slide-13.png" loading="lazy"
+             alt="Slide 13: Early results! Biases &amp; challenges remain">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We recognise that there are limitations within this work. This is our honest attempt at indexing all chondrichthyan research, and the method is still a work in progress. We know there’s work to be done.</p>
+          <p>●  	SharksReferences is a great tool, but it&#x27;s better known in Europe and the US, and therefore may underrepresent regional research from Asia, Africa, and Latin America.</p>
+          <p>●  	Local journals and grey literature from the Global South, published in other languages might be missing from our count - Improving our coverage is our top priority… with YOUR help.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-14">
+      <h2><span class="num">14</span>Improvements, but gap remains!</h2>
+      <a href="img/slide-14.png" class="shot">
+        <img src="img/slide-14.png" loading="lazy"
+             alt="Slide 14: Improvements, but gap remains!">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>So across chondrichthyan research, the bias is decreasing, and there is more representation of Global South studies LED by Global South authors.</p>
+          <p>However, there is still work to be done, as the Global North leads most of the research, meaning people and communities living where the chondrichthyans are and where they are most threatened and needed for sustenance and livelihoods, aren&#x27;t the ones leading the science. Chondrichthyan declines cannot be mitigated if the people LIVING and BREATHING these lives, are excluded from the research leadership. So again, it’s important to consider your role in research, and how you can best contribute, whilst ensuring all voices are included.</p>
+          <p>With the recent launch of ASRA – the Asian shark and ray alliance – we are seeing increased leadership AND collaboration in the Global South.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-15">
+      <h2><span class="num">15</span>Validate your data</h2>
+      <a href="img/slide-15.png" class="shot">
+        <img src="img/slide-15.png" loading="lazy"
+             alt="Slide 15: Validate your data">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>If you’re a coauthor on a paper indexed by sharkreferences.com you should have your own validation page on our GitHub, which lists all of your studies, and what the extraction results are for each of your papers: please go there and check: if your papers aren’t there, tell sharkreferences, and if there are any mistakes in the extractions, you can correct them to help improve the extraction rules for everyone and get updates. You can also create Github issues for new extraction types, rules, and study proposals, like ecological role.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-16">
+      <h2><span class="num">16</span>What&#x27;s next for elasmo_analyses?</h2>
+      <a href="img/slide-16.png" class="shot">
+        <img src="img/slide-16.png" loading="lazy"
+             alt="Slide 16: What&#x27;s next for elasmo_analyses?">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>We’re adding papers and doing fresh rounds of rules improvements and validations which are seeing extraction accuracy increase. Dashboards, gap analyses, and living lit reviews are coming, plus an AI model where you can talk with a shark knowledge oracle. With our friends at Sharkipedia we’re discussing how our projects can connect, to enrich both of them.</p>
+          <p>If YOU’VE conducted a chondrichthyan-specific lit review please let us know because that could help us validate the extraction process and improve things for everyone. And if you’re ABOUT to do a lit review, maybe you could use this and save time.</p>
+      </div>
+    </section>
+    <section class="slide" id="slide-17">
+      <h2><span class="num">17</span>Thank You</h2>
+      <a href="img/slide-17.png" class="shot">
+        <img src="img/slide-17.png" loading="lazy"
+             alt="Slide 17: Thank You">
+      </a>
+      <div class="notes">
+        <h3>Speaker notes</h3>
+          <p>Thanks to Irena Kingma and the Dutch elasmo team for funding Guuske Tiktak and I to run the data panel at EEA 2025 which started this project. This project is powered by love and obsession and funded by nobody, so if you like the idea of this existing and have any control of grant funding, please come talk to me, ditto if you want to be involved, and/or to ground-truth your lit review. Unrelatedly please see Vital’s talk on Sunday at 10 and stop using KUD to determine space use: let’s make 2026 the year we stop using stone tools. Thanks for your time. It’s coming home. [network map, LLM frontend]</p>
+      </div>
+    </section>
+
+  <p class="totop"><a href="#">&uarr; Back to top</a></p>
+
+</main>
+
+<footer>
+  Elasmobranch Analytical Methods Review &middot;
+  <a href="https://github.com/SimonDedman/elasmo_analyses">github.com/SimonDedman/elasmo_analyses</a>
+  &middot; CC BY 4.0
+</footer>
+
+</body>
+</html>
