@@ -183,5 +183,9 @@ docs/network/index_subset_files/
 # Drive; ingested into SharkPapers then deleted — never track binaries here)
 database/others_libraries/
 database/orphan_inbox/
+# Papers we hold that Shark References lacks, staged for their team to collect
+# over Synology. Duplicates of files already in SharkPapers; the durable record
+# is outputs/non_sr_papers.csv, not these binaries.
+database/SharkRefsExport/
 database/coauthor_dupe_verification.json
 database/coauthor_cleanup_plan.json
