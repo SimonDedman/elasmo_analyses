@@ -16,6 +16,8 @@ The work began as a panel session at the **European Elasmobranch Association (EE
 
 **New here? Start with the [results index](docs/results.html)** — live links to the interactive Author Atlas, the collaboration network, key figures, and the validation report.
 
+**Want the tour?** The [slide deck with speaker notes](https://simondedman.github.io/elasmo_analyses/slides/) walks through the whole project in 17 slides, each with the notes spoken alongside it, so the argument reads end to end without the talk. Also available as a [PDF](https://simondedman.github.io/elasmo_analyses/slides/elasmo_analyses_slides.pdf).
+
 ---
 
 ## The corpus at a glance
