@@ -56,7 +56,7 @@ KM=Keyword match, KFT=Keyword frequency threshold, ANC=Context anchors, KPC=Keyw
 
 Tables are ordered as columns appear in the database. Each table lists every column with its extraction configuration. **Techniques** column uses codes from Part 1.
 
-**Review process:** An accompanying [review spreadsheet](../review/extraction_review_comments.xlsx) provides one row per content item with columns per reviewer for collaborative comments and proposed edits. Changes are synced via Google Sheets and monitored for updates.
+**Review process:** An accompanying [review spreadsheet](./extraction_review_comments.xlsx) provides one row per content item with columns per reviewer for collaborative comments and proposed edits. Changes are synced via Google Sheets and monitored for updates.
 
 ---
 
@@ -97,9 +97,9 @@ Each technique is matched by its name + alternative search query + synonyms, all
 **Taxonomy source:** `data/Techniques DB for Panel Review_UPDATED.xlsx` (sheet: Full_List)
 **Documentation:**
 - [Technique taxonomy database design](../database/technique_taxonomy_database_design.md) — Hierarchical taxonomy structure
-- [Master techniques list](../techniques/master_techniques_list_for_population.md) — Full list of 129 core techniques across 8 disciplines
+- [Master techniques list](../archive/techniques_population/master_techniques_list_for_population.md) — Full list of 129 core techniques across 8 disciplines
 - [Technique classification schema proposal](../techniques/technique_classification_schema_proposal.md) — Schema design rationale
-- [Technique expansion list](../techniques/technique_expansion_list.md) — Additional techniques added post-launch
+- [Technique expansion list](../archive/techniques_population/technique_expansion_list.md) — Additional techniques added post-launch
 
 ---
 
@@ -122,9 +122,9 @@ Geographic study location data extracted via the geographic extraction pipeline 
 **Script:** Geographic extraction pipeline (`scripts/extract_study_locations_phase4*.py`)
 **Storage:** Also in `database/technique_taxonomy.db` → `paper_geography` table
 **Documentation:**
-- [Quick start guide](../geographic/QUICK_START_GEOGRAPHIC_ANALYSIS.md) — Summary statistics and SQL queries
-- [Complete geographic analysis](../geographic/GEOGRAPHIC_ANALYSIS_COMPLETE_SUMMARY_2025-11-24.md) — Full methodology and results
-- [Phase 4 study location guide](../geographic/PHASE_4_STUDY_LOCATION_GUIDE.md) — Parachute research analysis
+- [Quick start guide](../archive/geographic_phases/QUICK_START_GEOGRAPHIC_ANALYSIS.md) — Summary statistics and SQL queries
+- [Complete geographic analysis](../archive/geographic_phases/GEOGRAPHIC_ANALYSIS_COMPLETE_SUMMARY_2025-11-24.md) — Full methodology and results
+- [Phase 4 study location guide](../archive/geographic_phases/PHASE_4_STUDY_LOCATION_GUIDE.md) — Parachute research analysis
 - [Database query reference](../geographic/DATABASE_QUERY_REFERENCE.md) — SQL examples for geographic data
 
 ---

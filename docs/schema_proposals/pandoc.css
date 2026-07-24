@@ -1,0 +1,143 @@
+/* Stylesheet for the pandoc-generated schema proposal pages
+   (ecosystem_component, gear, impact, pressure).
+
+   Those four pages have always linked to this file, but it was never
+   committed, so they rendered unstyled on the published site. Colours
+   follow the project house style used by results.html and slides/. */
+
+:root {
+  --blue: #081E3F;
+  --blue-soft: #12305c;
+  --gold: #B6862C;
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #4b5566;
+  --border: #dde2e8;
+  --code-bg: #eef1f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1420;
+    --surface: #161f30;
+    --text: #e8ecf3;
+    --text-muted: #a7b1c2;
+    --border: #2a3550;
+    --code-bg: #1d2739;
+    --blue-soft: #1c3868;
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0 auto;
+  max-width: 46em;
+  padding: 2.5rem 1.25rem 5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1, h2, h3, h4 { line-height: 1.25; margin: 2rem 0 0.75rem; }
+h1 {
+  font-size: 1.9rem;
+  color: var(--blue);
+  border-bottom: 3px solid var(--gold);
+  padding-bottom: 0.4rem;
+  margin-top: 0;
+}
+h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.3rem;
+}
+h3 { font-size: 1.1rem; }
+h4 { font-size: 1rem; color: var(--text-muted); }
+
+@media (prefers-color-scheme: dark) {
+  h1 { color: #cfe0ff; }
+}
+
+a { color: var(--gold); }
+a:hover { text-decoration: underline; }
+
+p, li { max-width: 42em; }
+ul, ol { padding-left: 1.4rem; }
+li { margin-bottom: 0.3rem; }
+
+blockquote {
+  margin: 1.2rem 0;
+  padding: 0.4rem 0 0.4rem 1rem;
+  border-left: 4px solid var(--gold);
+  color: var(--text-muted);
+}
+
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+  font-size: 0.88em;
+}
+code {
+  background: var(--code-bg);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+}
+pre code { background: none; padding: 0; }
+
+/* Wide schema tables must scroll inside their own box, never the page */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+  background: var(--surface);
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+th { background: var(--blue); color: #fff; font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  th { background: var(--blue-soft); }
+}
+tr:nth-child(even) td { background: var(--code-bg); }
+
+/* pandoc wraps tables in this when --wrap is used; belt and braces */
+.table-wrapper, figure { overflow-x: auto; }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+/* pandoc title block */
+header#title-block-header .title { margin-bottom: 0.2rem; }
+header#title-block-header .subtitle,
+header#title-block-header .author,
+header#title-block-header .date {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0.1rem 0;
+}
+
+#TOC {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+}
+#TOC ul { margin: 0; }
+
+img { max-width: 100%; height: auto; }
