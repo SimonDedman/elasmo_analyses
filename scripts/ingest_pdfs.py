@@ -42,6 +42,20 @@ PAPERS_DATA_JSON = PROJECT / "docs/papers_data.json"
 DOWNLOAD_TRACKER_DB = PROJECT / "database/download_tracker.db"
 DOWNLOAD_QUEUE_DB = PROJECT / "outputs/download_queue.db"
 
+MASTER_CSV_DIR = PROJECT / "outputs/shark_references_bulk"
+
+# Fuzzy title-match guards (see match_by_pdf_title). MIN_OVERLAP_NO_YEAR is
+# deliberately steep: the year-less retry scans the whole corpus, where a 4-word
+# overlap matches unrelated papers far more often than the right one.
+MIN_DB_TITLE_WORDS = 4
+MIN_OVERLAP_NO_YEAR = 9
+
+# Minimum word overlap between a PDF's own text and the title stored against a
+# literature_id before we trust a DOI -> literature_id resolution. Guards the
+# off-by-one DOI corruption in the master CSV (ids 35736-35815), where a row's
+# doi belongs to the following row's paper.
+MIN_TITLE_AGREEMENT = 4
+
 # OCR fallback for image-only PDFs
 OCR_CACHE = PROJECT / "outputs" / ".ocr_cache"
 OCR_ENABLED = True  # set by --no-ocr CLI flag
@@ -373,6 +387,14 @@ def match_by_pdf_title(pdf_path: Path, all_rows: list[dict],
     Scores by how many of the DB title's meaningful words appear in
     the PDF's first-page text.  Requires >=60% coverage AND >=4 words.
 
+    The words compared against come from the PDF's whole first-page text
+    (title, authors, affiliations, abstract, keywords), so a short generic
+    DB title can reach high coverage on a handful of common words. Two
+    guards keep that from inventing matches: short DB titles are skipped
+    (``MIN_DB_TITLE_WORDS``), and the year-less retry — which searches the
+    entire corpus rather than one year — demands a much larger overlap
+    (``MIN_OVERLAP_NO_YEAR``).
+
     ``filename_year`` is an optional year extracted from the filename;
     used as fallback when the year cannot be read from the PDF text.
     """
@@ -407,7 +429,7 @@ def match_by_pdf_title(pdf_path: Path, all_rows: list[dict],
                 continue
 
         rtw = _title_words(r["title"])
-        if len(rtw) < 2:
+        if len(rtw) < MIN_DB_TITLE_WORDS:
             continue
         overlap = len(pdf_words & rtw)
         if overlap < 4:
@@ -421,24 +443,26 @@ def match_by_pdf_title(pdf_path: Path, all_rows: list[dict],
     if best and best_score >= 0.6 and best_overlap >= 4:
         return best, f"Title match from PDF text ({best_overlap} words, {best_score:.0%} of title)"
 
-    # If year filter gave no result, retry without it
+    # If year filter gave no result, retry without it. This searches every row
+    # in the corpus, so the bar is much higher: at MIN_OVERLAP (4) words it
+    # reliably matches unrelated papers that merely share common vocabulary.
     if year_hint:
         best = None
         best_score = 0.0
         best_overlap = 0
         for r in all_rows:
             rtw = _title_words(r["title"])
-            if len(rtw) < 2:
+            if len(rtw) < MIN_DB_TITLE_WORDS:
                 continue
             overlap = len(pdf_words & rtw)
-            if overlap < 4:
+            if overlap < MIN_OVERLAP_NO_YEAR:
                 continue
             score = overlap / len(rtw)
             if score > best_score or (score == best_score and overlap > best_overlap):
                 best_score = score
                 best_overlap = overlap
                 best = r
-        if best and best_score >= 0.6 and best_overlap >= 4:
+        if best and best_score >= 0.6 and best_overlap >= MIN_OVERLAP_NO_YEAR:
             return best, f"Title match from PDF text, no year filter ({best_overlap} words, {best_score:.0%})"
 
     reason = f"best title overlap: {best_overlap} words"
@@ -831,12 +855,20 @@ def load_database() -> tuple[list[dict], dict[str, dict], dict[str, list[dict]]]
                 "doi": r["doi"],
             })
 
-    # DOI index
+    rows.extend(load_recent_sr_rows({r["literature_id"] for r in rows}))
+
+    # DOI index. One DOI can land on several rows: the master CSV's off-by-one
+    # corruption leaves a DOI recorded against both its own paper and its
+    # neighbour. doi_lookup keeps the first for callers that want a single row;
+    # _DOI_MULTI keeps them all so match_pdf can pick by title agreement rather
+    # than by whichever row happened to be read first.
     doi_lookup: dict[str, dict] = {}
+    _DOI_MULTI.clear()
     for r in rows:
         nd = normalise_doi(r["doi"])
         if nd:
-            doi_lookup[nd] = r
+            doi_lookup.setdefault(nd, r)
+            _DOI_MULTI.setdefault(nd, []).append(r)
 
     # Author surname + year index (for fuzzy matching)
     author_year_lookup: dict[str, list[dict]] = {}
@@ -851,6 +883,157 @@ def load_database() -> tuple[list[dict], dict[str, dict], dict[str, list[dict]]]
         author_year_lookup.setdefault(key, []).append(r)
 
     return rows, doi_lookup, author_year_lookup
+
+
+def _latest_master_csv() -> Path | None:
+    """Most recent Shark References bulk export, or None if absent."""
+    files = sorted(MASTER_CSV_DIR.glob("shark_references_complete_*.csv"),
+                   key=lambda p: p.stat().st_mtime)
+    return files[-1] if files else None
+
+
+def load_recent_sr_rows(known_ids: set[str]) -> list[dict]:
+    """Rows present in the SR master CSV / download queue but not yet in viz_data.
+
+    viz_data.csv is regenerated from the parquet, which lags the monthly SR
+    crawl by weeks. Papers crawled since the last extraction therefore exist in
+    the master CSV and in docs/papers_data.json but are invisible to every
+    matching strategy, so a coauthor delivering one of them cannot match and the
+    fuzzy fallback invents an answer instead. Folding those rows in is what lets
+    a DOI resolve directly.
+
+    The queue supplies DOIs for rows the master CSV left blank (recovered by the
+    DOI-discovery pass), so both sources are consulted.
+    """
+    known = {str(i).replace(".0", "") for i in known_ids}
+
+    queue_doi_by_id: dict[str, str] = {}
+    if PAPERS_DATA_JSON.exists():
+        try:
+            with open(PAPERS_DATA_JSON, "r", encoding="utf-8") as f:
+                for q in json.load(f):
+                    lid = str(q.get("literature_id") or "").replace(".0", "")
+                    doi = (q.get("doi") or "").strip()
+                    if lid and doi:
+                        queue_doi_by_id.setdefault(lid, doi)
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    master = _latest_master_csv()
+    if master is None:
+        return []
+
+    extra: list[dict] = []
+    seen: set[str] = set()
+    with open(master, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            raw = (r.get("literature_id") or "").strip()
+            if not raw:
+                continue
+            try:
+                lid = str(int(float(raw)))
+            except ValueError:
+                continue
+            if lid in known or lid in seen:
+                continue
+            seen.add(lid)
+            extra.append({
+                "literature_id": lid,
+                "year": (r.get("year") or "").strip(),
+                "authors": (r.get("authors") or "").strip(),
+                "title": (r.get("title") or "").strip(),
+                "doi": (r.get("doi") or "").strip() or queue_doi_by_id.get(lid, ""),
+                "source": "sr_master",
+            })
+    return extra
+
+
+_ID_LOOKUP_CACHE: dict[int, dict] = {}
+_DOI_MULTI: dict[str, list[dict]] = {}
+
+
+def _rows_by_id(all_rows: list[dict]) -> dict[int, dict]:
+    """literature_id -> row, cached across calls (all_rows is stable per run)."""
+    if not _ID_LOOKUP_CACHE:
+        for r in all_rows:
+            try:
+                _ID_LOOKUP_CACHE[int(float(r["literature_id"]))] = r
+            except (ValueError, TypeError, KeyError):
+                continue
+    return _ID_LOOKUP_CACHE
+
+
+def title_agreement(pdf_text: str, row: dict) -> tuple[int, bool]:
+    """Check a DOI -> literature_id resolution against the PDF's own text.
+
+    Returns ``(overlap, agrees)``. A title of only two or three meaningful
+    words can never reach a flat four-word bar, so the test is proportional:
+    at least half the stored title's words must appear, and at least
+    ``MIN_TITLE_AGREEMENT`` of them unless the title is shorter than that.
+    """
+    rtw = _title_words(row.get("title") or "")
+    if not rtw:
+        return 0, True  # nothing to check against; don't block the DOI
+    # Search the whole extracted text, not just the title area: journal headers
+    # and rule-off lines can push the real title past any fixed window. Matching
+    # a word from the abstract is fine here, since the question is only whether
+    # this is the right paper, not where on the page its title sits.
+    overlap = len(_title_words(pdf_text) & rtw)
+    needed = min(MIN_TITLE_AGREEMENT, len(rtw))
+    return overlap, overlap >= needed and overlap / len(rtw) >= 0.5
+
+
+def resolve_doi_hit(doi_text: str, nd: str, hit: dict, all_rows: list[dict],
+                    text_path: Path, how: str) -> tuple[dict | None, str]:
+    """Decide which literature_id a DOI hit really belongs to.
+
+    A DOI alone is not enough. The master CSV contains a run of rows carrying
+    the DOI of the FOLLOWING literature_id, so a naive lookup files a paper
+    under its neighbour's id, and the same DOI can appear on more than one row.
+    Every plausible row — each row holding this DOI, plus each of their
+    id+1 neighbours — is scored on how much of its stored title actually
+    appears in the PDF, and the clear winner takes it. If nothing agrees, the
+    caller gets a mismatch reason instead of a wrong answer.
+    """
+    pdf_text = extract_text_for_matching(text_path)
+    # An unreadable PDF (image-only scan, heavy watermarking) gives us nothing
+    # to verify against, so the DOI stands on its own.
+    if len(_title_words(pdf_text)) < 5:
+        return hit, how
+
+    by_id = _rows_by_id(all_rows)
+    candidates: list[dict] = list(_DOI_MULTI.get(nd) or [hit])
+    for r in list(candidates):
+        try:
+            neighbour = by_id.get(int(float(r["literature_id"])) + 1)
+        except (ValueError, TypeError, KeyError):
+            continue
+        if neighbour is not None and neighbour not in candidates:
+            candidates.append(neighbour)
+
+    scored = [(*title_agreement(pdf_text, r), r) for r in candidates]
+    # Rank only among rows that actually agree. Ranking on raw overlap alone
+    # would let a long-titled neighbour outscore a correct short-titled row.
+    passing = sorted((s for s in scored if s[1]), key=lambda s: s[0],
+                     reverse=True)
+
+    if passing:
+        best_overlap, _, best = passing[0]
+        if best is hit:
+            return best, how
+        return best, (
+            f"{how} (stored against literature_id {hit.get('literature_id')}, "
+            f"resolved to {best.get('literature_id')} on title agreement: "
+            f"{best_overlap} words)"
+        )
+
+    best_overlap = max((s[0] for s in scored), default=0)
+    return None, (
+        f"DOI_TITLE_MISMATCH: {doi_text} resolves to literature_id "
+        f"{hit.get('literature_id')} ({(hit.get('title') or '')[:60]!r}) "
+        f"but its title does not appear in the PDF "
+        f"(best of {len(candidates)} candidate rows: {best_overlap} words)"
+    )
 
 
 def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
@@ -878,13 +1061,21 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
     doi_text = extract_doi_from_pdf(text_path)
     if doi_text:
         nd = normalise_doi(doi_text)
+        hit, how, matched_doi = None, "", nd
         if nd in doi_lookup:
-            return doi_lookup[nd], f"DOI from PDF text: {doi_text}"
-        # Sometimes DOI has trailing garbage, try trimming
-        for trim in [1, 2, 3]:
-            trimmed = nd[:-trim] if len(nd) > trim else nd
-            if trimmed in doi_lookup:
-                return doi_lookup[trimmed], f"DOI from PDF text (trimmed): {doi_text}"
+            hit, how = doi_lookup[nd], f"DOI from PDF text: {doi_text}"
+        else:
+            # Sometimes DOI has trailing garbage, try trimming
+            for trim in [1, 2, 3]:
+                trimmed = nd[:-trim] if len(nd) > trim else nd
+                if trimmed in doi_lookup:
+                    hit = doi_lookup[trimmed]
+                    matched_doi = trimmed
+                    how = f"DOI from PDF text (trimmed): {doi_text}"
+                    break
+        if hit is not None:
+            return resolve_doi_hit(doi_text, matched_doi, hit, all_rows,
+                                   text_path, how)
 
     # Strategy 2: reconstruct DOI from filename pattern
     recon_doi = reconstruct_doi_from_filename(pdf_path.name)
