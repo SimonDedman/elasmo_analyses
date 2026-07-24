@@ -151,7 +151,7 @@
             <tbody></tbody>
         </table>
 
-        <p class="updated">Updated: 2026-04-22 | <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub</a> | <a href="papers_data.json">JSON</a></p>
+        <p class="updated">Updated: 2026-07-23 | <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub</a> | <a href="papers_data.json">JSON</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -273,6 +273,25 @@
             $('#filterYear').on('change',function(){var v=$(this).val();dataTable.column(3).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
             $('#filterOA').on('change',function(){var v=$(this).val();dataTable.column(6).search(v||'',false,false).draw();});
             $('#filterPriority').on('change',function(){var v=$(this).val();dataTable.column(7).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
+
+            // Deep links, e.g. ?publisher=Wiley or ?journal=Copeia — lets the
+            // publisher/journal index hand out one link per slice of the queue.
+            // Runs last: the dropdowns must exist and be bound before we set them.
+            (function(){
+                var q=new URLSearchParams(window.location.search);
+                [['journal','#filterJournal'],['publisher','#filterPublisher'],
+                 ['year','#filterYear'],['oa','#filterOA'],
+                 ['priority','#filterPriority']].forEach(function(pair){
+                    var want=q.get(pair[0]);
+                    if(!want)return;
+                    var $sel=$(pair[1]);
+                    // Options carry a " (123)" count suffix in their label but the
+                    // bare name in their value, so match on value, case-insensitively.
+                    var hit=$sel.find('option').filter(function(){
+                        return this.value.toLowerCase()===want.toLowerCase();});
+                    if(hit.length)$sel.val(hit.first().val()).trigger('change');
+                });
+            })();
             loadClickedState();
         }).fail(function(){$('#loading').html('Error loading papers_data.json');});
     });
