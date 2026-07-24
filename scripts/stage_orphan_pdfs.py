@@ -636,7 +636,11 @@ def main() -> int:
     append_to_master_csv(staged_rows, log_lines)
 
     # Persist log
-    with open(LOG_FILE, "w", encoding="utf-8") as f:
+    # Append, never truncate: each run's staged ids are the only record of what
+    # entered the 600000+ range, and rows dropped by the master-CSV dedupe leave
+    # no other trace.
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(f"\n{'=' * 70}\n")
         f.write(f"Stage Orphan PDFs Log\nDate: {timestamp}\n")
         f.write(f"Inputs: {[str(p) for p in args.paths]}\n")
         f.write(f"Staged: {len(staged_rows)}\n\n")
