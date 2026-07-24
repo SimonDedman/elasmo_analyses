@@ -11,6 +11,10 @@ Phases:
   1. Crawl SR A-Z list pages (~5 min)
   2. Diff against our known papers (parquet + papers_data.json + orphan stage)
   3. Fetch SR detail pages for genuinely new papers
+  3b. (opt-out) Verify every new paper's DOI against Crossref (title + year).
+      A DOI that points at a different paper is dropped from the row and
+      logged to outputs/sr_doi_quarantine.csv rather than published — see the
+      2026-04 incident where 45 rows carried the next literature_id's DOI.
   4. Download PDFs (where SR has a link)
   5. Update master CSV + papers_data.json
   5b. (opt-out) Append new SR rows to the base parquet, then run incremental
@@ -26,18 +30,23 @@ Usage:
     python3 scripts/sync_shark_references.py --verbose       # debug logging
     python3 scripts/sync_shark_references.py --orphan-inbox /path/to/folder
     python3 scripts/sync_shark_references.py --no-orphan-scan
+    python3 scripts/sync_shark_references.py --no-verify-dois # skip Phase 3b DOI check
     python3 scripts/sync_shark_references.py --no-extract    # skip Phase 5b
 
 Author: Simon Dedman
-Date: 2026-04-06; updated 2026-04-27 (orphan staging + post-sync extraction)
+Date: 2026-04-06; updated 2026-04-27 (orphan staging + post-sync extraction),
+      2026-07-24 (Phase 3b DOI verification)
 """
 
 import argparse
+import csv
 import fcntl
+import html as html_mod
 import json
 import logging
 import re
 import smtplib
+import subprocess
 import sys
 import time
 import urllib.request
@@ -64,6 +73,9 @@ CONFIG_FILE = Path(__file__).resolve().parent / ".sr_sync_config.json"
 LOCK_FILE = Path("/tmp/sr_sync.lock")
 CHECKPOINT_FILE = PROJECT_ROOT / "outputs/.sr_sync_checkpoint.json"
 FEEDBACK_CSV = PROJECT_ROOT / "outputs/sr_suggested_pdf_links.csv"
+# DOIs SR published that demonstrably point at a different paper. Append-only
+# audit trail; also the list to send upstream to shark-references.
+DOI_QUARANTINE_CSV = PROJECT_ROOT / "outputs/sr_doi_quarantine.csv"
 DEFAULT_ORPHAN_INBOX = PROJECT_ROOT / "database/orphan_inbox"
 
 # ---------------------------------------------------------------------------
@@ -90,6 +102,19 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.5",
+}
+
+# --- Phase 3b: DOI verification (see verify_new_paper_dois) ------------------
+CROSSREF_API = "https://api.crossref.org/works"
+CROSSREF_MAILTO = "simondedman@gmail.com"
+CROSSREF_BATCH = 40          # DOIs per filter query
+CROSSREF_DELAY = 0.4         # seconds between batches
+DOI_TITLE_MIN_SIM = 0.6      # token overlap required to accept a DOI
+DOI_YEAR_TOLERANCE = 1       # publication year may differ by this much
+# Words too common in this corpus to carry any matching signal
+_TITLE_STOP = {
+    "the", "a", "an", "of", "on", "in", "for", "and", "or", "to", "from",
+    "with", "by", "using", "at", "is", "are", "new", "first", "record",
 }
 
 
@@ -454,6 +479,173 @@ def enrich_new_papers(session, new_papers, checkpoint, log):
     checkpoint["phase3_details"] = cached_details
     checkpoint["phase3_complete"] = True
     save_checkpoint(checkpoint)
+
+
+# ---------------------------------------------------------------------------
+# Phase 3b: Verify each new paper's DOI actually points at that paper
+#
+# In 2026-04 a run landed 45 rows whose `doi` belonged to the NEXT
+# literature_id, so the download helper's links opened the wrong paper for
+# three months before anyone noticed. Titles and journals were correct
+# throughout, which is exactly why it went unseen. The cause was never
+# reproduced — parse_list_page() returns the right DOI today — so this guard
+# assumes it can recur and catches it at sync time instead.
+#
+# A blank DOI is honest; a confidently wrong one is actively misleading. So a
+# DOI that fails verification is dropped from the row and written to
+# DOI_QUARANTINE_CSV with its evidence, rather than being published.
+# ---------------------------------------------------------------------------
+def _title_tokens(text: str) -> set:
+    text = re.sub(r"<[^>]+>", " ", html_mod.unescape(text or ""))
+    return {w for w in re.findall(r"[a-z]{4,}", text.lower()) if w not in _TITLE_STOP}
+
+
+def _title_similarity(a: str, b: str):
+    """Token overlap over the shorter title. None when either side is unusable."""
+    ta, tb = _title_tokens(a), _title_tokens(b)
+    if not ta or not tb:
+        return None
+    return len(ta & tb) / min(len(ta), len(tb))
+
+
+def _crossref_lookup(session, dois: list, log) -> dict:
+    """Batch-fetch Crossref metadata. Maps lowercased DOI -> dict or None."""
+    found = {}
+    for i in range(0, len(dois), CROSSREF_BATCH):
+        batch = dois[i:i + CROSSREF_BATCH]
+        params = {
+            "rows": 100,
+            "select": "DOI,title,container-title,issued",
+            "filter": ",".join("doi:" + d for d in batch),
+            "mailto": CROSSREF_MAILTO,
+        }
+        try:
+            resp = session.get(CROSSREF_API, params=params, timeout=60)
+            items = resp.json()["message"]["items"] if resp.ok else []
+        except Exception as e:
+            # A failed batch must not masquerade as "not in Crossref" — that
+            # would quarantine perfectly good DOIs. Retry each one singly.
+            log.warning(f"  Crossref batch failed ({e}) — retrying {len(batch)} individually")
+            items = []
+            for d in batch:
+                try:
+                    r = session.get(f"{CROSSREF_API}/{d}", timeout=45)
+                    if r.ok:
+                        items.append(r.json()["message"])
+                except Exception:
+                    pass
+                time.sleep(CROSSREF_DELAY)
+        for it in items:
+            issued = (it.get("issued", {}).get("date-parts") or [[None]])[0]
+            found[it["DOI"].lower()] = {
+                "title": (it.get("title") or [""])[0],
+                "journal": (it.get("container-title") or [""])[0],
+                "year": issued[0] if issued else None,
+            }
+        time.sleep(CROSSREF_DELAY)
+    return {d: found.get(d) for d in dois}
+
+
+def verify_new_paper_dois(session, new_papers, log) -> dict:
+    """Drop any DOI whose Crossref record isn't the paper we think it is.
+
+    Returns stats. Mutates `new_papers`: a rejected DOI is blanked in place, so
+    everything written downstream (master CSV, papers_data.json, parquet) gets
+    the corrected row.
+
+    Verification needs BOTH a title match and a year match. Title alone is not
+    enough: on the 2026-04 batch, three wrong DOIs scored 0.8-1.0 on title
+    while being different papers published years apart (a short species-account
+    title token-matched a full paper title completely). Year is what separated
+    them.
+    """
+    withdoi = [p for p in new_papers if (p.get("doi") or "").strip()]
+    if not withdoi:
+        log.info("  No new papers carry a DOI — nothing to verify")
+        return {"checked": 0, "ok": 0, "rejected": 0, "unverifiable": 0}
+
+    dois = sorted({_normalise_doi(p["doi"]) for p in withdoi} - {""})
+    log.info(f"  Verifying {len(dois)} DOIs across {len(withdoi)} new papers via Crossref...")
+    meta = _crossref_lookup(session, dois, log)
+
+    stats = {"checked": len(withdoi), "ok": 0, "rejected": 0, "unverifiable": 0}
+    rejects = []
+    for p in withdoi:
+        doi = _normalise_doi(p["doi"])
+        cr = meta.get(doi)
+        if cr is None:
+            # Not in Crossref at all (preprints, DataCite, brand-new DOIs).
+            # Unverifiable is not the same as wrong — keep it, but say so.
+            stats["unverifiable"] += 1
+            continue
+
+        sim = _title_similarity(p.get("title", ""), cr["title"])
+        try:
+            our_year = int(str(p.get("year") or "").strip() or 0)
+        except ValueError:
+            our_year = 0
+        year_ok = (
+            not our_year or cr["year"] is None
+            or abs(our_year - int(cr["year"])) <= DOI_YEAR_TOLERANCE
+        )
+
+        if sim is not None and sim >= DOI_TITLE_MIN_SIM and year_ok:
+            stats["ok"] += 1
+            continue
+
+        stats["rejected"] += 1
+        reason = []
+        if sim is None:
+            reason.append("no comparable title")
+        elif sim < DOI_TITLE_MIN_SIM:
+            reason.append(f"title overlap {sim:.2f} < {DOI_TITLE_MIN_SIM}")
+        if not year_ok:
+            reason.append(f"year {our_year} vs Crossref {cr['year']}")
+        rejects.append({
+            "literature_id": p.get("literature_id", ""),
+            "year": p.get("year", ""),
+            "authors": p.get("authors", ""),
+            "title": p.get("title", ""),
+            "findspot": p.get("findspot", ""),
+            "rejected_doi": p["doi"],
+            "doi_actually_is": re.sub(r"<[^>]+>", "", html_mod.unescape(cr["title"] or "")),
+            "doi_journal": cr["journal"],
+            "doi_year": cr["year"],
+            "reason": "; ".join(reason),
+        })
+        log.warning(
+            f"  DOI rejected for {p.get('literature_id')}: {p['doi']} "
+            f"is \"{(cr['title'] or '')[:60]}\" ({'; '.join(reason)})"
+        )
+        p["doi"] = ""  # never publish a link we know points elsewhere
+
+    if rejects:
+        DOI_QUARANTINE_CSV.parent.mkdir(parents=True, exist_ok=True)
+        newfile = not DOI_QUARANTINE_CSV.exists()
+        with open(DOI_QUARANTINE_CSV, "a", newline="", encoding="utf-8") as f:
+            # verified_correct_doi is left blank here: this pass only proves a
+            # DOI is wrong, not what the right one is. Fill it in by hand (or
+            # from a re-crawl) before sending the file to shark-references.
+            w = csv.DictWriter(f, fieldnames=[
+                "detected", "literature_id", "year", "authors", "title", "findspot",
+                "rejected_doi", "doi_actually_is", "doi_journal", "doi_year", "reason",
+                "verified_correct_doi",
+            ], extrasaction="ignore")
+            if newfile:
+                w.writeheader()
+            stamp = f"{datetime.now():%Y-%m-%d}"
+            for r in rejects:
+                w.writerow({"detected": stamp, **r})
+        log.warning(
+            f"  {len(rejects)} DOI(s) quarantined -> {DOI_QUARANTINE_CSV.name} "
+            f"(these are SR data errors worth reporting upstream)"
+        )
+
+    log.info(
+        f"  DOI check: {stats['ok']} verified, {stats['rejected']} rejected, "
+        f"{stats['unverifiable']} not in Crossref"
+    )
+    return stats
 
 
 # ---------------------------------------------------------------------------
@@ -920,6 +1112,8 @@ def build_summary(stats: dict) -> tuple[str, str]:
         short += f", {stats['orphans_staged']} orphans staged"
     if stats.get("extracted"):
         short += f", {stats['extracted']} extracted"
+    if stats.get("doi_rejected"):
+        short += f" | WARNING {stats['doi_rejected']} bad DOI(s) quarantined"
 
     lines = [
         f"Shark-References Monthly Sync — {datetime.now():%Y-%m-%d %H:%M}",
@@ -943,6 +1137,12 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"  From new papers:    {stats['pdfs_new']}",
         f"  From known papers:  {stats['pdfs_known']}",
         f"PDF failures:         {stats['pdf_failures']}",
+        f"",
+        f"--- DOI verification (Phase 3b) ---",
+        f"DOIs checked:         {stats.get('doi_checked', 0)}",
+        f"  Verified:           {stats.get('doi_ok', 0)}",
+        f"  REJECTED (dropped): {stats.get('doi_rejected', 0)}",
+        f"  Not in Crossref:    {stats.get('doi_unverifiable', 0)}",
         f"",
         f"--- State updates ---",
         f"Appended to CSV:      {stats['csv_appended']}",
@@ -996,6 +1196,10 @@ def main():
                         f"Defaults to {DEFAULT_ORPHAN_INBOX} if it exists.")
     parser.add_argument("--no-orphan-scan", action="store_true",
                         help="Skip Phase 0 orphan staging even if inbox exists")
+    parser.add_argument("--no-coauthor-scan", action="store_true",
+                        help="Skip Phase 0b scan of database/others_libraries/")
+    parser.add_argument("--no-verify-dois", action="store_true",
+                        help="Skip Phase 3b Crossref DOI verification")
     parser.add_argument("--no-extract", action="store_true",
                         help="Skip Phase 5b parquet propagation + incremental extraction")
     args = parser.parse_args()
@@ -1048,6 +1252,34 @@ def main():
                     stats["orphans_staged"] = o_stats["staged"]
                     stats["orphans_failed"] = o_stats["failed"]
                     orphan_new_ids = set(str(i) for i in o_stats["new_ids"])
+
+        # --- Phase 0b: Scan coauthor drop folders ---
+        # Coauthors deliver PDFs into database/others_libraries/<name>/ by
+        # clicking links from the remaining-todo list. Nothing swept those
+        # folders before, so deliveries sat unfiled indefinitely. Unlike the
+        # orphan inbox this never stages new literature_ids: every delivery
+        # corresponds to an existing queue entry, so anything that fails to
+        # match goes to a review sheet for a human instead.
+        if not args.no_coauthor_scan:
+            try:
+                from scan_coauthor_libraries import (  # noqa: E402
+                    discover as _discover_coauthors)
+                pending = sum(len(v) for v in _discover_coauthors(None).values())
+            except Exception as e:  # noqa: BLE001
+                log.warning(f"  Coauthor scan unavailable: {e}")
+                pending = 0
+            if pending:
+                log.info(f"Phase 0b: {pending} PDFs in coauthor folders")
+                if args.dry_run:
+                    log.info("  DRY RUN: would run scan_coauthor_libraries.py")
+                else:
+                    rc = subprocess.call(
+                        [sys.executable,
+                         str(Path(__file__).parent / "scan_coauthor_libraries.py")],
+                        cwd=str(PROJECT_ROOT))
+                    stats["coauthor_scanned"] = pending
+                    if rc != 0:
+                        log.warning(f"  Coauthor scan exited {rc}")
 
         # --- Load our state ---
         log.info("Loading known papers...")
@@ -1104,6 +1336,18 @@ def main():
             log.info("Phase 3: Fetching details for new papers...")
             enrich_new_papers(session, new_papers, checkpoint, log)
             stats["details_fetched"] = len(new_papers)
+
+        # --- Phase 3b: Verify DOIs before anything downstream trusts them ---
+        # Must run before Phase 5 writes the master CSV / papers_data.json,
+        # since it blanks rejected DOIs in `new_papers` in place.
+        if new_papers and not args.no_verify_dois:
+            log.info("")
+            log.info("Phase 3b: Verifying new papers' DOIs against Crossref...")
+            doi_stats = verify_new_paper_dois(session, new_papers, log)
+            stats["doi_checked"] = doi_stats["checked"]
+            stats["doi_ok"] = doi_stats["ok"]
+            stats["doi_rejected"] = doi_stats["rejected"]
+            stats["doi_unverifiable"] = doi_stats["unverifiable"]
 
         # --- Phase 4: Download PDFs ---
         log.info("")
