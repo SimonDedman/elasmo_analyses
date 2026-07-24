@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closed-access downloads: CSIRO Publishing</title><style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    .journal-header { background: #2c3e50; color: #fff; padding: 10px 15px; border-radius: 6px; margin: 28px 0 8px; font-size: 1.05em; }
+    .stats { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .paper { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3498db; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+    .paper:hover { transform: translateX(5px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    .paper-number { display: inline-block; background: #3498db; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+    .paper-id { color: #7f8c8d; font-size: 0.9em; margin-left: 10px; }
+    .title { font-weight: bold; color: #2c3e50; margin: 8px 0; }
+    .authors { color: #34495e; font-size: 0.95em; margin: 5px 0; }
+    .year { color: #7f8c8d; font-size: 0.9em; }
+    .url-link { display: inline-block; background: #27ae60; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 10px; font-weight: bold; }
+    .url-link:hover { background: #229954; }
+    .alt-link { display: inline-block; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; margin: 10px 0 0 8px; font-size: 0.85em; font-weight: bold; }
+    .alt-jstor { background: #b03a2e; } .alt-jstor:hover { background: #922b21; }
+    .alt-fiu   { background: #1f618d; } .alt-fiu:hover   { background: #154360; }
+    .alt-schol { background: #7d6608; } .alt-schol:hover { background: #5b4a06; }
+    .export-btn { background: #8e44ad; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; margin-left: 16px; font-size: 0.85em; }
+    .doi { color: #7f8c8d; font-size: 0.85em; margin-left: 12px; }
+    .instructions { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    .instructions h3 { margin-top: 0; color: #856404; }
+    .progress { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold; color: #27ae60; position: sticky; top: 0; z-index: 10; }
+    .controls { background: #eaf2f8; border: 1px solid #d4e6f1; padding: 12px 15px; border-radius: 8px; margin: 20px 0; }
+    .controls select, .controls input, .controls button { font-size: 0.9em; padding: 3px 8px; border-radius: 4px; border: 1px solid #bdc3c7; }
+    .controls button { cursor: pointer; background: #fff; }
+    .controls button:hover { background: #d6eaf8; }
+</style></head><body>
+<h1>🔒 Closed-access manual downloads: CSIRO Publishing</h1>
+<div class="stats"><strong>Publisher:</strong> CSIRO Publishing<br><strong>Total papers:</strong> 18
+&nbsp;across&nbsp;7 journal(s)<br><strong>Generated:</strong> 2026-07-23 19:41</div>
+<div class="instructions"><h3>📋 Instructions</h3><ol>
+<li><strong>Log in once</strong> to your publisher/library access (VPN, FIU OneSearch, JSTOR) before starting.</li>
+<li>Per paper, try routes in order: <strong>Download PDF (DOI)</strong> first; if no access, <strong>JSTOR</strong> → <strong>FIU OneSearch</strong> → <strong>Scholar</strong>. Save the PDF to your Downloads folder (it will be batch-ingested later).</li>
+<li>Clicking any route greys the paper and records <em>which route worked</em> — this feeds the FIU access-map.</li>
+<li>When you finish a page or pause, click <strong>⬇ Export routes</strong> and send the JSON: that reveals which journals/years need the library fallback vs. work direct.</li>
+<li>Journals are ordered alphabetically; clear a whole journal before moving on. Pause every ~25.</li>
+</ol></div>
+<div class="controls">
+<label><strong>You:</strong>
+<select id="userName"><option value="">--</option><option value="Alex">Alex</option><option value="Andrew">Andrew</option><option value="Carylanne">Carylanne</option><option value="Chiara">Chiara</option><option value="Chris">Chris</option><option value="David RG">David RG</option><option value="David S">David S</option><option value="Deven">Deven</option><option value="Dovi">Dovi</option><option value="Elena">Elena</option><option value="Emily">Emily</option><option value="Guuske">Guuske</option><option value="Lola">Lola</option><option value="Nathan">Nathan</option><option value="Nick">Nick</option><option value="Rima">Rima</option><option value="Ryan">Ryan</option><option value="Simon">Simon</option><option value="Sophia">Sophia</option><option value="Tobi-Dawne">Tobi-Dawne</option><option value="Ulrich">Ulrich</option><option value="Other">Other</option></select></label>
+&nbsp;<span id="syncStatus" style="color:#7f8c8d;font-size:0.85em;">Connecting to the shared record…</span>
+<div style="margin-top:8px;font-size:0.85em;">
+<strong>Library link:</strong>
+<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;"
+ title="Your library's search URL. Put {TITLE} where the paper title goes.">
+<button onclick="saveLibrary()">Save</button>
+<button onclick="presetLibrary('fiu')">FIU</button>
+<button onclick="presetLibrary('worldcat')">WorldCat</button>
+<br><em>Not at FIU? Paste your own library search URL with <code>{TITLE}</code> where the title goes; it's remembered on this browser.</em>
+</div></div>
+<div class="progress">Progress: <span id="count">0</span> / 18 papers clicked
+<button class="export-btn" onclick="exportRoutes()">⬇ Export routes</button></div><div id="papers"><div class="journal-header">📚 Australian Journal of Marine and Freshwater Research &nbsp;(3)</div><div class="paper" id="paper-2699" data-doi="10.1071/MF9540353" data-title="The biology, migration, and growth rate of the school shark, Galeorhinus australis (Macleay) (Carcharhinidae) in south-eastern Australian waters"><span class="paper-number">1</span>
+<span class="paper-id">ID: 2699</span><span class="doi">10.1071/MF9540353</span>
+<div class="title">The biology, migration, and growth rate of the school shark, Galeorhinus australis (Macleay) (Carcharhinidae) in south-eastern Australian waters</div><div class="authors">Olsen, A.M. (1954)</div><div class="year">Year: 1954</div>
+<a href="https://doi.org/10.1071/MF9540353" class="url-link" target="_blank" onclick="useRoute('2699','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20biology%2C%20migration%2C%20and%20growth%20rate%20of%20the%20school%20shark%2C%20Galeorhinus%20australis%20%28Macleay%29%20%28Carcharhinidae%29%20in%20south-eastern%20Australian%20waters&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('2699','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20biology%2C%20migration%2C%20and%20growth%20rate%20of%20the%20school%20shark%2C%20Galeorhinus%20australis%20%28Macleay%29%20%28Carcharhinidae%29%20in%20south-eastern%20Australian%20waters&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('2699','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20biology%2C%20migration%2C%20and%20growth%20rate%20of%20the%20school%20shark%2C%20Galeorhinus%20australis%20%28Macleay%29%20%28Carcharhinidae%29%20in%20south-eastern%20Australian%20waters" class="alt-link alt-schol" target="_blank" onclick="useRoute('2699','scholar')">Scholar</a></div><div class="paper" id="paper-23878" data-doi="10.1071/mf9850509" data-title="Mercury concentrations of the axial muscle tissues of some marine fishes of the continental shelf adjacent to Tasmania"><span class="paper-number">2</span>
+<span class="paper-id">ID: 23878</span><span class="doi">10.1071/mf9850509</span>
+<div class="title">Mercury concentrations of the axial muscle tissues of some marine fishes of the continental shelf adjacent to Tasmania</div><div class="authors">Thomson, J.D. (1985)</div><div class="year">Year: 1985</div>
+<a href="https://doi.org/10.1071/mf9850509" class="url-link" target="_blank" onclick="useRoute('23878','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Mercury%20concentrations%20of%20the%20axial%20muscle%20tissues%20of%20some%20marine%20fishes%20of%20the%20continental%20shelf%20adjacent%20to%20Tasmania&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('23878','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CMercury%20concentrations%20of%20the%20axial%20muscle%20tissues%20of%20some%20marine%20fishes%20of%20the%20continental%20shelf%20adjacent%20to%20Tasmania&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('23878','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Mercury%20concentrations%20of%20the%20axial%20muscle%20tissues%20of%20some%20marine%20fishes%20of%20the%20continental%20shelf%20adjacent%20to%20Tasmania" class="alt-link alt-schol" target="_blank" onclick="useRoute('23878','scholar')">Scholar</a></div><div class="paper" id="paper-5023" data-doi="10.1071/MF9920149" data-title="Tendon structure of the Caudal Fin in the Blue Shark, Prionace glauca"><span class="paper-number">3</span>
+<span class="paper-id">ID: 5023</span><span class="doi">10.1071/MF9920149</span>
+<div class="title">Tendon structure of the Caudal Fin in the Blue Shark, Prionace glauca</div><div class="authors">Keithan, E.D. & Ma, J.-Y. & Rashi, W. (1992)</div><div class="year">Year: 1992</div>
+<a href="https://doi.org/10.1071/MF9920149" class="url-link" target="_blank" onclick="useRoute('5023','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Tendon%20structure%20of%20the%20Caudal%20Fin%20in%20the%20Blue%20Shark%2C%20Prionace%20glauca&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('5023','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CTendon%20structure%20of%20the%20Caudal%20Fin%20in%20the%20Blue%20Shark%2C%20Prionace%20glauca&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('5023','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Tendon%20structure%20of%20the%20Caudal%20Fin%20in%20the%20Blue%20Shark%2C%20Prionace%20glauca" class="alt-link alt-schol" target="_blank" onclick="useRoute('5023','scholar')">Scholar</a></div><div class="journal-header">📚 Australian Journal of Zoology &nbsp;(3)</div><div class="paper" id="paper-13130" data-doi="10.1071/ZO9870343" data-title="Taxonomy of some Tetraphyllidean Cestodes from Elasmobranch fishes"><span class="paper-number">4</span>
+<span class="paper-id">ID: 13130</span><span class="doi">10.1071/ZO9870343</span>
+<div class="title">Taxonomy of some Tetraphyllidean Cestodes from Elasmobranch fishes</div><div class="authors">Butler, S.A. (1987)</div><div class="year">Year: 1987</div>
+<a href="https://doi.org/10.1071/ZO9870343" class="url-link" target="_blank" onclick="useRoute('13130','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Taxonomy%20of%20some%20Tetraphyllidean%20Cestodes%20from%20Elasmobranch%20fishes&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13130','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CTaxonomy%20of%20some%20Tetraphyllidean%20Cestodes%20from%20Elasmobranch%20fishes&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13130','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Taxonomy%20of%20some%20Tetraphyllidean%20Cestodes%20from%20Elasmobranch%20fishes" class="alt-link alt-schol" target="_blank" onclick="useRoute('13130','scholar')">Scholar</a></div><div class="paper" id="paper-21422" data-doi="10.1071/ZO01028" data-title="A comparison of anterior adhesive areas and secretions in Troglocephalus rhinobatidis and Neoheterocotyle rhinobatidis (Monogenea: Monocotylidae) from the gills of the shovelnose ray, Rhinobatos typus (Rhinobatidae)"><span class="paper-number">5</span>
+<span class="paper-id">ID: 21422</span><span class="doi">10.1071/ZO01028</span>
+<div class="title">A comparison of anterior adhesive areas and secretions in Troglocephalus rhinobatidis and Neoheterocotyle rhinobatidis (Monogenea: Monocotylidae) from the gills of the shovelnose ray, Rhinobatos typus (Rhinobatidae)</div><div class="authors">Cribb, B.W. & Gould, R.J. & Whittington, I.D. (2001)</div><div class="year">Year: 2001</div>
+<a href="https://doi.org/10.1071/ZO01028" class="url-link" target="_blank" onclick="useRoute('21422','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20comparison%20of%20anterior%20adhesive%20areas%20and%20secretions%20in%20Troglocephalus%20rhinobatidis%20and%20Neoheterocotyle%20rhinobatidis%20%28Monogenea%3A%20Monocotylidae%29%20from%20the%20gills%20of%20the%20shovelnose%20ray%2C%20Rhinobatos%20typus%20%28Rhinobatidae%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('21422','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20comparison%20of%20anterior%20adhesive%20areas%20and%20secretions%20in%20Troglocephalus%20rhinobatidis%20and%20Neoheterocotyle%20rhinobatidis%20%28Monogenea%3A%20Monocotylidae%29%20from%20the%20gills%20of%20the%20shovelnose%20ray%2C%20Rhinobatos%20typus%20%28Rhinobatidae%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('21422','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20comparison%20of%20anterior%20adhesive%20areas%20and%20secretions%20in%20Troglocephalus%20rhinobatidis%20and%20Neoheterocotyle%20rhinobatidis%20%28Monogenea%3A%20Monocotylidae%29%20from%20the%20gills%20of%20the%20shovelnose%20ray%2C%20Rhinobatos%20typus%20%28Rhinobatidae%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('21422','scholar')">Scholar</a></div><div class="paper" id="paper-35699" data-doi="10.1071/ZO20032" data-title="Dispersion of long-nosed fur seals (Arctocephalus forsteri) determined by tagging"><span class="paper-number">6</span>
+<span class="paper-id">ID: 35699</span><span class="doi">10.1071/ZO20032</span>
+<div class="title">Dispersion of long-nosed fur seals (Arctocephalus forsteri) determined by tagging</div><div class="authors">Shaughnessy, P.D. & Goldsworthy, S.D. (2020)</div><div class="year">Year: 2020</div>
+<a href="https://doi.org/10.1071/ZO20032" class="url-link" target="_blank" onclick="useRoute('35699','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Dispersion%20of%20long-nosed%20fur%20seals%20%28Arctocephalus%20forsteri%29%20determined%20by%20tagging&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35699','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CDispersion%20of%20long-nosed%20fur%20seals%20%28Arctocephalus%20forsteri%29%20determined%20by%20tagging&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35699','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Dispersion%20of%20long-nosed%20fur%20seals%20%28Arctocephalus%20forsteri%29%20determined%20by%20tagging" class="alt-link alt-schol" target="_blank" onclick="useRoute('35699','scholar')">Scholar</a></div><div class="journal-header">📚 Environmental Chemistry &nbsp;(1)</div><div class="paper" id="paper-34051" data-doi="10.1071/en24065" data-title="Assessment of mercury bioaccumulation in a tropical elasmobranch assemblage"><span class="paper-number">7</span>
+<span class="paper-id">ID: 34051</span><span class="doi">10.1071/en24065</span>
+<div class="title">Assessment of mercury bioaccumulation in a tropical elasmobranch assemblage</div><div class="authors">Campos, A.S. & Bezerra, M.F. & Moura, V.L. & Faria, V.V. & Rezende, C.E. & Bastos, W.R. & Oliveira, I.A.S. & Lacerda, L.D. (2024)</div><div class="year">Year: 2024</div>
+<a href="https://doi.org/10.1071/en24065" class="url-link" target="_blank" onclick="useRoute('34051','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Assessment%20of%20mercury%20bioaccumulation%20in%20a%20tropical%20elasmobranch%20assemblage&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('34051','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAssessment%20of%20mercury%20bioaccumulation%20in%20a%20tropical%20elasmobranch%20assemblage&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('34051','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Assessment%20of%20mercury%20bioaccumulation%20in%20a%20tropical%20elasmobranch%20assemblage" class="alt-link alt-schol" target="_blank" onclick="useRoute('34051','scholar')">Scholar</a></div><div class="journal-header">📚 Invertebrate Systematics &nbsp;(1)</div><div class="paper" id="paper-24941" data-doi="10.1071/is15040" data-title="Diversity, phylogenetic relationships and host associations of Calliobothrium and Symcallio (Cestoda : 'Tetraphyllidea') parasitising triakid sharks"><span class="paper-number">8</span>
+<span class="paper-id">ID: 24941</span><span class="doi">10.1071/is15040</span>
+<div class="title">Diversity, phylogenetic relationships and host associations of Calliobothrium and Symcallio (Cestoda : 'Tetraphyllidea') parasitising triakid sharks</div><div class="authors">Bernot, J.P. & Caira, J.N. & Pickering, M. (2016)</div><div class="year">Year: 2016</div>
+<a href="https://doi.org/10.1071/is15040" class="url-link" target="_blank" onclick="useRoute('24941','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Diversity%2C%20phylogenetic%20relationships%20and%20host%20associations%20of%20Calliobothrium%20and%20Symcallio%20%28Cestoda%20%3A%20%27Tetraphyllidea%27%29%20parasitising%20triakid%20sharks&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('24941','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CDiversity%2C%20phylogenetic%20relationships%20and%20host%20associations%20of%20Calliobothrium%20and%20Symcallio%20%28Cestoda%20%3A%20%27Tetraphyllidea%27%29%20parasitising%20triakid%20sharks&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('24941','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Diversity%2C%20phylogenetic%20relationships%20and%20host%20associations%20of%20Calliobothrium%20and%20Symcallio%20%28Cestoda%20%3A%20%27Tetraphyllidea%27%29%20parasitising%20triakid%20sharks" class="alt-link alt-schol" target="_blank" onclick="useRoute('24941','scholar')">Scholar</a></div><div class="journal-header">📚 Invertebrate Taxonomy &nbsp;(1)</div><div class="paper" id="paper-17029" data-doi="10.1071/it9940583" data-title="Synoptic checklist of ascaridoid parasites (Nematoda) from fish hosts"><span class="paper-number">9</span>
+<span class="paper-id">ID: 17029</span><span class="doi">10.1071/it9940583</span>
+<div class="title">Synoptic checklist of ascaridoid parasites (Nematoda) from fish hosts</div><div class="authors">Bruce, N.L. & Cannon, L.R.G. & Adlard, R. (1994)</div><div class="year">Year: 1994</div>
+<a href="https://doi.org/10.1071/it9940583" class="url-link" target="_blank" onclick="useRoute('17029','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Synoptic%20checklist%20of%20ascaridoid%20parasites%20%28Nematoda%29%20from%20fish%20hosts&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('17029','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CSynoptic%20checklist%20of%20ascaridoid%20parasites%20%28Nematoda%29%20from%20fish%20hosts&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('17029','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Synoptic%20checklist%20of%20ascaridoid%20parasites%20%28Nematoda%29%20from%20fish%20hosts" class="alt-link alt-schol" target="_blank" onclick="useRoute('17029','scholar')">Scholar</a></div><div class="journal-header">📚 Marine and Freshwater Research &nbsp;(6)</div><div class="paper" id="paper-5087" data-doi="10.1071/MF07184" data-title="Multi-year validation of photographic identification of grey nurse sharks, Carcharias taurus, and applications for non-invasive conservation research"><span class="paper-number">10</span>
+<span class="paper-id">ID: 5087</span><span class="doi">10.1071/MF07184</span>
+<div class="title">Multi-year validation of photographic identification of grey nurse sharks, Carcharias taurus, and applications for non-invasive conservation research</div><div class="authors">Bansemer, C.S. & Bennett, M.B. (2008)</div><div class="year">Year: 2008</div>
+<a href="https://doi.org/10.1071/MF07184" class="url-link" target="_blank" onclick="useRoute('5087','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Multi-year%20validation%20of%20photographic%20identification%20of%20grey%20nurse%20sharks%2C%20Carcharias%20taurus%2C%20and%20applications%20for%20non-invasive%20conservation%20research&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('5087','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CMulti-year%20validation%20of%20photographic%20identification%20of%20grey%20nurse%20sharks%2C%20Carcharias%20taurus%2C%20and%20applications%20for%20non-invasive%20conservation%20research&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('5087','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Multi-year%20validation%20of%20photographic%20identification%20of%20grey%20nurse%20sharks%2C%20Carcharias%20taurus%2C%20and%20applications%20for%20non-invasive%20conservation%20research" class="alt-link alt-schol" target="_blank" onclick="useRoute('5087','scholar')">Scholar</a></div><div class="paper" id="paper-33470" data-doi="10.1071/mf23234" data-title="Data Deficient' but potentially threatened: first biological observations on the poorly known quagga catshark (Halaelurus quagga)"><span class="paper-number">11</span>
+<span class="paper-id">ID: 33470</span><span class="doi">10.1071/mf23234</span>
+<div class="title">Data Deficient' but potentially threatened: first biological observations on the poorly known quagga catshark (Halaelurus quagga)</div><div class="authors">Abisha, C. & Dahanukar, N. & Ranjeet, K. & Raghavan, R. (2024)</div><div class="year">Year: 2024</div>
+<a href="https://doi.org/10.1071/mf23234" class="url-link" target="_blank" onclick="useRoute('33470','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Data%20Deficient%27%20but%20potentially%20threatened%3A%20first%20biological%20observations%20on%20the%20poorly%20known%20quagga%20catshark%20%28Halaelurus%20quagga%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('33470','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CData%20Deficient%27%20but%20potentially%20threatened%3A%20first%20biological%20observations%20on%20the%20poorly%20known%20quagga%20catshark%20%28Halaelurus%20quagga%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('33470','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Data%20Deficient%27%20but%20potentially%20threatened%3A%20first%20biological%20observations%20on%20the%20poorly%20known%20quagga%20catshark%20%28Halaelurus%20quagga%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('33470','scholar')">Scholar</a></div><div class="paper" id="paper-33331" data-doi="10.1071/mf23147" data-title="Tracking 4 years in the life of a female whale shark shows consistent migrations in the Gulf of Mexico and Caribbean"><span class="paper-number">12</span>
+<span class="paper-id">ID: 33331</span><span class="doi">10.1071/mf23147</span>
+<div class="title">Tracking 4 years in the life of a female whale shark shows consistent migrations in the Gulf of Mexico and Caribbean</div><div class="authors">Daye, D. & de la Parra, R. & Vaudo, J. & Harvey, J. & Harvey, G. & Shivji, M. & Wetherbee, B. (2024)</div><div class="year">Year: 2024</div>
+<a href="https://doi.org/10.1071/mf23147" class="url-link" target="_blank" onclick="useRoute('33331','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Tracking%204%20years%20in%20the%20life%20of%20a%20female%20whale%20shark%20shows%20consistent%20migrations%20in%20the%20Gulf%20of%20Mexico%20and%20Caribbean&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('33331','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CTracking%204%20years%20in%20the%20life%20of%20a%20female%20whale%20shark%20shows%20consistent%20migrations%20in%20the%20Gulf%20of%20Mexico%20and%20Caribbean&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('33331','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Tracking%204%20years%20in%20the%20life%20of%20a%20female%20whale%20shark%20shows%20consistent%20migrations%20in%20the%20Gulf%20of%20Mexico%20and%20Caribbean" class="alt-link alt-schol" target="_blank" onclick="useRoute('33331','scholar')">Scholar</a></div><div class="paper" id="paper-35521" data-doi="10.1071/MF25168" data-title="Age and growth of two smooth-hound shark species from the eastern central Pacific Ocean"><span class="paper-number">13</span>
+<span class="paper-id">ID: 35521</span><span class="doi">10.1071/MF25168</span>
+<div class="title">Age and growth of two smooth-hound shark species from the eastern central Pacific Ocean</div><div class="authors">Briones-Mendoza, J. & Conforme-Aguilera, J. & Delgado-Mero, J. & Choez-Quimiz, Y. & Ponce-Jurado, B. & Mendoza-Nieto, K. & Mejía, D. (2025)</div><div class="year">Year: 2025</div>
+<a href="https://doi.org/10.1071/MF25168" class="url-link" target="_blank" onclick="useRoute('35521','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Age%20and%20growth%20of%20two%20smooth-hound%20shark%20species%20from%20the%20eastern%20central%20Pacific%20Ocean&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35521','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAge%20and%20growth%20of%20two%20smooth-hound%20shark%20species%20from%20the%20eastern%20central%20Pacific%20Ocean&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35521','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Age%20and%20growth%20of%20two%20smooth-hound%20shark%20species%20from%20the%20eastern%20central%20Pacific%20Ocean" class="alt-link alt-schol" target="_blank" onclick="useRoute('35521','scholar')">Scholar</a></div><div class="paper" id="paper-35520" data-doi="10.1071/MF24255" data-title="Avoiding bycatch: integrating catch predictions with spatial prioritisation in a commercial prawn trawl fishery"><span class="paper-number">14</span>
+<span class="paper-id">ID: 35520</span><span class="doi">10.1071/MF24255</span>
+<div class="title">Avoiding bycatch: integrating catch predictions with spatial prioritisation in a commercial prawn trawl fishery</div><div class="authors">Smith, J.A. & Johnson, D.D. (2025)</div><div class="year">Year: 2025</div>
+<a href="https://doi.org/10.1071/MF24255" class="url-link" target="_blank" onclick="useRoute('35520','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Avoiding%20bycatch%3A%20integrating%20catch%20predictions%20with%20spatial%20prioritisation%20in%20a%20commercial%20prawn%20trawl%20fishery&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35520','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAvoiding%20bycatch%3A%20integrating%20catch%20predictions%20with%20spatial%20prioritisation%20in%20a%20commercial%20prawn%20trawl%20fishery&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35520','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Avoiding%20bycatch%3A%20integrating%20catch%20predictions%20with%20spatial%20prioritisation%20in%20a%20commercial%20prawn%20trawl%20fishery" class="alt-link alt-schol" target="_blank" onclick="useRoute('35520','scholar')">Scholar</a></div><div class="paper" id="paper-35674" data-doi="10.1071/MF25124" data-title="High congruence between cameras and on-board observers supports the electronic monitoring of shark fisheries"><span class="paper-number">15</span>
+<span class="paper-id">ID: 35674</span><span class="doi">10.1071/MF25124</span>
+<div class="title">High congruence between cameras and on-board observers supports the electronic monitoring of shark fisheries</div><div class="authors">Braccini, M. & Shuttleworth, A. & Parker, J. & Jessop, S. & Waltrick, D. & Saunders, B. & Harvey, E.S. (2026)</div><div class="year">Year: 2026</div>
+<a href="https://doi.org/10.1071/MF25124" class="url-link" target="_blank" onclick="useRoute('35674','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=High%20congruence%20between%20cameras%20and%20on-board%20observers%20supports%20the%20electronic%20monitoring%20of%20shark%20fisheries&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35674','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CHigh%20congruence%20between%20cameras%20and%20on-board%20observers%20supports%20the%20electronic%20monitoring%20of%20shark%20fisheries&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35674','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=High%20congruence%20between%20cameras%20and%20on-board%20observers%20supports%20the%20electronic%20monitoring%20of%20shark%20fisheries" class="alt-link alt-schol" target="_blank" onclick="useRoute('35674','scholar')">Scholar</a></div><div class="journal-header">📚 Wildlife Research &nbsp;(3)</div><div class="paper" id="paper-35412" data-doi="10.1071/WR25099" data-title="Minimising dolphin-induced bait depredation in a bather protection shark management program"><span class="paper-number">16</span>
+<span class="paper-id">ID: 35412</span><span class="doi">10.1071/WR25099</span>
+<div class="title">Minimising dolphin-induced bait depredation in a bather protection shark management program</div><div class="authors">Lawson, C.L. & Morris, S.G. & Green, M. & Butcher, P.A. (2025)</div><div class="year">Year: 2025</div>
+<a href="https://doi.org/10.1071/WR25099" class="url-link" target="_blank" onclick="useRoute('35412','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Minimising%20dolphin-induced%20bait%20depredation%20in%20a%20bather%20protection%20shark%20management%20program&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35412','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CMinimising%20dolphin-induced%20bait%20depredation%20in%20a%20bather%20protection%20shark%20management%20program&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35412','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Minimising%20dolphin-induced%20bait%20depredation%20in%20a%20bather%20protection%20shark%20management%20program" class="alt-link alt-schol" target="_blank" onclick="useRoute('35412','scholar')">Scholar</a></div><div class="paper" id="paper-35685" data-doi="10.1071/WR25070" data-title="Near but not neighbours: juvenile white sharks move together but stay apart"><span class="paper-number">17</span>
+<span class="paper-id">ID: 35685</span><span class="doi">10.1071/WR25070</span>
+<div class="title">Near but not neighbours: juvenile white sharks move together but stay apart</div><div class="authors">Anderson, J.M. & Rex, P.T. & Spurgeon, E. & Stirling, B. & Lowe, C.G. (2026)</div><div class="year">Year: 2026</div>
+<a href="https://doi.org/10.1071/WR25070" class="url-link" target="_blank" onclick="useRoute('35685','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Near%20but%20not%20neighbours%3A%20juvenile%20white%20sharks%20move%20together%20but%20stay%20apart&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35685','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CNear%20but%20not%20neighbours%3A%20juvenile%20white%20sharks%20move%20together%20but%20stay%20apart&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35685','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Near%20but%20not%20neighbours%3A%20juvenile%20white%20sharks%20move%20together%20but%20stay%20apart" class="alt-link alt-schol" target="_blank" onclick="useRoute('35685','scholar')">Scholar</a></div><div class="paper" id="paper-35686" data-doi="10.1071/WR25088" data-title="Absence or avoidance? White shark response to killer whale predation risk"><span class="paper-number">18</span>
+<span class="paper-id">ID: 35686</span><span class="doi">10.1071/WR25088</span>
+<div class="title">Absence or avoidance? White shark response to killer whale predation risk</div><div class="authors">Reeves, I.M. & Barnett, A. & Donnelly, D. & Meyer, L. & Huveneers, C. (2026)</div><div class="year">Year: 2026</div>
+<a href="https://doi.org/10.1071/WR25088" class="url-link" target="_blank" onclick="useRoute('35686','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Absence%20or%20avoidance%3F%20White%20shark%20response%20to%20killer%20whale%20predation%20risk&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35686','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAbsence%20or%20avoidance%3F%20White%20shark%20response%20to%20killer%20whale%20predation%20risk&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35686','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Absence%20or%20avoidance%3F%20White%20shark%20response%20to%20killer%20whale%20predation%20risk" class="alt-link alt-schol" target="_blank" onclick="useRoute('35686','scholar')">Scholar</a></div></div><script>
+    // Same Apps Script endpoint as docs/remaining_downloads.html, so progress made
+    // here lands in the shared record instead of being trapped in one browser.
+    const SHEET = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
+
+    let clicked = new Set();
+    const KEY = 'clicked_' + document.title;
+
+    function paint(id) {
+        const el = document.getElementById('paper-' + id);
+        if (el) { el.style.opacity = '0.5'; el.style.borderLeftColor = '#95a5a6'; }
+    }
+    function refreshCount() { document.getElementById('count').textContent = clicked.size; }
+
+    if (localStorage.getItem(KEY)) {
+        clicked = new Set(JSON.parse(localStorage.getItem(KEY)));
+        refreshCount(); clicked.forEach(paint);
+    }
+
+    // Pull the shared record so a paper someone else already did shows as done.
+    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
+        const done = new Set((res.data || []).map(x => (x.doi || '').trim().toLowerCase()));
+        document.querySelectorAll('.paper').forEach(el => {
+            const d = (el.dataset.doi || '').trim().toLowerCase();
+            if (d && done.has(d)) { clicked.add(el.id.replace('paper-', '')); paint(el.id.replace('paper-', '')); }
+        });
+        localStorage.setItem(KEY, JSON.stringify([...clicked]));
+        refreshCount();
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Synced with the shared record';
+    }).catch(() => {
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Offline — progress saved locally only';
+    });
+
+    function markClicked(id) {
+        if (!clicked.has(id)) {
+            clicked.add(id); refreshCount();
+            localStorage.setItem(KEY, JSON.stringify([...clicked]));
+            paint(id);
+        }
+        // Push to the shared record. no-cors: this is a blind write, we only need it to land.
+        const el = document.getElementById('paper-' + id);
+        const doi = el && el.dataset.doi;
+        if (SHEET && doi) {
+            fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                action: 'markClicked', doi: doi, title: (el.dataset.title || ''),
+                by: (localStorage.getItem('eea_username') || 'Anon'),
+                at: new Date().toISOString()})}).catch(() => {});
+        }
+    }
+
+    // Who am I — shares the eea_username key with the main download helper.
+    function initUser() {
+        const sel = document.getElementById('userName');
+        if (!sel) return;
+        const saved = localStorage.getItem('eea_username');
+        if (saved) sel.value = saved;
+        sel.addEventListener('change', () => localStorage.setItem('eea_username', sel.value));
+    }
+
+    // The library link defaults to FIU, which is no use to anyone else, so let
+    // each person store their own institution's search URL with a {TITLE} slot.
+    const LIBKEY = 'eea_library_url';
+    const LIB_FIU = 'https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any,contains,{TITLE}&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0';
+    const LIB_WORLDCAT = 'https://search.worldcat.org/search?q={TITLE}';
+    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_FIU; }
+    function applyLibrary() {
+        const tpl = libTemplate();
+        document.querySelectorAll('a.alt-fiu').forEach(a => {
+            const p = a.closest('.paper');
+            const t = (p && p.dataset.title) || '';
+            a.href = tpl.replace('{TITLE}', encodeURIComponent(t));
+            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch'
+                          : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
+        });
+        const inp = document.getElementById('libUrl');
+        if (inp) inp.value = tpl;
+    }
+    function saveLibrary() {
+        const v = document.getElementById('libUrl').value.trim();
+        if (v) localStorage.setItem(LIBKEY, v); else localStorage.removeItem(LIBKEY);
+        applyLibrary();
+    }
+    function presetLibrary(which) {
+        localStorage.setItem(LIBKEY, which === 'worldcat' ? LIB_WORLDCAT : LIB_FIU);
+        applyLibrary();
+    }
+    // Route tracker: record which access route worked for each paper (last wins),
+    // so the FIU access-map can be reconstructed from an exported routes JSON.
+    let routes = {};
+    const RKEY = 'routes_' + document.title;
+    if (localStorage.getItem(RKEY)) { try { routes = JSON.parse(localStorage.getItem(RKEY)); } catch(e) {} }
+    function useRoute(id, route) {
+        routes[id] = route; localStorage.setItem(RKEY, JSON.stringify(routes)); markClicked(id);
+    }
+    function exportRoutes() {
+        const blob = new Blob([JSON.stringify(routes, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '_routes.json'; a.click();
+    }
+    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='r') { if (confirm('Reset progress?')) { localStorage.removeItem(KEY); localStorage.removeItem(RKEY); location.reload(); } } });
+
+    initUser();
+    applyLibrary();
+</script></body></html>

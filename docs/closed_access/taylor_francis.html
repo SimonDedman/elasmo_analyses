@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closed-access downloads: Taylor & Francis</title><style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    .journal-header { background: #2c3e50; color: #fff; padding: 10px 15px; border-radius: 6px; margin: 28px 0 8px; font-size: 1.05em; }
+    .stats { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .paper { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3498db; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+    .paper:hover { transform: translateX(5px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    .paper-number { display: inline-block; background: #3498db; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+    .paper-id { color: #7f8c8d; font-size: 0.9em; margin-left: 10px; }
+    .title { font-weight: bold; color: #2c3e50; margin: 8px 0; }
+    .authors { color: #34495e; font-size: 0.95em; margin: 5px 0; }
+    .year { color: #7f8c8d; font-size: 0.9em; }
+    .url-link { display: inline-block; background: #27ae60; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 10px; font-weight: bold; }
+    .url-link:hover { background: #229954; }
+    .alt-link { display: inline-block; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; margin: 10px 0 0 8px; font-size: 0.85em; font-weight: bold; }
+    .alt-jstor { background: #b03a2e; } .alt-jstor:hover { background: #922b21; }
+    .alt-fiu   { background: #1f618d; } .alt-fiu:hover   { background: #154360; }
+    .alt-schol { background: #7d6608; } .alt-schol:hover { background: #5b4a06; }
+    .export-btn { background: #8e44ad; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; margin-left: 16px; font-size: 0.85em; }
+    .doi { color: #7f8c8d; font-size: 0.85em; margin-left: 12px; }
+    .instructions { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    .instructions h3 { margin-top: 0; color: #856404; }
+    .progress { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold; color: #27ae60; position: sticky; top: 0; z-index: 10; }
+    .controls { background: #eaf2f8; border: 1px solid #d4e6f1; padding: 12px 15px; border-radius: 8px; margin: 20px 0; }
+    .controls select, .controls input, .controls button { font-size: 0.9em; padding: 3px 8px; border-radius: 4px; border: 1px solid #bdc3c7; }
+    .controls button { cursor: pointer; background: #fff; }
+    .controls button:hover { background: #d6eaf8; }
+</style></head><body>
+<h1>🔒 Closed-access manual downloads: Taylor & Francis</h1>
+<div class="stats"><strong>Publisher:</strong> Taylor & Francis<br><strong>Total papers:</strong> 15
+&nbsp;across&nbsp;12 journal(s)<br><strong>Generated:</strong> 2026-07-23 19:41</div>
+<div class="instructions"><h3>📋 Instructions</h3><ol>
+<li><strong>Log in once</strong> to your publisher/library access (VPN, FIU OneSearch, JSTOR) before starting.</li>
+<li>Per paper, try routes in order: <strong>Download PDF (DOI)</strong> first; if no access, <strong>JSTOR</strong> → <strong>FIU OneSearch</strong> → <strong>Scholar</strong>. Save the PDF to your Downloads folder (it will be batch-ingested later).</li>
+<li>Clicking any route greys the paper and records <em>which route worked</em> — this feeds the FIU access-map.</li>
+<li>When you finish a page or pause, click <strong>⬇ Export routes</strong> and send the JSON: that reveals which journals/years need the library fallback vs. work direct.</li>
+<li>Journals are ordered alphabetically; clear a whole journal before moving on. Pause every ~25.</li>
+</ol></div>
+<div class="controls">
+<label><strong>You:</strong>
+<select id="userName"><option value="">--</option><option value="Alex">Alex</option><option value="Andrew">Andrew</option><option value="Carylanne">Carylanne</option><option value="Chiara">Chiara</option><option value="Chris">Chris</option><option value="David RG">David RG</option><option value="David S">David S</option><option value="Deven">Deven</option><option value="Dovi">Dovi</option><option value="Elena">Elena</option><option value="Emily">Emily</option><option value="Guuske">Guuske</option><option value="Lola">Lola</option><option value="Nathan">Nathan</option><option value="Nick">Nick</option><option value="Rima">Rima</option><option value="Ryan">Ryan</option><option value="Simon">Simon</option><option value="Sophia">Sophia</option><option value="Tobi-Dawne">Tobi-Dawne</option><option value="Ulrich">Ulrich</option><option value="Other">Other</option></select></label>
+&nbsp;<span id="syncStatus" style="color:#7f8c8d;font-size:0.85em;">Connecting to the shared record…</span>
+<div style="margin-top:8px;font-size:0.85em;">
+<strong>Library link:</strong>
+<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;"
+ title="Your library's search URL. Put {TITLE} where the paper title goes.">
+<button onclick="saveLibrary()">Save</button>
+<button onclick="presetLibrary('fiu')">FIU</button>
+<button onclick="presetLibrary('worldcat')">WorldCat</button>
+<br><em>Not at FIU? Paste your own library search URL with <code>{TITLE}</code> where the title goes; it's remembered on this browser.</em>
+</div></div>
+<div class="progress">Progress: <span id="count">0</span> / 15 papers clicked
+<button class="export-btn" onclick="exportRoutes()">⬇ Export routes</button></div><div id="papers"><div class="journal-header">📚 Annals and Magazine of Natural History &nbsp;(1)</div><div class="paper" id="paper-5752" data-doi="10.1080/00222935108654128" data-title="A new galeorhinid shark from South Africa, with notes on other species"><span class="paper-number">1</span>
+<span class="paper-id">ID: 5752</span><span class="doi">10.1080/00222935108654128</span>
+<div class="title">A new galeorhinid shark from South Africa, with notes on other species</div><div class="authors">Smith, J.L.B. (1951)</div><div class="year">Year: 1951</div>
+<a href="https://doi.org/10.1080/00222935108654128" class="url-link" target="_blank" onclick="useRoute('5752','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20new%20galeorhinid%20shark%20from%20South%20Africa%2C%20with%20notes%20on%20other%20species&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('5752','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20new%20galeorhinid%20shark%20from%20South%20Africa%2C%20with%20notes%20on%20other%20species&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('5752','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20new%20galeorhinid%20shark%20from%20South%20Africa%2C%20with%20notes%20on%20other%20species" class="alt-link alt-schol" target="_blank" onclick="useRoute('5752','scholar')">Scholar</a></div><div class="journal-header">📚 Annals and Magazine of Natural History, (Series 10) &nbsp;(1)</div><div class="paper" id="paper-2608" data-doi="10.1080/00222933208673596" data-title="A Cretaceous pristiophorid shark"><span class="paper-number">2</span>
+<span class="paper-id">ID: 2608</span><span class="doi">10.1080/00222933208673596</span>
+<div class="title">A Cretaceous pristiophorid shark</div><div class="authors">Woodward, A.S. (1932)</div><div class="year">Year: 1932</div>
+<a href="https://doi.org/10.1080/00222933208673596" class="url-link" target="_blank" onclick="useRoute('2608','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=A%20Cretaceous%20pristiophorid%20shark&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('2608','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CA%20Cretaceous%20pristiophorid%20shark&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('2608','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=A%20Cretaceous%20pristiophorid%20shark" class="alt-link alt-schol" target="_blank" onclick="useRoute('2608','scholar')">Scholar</a></div><div class="journal-header">📚 Annals and Magazine of Natural History, (Series 11) &nbsp;(1)</div><div class="paper" id="paper-3443" data-doi="10.1080/00222933808526889" data-title="On the teeth of a new elasmobranch from the Calciferous Sandstones of Glencartholm, Eskdale, Dumfriesshire"><span class="paper-number">3</span>
+<span class="paper-id">ID: 3443</span><span class="doi">10.1080/00222933808526889</span>
+<div class="title">On the teeth of a new elasmobranch from the Calciferous Sandstones of Glencartholm, Eskdale, Dumfriesshire</div><div class="authors">Moy-Thomas, J.A. (1938)</div><div class="year">Year: 1938</div>
+<a href="https://doi.org/10.1080/00222933808526889" class="url-link" target="_blank" onclick="useRoute('3443','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=On%20the%20teeth%20of%20a%20new%20elasmobranch%20from%20the%20Calciferous%20Sandstones%20of%20Glencartholm%2C%20Eskdale%2C%20Dumfriesshire&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('3443','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COn%20the%20teeth%20of%20a%20new%20elasmobranch%20from%20the%20Calciferous%20Sandstones%20of%20Glencartholm%2C%20Eskdale%2C%20Dumfriesshire&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('3443','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=On%20the%20teeth%20of%20a%20new%20elasmobranch%20from%20the%20Calciferous%20Sandstones%20of%20Glencartholm%2C%20Eskdale%2C%20Dumfriesshire" class="alt-link alt-schol" target="_blank" onclick="useRoute('3443','scholar')">Scholar</a></div><div class="journal-header">📚 Annals of Tropical Medicine and Parasitology &nbsp;(2)</div><div class="paper" id="paper-16410" data-doi="10.1080/00034983.1927.11684543" data-title="On a collection of cestodes from marine fishes of Ceylon and India"><span class="paper-number">4</span>
+<span class="paper-id">ID: 16410</span><span class="doi">10.1080/00034983.1927.11684543</span>
+<div class="title">On a collection of cestodes from marine fishes of Ceylon and India</div><div class="authors">Southwell, T. (1927)</div><div class="year">Year: 1927</div>
+<a href="https://doi.org/10.1080/00034983.1927.11684543" class="url-link" target="_blank" onclick="useRoute('16410','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=On%20a%20collection%20of%20cestodes%20from%20marine%20fishes%20of%20Ceylon%20and%20India&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('16410','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COn%20a%20collection%20of%20cestodes%20from%20marine%20fishes%20of%20Ceylon%20and%20India&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('16410','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=On%20a%20collection%20of%20cestodes%20from%20marine%20fishes%20of%20Ceylon%20and%20India" class="alt-link alt-schol" target="_blank" onclick="useRoute('16410','scholar')">Scholar</a></div><div class="paper" id="paper-16413" data-doi="10.1080/00034983.1929.11684609" data-title="On a new species of Phyllobothrium (P. microsomum) from an Indian shark"><span class="paper-number">5</span>
+<span class="paper-id">ID: 16413</span><span class="doi">10.1080/00034983.1929.11684609</span>
+<div class="title">On a new species of Phyllobothrium (P. microsomum) from an Indian shark</div><div class="authors">Southwell, T. & Hilmy, I.S. (1929)</div><div class="year">Year: 1929</div>
+<a href="https://doi.org/10.1080/00034983.1929.11684609" class="url-link" target="_blank" onclick="useRoute('16413','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=On%20a%20new%20species%20of%20Phyllobothrium%20%28P.%20microsomum%29%20from%20an%20Indian%20shark&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('16413','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COn%20a%20new%20species%20of%20Phyllobothrium%20%28P.%20microsomum%29%20from%20an%20Indian%20shark&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('16413','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=On%20a%20new%20species%20of%20Phyllobothrium%20%28P.%20microsomum%29%20from%20an%20Indian%20shark" class="alt-link alt-schol" target="_blank" onclick="useRoute('16413','scholar')">Scholar</a></div><div class="journal-header">📚 Historical Biology, in press &nbsp;(1)</div><div class="paper" id="paper-35513" data-doi="10.1080/08912963.2025.2594042" data-title="First description of a neoselachian shark remain (Neoselachii, Lamniformes) from the Lower Cretaceous Santana Formation, Araripe Basin, Northeastern Brazil"><span class="paper-number">6</span>
+<span class="paper-id">ID: 35513</span><span class="doi">10.1080/08912963.2025.2594042</span>
+<div class="title">First description of a neoselachian shark remain (Neoselachii, Lamniformes) from the Lower Cretaceous Santana Formation, Araripe Basin, Northeastern Brazil</div><div class="authors">Brito, P.M. & Veiga, I.M. & Assumpçao, C. & Cupello, C. (2025)</div><div class="year">Year: 2025</div>
+<a href="https://doi.org/10.1080/08912963.2025.2594042" class="url-link" target="_blank" onclick="useRoute('35513','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=First%20description%20of%20a%20neoselachian%20shark%20remain%20%28Neoselachii%2C%20Lamniformes%29%20from%20the%20Lower%20Cretaceous%20Santana%20Formation%2C%20Araripe%20Basin%2C%20Northeastern%20Brazil&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35513','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CFirst%20description%20of%20a%20neoselachian%20shark%20remain%20%28Neoselachii%2C%20Lamniformes%29%20from%20the%20Lower%20Cretaceous%20Santana%20Formation%2C%20Araripe%20Basin%2C%20Northeastern%20Brazil&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35513','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=First%20description%20of%20a%20neoselachian%20shark%20remain%20%28Neoselachii%2C%20Lamniformes%29%20from%20the%20Lower%20Cretaceous%20Santana%20Formation%2C%20Araripe%20Basin%2C%20Northeastern%20Brazil" class="alt-link alt-schol" target="_blank" onclick="useRoute('35513','scholar')">Scholar</a></div><div class="journal-header">📚 Journal of Sustainable Tourism, in press &nbsp;(1)</div><div class="paper" id="paper-35401" data-doi="10.1080/09669582.2025.2593421" data-title="Assessing tourism compliance challenges at one of the largest whale shark aggregation sites in the world"><span class="paper-number">7</span>
+<span class="paper-id">ID: 35401</span><span class="doi">10.1080/09669582.2025.2593421</span>
+<div class="title">Assessing tourism compliance challenges at one of the largest whale shark aggregation sites in the world</div><div class="authors">Ninh, H.T.T. & Griffin, C.R. & de la Parra-venegas, R. & Ovitz, K.L. & Danylchuk, A.J. & Griffin, L.P. (2025)</div><div class="year">Year: 2025</div>
+<a href="https://doi.org/10.1080/09669582.2025.2593421" class="url-link" target="_blank" onclick="useRoute('35401','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Assessing%20tourism%20compliance%20challenges%20at%20one%20of%20the%20largest%20whale%20shark%20aggregation%20sites%20in%20the%20world&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35401','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAssessing%20tourism%20compliance%20challenges%20at%20one%20of%20the%20largest%20whale%20shark%20aggregation%20sites%20in%20the%20world&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35401','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Assessing%20tourism%20compliance%20challenges%20at%20one%20of%20the%20largest%20whale%20shark%20aggregation%20sites%20in%20the%20world" class="alt-link alt-schol" target="_blank" onclick="useRoute('35401','scholar')">Scholar</a></div><div class="journal-header">📚 Mitochondrial Dna Part A, in press &nbsp;(1)</div><div class="paper" id="paper-35676" data-doi="10.1080/24701394.2026.2622715" data-title="Characterisation and comparative analysis of the complete mitochondrial genomes of two whiprays, Himantura leoparda and H. uarnak, occurring in the Southwest Indian Ocean"><span class="paper-number">8</span>
+<span class="paper-id">ID: 35676</span><span class="doi">10.1080/24701394.2026.2622715</span>
+<div class="title">Characterisation and comparative analysis of the complete mitochondrial genomes of two whiprays, Himantura leoparda and H. uarnak, occurring in the Southwest Indian Ocean</div><div class="authors">Redelinghuys, K. & Klein, J.D. & Bennett, R.H. & Venables, S. & Marshall, A. & Bester-van der Merwe, A.E. (2026)</div><div class="year">Year: 2026</div>
+<a href="https://doi.org/10.1080/24701394.2026.2622715" class="url-link" target="_blank" onclick="useRoute('35676','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Characterisation%20and%20comparative%20analysis%20of%20the%20complete%20mitochondrial%20genomes%20of%20two%20whiprays%2C%20Himantura%20leoparda%20and%20H.%20uarnak%2C%20occurring%20in%20the%20Southwest%20Indian%20Ocean&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('35676','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CCharacterisation%20and%20comparative%20analysis%20of%20the%20complete%20mitochondrial%20genomes%20of%20two%20whiprays%2C%20Himantura%20leoparda%20and%20H.%20uarnak%2C%20occurring%20in%20the%20Southwest%20Indian%20Ocean&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('35676','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Characterisation%20and%20comparative%20analysis%20of%20the%20complete%20mitochondrial%20genomes%20of%20two%20whiprays%2C%20Himantura%20leoparda%20and%20H.%20uarnak%2C%20occurring%20in%20the%20Southwest%20Indian%20Ocean" class="alt-link alt-schol" target="_blank" onclick="useRoute('35676','scholar')">Scholar</a></div><div class="journal-header">📚 Progress in Natural Science &nbsp;(1)</div><div class="paper" id="paper-14545" data-doi="10.1080/10002007088537454" data-title="The potential of vertebrate microfossils for marine to non-marine correlation in the Late Jurassic"><span class="paper-number">9</span>
+<span class="paper-id">ID: 14545</span><span class="doi">10.1080/10002007088537454</span>
+<div class="title">The potential of vertebrate microfossils for marine to non-marine correlation in the Late Jurassic</div><div class="authors">Thies, D. & Mudroch, A. & Turner, S. (2007)</div><div class="year">Year: 2007</div>
+<a href="https://doi.org/10.1080/10002007088537454" class="url-link" target="_blank" onclick="useRoute('14545','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=The%20potential%20of%20vertebrate%20microfossils%20for%20marine%20to%20non-marine%20correlation%20in%20the%20Late%20Jurassic&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('14545','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CThe%20potential%20of%20vertebrate%20microfossils%20for%20marine%20to%20non-marine%20correlation%20in%20the%20Late%20Jurassic&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('14545','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=The%20potential%20of%20vertebrate%20microfossils%20for%20marine%20to%20non-marine%20correlation%20in%20the%20Late%20Jurassic" class="alt-link alt-schol" target="_blank" onclick="useRoute('14545','scholar')">Scholar</a></div><div class="journal-header">📚 Rocks and Minerals Magazine &nbsp;(1)</div><div class="paper" id="paper-17568" data-doi="10.1080/00357529.1964.11766064" data-title="Shark tooth hunting along the Calvert Cliffs of Maryland"><span class="paper-number">10</span>
+<span class="paper-id">ID: 17568</span><span class="doi">10.1080/00357529.1964.11766064</span>
+<div class="title">Shark tooth hunting along the Calvert Cliffs of Maryland</div><div class="authors">Case, G.R. (1964)</div><div class="year">Year: 1964</div>
+<a href="https://doi.org/10.1080/00357529.1964.11766064" class="url-link" target="_blank" onclick="useRoute('17568','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Shark%20tooth%20hunting%20along%20the%20Calvert%20Cliffs%20of%20Maryland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('17568','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CShark%20tooth%20hunting%20along%20the%20Calvert%20Cliffs%20of%20Maryland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('17568','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Shark%20tooth%20hunting%20along%20the%20Calvert%20Cliffs%20of%20Maryland" class="alt-link alt-schol" target="_blank" onclick="useRoute('17568','scholar')">Scholar</a></div><div class="journal-header">📚 Sarsia &nbsp;(1)</div><div class="paper" id="paper-24716" data-doi="10.1080/00364827.1979.10411375" data-title="Fish types in the zoological museum, University of Bergen, Norway"><span class="paper-number">11</span>
+<span class="paper-id">ID: 24716</span><span class="doi">10.1080/00364827.1979.10411375</span>
+<div class="title">Fish types in the zoological museum, University of Bergen, Norway</div><div class="authors">Frøiland, Ø. (1979)</div><div class="year">Year: 1979</div>
+<a href="https://doi.org/10.1080/00364827.1979.10411375" class="url-link" target="_blank" onclick="useRoute('24716','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Fish%20types%20in%20the%20zoological%20museum%2C%20University%20of%20Bergen%2C%20Norway&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('24716','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CFish%20types%20in%20the%20zoological%20museum%2C%20University%20of%20Bergen%2C%20Norway&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('24716','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Fish%20types%20in%20the%20zoological%20museum%2C%20University%20of%20Bergen%2C%20Norway" class="alt-link alt-schol" target="_blank" onclick="useRoute('24716','scholar')">Scholar</a></div><div class="journal-header">📚 Transactions of the Royal Society of South Africa &nbsp;(3)</div><div class="paper" id="paper-3895" data-doi="10.1080/00359191309519676" data-title="Description of a new species of sting-ray (Trygon) from South Africa"><span class="paper-number">12</span>
+<span class="paper-id">ID: 3895</span><span class="doi">10.1080/00359191309519676</span>
+<div class="title">Description of a new species of sting-ray (Trygon) from South Africa</div><div class="authors">Gilchrist, J.D.F. (1913)</div><div class="year">Year: 1913</div>
+<a href="https://doi.org/10.1080/00359191309519676" class="url-link" target="_blank" onclick="useRoute('3895','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Description%20of%20a%20new%20species%20of%20sting-ray%20%28Trygon%29%20from%20South%20Africa&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('3895','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CDescription%20of%20a%20new%20species%20of%20sting-ray%20%28Trygon%29%20from%20South%20Africa&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('3895','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Description%20of%20a%20new%20species%20of%20sting-ray%20%28Trygon%29%20from%20South%20Africa" class="alt-link alt-schol" target="_blank" onclick="useRoute('3895','scholar')">Scholar</a></div><div class="paper" id="paper-12077" data-doi="10.1080/00359193609518910" data-title="Two interesting new fishes from South Africa"><span class="paper-number">13</span>
+<span class="paper-id">ID: 12077</span><span class="doi">10.1080/00359193609518910</span>
+<div class="title">Two interesting new fishes from South Africa</div><div class="authors">Smith, J.L.B. (1936)</div><div class="year">Year: 1936</div>
+<a href="https://doi.org/10.1080/00359193609518910" class="url-link" target="_blank" onclick="useRoute('12077','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Two%20interesting%20new%20fishes%20from%20South%20Africa&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('12077','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CTwo%20interesting%20new%20fishes%20from%20South%20Africa&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('12077','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Two%20interesting%20new%20fishes%20from%20South%20Africa" class="alt-link alt-schol" target="_blank" onclick="useRoute('12077','scholar')">Scholar</a></div><div class="paper" id="paper-3896" data-doi="10.1080/00359194309519831" data-title="Interesting new fishes of three genera new to South Africa, with a note on Mobula diabolus (Shaw)"><span class="paper-number">14</span>
+<span class="paper-id">ID: 3896</span><span class="doi">10.1080/00359194309519831</span>
+<div class="title">Interesting new fishes of three genera new to South Africa, with a note on Mobula diabolus (Shaw)</div><div class="authors">Smith, J.L.B. (1943)</div><div class="year">Year: 1943</div>
+<a href="https://doi.org/10.1080/00359194309519831" class="url-link" target="_blank" onclick="useRoute('3896','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Interesting%20new%20fishes%20of%20three%20genera%20new%20to%20South%20Africa%2C%20with%20a%20note%20on%20Mobula%20diabolus%20%28Shaw%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('3896','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CInteresting%20new%20fishes%20of%20three%20genera%20new%20to%20South%20Africa%2C%20with%20a%20note%20on%20Mobula%20diabolus%20%28Shaw%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('3896','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Interesting%20new%20fishes%20of%20three%20genera%20new%20to%20South%20Africa%2C%20with%20a%20note%20on%20Mobula%20diabolus%20%28Shaw%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('3896','scholar')">Scholar</a></div><div class="journal-header">📚 Transactions of the Royal Society of South Australia &nbsp;(1)</div><div class="paper" id="paper-16972" data-doi="10.1080/03721426.2009.10887107" data-title="Oncomegas aetobatidis sp. nov. (Cestoda: Trypanorhyncha), a re-description of O. australiensis Toth, Campbell & Schmidt, 1992 and new records of trypanorhynch cestodes from Australian elasmobranch fishes"><span class="paper-number">15</span>
+<span class="paper-id">ID: 16972</span><span class="doi">10.1080/03721426.2009.10887107</span>
+<div class="title">Oncomegas aetobatidis sp. nov. (Cestoda: Trypanorhyncha), a re-description of O. australiensis Toth, Campbell & Schmidt, 1992 and new records of trypanorhynch cestodes from Australian elasmobranch fishes</div><div class="authors">Campbell, R.A. & Beveridge, I. (2009)</div><div class="year">Year: 2009</div>
+<a href="https://doi.org/10.1080/03721426.2009.10887107" class="url-link" target="_blank" onclick="useRoute('16972','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Oncomegas%20aetobatidis%20sp.%20nov.%20%28Cestoda%3A%20Trypanorhyncha%29%2C%20a%20re-description%20of%20O.%20australiensis%20Toth%2C%20Campbell%20%26%20Schmidt%2C%201992%20and%20new%20records%20of%20trypanorhynch%20cestodes%20from%20Australian%20elasmobranch%20fishes&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('16972','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COncomegas%20aetobatidis%20sp.%20nov.%20%28Cestoda%3A%20Trypanorhyncha%29%2C%20a%20re-description%20of%20O.%20australiensis%20Toth%2C%20Campbell%20%26%20Schmidt%2C%201992%20and%20new%20records%20of%20trypanorhynch%20cestodes%20from%20Australian%20elasmobranch%20fishes&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('16972','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Oncomegas%20aetobatidis%20sp.%20nov.%20%28Cestoda%3A%20Trypanorhyncha%29%2C%20a%20re-description%20of%20O.%20australiensis%20Toth%2C%20Campbell%20%26%20Schmidt%2C%201992%20and%20new%20records%20of%20trypanorhynch%20cestodes%20from%20Australian%20elasmobranch%20fishes" class="alt-link alt-schol" target="_blank" onclick="useRoute('16972','scholar')">Scholar</a></div></div><script>
+    // Same Apps Script endpoint as docs/remaining_downloads.html, so progress made
+    // here lands in the shared record instead of being trapped in one browser.
+    const SHEET = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
+
+    let clicked = new Set();
+    const KEY = 'clicked_' + document.title;
+
+    function paint(id) {
+        const el = document.getElementById('paper-' + id);
+        if (el) { el.style.opacity = '0.5'; el.style.borderLeftColor = '#95a5a6'; }
+    }
+    function refreshCount() { document.getElementById('count').textContent = clicked.size; }
+
+    if (localStorage.getItem(KEY)) {
+        clicked = new Set(JSON.parse(localStorage.getItem(KEY)));
+        refreshCount(); clicked.forEach(paint);
+    }
+
+    // Pull the shared record so a paper someone else already did shows as done.
+    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
+        const done = new Set((res.data || []).map(x => (x.doi || '').trim().toLowerCase()));
+        document.querySelectorAll('.paper').forEach(el => {
+            const d = (el.dataset.doi || '').trim().toLowerCase();
+            if (d && done.has(d)) { clicked.add(el.id.replace('paper-', '')); paint(el.id.replace('paper-', '')); }
+        });
+        localStorage.setItem(KEY, JSON.stringify([...clicked]));
+        refreshCount();
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Synced with the shared record';
+    }).catch(() => {
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Offline — progress saved locally only';
+    });
+
+    function markClicked(id) {
+        if (!clicked.has(id)) {
+            clicked.add(id); refreshCount();
+            localStorage.setItem(KEY, JSON.stringify([...clicked]));
+            paint(id);
+        }
+        // Push to the shared record. no-cors: this is a blind write, we only need it to land.
+        const el = document.getElementById('paper-' + id);
+        const doi = el && el.dataset.doi;
+        if (SHEET && doi) {
+            fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                action: 'markClicked', doi: doi, title: (el.dataset.title || ''),
+                by: (localStorage.getItem('eea_username') || 'Anon'),
+                at: new Date().toISOString()})}).catch(() => {});
+        }
+    }
+
+    // Who am I — shares the eea_username key with the main download helper.
+    function initUser() {
+        const sel = document.getElementById('userName');
+        if (!sel) return;
+        const saved = localStorage.getItem('eea_username');
+        if (saved) sel.value = saved;
+        sel.addEventListener('change', () => localStorage.setItem('eea_username', sel.value));
+    }
+
+    // The library link defaults to FIU, which is no use to anyone else, so let
+    // each person store their own institution's search URL with a {TITLE} slot.
+    const LIBKEY = 'eea_library_url';
+    const LIB_FIU = 'https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any,contains,{TITLE}&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0';
+    const LIB_WORLDCAT = 'https://search.worldcat.org/search?q={TITLE}';
+    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_FIU; }
+    function applyLibrary() {
+        const tpl = libTemplate();
+        document.querySelectorAll('a.alt-fiu').forEach(a => {
+            const p = a.closest('.paper');
+            const t = (p && p.dataset.title) || '';
+            a.href = tpl.replace('{TITLE}', encodeURIComponent(t));
+            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch'
+                          : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
+        });
+        const inp = document.getElementById('libUrl');
+        if (inp) inp.value = tpl;
+    }
+    function saveLibrary() {
+        const v = document.getElementById('libUrl').value.trim();
+        if (v) localStorage.setItem(LIBKEY, v); else localStorage.removeItem(LIBKEY);
+        applyLibrary();
+    }
+    function presetLibrary(which) {
+        localStorage.setItem(LIBKEY, which === 'worldcat' ? LIB_WORLDCAT : LIB_FIU);
+        applyLibrary();
+    }
+    // Route tracker: record which access route worked for each paper (last wins),
+    // so the FIU access-map can be reconstructed from an exported routes JSON.
+    let routes = {};
+    const RKEY = 'routes_' + document.title;
+    if (localStorage.getItem(RKEY)) { try { routes = JSON.parse(localStorage.getItem(RKEY)); } catch(e) {} }
+    function useRoute(id, route) {
+        routes[id] = route; localStorage.setItem(RKEY, JSON.stringify(routes)); markClicked(id);
+    }
+    function exportRoutes() {
+        const blob = new Blob([JSON.stringify(routes, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '_routes.json'; a.click();
+    }
+    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='r') { if (confirm('Reset progress?')) { localStorage.removeItem(KEY); localStorage.removeItem(RKEY); location.reload(); } } });
+
+    initUser();
+    applyLibrary();
+</script></body></html>

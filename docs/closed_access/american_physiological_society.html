@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Closed-access downloads: American Physiological Society</title><style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    .journal-header { background: #2c3e50; color: #fff; padding: 10px 15px; border-radius: 6px; margin: 28px 0 8px; font-size: 1.05em; }
+    .stats { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .paper { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #3498db; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; }
+    .paper:hover { transform: translateX(5px); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+    .paper-number { display: inline-block; background: #3498db; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; margin-right: 10px; }
+    .paper-id { color: #7f8c8d; font-size: 0.9em; margin-left: 10px; }
+    .title { font-weight: bold; color: #2c3e50; margin: 8px 0; }
+    .authors { color: #34495e; font-size: 0.95em; margin: 5px 0; }
+    .year { color: #7f8c8d; font-size: 0.9em; }
+    .url-link { display: inline-block; background: #27ae60; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-top: 10px; font-weight: bold; }
+    .url-link:hover { background: #229954; }
+    .alt-link { display: inline-block; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; margin: 10px 0 0 8px; font-size: 0.85em; font-weight: bold; }
+    .alt-jstor { background: #b03a2e; } .alt-jstor:hover { background: #922b21; }
+    .alt-fiu   { background: #1f618d; } .alt-fiu:hover   { background: #154360; }
+    .alt-schol { background: #7d6608; } .alt-schol:hover { background: #5b4a06; }
+    .export-btn { background: #8e44ad; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; margin-left: 16px; font-size: 0.85em; }
+    .doi { color: #7f8c8d; font-size: 0.85em; margin-left: 12px; }
+    .instructions { background: #fff3cd; border: 1px solid #ffc107; padding: 15px; border-radius: 8px; margin: 20px 0; }
+    .instructions h3 { margin-top: 0; color: #856404; }
+    .progress { background: #fff; padding: 15px; border-radius: 8px; margin: 20px 0; font-weight: bold; color: #27ae60; position: sticky; top: 0; z-index: 10; }
+    .controls { background: #eaf2f8; border: 1px solid #d4e6f1; padding: 12px 15px; border-radius: 8px; margin: 20px 0; }
+    .controls select, .controls input, .controls button { font-size: 0.9em; padding: 3px 8px; border-radius: 4px; border: 1px solid #bdc3c7; }
+    .controls button { cursor: pointer; background: #fff; }
+    .controls button:hover { background: #d6eaf8; }
+</style></head><body>
+<h1>🔒 Closed-access manual downloads: American Physiological Society</h1>
+<div class="stats"><strong>Publisher:</strong> American Physiological Society<br><strong>Total papers:</strong> 31
+&nbsp;across&nbsp;5 journal(s)<br><strong>Generated:</strong> 2026-07-23 19:41</div>
+<div class="instructions"><h3>📋 Instructions</h3><ol>
+<li><strong>Log in once</strong> to your publisher/library access (VPN, FIU OneSearch, JSTOR) before starting.</li>
+<li>Per paper, try routes in order: <strong>Download PDF (DOI)</strong> first; if no access, <strong>JSTOR</strong> → <strong>FIU OneSearch</strong> → <strong>Scholar</strong>. Save the PDF to your Downloads folder (it will be batch-ingested later).</li>
+<li>Clicking any route greys the paper and records <em>which route worked</em> — this feeds the FIU access-map.</li>
+<li>When you finish a page or pause, click <strong>⬇ Export routes</strong> and send the JSON: that reveals which journals/years need the library fallback vs. work direct.</li>
+<li>Journals are ordered alphabetically; clear a whole journal before moving on. Pause every ~25.</li>
+</ol></div>
+<div class="controls">
+<label><strong>You:</strong>
+<select id="userName"><option value="">--</option><option value="Alex">Alex</option><option value="Andrew">Andrew</option><option value="Carylanne">Carylanne</option><option value="Chiara">Chiara</option><option value="Chris">Chris</option><option value="David RG">David RG</option><option value="David S">David S</option><option value="Deven">Deven</option><option value="Dovi">Dovi</option><option value="Elena">Elena</option><option value="Emily">Emily</option><option value="Guuske">Guuske</option><option value="Lola">Lola</option><option value="Nathan">Nathan</option><option value="Nick">Nick</option><option value="Rima">Rima</option><option value="Ryan">Ryan</option><option value="Simon">Simon</option><option value="Sophia">Sophia</option><option value="Tobi-Dawne">Tobi-Dawne</option><option value="Ulrich">Ulrich</option><option value="Other">Other</option></select></label>
+&nbsp;<span id="syncStatus" style="color:#7f8c8d;font-size:0.85em;">Connecting to the shared record…</span>
+<div style="margin-top:8px;font-size:0.85em;">
+<strong>Library link:</strong>
+<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;"
+ title="Your library's search URL. Put {TITLE} where the paper title goes.">
+<button onclick="saveLibrary()">Save</button>
+<button onclick="presetLibrary('fiu')">FIU</button>
+<button onclick="presetLibrary('worldcat')">WorldCat</button>
+<br><em>Not at FIU? Paste your own library search URL with <code>{TITLE}</code> where the title goes; it's remembered on this browser.</em>
+</div></div>
+<div class="progress">Progress: <span id="count">0</span> / 31 papers clicked
+<button class="export-btn" onclick="exportRoutes()">⬇ Export routes</button></div><div id="papers"><div class="journal-header">📚 American Journal of Physiology &nbsp;(6)</div><div class="paper" id="paper-10521" data-doi="10.1152/ajplegacy.1966.211.1.11" data-title="Measurement of gill water flow in Squalus acanthias using the dye-dilution technique"><span class="paper-number">1</span>
+<span class="paper-id">ID: 10521</span><span class="doi">10.1152/ajplegacy.1966.211.1.11</span>
+<div class="title">Measurement of gill water flow in Squalus acanthias using the dye-dilution technique</div><div class="authors">Millen, J.E. & Murdaugh, H.V. & Hearn, D.C. & Robin, E.D. (1966)</div><div class="year">Year: 1966</div>
+<a href="https://doi.org/10.1152/ajplegacy.1966.211.1.11" class="url-link" target="_blank" onclick="useRoute('10521','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Measurement%20of%20gill%20water%20flow%20in%20Squalus%20acanthias%20using%20the%20dye-dilution%20technique&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10521','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CMeasurement%20of%20gill%20water%20flow%20in%20Squalus%20acanthias%20using%20the%20dye-dilution%20technique&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10521','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Measurement%20of%20gill%20water%20flow%20in%20Squalus%20acanthias%20using%20the%20dye-dilution%20technique" class="alt-link alt-schol" target="_blank" onclick="useRoute('10521','scholar')">Scholar</a></div><div class="paper" id="paper-6019" data-doi="10.1152/ajplegacy.1968.215.6.1493" data-title="Osmotic regulation and urea metabolism in the lemon shark Negaprion brevirostris"><span class="paper-number">2</span>
+<span class="paper-id">ID: 6019</span><span class="doi">10.1152/ajplegacy.1968.215.6.1493</span>
+<div class="title">Osmotic regulation and urea metabolism in the lemon shark Negaprion brevirostris</div><div class="authors">Goldstein, L. & Oppelt, W.W. & Maren, T.H. (1968)</div><div class="year">Year: 1968</div>
+<a href="https://doi.org/10.1152/ajplegacy.1968.215.6.1493" class="url-link" target="_blank" onclick="useRoute('6019','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Osmotic%20regulation%20and%20urea%20metabolism%20in%20the%20lemon%20shark%20Negaprion%20brevirostris&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('6019','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2COsmotic%20regulation%20and%20urea%20metabolism%20in%20the%20lemon%20shark%20Negaprion%20brevirostris&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('6019','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Osmotic%20regulation%20and%20urea%20metabolism%20in%20the%20lemon%20shark%20Negaprion%20brevirostris" class="alt-link alt-schol" target="_blank" onclick="useRoute('6019','scholar')">Scholar</a></div><div class="paper" id="paper-10522" data-doi="10.1152/ajplegacy.1968.214.3.635" data-title="Unidirectional fluxes of sodium ions in the spiny dogfish, Squalus acanthias"><span class="paper-number">3</span>
+<span class="paper-id">ID: 10522</span><span class="doi">10.1152/ajplegacy.1968.214.3.635</span>
+<div class="title">Unidirectional fluxes of sodium ions in the spiny dogfish, Squalus acanthias</div><div class="authors">Horowicz, P. & Burger, J.W. (1968)</div><div class="year">Year: 1968</div>
+<a href="https://doi.org/10.1152/ajplegacy.1968.214.3.635" class="url-link" target="_blank" onclick="useRoute('10522','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Unidirectional%20fluxes%20of%20sodium%20ions%20in%20the%20spiny%20dogfish%2C%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10522','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CUnidirectional%20fluxes%20of%20sodium%20ions%20in%20the%20spiny%20dogfish%2C%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10522','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Unidirectional%20fluxes%20of%20sodium%20ions%20in%20the%20spiny%20dogfish%2C%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10522','scholar')">Scholar</a></div><div class="paper" id="paper-10523" data-doi="10.1152/ajplegacy.1969.216.2.440" data-title="H+ buffering and excretion in response to acute hypercapnia in the dogfish Squalus acanthias"><span class="paper-number">4</span>
+<span class="paper-id">ID: 10523</span><span class="doi">10.1152/ajplegacy.1969.216.2.440</span>
+<div class="title">H+ buffering and excretion in response to acute hypercapnia in the dogfish Squalus acanthias</div><div class="authors">Cross, C.E. & Packer, B.S. & Linta, J.M. & Murdaugh, H.V. & Robin, E.D. (1969)</div><div class="year">Year: 1969</div>
+<a href="https://doi.org/10.1152/ajplegacy.1969.216.2.440" class="url-link" target="_blank" onclick="useRoute('10523','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=H%2B%20buffering%20and%20excretion%20in%20response%20to%20acute%20hypercapnia%20in%20the%20dogfish%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10523','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CH%2B%20buffering%20and%20excretion%20in%20response%20to%20acute%20hypercapnia%20in%20the%20dogfish%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10523','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=H%2B%20buffering%20and%20excretion%20in%20response%20to%20acute%20hypercapnia%20in%20the%20dogfish%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10523','scholar')">Scholar</a></div><div class="paper" id="paper-10524" data-doi="10.1152/ajplegacy.1970.219.4.886" data-title="Phlorizin and renal phosphate secretion in the spiny dogfish Squalus acanthias"><span class="paper-number">5</span>
+<span class="paper-id">ID: 10524</span><span class="doi">10.1152/ajplegacy.1970.219.4.886</span>
+<div class="title">Phlorizin and renal phosphate secretion in the spiny dogfish Squalus acanthias</div><div class="authors">Wolbach, R.A. (1970)</div><div class="year">Year: 1970</div>
+<a href="https://doi.org/10.1152/ajplegacy.1970.219.4.886" class="url-link" target="_blank" onclick="useRoute('10524','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Phlorizin%20and%20renal%20phosphate%20secretion%20in%20the%20spiny%20dogfish%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10524','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CPhlorizin%20and%20renal%20phosphate%20secretion%20in%20the%20spiny%20dogfish%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10524','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Phlorizin%20and%20renal%20phosphate%20secretion%20in%20the%20spiny%20dogfish%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10524','scholar')">Scholar</a></div><div class="paper" id="paper-10526" data-doi="10.1152/ajplegacy.1976.230.4.925" data-title="Intracellular osmoregulatory role of amino acids and urea in marine elasmobranchs"><span class="paper-number">6</span>
+<span class="paper-id">ID: 10526</span><span class="doi">10.1152/ajplegacy.1976.230.4.925</span>
+<div class="title">Intracellular osmoregulatory role of amino acids and urea in marine elasmobranchs</div><div class="authors">Forster, R.P. & Goldstein, L. (1976)</div><div class="year">Year: 1976</div>
+<a href="https://doi.org/10.1152/ajplegacy.1976.230.4.925" class="url-link" target="_blank" onclick="useRoute('10526','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Intracellular%20osmoregulatory%20role%20of%20amino%20acids%20and%20urea%20in%20marine%20elasmobranchs&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10526','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CIntracellular%20osmoregulatory%20role%20of%20amino%20acids%20and%20urea%20in%20marine%20elasmobranchs&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10526','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Intracellular%20osmoregulatory%20role%20of%20amino%20acids%20and%20urea%20in%20marine%20elasmobranchs" class="alt-link alt-schol" target="_blank" onclick="useRoute('10526','scholar')">Scholar</a></div><div class="journal-header">📚 American Journal of Physiology. Cell Physiology &nbsp;(4)</div><div class="paper" id="paper-13124" data-doi="10.1152/ajpcell.1986.251.5.c721" data-title="Resolution of apical from basolateral membrane of shark rectal gland"><span class="paper-number">7</span>
+<span class="paper-id">ID: 13124</span><span class="doi">10.1152/ajpcell.1986.251.5.c721</span>
+<div class="title">Resolution of apical from basolateral membrane of shark rectal gland</div><div class="authors">Dubinsky, W.P. & Monti, L.B. (1986)</div><div class="year">Year: 1986</div>
+<a href="https://doi.org/10.1152/ajpcell.1986.251.5.c721" class="url-link" target="_blank" onclick="useRoute('13124','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Resolution%20of%20apical%20from%20basolateral%20membrane%20of%20shark%20rectal%20gland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13124','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CResolution%20of%20apical%20from%20basolateral%20membrane%20of%20shark%20rectal%20gland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13124','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Resolution%20of%20apical%20from%20basolateral%20membrane%20of%20shark%20rectal%20gland" class="alt-link alt-schol" target="_blank" onclick="useRoute('13124','scholar')">Scholar</a></div><div class="paper" id="paper-13126" data-doi="10.1152/AJPCELL.1989.257.2.C377" data-title="Propionate induces cell swelling and K super(+) accumulation in shark rectal gland"><span class="paper-number">8</span>
+<span class="paper-id">ID: 13126</span><span class="doi">10.1152/AJPCELL.1989.257.2.C377</span>
+<div class="title">Propionate induces cell swelling and K super(+) accumulation in shark rectal gland</div><div class="authors">Feldman, G.M. & Ziyadeh, F.N. & Mills, J.W. & Booz, G.W. & Kleinzeller, A. (1989)</div><div class="year">Year: 1989</div>
+<a href="https://doi.org/10.1152/AJPCELL.1989.257.2.C377" class="url-link" target="_blank" onclick="useRoute('13126','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Propionate%20induces%20cell%20swelling%20and%20K%20super%28%2B%29%20accumulation%20in%20shark%20rectal%20gland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13126','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CPropionate%20induces%20cell%20swelling%20and%20K%20super%28%2B%29%20accumulation%20in%20shark%20rectal%20gland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13126','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Propionate%20induces%20cell%20swelling%20and%20K%20super%28%2B%29%20accumulation%20in%20shark%20rectal%20gland" class="alt-link alt-schol" target="_blank" onclick="useRoute('13126','scholar')">Scholar</a></div><div class="paper" id="paper-13127" data-doi="10.1152/ajpcell.1991.260.5.c1125" data-title="Atriopeptin stimulates chloride secretion in cultured shark rectal gland cells"><span class="paper-number">9</span>
+<span class="paper-id">ID: 13127</span><span class="doi">10.1152/ajpcell.1991.260.5.c1125</span>
+<div class="title">Atriopeptin stimulates chloride secretion in cultured shark rectal gland cells</div><div class="authors">Karnaky, K.J. & Valentich, J.D. & Currie, M.G. & Oehlenschlager, W.F. & Kennedy, M.P. (1991)</div><div class="year">Year: 1991</div>
+<a href="https://doi.org/10.1152/ajpcell.1991.260.5.c1125" class="url-link" target="_blank" onclick="useRoute('13127','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Atriopeptin%20stimulates%20chloride%20secretion%20in%20cultured%20shark%20rectal%20gland%20cells&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13127','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAtriopeptin%20stimulates%20chloride%20secretion%20in%20cultured%20shark%20rectal%20gland%20cells&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13127','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Atriopeptin%20stimulates%20chloride%20secretion%20in%20cultured%20shark%20rectal%20gland%20cells" class="alt-link alt-schol" target="_blank" onclick="useRoute('13127','scholar')">Scholar</a></div><div class="paper" id="paper-10541" data-doi="10.1152/AJPCELL.1995.268.1.C70" data-title="cAMP-activated Cl- channels in primary cultures of spiny dogfish (Squalus acanthias) rectal gland"><span class="paper-number">10</span>
+<span class="paper-id">ID: 10541</span><span class="doi">10.1152/AJPCELL.1995.268.1.C70</span>
+<div class="title">cAMP-activated Cl- channels in primary cultures of spiny dogfish (Squalus acanthias) rectal gland</div><div class="authors">Devor, D.C. & Forrest, J.N. & Suggs, W.K. & Frizzell, R.A. (1995)</div><div class="year">Year: 1995</div>
+<a href="https://doi.org/10.1152/AJPCELL.1995.268.1.C70" class="url-link" target="_blank" onclick="useRoute('10541','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=cAMP-activated%20Cl-%20channels%20in%20primary%20cultures%20of%20spiny%20dogfish%20%28Squalus%20acanthias%29%20rectal%20gland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10541','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CcAMP-activated%20Cl-%20channels%20in%20primary%20cultures%20of%20spiny%20dogfish%20%28Squalus%20acanthias%29%20rectal%20gland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10541','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=cAMP-activated%20Cl-%20channels%20in%20primary%20cultures%20of%20spiny%20dogfish%20%28Squalus%20acanthias%29%20rectal%20gland" class="alt-link alt-schol" target="_blank" onclick="useRoute('10541','scholar')">Scholar</a></div><div class="journal-header">📚 American Journal of Physiology. Heart and Circulatory Physiology &nbsp;(1)</div><div class="paper" id="paper-10539" data-doi="10.1152/ajpheart.1993.265.2.h661" data-title="Neuropeptide Y potentiates contractile response to norepinephrine in skate coronary artery"><span class="paper-number">11</span>
+<span class="paper-id">ID: 10539</span><span class="doi">10.1152/ajpheart.1993.265.2.h661</span>
+<div class="title">Neuropeptide Y potentiates contractile response to norepinephrine in skate coronary artery</div><div class="authors">Bjenning, C. & Holmgren, S. & Farrell, A.P. (1993)</div><div class="year">Year: 1993</div>
+<a href="https://doi.org/10.1152/ajpheart.1993.265.2.h661" class="url-link" target="_blank" onclick="useRoute('10539','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Neuropeptide%20Y%20potentiates%20contractile%20response%20to%20norepinephrine%20in%20skate%20coronary%20artery&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10539','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CNeuropeptide%20Y%20potentiates%20contractile%20response%20to%20norepinephrine%20in%20skate%20coronary%20artery&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10539','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Neuropeptide%20Y%20potentiates%20contractile%20response%20to%20norepinephrine%20in%20skate%20coronary%20artery" class="alt-link alt-schol" target="_blank" onclick="useRoute('10539','scholar')">Scholar</a></div><div class="journal-header">📚 American Journal of Physiology. Regulatory &nbsp;(17)</div><div class="paper" id="paper-6005" data-doi="10.1152/ajpregu.1978.234.1.r61" data-title="Comparative aspects of brain barrier systems for non-electrolytes"><span class="paper-number">12</span>
+<span class="paper-id">ID: 6005</span><span class="doi">10.1152/ajpregu.1978.234.1.r61</span>
+<div class="title">Comparative aspects of brain barrier systems for non-electrolytes</div><div class="authors">Cserr, H.F. & Fenstermacher, J.D. & Rall, D.P. (1978)</div><div class="year">Year: 1978</div>
+<a href="https://doi.org/10.1152/ajpregu.1978.234.1.r61" class="url-link" target="_blank" onclick="useRoute('6005','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Comparative%20aspects%20of%20brain%20barrier%20systems%20for%20non-electrolytes&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('6005','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CComparative%20aspects%20of%20brain%20barrier%20systems%20for%20non-electrolytes&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('6005','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Comparative%20aspects%20of%20brain%20barrier%20systems%20for%20non-electrolytes" class="alt-link alt-schol" target="_blank" onclick="useRoute('6005','scholar')">Scholar</a></div><div class="paper" id="paper-13122" data-doi="10.1152/ajprenal.1979.237.2.f138" data-title="Hormonal regulation of active chloride transport in the dogfish rectal gland"><span class="paper-number">13</span>
+<span class="paper-id">ID: 13122</span><span class="doi">10.1152/ajprenal.1979.237.2.f138</span>
+<div class="title">Hormonal regulation of active chloride transport in the dogfish rectal gland</div><div class="authors">Stoff, J.S. & Rosa, R. & Hallac, R. & Silva, P. & Epstein, F.H. (1979)</div><div class="year">Year: 1979</div>
+<a href="https://doi.org/10.1152/ajprenal.1979.237.2.f138" class="url-link" target="_blank" onclick="useRoute('13122','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Hormonal%20regulation%20of%20active%20chloride%20transport%20in%20the%20dogfish%20rectal%20gland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13122','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CHormonal%20regulation%20of%20active%20chloride%20transport%20in%20the%20dogfish%20rectal%20gland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13122','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Hormonal%20regulation%20of%20active%20chloride%20transport%20in%20the%20dogfish%20rectal%20gland" class="alt-link alt-schol" target="_blank" onclick="useRoute('13122','scholar')">Scholar</a></div><div class="paper" id="paper-10528" data-doi="10.1152/ajpregu.1981.241.3.r228" data-title="Systemic arterial pressor responses induced by potassium in dogfish, Squalus acanthias"><span class="paper-number">14</span>
+<span class="paper-id">ID: 10528</span><span class="doi">10.1152/ajpregu.1981.241.3.r228</span>
+<div class="title">Systemic arterial pressor responses induced by potassium in dogfish, Squalus acanthias</div><div class="authors">Opdyke, D.F. & Carroll, R.G. & Keller, N.E. (1981)</div><div class="year">Year: 1981</div>
+<a href="https://doi.org/10.1152/ajpregu.1981.241.3.r228" class="url-link" target="_blank" onclick="useRoute('10528','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Systemic%20arterial%20pressor%20responses%20induced%20by%20potassium%20in%20dogfish%2C%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10528','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CSystemic%20arterial%20pressor%20responses%20induced%20by%20potassium%20in%20dogfish%2C%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10528','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Systemic%20arterial%20pressor%20responses%20induced%20by%20potassium%20in%20dogfish%2C%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10528','scholar')">Scholar</a></div><div class="paper" id="paper-10530" data-doi="10.1152/ajpregu.1982.243.3.r296" data-title="Blood flow in the rectal gland of Squalus acanthias"><span class="paper-number">15</span>
+<span class="paper-id">ID: 10530</span><span class="doi">10.1152/ajpregu.1982.243.3.r296</span>
+<div class="title">Blood flow in the rectal gland of Squalus acanthias</div><div class="authors">Kent, B. & Olson, K.R. (1982)</div><div class="year">Year: 1982</div>
+<a href="https://doi.org/10.1152/ajpregu.1982.243.3.r296" class="url-link" target="_blank" onclick="useRoute('10530','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Blood%20flow%20in%20the%20rectal%20gland%20of%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10530','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CBlood%20flow%20in%20the%20rectal%20gland%20of%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10530','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Blood%20flow%20in%20the%20rectal%20gland%20of%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10530','scholar')">Scholar</a></div><div class="paper" id="paper-10529" data-doi="10.1152/ajpregu.1982.242.1.r70" data-title="Effect of tilting on blood pressure and interstitial fluid pressures of bluefish and smooth dogfish"><span class="paper-number">16</span>
+<span class="paper-id">ID: 10529</span><span class="doi">10.1152/ajpregu.1982.242.1.r70</span>
+<div class="title">Effect of tilting on blood pressure and interstitial fluid pressures of bluefish and smooth dogfish</div><div class="authors">Ogilvy, C.S. & Dubois, A.B. (1982)</div><div class="year">Year: 1982</div>
+<a href="https://doi.org/10.1152/ajpregu.1982.242.1.r70" class="url-link" target="_blank" onclick="useRoute('10529','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Effect%20of%20tilting%20on%20blood%20pressure%20and%20interstitial%20fluid%20pressures%20of%20bluefish%20and%20smooth%20dogfish&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10529','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CEffect%20of%20tilting%20on%20blood%20pressure%20and%20interstitial%20fluid%20pressures%20of%20bluefish%20and%20smooth%20dogfish&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10529','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Effect%20of%20tilting%20on%20blood%20pressure%20and%20interstitial%20fluid%20pressures%20of%20bluefish%20and%20smooth%20dogfish" class="alt-link alt-schol" target="_blank" onclick="useRoute('10529','scholar')">Scholar</a></div><div class="paper" id="paper-10531" data-doi="10.1152/AJPREGU.1983.244.5.R641" data-title="Dual mechanism for catecholamine secretion in the dogfish shark Squalus acanthias"><span class="paper-number">17</span>
+<span class="paper-id">ID: 10531</span><span class="doi">10.1152/AJPREGU.1983.244.5.R641</span>
+<div class="title">Dual mechanism for catecholamine secretion in the dogfish shark Squalus acanthias</div><div class="authors">Opdyke, D.F. & Bullock, J. & Keller, N.E. & Holmes, K. (1983)</div><div class="year">Year: 1983</div>
+<a href="https://doi.org/10.1152/AJPREGU.1983.244.5.R641" class="url-link" target="_blank" onclick="useRoute('10531','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Dual%20mechanism%20for%20catecholamine%20secretion%20in%20the%20dogfish%20shark%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10531','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CDual%20mechanism%20for%20catecholamine%20secretion%20in%20the%20dogfish%20shark%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10531','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Dual%20mechanism%20for%20catecholamine%20secretion%20in%20the%20dogfish%20shark%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10531','scholar')">Scholar</a></div><div class="paper" id="paper-13123" data-doi="10.1152/ajprenal.1983.245.5.f640" data-title="Intracellular chloride activities in the isolated perfused shark rectal gland"><span class="paper-number">18</span>
+<span class="paper-id">ID: 13123</span><span class="doi">10.1152/ajprenal.1983.245.5.f640</span>
+<div class="title">Intracellular chloride activities in the isolated perfused shark rectal gland</div><div class="authors">Welsh, M.J. & Smith, P.L. & Frizzell, R.A. (1983)</div><div class="year">Year: 1983</div>
+<a href="https://doi.org/10.1152/ajprenal.1983.245.5.f640" class="url-link" target="_blank" onclick="useRoute('13123','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Intracellular%20chloride%20activities%20in%20the%20isolated%20perfused%20shark%20rectal%20gland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13123','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CIntracellular%20chloride%20activities%20in%20the%20isolated%20perfused%20shark%20rectal%20gland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13123','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Intracellular%20chloride%20activities%20in%20the%20isolated%20perfused%20shark%20rectal%20gland" class="alt-link alt-schol" target="_blank" onclick="useRoute('13123','scholar')">Scholar</a></div><div class="paper" id="paper-10533" data-doi="10.1152/ajpregu.1984.246.5.r825" data-title="Vascular recovery following hemorrhage in the dogfish shark Squalus acanthias"><span class="paper-number">19</span>
+<span class="paper-id">ID: 10533</span><span class="doi">10.1152/ajpregu.1984.246.5.r825</span>
+<div class="title">Vascular recovery following hemorrhage in the dogfish shark Squalus acanthias</div><div class="authors">Carroll, R.G. & Opdyke, D.F. & Keller, N.E. (1984)</div><div class="year">Year: 1984</div>
+<a href="https://doi.org/10.1152/ajpregu.1984.246.5.r825" class="url-link" target="_blank" onclick="useRoute('10533','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Vascular%20recovery%20following%20hemorrhage%20in%20the%20dogfish%20shark%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10533','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CVascular%20recovery%20following%20hemorrhage%20in%20the%20dogfish%20shark%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10533','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Vascular%20recovery%20following%20hemorrhage%20in%20the%20dogfish%20shark%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10533','scholar')">Scholar</a></div><div class="paper" id="paper-10534" data-doi="10.1152/ajpregu.1985.249.3.r348" data-title="Atriopeptin stimulation of rectal gland function in Squalus acanthias"><span class="paper-number">20</span>
+<span class="paper-id">ID: 10534</span><span class="doi">10.1152/ajpregu.1985.249.3.r348</span>
+<div class="title">Atriopeptin stimulation of rectal gland function in Squalus acanthias</div><div class="authors">Solomon, R. & Taylor, M. & Dorsey, D. & Silva, P. & Epstein, F.H. (1985)</div><div class="year">Year: 1985</div>
+<a href="https://doi.org/10.1152/ajpregu.1985.249.3.r348" class="url-link" target="_blank" onclick="useRoute('10534','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Atriopeptin%20stimulation%20of%20rectal%20gland%20function%20in%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10534','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CAtriopeptin%20stimulation%20of%20rectal%20gland%20function%20in%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10534','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Atriopeptin%20stimulation%20of%20rectal%20gland%20function%20in%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10534','scholar')">Scholar</a></div><div class="paper" id="paper-13128" data-doi="10.1152/ajpregu.1992.263.4.r741" data-title="Digital image analysis of shark gills: Modeling of oxygen transfer in the domain of time"><span class="paper-number">21</span>
+<span class="paper-id">ID: 13128</span><span class="doi">10.1152/ajpregu.1992.263.4.r741</span>
+<div class="title">Digital image analysis of shark gills: Modeling of oxygen transfer in the domain of time</div><div class="authors">Bhargava, V. & Lai, N.C. & Graham, J.B. & Hempleman, S.C. & Shabetai, R. (1992)</div><div class="year">Year: 1992</div>
+<a href="https://doi.org/10.1152/ajpregu.1992.263.4.r741" class="url-link" target="_blank" onclick="useRoute('13128','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Digital%20image%20analysis%20of%20shark%20gills%3A%20Modeling%20of%20oxygen%20transfer%20in%20the%20domain%20of%20time&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('13128','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CDigital%20image%20analysis%20of%20shark%20gills%3A%20Modeling%20of%20oxygen%20transfer%20in%20the%20domain%20of%20time&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('13128','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Digital%20image%20analysis%20of%20shark%20gills%3A%20Modeling%20of%20oxygen%20transfer%20in%20the%20domain%20of%20time" class="alt-link alt-schol" target="_blank" onclick="useRoute('13128','scholar')">Scholar</a></div><div class="paper" id="paper-10538" data-doi="10.1152/ajpregu.1992.262.4.r707" data-title="C-type natriuretic Peptides stimulate chloride secretion in the rectal gland of Squalus acanthias"><span class="paper-number">22</span>
+<span class="paper-id">ID: 10538</span><span class="doi">10.1152/ajpregu.1992.262.4.r707</span>
+<div class="title">C-type natriuretic Peptides stimulate chloride secretion in the rectal gland of Squalus acanthias</div><div class="authors">Solomon, R. & Protter, A. & Mcenroe, G. & Porter, J.G. & Silva, P. (1992)</div><div class="year">Year: 1992</div>
+<a href="https://doi.org/10.1152/ajpregu.1992.262.4.r707" class="url-link" target="_blank" onclick="useRoute('10538','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=C-type%20natriuretic%20Peptides%20stimulate%20chloride%20secretion%20in%20the%20rectal%20gland%20of%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10538','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CC-type%20natriuretic%20Peptides%20stimulate%20chloride%20secretion%20in%20the%20rectal%20gland%20of%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10538','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=C-type%20natriuretic%20Peptides%20stimulate%20chloride%20secretion%20in%20the%20rectal%20gland%20of%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10538','scholar')">Scholar</a></div><div class="paper" id="paper-10540" data-doi="10.1152/ajpregu.1993.265.3.r573" data-title="Cardiovascular actions of dogfish urotensin II in the dogfish Scyliorhinus canicula"><span class="paper-number">23</span>
+<span class="paper-id">ID: 10540</span><span class="doi">10.1152/ajpregu.1993.265.3.r573</span>
+<div class="title">Cardiovascular actions of dogfish urotensin II in the dogfish Scyliorhinus canicula</div><div class="authors">Hazon, N. & Bjenning, C. & Conlon, J.M. (1993)</div><div class="year">Year: 1993</div>
+<a href="https://doi.org/10.1152/ajpregu.1993.265.3.r573" class="url-link" target="_blank" onclick="useRoute('10540','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Cardiovascular%20actions%20of%20dogfish%20urotensin%20II%20in%20the%20dogfish%20Scyliorhinus%20canicula&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10540','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CCardiovascular%20actions%20of%20dogfish%20urotensin%20II%20in%20the%20dogfish%20Scyliorhinus%20canicula&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10540','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Cardiovascular%20actions%20of%20dogfish%20urotensin%20II%20in%20the%20dogfish%20Scyliorhinus%20canicula" class="alt-link alt-schol" target="_blank" onclick="useRoute('10540','scholar')">Scholar</a></div><div class="paper" id="paper-10542" data-doi="10.1152/ajpregu.1995.268.6.r1359" data-title="Characterization of the endogenous intestinal peptide that stimulates the rectal gland of Scyliorhinus canicula"><span class="paper-number">24</span>
+<span class="paper-id">ID: 10542</span><span class="doi">10.1152/ajpregu.1995.268.6.r1359</span>
+<div class="title">Characterization of the endogenous intestinal peptide that stimulates the rectal gland of Scyliorhinus canicula</div><div class="authors">Anderson, W.G. & Conlon, J.M. & Hazon, N. (1995)</div><div class="year">Year: 1995</div>
+<a href="https://doi.org/10.1152/ajpregu.1995.268.6.r1359" class="url-link" target="_blank" onclick="useRoute('10542','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Characterization%20of%20the%20endogenous%20intestinal%20peptide%20that%20stimulates%20the%20rectal%20gland%20of%20Scyliorhinus%20canicula&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10542','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CCharacterization%20of%20the%20endogenous%20intestinal%20peptide%20that%20stimulates%20the%20rectal%20gland%20of%20Scyliorhinus%20canicula&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10542','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Characterization%20of%20the%20endogenous%20intestinal%20peptide%20that%20stimulates%20the%20rectal%20gland%20of%20Scyliorhinus%20canicula" class="alt-link alt-schol" target="_blank" onclick="useRoute('10542','scholar')">Scholar</a></div><div class="paper" id="paper-10543" data-doi="10.1152/ajpregu.1995.269.2.r389" data-title="Myometrium of the spiny dogfish Squalus acanthias: peptide and steroid regulation"><span class="paper-number">25</span>
+<span class="paper-id">ID: 10543</span><span class="doi">10.1152/ajpregu.1995.269.2.r389</span>
+<div class="title">Myometrium of the spiny dogfish Squalus acanthias: peptide and steroid regulation</div><div class="authors">Sorbera, L.A. & Callard, I.P. (1995)</div><div class="year">Year: 1995</div>
+<a href="https://doi.org/10.1152/ajpregu.1995.269.2.r389" class="url-link" target="_blank" onclick="useRoute('10543','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Myometrium%20of%20the%20spiny%20dogfish%20Squalus%20acanthias%3A%20peptide%20and%20steroid%20regulation&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10543','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CMyometrium%20of%20the%20spiny%20dogfish%20Squalus%20acanthias%3A%20peptide%20and%20steroid%20regulation&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10543','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Myometrium%20of%20the%20spiny%20dogfish%20Squalus%20acanthias%3A%20peptide%20and%20steroid%20regulation" class="alt-link alt-schol" target="_blank" onclick="useRoute('10543','scholar')">Scholar</a></div><div class="paper" id="paper-10544" data-doi="10.1152/ajpregu.1997.273.1.r134" data-title="Characteristics of renal Na(+)-D-glucose cotransport in the skate (Raja erinacea) and shark (Squalus acanthias)"><span class="paper-number">26</span>
+<span class="paper-id">ID: 10544</span><span class="doi">10.1152/ajpregu.1997.273.1.r134</span>
+<div class="title">Characteristics of renal Na(+)-D-glucose cotransport in the skate (Raja erinacea) and shark (Squalus acanthias)</div><div class="authors">Kipp, H. & Kinne-Saffran, E. & Bevan, C. & Kinne, R.K. (1997)</div><div class="year">Year: 1997</div>
+<a href="https://doi.org/10.1152/ajpregu.1997.273.1.r134" class="url-link" target="_blank" onclick="useRoute('10544','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Characteristics%20of%20renal%20Na%28%2B%29-D-glucose%20cotransport%20in%20the%20skate%20%28Raja%20erinacea%29%20and%20shark%20%28Squalus%20acanthias%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10544','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CCharacteristics%20of%20renal%20Na%28%2B%29-D-glucose%20cotransport%20in%20the%20skate%20%28Raja%20erinacea%29%20and%20shark%20%28Squalus%20acanthias%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10544','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Characteristics%20of%20renal%20Na%28%2B%29-D-glucose%20cotransport%20in%20the%20skate%20%28Raja%20erinacea%29%20and%20shark%20%28Squalus%20acanthias%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('10544','scholar')">Scholar</a></div><div class="paper" id="paper-10546" data-doi="10.1152/ajpregu.1999.277.6.r1725" data-title="Mode of activation of salt secretion by C-type natriuretic peptide in the shark rectal gland"><span class="paper-number">27</span>
+<span class="paper-id">ID: 10546</span><span class="doi">10.1152/ajpregu.1999.277.6.r1725</span>
+<div class="title">Mode of activation of salt secretion by C-type natriuretic peptide in the shark rectal gland</div><div class="authors">Silva, P. & Solomon, R.J. & Epstein, F.H. (1999)</div><div class="year">Year: 1999</div>
+<a href="https://doi.org/10.1152/ajpregu.1999.277.6.r1725" class="url-link" target="_blank" onclick="useRoute('10546','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Mode%20of%20activation%20of%20salt%20secretion%20by%20C-type%20natriuretic%20peptide%20in%20the%20shark%20rectal%20gland&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10546','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CMode%20of%20activation%20of%20salt%20secretion%20by%20C-type%20natriuretic%20peptide%20in%20the%20shark%20rectal%20gland&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10546','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Mode%20of%20activation%20of%20salt%20secretion%20by%20C-type%20natriuretic%20peptide%20in%20the%20shark%20rectal%20gland" class="alt-link alt-schol" target="_blank" onclick="useRoute('10546','scholar')">Scholar</a></div><div class="paper" id="paper-7974" data-doi="10.1152/ajpregu.2001.280.1.r16" data-title="Active urea transport and an unusual basolateral membrane composition in the gills of a marine elasmobranch"><span class="paper-number">28</span>
+<span class="paper-id">ID: 7974</span><span class="doi">10.1152/ajpregu.2001.280.1.r16</span>
+<div class="title">Active urea transport and an unusual basolateral membrane composition in the gills of a marine elasmobranch</div><div class="authors">Fines, G.A. & Ballantyne, J.S. & Wright, P.A. (2001)</div><div class="year">Year: 2001</div>
+<a href="https://doi.org/10.1152/ajpregu.2001.280.1.r16" class="url-link" target="_blank" onclick="useRoute('7974','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Active%20urea%20transport%20and%20an%20unusual%20basolateral%20membrane%20composition%20in%20the%20gills%20of%20a%20marine%20elasmobranch&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('7974','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CActive%20urea%20transport%20and%20an%20unusual%20basolateral%20membrane%20composition%20in%20the%20gills%20of%20a%20marine%20elasmobranch&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('7974','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Active%20urea%20transport%20and%20an%20unusual%20basolateral%20membrane%20composition%20in%20the%20gills%20of%20a%20marine%20elasmobranch" class="alt-link alt-schol" target="_blank" onclick="useRoute('7974','scholar')">Scholar</a></div><div class="journal-header">📚 American Journal of Physiology. Renal Physiology &nbsp;(3)</div><div class="paper" id="paper-10536" data-doi="10.1152/ajprenal.1986.250.3.f516" data-title="Stoichiometry of sodium chloride transport by rectal gland of Squalus acanthias"><span class="paper-number">29</span>
+<span class="paper-id">ID: 10536</span><span class="doi">10.1152/ajprenal.1986.250.3.f516</span>
+<div class="title">Stoichiometry of sodium chloride transport by rectal gland of Squalus acanthias</div><div class="authors">Silva, P. & Myers, M.A. (1986)</div><div class="year">Year: 1986</div>
+<a href="https://doi.org/10.1152/ajprenal.1986.250.3.f516" class="url-link" target="_blank" onclick="useRoute('10536','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Stoichiometry%20of%20sodium%20chloride%20transport%20by%20rectal%20gland%20of%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10536','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CStoichiometry%20of%20sodium%20chloride%20transport%20by%20rectal%20gland%20of%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10536','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Stoichiometry%20of%20sodium%20chloride%20transport%20by%20rectal%20gland%20of%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10536','scholar')">Scholar</a></div><div class="paper" id="paper-10535" data-doi="10.1152/ajprenal.1986.250.2.f288" data-title="Dissociation of CO2 hydration and renal acid secretion in the dogfish, Squalus acanthias"><span class="paper-number">30</span>
+<span class="paper-id">ID: 10535</span><span class="doi">10.1152/ajprenal.1986.250.2.f288</span>
+<div class="title">Dissociation of CO2 hydration and renal acid secretion in the dogfish, Squalus acanthias</div><div class="authors">Swenson, E.R. & Maren, T.H. (1986)</div><div class="year">Year: 1986</div>
+<a href="https://doi.org/10.1152/ajprenal.1986.250.2.f288" class="url-link" target="_blank" onclick="useRoute('10535','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Dissociation%20of%20CO2%20hydration%20and%20renal%20acid%20secretion%20in%20the%20dogfish%2C%20Squalus%20acanthias&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10535','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CDissociation%20of%20CO2%20hydration%20and%20renal%20acid%20secretion%20in%20the%20dogfish%2C%20Squalus%20acanthias&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10535','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Dissociation%20of%20CO2%20hydration%20and%20renal%20acid%20secretion%20in%20the%20dogfish%2C%20Squalus%20acanthias" class="alt-link alt-schol" target="_blank" onclick="useRoute('10535','scholar')">Scholar</a></div><div class="paper" id="paper-10537" data-doi="10.1152/ajprenal.1991.261.4.f734" data-title="Identification of C-type natriuretic peptide in heart of spiny dogfish shark (Squalus acanthias)"><span class="paper-number">31</span>
+<span class="paper-id">ID: 10537</span><span class="doi">10.1152/ajprenal.1991.261.4.f734</span>
+<div class="title">Identification of C-type natriuretic peptide in heart of spiny dogfish shark (Squalus acanthias)</div><div class="authors">Schofield, J.P. & Jones, D.S. & Forrest, J.N. (1991)</div><div class="year">Year: 1991</div>
+<a href="https://doi.org/10.1152/ajprenal.1991.261.4.f734" class="url-link" target="_blank" onclick="useRoute('10537','doi')">📥 Download PDF (DOI)</a>
+<a href="https://www.jstor.org/action/doBasicSearch?Query=Identification%20of%20C-type%20natriuretic%20peptide%20in%20heart%20of%20spiny%20dogfish%20shark%20%28Squalus%20acanthias%29&so=rel" class="alt-link alt-jstor" target="_blank" onclick="useRoute('10537','jstor')">JSTOR</a>
+<a href="https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any%2Ccontains%2CIdentification%20of%20C-type%20natriuretic%20peptide%20in%20heart%20of%20spiny%20dogfish%20shark%20%28Squalus%20acanthias%29&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0" class="alt-link alt-fiu" target="_blank" onclick="useRoute('10537','fiu')">FIU OneSearch</a>
+<a href="https://scholar.google.com/scholar?q=Identification%20of%20C-type%20natriuretic%20peptide%20in%20heart%20of%20spiny%20dogfish%20shark%20%28Squalus%20acanthias%29" class="alt-link alt-schol" target="_blank" onclick="useRoute('10537','scholar')">Scholar</a></div></div><script>
+    // Same Apps Script endpoint as docs/remaining_downloads.html, so progress made
+    // here lands in the shared record instead of being trapped in one browser.
+    const SHEET = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
+
+    let clicked = new Set();
+    const KEY = 'clicked_' + document.title;
+
+    function paint(id) {
+        const el = document.getElementById('paper-' + id);
+        if (el) { el.style.opacity = '0.5'; el.style.borderLeftColor = '#95a5a6'; }
+    }
+    function refreshCount() { document.getElementById('count').textContent = clicked.size; }
+
+    if (localStorage.getItem(KEY)) {
+        clicked = new Set(JSON.parse(localStorage.getItem(KEY)));
+        refreshCount(); clicked.forEach(paint);
+    }
+
+    // Pull the shared record so a paper someone else already did shows as done.
+    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
+        const done = new Set((res.data || []).map(x => (x.doi || '').trim().toLowerCase()));
+        document.querySelectorAll('.paper').forEach(el => {
+            const d = (el.dataset.doi || '').trim().toLowerCase();
+            if (d && done.has(d)) { clicked.add(el.id.replace('paper-', '')); paint(el.id.replace('paper-', '')); }
+        });
+        localStorage.setItem(KEY, JSON.stringify([...clicked]));
+        refreshCount();
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Synced with the shared record';
+    }).catch(() => {
+        const s = document.getElementById('syncStatus');
+        if (s) s.textContent = 'Offline — progress saved locally only';
+    });
+
+    function markClicked(id) {
+        if (!clicked.has(id)) {
+            clicked.add(id); refreshCount();
+            localStorage.setItem(KEY, JSON.stringify([...clicked]));
+            paint(id);
+        }
+        // Push to the shared record. no-cors: this is a blind write, we only need it to land.
+        const el = document.getElementById('paper-' + id);
+        const doi = el && el.dataset.doi;
+        if (SHEET && doi) {
+            fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify({
+                action: 'markClicked', doi: doi, title: (el.dataset.title || ''),
+                by: (localStorage.getItem('eea_username') || 'Anon'),
+                at: new Date().toISOString()})}).catch(() => {});
+        }
+    }
+
+    // Who am I — shares the eea_username key with the main download helper.
+    function initUser() {
+        const sel = document.getElementById('userName');
+        if (!sel) return;
+        const saved = localStorage.getItem('eea_username');
+        if (saved) sel.value = saved;
+        sel.addEventListener('change', () => localStorage.setItem('eea_username', sel.value));
+    }
+
+    // The library link defaults to FIU, which is no use to anyone else, so let
+    // each person store their own institution's search URL with a {TITLE} slot.
+    const LIBKEY = 'eea_library_url';
+    const LIB_FIU = 'https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any,contains,{TITLE}&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0';
+    const LIB_WORLDCAT = 'https://search.worldcat.org/search?q={TITLE}';
+    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_FIU; }
+    function applyLibrary() {
+        const tpl = libTemplate();
+        document.querySelectorAll('a.alt-fiu').forEach(a => {
+            const p = a.closest('.paper');
+            const t = (p && p.dataset.title) || '';
+            a.href = tpl.replace('{TITLE}', encodeURIComponent(t));
+            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch'
+                          : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
+        });
+        const inp = document.getElementById('libUrl');
+        if (inp) inp.value = tpl;
+    }
+    function saveLibrary() {
+        const v = document.getElementById('libUrl').value.trim();
+        if (v) localStorage.setItem(LIBKEY, v); else localStorage.removeItem(LIBKEY);
+        applyLibrary();
+    }
+    function presetLibrary(which) {
+        localStorage.setItem(LIBKEY, which === 'worldcat' ? LIB_WORLDCAT : LIB_FIU);
+        applyLibrary();
+    }
+    // Route tracker: record which access route worked for each paper (last wins),
+    // so the FIU access-map can be reconstructed from an exported routes JSON.
+    let routes = {};
+    const RKEY = 'routes_' + document.title;
+    if (localStorage.getItem(RKEY)) { try { routes = JSON.parse(localStorage.getItem(RKEY)); } catch(e) {} }
+    function useRoute(id, route) {
+        routes[id] = route; localStorage.setItem(RKEY, JSON.stringify(routes)); markClicked(id);
+    }
+    function exportRoutes() {
+        const blob = new Blob([JSON.stringify(routes, null, 2)], {type: 'application/json'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '_routes.json'; a.click();
+    }
+    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='r') { if (confirm('Reset progress?')) { localStorage.removeItem(KEY); localStorage.removeItem(RKEY); location.reload(); } } });
+
+    initUser();
+    applyLibrary();
+</script></body></html>
