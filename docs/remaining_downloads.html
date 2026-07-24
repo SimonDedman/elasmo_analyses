@@ -112,6 +112,7 @@
             </div>
             <button class="btn-clear" onclick="clearAllFilters()">Clear</button>
             <label style="font-size: 11px; white-space: nowrap;"><input type="checkbox" id="hideClicked"> Hide clicked</label>
+            <label style="font-size: 11px; white-space: nowrap;" title="Conference abstracts flagged as triage:conference_abstract — the full text usually never existed, so they are hidden by default."><input type="checkbox" id="showAbstracts"> Include conference abstracts (<span id="abstractCount">0</span>)</label>
             <span class="sync-status" id="syncStatus">...</span>
         </div>
 
@@ -228,10 +229,33 @@
         $('#hideClicked').on('change',function(){applyHideFilter();});
 
         $.getJSON('papers_data.json',function(data){
-            paperData=data;var total=data.length;
+            paperData=data;
+            // Conference abstracts (triage:conference_abstract) are hidden by default:
+            // the full text generally never existed, so they aren't downloadable work.
+            // Kept in the data rather than deleted — Carylanne's abstract archive may
+            // make them obtainable after all, at which point the flag can be cleared.
+            var isAbs=function(r){return r.triage==='conference_abstract';};
+            var nAbs=data.filter(isAbs).length;
+            $('#abstractCount').text(nAbs);
+            var total=data.length-nAbs;
             var oaOpen=['gold','green','hybrid','bronze'];
-            var oaAvail=data.filter(function(r){return oaOpen.indexOf(r.oa_status)>=0;}).length;
+            var oaAvail=data.filter(function(r){return !isAbs(r)&&oaOpen.indexOf(r.oa_status)>=0;}).length;
             $('#stat-total').text(total);$('#stat-oa').text(oaAvail);$('#stat-closed').text(total-oaAvail);
+            // Always-on filter; the checkbox decides whether abstracts pass.
+            $.fn.dataTable.ext.search.push(function(s,d,dataIndex){
+                if($('#showAbstracts').is(':checked'))return true;
+                var rec=paperData[dataIndex];
+                return !(rec&&isAbs(rec));
+            });
+            $('#showAbstracts').on('change',function(){
+                var show=$(this).is(':checked');
+                $('#stat-total').text(show?data.length:total);
+                $('#stat-oa').text(show
+                    ?data.filter(function(r){return oaOpen.indexOf(r.oa_status)>=0;}).length
+                    :oaAvail);
+                $('#stat-closed').text((show?data.length:total)-parseInt($('#stat-oa').text(),10));
+                if(dataTable)dataTable.draw();
+            });
 
             // Journal dropdown with counts — sorted alphabetically
             var jc={};data.forEach(function(r){var j=(r.journal_clean||r.journal||'Unknown').trim();jc[j]=(jc[j]||0)+1;});
