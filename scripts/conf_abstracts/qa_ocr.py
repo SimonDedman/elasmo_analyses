@@ -41,12 +41,18 @@ def text_quality(pdf) -> dict:
 
 
 def ensure_ocr(pdf, scratch: Path = OCR_SCRATCH, backup_dir: Path = None,
-               timeout=21600) -> dict:
+               timeout=21600, only_no_text: bool = True) -> dict:
     """Re-OCR the PDF in place if its text quality is poor. Returns a dict with
-    before/after status and whether it was re-OCR'd."""
+    before/after status and whether it was re-OCR'd.
+
+    only_no_text=True (default) re-OCRs only files with essentially no text
+    layer; already-OCR'd 'low_quality' scans are left alone (re-OCR of a
+    degraded scan does not improve it — see project_ocr_relang_pipeline)."""
     pdf = Path(pdf)
     before = text_quality(pdf)
-    if before["status"] == "ok":
+    trigger = "no_text" if only_no_text else ("no_text", "low_quality")
+    skip = before["status"] not in (trigger if isinstance(trigger, tuple) else (trigger,))
+    if skip:
         return dict(reocr=False, before=before, after=before)
 
     scratch = Path(scratch)

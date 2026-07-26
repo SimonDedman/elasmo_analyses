@@ -37,7 +37,12 @@ def list_pdfs(only=None):
     pdfs = []
     for d, is_ocr in ((config.DIGITISED, False), (config.UNDIGITISED, True)):
         if d.exists():
-            for p in sorted(d.glob("*.pdf")):
+            # case-insensitive: catch both .pdf and .PDF
+            seen = set()
+            for p in sorted(d.iterdir()):
+                if p.suffix.lower() != ".pdf" or p.name in seen:
+                    continue
+                seen.add(p.name)
                 if only and not fnmatch.fnmatch(p.name, only):
                     continue
                 pdfs.append((p, is_ocr))
