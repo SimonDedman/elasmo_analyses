@@ -6,6 +6,7 @@ no explicit society signal is present.
 import re
 
 from conf_abstracts import llm
+from conf_abstracts.lexicon import is_elasmo_text
 from conf_abstracts.sessions import parse_session_line
 
 _TRAIL_DIGITS = re.compile(r"[\d\*†‡,;]+$")
@@ -84,14 +85,22 @@ def extract_fields(block: dict, meeting: str, fmt: str = "jmih_book",
     rec["confidence"] = round(max(conf, 0.0), 2)
     rec["needs_review"] = 1 if conf < 0.7 else 0
 
-    # LLM society inference only when structure gave no society and we have text
-    if use_llm and not rec["societies_explicit"] and title and body \
+    # Content inference only when structure gave no explicit society.
+    if not rec["societies_explicit"] and (title or body) \
             and meeting not in ("SI", "EEA"):
-        got = llm.infer_society(title, body)
-        if got:
-            rec["society_inferred"] = got.get("society")
-            rec["_llm_is_elasmo"] = got.get("is_elasmo")
-            if got.get("confidence"):
-                rec["confidence"] = round(min(rec["confidence"] or 1.0,
-                                              0.5 + got["confidence"] / 2), 2)
+        # 1. Deterministic elasmo lexicon (reliable for the elasmo flag).
+        if is_elasmo_text(title, body):
+            rec["society_inferred"] = "AES"
+            rec["_llm_is_elasmo"] = True
+        # 2. Otherwise ask the LLM to split fish (ASIH/NIA) vs herp (HL/SSAR).
+        elif use_llm and title and body:
+            got = llm.infer_society(title, body)
+            if got:
+                soc = got.get("society")
+                # trust the lexicon over the LLM for AES; LLM only for non-elasmo
+                rec["society_inferred"] = soc if soc in ("ASIH", "HL", "SSAR", "NIA") else soc
+                rec["_llm_is_elasmo"] = False
+                if got.get("confidence"):
+                    rec["confidence"] = round(min(rec["confidence"] or 1.0,
+                                                  0.5 + got["confidence"] / 2), 2)
     return rec

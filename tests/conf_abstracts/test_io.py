@@ -7,6 +7,15 @@ from conf_abstracts import segment, extract, schema, load, export, qa_ocr
 FIX = Path(__file__).resolve().parent / "fixtures" / "jmih2016_p50.txt"
 
 
+def test_elasmo_lexicon():
+    from conf_abstracts.lexicon import is_elasmo_text
+    assert is_elasmo_text("Growth Rates of Smalltooth Sawfish Pristis pectinata", "")
+    assert is_elasmo_text("Population genetics of the cownose ray", "Rhinoptera bonasus")
+    assert is_elasmo_text("Diet of the little skate", "Leucoraja erinacea")
+    assert not is_elasmo_text("Calling Phenology of Coastal Prairie Anurans", "frogs")
+    assert not is_elasmo_text("Osteology of Nurseryfish", "Kurtus gulliveri")
+
+
 def test_qa_classify():
     assert qa_ocr._classify(0, 0.0) == "no_text"
     assert qa_ocr._classify(5000, 0.30) == "low_quality"
