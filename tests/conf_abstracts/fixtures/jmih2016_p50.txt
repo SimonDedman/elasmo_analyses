@@ -1,0 +1,172 @@
+molecular phylogenetic analysis designed to resolve species-level relationships across
+the whole family. We analyze 5,400 bp of DNA from nuclear and mitochondrial markers
+for 45 species in 14 genera. In order to understand evolutionary patterns among
+geographically disparate faunas, samples were included from the western and eastern
+Amazon, Orinoco, Upper Madeira, Essequibo, Magdalena, Maracaibo, and La Plata
+basins. Our Bayesian and Maximum Likelihood topologies corroborate previous
+findings of Sternarchorhamphinae as the sister to all other apteronotids and indicate
+novel positions for the Amazonian endemic genera Magosternarchus and Pariosternarchus,
+and find that the poorly-defined Porotergus is monophyletic. Our results further show
+short branch lengths in the clade of the morphologically diverse deep-channel specialists
+consisting of Sternarchorhynchus + Navajini, suggesting rapid evolution associated with
+this habitat.
+______________________________________________________________________________
+
+0017 Fish Morphology & Biogeography, Salon A-C, Sunday 10 July 2016
+Tim Berra1, You He2, Dion Wedd3
+1The Ohio State University, Dept. of Evolution, Ecology & Organismal Biology,
+
+Mansfield, OH, USA, 2Shanghai Synchrotron Radiation Facility, Shanghai Institute of
+Applied Physics, Chinese Academy of Sciences, Shanghai, China, 3Territory Wildlife
+Park, Parks and Wildlife Commission of the Northern Territory, Palmerston, Northern
+Territory, Australia
+A Microtomographic Osteology of the Forehead Hook of Nurseryfish, Kurtus
+gulliveri (Perciformes: Kurtidae)
+The nurseryfish, Kurtus gulliveri, is known for "forehead brooding" parental care
+behavior in which the adult male carries the egg mass on a hook that overhangs the
+"forehead". We employed X-ray microtomography to investigate the neurocranium with
+focus on the supraoccipital bone in a series of specimens from postflexion larva to adult
+male and female (10-200 mm SL). A slit-like cavity appeared in the SOC in the late
+postflexion-stage. The SOC can be divided into three parts anteroposteriorly in juveniles
+and adult females by reference to the cavity. 1. The crest rostrum is the most anterior
+end of the supraoccipital. 2. The intermediate segment contains a slit-like cavity filled
+with soft tissue. 3. The crest tail expands posteroventraly. The hook in adult males is
+derived from this basic configuration by resorption of the crest rostrum and forward
+growth of the anterior part of the intermediate segment. The cavity within the
+intermediate segment extends into the hook's protruding termination. This cavity may
+accommodate vessels nourishing the SOC. By comparison, in apogonid fishes, putative
+sister group of the Kurtidae, the SOC is a simple laminar structure without any cavity.
+Based on the above findings, we suggest that the cavity within the SOC is a unique
+osteological feature and may represent an anatomical pre-adaption for K. gulliveri that
+allowed the peculiar supraoccpital hook to evolve and constitute the osteological basis
+of forehead brooding parental care.
+______________________________________________________________________________
+48
+
+0974 AES Sawfishes Symposium, Salon E, Sunday 10 July 2016
+Dana Bethea1, John Carlson1, R. Dean Grubbs2, Gregg Poulakis3
+1NOAA Fisheries Southeast Fisheries Science Center Panama City Laboratory, Panama
+
+City, FL, USA, 2Florida State University Coastal and Marine Laboratory, St. Teresa, FL,
+USA, 3Florida Fish and Wildlife Conservation Commission Port Charlotte Field
+Laboratory, Port Charlotte, FL, USA
+Growth Rates of Smalltooth Sawfish, Pristis pectinata, Using Lengthfrequency and Tag-recapture Data
+Predicting the recovery of an endangered species requires a clear understanding of its
+life history, including species-specific growth rates. To examine the growth rates of
+smalltooth sawfish, Pristis pectinata, we used length-frequency and tag-recapture data of
+animals collected 2009 to 2015 in southwest Florida USA. Stretched total length (STL)
+data from 621 captures (64 - 455 cm) and 137 recaptures (69 - 417 cm) were used for
+analyses. Length-frequency data showed modes at 80 - 85, 155 - 175, and 405 cm STL;
+however majority of the data were from animals less than 220 cm STL (n=580 captures,
+134 recaptures). Animals were collected in all months, with 72% captured March to July.
+Data were analyzed using the ELEFAN II and PROJMAT methods to fit seasonal and
+non-seasonal von Bertalanffy growth functions. Growth parameters estimated from
+length-frequency data were Linf = 501 - 572 cm STL, k = 0.19 - 0.26 year-1, and t0 = -0.93
+- -0.70 years, depending on the model used. Growth parameters for tag-recapture data
+were analyzed using the GROTAG method and were similar to that from lengthfrequency data (Linf = 424 cm STL, k = 0.23 year-1). This study supports published
+information for smalltooth sawfish and suggests this species has more rapid growth,
+especially during the first year, than has previously been reported.
+______________________________________________________________________________
+
+0665 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Alannah Biega1, Dan Greenberg1, Arne Mooers1, Owen Jones2, Tom Martin3
+1Simon Fraser University, Burnaby, Canada, 2Max-Planck Odense Center, Odense,
+
+Denmark, 3Operation Wallacea, Lincolnshire, UK
+Assessing Amphibians held Ex Situ for Current and Future Conservation
+Concern
+Ambitious global conservation targets have been set to manage increasing threats to
+amphibians. Ex-situ institutions are playing an expanding role in meeting these targets.
+Here, we examine the extent to which zoos house species representing the greatest
+overall conservation priority by testing how eight variables relating to extinction risk IUCN status, habitat specialization, obligate stream-breeding, geographic range size,
+body size, and island, high-altitude and tropical endemism - vary between amphibian
+species held in zoos and their close relatives not held in zoos. Based on 253 species
+found in zoos that could be confidently paired with close relatives not in zoos, and in
+contrast to reported patterns for birds and mammals, we find that amphibians currently
+49
+
+held in zoos are equally as threatened as their close relatives not found in zoos. This is
+due entirely to the inclusion of data on species holdings from Amphibian Ark, an
+organization that helps to coordinate conservation activities in many 'non-traditional'
+institutions. Such networks of small non-traditional zoos are making meaningful
+contributions to ex-situ conservation, and the establishment of other taxa-specific
+organisations modelled on Amphibian Ark might be considered. That said, our results
+indicate that the ex-situ network is still not prioritizing range-restricted habitat
+specialists, species that possess greater overall extinction risk in the near future. We
+strongly encourage all zoos to continue increasing their holdings of amphibian species,
+but to pay greater attention to these species of particular conservation concern.
+______________________________________________________________________________
+
+0110 Lightning Talks, Galerie 2, Saturday 9 July 2016
+Jennifer S. Bigman, Nicholas K. Dulvy
+Simon Fraser University, Burnaby, BC, Canada
+Body size and the speed of life
+Elasmobranchs are among the most threatened groups of marine life and conservation
+efforts are lacking, likely due to the data-poor nature of this group (Dulvy et al. 2014).
+Understanding the intrinsic sensitivity to decline for threatened species and predicting
+the same for data-poor species is needed to prioritize management. As life history traits
+relate to intrinsic sensitivity to decline, they can be used to understand which species
+should be prioritized (Dulvy and Reynolds 2003, Hutchings et al. 2012). Many life
+history traits have been used as correlates of decline sensitivity, with population growth
+rate having one of the strongest relationships (Dulvy et al. 2004, Hutchings et al. 2012).
+Unfortunately, estimating population growth rates requires large, detailed demographic
+data sets resulting from many specimens, time, and funding. As population growth rates
+are constrained by metabolic function, measuring metabolic rate could be a possible tool
+for estimating the relative sensitivity to decline of an organism (Hennemann 1983). For
+elasmobranchs, measuring metabolic rate is often not feasible due to their large size, and
+some other trait that is easier to measure is needed. Here, we analyze the utility of a
+morphological trait, gill surface area, as a proxy for relative metabolic rate. Specifically,
+the relationship of metabolic rate, gill surface area, body size, and temperature will be
+explored for both elasmobranch and teleost fishes, as there is sparse data existing for
+elasmobranch metabolic rate and gill surface area. Results of this analysis will be
+presented along with the implications of this study.
+______________________________________________________________________________
+
+50
+
+0196 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Corinthia Black2, Peter Berendzen1
+1University of Northern Iowa, Cedar Falls, IA, USA, 2Clarke University, Dubuque, IA,
+
+USA
+The Effect of Phylogeny on Morphological Characteristics of the Skeleton in
+Pleuronectiformes
+Pleuronectiformes is a unique order of fishes that display asymmetrical characteristics
+related to eye migration. Despite sharing characteristics related to sidedness,
+Pleuronectiformes have a diverse array of body shapes and habitats. The goal of this
+study was to analyze body shape and habitat type in relation to the most recent
+phylogeny. Body shape was quantified through geometric morphometric analysis on
+radiographic images. Radiographs were chosen over photographs to insure ossification
+of the frontal bone was complete, which indicates the end of eye migration. Thirteen
+landmarks and 25 semilandmarks outlining the body and spinal column were digitized
+on 392 specimens, representing 10 families in the order. Shape variation was
+summarized through principal component analyses. Some families within
+Pleuronectiformes revealed tight clustering and clear separation within the
+morphospace, whereas others showed extensive overlapping with other families.
+Psettodidae, Cynoglossidae, Samaridae, Citharidae, and Achiropsettidae clustered more
+tightly in the morphospace, implying more conservative body shapes. Pleuronectidae,
+Scophthalmidae, Soleidae, Bothidae, and Achiridae displayed broad scattering and
+overlap in the morphospace indicating greater diversity in body shape. Life history traits
+were mapped onto the morphospace to determine if clustering was based on habitat.
+Individuals tend to cluster based on fresh, brackish, and marine water environments,
+suggesting water type may attribute to convergence of body shape.
+______________________________________________________________________________
+
+0828 HL GRADUATE RESEARCH AWARD, Galerie 2, Friday 8 July 2016
+Jenell Black1, Frank V. Paladino1, Nathan J. Robinson1, Laurie Mauger2
+1Indiana University Purdue University Fort Wayne, Fort Wayne, IN, USA, 2Southern
+
+Utah University, Cedar City, UT, USA
+Size class distribution of the American crocodile (Crocodylus acutus) in a
+mangrove estuary on the Pacific coast of Costa Rica
+The purpose of this study was to determine the size-class distribution of American
+crocodiles (Crocodylus acutus) within a mangrove estuary on the Pacific coast of Costa
+Rica. Furthermore, this study was conducted during the local dry season. It is
+hypothesized that in periods of drought, a size class arrangement arises along the
+estuary with smaller crocodiles found in areas of lowest salinity. To obtain baseline data
+on water chemistry, salinity measurements were obtained every 200m along the length
+of the Tamarindo estuary using a YSI Model 30. The estuary was toured
+opportunistically with a local guided tour, or monthly via canoe. The GPS location,
+51
+
+
