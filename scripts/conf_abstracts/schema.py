@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS abstracts (
     session_datetime   TEXT,
     location           TEXT,
     abstract_text      TEXT,
+    keywords           TEXT,
     length_words       INTEGER,
     is_elasmo          INTEGER DEFAULT 0,
     elasmo_basis       TEXT,    -- session_prefix / award / meeting / content

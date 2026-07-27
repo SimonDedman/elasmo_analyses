@@ -65,6 +65,7 @@ def insert_abstract(con, meeting_id: int, record: dict):
         session_datetime=record.get("session_datetime"),
         location=record.get("location"),
         abstract_text=record.get("abstract_text"),
+        keywords=record.get("keywords"),
         length_words=len(text.split()) if text else 0,
         is_elasmo=record.get("is_elasmo", 0),
         elasmo_basis=record.get("elasmo_basis"),

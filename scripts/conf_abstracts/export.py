@@ -24,9 +24,9 @@ def to_parquet_elasmo(con, path) -> int:
     (title, year, authors, abstract, plus provenance). Returns row count."""
     df = pd.read_sql_query(
         """SELECT a.abstract_id, m.meeting, m.year, a.title,
-                  a.abstract_text AS abstract, a.presentation_type, a.society,
-                  a.society_basis, a.elasmo_basis, a.award, a.session_name,
-                  a.confidence, a.needs_review, m.source_pdf
+                  a.abstract_text AS abstract, a.keywords, a.presentation_type,
+                  a.society, a.society_basis, a.elasmo_basis, a.award,
+                  a.session_name, a.confidence, a.needs_review, m.source_pdf
            FROM abstracts a JOIN meetings m ON a.meeting_id=m.meeting_id
            WHERE a.is_elasmo=1""", con)
     auth = _authors_by_abstract(con)
