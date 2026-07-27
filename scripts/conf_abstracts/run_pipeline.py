@@ -97,6 +97,18 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a3_parser",
                         blocks=n, inserted=n, status="ok")
 
+    # Modern program/schedule books (talks only, no abstract bodies).
+    for frag, (mtg, yr) in config.PROGRAM_BOOK_FILES.items():
+        if frag in path.name:
+            from conf_abstracts import parse_program_book
+            smeta = dict(meta)
+            smeta["meeting"], smeta["year"] = mtg, yr
+            smeta["source_pdf"] = str(path)
+            smeta["doc_type"] = "program_book"
+            n = parse_program_book.ingest_program_book(con, qa_ocr.extract_text(path), smeta)
+            return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="program_book",
+                        blocks=n, inserted=n, status="ok")
+
     # SI abstract-book PDFs with a dedicated parser (matched by filename).
     for frag, (mtg, yr, mod) in config.SI_PDF_PARSERS.items():
         if frag in path.name:
