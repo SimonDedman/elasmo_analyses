@@ -1,0 +1,133 @@
+"""Parser for modern JMIH program/schedule books (2021-2025 'Conference_Program').
+
+These have NO abstract bodies — they are schedules. Each talk:
+    Session 7: ASIH Stoye Awards: Ecology and Ethology   <- session (society prefix)
+    Moderator: Scott Parker
+    1:30 pm                                               <- time
+    John Moore, Thomas Anderson                           <- authors
+    7.1 | The Effects of Food Web Manipulations ...        <- "N.N | Title" (may wrap)
+
+We capture title, authors, presentation_type, session, society, day/time —
+abstract_text stays null. Older grid/matrix program books (2006-2019) linearise
+badly and are out of scope here.
+"""
+import re
+
+from conf_abstracts.config import SOCIETIES
+
+_SOC = "|".join(sorted(SOCIETIES, key=len, reverse=True))
+_TALK = re.compile(r"^\s*(?:CANCELLED\s+)?(\d+\.\d+[A-Za-z]?)\s*\|\s*(.+)$")
+_TIME = re.compile(r"^\s*\d{1,2}:\d{2}\s*(am|pm|AM|PM)\s*$")
+_SESSION = re.compile(r"^\s*Session\s+[\w]+\s*:\s*(.+)$", re.I)
+_POSTER = re.compile(r"poster", re.I)
+_DAY = re.compile(
+    r"^\s*(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b.*\d{4}", re.I)
+_MOD = re.compile(r"^\s*Moderator", re.I)
+_SOC_PREFIX = re.compile(r"\b(" + _SOC + r")\b")
+
+
+def _session_society(session_name: str):
+    m = _SOC_PREFIX.search(session_name or "")
+    return m.group(1) if m else None
+
+
+def parse_program_book_blocks(text: str):
+    lines = text.splitlines()
+    blocks = []
+    cur_session = None
+    cur_society = None
+    cur_type = "talk"
+    cur_day = None
+    pending = []          # lines accumulated since the last time marker (authors)
+    i, n = 0, len(lines)
+    while i < n:
+        raw = lines[i]
+        s = raw.strip()
+        if not s:
+            i += 1
+            continue
+        if _DAY.match(s):
+            cur_day = s
+            pending = []
+            i += 1
+            continue
+        sm = _SESSION.match(s)
+        if sm:
+            cur_session = sm.group(1).strip()
+            cur_society = _session_society(cur_session)
+            cur_type = "poster" if _POSTER.search(cur_session) else "talk"
+            pending = []
+            i += 1
+            continue
+        if _MOD.match(s):
+            i += 1
+            continue
+        if _TIME.match(s):
+            pending = []          # authors follow the time
+            i += 1
+            continue
+        tm = _TALK.match(s)
+        if tm:
+            title = tm.group(2).strip()
+            # title may wrap onto following lines until a time/talk/session/blank
+            j = i + 1
+            while j < n:
+                nxt = lines[j].strip()
+                if not nxt or _TIME.match(nxt) or _TALK.match(nxt) \
+                        or _SESSION.match(nxt) or _DAY.match(nxt) or _MOD.match(nxt):
+                    break
+                title += " " + nxt
+                j += 1
+            # authors = the most recent pending non-empty line(s)
+            author_raw = " ".join(pending).strip()
+            blocks.append(dict(
+                program_number=tm.group(1),
+                title=title.strip(),
+                author_raw=author_raw,
+                presentation_type=cur_type,
+                session_name=cur_session,
+                societies_explicit=[cur_society] if cur_society else [],
+                session_datetime=cur_day,
+            ))
+            pending = []
+            i = j
+            continue
+        # otherwise: a candidate author line (accumulate)
+        pending.append(s)
+        i += 1
+    return blocks
+
+
+def ingest_program_book(con, text, meeting_meta):
+    """Parse a modern program book and insert schedule talks (no bodies).
+    Returns count."""
+    from conf_abstracts import load, extract, tag
+    meta = dict(meeting_meta)
+    meta.setdefault("doc_type", "program_book")
+    meta.setdefault("parse_status", "ok")
+    mid = load.upsert_meeting(con, meta)
+    n = 0
+    for b in parse_program_book_blocks(text):
+        if not b["title"] or len(b["title"]) < 6:
+            continue
+        rec = extract.extract_fields(
+            dict(program_number=b["program_number"], session_line=b["session_name"] or "",
+                 author_raw=b["author_raw"], title=b["title"], abstract_text=None),
+            meta["meeting"], fmt="jmih_book", use_llm=False)
+        # override with the schedule-derived fields
+        rec["presentation_type"] = b["presentation_type"]
+        rec["session_name"] = b["session_name"]
+        rec["societies_explicit"] = b["societies_explicit"]
+        rec["session_datetime"] = b["session_datetime"]
+        rec["abstract_text"] = None
+        rec["keywords"] = None
+        rec = tag.resolve(rec, meta["meeting"])
+        if rec.get("_llm_is_elasmo") and not rec["is_elasmo"]:
+            rec["is_elasmo"] = 1
+            rec["elasmo_basis"] = "content"
+        rec["needs_review"] = 1 if not b["author_raw"] else 0
+        if load.insert_abstract(con, mid, rec):
+            n += 1
+    con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
+    con.commit()
+    return n

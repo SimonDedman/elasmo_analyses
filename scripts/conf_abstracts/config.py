@@ -63,6 +63,14 @@ A3_FILES = {
     "2005-JMIH-Abstract-Book": ("JMIH", 2005),
 }
 
+# Modern program/schedule books ("N.N | Title" format, no abstract bodies).
+# Only 2024/2025 use this cleanly; 2021-2023 and the older grid-matrix books
+# (2006-2019) use other layouts and are not yet handled.
+PROGRAM_BOOK_FILES = {
+    "2024_JMIH_Conference_Program": ("JMIH", 2024),
+    "2025_JMIH_Conference_Program": ("JMIH", 2025),
+}
+
 # SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).
 SI2026_BODY_PDF = ("/home/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/"
                    "database/others_libraries/Carylanne/Digitised Programs/"
