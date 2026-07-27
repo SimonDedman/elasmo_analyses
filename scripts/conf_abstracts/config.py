@@ -50,6 +50,12 @@ SI_PDF_PARSERS = {
     "Sharks_International_Conference-Abstract_Book_2": ("SI", 2018, "parse_si2018_pdf"),
 }
 
+# JMIH/ASIH abstract books in the 'A2' format (author-block delimited, no
+# separators/ids/Keywords). Keyed by filename fragment -> (meeting, year).
+A2_FILES = {
+    "JMIH-Abstracts-2012": ("JMIH", 2012),
+}
+
 # SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).
 SI2026_BODY_PDF = ("/home/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/"
                    "database/others_libraries/Carylanne/Digitised Programs/"
