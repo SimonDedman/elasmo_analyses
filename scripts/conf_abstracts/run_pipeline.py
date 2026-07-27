@@ -86,6 +86,17 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a2_parser",
                         blocks=n, inserted=n, status="ok")
 
+    # A3-format abstract books (number + UPPERCASE authors + separators).
+    for frag, (mtg, yr) in config.A3_FILES.items():
+        if frag in path.name:
+            from conf_abstracts import parse_jmih_a3
+            smeta = dict(meta)
+            smeta["meeting"], smeta["year"] = mtg, yr
+            smeta["source_pdf"] = str(path)
+            n = parse_jmih_a3.ingest_jmih_a3(con, qa_ocr.extract_text(path), smeta)
+            return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a3_parser",
+                        blocks=n, inserted=n, status="ok")
+
     # SI abstract-book PDFs with a dedicated parser (matched by filename).
     for frag, (mtg, yr, mod) in config.SI_PDF_PARSERS.items():
         if frag in path.name:

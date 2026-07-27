@@ -56,6 +56,13 @@ A2_FILES = {
     "JMIH-Abstracts-2012": ("JMIH", 2012),
 }
 
+# A3-format books (number + UPPERCASE authors + initial-keyed affils). The 2005
+# book has underscore separators; the OCR'd 1997-2004 books (schedule-heavy,
+# multi-column) parse poorly and are handled best-effort from a4_text/.
+A3_FILES = {
+    "2005-JMIH-Abstract-Book": ("JMIH", 2005),
+}
+
 # SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).
 SI2026_BODY_PDF = ("/home/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/"
                    "database/others_libraries/Carylanne/Digitised Programs/"
