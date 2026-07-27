@@ -26,13 +26,80 @@ _MOD = re.compile(r"^\s*Moderator", re.I)
 _SOC_PREFIX = re.compile(r"\b(" + _SOC + r")\b")
 
 
+_FUNC_WORD = re.compile(
+    r"\b(of|the|and|in|on|for|with|to|from|by|at|as|between|during|using|"
+    r"based|within|among|into|through|new|effects?|role)\b")
+
+
 def _session_society(session_name: str):
     m = _SOC_PREFIX.search(session_name or "")
     return m.group(1) if m else None
 
 
+def _is_namelist(s: str) -> bool:
+    """Author line (proper names, no title function-words like 'of'/'the')."""
+    return not _FUNC_WORD.search(s) and bool(s)
+
+
+def _parse_time_delimited(text: str):
+    """2021-2023 format: time -> authors -> title (no 'N.N |' number)."""
+    lines = text.splitlines()
+    blocks = []
+    cur_session = cur_society = cur_day = None
+    cur_type = "talk"
+    i, n = 0, len(lines)
+    while i < n:
+        s = lines[i].strip()
+        if not s:
+            i += 1
+            continue
+        if _DAY.match(s):
+            cur_day = s
+            i += 1
+            continue
+        sm = _SESSION.match(s)
+        if sm:
+            cur_session = sm.group(1).strip()
+            cur_society = _session_society(cur_session)
+            cur_type = "poster" if _POSTER.search(cur_session) else "talk"
+            i += 1
+            continue
+        if _TIME.match(s):
+            # collect content lines until the next time / session / day
+            content = []
+            j = i + 1
+            while j < n:
+                t = lines[j].strip()
+                if _TIME.match(t) or _SESSION.match(t) or _DAY.match(t):
+                    break
+                if t and not _MOD.match(t):
+                    content.append(t)
+                j += 1
+            # authors = leading name-list lines; title = the rest
+            ai = 0
+            while ai < len(content) and _is_namelist(content[ai]):
+                ai += 1
+            author_raw = " ".join(content[:ai]).strip()
+            title = " ".join(content[ai:]).strip()
+            if title and len(title) >= 6:
+                blocks.append(dict(
+                    program_number=None, title=title, author_raw=author_raw,
+                    presentation_type=cur_type, session_name=cur_session,
+                    societies_explicit=[cur_society] if cur_society else [],
+                    session_datetime=cur_day))
+            i = j
+            continue
+        i += 1
+    return blocks
+
+
 def parse_program_book_blocks(text: str):
     lines = text.splitlines()
+    # 2024/2025 use "N.N | Title"; 2021-2023 are time-delimited with no number.
+    if sum(1 for l in lines if _TALK.match(l)) < 20:
+        td = _parse_time_delimited(text)
+        if td:
+            return td
     blocks = []
     cur_session = None
     cur_society = None
@@ -107,8 +174,20 @@ def ingest_program_book(con, text, meeting_meta):
     meta.setdefault("parse_status", "ok")
     mid = load.upsert_meeting(con, meta)
     n = 0
+    _NOISE_AUTH = re.compile(r"\b(Room|Ballroom|Hall|LOCATION|Suite|Salon|Foyer)\b", re.I)
+    _NOISE_TITLE = re.compile(
+        r"^(Schedule-at-a-Glance|Symposium:|LOCATION|Welcome|Break|Lunch|"
+        r"Poster Session|Business Meeting|Social|Reception|Registration|Awards?)\b", re.I)
     for b in parse_program_book_blocks(text):
         if not b["title"] or len(b["title"]) < 6:
+            continue
+        # drop grid-schedule pollution and non-talk logistics
+        if _NOISE_AUTH.search(b["author_raw"] or ""):
+            continue
+        if _NOISE_TITLE.match(b["title"]):
+            continue
+        # a real talk has a presenter (keynotes included); skip author-less items
+        if not (b["author_raw"] or "").strip():
             continue
         rec = extract.extract_fields(
             dict(program_number=b["program_number"], session_line=b["session_name"] or "",

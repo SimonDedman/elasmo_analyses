@@ -67,7 +67,10 @@ A3_FILES = {
 # Only 2024/2025 use this cleanly; 2021-2023 and the older grid-matrix books
 # (2006-2019) use other layouts and are not yet handled.
 PROGRAM_BOOK_FILES = {
-    "2024_JMIH_Conference_Program": ("JMIH", 2024),
+    "2021_JMIH_ConferenceProgram": ("JMIH", 2021),   # time-delimited (no N.N|)
+    "2022_JMIH_Conference_Program": ("JMIH", 2022),
+    "2023_JMIH_Conference_Program": ("JMIH", 2023),
+    "2024_JMIH_Conference_Program": ("JMIH", 2024),  # "N.N | Title"
     "2025_JMIH_Conference_Program": ("JMIH", 2025),
 }
 
