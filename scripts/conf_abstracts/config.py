@@ -35,5 +35,13 @@ DENSITY_MIN = 0.45
 OLLAMA_HOST = "http://127.0.0.1:11435"
 OLLAMA_MODEL = "qwen2.5:3b-instruct"
 
+# Structured (xlsx) sources for conferences that ship a spreadsheet programme
+# rather than a parseable abstract-book PDF. Keyed by (meeting, year).
+# SI programmes are structured; reuse them instead of PDF segmentation.
+SI_SOURCES = {
+    ("SI", 2026): "/media/simon/data/Documents/Si Work/PostDoc Work/SI/"
+                  "2026 Sri Lanka/Sessions info/SI2026_Conference_Programme.xlsx",
+}
+
 # Marine Google calendar for milestone/failure markers.
 MARINE_CALENDAR_ID = "oa9mb0k12rkfsdsm9752bsahsc@group.calendar.google.com"

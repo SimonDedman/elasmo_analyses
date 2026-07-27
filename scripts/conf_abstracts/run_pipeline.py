@@ -22,7 +22,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from conf_abstracts import (config, schema, classify, qa_ocr, segment,
-                            extract, tag, load, export)
+                            extract, tag, load, export, ingest_si_xlsx)
 
 
 def log(msg):
@@ -55,6 +55,18 @@ def fmt_for(meta):
 
 def process_pdf(con, path, is_ocr, use_llm, do_reocr):
     meta = classify.classify_pdf(path, is_ocr=is_ocr)
+    # Route conferences with a structured xlsx source to the xlsx ingester
+    # instead of parsing the PDF (SI programmes ship as spreadsheets).
+    key = (meta["meeting"], meta["year"])
+    if key in config.SI_SOURCES:
+        xlsx = config.SI_SOURCES[key]
+        smeta = dict(meta)
+        smeta["source_pdf"] = xlsx
+        smeta["doc_type"] = "abstract_book"
+        smeta["parse_status"] = "ok"
+        n = ingest_si_xlsx.ingest_si_xlsx(con, xlsx, smeta)
+        return dict(pdf=path.name, meeting=meta["meeting"], year=meta["year"],
+                    doc_type="xlsx", blocks=n, inserted=n, status="ok")
     if do_reocr:
         q = qa_ocr.ensure_ocr(path)
         if q.get("reocr"):
