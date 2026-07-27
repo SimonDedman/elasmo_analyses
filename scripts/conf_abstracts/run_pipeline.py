@@ -65,8 +65,28 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
         smeta["doc_type"] = "abstract_book"
         smeta["parse_status"] = "ok"
         n = ingest_si_xlsx.ingest_si_xlsx(con, xlsx, smeta)
+        # SI2026: merge abstract bodies from the companion PDF (matched by id)
+        try:
+            from conf_abstracts import parse_si_pdf
+            body_pdf = qa_ocr.extract_text(config.SI2026_BODY_PDF)
+            parse_si_pdf.merge_pdf_bodies(con, body_pdf, meta["meeting"], meta["year"])
+        except Exception as e:
+            log(f"  SI2026 body merge skipped: {e}")
         return dict(pdf=path.name, meeting=meta["meeting"], year=meta["year"],
                     doc_type="xlsx", blocks=n, inserted=n, status="ok")
+
+    # SI abstract-book PDFs with a dedicated parser (matched by filename).
+    for frag, (mtg, yr, mod) in config.SI_PDF_PARSERS.items():
+        if frag in path.name:
+            import importlib
+            parser = importlib.import_module(f"conf_abstracts.{mod}")
+            smeta = dict(meta)
+            smeta["meeting"], smeta["year"] = mtg, yr
+            smeta["source_pdf"] = str(path)
+            text = qa_ocr.extract_text(path)
+            n = parser.ingest_si2018(con, text, smeta)
+            return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="pdf_parser",
+                        blocks=n, inserted=n, status="ok")
     if do_reocr:
         q = qa_ocr.ensure_ocr(path)
         if q.get("reocr"):
