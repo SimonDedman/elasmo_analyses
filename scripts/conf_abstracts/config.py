@@ -43,5 +43,17 @@ SI_SOURCES = {
                   "2026 Sri Lanka/Sessions info/SI2026_Conference_Programme.xlsx",
 }
 
+# SI abstract-book PDFs with a dedicated parser, keyed by a filename substring.
+# value = (meeting, year, parser_module). The 2018 (Joao Pessoa) book has no
+# year in its filename, so it's matched here.
+SI_PDF_PARSERS = {
+    "Sharks_International_Conference-Abstract_Book_2": ("SI", 2018, "parse_si2018_pdf"),
+}
+
+# SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).
+SI2026_BODY_PDF = ("/home/simon/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/"
+                   "database/others_libraries/Carylanne/Digitised Programs/"
+                   "SI2026 - Abstract Book (29th April 2026).pdf")
+
 # Marine Google calendar for milestone/failure markers.
 MARINE_CALENDAR_ID = "oa9mb0k12rkfsdsm9752bsahsc@group.calendar.google.com"
