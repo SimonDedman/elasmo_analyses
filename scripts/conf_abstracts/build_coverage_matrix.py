@@ -10,6 +10,7 @@ Sources: the conference_abstracts DB (what we've ingested); Cat Gordon's email
 Carylanne Maier (has all ASIH/JMIH society abstracts 1992-2024, digitising gaps);
 known SI years (quadrennial). Uncertain cells marked '?'.
 """
+import csv
 import sqlite3
 from pathlib import Path
 
@@ -19,6 +20,20 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 REPO = Path(__file__).resolve().parents[2]
 DB = REPO / "database" / "conference_abstracts.db"
 OUT = REPO / "outputs" / "conference_coverage_matrix.xlsx"
+# ASIH/JMIH annual-meeting host cities 1916-2025, from Simon's
+# github.com/SimonDedman/AESconfLocations (data/asih_meetings.csv).
+ASIH_CSV = REPO / "database" / "asih_meetings.csv"
+
+
+def load_asih_locations():
+    locs = {}
+    with open(ASIH_CSV) as fh:
+        for row in csv.DictReader(fh):
+            try:
+                locs[int(row["year"])] = row["location"].strip()
+            except (ValueError, KeyError):
+                pass
+    return locs
 
 # status -> fill colour (red -> green)
 FILL = {
@@ -50,8 +65,10 @@ SI = {  # Sharks International, quadrennial; locations from project data + email
     2022: ("Valencia", "Digital"),          # Cat emailed the SI2022 PDF; not yet ingested
     2026: ("Colombo", "Ingested"),          # SI2026 ingested (1001)
 }
-# JMIH/ASIH host cities — only where known; else '?'
-JMIH_LOC = {1997: "Seattle", 2026: "New Orleans"}
+# JMIH/ASIH host cities loaded from AESconfLocations CSV (1916-2025) at build
+# time; 2026 (New Orleans) appended below.
+JMIH_LOC = load_asih_locations()
+JMIH_LOC.setdefault(2026, "New Orleans, LA")
 # JMIH/ASIH years where we hold the source file but haven't ingested abstracts
 # (e.g. 2026 program is image-only, awaiting OCR).
 JMIH_DIGITAL = {2026}
@@ -129,7 +146,7 @@ def build():
         cell.font = Font(size=9)
 
     r = 2
-    for year in range(1983, 2027):
+    for year in range(1916, 2027):
         ws.cell(row=r, column=1, value=year).font = Font(bold=True)
         ws.cell(row=r, column=1).border = border
         for ci, kind in [(2, "ASIH"), (3, "JMIH"), (4, "AES"), (5, "Other")]:
@@ -180,8 +197,10 @@ def build():
         leg.cell(row=i, column=3).fill = PatternFill("solid", fgColor=FILL[st])
     notes = [
         "", "NOTES / ASSUMPTIONS:",
-        "- ASIH the society dates to 1913; matrix starts 1983 (AES founding = start of elasmo/shark abstracts). Extend earlier on request.",
-        "- ASIH/AES/JMIH/Other columns share one source book per year (the joint meeting), so their status moves together; AES cell shows the elasmo-abstract count where ingested.",
+        "- Matrix spans 1916-2026. ASIH/JMIH host cities are from Simon's github.com/SimonDedman/AESconfLocations (data/asih_meetings.csv, 1916-2025) + 2026 New Orleans.",
+        "- The annual meeting is 'ASIH' pre-1997 and 'JMIH' (joint) from 1997; AES (elasmo society) founded 1983 and meets within it. Pre-1983 AES = NA.",
+        "- ASIH/AES/JMIH/Other columns share one source book per year, so status moves together; AES cell shows the elasmo-abstract count where ingested.",
+        "- No abstracts collected pre-1992 (Carylanne's archive starts 1992), so 1916-1991 show the host city but 'Missing' status.",
         "- 'OCR' status = the degraded 1997-2004 JMIH books (phone-photos, dewarped); all records flagged needs_review. Carylanne's planned FLATBED re-scans will upgrade these.",
         "- JMIH/ASIH host cities mostly unknown ('?') — Carylanne or the society records would have them; only 1997 (Seattle) confirmed here.",
         "- EEA 2010-2026 from Cat Gordon (Shark Trust) email 2026-07-28; pre-2010 EEA exists (founded ~1996) — Ali's archive goes back further (out of office till mid-Aug).",
