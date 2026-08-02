@@ -25,33 +25,48 @@ DB = REPO / "database" / "conference_abstracts.db"
 OUT = REPO / "outputs" / "conference_coverage_matrix.xlsx"
 ASIH_CSV = REPO / "database" / "asih_meetings.csv"
 
+# status order (red -> green). 'Programme' distinguishes a schedule/grid PDF we
+# hold (NO abstract bodies, abstract book still needed) from 'Digital' = a
+# parseable abstract-book PDF we hold and can ingest.
 FILL = {
-    "Missing": "E06666", "Hardcopy": "F6B26B", "OCR": "FFD966",
-    "Digital": "FFE599", "Schedule": "B6D7A8", "Ingested": "6AA84F",
-    "Pending": "D9D2E9", "NA": None,          # NA -> no fill (no conference)
+    "Missing": "E06666", "Hardcopy": "F6B26B", "Programme": "F9CB9C",
+    "Digital": "FFE599", "OCR": "FFD966", "Schedule": "B6D7A8",
+    "Ingested": "6AA84F", "Pending": "D9D2E9", "NA": None,
 }
+# (location, status, action-note). status conveys what we HOLD; the note says
+# what's still NEEDED so the sheet is self-documenting.
 EEA = {
-    2010: ("Galway", "Hardcopy"), 2011: ("Berlin", "Hardcopy"),
-    2012: ("Milan", "Hardcopy"),
-    2013: ("Plymouth", "Digital"),      # abstract book PDF held locally
-    2014: ("Leeuwarden", "Hardcopy"),
-    2015: ("Peniche", "Digital"),       # abstract book held (EEA_2015_Book_of_abstracts.pdf)
-    2016: ("Bristol", "Hardcopy"),
-    2017: ("Amsterdam", "Digital"),     # programme held (not abstract book)
-    2018: ("Peniche", "Digital"), 2019: ("Rende", "Hardcopy"),
-    2020: ("online (covid)", "Digital"), 2021: ("Leiden", "Digital"),
-    2022: ("Valencia (SI)", "Digital"),
-    2023: ("Brighton", "Digital"),      # programme held; abstract book TBC
-    2024: ("Thessaloniki", "Digital"), 2025: ("Rotterdam", "Digital"),
-    2026: ("online", "Digital"),
+    2010: ("Galway", "Hardcopy", "Cat has hardcopy"),
+    2011: ("Berlin", "Hardcopy", "Cat has hardcopy"),
+    2012: ("Milan", "Hardcopy", "Cat has hardcopy"),
+    2013: ("Plymouth", "Digital", "abstract book held — ingest"),
+    2014: ("Leeuwarden", "Hardcopy", "Cat has hardcopy"),
+    2015: ("Peniche", "Digital", "abstract book held — ingest"),
+    2016: ("Bristol", "Hardcopy", "Cat (Shark Trust) hosted — ask for print PDF"),
+    2017: ("Amsterdam", "Programme", "only programme held — abstract book needed"),
+    2018: ("Peniche", "Missing", "Cat: no hardcopy, likely online-only — find"),
+    2019: ("Rende", "Hardcopy", "Cat has hardcopy"),
+    2020: ("online (covid)", "Missing", "covid/online — find"),
+    2021: ("Leiden", "Programme", "only programme held — abstract book needed"),
+    2022: ("Valencia (=SI2022)", "Schedule", "covered via SI2022 (schedule)"),
+    2023: ("Brighton", "Programme", "programme held; abstract book available — ask Cat"),
+    2024: ("Thessaloniki", "Pending", "abstract book available — ask Cat"),
+    2025: ("Rotterdam", "Pending", "abstract book available — ask Cat"),
+    2026: ("online", "Pending", "will be digital"),
 }
-SI = {2010: ("Cairns", "Missing"), 2014: ("Durban", "Missing"),
-      2018: ("Joao Pessoa", "Ingested"), 2022: ("Valencia", "Ingested"),
-      2026: ("Colombo", "Ingested")}
-# JMIH/ASIH years where we hold the source PDF but can't ingest talks yet:
-# 2026 = image-only (needs OCR); 2017/2019 = multi-column grid program books
-# whose per-talk detail doesn't extract cleanly (get abstract books instead).
-JMIH_DIGITAL = {2017, 2019, 2026}
+SI = {2010: ("Cairns", "Missing", "find source"),
+      2014: ("Durban", "Missing", "find source"),
+      2018: ("Joao Pessoa", "Ingested", ""),
+      2022: ("Valencia", "Schedule", "programme ingested (no bodies)"),
+      2026: ("Colombo", "Ingested", "")}
+# JMIH/ASIH years where we hold a PDF that is NOT an ingestable abstract book:
+# a grid programme (2017/2019 — detail doesn't extract; get the abstract book)
+# or an image-only programme (2026 — needs OCR + abstract book).
+JMIH_PROGRAMME = {
+    2017: "grid programme only — abstract book needed (Carylanne)",
+    2019: "grid programme only — abstract book needed (Carylanne)",
+    2026: "image-only programme — needs OCR; abstract book needed",
+}
 SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "SI"]
 
 
@@ -106,17 +121,20 @@ def db_year_society():
 
 
 def meeting_cell(year, db):
+    """Return (location, status, note, elasmo_count)."""
     loc = JMIH_LOC.get(year, "?")
     d = db.get(year)
     if d and d["abstract"]:
-        return loc, ("OCR" if d["ocr"] else "Ingested"), d["elasmo"]
+        if d["ocr"]:
+            return loc, "OCR", "degraded scan (needs_review) — flatbed re-scan planned", d["elasmo"]
+        return loc, "Ingested", "", d["elasmo"]
     if d and d["schedule"]:
-        return loc, "Schedule", d["elasmo"]
-    if year in JMIH_DIGITAL:
-        return loc, "Digital", 0
+        return loc, "Schedule", "programme ingested (no abstract bodies)", d["elasmo"]
+    if year in JMIH_PROGRAMME:
+        return loc, "Programme", JMIH_PROGRAMME[year], 0
     if 1992 <= year <= 2024:
-        return loc, "Hardcopy", 0
-    return loc, "Missing", 0
+        return loc, "Hardcopy", "Carylanne has hardcopy (1992-2024) — get abstract book", 0
+    return loc, "Missing", "", 0
 
 
 def build():
@@ -132,13 +150,14 @@ def build():
     leg.append(["Status", "Meaning", "Colour"])
     for c in leg[1]:
         c.font = Font(bold=True)
-    order = [("Missing", "No known source"),
+    order = [("Missing", "No known source anywhere"),
              ("Hardcopy", "Physical book exists (Carylanne / Cat / Ali), not digitised"),
-             ("Digital", "Digital PDF exists but not yet ingested"),
-             ("OCR", "OCR'd & ingested but low-confidence (needs_review) — old degraded scans"),
-             ("Schedule", "Program book ingested: titles/authors/type, NO abstract bodies"),
+             ("Programme", "Digital PROGRAMME/schedule held, but NOT full abstracts — the abstract book is still needed (see note)"),
+             ("Digital", "Digital ABSTRACT BOOK held & ingestable, not yet ingested"),
+             ("OCR", "Full abstracts ingested but from degraded scans (needs_review) — flatbed re-scan planned"),
+             ("Schedule", "Programme ingested: titles/authors/type, NO abstract bodies"),
              ("Ingested", "Full abstracts ingested into the DB"),
-             ("Pending", "Being collated by an external contact (OCS: Brit Finucci)")]
+             ("Pending", "Available from an external contact, not yet obtained (EEA: Cat; OCS: Brit)")]
     for i, (st, mean) in enumerate(order, 2):
         leg.cell(row=i, column=1, value=st)
         leg.cell(row=i, column=2, value=mean)
@@ -177,39 +196,42 @@ def build():
         cell.border = border
         cell.font = Font(size=9)
 
+    def txt(loc, st, note):
+        return f"{loc}; {st}" + (f" — {note}" if note else "")
+
     r = 2
     for year in range(1916, 2027):
         ws.cell(row=r, column=1, value=year).font = Font(bold=True)
         ws.cell(row=r, column=1).border = border
-        loc, st, el = meeting_cell(year, db)
-        put(r, 2, f"{loc}; {st}", st)
+        loc, st, note, el = meeting_cell(year, db)
+        put(r, 2, txt(loc, st, note), st)
         # AES (founded 1983)
         if year >= 1983:
-            aes_txt = f"{loc}" + (f" ({el})" if el else "") + f"; {st}"
-            put(r, 3, aes_txt, st)
+            aloc = f"{loc}" + (f" ({el})" if el else "")
+            put(r, 3, txt(aloc, st, note), st)
         else:
             put(r, 3, "", "NA")
         # EEA
         if year in EEA:
-            l, s = EEA[year]; put(r, 4, f"{l}; {s}", s)
+            l, s, n = EEA[year]; put(r, 4, txt(l, s, n), s)
         elif 1997 <= year <= 2009:
-            put(r, 4, "?; Hardcopy (Ali archive)", "Hardcopy")
+            put(r, 4, "?; Hardcopy — Ali's archive (back mid-Aug)", "Hardcopy")
         else:
             put(r, 4, "", "NA")
         # OCS (biennial ~2012+)
         if year >= 2012 and year % 2 == 0:
-            put(r, 5, "?; Pending (Brit)", "Pending")
+            put(r, 5, "?; Pending — Brit collating (council approval)", "Pending")
         else:
             put(r, 5, "", "NA")
         # SI (quadrennial)
         if year in SI:
-            l, s = SI[year]; put(r, 6, f"{l}; {s}", s)
+            l, s, n = SI[year]; put(r, 6, txt(l, s, n), s)
         else:
             put(r, 6, "", "NA")
         r += 1
     ws.column_dimensions["A"].width = 6
     for col in "BCDEF":
-        ws.column_dimensions[col].width = 24
+        ws.column_dimensions[col].width = 44
     ws.freeze_panes = "B2"
 
     # ---- Dashboard ----
