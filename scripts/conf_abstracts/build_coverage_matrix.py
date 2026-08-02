@@ -35,11 +35,13 @@ EEA = {
     2012: ("Milan", "Hardcopy"),
     2013: ("Plymouth", "Digital"),      # abstract book PDF held locally
     2014: ("Leeuwarden", "Hardcopy"),
-    2015: ("Peniche", "Hardcopy"),      # only the programme held, not abstract book
-    2016: ("Bristol", "Hardcopy"), 2017: ("Amsterdam", "Hardcopy"),
+    2015: ("Peniche", "Digital"),       # abstract book held (EEA_2015_Book_of_abstracts.pdf)
+    2016: ("Bristol", "Hardcopy"),
+    2017: ("Amsterdam", "Digital"),     # programme held (not abstract book)
     2018: ("Peniche", "Digital"), 2019: ("Rende", "Hardcopy"),
     2020: ("online (covid)", "Digital"), 2021: ("Leiden", "Digital"),
-    2022: ("Valencia (SI)", "Digital"), 2023: ("Brighton", "Digital"),
+    2022: ("Valencia (SI)", "Digital"),
+    2023: ("Brighton", "Digital"),      # programme held; abstract book TBC
     2024: ("Thessaloniki", "Digital"), 2025: ("Rotterdam", "Digital"),
     2026: ("online", "Digital"),
 }
