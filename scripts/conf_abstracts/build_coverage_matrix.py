@@ -48,7 +48,10 @@ EEA = {
 SI = {2010: ("Cairns", "Missing"), 2014: ("Durban", "Missing"),
       2018: ("Joao Pessoa", "Ingested"), 2022: ("Valencia", "Ingested"),
       2026: ("Colombo", "Ingested")}
-JMIH_DIGITAL = {2026}
+# JMIH/ASIH years where we hold the source PDF but can't ingest talks yet:
+# 2026 = image-only (needs OCR); 2017/2019 = multi-column grid program books
+# whose per-talk detail doesn't extract cleanly (get abstract books instead).
+JMIH_DIGITAL = {2017, 2019, 2026}
 SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "SI"]
 
 
