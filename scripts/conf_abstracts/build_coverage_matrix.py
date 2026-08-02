@@ -32,8 +32,10 @@ FILL = {
 }
 EEA = {
     2010: ("Galway", "Hardcopy"), 2011: ("Berlin", "Hardcopy"),
-    2012: ("Milan", "Hardcopy"), 2013: ("Plymouth", "Hardcopy"),
-    2014: ("Leeuwarden", "Hardcopy"), 2015: ("Peniche", "Hardcopy"),
+    2012: ("Milan", "Hardcopy"),
+    2013: ("Plymouth", "Digital"),      # abstract book PDF held locally
+    2014: ("Leeuwarden", "Hardcopy"),
+    2015: ("Peniche", "Hardcopy"),      # only the programme held, not abstract book
     2016: ("Bristol", "Hardcopy"), 2017: ("Amsterdam", "Hardcopy"),
     2018: ("Peniche", "Digital"), 2019: ("Rende", "Hardcopy"),
     2020: ("online (covid)", "Digital"), 2021: ("Leiden", "Digital"),
@@ -42,7 +44,7 @@ EEA = {
     2026: ("online", "Digital"),
 }
 SI = {2010: ("Cairns", "Missing"), 2014: ("Durban", "Missing"),
-      2018: ("Joao Pessoa", "Ingested"), 2022: ("Valencia", "Digital"),
+      2018: ("Joao Pessoa", "Ingested"), 2022: ("Valencia", "Ingested"),
       2026: ("Colombo", "Ingested")}
 JMIH_DIGITAL = {2026}
 SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "SI"]
