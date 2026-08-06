@@ -17,7 +17,7 @@ Link each paper's author list to external author identity databases to recover i
 - **Method:** Batch DOI lookup (50 DOIs per request). Old-style DOIs containing `(SICI)` or semicolons cause 400 errors in batch mode; the script falls back to individual per-DOI lookups for these.
 - **Output files:**
   - `outputs/openalex_paper_authors.csv` — one row per author-paper pairing (71,801 rows)
-  - `outputs/openalex_unique_authors.csv` — one row per unique author (28,953 authors)
+  - `outputs/openalex_unique_authors.csv` — one row per unique author (29,929 authors)
 - **Coverage:** 15,780 papers matched; 87.7 % of author records include institution data
 
 ### NamSor

@@ -23,12 +23,30 @@ output — **resumable across nights** until access expires.
 - The **166 binary schema columns** already defined in `ALL_SCHEMAS`
   (`eco_` 20, `pr_` 26, `gear_` 28, `imp_` 21, `d_` 19, `b_` 9, `sb_` 43) —
   ocean basins and sub-basins are already covered.
-- **NEW geography:** `study_country` (list) and `study_region` (free text) — the
-  actual place the study was conducted. The schema has **no** study-country
-  field today, and the geo-pipeline's `geo_study_latitude/longitude` are known
-  broken (hemisphere sign lost; see project memory). Fable extracts study
-  location reliably, so this is the highest-value addition and the answer to
-  "geography columns, if not already included".
+- **FINER geography:** `study_country` (list) and `study_region` (free text) —
+  the actual place the study was conducted.
+
+  > **Corrected 2026-08-06.** This section previously claimed the schema has
+  > "no study-country field today". That was **wrong**. The geographic pipeline
+  > already provides binned country and region slots in an explicit hierarchy:
+  > `geo_study_country` (3,836 rows, 61 bins), `geo_study_ocean_basin` (6 bins),
+  > `ob_*` (9), `b_*` (9 basins) with `sb_*` (43 sub-basins) nested beneath,
+  > plus `superregion`, and on the author axis `geo_first_author_country`
+  > (6,162 rows, 74 bins) and `geo_first_author_region` (Global North/South).
+  > See [`docs/schema_proposals/geographic_extraction.md`](../../schema_proposals/geographic_extraction.md).
+  >
+  > What an LLM pass actually adds is **resolution and recall, not a missing
+  > slot**: multi-country lists ("Indonesia; Singapore"), sub-national locality
+  > as free text ("Los Lagos Region, southern Chile; Bahia Mansa and Comau
+  > Channel"), and coverage above the current 12% for `geo_study_country`.
+  > State it that way in any external document.
+
+  Separately, `geo_study_latitude`/`geo_study_longitude` are unusable: all 967
+  values are positive **and the magnitudes bear no relation to real positions**,
+  so this is not a salvageable sign flip. That fix is still open (see
+  `scripts/viz_H_geography.R` and `scripts/rag/filter_config.py`); the H2 figure
+  works around it using `geo_study_country` polygon centroids. Do not describe
+  the coordinate problem as solved.
 
 ## Billing / execution path
 

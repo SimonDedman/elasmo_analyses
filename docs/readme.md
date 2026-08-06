@@ -23,7 +23,7 @@ guides, the EEA-2025 abstract, or dated build logs, they live there.
 
 - **[schema_proposals/](schema_proposals/)** — the design core. Per-schema column proposals (`discipline`, `ecosystem`, `pressure`, `gear`, `impact`, `ocean_basin`, plus `species`, `depth`, `analytical_techniques`), the [extraction logic](schema_proposals/extraction_logic.md), and the [false-positive catalogue](schema_proposals/extraction_quality_issues.md).
 - **[techniques/](techniques/)** — technique classification schema and the 8-discipline structure.
-- **[database/technique_taxonomy_database_design.md](database/technique_taxonomy_database_design.md)** — the 208-technique taxonomy DB.
+- **[database/technique_taxonomy_database_design.md](database/technique_taxonomy_database_design.md)** — the 215-technique taxonomy (`data/master_techniques.csv`).
 
 ## Current design specs
 

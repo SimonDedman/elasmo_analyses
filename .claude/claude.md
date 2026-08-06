@@ -8,8 +8,10 @@ This is a systematic literature review project for the European Elasmobranch Ass
 - **Primary database:** Shark-References (https://shark-references.com) - 30,000+ chondrichthyan papers
 - **Database format:** DuckDB (optimized for wide sparse schema with columnar storage)
 - **Main databases:**
-  - `shark_references.db` - Main bibliographic database (SQLite)
-  - `database/technique_taxonomy.db` - Technique classification (208 techniques, SQLite)
+  - ~~`shark_references.db`~~ - **0 bytes, no tables.** The corpus of record is
+    `outputs/literature_review_enriched.parquet`.
+  - `database/technique_taxonomy.db` - link tables only; its `techniques` table
+    is **EMPTY**. Canonical list: `data/master_techniques.csv` (215).
   - `outputs/literature_review.duckdb` - DuckDB analytical database
 - **Species count:** ~1,200 chondrichthyan species
 - **Schema:** ~1,652 columns (wide sparse binary classification)
@@ -115,7 +117,7 @@ dbGetQuery(con, "
 **Context:** The master techniques database requires regular updates from panelist reviews.
 
 **Database location:** `database/technique_taxonomy.db`
-**CSV version:** `data/master_techniques.csv` (208 techniques)
+**CSV version (CANONICAL):** `data/master_techniques.csv` (215 techniques)
 **Excel for review:** `data/Techniques DB for Panel Review.xlsx`
 
 **Common updates:**
@@ -255,7 +257,7 @@ dbGetQuery(con, "
 **Completed:**
 - ✅ 8-discipline framework defined
 - ✅ Database schema designed (1,652 columns)
-- ✅ 208 techniques compiled and documented
+- ✅ 215 techniques compiled and documented
 - ✅ 243 expert candidates identified
 - ✅ Shark-References integration scripts created
 - ✅ PDF acquisition infrastructure built

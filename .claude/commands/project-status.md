@@ -20,12 +20,13 @@ Check and report:
 - Status indicator: ✅ >1000 PDFs, 🔄 100-1000, ⏳ <100, ❌ none
 
 ## 3. Technique Database
-Query `database/technique_taxonomy.db` and report:
-- Total techniques (should be 208)
+Read `data/master_techniques.csv` and report (NOT `technique_taxonomy.db` — its
+`techniques` table is empty, so querying it always reports zero):
+- Total techniques (should be 215)
 - Breakdown by discipline (BIO/BEH/TRO/GEN/MOV/FISH/CON/DATA)
 - Count with search queries defined
 - Count validated by EEA 2025 presentations
-- Status: ✅ if 208 techniques, 🔄 if different
+- Status: ✅ if 215 techniques, 🔄 if different
 
 ## 4. Documentation Status
 Check `docs/` directory:

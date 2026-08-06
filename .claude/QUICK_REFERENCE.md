@@ -3,8 +3,11 @@
 ## Project Quick Facts
 - **Working Directory:** `/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/`
 - **Main Databases:**
-  - `shark_references.db` - Bibliographic (SQLite)
-  - `database/technique_taxonomy.db` - 208 techniques (SQLite)
+  - ~~`shark_references.db`~~ - **0 bytes, no tables. There is no master paper DB;
+    `outputs/literature_review_enriched.parquet` is the corpus of record.**
+  - `database/technique_taxonomy.db` - link tables only (`paper_techniques`,
+    `paper_geography`, `institutions`). **Its `techniques` table is EMPTY** —
+    the technique list is `data/master_techniques.csv` (215).
   - `outputs/literature_review.duckdb` - Analytical (DuckDB)
 - **Virtual Environment:** `./venv/bin/` (Python 3.13)
 
@@ -74,7 +77,7 @@ source venv/bin/activate           # Activate
 ## Key Files & Locations
 
 ### Data Files
-- `data/master_techniques.csv` - 208 techniques
+- `data/master_techniques.csv` - **215 techniques (canonical list)**
 - `data/species_common_lookup_cleaned.csv` - Species names
 - `data/Techniques DB for Panel Review.xlsx` - For panelist edits
 
@@ -109,7 +112,7 @@ Just ask: "Species column for white shark?"
 → Claude knows: `sp_carcharodon_carcharias`
 
 ## Project Status (Current)
-✅ **Completed:** Database schema, 208 techniques compiled, 243 candidates identified
+✅ **Completed:** Database schema, 215 techniques compiled, 243 candidates identified
 🔄 **In Progress:** PDF acquisition, panelist reviews
 ⏳ **Upcoming:** Bulk Shark-References automation (awaiting permission), EEA conference (Oct 30)
 

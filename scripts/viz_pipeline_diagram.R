@@ -66,7 +66,7 @@ yt7 <- min(yt5 - stage_total_h(N5), yt6 - stage_total_h(N6)) - COL_GAP
 
 ## -- Stage 1: Data Sources ----------------------------------------------------
 s1 <- make_boxes(1, X_L, yt1,
-  c("Shark-References DB\n(30,553 papers)",
+  c("Shark-References DB\n(31,653 papers)",
     "OpenAlex API\n(authors + citations)",
     "Sharkipedia API\n(species traits)",
     "Genderize.io\n(gender inference)",
@@ -75,7 +75,7 @@ s1 <- make_boxes(1, X_L, yt1,
 
 ## -- Stage 2: Paper Acquisition -----------------------------------------------
 s2 <- make_boxes(2, X_R, yt2,
-  c("PDF library\n(16,303 PDFs)",
+  c("PDF library\n(20,404 PDFs)",
     "Shark-References NAS\n(Jurgen uploads)",
     "Direct download &\ncoauthor contributions",
     "Download tracking\nweb interface"),
@@ -83,7 +83,7 @@ s2 <- make_boxes(2, X_R, yt2,
 
 ## -- Stage 3: Schema Design ---------------------------------------------------
 s3 <- make_boxes(3, X_L, yt3,
-  c("6 schemas, 123 binary\ncolumns total",
+  c("6 schemas, 127 binary\ncolumns total",
     "Eco(20) - Pressure(26)\nGear(28) - Impact(21)",
     "Discipline(19) -\nOcean Basin(9)",
     "Validated: Beukhof 2026,\nISSCFG, BMIS"),
@@ -98,7 +98,7 @@ s4 <- make_boxes(4, X_R, yt4,
 
 ## -- Stage 5: Enrichment (6 items, tweak 1 adds Altmetric) --------------------
 s5 <- make_boxes(5, X_L, yt5,
-  c("Author data\n(28,953 unique authors)",
+  c("Author data\n(29,929 unique authors)",
     "Gender inference\n(87% resolved)",
     "Institution country\nmapping (87.7%)",
     "Geographic pipeline\n(study country, basin)",
@@ -110,7 +110,7 @@ s5 <- make_boxes(5, X_L, yt5,
 
 ## -- Stage 6: Outputs (5 items, tweak 2+3: moved parquet here, 118+) ----------
 s6 <- make_boxes(6, X_R, yt6,
-  c("Output: enriched\n.parquet (1,546+ cols)",
+  c("Output: enriched\n.parquet (1,744 cols)",
     "118+ analytical\nvisualisations",
     "Schema extraction\nevidence CSV",
     "Per-journal download\npages",
@@ -288,7 +288,7 @@ p <- ggplot() +
   ) +
   labs(
     title    = "EEA 2025 Data Panel: Project Pipeline",
-    subtitle = "30,553 papers  |  16,303 PDFs  |  123 schema columns  |  28,953 authors"
+    subtitle = "31,653 papers  |  20,404 PDFs  |  1,744 schema columns  |  29,929 authors"
   ) +
   coord_cartesian(xlim = c(0, 20), ylim = c(y_lo, y_hi), expand = FALSE) +
 

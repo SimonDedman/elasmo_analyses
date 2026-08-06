@@ -179,7 +179,7 @@ even with no model server running.
 
 ## Limitations (be honest about these)
 
-- **300 of ~20,000 PDFs indexed (~1.5%).** Most questions about niche
+- **[SUPERSEDED 2026-08-06 — the full index build completed 2026-07-11: 19,885 papers / 204,508 chunks. The paragraph below describes the 300-paper prototype and is kept for history.]** 300 of ~20,000 PDFs indexed (~1.5%). Most questions about niche
   topics will correctly come back "unresolved" simply because the sample
   doesn't contain relevant papers yet — that's expected at this stage,
   not a bug in retrieval.
@@ -282,7 +282,13 @@ even with no model server running.
    WebUI (already scoped in the roadmap doc) for a chat-style interface,
    or a lightweight Streamlit/Gradio wrapper as an interim step.
 8. **Evaluate retrieval quality quantitatively, including the cross-encoder
-   thresholds.** Build a small gold-standard question set (reuse the
+   thresholds.** ⚠️ **Promoted to a scoped workpackage 2026-08-06 — full plan in
+   [`docs/superpowers/specs/2026-08-06-retrieval-evaluation-design.md`](../superpowers/specs/2026-08-06-retrieval-evaluation-design.md).**
+   This is now the largest unmeasured claim in the project: the interface runs
+   over the full corpus and has a public-facing web front-end, but nothing about
+   its retrieval or answer quality has been measured, so no number about it can
+   be quoted in a paper or grant. Do this before the interface goes in front of
+   external users. Build a small gold-standard question set (reuse the
    Schiffman 22-category comparison or manually curated Q&A pairs) and
    measure precision@k / whether the correct paper appears in top-k, rather
    than relying on spot-checks. The CE_FLOOR=0.0 / CE_STRONG=1.0 cut-offs
