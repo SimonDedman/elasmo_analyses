@@ -19,7 +19,7 @@ Output:
 Features:
     - TIER 1: Direct copy (9 fields, 100% accuracy)
     - TIER 2: Simple parsing (journal, epoch, country, superregion, study_type)
-    - TIER 3: Extraction (215 techniques + 9 basins + 2174 species, 60-80% accuracy)
+    - TIER 3: Extraction (215 techniques + 9 basins + 1,308 species, 60-80% accuracy)
     - Species extraction uses validated chondrichthyan species list
     - Searches for BOTH scientific names (binomials) AND common names
 
