@@ -189,3 +189,9 @@ database/orphan_inbox/
 database/SharkRefsExport/
 database/coauthor_dupe_verification.json
 database/coauthor_cleanup_plan.json
+
+# Grant applications and meeting files. This repo is PUBLIC. The folder holds
+# budgets with named salaries and fringe rates, FIU internal forms, CVs,
+# reference letters, and draft proposals — none of which belong on GitHub.
+# The durable record is the local/NAS copy, not version control.
+elasmo_analyses/
