@@ -24,7 +24,10 @@ from pathlib import Path
 import openpyxl
 
 REPO = Path(__file__).resolve().parents[2]
-REL = "database/conference_coverage_matrix.xlsx"
+# The NAS->Google-Drive sync operates on the outputs/ copy (colleague edits land
+# there); database/ is the local working copy. Check both and flag divergence.
+REL = "outputs/conference_coverage_matrix.xlsx"
+REL_DB = "database/conference_coverage_matrix.xlsx"
 CUR = REPO / REL
 
 STATUSES = {"Missing", "Hardcopy", "Programme", "Digital", "OCR",
@@ -90,6 +93,16 @@ def main():
             print("No changes vs last committed version.")
     else:
         print("(no git baseline found — cannot diff)")
+
+    # 1b. the two local copies must agree (a divergence = a stale sync)
+    db = REPO / REL_DB
+    if db.exists():
+        c2 = cells(db)
+        if c2 != cur:
+            issues += 1
+            ndiff = len(set(cur) ^ set(c2)) + sum(1 for k in set(cur) & set(c2) if cur[k] != c2[k])
+            print(f"\n=== DIVERGENCE: outputs/ and database/ copies differ ({ndiff} cells) "
+                  "— likely a stale NAS/Drive sync; reconcile before editing ===")
 
     # 2. schema validation (skip header row 1 and the Year column A)
     print("\n=== schema check (Coverage data cells) ===")
