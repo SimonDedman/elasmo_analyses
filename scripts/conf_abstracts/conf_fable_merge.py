@@ -1,0 +1,125 @@
+"""STAGE 3 — merge Fable abstract-extraction caches into the abstracts DB.
+
+Reads each book's JSON cache (written by the Fable agents), inserts meetings +
+abstracts + authors via the existing load layer, tags elasmo (EEA/SI meetings
+are wholly elasmo; otherwise the lexicon decides), and regenerates the exports.
+
+By default writes to a SEPARATE DB (conference_abstracts_fable.db) so the Fable
+output can be quality-compared against the regex DB before replacing it. Pass
+--db to point elsewhere.
+
+Run: ./venv/bin/python scripts/conf_abstracts/conf_fable_merge.py [--db PATH]
+"""
+import argparse
+import json
+from pathlib import Path
+
+from conf_abstracts import config as C, schema, load, tag, lexicon, export
+
+WORKLIST = C.OUT / "conf_abstracts" / "fable_worklist.json"
+
+
+def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str):
+    """Turn one Fable abstract object into a load.insert_abstract record."""
+    title = (a.get("title") or "").strip()
+    body = (a.get("abstract_text") or "").strip() or None
+    ptype = (a.get("presentation_type") or "").strip().lower() or None
+    if ptype and ptype not in C.PRESENTATION_TYPES:
+        ptype = None
+    kw = a.get("keywords") or []
+    keywords = "; ".join(k for k in kw if k) if isinstance(kw, list) else (kw or None)
+
+    authors = []
+    for i, au in enumerate(a.get("authors") or [], start=1):
+        if isinstance(au, str):
+            authors.append(dict(full_name=au.strip(), position=i))
+        elif isinstance(au, dict):
+            authors.append(dict(
+                full_name=(au.get("full_name") or au.get("name") or "").strip(),
+                position=i,
+                is_presenter=int(bool(au.get("is_presenter"))),
+                affiliation=(au.get("affiliation") or None),
+                affiliation_country=(au.get("affiliation_country") or None)))
+    authors = [x for x in authors if x["full_name"]]
+
+    rec = dict(
+        program_number=a.get("program_number"),
+        title=title or None,
+        presentation_type=ptype,
+        session_name=(a.get("session_name") or None),
+        abstract_text=body,
+        keywords=keywords,
+        authors=authors,
+        society=None, societies_explicit=None, society_inferred=None,
+    )
+    rec = tag.resolve(rec, meeting)          # EEA/SI meeting -> is_elasmo=1
+    # non-elasmo-meeting books: fall back to the lexicon on title+body
+    if not rec["is_elasmo"] and not is_elasmo_meeting:
+        if lexicon.is_elasmo_text(title, body or ""):
+            rec["is_elasmo"] = 1
+            rec["elasmo_basis"] = "content"
+    if is_elasmo_meeting and rec.get("society") is None:
+        rec["society"] = soc_hint
+        rec["society_basis"] = "meeting"
+    if not rec["title"] or len(rec["title"]) > 300:
+        rec["needs_review"] = 1
+    return rec
+
+
+def merge(db_path):
+    wl = json.loads(WORKLIST.read_text(encoding="utf-8"))
+    con = schema.create_db(db_path)
+    tot_books = tot_abs = 0
+    for w in wl:
+        cache = Path(w["cache_path"])
+        if not cache.exists():
+            print(f"  [{w['index']:2}] {w['key']:10} NO CACHE — skipped")
+            continue
+        try:
+            data = json.loads(cache.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  [{w['index']:2}] {w['key']:10} BAD JSON: {e}")
+            continue
+        abstracts = data if isinstance(data, list) else data.get("abstracts", [])
+        meta = dict(
+            meeting=w["meeting"], year=w["year"], name=None,
+            location=w["city"], dates=None, source_pdf=w["source_pdf"],
+            doc_type="abstract_book", page_count=None, is_ocr=0,
+            parse_status="ok")
+        mid = load.upsert_meeting(con, meta)
+        n = 0
+        for a in abstracts:
+            if not isinstance(a, dict):
+                continue
+            rec = _mk_record(a, w["meeting"], w["is_elasmo_meeting"],
+                             w["society_hint"])
+            if not rec["title"]:
+                continue
+            if load.insert_abstract(con, mid, rec):
+                n += 1
+        con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
+        con.commit()
+        with_body = sum(1 for a in abstracts
+                        if isinstance(a, dict) and (a.get("abstract_text") or "").strip())
+        print(f"  [{w['index']:2}] {w['key']:10} {w['year']}  "
+              f"{n:4} abstracts ({with_body} with body)")
+        tot_books += 1
+        tot_abs += n
+    print(f"\n{tot_books} books, {tot_abs} abstracts -> {db_path}")
+
+    # exports alongside the DB
+    stem = Path(db_path).with_suffix("")
+    export.to_parquet_elasmo(con, f"{stem}.parquet")
+    export.to_json(con, f"{stem}.json")
+    export.to_xlsx(con, f"{stem}.xlsx")
+    print(f"exports: {stem}.{{parquet,json,xlsx}}")
+    con.close()
+
+
+if __name__ == "__main__":
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--db", default=str(C.REPO / "database" / "conference_abstracts_fable.db"))
+    a = ap.parse_args()
+    merge(a.db)
