@@ -75,8 +75,12 @@ Includable relationships: `observations`, `observations.measurements`, `measurem
 
 ### Account Credentials
 
-- Username: simondedman@gmail.com
-- Password: rpf0gat@jae*JBW*egh
+Held out of the repository. The Sharkipedia account login and API bearer token
+live in project memory, not here.
+
+> **Redacted 2026-08-06.** A live username and password were committed here in
+> plaintext to a **public** repository. Removing them from the working tree does
+> **not** remove them from git history, so **the password must be rotated**.
 
 ## GitHub Repository
 
@@ -106,8 +110,8 @@ Includable relationships: `observations`, `observations.measurements`, `measurem
 4. **Trait-method linkage** — which analytical methods were used to derive each trait measurement
 
 ### What we add to Sharkipedia:
-1. **Method classification** — our 151-technique taxonomy mapped to their trait measurements
-2. **Literature coverage** — our 30,500 papers vs. their ~264 source references
+1. **Method classification** — our 215-technique taxonomy mapped to their trait measurements
+2. **Literature coverage** — our ~31,650 papers vs. their ~264 source references
 3. **Discipline context** — which disciplines use which trait types
 
 ### Join Keys
