@@ -22,7 +22,9 @@ def main(index: int):
         print(f"ERROR: no worklist entry with index {index}")
         return 1
     cache = Path(entry["cache_path"])
-    if cache.exists() and cache.stat().st_size > 2:
+    # ">= 2" treats a legitimate empty result ("[]", 2 bytes — a programme with
+    # no extractable abstracts) as done, so resume runs don't re-do it.
+    if cache.exists() and cache.stat().st_size >= 2:
         print("ALREADY_DONE")
         return 0
     text = Path(entry["src_txt"]).read_text(encoding="utf-8")
