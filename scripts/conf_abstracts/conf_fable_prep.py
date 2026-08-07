@@ -35,11 +35,17 @@ SCOPE = [
 
 
 def _key(pdf: Path) -> str:
-    """Stable short key from the filename, e.g. EEA2004_London -> EEA2004."""
+    """Stable short key from the filename, e.g. EEA2004_London -> EEA2004.
+    A year split across two books (oral/poster) gets an _oral/_poster suffix so
+    they don't collide (e.g. EEA2023_oral, EEA2023_poster)."""
     m = re.match(r"([A-Za-z]+)_?(\d{4})", pdf.stem)
-    if m:
-        return f"{m.group(1)}{m.group(2)}"
-    return re.sub(r"[^A-Za-z0-9]+", "_", pdf.stem)[:32]
+    base = f"{m.group(1)}{m.group(2)}" if m else re.sub(r"[^A-Za-z0-9]+", "_", pdf.stem)[:32]
+    low = pdf.stem.lower()
+    if "oral" in low:
+        base += "_oral"
+    elif "poster" in low:
+        base += "_poster"
+    return base
 
 
 def _year(pdf: Path) -> int | None:
@@ -59,12 +65,27 @@ def pdftotext_layout(pdf: Path) -> str:
         capture_output=True, timeout=300).stdout.decode("utf-8", "replace")
 
 
+# EEA host cities by year — recovers meeting.location for a book whose source
+# PDF vanished from the NAS-synced folder (so we can't parse the city from it).
+_EEA_CITIES = {
+    2004: "London", 2011: "Berlin", 2013: "Plymouth", 2014: "Leeuwarden",
+    2015: "Peniche", 2016: "Bristol", 2017: "Amsterdam", 2018: "Peniche",
+    2019: "Rende", 2023: "Brighton", 2024: "Thessaloniki", 2025: "Rotterdam",
+}
+
+
 def build(only=None):
     SRC_DIR.mkdir(parents=True, exist_ok=True)
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     import glob as _glob
-    worklist = []
-    idx = 0
+    # keep prior entries so a book stays in the worklist even if its source PDF
+    # later vanishes from the NAS-synced folder (the extracted text is the
+    # durable artifact; the PDF is not).
+    by_key = {}
+    if WORKLIST.exists():
+        for w in json.loads(WORKLIST.read_text(encoding="utf-8")):
+            by_key[w["key"]] = w
+
     for pattern, meeting, soc_hint, elasmo in SCOPE:
         for path in sorted(_glob.glob(pattern)):
             pdf = Path(path)
@@ -74,32 +95,59 @@ def build(only=None):
             text = pdftotext_layout(pdf)
             if len(text) < 1000:
                 # corrupt/image-only PDF (2024/2025 have broken catalogs; awaiting
-                # clean copies from Cat). Skip rather than burn a Fable agent.
-                print(f"  SKIP {key} ({pdf.name}): only {len(text)} chars extracted")
+                # clean copies from Cat). Skip rather than burn a Fable agent — but
+                # DON'T drop a previously-extracted version of the same book.
+                if key not in by_key or not Path(by_key[key]["src_txt"]).exists():
+                    print(f"  SKIP {key} ({pdf.name}): only {len(text)} chars extracted")
                 continue
             src = SRC_DIR / f"{key}.txt"
             src.write_text(text, encoding="utf-8")
-            worklist.append(dict(
-                index=idx,
-                key=key,
-                meeting=meeting,
-                year=_year(pdf),
-                city=_city(pdf),
-                society_hint=soc_hint,
-                is_elasmo_meeting=elasmo,
-                source_pdf=str(pdf),
-                src_txt=str(src),
-                cache_path=str(CACHE_DIR / f"{key}.json"),
-                n_chars=len(text),
-            ))
-            idx += 1
+            by_key[key] = dict(
+                key=key, meeting=meeting, year=_year(pdf),
+                city=_city(pdf) or _EEA_CITIES.get(_year(pdf)),
+                society_hint=soc_hint, is_elasmo_meeting=elasmo,
+                source_pdf=str(pdf), src_txt=str(src),
+                cache_path=str(CACHE_DIR / f"{key}.json"), n_chars=len(text))
+
+    # recover orphaned src texts on disk not represented in the worklist (e.g.
+    # a book extracted on an earlier run whose worklist entry was later lost and
+    # whose PDF has since vanished from the NAS folder). Reconstruct from the key.
+    for txt in sorted(SRC_DIR.glob("*.txt")):
+        key = txt.stem
+        if key in by_key or txt.stat().st_size < 1000:
+            continue
+        yr = _year(txt)
+        print(f"  RECOVER {key}: orphaned text, no worklist entry (rebuilt)")
+        by_key[key] = dict(
+            key=key, meeting="EEA", year=yr, city=_EEA_CITIES.get(yr),
+            society_hint="AES", is_elasmo_meeting=True,
+            source_pdf=str(C.REPO / "database/others_libraries/Cat" / f"{key}.pdf"),
+            src_txt=str(txt), cache_path=str(CACHE_DIR / f"{key}.json"),
+            n_chars=txt.stat().st_size)
+
+    # retain orphaned entries (PDF gone) whose extracted text still survives;
+    # drop those whose text is missing/empty.
+    worklist = []
+    for key, w in by_key.items():
+        txt = Path(w["src_txt"])
+        if not txt.exists() or txt.stat().st_size < 1000:
+            print(f"  DROP {key}: no surviving text ({w['src_txt']})")
+            continue
+        w["n_chars"] = txt.stat().st_size
+        w.setdefault("city", _EEA_CITIES.get(w.get("year")))
+        worklist.append(w)
+    worklist.sort(key=lambda w: (str(w.get("year")), w["key"]))
+    for i, w in enumerate(worklist):
+        w["index"] = i
+
     WORKLIST.parent.mkdir(parents=True, exist_ok=True)
     WORKLIST.write_text(json.dumps(worklist, indent=2), encoding="utf-8")
     print(f"worklist: {len(worklist)} books -> {WORKLIST}")
     for w in worklist:
         done = "cached" if Path(w["cache_path"]).exists() else "     "
-        print(f"  [{w['index']:2}] {done} {w['key']:10} {w['year']} "
-              f"{(w['city'] or ''):14} ~{w['n_chars']//4:>6}tok")
+        gone = "" if Path(w["source_pdf"]).exists() else " (PDF gone; text kept)"
+        print(f"  [{w['index']:2}] {done} {w['key']:14} {w['year']} "
+              f"{(w['city'] or ''):12} ~{w['n_chars']//4:>6}tok{gone}")
     return worklist
 
 
