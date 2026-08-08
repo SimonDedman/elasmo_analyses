@@ -68,26 +68,34 @@ def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str):
 
 def merge(db_path):
     wl = json.loads(WORKLIST.read_text(encoding="utf-8"))
+    # rebuild fresh from the caches every run — the DB is a derived artifact, so
+    # rebuilding keeps per-book counts accurate and the merge idempotent (an
+    # append would dedup re-merged books to "0 inserted").
+    dbp = Path(db_path)
+    if dbp.exists():
+        dbp.unlink()
     con = schema.create_db(db_path)
-    tot_books = tot_abs = 0
+    missing = []
     for w in wl:
         cache = Path(w["cache_path"])
-        if not cache.exists():
-            print(f"  [{w['index']:2}] {w['key']:10} NO CACHE — skipped")
+        if not cache.exists() or cache.stat().st_size < 2:
+            missing.append(w["key"])
             continue
         try:
             data = json.loads(cache.read_text(encoding="utf-8"))
         except Exception as e:
-            print(f"  [{w['index']:2}] {w['key']:10} BAD JSON: {e}")
+            print(f"  {w['key']:16} BAD JSON: {e}")
+            missing.append(w["key"])
             continue
         abstracts = data if isinstance(data, list) else data.get("abstracts", [])
+        # chunks of one book share source_pdf -> one meeting; title-dedup folds
+        # the overlap. upsert_meeting returns the existing id for later chunks.
         meta = dict(
             meeting=w["meeting"], year=w["year"], name=None,
             location=w["city"], dates=None, source_pdf=w["source_pdf"],
             doc_type="abstract_book", page_count=None, is_ocr=0,
             parse_status="ok")
         mid = load.upsert_meeting(con, meta)
-        n = 0
         for a in abstracts:
             if not isinstance(a, dict):
                 continue
@@ -95,17 +103,27 @@ def merge(db_path):
                              w["society_hint"])
             if not rec["title"]:
                 continue
-            if load.insert_abstract(con, mid, rec):
-                n += 1
-        con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
+            load.insert_abstract(con, mid, rec)   # dedups within the meeting
         con.commit()
-        with_body = sum(1 for a in abstracts
-                        if isinstance(a, dict) and (a.get("abstract_text") or "").strip())
-        print(f"  [{w['index']:2}] {w['key']:10} {w['year']}  "
-              f"{n:4} abstracts ({with_body} with body)")
+
+    # fix per-meeting counts from the DB (cumulative across chunks) and report
+    con.execute("UPDATE meetings SET n_abstracts = "
+                "(SELECT COUNT(*) FROM abstracts WHERE abstracts.meeting_id = meetings.meeting_id)")
+    con.commit()
+    tot_books = tot_abs = 0
+    print()
+    for mid, mtg, yr, loc, n in con.execute(
+            "SELECT meeting_id, meeting, year, location, n_abstracts "
+            "FROM meetings ORDER BY year, location"):
+        wb = con.execute("SELECT COUNT(*) FROM abstracts WHERE meeting_id=? "
+                         "AND abstract_text IS NOT NULL AND length(trim(abstract_text))>0",
+                         (mid,)).fetchone()[0]
+        print(f"  {mtg} {yr} {(loc or ''):12} {n:4} abstracts ({wb} with body)")
         tot_books += 1
         tot_abs += n
-    print(f"\n{tot_books} books, {tot_abs} abstracts -> {db_path}")
+    if missing:
+        print(f"\n  NOT YET EXTRACTED: {', '.join(sorted(set(missing)))}")
+    print(f"\n{tot_books} meetings, {tot_abs} abstracts -> {db_path}")
 
     # exports alongside the DB
     stem = Path(db_path).with_suffix("")
