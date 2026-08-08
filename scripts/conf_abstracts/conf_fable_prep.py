@@ -26,6 +26,52 @@ SRC_DIR = C.OUT / "conf_abstracts" / ".fable_src"
 CACHE_DIR = C.OUT / "conf_abstracts" / ".fable_cache"
 WORKLIST = C.OUT / "conf_abstracts" / "fable_worklist.json"
 
+# Fable under-extracts very long books (observed: EEA2016 at 230k chars yielded
+# only 20 of ~70 abstracts — it stops generating partway). Books over this size
+# are split into overlapping chunks, one Fable agent each; the merge folds the
+# chunks back into ONE meeting (shared source_pdf) and dedups the overlap by
+# title. Books at/below ~168k chars extract fully in one pass.
+CHUNK_THRESHOLD = 170_000
+CHUNK_SIZE = 130_000
+CHUNK_OVERLAP = 15_000
+
+
+def _cache_count(cache_path) -> int:
+    p = Path(cache_path)
+    if not p.exists() or p.stat().st_size < 2:
+        return 0
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        return len(d) if isinstance(d, list) else len(d.get("abstracts", []))
+    except Exception:
+        return 0
+
+
+def _healthy_cache(entry) -> bool:
+    """A single-book cache that extracted fully: full books run ~0.40 abstracts
+    per 1000 chars; truncated ones (EEA2016: 0.087) fall well below. Programmes
+    with no bodies (2015/2017) are small and handled by the size threshold."""
+    n = _cache_count(entry["cache_path"])
+    return n > 0 and (n / max(entry["n_chars"], 1) * 1000) >= 0.25
+
+
+def _chunk_text(text: str):
+    """Split into overlapping char windows on paragraph/line boundaries."""
+    if len(text) <= CHUNK_THRESHOLD:
+        return [text]
+    chunks, start, n = [], 0, len(text)
+    while start < n:
+        end = min(start + CHUNK_SIZE, n)
+        if end < n:  # extend to the next line break so an abstract isn't cut mid-line
+            nl = text.find("\n", end)
+            if 0 < nl < end + 2000:
+                end = nl
+        chunks.append(text[start:end])
+        if end >= n:
+            break
+        start = end - CHUNK_OVERLAP
+    return chunks
+
 # Books in scope. Each entry: (glob, meeting, society_hint, is_elasmo_meeting).
 # EEA books are wholly elasmo (meeting=EEA -> AES society). The Cat/ folder holds
 # the EEA abstract books; extend this list to sweep JMIH/ASIH/SI later.
@@ -114,8 +160,8 @@ def build(only=None):
     # whose PDF has since vanished from the NAS folder). Reconstruct from the key.
     for txt in sorted(SRC_DIR.glob("*.txt")):
         key = txt.stem
-        if key in by_key or txt.stat().st_size < 1000:
-            continue
+        if key in by_key or txt.stat().st_size < 1000 or "__c" in key:
+            continue  # "__c" = a chunk slice, not a standalone book
         yr = _year(txt)
         print(f"  RECOVER {key}: orphaned text, no worklist entry (rebuilt)")
         by_key[key] = dict(
@@ -136,6 +182,31 @@ def build(only=None):
         w["n_chars"] = txt.stat().st_size
         w.setdefault("city", _EEA_CITIES.get(w.get("year")))
         worklist.append(w)
+
+    # split oversized books that didn't extract healthily into overlapping chunks
+    # (one Fable agent each); the merge folds them back via shared source_pdf.
+    expanded = []
+    for w in worklist:
+        text = Path(w["src_txt"]).read_text(encoding="utf-8")
+        if len(text) <= CHUNK_THRESHOLD or _healthy_cache(w):
+            w.setdefault("book_key", w["key"])
+            w.setdefault("chunk", 0)
+            expanded.append(w)
+            continue
+        parts = _chunk_text(text)
+        print(f"  CHUNK {w['key']}: {len(text)} chars -> {len(parts)} chunks "
+              f"(single-book cache had {_cache_count(w['cache_path'])} abstracts)")
+        for ci, part in enumerate(parts):
+            ck = f"{w['key']}__c{ci}"
+            csrc = SRC_DIR / f"{ck}.txt"
+            csrc.write_text(part, encoding="utf-8")
+            expanded.append(dict(
+                key=ck, book_key=w["key"], chunk=ci,
+                meeting=w["meeting"], year=w["year"], city=w.get("city"),
+                society_hint=w["society_hint"], is_elasmo_meeting=w["is_elasmo_meeting"],
+                source_pdf=w["source_pdf"], src_txt=str(csrc),
+                cache_path=str(CACHE_DIR / f"{ck}.json"), n_chars=len(part)))
+    worklist = expanded
     worklist.sort(key=lambda w: (str(w.get("year")), w["key"]))
     for i, w in enumerate(worklist):
         w["index"] = i
