@@ -130,6 +130,8 @@ def build(only=None):
     by_key = {}
     if WORKLIST.exists():
         for w in json.loads(WORKLIST.read_text(encoding="utf-8")):
+            if "__c" in w["key"]:
+                continue  # chunk entries are ephemeral — regenerated from the full book each run
             by_key[w["key"]] = w
 
     for pattern, meeting, soc_hint, elasmo in SCOPE:
