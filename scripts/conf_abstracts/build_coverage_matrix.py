@@ -35,23 +35,26 @@ FILL = {
 }
 # (location, status, action-note). status conveys what we HOLD; the note says
 # what's still NEEDED so the sheet is self-documenting.
+# EEA abstract books extracted via Fable (2026-08-14): 731 abstracts across 11
+# meetings into conference_abstracts_fable.db. "Ingested" notes carry the count.
 EEA = {
+    2004: ("London", "Ingested", "55 abstracts (Fable)"),
     2010: ("Galway", "Hardcopy", "Cat has hardcopy"),
-    2011: ("Berlin", "Hardcopy", "Cat has hardcopy"),
+    2011: ("Berlin", "Ingested", "58 abstracts (Fable)"),
     2012: ("Milan", "Hardcopy", "Cat has hardcopy"),
-    2013: ("Plymouth", "Digital", "abstract book held — ingest"),
-    2014: ("Leeuwarden", "Hardcopy", "Cat has hardcopy"),
-    2015: ("Peniche", "Digital", "abstract book held — ingest"),
-    2016: ("Bristol", "Hardcopy", "Cat (Shark Trust) hosted — ask for print PDF"),
-    2017: ("Amsterdam", "Programme", "only programme held — abstract book needed"),
-    2018: ("Peniche", "Missing", "Cat: no hardcopy, likely online-only — find"),
-    2019: ("Rende", "Hardcopy", "Cat has hardcopy"),
+    2013: ("Plymouth", "Ingested", "93 abstracts (Fable)"),
+    2014: ("Leeuwarden", "Ingested", "61 abstracts (Fable)"),
+    2015: ("Peniche", "Programme", "2-page programme only (0 abstracts) — abstract book needed"),
+    2016: ("Bristol", "Ingested", "93 abstracts (Fable)"),
+    2017: ("Amsterdam", "Ingested", "62 talks, programme/no bodies (Fable)"),
+    2018: ("Peniche", "Ingested", "75 abstracts (Fable)"),
+    2019: ("Rende", "Ingested", "136 abstracts (Fable)"),
     2020: ("online (covid)", "Missing", "covid/online — find"),
     2021: ("Leiden", "Programme", "only programme held — abstract book needed"),
     2022: ("Valencia (=SI2022)", "Schedule", "covered via SI2022 (schedule)"),
-    2023: ("Brighton", "Programme", "programme held; abstract book available — ask Cat"),
-    2024: ("Thessaloniki", "Pending", "abstract book available — ask Cat"),
-    2025: ("Rotterdam", "Pending", "abstract book available — ask Cat"),
+    2023: ("Brighton", "Ingested", "oral 64 + poster 34 = 98 abstracts (Fable)"),
+    2024: ("Thessaloniki", "Pending", "PDF corrupt — need clean copy from Cat"),
+    2025: ("Rotterdam", "Pending", "PDF corrupt — need clean copy from Cat"),
     2026: ("online", "Pending", "will be digital"),
 }
 SI = {2010: ("Cairns", "Missing", "find source"),
@@ -169,7 +172,7 @@ def build():
         "- Host cities 1916-2025 from github.com/SimonDedman/AESconfLocations; 2026 = New Orleans.",
         "- 'OCR' = degraded 1997-2004 JMIH phone-photo scans (all needs_review); Carylanne's flatbed re-scans will upgrade these.",
         "- No abstracts collected pre-1992 (Carylanne's archive starts 1992) → 1916-1991 show host city but 'Missing'.",
-        "- EEA 2010-2026 from Cat Gordon (Shark Trust); pre-2010 in Ali's archive. EEA not yet ingested. SI2022 Valencia PDF received (Digital).",
+        "- EEA 2010-2026 from Cat Gordon (Shark Trust); pre-2010 in Ali's archive. EEA 2004-2019 + 2023 ingested via Fable (731 abstracts, 2026-08-14); 2024/2025 PDFs corrupt (await clean copies from Cat). SI2022 Valencia PDF received (Digital).",
         "- OCS (Oceania Chondrichthyan Soc, ~2011+, biennial): Brit Finucci collating, pending council — years/locations TBC.",
         "- Blank/unshaded cell = no conference that year for that series.",
         "- Per-society counts & trends: see the Dashboard tab.",
