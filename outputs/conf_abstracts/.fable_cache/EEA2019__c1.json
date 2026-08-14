@@ -1,0 +1,2233 @@
+[
+ {
+  "title": "Shark Research Hub for Dusky Sharks (Carcharhinus obscurus) and Sandbar Sharks (Carcharhinus plumbeus) in the Easternmost Mediterranean Sea",
+  "authors": [
+   {
+    "full_name": "Aviad Scheinin",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Eyal Bigal",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL; Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ziv Zemah Shamir",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL; Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Adi Barash",
+    "affiliation": "Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Tal Starostinetsky-Malonek",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL; Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Stephane Martinez",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL; Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Danny Morick",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dan Tchernov",
+    "affiliation": "Morris Kahn Marine Research Station, Leon H. Charney School of Marine Sciences, University of Haifa, ISRAEL; Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The Top Predator laboratory of Morris Kahn Marine Research Station has been running a shark-tagging project in the last 4 years, as part of a long-term ecological research programme. The study takes place at an anthropogenic, seasonal aggregation area of sharks in the warm discharge waters of power plants along the Mediterranean coast of Israel. Following the tagging protocol of Sharklab (Bimini, Bahamas), 51 sharks have been tagged thus far, of which 35 were dusky sharks (Carcharhimus obscurus; 34 females and 1 male) and 16 sandbar sharks (Carcharhinus plumbeus; all male). These species are listed by the IUCN as data deficient (DD) and endangered (EN) in the Mediterranean Sea, respectively. The tagging procedure includes morphometric measurements as well as DNA, stable isotopes, blood chemistry and microbiome sampling. All tagged sharks are issued a subcutaneous PIT tag as well as a spaghetti tag. 19 dusky sharks and 10 sandbar sharks were tagged with acoustic transmitters and an array of 11 receivers was placed within the tagging site and in other aggregation areas, such as offshore mariculture facilities, throughout Israel's marine space. Results indicate thermo-regulated fidelity at human-altered habitats and size as well as sex-dependent aggregating behaviour. In the Mediterranean Sea, where shark populations have declined dramatically over the last 70 years, Israeli waters have become an oasis for coastal sharks and a hub for their research, supported by ground-breaking conservation, legislation and enforcement.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Emerging Technologies in Acoustic Telemetry: Real-time vs. Data Storage",
+  "authors": [
+   {
+    "full_name": "Andre Steckenreuter",
+    "affiliation": "Innovasea, Cologne, GERMANY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Silvana Germana",
+    "affiliation": "Innovasea, Halifax, CANADA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Richard Vallee",
+    "affiliation": "Innovasea, Halifax, CANADA",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Acoustic telemetry is a well-established tool that has been used around the world for more than three decades to get an understanding of the spatio-temporal movements and associated behaviour of a wide range of aquatic animals. New emerging technologies are being developed continuously that allow for new research applications and designs. Examples for these new technologies are (1) real-time observations of both aquatic animals as well as their aquatic environment and (2) acoustic data storage tags. Applied real-time systems may consist of various underwater sensors, acoustic telemetry tags on aquatic animals, a surface hub that receives data from the sensors as well as from the tags, and a cloud-centric database. Such systems are now in use at several global installations. Data access is available via a mobile phone or laptop that provide real-time notifications when tagged animals are near receivers or the current state of environmental variables. Acoustic data storage tags might be used especially for far-ranging animals such as sharks and rays that might inhabit coastal and pelagic regions at different times of the year. These applications can be used to get a bigger picture of a species behaviour and its spatio-temporal distribution in order to address conservation and management measures since data is also collected while animals are outside of acoustic arrays. Here, we will explore the evolution of the use of acoustic telemetry and how receiving data in real-time and in acoustic data storage applications will help sustain our ocean ecosystems.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Habitat use of juvenile white sharks (Carcharodon carcharias) and shortfin mako sharks (Isurus oxyrinchus) in a nursery area in the west coast of Baja California, México",
+  "authors": [
+   {
+    "full_name": "Elena Tamburin",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO; Fundación Alium Pacfic, Carrera 26 No. 5C–13, Cali, COLOMBIA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Sora L. Kim",
+    "affiliation": "Department of Life and Environmental Sciences, University of California Merced, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fernando R. Elorriaga-Verplancken",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniel J. Madigan",
+    "affiliation": "Gulf of California International Research Center, Loma los Frailes S/N, Santa Rosalía, BCS 23920, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mauricio Hoyos-Padilla",
+    "affiliation": "Pelagios-Kakunjá A.C, Sinaloa 1540. Col. Las Garzas, C.P. 23070, La Paz, B.C.S., MÉXICO; Fins Attached: Marine Research and Conservation 19675, Still Glen Drive Colorado Springs, CO 80908, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alberto Sánchez-González",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Agustín Hernández-Herrera",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "José Leonardo Castillo-Geniz",
+    "affiliation": "Centro Regional de Investigación Pesquera de Ensenada, Instituto Nacional de la Pesca (INAPESCA), MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlos Javier Godinez-Padilla",
+    "affiliation": "Centro Regional de Investigación Pesquera de Ensenada, Instituto Nacional de la Pesca (INAPESCA), MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Felipe Galván-Magaña",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Information like habitat preferences and trophic ecology regarding juvenile white sharks Carcharodon carcharias (WS) and shortfin mako sharks Isurus oxyrinchus (MS) is lacking. This study investigates the habitat use of juvenile MS and WS in the nursery area of Sebastian Vizcaino Bay (SVB) using stable isotope analysis in multiple tissues. During 2015 and 2016, we collected muscle (n=165), blood samples (n=147), red blood cells (RBC; n=62) and plasma (n=70) of young MS and muscle (n=6), RBC (=2) and plasma (n=2) of young WS. The size range for MS was 64.5-196 cm of total length (TL) and for WS it was 130-292 cm TL. Shortfin mako and white sharks had significant differences for muscle tissue in δ13C values (W = 255.5, p < 0.0001), but not in δ15N values (W = 1189.5, p = 0.08). We did not find significant differences in δ13C values (W = 228, p-value = 0.045) and δ15N values (W = 420.5, p-value = 0.8) of whole blood between shortfin mako and white sharks. In addition, sharks with similar TL of both species (MS > 102 cm TL and WS <186 cm TL) showed a similar pattern of δ15N values for whole blood, RBCs and plasma. MS and WS with similar total length (MS> 102 cm TL and WS < 186 cm TL) reflected in their tissues (muscle, blood, RBC and plasma) the regional baseline 15-N enriched isotopic signature of SVB, suggesting that SVB has a unique isotopic signature (isoscape). The similarity in isotopic niche and isotopic composition between shortfin mako and white sharks in multiple tissues reflecting large and short time periods suggest shared resource and common habitat use inside SVB throughout extended times confirming their residency in this area during their earlier life stages.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Temporal variability in whale shark (Rhincodon typus) presence in the South Ari Marine Protected Area, Maldives, Indian Ocean",
+  "authors": [
+   {
+    "full_name": "Silvia Valsecchi",
+    "affiliation": "Department of Earth and Environmental Sciences DISAT (DISAT), University of Milano Bicocca (MI), ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Caterina Lanfredi",
+    "affiliation": "CoNISMa (The National Inter-University Consortium for Marine Sciences) U.R.L. Politecnico di Milano (MI), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Arianna Azzellino",
+    "affiliation": "Environmental Engineering Department (DICA), Politecnico di Milano (MI), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alessandra Savini",
+    "affiliation": "Department of Earth and Environmental Sciences DISAT (DISAT), University of Milano Bicocca (MI), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Valentina Alice Bracchi",
+    "affiliation": "Department of Earth and Environmental Sciences DISAT (DISAT), University of Milano Bicocca (MI), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fabio Marchese",
+    "affiliation": "Department of Earth and Environmental Sciences DISAT (DISAT), University of Milano Bicocca (MI), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "James Hancock",
+    "affiliation": "Maldives Whale Shark Research Programme (MWSRP), MALDIVES & UNITED KINGDOM",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Richard Rees",
+    "affiliation": "Maldives Whale Shark Research Programme (MWSRP), MALDIVES & UNITED KINGDOM",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Whale sharks are usually observed in coastal areas throughout the highly productive tropical and subtropical regions. The Indo-Pacific sub-population is declining mainly due to fisheries catches, bycatch and vessel strikes. Accordingly, in 2016 the species was assessed as \"Endangered\" on the IUCN Red List. Despite conservation concerns, there are still substantial gaps in the knowledge of whale shark ecology. This study investigates the temporal variability of whale shark presence in the South Ari Atoll Marine Protected Area (S.A.MPA). Even if the area is very limited (about 42km2) it appears to be an important aggregation site for the species in the Maldives archipelago. Since 2012 the Maldives Whale Shark Research Programme (MWSRP) has been collecting data year-round within the MPA. Due to the heterogeneity of the effort among different years only data collected between 2014 and 2017 has been considered in this study. A total of 572 sharks encounters have been reported in this period. Concurrently, in situ Sea Surface Temperature (SST) has also been collected. Sightings per Unit of Effort (SPUE) was calculated based on the number of survey trips carried out per month and per year during favorable environmental conditions (e.g. wind speed not exceed 3 in the Beaufort scale and partial and total clouds covered conditions). Generalized Linear Models have been used to analyse the temporal variability of the SPUE. No significant difference has been observed in SPUE across the study period. However, taking into consideration data on a monthly-year basis, the species' occurrence presents significant differences (P-level < 0.01). Further analysis revealed that SST could be a significant covariate. The understanding offered by this study provides additional information upon which to base an appropriate management strategy in the MPA for this wide-ranging species.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "The historical occurrence of the angelshark Squatina squatina and common skate Dipturus intermedius in Dutch coastal waters",
+  "authors": [
+   {
+    "full_name": "Roeland A. Bom",
+    "affiliation": "Department of Coastal Systems, NIOZ Royal Netherlands Institute for Sea Research, and Utrecht University, NETHERLANDS",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Monique van de Water",
+    "affiliation": "Stichting Het Wereld Natuur Fonds-Nederland, NETHERLANDS",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Aafke Brader",
+    "affiliation": "Stichting Het Wereld Natuur Fonds-Nederland, NETHERLANDS",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Henk W. van der Veer",
+    "affiliation": "Department of Coastal Systems, NIOZ Royal Netherlands Institute for Sea Research, and Utrecht University, NETHERLANDS",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Anieke van Leeuwen",
+    "affiliation": "Department of Coastal Systems, NIOZ Royal Netherlands Institute for Sea Research, and Utrecht University, NETHERLANDS",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The North Sea is known for its natural richness. Yet it is also one of most intensively exploited seas in the world, and, as a result, fish species have disappeared or populations are reduced to low numbers. There is a growing call to restore the natural richness of the North Sea but, it is often unclear what this is, because baseline studies date back 60 years at best. Elasmobranchs are an example of a group of species of which populations in the North Sea have marginalized over the past century. These includes the critically endangered angelshark Squatina squatina and common skate Dipturus intermedius. We review the historical abundance and some life-history aspects of these species in the Dutch marine waters using a variety of historical sources. Palaeontological sources dating back to the origin of the North Sea suggest that these species always have been present in the area. Written historical sources from the 16th to the 19th century suggest that the angelshark used to be fairly common and that the common skate was indeed common. Catch reports indicate that the angel shark started to decline at the onset of the 20th century and went locally extinct in the 1970s. Landings and fishery-independent data of common skate show a similar picture. The start of the decline coincides with the onset of steam-powered fisheries whereas the demise follows on the intensification of diesel-powered beam-trawlers. Historical reports and catch data indicates that angelsharks mainly visited the area in summer to reproduce. Common skates were mainly caught in winter and these were mostly young individuals that supposedly used the area as nursery grounds. Our study shows that if we base our ideas of a North Sea ecosystem on a baseline view after 1900 we may have overly low expectations of its potential natural richness.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Movement evaluation of elasmobranch species in the northern-central Adriatic Sea using a conventional tagging approach",
+  "authors": [
+   {
+    "full_name": "Matteo Barbato",
+    "affiliation": "Department of Biology, University of Padova, Padova ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Sara Bonanomi",
+    "affiliation": "CNR-IRBIM, Ancona, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Diego Borme",
+    "affiliation": "Istituto Nazionale di Oceanografia e di Geofisica Sperimentale - OGS, Trieste, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Federico Cali'",
+    "affiliation": "CNR-IRBIM, Ancona, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sasǎ Raicevich",
+    "affiliation": "ISPRA Chioggia ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Antonello Sala",
+    "affiliation": "CNR-IRBIM, Ancona, ITALY; DG Joint Research Centre (JRC) Directorate D - Sustainable Resources Unit D.02 Water and Marine Resources",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlotta Mazzoldi",
+    "affiliation": "Department of Biology, University of Padova, Padova ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The decline of elasmobranch populations in the Mediterranean Sea highlights the need of developing effective management strategies. The biological traits of such organisms include internal fertilization, hence decoupling mating from egg release/parturition, a longer life and a slower growth rate compared to most teleosts, making elasmobranch populations particularly vulnerable to fishery exploitation. Because of their biology, these species distribution may vary drastically among life stages (e.g. adults vs juveniles, pregnant vs non-pregnant females) and sexes. Movements across Mediterranean water bodies, between mating, parturitions, feeding areas and the occurrence of aggregations in a specific area are fundamental points for understanding their ecology. Therefore, integrating movement information in management strategies of these species is a crucial step forward. Such data on pelagic and benthic species are scarce throughout the Mediterranean Sea and especially in the Adriatic Sea. In this study, we adopted a conventional tagging approach in the Adriatic Sea using \"spaghetti\" tags in collaboration with professional and recreational fishermen, elasmobranchs, caught as target or bycatch, were tagged and released after species identification, recording size, sex and maturity (for males by clasper calcification and for females TL50 was used if known) and storing release coordinates in Tshark.org database. So far, we tagged 592 individuals (12 species) among which the majority are smooth-hound sharks (Mustelus mustelus and M. punctulatus), eagle ray (Myliobatis aquila) and pelagic sting ray (Pteroplatytrygon violacea). We received 6 recapture reports out of 301 of tagged Mustelus spp, ranging between 6 months to 5 days after release, and 1 of pelagic sting ray, after 2 months and 15 days after release. The longest distance recoded was of 20 nautical miles (NM) for Mustelus spp and 125 NM for P. violacea. As this approach relies on the recapture reporting, the collaboration between research institutions across Mediterranean countries, and between researchers and fishermen as well, is fundamental to increase recapture information.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Reconstructing past and present behaviours, occurrence and seasonality of elasmobranch species through the recovery of Local Ecological Knowledge",
+  "authors": [
+   {
+    "full_name": "Matteo Barbato",
+    "affiliation": "Department of Biology - University of Padova, Padova, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Claudio Barría",
+    "affiliation": "Institut de Ciències del Mar (ICM-CSIC), Bacellona, SPAIN",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrea Bellodi",
+    "affiliation": "Department of Life Sciences and Environmental, University of Cagliari, Cagliari, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sara Bonanomi",
+    "affiliation": "IRBIM-CNR, Ancona, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Diego Borme",
+    "affiliation": "Istituto Nazionale di Oceanografia e di Geofisica Sperimentale - OGS Trieste, Trieste, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ilija Ćetković",
+    "affiliation": "University of Montenegro, Institute of Marine Biology, Kotor, Montenegro",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ana I. Colmenero",
+    "affiliation": "Institut de Ciències del Mar (ICM-CSIC), Bacellona, SPAIN",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Colloca",
+    "affiliation": "IRBIM-CNR, Mazara del Vallo, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fabio Crocetta",
+    "affiliation": "Department of Integrative Marine Ecology, Stazione Zoologia Anton Dohrn, Napoli, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Egemen Demir",
+    "affiliation": "COMU, Marine Science and Technology Faculty, Çanakkale Merkez/Çanakkale, TURKEY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco De Carlo",
+    "affiliation": "CIBM/Soc. Coop. Aplysia, Livorno, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Manfredi Di Lorenzo",
+    "affiliation": "IRBIM-CNR, Mazara del Vallo, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Maria Cristina Follesa",
+    "affiliation": "Department of Life Sciences and Environmental, University of Cagliari, Cagliari, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fulvio Garibaldi",
+    "affiliation": "Dipartimento di Scienze della Terra dell'Ambiente e della Vita – University of Genova, Genova, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianni Giglio",
+    "affiliation": "DiBEST, University of Calabria, Arcavacata di Rende, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ioannis Giovos",
+    "affiliation": "iSea-2. Technological Educational Institute of Western Greece, Thessaloniki, GREECE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giulia Guerriero",
+    "affiliation": "Federico II di Napoli, Napoli, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Olfa Hentati",
+    "affiliation": "Higher Institute of Biotechnology of Sfax, Sfax, TUNISIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ana Jevremović",
+    "affiliation": "University of Zadar, Zadar, CROATIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Claudia Kruschel",
+    "affiliation": "University of Zadar, Zadar, CROATIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mohamed Ksibi",
+    "affiliation": "Higher Institute of Biotechnology of Sfax, Sfax, TUNISIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Luca Lanteri",
+    "affiliation": "Dipartimento di Scienze della Terra dell'Ambiente e della Vita – University of Genova, Genova, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Luigi Leonetti",
+    "affiliation": "DiBEST, University of Calabria, Arcavacata di Rende, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alessandro Ligas",
+    "affiliation": "CIBM/Soc. Coop. Aplysia, Livorno, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Adriano Madonna",
+    "affiliation": "Federico II di Napoli, Napoli, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sanja Matić-Skoko",
+    "affiliation": "Institute of Oceanography and Fishery, Split, CROATIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Renata Mimica",
+    "affiliation": "Fishery Office, Rijeka, CROATIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dimitrios K. Moutopoulos",
+    "affiliation": "Technological Educational Institute of Western Greece, Thessaloniki, GREECE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Antonello Mulas",
+    "affiliation": "Department of Life Sciences and Environmental, University of Cagliari, Cagliari, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vedrana Nerlović",
+    "affiliation": "University of Split, University Department of Marine Studies, Split, CROATIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Konstantinos Tsoukindas",
+    "affiliation": "Technological Educational Institute of Western Greece, Thessaloniki, GREECE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ana Pešić",
+    "affiliation": "University of Montenegro, Institute of Marine Biology, Kotor, Montenegro",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cristina Porcu",
+    "affiliation": "Department of Life Sciences and Environmental, University of Cagliari, Cagliari, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Riginella",
+    "affiliation": "Department of Integrative Marine Ecology, Stazione Zoologia Anton Dohrn, Napoli, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "DiBEST, University of Calabria, Arcavacata di Rende, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sezginer Tunçer",
+    "affiliation": "COMU, Marine Science and Technology Faculty, Çanakkale Merkez/Çanakkale, TURKEY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dario Vrdoljak",
+    "affiliation": "Institute of Oceanography and Fishery, Split, CROATIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlotta Mazzoldi",
+    "affiliation": "Department of Biology - University of Padova, Padova, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Elasmobranchs constitute a target or bycatch of a wide variety of fishing techniques. Such anthropogenic pressure has brought to a drastic reduction of local populations across the Mediterranean Sea. Moreover, limited-data collection and species misidentification, among others, have led to a scarcity of historical data on species occurrence and abundance trends in several taxa. Such information is particularly valuable to study migration dynamics and behaviour variations, as well as to reconstruct historical trends. To fill this data gap, the use of local ecological knowledge from professional fishermen can be considered as a valuable source of semi-quantitative information on several aspects of species ecology, abundance and behavioural aspects. Through a questionnaire survey, fishermen operating with diverse fishing gears such as bottom and pelagic trawlers, set nets and longlines were interviewed by trained researchers with the aid of photo-identification materials. A total of 211 interviews were collected across nine Mediterranean FAO-GSA sub-areas (9, 10, 11, 16, 17, 18, 19, 22, 28). Results covered a wide range of elasmobranch species with regard to coastal, pelagic and deep-sea environment. Interviewers indicated species that were abundant in the past, declined recently and showed size variation compared to past catches. Moreover, fishermen reported aggregation sightings/events, seasonal movements and species-specific fishing area. The present study constitutes a baseline regarding abundance and distribution of elasmobranch species in historical times and may represent a valuable tool for data deficient taxa. It also gives new insights on elasmobranchs behavioural and ecological aspects and highlights priority species and suitable geographic areas for conservation and behavioural studies.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Preliminary data on Zooplankton community structure in Nosybe Madagascar – Whale shark (Rhincodon typus) feeding ecology project",
+  "authors": [
+   {
+    "full_name": "Paolo Bava",
+    "affiliation": "Sharks Studies Center – Scientific Institute, M. Marittima (GR), ITALY; Università Bicocca Milano, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Sharks Studies Center – Scientific Institute, M. Marittima (GR), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "DiBEST, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Iole Di Capua",
+    "affiliation": "Stazione Zoologica Anton Dohrn, Napoli, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Isabella Buttino",
+    "affiliation": "Stazione Zoologica Anton Dohrn, Napoli, ITALY; Institute for Environmental Protection and Agency, ISPRA, Livorno, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "It is known that juveniles whale sharks (Rhincodon typus) have tendency to gather, seasonally, in a few coastal areas around the world to feed on zooplankton; however little is known about their food preferences. The CSS (Centro Studi Squali) scientific coordinator of the project \"Whale shark feeding ecology\" (in partnership with University of Calabria, University of Siena, ISPRA, University of Naples Federico II, Stazione Zoologica Anton Dohrn), in 2016, started the study of these aggregations. During field observations we collected zooplankton samples and we observed feeding behaviour of sharks to understand the main characteristics of the zooplankton community that appears to cause said gatherings. So far two expeditions (2017 and 2018) have been carried out in the channel of Mozambique, in the coastal waters of the Nosy Be (MG). Here whale sharks are present in the last four months of the year: data were collected in the eastern part of the island in late November-early December which is the peak season for whale shark sightings in the area. Zooplankton samples were collected vertically from 10 m depth to surface, using a net with 200 µm mesh aperture. The samples were concentrated using a 50µm filter and fixed with alcohol (70%) and lugol (1%). At the same time, location, water temperature and transparency, shark presence/absence and feeding behaviour were recorded. Quantitative and qualitative analysis of zooplankton samples were performed at Stazione Zoologica Anton Dohrn and ISPRA laboratories. We calculated zooplankton biomass and abundance. We identified at species level the most important zooplanktonic taxa (copepods, chetognats etc) and moreover we calculated their size spectra.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Deepsea sharks of Guatemala: New records of the Atlantic sixgill shark Hexanchus vitulus",
+  "authors": [
+   {
+    "full_name": "Cristopher Avalos-Castillo",
+    "affiliation": "Fundación Mundo Azul, Guatemala city, GUATEMALA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Omar Santana-Morales",
+    "affiliation": "ECOCIMATI A. C., Ensenada, MÉXICO; Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elisa Areano",
+    "affiliation": "Fundación Mundo Azul, Guatemala city, GUATEMALA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Edgar E. Becerril-García",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MEXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The knowledge of Hexanchus vitulus (Springer & Waller, 1969) and other deep-sea sharks in the Caribbean Sea is considered scarce, as these species are unfrequently captured by local artisanal fishers and therefore scientific research regarding its biology has not been developed. The present study reports the first record with morphometry data of H. vitulus in this area, in order to provide useful information for future comparisons of specimens in other coastal regions. A total of ten Atlantic six gill sharks was captured offshore El Quetzalito, Guatemala (15.740379 N, -88.274621W) by artisanal fishers at using longlines and fishing nets at a depth of 275-365 m. The date of capture, fishing gear, used bait, sex, total length, precaudal length, and fork length were registered from each shark. Taxonomic identification was carried out through the description published by Compagno et al., (2005) and Daly-Engel et al., (2018). All the specimens were identified as H. vitulus due to the presence of six gills, a slender body with brown dorsal and white ventral coloration, narrow head and mouth, anterior serrations on lower teeth, and large eyes. These characteristics are the same described for H. nakamurai, because H. vitulus has been describes as a cryptic species with no evident external differentiation known to date. The length of the specimens ranged between 61-165 cm TL, with a mean of 142 ± 29 SD cm TL. Most of the captured sharks were considered mature individuals with the exception of a juvenile female caught in 2015. Sex ratio of this sample was 2.3:1 (Males:Females), where 90% of the sharks were mature individuals. The high quantity of mature sharks in this sample differs from what observed in other relatively close areas like Belize. Arguments regarding a potential segregation between mature and immature individuals related to locality and month are presented.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "The presence of Remora remora on Mobula birostris in the largest Marine Protected Area of North America",
+  "authors": [
+   {
+    "full_name": "E. Becerril-García",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MEXICO",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Miguel A. Gutiérrez-Ortiz",
+    "affiliation": "Ecosistemas y Conservación: Proazul Terrestre A.C., La Paz, MEXICO; Universidad Autónoma de Baja California Sur, La PAZ, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Paul A. Preciado-González",
+    "affiliation": "Ecosistemas y Conservación: Proazul Terrestre A.C., La Paz, MEXICO; Universidad Autónoma de Baja California Sur, La PAZ, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Arturo Ayala-Bocos",
+    "affiliation": "Ecosistemas y Conservación: Proazul Terrestre A.C., La Paz, MEXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The ecology of mantas and echeneids in the Eastern Tropical Pacific is poorly understood. In this study we describe the frequency of interactions between the vulnerable Mobula birostris and its symbiont Remora remora, through the participation of scientists and tourists in a marine protected area. Data were obtained by the analysis of underwater pictures of observed mantas with remoras during 139 diving days at sea during the years 2016-2017. A total of 273 records of mantas with remoras was registered from 207 identified individuals. Estimated size of mantas ranged from 250-550 cm DW, with an average size of 380 ± 50 cm SD. Sex ratio of mantas was 1.3:1 (Female:Male) as observed from our sample of 89 females (42.9%), 68 males (32.8%), and 50 individuals (24%) for which sex could not be determined. The remora species observed in all the mantas was the common remora Remora remora. Average number of remoras attached to the mantas was 1.6 ± 0.56 remoras per manta. Estimated size of the remora ranged between 40-80 cm TL, with an average of 60 cm ± 10 cm SD. During the study period, there were no significant differences between months and the number of remoras per manta (H7,271=5.13; p=0.64). Most of the mantas usually had one or two remoras, 43 % (n=117) and 53.5 % (n=147), respectively; while 2.5% of the mantas (n=5) were observed with three remoras, and only two individuals with four (0.9%). Although a higher number of remoras in female mantas was observed, there was no significant differences according to the morphotype or sex of the mantas (H3,208=7.90; p=0.04) confirmed by the Bonferroni post-hoc test. The study of this host-symbiont interaction is discussed in terms of the potential insights that this kind of research could provide regarding the ecology of mantas and remoras if compared with other aggregation sites.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Correlation between phytoplancton abundance and whale shark feeding behaviour at Nosy Be (Madagascar)",
+  "authors": [
+   {
+    "full_name": "Francesco Bolinesi",
+    "affiliation": "Department of Biology, University of Naples \"Federico II\", ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Martina Arpaia",
+    "affiliation": "Department of Biology, University of Naples \"Federico II\", ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marica Lopez",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianni Giglio",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giorgia Zicarelli",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vittoria Battaglia",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Samira Gallo",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Chiara Romano",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mario Affuso",
+    "affiliation": "Department of Biology, University of Naples \"Federico II\", ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emanuela Serino",
+    "affiliation": "Department of Biology, University of Naples \"Federico II\", ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Anna Palopoli",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandro Tripepi",
+    "affiliation": "Department of Biology, Ecology and earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Centro Studi Squali, Massa Marittima (GR) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlotta Barba",
+    "affiliation": "Manta Diving, Nosy Be, MADAGASCAR",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Olga Mangoni",
+    "affiliation": "Department of Biology, University of Naples \"Federico II\", ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "In the years 2017, 2018 and 2019 the feeding behavior of the whale shark has been studied off Nosy Be Island (Madagascar). In particular, the investigations involved the description of the behavioral modules of the whale shark and their relationship with the phytoplankton communities. In total, 65 phytoplankton samples were collected in the following four behavioural conditions: 0 - absence of whale sharks; 1 - presence of swimming whale sharks; 2 - presence of whale sharks in horizontal feeding; 3 - presence of whale sharks in vertical passive feeding; 4 - presence of whale sharks in vertical active feeding. All samples were immediately filtered and then frozen to be subsequently analyzed by HPLC to identify the total biomass and contribution of the different functional groups of phytoplankton. In total 8 phytoplanctonic taxa have been identified: Prasinophyceae, Dinoflagellata, Cryptophyceae, Primnesiophyceae, Pelagophyceae, Chlorophyceae, Cyanobacteria and Bacillariophyceae. Among them, Cryptophyceae were the most abundant. Our results seemed to highlight a certain correlation also between behavioral feeding intensity exhibited by sharks and the total biomass of phytoplancton. In particular, this appeared more evident with some groups of algae that might be involved in the release of the dimethyl sulfonio propionate (DMSP). This substance is produced by algal organisms in response to predation by zooplankton organisms. Since DMSP is a substance characterized by a strong odor, the results could demonstrate the fundamental role of smell in the identification of food sources by the whale shark, as confirmed for marine birds.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Effects of biological acoustic signals and shipping noise on behavioural parameters in small-spotted catshark (Scyliorhinus canicula)",
+  "authors": [
+   {
+    "full_name": "Giovanni De Vincenzi",
+    "affiliation": "National Research Council - Institute for Biological Resources and Marine Biotechnology, Messina, ITALY; Departmnt of Life Science and Systems Biology, University of Torino, Torino, ITALY; Association eConscience – Art of Soundscape, Monreale, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Centro Studi Squali, Massa Marittima (GR), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Salvatore Viola",
+    "affiliation": "National Institute of Nuclear Physics - National Laboratories of the South (INFN-LNS), Catania (CT), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gaspare Buffa",
+    "affiliation": "National Research Council - Institute for the Study of Anthropic Impacts and Sustainability in the Marine Environment (IAS–CNR), Campobello di Mazara (TP), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Virginia Sciacca",
+    "affiliation": "National Research Council - Institute for Biological Resources and Marine Biotechnology, Messina, ITALY; Departmnt of Life Science and Systems Biology, University of Torino, Torino, ITALY; Association eConscience – Art of Soundscape, Monreale, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vincenzo Maccarrone",
+    "affiliation": "National Research Council - Institute for the Study of Anthropic Impacts and Sustainability in the Marine Environment (IAS–CNR), Campobello di Mazara (TP), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Valentina Corrias",
+    "affiliation": "National Research Council - Institute for Biological Resources and Marine Biotechnology, Messina, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesca Romana Reinero",
+    "affiliation": "Centro Studi Squali, Massa Marittima (GR), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Filiciotto",
+    "affiliation": "National Research Council - Institute for Biological Resources and Marine Biotechnology, Messina, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Despite in recent years the interest about the human-made noise effects on marine animals have received notably increasing, at date few studies have investigated the potential role of acoustic masking on animal's bio-ecological relationship. In this study, we exposed twelve specimens of small-spotted catshark (Scyliorhinus canicula, Linnaeus 1758) to biological and anthropogenic sounds in order to assess their behavioural changes potentially referable to pray presence and masking effect due to the shipping noise. Specifically, the sharks held individually in aquarium were exposed to three acoustic experimental conditions differentiated in their spectral (Hz) components (biological and anthropogenic mixed sources) and intensity (dB re 1 µPa) levels. Swimming behaviour and spatial distribution of the specimens were recorded. The results highlighted significant differences in time spent in swimming and in spatial use of the aquarium among the experimental conditions. The sharks concentrated their swimming behaviour in the aquarium's lower sections when the intensity levels of the biological acoustic sources were higher than the anthropogenic ones. Conversely, when the intensity levels of the anthropogenic sources were higher than the biological, the specimens showed the highest values of time spent in swimming, and changed their spatial distribution highlighting an aquarium occupancy in favour of the less noisy sections. In conclusion, in this study was hypothesised that the environmental soundscape could play an important role in the small-spotted catshark prey-predator relationship and that the impact of masking effect can strictly depends on the acoustic intensity levels.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "First assessment of the genetic structure of deepwater blackmouth catshark (Galeus melastomus Rafinesque, 1810) in Atlantic and Mediterranean populations",
+  "authors": [
+   {
+    "full_name": "Simone Di Crescenzo",
+    "affiliation": "Department of Biological, Geological & Environmental Sciences (BiGeA), University of Bologna, Bologna, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Alice Ferrari",
+    "affiliation": "Department of Biological, Geological & Environmental Sciences (BiGeA), University of Bologna, Bologna, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alessia Cariani",
+    "affiliation": "Department of Biological, Geological & Environmental Sciences (BiGeA), University of Bologna, Bologna, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fausto Tinti",
+    "affiliation": "Department of Biological, Geological & Environmental Sciences (BiGeA), University of Bologna, Bologna, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The worldwide abundance of Galeus melastomus in the biological composition of fishery bycatch led to consider this species as a key-taxon for understanding the mysterious biology and ecology of sharks living in deep ecosystems. With the present work, we aim to unravel the population structure of the blackmouth catshark in the Mediterranean Sea and adjacent North-Eastern Atlantic with the use of nuclear molecular markers (simple sequence repeats, SSRs) and compare our results with recent findings based on mitochondrial DNA supporting total panmixia in the species. Given the absence of species-specific microsatellite markers we attempted the cross-amplification of a panel of 129 SSRs developed for Centroselachus crepidater, Galeorhinus galeus, Hexanchus griseus, Mustelus antarcticus, M. canis, M. henlei, M. mustelus, Negaprion brevirostris, Scyliorhinus canicula, Squalus acanthias and S. mitsukurii on blackmouth catsharks collected during scientific surveys undertaken in different years. The rationale of the chosen methodology was based on the calculation of genetic distances between NADH2 sequences (1044bp long) derived from 595 species of elasmobranchs. Our strategy focused on testing first SSRs markers developed on closely-related species. Then, we assessed highly polymorphic markers developed on non-closely-related species. After a pilot gradient amplification on few individuals from three different geographic macro-areas, we screened a total of 24 samples at the established conditions. To date, 16 microsatellite loci have been classified as potential candidates for the successful cross-amplification on Atlantic and Mediterranean samples of G. melastomus. These candidate loci will be applied in the population genetic analysis delineated in the Atlantic Ocean (two sites) and in the Mediterranean Sea (five sites). Hopefully, the higher resolution power of the markers chosen for this study will be able to disclose any signal of genetic structure of the blackmouth catsharks and will contribute to improve the knowledge on deep-sharks.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Recent attacks by White Shark in the Strait of Messina",
+  "authors": [
+   {
+    "full_name": "Achille De Sanctis",
+    "affiliation": "Museo Civico di Storia Naturale, via degli Studi 9, 97013 Comiso (Ragusa), ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Antonio Di Natale",
+    "affiliation": "Aquastudio, via Trapani 6, 98121 Messina, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianni Insacco",
+    "affiliation": "Museo Civico di Storia Naturale, via degli Studi 9, 97013 Comiso (Ragusa), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Bruno Zava",
+    "affiliation": "Museo Civico di Storia Naturale, via degli Studi 9, 97013 Comiso (Ragusa), ITALY; Wilderness Studi Ambientali. Via Cruillas, 27, 90146 Palermo, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "According to Boldrocchi et alii (2017) the information on the diet of white sharks in the Mediterranean inferred from stomach content analyses of 103 stomachs revealed among other prey items 45 bony fish and 5 cartilaginous fish. The most common teleost prey groups were tuna (Thunnus spp.) and swordfish (Xiphias gladius). In the Strait of Messina motorboats known as \"feluche\" or are used to catch the swordfish. These have a 20-25 m high mast, on the top of which sighters and helmsmen are placed: on the front there is a walkway up to 45 m long, at the end of which the harpooner is standing. In this sector of the sea, the press often reports the presence of large sharks. In the present note we report three shark attacks (documented by photographs) on Red Tuna and Swordfish in the Strait. On April 5, 2017, during the ascent of a 70 kg line-caught red tuna, a white shark launched an attack that documented a bite that removed about 30 kg of flesh from the ventral region. The second attack took place on August 1, 2019 in the water in front of S. Agata of Messina on a swordfish hooked by a feluca, \"Felicia II\"; the swordfish after being harpooned fell to the sea bottom at a depth 80 metres, where it remained for about 20 minutes. Subsequently the fish it was set on board allowing to record a bite that ha detached about 20 kg of flesh, the entire weight of the fish was estimated at around 107 kg. The third attack was observed by the same fishermen on August 5, 2019. A swordfish swimming below the surface was successfully attacked by a white shark which cut off its tail. The same swordfish was subsequently harpooned and hoisted on board on the feluca.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "An updated check-list of elasmobranchs of Calabria",
+  "authors": [
+   {
+    "full_name": "Francesco Luigi Leonetti",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Gianni Giglio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Armando Santoro",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ilaria Bernabò",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianluca Mauro",
+    "affiliation": "Amphibian Diving, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pierluigi Rizzo",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Faustino Scarcelli",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pietro Giovannelli",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Agostino Leone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Sharks Studies Center – Scientific Institute, Massa Marittima (GR), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vincenzo Circosta",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandro Tripepi",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Leonard J.V. Compagno",
+    "affiliation": "Sharks Studies Center – Scientific Institute, Massa Marittima (GR), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Despite Calabria represents an interesting study area due to its geographic position, nothing is known of the presence of sharks and rays in this region. Data presented in this work come from nineteen years of opportunistic fishing surveys (from 2000 to 2019). Our data shows that 53 species of elasmobranchs are present in Calabrian seas: 30 of these are sharks, 22 are rays. To these, 1 species of Chimaeras must be added. All they represent about the 50% of species reported for the Mediterranean. The more widespread encountered species were Hexanchus griseus, Scyliorhinus canicula, Prionace glauca, Raja asterias and Raja clavata. Very interesting is also the presence and distribution in the study area of species such as Cetorhinus maximus, Carcharodon carcharias, Isurus oxyrhincus, Sphyrna zygaena and Mobula mobular. Also, information on localities and specimens has been presented. We report also new records of Alopias superciliosus, Carcharhinus obscurus and Sphyrna mokarran.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "The diet of deep-sea sharks",
+  "authors": [
+   {
+    "full_name": "Ulrich Martin",
+    "affiliation": "Earth and Life Institute, Université Catholique de Louvain, Louvain-La-Neuve, BELGIUM",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jérôme Mallefet",
+    "affiliation": "Earth and Life Institute, Université Catholique de Louvain, Louvain-La-Neuve, BELGIUM",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The deep-sea can be defined as the part of the oceans below 200 meters. The organisms living there can be qualified as deep-sea organisms. However, a lot of these organisms display vertical movements bringing them above 200 meters, making it difficult to classify them. Deep-sea organisms are thus considered here to be organisms spending most of their life cycle below 200 meters. Due to the technical difficulties linked to deep-sea study, a lot remains to be discovered about the organisms living in the depths of the oceans. The trophic structure and interactions inside the deep-sea food-webs remain poorly known for a lot of taxa, including deep-sea sharks. Here, we first try to separate the known shark species between deep-sea and surface species. We then try to review the available knowledges on deep-sea sharks' diet. Most of the information come from stomach contents but the use of more recent techniques is increasing in order to assess deep-sea sharks' trophic ecology. Stable isotope analyzes and fatty acid profiles have proved to provide useful information in this regard and have been included in our review.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Effect of environmental and temporal variables on the relative abundance of Carcharhinus falciformis and Sphyrna zygaena in Cabo San Lucas, Mexico",
+  "authors": [
+   {
+    "full_name": "Francisco Mascareño-Suarez",
+    "affiliation": "Fundación México Azul, Mexico City, MEXICO",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Clara Calatayud",
+    "affiliation": "Fundación México Azul, Mexico City, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jacopo Brunetti",
+    "affiliation": "Cabo Shark Dive, Cabo San Lucas, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Miguel Ángel Eliceche-Constantini",
+    "affiliation": "Cabo Shark Dive, Cabo San Lucas, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "James Ketchum",
+    "affiliation": "Pelagios Kakunjá A.C., La Paz, MEXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Environmental factors have an important effect on sharks. It has been observed that the horizontal and vertical movements of these animals, as well as their distribution, abundance, and use of habitat, can be influenced by biotic and abiotic factors. Due to the fact that pelagic sharks possess specific environmental preferences, and the area of Cabo San Lucas is characterized by drastic oceanographic variability between the warm and temperate seasons, we expect the relative abundance of these organisms to be influenced by environmental factors, especially temperature and chlorophyll concentration. The main goal of this study was to determine which environmental and temporal variables (month and hour) have significant influence over the relative abundance of Carcharhinus falciformis and Sphyrna zygaena in Cabo San Lucas. To do this, submarine censuses were completed, where we registered the relative abundance of these species, as well as environmental factors such as sea surface temperature, wind speed, and water color. Also, satellite data regarding chlorophyll a concentration was downloaded. These variables were incorporated into generalized linear models (GLM), where the relative abundance was the response factor. For C. falciformis, we found significant differences for temperature, chlorophyll concentration, month of the year, and hour (GLM, p<0.001). Its relative abundance was greater with warm waters (29.7±0.3ºC), whereas it was lower with high concentrations of chlorophyll (0.15±0.002 mg/m3). Also, they were more abundant during Autumn and between 5 and 6 pm. In contrast, water color was the only variable that showed significant differences for S. zygaena (GLM, p<0.01), with green water resulting in greater relative abundance. This is the first study to characterize the abundance and temporality of two highly exploited shark species in the region, and we found differences amongst them. Our results give valuable information in terms of management and conservation efforts in the area.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Preliminary data on population trends of Great White Shark, Carcharodon carcharias (Linnaeus, 1758), in Gansbaai (Southafrica) between 2009 and 2019",
+  "authors": [
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Sharks Studies Center – Scientific Institute, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Davide Bonsignori",
+    "affiliation": "Sharks Studies Center – Scientific Institute, ITALY; Dipartimento Scienze della vita e ambiente. Politecnico delle Marche, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesca Romana Reinero",
+    "affiliation": "Sharks Studies Center – Scientific Institute, ITALY; Department of Biology, Ecology and Earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Since 2000, the CSS team (Sharks Studies Center), as part of the project: \"Ecology and Ethology of the Great White Shark\", has been collecting ethological data during Scientific Expeditions organized in South Africa in Gansbaai, 200 km east of Cape Town. In Gansbaai Bay and around Dyer Island and Geyser rock, there is a large population of White Sharks that can be observed thanks to the support of local ecotourism operators authorized to reach the best field observation sites. Research activities about ethological and ecotoxicological analyses, covered between 2003 and 2019, were developed in collaboration with: University of Calabria and Siena in Italy and Stellenbosch University in South Africa. In order to enable proper data collection, it was necessary to develop techniques to identify white sharks that consist mainly of the collection of various biometric and environmental data in special sheets, as well as photographs of animals with special attention to the dorsal fins. After the first years of optimization of the techniques and of staff involved, it was necessary to identify the individual specimens and, between 2009 and 2019, it was possible to create a db. Since 2009 to 2019, between march and may, 423 different white sharks were catalogued for a total of 440 hours of field observations from the boat and 220 hours of observations from the cage, including 99 photographs of unique dorsal fins. In this work the preliminary results, related to the trends of the population present in Gansbaai Bay are presented and discussed.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Sharks in hot waters: effects of a simulated marine heatwave over the foraging behaviour of a temperate catshark",
+  "authors": [
+   {
+    "full_name": "Catarina P. Santos",
+    "affiliation": "MARE - Marine and Environmental Sciences Centre, Laboratório Marítimo da Guia, Faculdade de Ciências da Universidade de Lisboa, Avenida Nossa Senhora do Cabo 939, 2750-374 Cascais, PORTUGAL",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Maria R. Pegado",
+    "affiliation": "MARE - Marine and Environmental Sciences Centre, Laboratório Marítimo da Guia, Faculdade de Ciências da Universidade de Lisboa, Avenida Nossa Senhora do Cabo 939, 2750-374 Cascais, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dayanne Raffoul",
+    "affiliation": "MARE - Marine and Environmental Sciences Centre, Laboratório Marítimo da Guia, Faculdade de Ciências da Universidade de Lisboa, Avenida Nossa Senhora do Cabo 939, 2750-374 Cascais, PORTUGAL; Università degli Studi di Milano-Bicocca, Milano, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marta Konieczna",
+    "affiliation": "MARE - Marine and Environmental Sciences Centre, Laboratório Marítimo da Guia, Faculdade de Ciências da Universidade de Lisboa, Avenida Nossa Senhora do Cabo 939, 2750-374 Cascais, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Paulo Jorge",
+    "affiliation": "MARE - Marine and Environmental Sciences Centre, Laboratório Marítimo da Guia, Faculdade de Ciências da Universidade de Lisboa, Avenida Nossa Senhora do Cabo 939, 2750-374 Cascais, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pedro C. Miranda",
+    "affiliation": "Instituto de Biofísica e Engenharia Biomédica, Faculdade de Ciências, Universidade de Lisboa, Lisbon, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rui Rosa",
+    "affiliation": "MARE - Marine and Environmental Sciences Centre, Laboratório Marítimo da Guia, Faculdade de Ciências da Universidade de Lisboa, Avenida Nossa Senhora do Cabo 939, 2750-374 Cascais, PORTUGAL",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Marine heatwaves (MHWs) are known to have large-scale implications over entire ecosystems, however, their effects over key predators, such as elasmobranchs, are still poorly understood. Although multiples studies have revealed several developmental, physiological, and behavioural implications of temperature increase in this group, this has yet to be addressed in an MHW context. In the present study, we investigated the effects of a simulated MHW over the foraging behaviour of juvenile temperate sharks (Scyliorhinus canicula). Treatment conditions were chosen to reflect a realist MHW scenario based on previous events detected in the wild (15 days, Δ 3 °C above climatological normal; category II). Following exposure, the animal food intake, foraging motivation and response to both olfactory and electrical cues were assessed. While no changes were observed in food intake, cue response, and foraging time, there was an increase in the number of turns and biting events. These behavioural changes may indicate changes in foraging efficiency, which not only have the potential to undermine the coping capacity of shark juveniles but also to induce changes in the predation dynamics. As anthropogenic climate change continues unabated, MHWs are expected to increase in frequency, duration and intensity, which may further challenge the foraging efficiency of these key predators, with potential cascading consequences in ecosystems already subjected increasing pressure.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Behavioural complexity in white sharks: influence of age, sex and environment",
+  "authors": [
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Angelo Carotenuto",
+    "affiliation": "Department of Biology, University \"Federico II\", Naples, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lorenzo Leporati",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giuseppe Rijllo",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianni Giglio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ylenia Fabietti",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sharon Chiriaco",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vincenzo Circosta",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Luna Graziadio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Chiara Spadaro",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Agnese Tigani",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandro Tripepi",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Sharks Studies Center – Scientific Institute, Massa Marittima (GR), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Leonard J.V. Compagno",
+    "affiliation": "Sharks Studies Center – Scientific Institute, Massa Marittima (GR), ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "From 2005 to 2018 the individual surface behaviour of bait-attracted white sharks during ecotourism activites has been studied off Dyer Island Nature Reserve (South Africa). Observations were made from a commercial cage-diving boat both by observers and by a drone. A total of 235 white sharks has been identified. The individual behavioural units observed were: parading, bait following, visual inspection, breach, tail slap, tail stand, spy hop, repetitive aerial gaping, and head-up vertical emerging. We compared the exhibition of these behaviors and the complexity of the ethograms to both biological (sex, age) and environmental (tides, cloud cover, underwater visibility, sea surface conditions, temperature, time of the day) factors. We observed no correlation between behavior and sex of the white sharks, while a significant correlation was observed comparing ethograms of mature and immature white sharks: young sharks performed more complex ethograms with a higher number of behavioural units than adult ones. Regarding the effects of environmental conditions, the sequence and structure of individual behaviors were affected in particular by cloud cover and tides.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Occurrence of the basking shark (Cetorhinus maximus) in French waters. 20 years of data from a public sightings recording scheme",
+  "authors": [
+   {
+    "full_name": "Eric Stephan",
+    "affiliation": "Association Pour l'Etude et la Conservation des Sélaciens (APECS), Brest, FRANCE",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Alexandra Rohr",
+    "affiliation": "Association Pour l'Etude et la Conservation des Sélaciens (APECS), Brest, FRANCE",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Since 1998, a public basking shark sightings recording scheme is established in French waters. The aim is to gather simple data on occurrences to locate any sightings hotspots and, in the long term, to detect possible variations in spatial and seasonal distribution of the sightings. Highlighting such areas could help to minimize conflict between this species of conservation concern and human activities. This type of projects involving members of the public are recognised for contributing also in terms of public awareness. This is something important to make possible the implementation of new measures to better protect basking sharks. We analysed data collected between 1998 and 2017 (20 years). 1857 sightings representing 2409 sharks were recorded. Data were analysed in term of spatial, inter-annual and seasonal distribution. Inter-annual and seasonal distribution were investigated globally and for several geographical areas (Mediterranean Sea, Bay of Biscay, Celtic Sea, Channel and south North Sea).",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "First insights into the trophic ecology of young White Sharks (Carcharodon carcharias) in Baja California waters, Mexico",
+  "authors": [
+   {
+    "full_name": "Elena Tamburin",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO; Fundación Alium Pacific, Cra. 26 No. 5C–13, Cali, COLOMBIA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Fernando R. Elorriaga-Verplancken",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Colombo Estupiñan-Montaño",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO; Fundación Alium Pacific, Cra. 26 No. 5C–13, Cali, COLOMBIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniel J. Madigan",
+    "affiliation": "Gulf of California International Research Center, Loma los Frailes S/N, Santa Rosalía, BCS 23920, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alberto Sánchez-González",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Toby Daly-Engel",
+    "affiliation": "Florida Institute of Technology, Department of Ocean Engineering and Marine Sciences, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mauricio Hoyos Padilla",
+    "affiliation": "Pelagios-Kakunjá A.C, Sinaloa 1540. Col. Las Garzas, C.P. 23070, La Paz, B.C.S., MÉXICO; Fins Attached: Marine Research and Conservation 19675, Still Glen Drive Colorado Springs, CO 80908, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Michelle Wcisel",
+    "affiliation": "Michigan State University Museum, East Lansing, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Felipe Galván-Magaña",
+    "affiliation": "Instituto Politécnico Nacional, Centro Interdisciplinario de Ciencias Marinas, La Paz, MÉXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "White sharks are usually defined as generalist predators, with a well described ontogenetic dietary shift that occurs between the subadult and adult stages. Yet the majority of published studies have focused on large and mature individuals, so the information about feeding habits is still lacking for young white sharks. It is imperative to improve information about the trophic ecology of white sharks across life-stages to better understand habitat shifts and their early life movements inside nursery areas, which are determined by resources availability. This study provides the first insight into the trophic ecology of young white sharks using stable isotopes analysis (SIA) in muscle tissues to characterize prey contributions and ontogenetic changes in habitat use. We collected muscle of 21 white sharks from Sebastian Vizcaino Bay (SVB) during the period 2015-2018, including five newborns, three YOY and three juveniles. White shark isotopic values did not vary by sex (δ15N values: W = 52, p = 0.8 and δ13C values: t = 0.25, p = 0.8) as well as age classes (δ15N values: W =54, p = 0.4 and δ13C values: t = -0.9, p = 0.4) and we did not find variation based on size classes for δ13C and δ15N. However, we found changes in prey composition across white shark life stages, with significant changes throughout ontogeny. Mixing model indicate a high use of coastal areas for foraging, which likely represents the shift from the embryo's typical maternally-derived isotopic signature incorporated in offshore foraging regions to the postpartum isotopic composition, incorporated by neonates from inshore nursery habitats, including SVB. This study reinforces the assertion that coastal areas, like SVB and the prey preferences that take place in this area (from previous research) are critical for the development and to the successful foraging of young white sharks, providing relevant knowledge regarding this species.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Composition of the diet of three Etmopterus species off Angola",
+  "authors": [
+   {
+    "full_name": "Diana Zaera",
+    "affiliation": "Institute of Marine Research, NORWAY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Claudia Junge",
+    "affiliation": "Institute of Marine Research, NORWAY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Three species of lantern sharks occur in Angolan waters: Etmopterus polli, E. pusillus, and E. spinax, along the continental slope at depths down to 1000 m. As part of the regional cooperation between Norway and Angola annual surveys were carried out on board the R/V Dr Fridtjof Nansen. During these surveys, 4162 individuals were collected, Total length (TL), sex, maturity and stomach content were recorded. The specimen's length range was: 10 to 27 cm TL for E. polli, 10 to 55 cm TL for E. pusillus and 10 to 35 cm TL for E. spinax. Food items were identified to the lowest possibly taxon, weighed, measured and grouped into three taxonomic groups: teleosts, cephalopods, crustaceans and remains (e.g. squid beaks, scales and otoliths). Prey importance was evaluated by using the index of relative importance (IRI), expressed as percentage (%IRI). To determine if there were significant differences in stomach contents between sexes and maturity stages, multivariate analysis of variance (MANOVA) were done. The dependent variable used was the Index of Relative Fullness (IRF). Preliminary results show that these species consumed a relatively wide range of prey items belonging to three major groups: teleosts (10 families), crustaceans (7 families), and cephalopods (4 families). For all three Etmopterus species, cephalopods were the most frequent prey. The other categories varied in importance in the diet by species and life history stage. There were no significant differences in the diet of males and females, but we found an ontogenetic dietary shift, reflected in the importance of teleosts between immature and mature specimens. E. polli had the highest dietary diversity and seem to feed mainly on fast moving prey. This study provides the first quantitative investigation of the diets of three species of sharks belonging to the Etmopteridae family off Angola.",
+  "keywords": [],
+  "session_name": "Ecology, Migration and Feeding"
+ },
+ {
+  "title": "Organochlorine compounds in several species of shark sampled in three different world areas",
+  "authors": [
+   {
+    "full_name": "Guia Consales",
+    "affiliation": "Department of Physical, Earth and Environmental Sciences, University of Siena, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Daniele Cagnazzi",
+    "affiliation": "Marine Ecology Research Centre, School of Environment, Science and Engineering, Southern Cross University, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Sharks Study Center, Aquarium Mondo Marino, Massa Marittima, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandro Tripepi",
+    "affiliation": "Department of Biology, Ecology and Earth Science (DiBEST), University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Science (DiBEST), University of Calabria, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matt Kenyon Broadhurst",
+    "affiliation": "NSW Department of Primary Industries, Fisheries Conservation Technology Unit, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Simone Rizzuto",
+    "affiliation": "Lancaster University - Lancaster Environment Center, UK",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesca Schillaci",
+    "affiliation": "Department of Physical, Earth and Environmental Sciences, University of Siena, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniele Coppola",
+    "affiliation": "Department of Physical, Earth and Environmental Sciences, University of Siena, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Letizia Marsili",
+    "affiliation": "Department of Physical, Earth and Environmental Sciences, University of Siena, ITALY; Inter-University Center of Cetacean Research (CIRCE), ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Persistent organic pollutants (POPs) such as organochlorine compounds (OCs) are still exploited in some countries both for special permit and for the non-regulation of these products. Marine apex predators like sharks have the potential to accumulate and biomagnify OCs due to their position in the trophic food web. In this study we analyzed hexachlorobenzene (HCB), dichlorodiphenyltrichloroethane and its metabolites (DDTs) and polychlorinated biphenyls (PCBs) in 59 muscle samples from by-caught and free ranging sharks of 6 different species collected in 3 different areas: Mediterranean Sea, northern New South Wales (Australia) and Dyer Island (South Africa). Overall, South African specimens were the most impacted by PCBs and Mediterranean species by DDTs. Nevertheless, ratio between pp'DDE/pp'DDT in South African sharks suggested a recent use of this xenobiotic along with DDT fingerprint in Australian specimens, while unusually high values of op' DDT isomers are probably linked to the use of an industrial (non-insecticidal) DDT.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "From purse seine bycatch data to population trends: deriving an abundance index for the silky shark based on its associative behaviour with floating objects in the Indian Ocean",
+  "authors": [
+   {
+    "full_name": "Alexandra Diallo",
+    "affiliation": "Institut de Recherche pour le Developpement (IRD), UMR MARBEC (IRD, Ifremer, Univ. Montpellier, CNRS), Sete - FRANCE",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Mariana Travassos Tolotti",
+    "affiliation": "Institut de Recherche pour le Developpement (IRD), UMR MARBEC (IRD, Ifremer, Univ. Montpellier, CNRS), Sete - FRANCE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Philippe Sabarros",
+    "affiliation": "Institut de Recherche pour le Developpement (IRD), UMR MARBEC (IRD, Ifremer, Univ. Montpellier, CNRS), Sete - FRANCE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Laurent Dagorn",
+    "affiliation": "Institut de Recherche pour le Developpement (IRD), UMR MARBEC (IRD, Ifremer, Univ. Montpellier, CNRS), Sete - FRANCE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Manuela Capello",
+    "affiliation": "Institut de Recherche pour le Developpement (IRD), UMR MARBEC (IRD, Ifremer, Univ. Montpellier, CNRS), Sete - FRANCE",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Classified as vulnerable to near-threatened on the IUCN red list, the silky shark, Carcharhinus falciformis is a pelagic species. The species is vulnerable to overfishing due to its spatial distribution and biological characteristic. Using data from French and Spanish tropical tuna purse seine fishery, this study proposes a new method to derive an abundance index for silky shark's populations in two areas of the Indian Ocean. Two models were used: the first one describes the dynamics of sharks associated to floating objects (FOBs) used by tuna purse seiners in a social and in a non-social case. The second one illustrates the exchanges of individuals between the FOB-associated population and an external pool of sharks. The parameters estimated of the first model were obtained with fitting analysis. They were then integrated to the second model, allowing to derive an abundance index for the silky shark in statistical units of space and time and therefore the construction of temporal series of the population trend. This methodology has the potential to be applied to many other species associating with FOBs and serve as a tool for fisheries management.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Challenging the data and status quo: the case of deepwater species in the high north – do we need dedicated elasmobranch surveys?",
+  "authors": [
+   {
+    "full_name": "Claudia Junge",
+    "affiliation": "Institute of Mairne Research IMR, Tromsø, NORWAY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Marlén K. Myrlund",
+    "affiliation": "Institute of Mairne Research IMR, Tromsø, NORWAY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ole Thomas Albert",
+    "affiliation": "Institute of Mairne Research IMR, Tromsø, NORWAY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Deepwater species are in general more difficult to study compared to species in shallower waters due to the difficulty of access. This is limiting many studies to determining the presence and population composition at a very specific timepoint only, that is, the timepoint of catch, usually via a trawl. The power of such data therefore lies in the establishment of time series with many repeated measurements over a long time span, ideally also covering a large enough spatial area to capture the entire population range. We analysed >30 years of survey data from the Institute of Marine Research in Norway spanning minaly the North Sea and the Norwegian Sea focussing on deepsea sharks, skates and chimaera. We focussed on annual or bi-annual survey series that have been ongoing for at least 25 years. All survey series are designed to monitor the population status of commercial species like redfish, greenland halibut and shrimps and are based on trawl catches. Species-specific distributions, and changes over time, can be detected, as well as developments of population composition (e.g. size and gender) by such time series. However, critical information like presence/absence and continuous distribution along different habitat types are typically not possible to assess, and neither are \"realistic\" number for species not typically caught in trawls. We would like to present a few discussion points about the pro's and con's for dedicated chondrichthyan surveys and possible methodological additions to existing surveys, including the critical question about cost/benefit for e.g. rare, threatened or indicator species.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Using a coastal shark species as sentinel in marine pollution biomonitoring surveys",
+  "authors": [
+   {
+    "full_name": "Alexandre Marques",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Luís M.F. Alves",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marco F.L. Lemos",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sara C. Novais",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Marine contamination is worse than ever. To have an indication of stress or susceptibility, understanding how contamination correlates with key biological endpoints is essential. Sharks tend to accumulate high amounts of contaminants throughout their lives, bioaccumulating pollutants present in the water and biomagnifying the pollutants from their prey. Many shark species are caught and consumed all over the world, making them relevant for economical and public health reasons. To understand possible consequences of contamination, the present work aimed to quantify the levels of some metals in Scyliorhinus canicula and also measure biochemical biomarkers related with oxidative stress and energy metabolism. Moreover, efforts were made towards understating how the contamination-response patterns varied between lethal and less-invasive/non-lethal sampling. Sharks caught off the coast of Portugal by a commercial trawling boat were sampled. For each individual, levels of 13 metals were measured in both skin and muscle, while biochemical parameters were measured in several tissues including muscle, liver, blood and skin. Arsenic (As), iron (Fe), and zinc (Zn) had the higher mean values of all measured metals. There was a tendency for higher metal accumulation in skin, with differences being found between life-stages and genders. Furthermore, some analysed sharks surpassed stipulated guideline limits for human consumption of mercury (Hg) and As. Regarding the biochemical responses, suitable biomarker candidates could be identified as several significant correlations were observed between the physiological parameters and contaminant accumulation levels. When comparing lethal and non-lethal sampling some promising similarities were observed, especially when using skin biopsies, indicating good potential for being used as proxy for deeper tissues in future biomonitoring efforts. This study further highlights the effectiveness of combining biochemical parameters and pollutant body burden determinations to assess effects of contamination and demonstrates the great potential of sharks to be used in biomonitoring studies of the marine environment.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Half a century of global decline in oceanic sharks and rays",
+  "authors": [
+   {
+    "full_name": "Nathan Pacoureau",
+    "affiliation": "Department of Biological Sciences, Earth to Ocean Research Group, Simon Fraser University, CANADA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Cassandra L. Rigby",
+    "affiliation": "Centre for Sustainable Tropical Fisheries and Aquaculture & College of Science and Engineering, James Cook University, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Peter M. Kyne",
+    "affiliation": "Research Institute for the Environment & Livelihoods, Charles Darwin University, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Richard B. Sherley",
+    "affiliation": "Environment and Sustainability Institute, College of Life and Environmental Sciences, University of Exeter, UK",
+    "is_presenter": false
+   },
+   {
+    "full_name": "John C. Carlson",
+    "affiliation": "NOAA National Marine Fisheries Service, Southeast Fisheries Science Center, Panama City Laboratory, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniel Fernando",
+    "affiliation": "Blue Resources Trust, SRI LANKA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Malcolm P. Francis",
+    "affiliation": "National Institute of Water and Atmospheric Research, Wellington, NEW ZEALAND",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rima W. Jabado",
+    "affiliation": "Elasmo Project, Dubai, UNITED ARAB EMIRATES",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sonja V. Fordham",
+    "affiliation": "Shark Advocates International, The Ocean Foundation, Washington, DC, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Katelyn B. Herman",
+    "affiliation": "Georgia Aquarium, Atlanta, GA, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kwang-Ming Liu",
+    "affiliation": "Institute of Marine Affairs and Resource Management, Taiwan Ocean University, TAIWAN",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrea D. Marshall",
+    "affiliation": "Marine Megafauna Foundation, Truckee, CA, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Riley A. Pollom",
+    "affiliation": "Department of Biological Sciences, Earth to Ocean Research Group, Simon Fraser University, CANADA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Evgeny V. Romanov",
+    "affiliation": "CAP RUN - NEXA, 97420 Le Port, Île de la Réunion, FRANCE",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Colin A. Simpfendorfer",
+    "affiliation": "Centre for Sustainable Tropical Fisheries and Aquaculture & College of Science and Engineering, James Cook University, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jamie S. Yin",
+    "affiliation": "Department of Biological Sciences, Earth to Ocean Research Group, Simon Fraser University, CANADA; Department of Ecology, Evolution, and Natural Resources, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Holly K. Kindsvater",
+    "affiliation": "Department of Ecology, Evolution, and Natural Resources, USA; Department of Fish and Wildlife Conservation, Virginia Polytechnic Institute and State University, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Nicholas K. Dulvy",
+    "affiliation": "Department of Biological Sciences, Earth to Ocean Research Group, Simon Fraser University, CANADA",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Overexploitation is the primary cause of fish extinction risk, yet individual species declines are difficult to track, particularly in the high seas. This knowledge gap impedes progress towards Aichi Biodiversity Targets and Sustainable Development Goals. We take advantage of newly available timeseries for 53 timeseries of 18 species of oceanic sharks and rays to measure changes in abundance by calculating the Living Planet Index. Worldwide, the abundance of oceanic sharks and rays has declined by 71% since 1970, with the steepest ongoing decline occurring in the Indian Ocean. Recent catch quotas, prohibitions, and international trade regulations provide some hope, yet without a drastic improvement in implementation of management there is a real risk of worldwide collapse of these populations and a disruption of their ecological function.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Bioaccumulation and trophic transfer of Cadmium in Brown smooth-hound Mustelus henlei in Las Barrancas, Baja California Sur, Mexico",
+  "authors": [
+   {
+    "full_name": "Laura Pantoja",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Ana Judith Marmolejo",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Felipe Galván-Magaña",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Arturo Tripp",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fernando Elorriaga",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Laura Arreola",
+    "affiliation": "Centro Interdisciplinario de Investigaciones y Estudios sobre Medio Ambiente y Desarrollo, Ciudad de Mexico, MEXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "We analyzed the concentration of cadmium in the mesopredator Mustelus henlei in an area influenced by a natural deposit of phosphorite and by coastal upwellings. Both processes provide Cd in a natural way. In the Las Barrancas, Mexico, M. henlei is one of the most important coastal sharks in the artisanal fishery of the region, representing an important source for human consumption. Due to the risk that it may constitute for human health, it is necessary to know the concentrations of Cd in muscle and liver, the risk to consumers and evaluate the biomagnification of this element in the trophic chain. The concentrations of Cd in the muscle of M. henlei were lower than the limits of detection, then the meat of this species does not constitute a risk to human health. However, the liver hade average concentrations of 0.96 µg g-1 (0-6.07, min-max), these values are above what is established by the official Mexican Norm, probably due to the high influence of the phosphorite deposits present, and to the upwelling events in the study area. The Mann-Whitney U test showed that had statistically significant differences in Cd between females 0.65 µg g-1 (0.26-4.85, min-max) and males 1.21 µg g-1 (0.43-6.07, min-max): this is probably ta consequence of the metabolic characteristics of each sex. The linear regression showed that there was no relationship between the length of M. henlei and the Cd concentration: this let speculate that probably there is no bioaccumulation of the Cd in the liver as the organisms increase in size. The analysis of Cd in the main prey of M. henlei using the factor of biomagnification (FBM) indicated that red crab (P. planipes) with respect to M. henlei was: FBM= 1.08; whereas the chub mackerel (S. japonicus) was 4.57, which indicates a higher biomagnification of this element in chub mackerel.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "First determination of organochlorine pollutants (OCs) in oceanic manta rays, Mobula birostris",
+  "authors": [
+   {
+    "full_name": "Tania Pelamatti",
+    "affiliation": "CICIMAR-IPN, La Paz, (BCS), MÉXICO; Pelagios Kakunjá, La Paz, (BCS), MÉXICO",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Edgar M. Hoyos Padilla",
+    "affiliation": "Pelagios Kakunjá, La Paz, (BCS), MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Iliana A. Fonseca Ponce",
+    "affiliation": "CICIMAR-IPN, La Paz, (BCS), MÉXICO; Proyecto Manta Pacifico Mexicano, Puerto Vallarta, (JAL) MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lorena Rios Mendoza",
+    "affiliation": "University of Wisconsin-Superior, Superior (WI), USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rogelio Gonzalez Armas",
+    "affiliation": "CICIMAR-IPN, La Paz, (BCS), MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ana J. Marmolejo Rodriguez",
+    "affiliation": "CICIMAR-IPN, La Paz, (BCS), MÉXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Felipe Galván Magaña",
+    "affiliation": "CICIMAR-IPN, La Paz, (BCS), MÉXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Oceanic manta rays Mobula birostris, are broadly distributed in tropical and temperate waters and their populations are in decline worldwide. In the Mexican Pacific Ocean, they are protected from fishing activity, with a permanent ban for their capture, possession and commerce in the whole country. For this reason, data on their ecology and toxicology must be obtained in non-invasive ways and the biopsies taken from free-ranging animals are a useful tool for toxicological studies. Data on persistent organochlorines (OCs) in sharks and rays are scarce, in manta rays are unknown. Occupying a low trophic level, manta rays could be an early sentinel for the contamination levels in the area. Although many of these persistent organic pollutants are nowadays banned in many countries of the world because of their negative effects on wildlife, they are still found in the environment due to their persistence and slow degradation. Concentrations of OCs such as polychlorinated biphenyls (PCBs) and organochlorine pesticides (OCPs) were determined in skin and muscle biopsies of free-ranging oceanic manta rays in Revillagigedo Archipelago and Banderas Bay, where they aggregate in the Mexican Pacific Ocean. Biopsies were taken during scuba and freediving using a pole spear and underwent chemical extraction and subsequent analysis with a gas chromatograph equipped with mass spectrometer (GC-MS) to identify and quantify individual PCB congeners and OCPs. PCBs were detected in biopsies, while no OCPs were detected in any sample. This is the first time that persistent organochlorines are investigated in manta rays and represent a baseline for future studies. OCs can interfere with reproduction in fish and could pose a serious threat to the vulnerable populations of oceanic manta rays around the world.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Trace elements concentration in target tissues of a population of lesser spotted dogfish, Scyliorhinus canicula, from Central Mediterranean Sea",
+  "authors": [
+   {
+    "full_name": "Francesca Romana Reinero",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY; Centro Studi Squali, Massa Marittima (GR) ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Centro Studi Squali, Massa Marittima (GR) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandro Tripepi",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marco Minervino",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cristian Marchio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianluca Nania",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Laura Bevacqua",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Donatella Barca",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Humans, in addition to represent a direct threat to sharks, also indirectly exerts a strong pressure on these animals, due to the continuous release of polluting elements in the water and the atmosphere. Sharks, as predators at the top of marine food chain, act as final receptors for a series of polluting elements that are regularly discharged into the sea. The goal of this research was to delineate and compare trace elements concentration rates in vertebrae, skin and liver of a population of lesser spotted dogfish, Scyliorhinus canicula, from Central Mediterranean. 75 sharks were collected in the Tyrrhenian Sea, 12 miles off of Rocchette Punta Ala. 46 trace elements were analyzed in 75 vertebrae, 12 livers and 12 pieces of skin. Vertebrae were processed with LA-ICPMs, while liver and skin through acid attacks combined with ICPMs. The most abundant and potentially toxic elements were: lead, arsenic, manganese, zinc, nickel, copper, cadmium and iron. Lead, arsenic and manganese showed highest concentrations in the vertebrae, due to the diet of the sharks that is composed of crustaceans, bony fish and shellfish that accumulate many of these elements. Iron and nickel showed highest concentrations in the skin of the samples, due to their presence in the water column, especially along the coast where sharks were collected. At the end, cadmium, zinc and copper showed highest concentrations in the liver, due to their ability to induce trace elements binding metallothionein (MT), which chelates trace metals and reduce the concentration of cadmium.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "How shiny are shark teeth? Major element quantification in bioapatite",
+  "authors": [
+   {
+    "full_name": "Martina Savioli",
+    "affiliation": "Department of Chemical and Geological Sciences, University of Modena and Reggio Emilia, Via Campi 103, I-41125, Modena, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Luca Medici",
+    "affiliation": "Institute of Methodologies for Environmental Analysis, National Research Council of Italy, C.da S. Loja-Zona Industriale, I-85050, Tito Scalo (Potenza), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Annalisa Ferretti",
+    "affiliation": "Department of Chemical and Geological Sciences, University of Modena and Reggio Emilia, Via Campi 103, I-41125, Modena, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Simona Clo",
+    "affiliation": "MedSharks, Via Ruggero Fauro 82, 00197 Rome, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniele Malferrari",
+    "affiliation": "Department of Chemical and Geological Sciences, University of Modena and Reggio Emilia, Via Campi 103, I-41125, Modena, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Elasmobranchs are among the most successful vertebrates in the Phanerozoic, with a stratigraphic distribution ranging from the Silurian to Recent times and a global distribution. Like other vertebrates, they share the use of bioapatite in making mineralized tissues. Bioapatite represents a unique archive of physical and chemical environmental information. Indeed, bioapatite lattice can accommodate iso- and hetero-valent substitutions during life or after burial and diagenesis, with a variation of the chemical composition during geological time. Chemical and crystal-chemical data can be achieved by different analytical tools, like laser ablation inductively coupled plasma mass spectrometry (LA-ICPMS). As LA-ICPMS results are affected by physical-chemical preperties of the sample matrix, an internal standard is usually required to correct and validate the analytical results. Unluckily, an exclusive internal standard is so far missing for bioapatite, strongly affected by isomorphic sobstitutions. A possible solution can be the calibration with external standards which, however, are not so diffused. We propose herein a new method to prepare home-made matrix-matched calibration standards to measure major element concentrations. The method has been tested on living and fossil shark teeth. The final goal is the development of a reliable tool for chemical characterization by LA-ICPMS on small sized samples, avoiding the use of electron microprobe, that is considered a more appropriate technique, but which is more expensive, less diffused and, in any case, once again strictly dependent on the calibrating standards. Our technique can be useful to study teeth of living elasmobranchs in order to find possible chemical and crystal-chemical variation in bioapatite related, for example, to specific habitat, age, gender, etc.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Trace elements and isotopes analysis on historical samples of white sharks (Carcharodon carcharias) from central Mediterranean Sea",
+  "authors": [
+   {
+    "full_name": "Laura Bevacqua",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Edgar E. Becerril-Garcia",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fernando Elloriaga-Verplancken",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Diego Juaristi-Videgaray",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesca Romana Reinero",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY; Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Centro Studi Squali, Massa Marittima (GR) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Felipe Galvan-Magana",
+    "affiliation": "Centro Interdisciplinario de Ciencias Marinas Instituto Politécnico Nacional, La Paz, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianni Giglio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Donatella Barca",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandro Tripepi",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Both trace elements and isotopes analysis were performed on two samples of vertebrae of White Sharks Carcharodon carcharias from Favignana Island (Sicily, central Mediterranean). For the trace elements analysis, the ICP-MS associated by Laser Ablation allowed us to find 36 trace elements. More samples were taken, on the same vertebrae, along a transect that goes from the most central part of the vertebra to the distal one. Among these 36 trace elements we have been detected high concentrations of Pb, Fe, Zn, Sr, Ba and U. Fluctuations of these elements can be caused by different kind of processes such as variations in temperature, nutrition, uptake of urban pollutants and proximity to industrial areas. The stable isotopes (δ15N and δ13C) analysis has been performed through IRMS (Isotope Ratio Mass Spectrometry) and allowed us to understand the trophic levels of individuals. The two white shark vertebrae showed different isotopic values. The first individual (seven growth layers) presented isotopic ranges from 9.6‰ to 10.8‰ (δ15N) and from -16.5‰ to -13.0‰ (δ13C); this showed a mean ± SD value of 10.3 ± 0.4‰ for δ15N and -14.6 ± 1.3‰ for δ13C. The second individual (five growth layers) presented isotopic ranges from 9.8‰ to 11.1‰ (δ15N) and from -16.9‰ to -15.0‰ (δ13C), displaying a mean ± SD value of 10.8 ± 0.6‰ for δ15N and -15.8 ± 0.8‰ for δ13C. In terms of δ15N values, there were not significant differences (U = 6, p =0.07346) between the two individuals; however, there were significant differences (t = -1.8, p =0.049256) in δ13C values, both at a significance level of 0.05. The absence of differences between the trophic level of the individuals could be related to the trophic level of their preys at the time of age. The differences observed in the case of δ13C are probably correlated to the fact that the first shark was feeding near the coast, while the other feed more offshore.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Microbial infection in sharks as a bioindicator for the state of the environment in the eastern Mediterranean Sea",
+  "authors": [
+   {
+    "full_name": "Eyal Bigal",
+    "affiliation": "Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL; Morris Kahn Marine Research Station, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Danny Morick",
+    "affiliation": "Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL; Morris Kahn Marine Research Station, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Nadav Davidovich",
+    "affiliation": "Israeli Veterinary Services, Bet Dagan, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Natascha Wosnick",
+    "affiliation": "Departamento de Zoologia, Centro Politécnico, Universidade Federal do Paraná, Curitiba, BRAZIL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ziv Zemah Shamir",
+    "affiliation": "Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL; Morris Kahn Marine Research Station, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dan Tchernov",
+    "affiliation": "Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL; Morris Kahn Marine Research Station, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Aviad P. Scheinin",
+    "affiliation": "Department of Marine Biology, Leon H. Charney School of Marine Sciences, University of Haifa, Haifa, ISRAEL; Morris Kahn Marine Research Station, University of Haifa, Haifa, ISRAEL",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Streptococcus agalactiae (group B streptococcus; GBS) is a zoonotic agent that has a wide range of hosts including both bony and cartilaginous fishes. We describe meningoencephalitis as a result of S. agalactiae (serotype Ia) infection in a female sandbar shark (Carcharhinus plumbeus; Nardo, 1827) that stranded on the eastern Mediterranean coast of Israel in 2018. Based on post-mortem examination, histopathology, and bacterial identification, we conclude that this pathogen was the etiologic agent. C. plumbeus is an endangered (EN) species in the Mediterranean Sea according to the International Union for the Conservation of Nature (IUCN) Red list, with a decreasing number of mature individuals in the population. Information on pathogen prevalence in apex marine predators could inform about potential risks to threatened species and provide indication on the state of the environment in this region. Our findings improve current knowledge about the health status of sharks and warrant further research into the interaction between microbial and high-level organisms in the marine environment.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Cartilaginous fish as bioindicator in the Algerian basin",
+  "authors": [
+   {
+    "full_name": "Sara Ladoul",
+    "affiliation": "ENSSMAL, Dely-Ibrahim, Algiers, ALGERIA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Sabrina Kefil",
+    "affiliation": "Laboratory of Biodiversity and Environment, USTHB, FBS, Algiers, ALGERIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Farid Hemida",
+    "affiliation": "ENSSMAL, Dely-Ibrahim, Algiers, ALGERIA",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Pollution of marine organisms by heavy metals can occur by direct contamination via the environment or by ingestion of contaminated preys. In order to monitor ecosystems by apprehending their disturbances, it is important to identify bio-indicator species potentially capable of informing about the quality of the environment in which they live. Some sharks and rays as Mustelus sp., Scyliorhinus canicula (Linné, 1758) and Raja sp. may be used as potentially bioindicators. Closely related and part of the same communities, these species occur in the same habitat, each one occupying a distinct ecological niche whose functioning is defined by competition or by prey-predator system. These cartilaginous fish belong to the characteristic community of Diplodus vulgaris (Sparidae). The Thalassa campaign data were used and related to distribution, species diversity and associated fauna. These results are provided by behavioral studies (abundance, spatial distributions, communities), and monitoring of this bony fish, and are also a first step towards the ecosystem approach to fisheries (EAF).",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Biomagnification of trace elements in the blue shark Prionace glauca in Baja California Sur, Mexico",
+  "authors": [
+   {
+    "full_name": "Ariagna Lara Lorenzo",
+    "affiliation": "Departamento de Pesquerías y Ecología Marina, Centro Interdisciplinario de Ciencias Marinas del Instituto Politécnico Nacional (CICIMAR-IPN), La Paz, Baja California Sur, MEXICO",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Felipe Galván Magaña",
+    "affiliation": "Departamento de Pesquerías y Ecología Marina, Centro Interdisciplinario de Ciencias Marinas del Instituto Politécnico Nacional (CICIMAR-IPN), La Paz, Baja California Sur, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Laura Arreola Mendoza",
+    "affiliation": "Centro Interdisciplinario de Investigaciones y Estudios Sobre Medio Ambiente y Desarrollo del Instituto Politécnico Nacional (CIIEMAD-IPN), Ciudad de México, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fernando Elorriaga Verplancken",
+    "affiliation": "Departamento de Pesquerías y Ecología Marina, Centro Interdisciplinario de Ciencias Marinas del Instituto Politécnico Nacional (CICIMAR-IPN), La Paz, Baja California Sur, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rogelio González Armas",
+    "affiliation": "Departamento de Pesquerías y Ecología Marina, Centro Interdisciplinario de Ciencias Marinas del Instituto Politécnico Nacional (CICIMAR-IPN), La Paz, Baja California Sur, MEXICO",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ana Judith Marmolejo Rodriguez",
+    "affiliation": "Departamento de Pesquerías y Ecología Marina, Centro Interdisciplinario de Ciencias Marinas del Instituto Politécnico Nacional (CICIMAR-IPN), La Paz, Baja California Sur, MEXICO",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "One of the most abundant and consumed sharks worldwide is the blue shark, Prionace glauca. Due to its high trophic position, it can accumulate large concentrations of potentially toxic elements in its tissues and constitute a risk to human health due to its consumption. As the main route of uptake of trace elements is gastrointestinal, the objective of this study was to determine the biomagnification of mercury (Hg), selenium (Se) and cadmium (Cd) through the main preys of Prionace glauca, on the coast Western Baja California Sur, Mexico. Low average levels of the three trace elements analyzed in the shark muscle tissue were found (Hg = 0.43 ± 0.35 µg g-1 wet weight; Se = 0.53 ± 0.43 µg g-1 dry weight; Cd = 0.24 ± 0.81 µg g-1 wet weight). These values are below the maximum permissible limits so that their meat is suitable for human consumption. Among the female and male individuals no statistically significant differences were found for any of the elements studied. The main prey of the blue shark were the giant squid Dosidicus gigas and the prawn Pleuroncodes planipes, being the latter who provided the greatest contribution of mercury to the blue shark and Dosidicus gigas of selenium. In the case of cadmium, biomagnification did not occur because both preys had higher concentrations of this metal concerning the shark.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "White blood cells number is correlated to parasitic charge in the small spotted catshark Scyliorhinus canicula",
+  "authors": [
+   {
+    "full_name": "Cristian Marchio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Francesca Romana Reinero",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY; Centro Studi Squali, Massa Marittima (GR) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Luigi Leonetti",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gianni Giglio",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mariacristina Filice",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesca Riviello",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marco Minervino",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Primo Micarelli",
+    "affiliation": "Centro Studi Squali, Massa Marittima (GR) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandra Imbrogno",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Concetta Milazzo",
+    "affiliation": "Department of Biology, Ecology and Earth Sciences, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Hematology is now a useful diagnostic tool in human and domestic mammalian medicine and is becoming such also in the clinical evaluation of fish. Most of the current knowledge of fish hematology derives from research carried out on agnate organisms like missine and lampreys, on a few species of elasmobranchs and on some species of teleosts, although standardized hematological methods and reference intervals for elasmobranchs have not yet been established. The goal of this research was to compare the number of white blood cells present in the specimens of a population of lesser spotted dogfish (Scyliorhinus canicula) from central Mediterranean Sea with the parasitic charge. 75 sharks were collected in the Tyrrhenian Sea, 12 miles off of Rocchette Punta Ala, in Tuscany. Helminth communities were analyzed in the stomach, spiral valve, liver, gills, mouth and nostrils of all the sharks collected, while hematological analysis has been performed taking blood samples from venous sinus of the cardiac cavity of 32 sharks. Complete blood analysis has been performed for 10 samples, while for the remaining 22 only the leukocyte count was carried out using the fluorescence flow cytometry method. All the hematological parameters were correlated with each other, but just the correlation between the number of white blood cells and parasitic charge for the 32 sharks considered was extremely significant and inversely proportional, as the parasitized sharks showed fewer white blood cells than the not parasitized ones. The possible explanation of this result can be found in the immunosoppression from accumulation of trace elements (Hg, Pb, Cd, Cu, As, Zn) in the tissues of lesser spotted dogfish, as already demonstrated in some studies carried out on green frogs and bony fish.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Vertebrae as novel target for trace elements accumulation in Small-spotted Catshark (Scyliorhinus canicula)",
+  "authors": [
+   {
+    "full_name": "Marco Minervino",
+    "affiliation": "Department of Biology, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Laura Bevacqua",
+    "affiliation": "Department of Biology, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cristian Marchio",
+    "affiliation": "Department of Biology, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesca Romana Reinero",
+    "affiliation": "Department of Biology, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Donatella Barca",
+    "affiliation": "Department of Biology, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emilio Sperone",
+    "affiliation": "Department of Biology, University of Calabria, Rende (CS) ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Elasmobranchs are top-predator organisms, essential to maintain trophic web equilibrium in the marine environment. Therefore, fishery and pollutants represent a real threat for these organisms, besides the high lipid content of their diet makes them bioaccumulators organism. Bioaccumulation was previously studied in liver, gills, gut, but little is known about elasmobranch vertebrae. These are an interesting target to study for their structure. Indeed vertebrae are made up of concentric rings, the external are later formed and the inners are the oldest. For this reason, the vertebrae study could allow to evaluate the correlation between pollutants absorption and life traits. Small-Spotted Catshark (Scyliorhinus canicula) was chosen as model because its benthic habits and its ecological importance make it a suitable candidate to study the environmental pollution. Seventy-five specimens were collected in the 'Golfo di Follonica' (Italy). To assess accumulation in vertebrae structure, we analyzed two different parts: the centre and the more external ring. This helped us to denote differences between juvenile and adult stages respectively. Trace element content was assessed through LA-ICP-MS. Results showed a decrease in Pb accumulation during life stages, the same occurred for arsenic and nickel. On the opposite, zinc concentration increases in the external section of vertebra compared to the inner one. This changes could be due to different feeding habits of S. canicula. Indeed, the juveniles feed on small crustaceans and mollusks, organisms known to accumulate arsenic, nickel. On the other hand, adults use to pray fish, with a higher content of Zn. Our data confirm that vertebrae are a reliable marker of pollutant-metals accumulation, and S. canicula is a good candidate for pollution biomonitoring and shark's conservation studies.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Shark skin biopsy sampling as a potential non-lethal and less-invasive marine biomonitoring tool",
+  "authors": [
+   {
+    "full_name": "Alexandre Marques",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Luís M.F. Alves",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marco F.L. Lemos",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sara C. Novais",
+    "affiliation": "MARE – Marine and Environmental Sciences Centre, ESTM, Polytechnic Institute of Leiria, 2520-641, Peniche, PORTUGAL",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Anthropogenic derived contamination is a daily threat to marine resources. Long-living and slow growing, higher trophic level animals like sharks are usually the most affected. Studies have been made to assess the impacts of contamination on sharks, but they mostly rely on very invasive or even lethal sampling. Non-lethal methods must be developed and optimized, with blood and skin biopsies being already used with some success in large endangered animals like cetaceans. This work aimed to assess the potential of skin biopsies to be used as sole tissues in the assessment of metal contamination and biochemical responses in sharks, using the Atlantic lesser-spotted dogfish (Scyliorhinus canicula) as test species. A total of 74 specimens were captured of the shore of Portugal, aboard a commercial trawling vessel, and sampled for skin and muscle once arrived at the lab (in the same day). A total of 13 metals, along with several energy metabolism and oxidative stress related biochemical responses were measured. Overall, skin tissue tended to harbour greater metallic contamination when compared to muscle. However, positive correlations were found between skin and muscle metal levels, across all tested elements. Biochemical responses, mainly energy metabolism related, also seemed to be similarly influenced by the same metal contaminants in both tissues. All correlations and interactions found in-between metals and biomarkers point to a pattern of similar response both in deeper muscle and skin biopsies. Therefore, this work highlights the potential of skin biopsy to be used as substitute for deeper, more invasive (and lethal) muscle sampling. Studies like this one, encompassing comparisons between sub cellular responses to contamination levels in deeper tissues and skin biopsies, are a crucial and most needed step in validating non-lethal methodologies to be used in future efforts to gather ecotoxicological data and to protect larger endangered shark species.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Occurrence of anthropogenic litter in stomach contents of demersal elasmobranchs from the southern Tyrrhenian Sea",
+  "authors": [
+   {
+    "full_name": "Cristina Pedà",
+    "affiliation": "ISPRA, Milazzo (ME), ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Michela D'Alessandro",
+    "affiliation": "ISPRA, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Federica Laface",
+    "affiliation": "ISPRA, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pietro Battaglia",
+    "affiliation": "SZN, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pierpaolo Consoli",
+    "affiliation": "SZN, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Longo",
+    "affiliation": "SZN, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Franco Andaloro",
+    "affiliation": "SZN, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Teresa Bottari",
+    "affiliation": "CNR, Rome, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Saša Raicevich",
+    "affiliation": "ISPRA, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Silvio Greco",
+    "affiliation": "SZN, Milazzo (ME), ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giuseppe Sabatino",
+    "affiliation": "Department of Mathematics and Computer Science, Physical Sciences and Earth Sciences, University of Messina, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Maria Teresa Caccamo",
+    "affiliation": "Department of Mathematics and Computer Science, Physical Sciences and Earth Sciences, University of Messina, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Salvatore Magazù",
+    "affiliation": "Department of Mathematics and Computer Science, Physical Sciences and Earth Sciences, University of Messina, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Teresa Romeo",
+    "affiliation": "ISPRA, Milazzo (ME), ITALY; SZN, Milazzo (ME), ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "To date, available information on marine litter ingestion in Mediterranean elasmobranchs is still very poor, although these species have an important role in the marine trophic web as predators. This study reports the anthropogenic litter ingestion in four elasmobranch species caught by trawlers and longliners in the southern Tyrrhenian Sea: the lesser-spotted dogfish, Scyliorhinus canicula (n= 27; mean total length TL 40.5 ± 6.3 cm), the velvet belly dogfish, Etmopterus spinax (n= 16; mean TL 21.2 ± 7.7 cm), the blackmouth catshark, Galeus melastomus (n= 12; mean TL 20.7 ± 3.0 cm) and the thornback ray Raja clavata (n= 6; mean TL 65.8 ± 2.8 cm). A total of 61 stomach contents were examined by direct visual sorting at a stereo microscope in order to identify the anthropogenic litter. Once isolated, litter particles were counted and categorized by shape, colour and size. Overall, 18 litter particles were identified from the stomach contents of 14 demersal elasmobranchs (23% of total occurrence, O%). In details, litter items were recorded in seven S. canicula (O%= 25.9), four G. melastomus (O%= 33.3), three R. clavata (O%= 50), whereas no litter ingestion was observed in E. spinax. Transparent and white colours resulted the debris with the highest frequency of ingestion (O%= 25). Fragments were the most common litter in stomachs of both S. canicula (O%= 87.5%) and R. clavata (O%= 75), whereas in G. melastomus fragments and filaments occurred with the same frequency (O%= 50). Most litter particles (55.5% of total debris) had a size less than 5 mm. This is the first time that litter ingestion is observed in R. clavata in Mediterranean waters. Some of these species could be considered as indicators for litter ingestion in marine demersal habitats.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Morphological and molecular characterization of gastrointestinal parasites in Mustelus mustelus from Adriatic Sea",
+  "authors": [
+   {
+    "full_name": "Perla Tedesco",
+    "affiliation": "Department of Veterinary Medical Sciences, Alma Mater Studiorum University of Bologna, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Andrea Gustinelli",
+    "affiliation": "Department of Veterinary Medical Sciences, Alma Mater Studiorum University of Bologna, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Monica Caffara",
+    "affiliation": "Department of Veterinary Medical Sciences, Alma Mater Studiorum University of Bologna, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrea Marsella",
+    "affiliation": "Department of Comparative Biomedical Sciences, Istituto Zooprofilattico Sperimentale delle Venezie, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Anna Toffan",
+    "affiliation": "Department of Comparative Biomedical Sciences, Istituto Zooprofilattico Sperimentale delle Venezie, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Eleonora Cacchi",
+    "affiliation": "Department of Veterinary Medical Sciences, Alma Mater Studiorum University of Bologna, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Maria Letizia Fioravanti",
+    "affiliation": "Department of Veterinary Medical Sciences, Alma Mater Studiorum University of Bologna, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Increasing interest in the management and conservation of elasmobranchs highlights the importance of acquiring further knowledge of their biology and ecology; in this respect, important information can be derived from the analysis of their parasite fauna. Parasitological investigations focused on elasmobranchs from Mediterranean Sea are scarce; the compilation of accurate and updated checklists is further complicated by the occurrence of old records of infection and the doubtful identity of the shark host. A healthy specimen of Common Smoothhound, Mustelus mustelus, (total length: 66 cm) fished as bycatch in northern Adriatic Sea was subjected to a complete parasitological examination. Collected parasites were processed for morphological and morphometric analyses aimed at identifying them to the species level. Parasite identity was confirmed through amplification and sequencing of 28S rDNA. Nematodes belonging to the species Acanthocheilus rotundatus (15 specimens) were recovered from the stomach and the proximal intestine, while cestodes belonging to the species Calliobothrium verticillatum (5 specimens) were collected from the spiral valve. Calliobothrium spp. are known to parasitize different species of Mustelus around the world's oceans. Particularly, C. verticillatum has been reported in M. mustelus from Northeastern Atlantic and only one report dating back to the 50s on this parasite in M. mustelus from Mediterranean Sea exists. Our results would therefore confirm the occurrence of this host-parasite association in Mediterranean waters. Acanthocheilus rotundatus has been described infecting M. mustelus from Adriatic Sea based on morphological evidence; our work provides the first sequence data of A. rotundatus from Mediterranean Sea, since only sequences of specimens collected in extra-Mediterranean areas were available so far. Updated knowledge on the parasite fauna of M. mustelus from Adriatic Sea would contribute to elucidate aspects of the ecology, biology and health status of elasmobranchs from Mediterranean Sea, providing useful information for their proper management and conservation.",
+  "keywords": [],
+  "session_name": "Elasmobranchs as Bioindicators"
+ },
+ {
+  "title": "Forty-five years of shark conservation: from \"Jaws\" to 2019",
+  "authors": [
+   {
+    "full_name": "Sarah L. Fowler",
+    "affiliation": "Save Our Seas Foundation, SWITZERLAND",
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": "keynote",
+  "abstract_text": "Jaws, the novel, was published in 1974 and the film released in 1975. Forty-five years ago, about 800 species of sharks, rays and chimaeras were known to science and the global human population was around 4 billion. Today, about 1,250 chondrichthyan fishes have been described and the human population is roughly 7.5 billion. This presentation reviews the history of shark conservation and management since the 1970s and current challenges faced as the year 2020 approaches.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "Use of genomics for applied elasmobranch conservation",
+  "authors": [
+   {
+    "full_name": "Diana A. Pazmiño",
+    "affiliation": "Galápagos Science Center, Universidad San Francisco de Quito, Galápagos, ECUADOR; James Cook University, AUSTRALIA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Lynne vanHerwerden",
+    "affiliation": "James Cook University, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Floriaan Devloo-Delva",
+    "affiliation": "School of Biological Sciences – QMS, University of Tasmania, AUSTRALIA; Oceans and Atmosphere, CSIRO, AUSTRALIA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gregory E. Maes",
+    "affiliation": "James Cook University, AUSTRALIA; Laboratory of Biodiversity and Evolutionary Genomics, University of Leuven, BELGIUM; Laboratory for Cytogenetics and Genome Research, Center for Human Genetics, Genomics Core, BELGIUM",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The advent of Next Generation Sequencing (NGS) technologies has seen a transition from conservation genetics to genomics (from gene to genome scales), which is informing our understanding of species and improving conservation outcomes based on these insights. This technology has provided access to thousands of genome-wide markers, collectively capable of providing reliable inferences about demographic patterns and enabling detection of local adaptation. Examples of applied genomics in elasmobranch conservation and forensics at different levels, from species to individuals are becoming more common as we develop genomic resources for non-model species. For species identification, when diagnostic external morphological characters are lacking, or when identifications rely on body parts, the use of non-expensive techniques such as mtDNA sequencing is often used. However, when dealing with closely related, recently diverged species, as is the case of the Galapagos (Carcharhinus galapagensis) and dusky (C. obscurus) sharks, the combination of mtDNA and genome-wide diagnostic markers is required to distinguish the species. This also allows other biologically relevant patterns of genetic variation to be explored, such as those that arise due to hybridization. A first population connectivity assessment of C. galapagensis in the Eastern Tropical Pacific resulted in the development of 1,873 high-resolution SNP markers. A selected subset of SNPs was further used to successfully assess hybridisation patterns between this, and C. obscurus. Future steps include the use of such markers as forensic tools to develop a cost-effective PCR-based essay to rapidly distinguish the two species from carcases or body parts. Likewise, the development of worldwide genomic resources capable of detecting population structure at large as well as fine geographic scales is crucial at the population level to identify particular signatures of selection and local adaptation that can lead to provenience-detecting markers. Finally, at the individual level the inference of the sex-determination systems in new species is leading the way towards the identification of sex-linked markers that can aid sex identification from fin or tissue samples. Current efforts using in silico and PCR validations are showing that SNP markers can be effective at assigning the correct sex in at least twelve of the sixteen species tested. Applying fundamental knowledge towards the development of molecular traceability tools is the logical and much needed step towards shark conservation.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "A world platform to support data collection on endangered shark species in the Mediterranean Sea",
+  "authors": [
+   {
+    "full_name": "Filippo Bargnesi",
+    "affiliation": "Department of Life and Environmental Sciences, Polytechnic University of Marche, Ancona ITALY; Cattolica Aquarium, Cattolica (RN), ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Stefano Moro",
+    "affiliation": "Department of Environmental Biology, Sapienza University of Rome, Rome ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Agostino Leone",
+    "affiliation": "Department of Biological, Geological & Environmental Sciences, University of Bologna, Ravenna ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Ferretti",
+    "affiliation": "Hopkins Marine Station, Stanford University, Monterey (CA) USA; Department of Fish and Wildlife Conservation, Virginia Tech, Blacksburg (VA) USA",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "In the Mediterranean Sea, sharks are currently one of the less frequently observed groups of animals. Scientific surveys do not provide enough observation effort to collect relevant data on the presence and distribution of the species, and fisheries data have been historically scattered and rarely adequate in terms of taxonomic resolution. Following the IUCN regional assessment 57% of the species are listed as endangered and 25 % as still data deficient. New monitoring strategies need to take place in the area to improve data collection, and new technologies can create a link between people and scientists. Data management is crucial in these cases. Here we present sharkPulse, a collaborative international project aiming to involve divers, fishermen, surfers, beachgoers and other ocean users in sharing image-based sightings of sharks. To facilitate users participation the sharkPulse team has developed a web platform (http:\\\\sharkpulse.org) and a mobile application (IOS and Android). All the data collected are available and shared online with summary tables and distribution maps. To break linguistic barriers and boost participation, the project has created national focal points in several parts of the world (Italy, UK, New Zealand, South Africa, Greece). From 2016, the Italian national focal point has focused his activity on the Mediterranean Sea, collecting more than 900 photographic records of 35 shark species. Here we present a first exploration of these data and highlight some emerging patterns: i) possible identification of strongholds for rare and endangered species; ii) seasonal shifts in pelagic shark distributions; and iii) presence of newborns and immature specimens for broad-ranging species such as the shortfin mako (Isurus oxyrinchus) for which these sightings are more frequent (75% of the records) than adults. Integrated collection and analysis of these data can improve scientific understanding of sharks in the Mediterranean Sea, fill the data gap that has historically characterized the basin on these species, and stimulate conservation and recovery actions.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "Shark and Ray Forensics, a conservation tool for the Western Indian Ocean region",
+  "authors": [
+   {
+    "full_name": "Tamaryn Asbury",
+    "affiliation": "Department of Genetics, Stellenbosch University, SOUTH AFRICA",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Aletta Bester-van der Merwe",
+    "affiliation": "Department of Genetics, Stellenbosch University, SOUTH AFRICA",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Worldwide, ocean and coastal threat is driven by the rapid expansion of fisheries and global trade markets, whereby overfishing activities and habitat degradation have severely altered elasmobranch populations. The western Indian Ocean is an important conservation area for sharks and rays as this region is a global hotspot for biodiversity and for threatened species. The harvesting of elasmobranchs in this region is amongst others driven by the international shark meat and shark fin trade. In this study, we assessed marine forensics as a tool for complementing traditional identification methods – through the development of a mini-barcoding assay as well as High Resolution Melt (HRM) analysis, relevant to elasmobranch species occurring in the western Indian Ocean region. This involved the testing and optimisation of the standard barcoding region of the cytochrome oxidase c subunit 1 (COI), using traditional barcoding primers as well as two sets of nested PCR primers in a multiplex assay. Preliminary results (only a 22% species identification success rate) indicated the limitations of using only the traditional COI primers and warrented the inclusion of additional gene regions for species identification of future shark forensic cases. In this study, a mini-barcoding multiplex assay comprising three primer sets were optimised and applied to a wide range of shark forensic case studies, involving confiscated shark fins possibly for illegal trade. Furthermore, a HRM approach was validated based on six southern African houndshark species and further optimised for additional commercially exploited species such as hammerhead S. lewini and S. zygaena, copper C. brachyurus, dusky C. obscurus, bull C. leucas, blacktip C. limbatus and blue shark P. glauca. Ultimately, these approaches can be combined to develop a relatively fast and cost-effective identification protocol that can be applied to identify most, if not all, elasmobranch species involved in trade regionally.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "Reducing bycatch and mortality in the Med: the project proposal eLIFE (elasmobranch low impact fishing experience)",
+  "authors": [
+   {
+    "full_name": "Massimiliano Bottaro",
+    "affiliation": "Stazione Zoologica Anton Dohrn - Italian National Institute for Marine Biology, Ecology and Biotechnology, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Francesca Battistelli",
+    "affiliation": "Legambiente, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Flavia Binda",
+    "affiliation": "Consorzio Mediterraneo, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Periklis Kleitou",
+    "affiliation": "Marine and Environmental Research (MER) Lab., CYPRUS",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alessandro Lucchetti",
+    "affiliation": "Italian National Research Council, Institute for Biological Resources and Marine Biotechnology, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlotta Mazzoldi",
+    "affiliation": "University of Padua, Department of Biology, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giovanni Mosca",
+    "affiliation": "Softeco, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Augusto Navone",
+    "affiliation": "Marine Protected Area of Tavolara-Punta coda Cavallo, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Bruna Valettini",
+    "affiliation": "Costa Edutainment, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giulia Visconti",
+    "affiliation": "Marine Protected Area of Isole Pelagie, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Over-exploitation and fishery by-catch leads to an increasing decline of elasmobranchs worlwide; with unpredictable consequences for the health and structure of the ecosystems. According to IUCN, the Mediterranean Sea is amongst the three top regions where the biodiversity of sharks and rays is seriously threatened. Considering the European waters, the IUCN reveals that half of the assessed elasmobranch species, 39 out of 73, are threatened at Mediterranean level. Despite some recent efforts in EU to reduce shark by-catch and mortality (i.e., adoption of the European Commission's Action plan for the Conservation and Management of Sharks, and adoption of the Council Regulation (EU) 2017/127), the EC goals are far from being achieved, and conservation actions need to be set up. Current legislation only prevents retention and trade, but not the actual capture or the mortality that may occur as a result. The factors that contribute to the by-catch and the mortality of elasmobranch during fisheries capture are - in fact - many, but the major is the fishers' attitude. The consciuous and responsible behavior of the employees in commercial fishing activities is fundamental to mitigate the impact of their actions on the marine biodiversity, cartilaginous fishes included. The project eLIFE (elasmobranch low impact fishing experience), has been recently funded by the EU's LIFE programme for the protection of the enviornment. It aims to reduce the elasmobranch by-catch and mortality by promoting best conservation practices in the context of the EU commercial fishing activities in the Mediterranean Sea. It targets several sharks listed as endengered or critically endengered in the Red List of the European marine fishes of the IUCN and it includes the partecipation of 3 EU countries (Italy, Cyprus and Greece). eLIFE is based on the direct involvement of the professional fishers, and will test the efficiency of using low impact fishing gears and correct methods of manipulation for the elasmobranch incidental caught, as well as the use of digital technology, like satellite tags and a smartphone application to monitor the efficency of the conservation actions and to obtain new spatial information.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "How key stakeholders can help secure the future of the Critically Endangered Angelshark",
+  "authors": [
+   {
+    "full_name": "María Belén Caro",
+    "affiliation": "Angel Shark Project, CANARY ISLANDS",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Joanna Barker",
+    "affiliation": "Angel Shark Project, CANARY ISLANDS; Conservation & Policy, Zoological Society of London, UK",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Michael Sealey",
+    "affiliation": "Angel Shark Project, CANARY ISLANDS",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Eva Meyers",
+    "affiliation": "Angel Shark Project, CANARY ISLANDS; Zoological Research Museum Alexander Koenig, Bonn, GERMANY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "David Jiménez Alvarado",
+    "affiliation": "Angel Shark Project, CANARY ISLANDS; EcoAqua, Universidad de Las Palmas de Gran Canaria, Islas Canarias, SPAIN",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The Angelshark (Squatina squatina) was once widespread throughout the Eastern Atlantic and Mediterranean Sea, but now is one of the most threatened fish in European waters. Indeed, the angel shark family is identified as the second most threatened elasmobranch taxon after a global review of extinction risk by the IUCN. A unique stronghold remains for the Angelshark in the Canary Islands, but even here the species is under threat. Given the importance of forging bonds with key stakeholders to secure the future of this species, Angel Shark Project: Canary Islands (ASP:CI), a collaboration between Universidad de Las Palmas de Gran Canaria, Zoological Society of London and Zoologisches Forschungsmuseum Alexander Koenig, has developed a number of tools to engage interested parties and encourage them to provide information to aid scientific research. Our focus is on the recreational sector, specifically divers and fishers. This year, ASP:CI has re-launched best practice guidelines in collaboration with the recreational fishing sector to a) encourage fishers to safely release any accidentally caught Angelsharks, b) report these encounters and c) gain the trust of the fishing community and raise the awareness on the species. In addition, we completed the first Count the Angels event in Fuerteventura, which brings together dive centres to complete a census of Angelsharks across the island via coordinated diving. A total of 7 dive centres participated, 24 Angelsharks sighted and over 882 diving hours were completed during this event. This not only reinforces the bond with the diving community, but enables greater coverage across large stretches of coastline to better understand Angelshark presence, and in the future, calculate abundance metrics. These tools will ensure and reinforce the bond between scientists and the recreational community, a key task when working with a Critically Endangered species.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "Longline fishery in a marine reserve – catching protected megafauna in the Galapagos Islands",
+  "authors": [
+   {
+    "full_name": "Florencia Cerutti",
+    "affiliation": "Department of Marine Biology, Charles Darwin Research Station, Charles Darwin Foundation, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Nicolás Moity",
+    "affiliation": "Department of Marine Biology, Charles Darwin Research Station, Charles Darwin Foundation, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Manuel Dureuil",
+    "affiliation": "Dalhousie University, Department of Biology, 1355 Oxford Street, Halifax, NS, B3H 4R2, CANADA; Sharks of the Atlantic. Research and Conservation Centre (ShARCC), Halifax, Nova Scotia, CANADA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jorge Ramírez-González",
+    "affiliation": "Department of Marine Biology, Charles Darwin Research Station, Charles Darwin Foundation, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Harry Reyes",
+    "affiliation": "Galápagos National Park Directorate, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kayla Budd",
+    "affiliation": "Department of Marine Biology, Charles Darwin Research Station, Charles Darwin Foundation, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR; Department of Biology, University of Wisconsin-Eau Claire, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "José Marín-Jarrín",
+    "affiliation": "Department of Marine Biology, Charles Darwin Research Station, Charles Darwin Foundation, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR; Current Address: Fisheries Biology Department, Humboldt State University, California, USA",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pelayo Salinas-de-León",
+    "affiliation": "Department of Marine Biology, Charles Darwin Research Station, Charles Darwin Foundation, Av Charles Darwin s/n, Puerto Ayora, Galapagos, ECUADOR; Pristine Seas, National Geographic Society, Washington, District of Columbia, USA",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Marine megafauna (elasmobranchs, mammals, turtles, birds) is important from an ecological point of view because it occupies upper trophic levels and is also often essential for marine tourism. Species belonging to this group are often heavily impacted by fishing due to their longevity, late sexual maturity and low reproductive output, which affect the capability to recover from depletion. In the Galapagos, marine megafauna is protected throughout the marine reserve and is the main attraction for marine tourism, generating millions of dollars in revenue annually. Multiple artisanal longlining projects were carried out since the 1990s with the aim of redirecting fishing effort from the depleted coastal-demersal species to pelagic fish, such as yellowfin tuna, Thunnus albacares and swordfish, Xiphias gladius. All these projects have resulted in high bycatch of megafauna. Despite its importance in the archipelago, megafauna is still being caught as bycatch in the longline fishery, without independent scientific studies to evaluate its impact, largely due to poor objective definition, data collection, and enforcement. To fill in this knowledge gap, we analyzed data of the fifth longline fishing project (2012-2013) to describe the fishery, identify variables affecting bycatch, and suggest mitigation strategies. This experimental project involved twelve fishing vessels, which deployed 42,007 hooks catching 4,893 individuals belonging to 33 species, mostly yellowfin tuna. Of those, 16 species were protected megafauna, particularly blacktip sharks, Carcharhinus limbatus and oceanic manta, Manta birostris. These species were regularly captured during the two fishing seasons and in all the four bioregions that occur in the archipelago, suggesting little potential to mitigate their catch. As an alternative, we identified 14 hotspots where yellowfin tuna and swordfish could be harvested through more selective fishing techniques. In an archipelago where the main economic activity is marine wildlife tourism, the implementation of an extractive and unselective activity such as pelagic longline fishing should be avoided to ensure the preservation of the Galapagos marine ecosystem and its booming tourism industry.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ },
+ {
+  "title": "Using local ecological knowledge to reconstruct trends in elasmobranch populations in the Strait of Sicily",
+  "authors": [
+   {
+    "full_name": "Virginia Carrozzi",
+    "affiliation": "CNR-IRBIM, Mazara del Vallo, ITALY",
+    "is_presenter": true
+   },
+   {
+    "full_name": "Manfredi Di Lorenzo",
+    "affiliation": "CNR-IRBIM, Mazara del Vallo, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrea Simonetti",
+    "affiliation": "University of Turin, Torino, ITALY",
+    "is_presenter": false
+   },
+   {
+    "full_name": "Francesco Colloca",
+    "affiliation": "CNR-IRBIM, Mazara del Vallo, ITALY",
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Fishers have a rich knowledge of the resources and the environment in which they work, that is rarely utilised to provide advice on the status of exploited populations. Fishers \"local ecological knowledge\" (LEK) can be used to reconstruct species trends, like sharks, that currently are at very low biomass due to overfishing. In this study we used the historical memories of Sicilian fishers to gather data on change in fishing practices and capture of cartilaginous species in the Strait of Sicily over the last decades. We conducted interviews with 27 retired trawl fishers from Mazara del Vallo harbour (SW Sicily) using a pre-defined questionnaire with a series of open and fixed questions and comparing to the present abundance. The questionnaire included specific questions about the trends they perceived in cartilaginous fish occurence abundance between 1940s and 2000s (according to three main time periods 1940-1960, 1961-1980 and 1981-2010), in order to facilitate the estimation of eventual changes over time. A total of 29 species were mentioned by fishermen during interviews, including large pelagic sharks (Carcharhinidae, Sphyrnidae and Lamnidae), mesopredatory demersal sharks (Squalidae, Hexanchidae, Centrophoridae, Oxynotidae, Triakidae, Scyliorhinidae and Squatinidae) and batoids. Overall shark catches were perceived to have diminished since the early 1940s: about 95% of fishers reported the decline of commercially important species (e.g. Mustelus spp.) and indicated species that could have been depleted (e.g. Squatina spp., Sphyrna spp.). Our study shows that LEK of fishers can be beneficial for reconstructing long-term population trends of exploited species when traditional standard data on fisheries catch or species relative abundance from surveys is limited or only available for recent periods. The results obtained cleary indicate the rapid and alarming decline of elasmobranchs in the Strait of Sicily highlighting the need for urgent conservation measures to be adopted.",
+  "keywords": [],
+  "session_name": "Conservation and Communication"
+ }
+]

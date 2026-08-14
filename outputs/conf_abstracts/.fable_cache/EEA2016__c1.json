@@ -1,0 +1,573 @@
+[
+  {
+    "title": "New data about vascularisation and histology in neoselachian teeth based on computed tomography",
+    "authors": [
+      {"full_name": "Alba Martín-Lázaro", "affiliation": "University of Valencia", "is_presenter": true},
+      {"full_name": "C. Martínez-Pérez", "affiliation": "University of Valencia", "is_presenter": false},
+      {"full_name": "H. Botella", "affiliation": "University of Valencia", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Based on their internal structure, elasmobranch teeth have been traditionally separated into two different dental histotypes, orthodond and osteodont. The orthodont histotype is characterised by teeth with an open pulp cavity surrounded by orthodentine and osteodentine, whereas in the osteodont histotype the pulp cavity is completely closed and teeth are formed only by osteodentine. However, this classification has recently been criticised because of its simplification (Moyer et al., 2015), existing species which teeth histology cannot be classified exactly within any of the classical described histotypes. To test and evaluate the variation of teeth histology within the Euselachii phylogeny, here we analysed teeth of several species of current elasmobranch using Synchrotron X-Ray Tomography Microscopy (SXRTM) to characterise their internal structure. The tridimensional reconstruction and the topographical analysis of the teeth have allowed us to identify the classic histotypes, but also describe other intermediate states, with teeth completely formed by orthodentine, or teeth with several dentine combinations in the cusp. These different arrangements could be explained by heterochronic processes affecting rates of the tissues within the teeth. Therefore, our results stand out the idea that the classical histotypes are a reductionist classification and don't reflect the real variation of this characters. The application of new methodologies, like microtomography with synchrotron, have demonstrated being a powerful tool for the study of the histology and the internal structures at submicrometric resolution.",
+    "keywords": ["Histoypes", "Orthodont", "Osteodont", "Synchrotron", "Osteodentine", "Orthodentine"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "Development and evolution of the cutting dentition of dogfish (squaliform) sharks",
+    "authors": [
+      {"full_name": "Charlie J. Underwood", "affiliation": "Department of Earth and Planetary Sciences, Birkbeck, University of London, UK", "is_presenter": true},
+      {"full_name": "Z. Johanson", "affiliation": "Department of Earth Sciences, Natural History Museum, London, UK", "is_presenter": false},
+      {"full_name": "M. M. Smith", "affiliation": "Dental Institute, Craniofacial Development, King's College London, London, UK", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The dogfish (squaliform) sharks are dominant predators in many cool and deep seas. Most possess a unique dentition with teeth overlapping and locking together to form a continuous cutting blade on the jaw margin, either on both jaws or restricted to the lower jaw. This contrasts with the alternating pattern of teeth in almost all other sharks and rays. CT scanning of the developing teeth of the Spurdog Squalus acanthias and other squaliforms revealed that the first teeth in the embryo are arranged as in other sharks, realigning during growth to line up teeth from adjacent tooth rows. In species with more highly derived dentitions, the blade-like lower teeth first form in the embryo in a similar arrangement to in the adult of Squalus, wheres the small upper teeth retail their alternating pattern into adulthood. The possession of a unique cutting dentition allows squaliforms to feed on large food items (living or dead) when needed, giving them an evolutionary advantage in low nutrient or cold environments, where they have been focuses for their entire evolutionary history.",
+    "keywords": ["Teeth development", "Evolution", "Feeding", "Squaliforms"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "Diet composition and trophic position of juvenile Scalloped Hammerhead Sharks in a nursery area at Viti Levu, Fiji",
+    "authors": [
+      {"full_name": "Niklas Komoss", "affiliation": "University Bremen, Germany; Leibniz Centre Tropical Marine Ecology", "is_presenter": true},
+      {"full_name": "M. Zimmer", "affiliation": "Leibniz Centre Tropical Marine Ecology", "is_presenter": false},
+      {"full_name": "C. Rico", "affiliation": "University of the South Pacific, Suva, Fiji", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Nursery areas provide protection from predators and ample food supply for juvenile individuals of a species, the adults of which spend their lives in different habitats. The Rewa river Delta on Viti Levu, Fiji, has recently been identified as nursery area for the Scalloped Hammerhead Shark Sphyrna lewini. We evaluated the diet composition and the trophic position of neonate and young of the year (YOY) individuals within this nursery area. The information on the diet of the sharks will provide insight on whether the nursery area provides abundant food for the sharks. For this, a combination of stable isotope analysis of shark tissue and DNA-barcoding of gut contents was used. The analysis of the carbon (δ13C) and nitrogen composition (δ15N) of muscle tissue revealed a shift in the composition which correlated with the age of the juveniles. The maternal isotope signal was evident within the muscle tissue of neonates and fades as the sharks mature. The results of the DNA barcoding of the stomach content complement the study by identifying the preferred prey species.",
+    "keywords": ["Sphyrna lewini", "Diet", "Stable isotopes", "DNA barcoding"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "Evolution and development of shark tooth regeneration",
+    "authors": [
+      {"full_name": "K. Martin", "affiliation": "Department of Animal and Plant Sciences, University of Sheffield; Department of Earth Sciences, Natural History Museum, London", "is_presenter": false},
+      {"full_name": "L. Rasch", "affiliation": "Department of Animal and Plant Sciences, University of Sheffield; Department of Earth Sciences, Natural History Museum, London", "is_presenter": false},
+      {"full_name": "R. Cooper", "affiliation": "Department of Animal and Plant Sciences, University of Sheffield; Department of Earth Sciences, Natural History Museum, London", "is_presenter": false},
+      {"full_name": "B. Metscher", "affiliation": "Department of Animal and Plant Sciences, University of Sheffield; Department of Earth Sciences, Natural History Museum, London", "is_presenter": false},
+      {"full_name": "Z. Johanson", "affiliation": "Department of Animal and Plant Sciences, University of Sheffield; Department of Earth Sciences, Natural History Museum, London", "is_presenter": false},
+      {"full_name": "Gareth Fraser", "affiliation": "Department of Animal and Plant Sciences, University of Sheffield; Department of Earth Sciences, Natural History Museum, London", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Sharks and other polyphyodont vertebrates retain the crown gnathostome character of continuous successional regeneration of oral teeth. How capacity for successional regeneration is maintained in some lineages but lost from other (e.g. mammals) is currently unknown. We have shown that a compound and dynamic Sox2+ stem cell population resident in the shark dentition connects the superficial taste-competent oral epithelium at the taste/tooth-junction with the deep tooth-forming successional lamina via cells migrating through the lingual margin of the middle dental epithelium during successional regeneration of teeth. We have shown that both taste buds and teeth emerge from the odonto-gustatory band, a field of embryonic oral epithelium equivalent to the odonteogenic band of mammals, and that the Sox2+ stem niches of the taste/tooth-junction and the successional lamina are derived from the odonto-gustatory band. We provide evidence for the shark test-bite or taste-bite. We suggest that a novel collaboration between the generalized odontode gene regulatory network and the taste bud gene regulatory network specifically in the oropharynx was key to the evolutionary transformation between dermal odontodes (i.e. placoid scales) and oropharyngeal odontodes (i.e. teeth). Differential gene expression analyses preformed here with microdissected sub-regions of recently hatched shark dentition, including the taste/tooth-junction and successional lamina stem niches in addition to developing early teeth, erupting late teeth, and taste bud epithelium from the basihyal not associated with teeth offers novel insights into the molecular distinction between taste, tooth, and dual-competent epithelia via the discovery of shared and differentially expressed genes.",
+    "keywords": ["Tooth regeneration", "Dental stem cells", "Taste buds", "Taste-bite", "Skin denticles", "Evolution"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "The Tooth, the Whole Tooth and Nothing but the Tooth; Ontogenetic Shift Dynamics in the White Shark",
+    "authors": [
+      {"full_name": "Georgia C.A. French", "affiliation": "University of Sussex", "is_presenter": true},
+      {"full_name": "M. Stürup", "affiliation": null, "is_presenter": false},
+      {"full_name": "S. Rizutto", "affiliation": null, "is_presenter": false},
+      {"full_name": "J.H. van Wyk", "affiliation": null, "is_presenter": false},
+      {"full_name": "S.P. Wintner", "affiliation": null, "is_presenter": false},
+      {"full_name": "A.V. Towner", "affiliation": null, "is_presenter": false},
+      {"full_name": "W.O.H. Hughes", "affiliation": null, "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Ontogenetic dietary shifts are widespread across the animal kingdom, and in many cases involve associated morphological changes in foraging phenotype. These changes may differ between sexes or vary between individuals, and are important factors in the ecology of species. While such factors have received much attention in terrestrial systems, they are much less well understood in marine taxa. The White Shark Carcharodon carcharias is a marine apex predator that is generally considered to undergo an ontogenetic dietary shift from piscivory to preying primarily on marine mammals, with an associated change in tooth morphology from cuspidate teeth suited to grasping piscivorous prey to broad teeth more capable of effectively handling large marine mammal prey. Here we integrate a new approach involving photographic analysis of live sharks, alongside data obtained from a large jaw collection and previously published data, to investigate the ontogenetic shift in tooth morphology in White Sharks, comparing this for males and females, and examining inter-individual variation in tooth shape. The results reveal significant differences between male and female white sharks in the relationship between tooth morphology and shark length (which approximates to age), and a previously unreported ontogenetic change in male tooth shape. Males develop broader upper first teeth and increased medial angle of their upper third teeth as they age, while females do not exhibit a clear ontogenetic change in tooth morphology. There was substantial individual variation in male sharks with implications for Pace of Life Syndrome, and potential phenotypic polymorphism in female sharks. The results suggest that sexual differences and individual variation play major roles in ontogenetic changes in tooth morphology in White Sharks, with potential implications for foraging biology.",
+    "keywords": ["Ontogenetic shift", "White Shark", "Polymorphism", "Individual variation"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "A new method for dietary discrimination in elasmobranchs",
+    "authors": [
+      {"full_name": "Laura McLennan", "affiliation": "University of Leicester and University of Derby", "is_presenter": true},
+      {"full_name": "M. Purnell", "affiliation": "University of Leicester and University of Derby", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "As abundant and widespread apex predators, elasmobranchs play influential roles in food-web dynamics of marine communities. This has obvious implications for fisheries management and marine conservation, yet elasmobranch diet is relatively understudied; for the majority of species little or no quantitative dietary data exist. This reflects the difficulties of traditional methods in the analysis of diet in wild elasmobranchs; direct observation of feeding and stomach contents analysis. Traditional methods are particularly unsuitable for those species most at risk and requiring conservation measures. Additional methods of dietary analysis are thus required. Here, by quantifying the 3D tooth surface textures that develop as a consequence of feeding, we show that tooth microwear varies with diet in sharks. 3D microwear texture analyses can be applied to both small samples and animals with no gut contents, offering a way to reduce the impact on wild shark populations when analysing their dietary ecology. This is especially relevant in the conservation of endangered species. Furthermore, because it accumulates over longer periods of time, analysis of microwear texture overcomes the 'snapshot bias' of stomach contents analysis. This is the first time that 3D microwear texture analyses have been successfully used to detect dietary differences within sharks, providing a potentially powerful tool for dietary analysis in living and extinct elasmobranchs.",
+    "keywords": ["Dietary discrimination", "Elasmobranchs"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "Dogfish Parasite; which factors impact upon this host-parasite interaction?",
+    "authors": [
+      {"full_name": "Jennifer Pearce", "affiliation": "Aberystwyth University", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Whilst parasites are generally viewed in a negative light, it is possible to use their presence within their hosts for beneficial research. Using parasites as tags allows their infection to be analysed to provide information on much of the host species' ecology such as migration, diet, population growth, and to monitor the species for overexploitation. Whilst work is being done on using parasites as tags, comparatively little research effort is going into the parasites themselves and their interactions with the host species. During this research, the relationship between host species, age, sex, condition, and parasite prevalence within the Lesser-Spotted and Greater-Spotted Dogfish are analysed and investigated. The work was carried out over a period of five years, in Cardigan Bay, Wales; the area from which the dogfish samples were collected. It was found that there was a significant difference in the parasite loads of the two dogfish species (p<0.05), whereas for various reasons the other factors measured were not found to be of significance. This data will help to contribute to further study of parasites and their application as tags.",
+    "keywords": ["Parasites", "Lesser-Spotted Dogfish", "Greater-Spotted Dogfish", "Host-parasite relationship"],
+    "session_name": "Session 7: Dentition, feeding habits and parasites"
+  },
+  {
+    "title": "Tuna tales: using market levers to transform fisheries management",
+    "authors": [
+      {"full_name": "Daniel Suddaby", "affiliation": "World Wildlife Fund (WWF)", "is_presenter": true}
+    ],
+    "presentation_type": "keynote",
+    "abstract_text": "Over the last five years WWF has had a focus on transforming international management of tropical tuna species. An example of this has been the work in the Indian Ocean, an area that supports not only one of the largest industrial tuna fisheries in the world, accounting for 20% of the global catch in 2014, but also fringed with the highest percentage of developing coastal states of all tuna management areas. A concerted effort in the region to improve management by the Indian Ocean Tuna Commission (IOTC) has resulted in an international agreement on scientifically based catch limits (Harvest Control Rules). One of the successful methods employed to reach this agreement was nurturing and harnessing the demand for 'sustainable' tuna from consumers. This presentation will give a cursory summary of the general strategy, the case study in the Indian Ocean and some of the opportunities and challenges of such an approach. This approach could potentially be used to move shark fisheries onto a more sustainable footing.",
+    "keywords": [],
+    "session_name": null
+  },
+  {
+    "title": "Conservation Planning for Flat Sharks",
+    "authors": [
+      {"full_name": "Julia Lawson", "affiliation": "IUCN Shark Specialist Group", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "An estimated one-quarter of the world's chondrichthyans are threatened with extinction (classified as Vulnerable, Endangered, or Critically Endangered) on the IUCN Red List for Threatened Species, 107 of which are rays and 74 are sharks. Julia Lawson, Programme Officer of the IUCN Shark Specialist Group (SSG), discusses the role that the SSG has played in generating action to conserve these species of concern. The SSG consists of 171 members in 55 countries who work to collectively secure the conservation, management and, where necessary, the recovery of the world's chondrichthyans by mobilizing technical and scientific expertise. Additionally, the SSG operates under the umbrella of the IUCN Species Survival Commission (SSC), an organization that first mobilized technical and scientific expertise to generate species action plans in the late 1980s. The combination of an engaged SSG membership and the senior expertise of the IUCN SSC has helped guide the development of three conservation strategies over the past five years: sawfishes (2012), devil and manta rays (2015), and the Angelshark (currently underway). These conservation strategies have drawn upon well-established conservation planning strategies, while also considering novel methods to explore the unique challenges that are faced by chondrichthyans. This talk will describe the process of developing these strategies and the conservation successes that have been achieved thus far.",
+    "keywords": ["Conservation", "Marine", "IUCN Red List", "Mobula Ray", "Sawfish", "Angelshark"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Time for action: opportunities for implementing the CMS Sharks MoU through RFMOs",
+    "authors": [
+      {"full_name": "Sonja V. Fordham", "affiliation": "Shark Advocates International", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Since 1999, Parties to the Convention on Migratory Species (CMS) have added 29 species of sharks and rays to the CMS Appendices, bringing obligations for strict protection (Appendix I) and/or cooperative conservation efforts (Appendix II). As of February 2016, all CMS-listed elasmobranchs are now also covered under the scope of a 2010 Memorandum of Understanding (MoU) -- the first intergovernmental agreement dedicated to global shark and ray conservation -- and an associated 2012 Conservation Plan. These actions have bolstered efforts to safeguard elasmobranchs through both awareness and action. Listings on the Appendices, in particular, have been a major factor in numerous domestic protections while also serving to highlight at-risk species for other international fora. Through the CMS Sharks MoU and associated Conservation Plan, signatories have agreed, inter alia, to facilitate a better understanding of shark populations and fisheries, set science-based catch limits in an effort to ensure sustainable fishing, prevent finning, and cooperate toward shark conservation through international bodies. Four years after adoption of the Conservation Plan, however, concrete actions to fulfill MoU goals remain insufficient. Considering that overfishing is the primary threat to elasmobranchs, and that many threatened populations are fished by multiple countries, the world's Regional Fishery Management Organizations (RFMOs) provide excellent opportunities for immediate, concrete action that can go a long way toward fulfilling CMS obligations and safeguarding at-risk species. Suggestions will be offered for specific courses of action, including ideas for elasmobranch scientists who interested in facilitating such progress.",
+    "keywords": [],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Implementing CITES Appendix II for sharks and rays",
+    "authors": [
+      {"full_name": "Sarah Fowler", "affiliation": "Save Our Seas Foundation (SOSF)", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "CITES Appendix II is intended to prevent international trade from depleting species to the extent that they become threatened with extinction. It regulates, but does not prohibit commercial trade. Such trade is only permitted if exporting countries can confirm that the products they are trading with other countries were legally obtained and if they have issued a \"Non-detriment Finding\" (NDF). Importing countries must ensure that this paperwork is in order before accepting the traded items. The presentation explains what an NDF is, and how trade regulation will work for the sharks and rays that were listed in Appendix II by the 17th Meeting of the Conference of Parties to CITES, in October 2016.",
+    "keywords": ["CITES", "Trade", "Non-Detriment Findings"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "A balancing act: protecting Mediterranean sharks",
+    "authors": [
+      {"full_name": "Ali Hood", "affiliation": "The Shark Trust", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Management of Mediterranean fisheries is a balancing act, incorporating the political, economic, cultural and environmental objectives of over 20 nations. Since 1952 this has been undertaken through the General Fisheries Commission for the Mediterranean (GFCM) whose broad remit includes the management and conservation of sharks. The GFCM can adopt binding recommendations for fisheries conservation and management which must then be implemented by GFCM Parties. In 2005 the GFCM banned fishing activities below depths of 1000m, reducing pressure on some deep-sea sharks; in 2010 and 2011 it endorsed recommendations to protect threshers and hammerheads caught as bycatch; the following year the GFCM prohibited the fishing and retention of the 24 species of threatened sharks and rays listed on the Barcelona Convention's Annex II of the Protocol concerning Specially Protected Areas and Biological Diversity in the Mediterranean – in doing so committing all Parties to implementing domestic prohibition. On paper these measures are promising. Yet huge challenges remain surrounding their implementation and enforcement. In 2016 the Shark Trust became an accredited Observer to the GFCM and is committed to working with NGO partners and the GFCM Secretariat to assist Parties in meeting outstanding obligations. The Trust is also working with partners on a 'European Angelshark Conservation Strategy', concentrating on the three Critically Endangered species found in the Mediterranean. Central to this strategy will be encouraging all GFCM Parties to fully implement recommendations outlined above.",
+    "keywords": ["Mediterranean", "GFCM", "Barcelona Convention", "implementation", "elasmobranch"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Using non-invasive survey methods to assess the abundance and biodiversity of elasmobranch species at Tubbataha Reefs Natural Park, Philippines",
+    "authors": [
+      {"full_name": "R. Murray", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "S. Conales Jr", "affiliation": "Tubbataha Management Office", "is_presenter": false},
+      {"full_name": "S.J. Pierce", "affiliation": "Marine Megafauna Foundation", "is_presenter": false},
+      {"full_name": "G. Araujo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "J. Labaja", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "S. Snow", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "Alessandro Ponzo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Elasmobranchs are amongst the most threatened group of marine species. Over-fishing, coupled with their life history characteristics has resulted in sharp decrease in population numbers worldwide. Identifying the population and species composition of elasmobranch species in areas of remaining known aggregations is crucial in creating a management plan to help conserve target species. The use of non-invasive survey techniques is becoming more popular in elasmobranch research. Baited Remote Underwater Video surveys (BRUV) and Underwater Visual Surveys (UVS) were applied to assess the biodiversity and relative abundance of elasmobranch species in Tubbataha Reefs Natural Park (TRNP). A total of 69 successful BRUV surveys were conducted between March – June 2015 across 3 habitats (Shallow Reef, Deep Fore-reef, Lagoon) and 2 Zones (North islet, South Islet) within the waters of Tubbataha Reefs Natural Park (TRNP), located in the middle of the Sulu Sea. A total of 11 species of elasmobranchs were documented during BRUV surveys. The surveys indicated the highest known CPUE for Whitetip Reef Shark (0.94) and Grey Reef Shark (1.2) in the world based on available data from Australia, Fiji and Indonesia. A total of 20 UVS surveys were conducted in TRNP between May 17th - 24th 2015 and June 11th - 20th 2016 showing incredibly high densities of reef sharks (7.26 per/ha-1). This study highlights the importance of properly managed protected areas for the conservation of elasmobranchs especially in regions of high exploitation and provides a unique opportunity to shift back the baseline for these vulnerable and endangered species.",
+    "keywords": ["Tubbataha Reefs Natural Park", "BRUV", "Philippines", "World Heritage Site", "MPA", "Shark"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "1000 Whale Sharks in the Philippines: Reaching a conservation milestone in time of peril",
+    "authors": [
+      {"full_name": "Emer McCoy", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": true},
+      {"full_name": "R. Burce", "affiliation": "WWF-Philippines", "is_presenter": false},
+      {"full_name": "S. Conales Jr", "affiliation": "Tubbataha Management Office", "is_presenter": false},
+      {"full_name": "J. Labaja", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "D. David", "affiliation": "WWF-Philippines", "is_presenter": false},
+      {"full_name": "R. Murray", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "S. Snow", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "G. Araujo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "P. Alessandro", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The Philippines was once a theatre of one of the largest Whale Shark fisheries in South East Asia though national protection in 1998 allowed the flourishing of several coastal aggregations, now supporting a growing tourism industry. Photo identification of the Philippines Whale Shark population was initiated in 1997 by WWF-Philippines in Donsol, Sorsogon. Since then, four additional aggregations have been studied. As of July 2016, 468 unique individuals have been identified in Donsol, 255 in Oslob, Cebu, 193 in Panaon Island, Southern Leyte, 98 in Tubbataha Reefs Natural Park, Palawan and 35 in Honday Bay, Palawan together with few other minor ephemeral aggregations. The 1000th Philippines Whale Shark was identified in May 2016 and uploaded on the online international database Wildbook for Whale Sharks. Data collection has been a combined effort from dedicated surveys by the Large Marine Vertebrates Research Institute Philippines, the WWF-Philippines, and citizen science. A network of connectivity between aggregations has been identified with the Bohol Sea as a major crossroads. Shark P-545 was the first Whale Shark to be matched internationally in South East Asia, covering the distance between Taiwan and Southern Leyte (>1600km) in 11 months. The trans-boundary movements of these giants is of increasing concern for their conservation in light of the continuous threats from target fisheries in Asia, and the recent listing as Endangered under IUCN Red List. Increasing fishery enforcement at national level and transnational cooperation and protection under international agreement like CMS Appendix I is strongly recommended.",
+    "keywords": ["Whale Shark", "Philippines", "Photo-Identification", "Donsol", "Oslob", "Panaon Island"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Spatiotemporal distribution of Caribbean Reef Sharks Carcharhinus perezii and Nurse Sharks Ginglymostoma cirratum in the waters of Saba, Dutch Caribbean",
+    "authors": [
+      {"full_name": "Guido Leurs", "affiliation": "IMARES Wageningen UR", "is_presenter": true},
+      {"full_name": "H.V. Winter", "affiliation": "IMARES Wageningen UR", "is_presenter": false},
+      {"full_name": "M. de Graaf", "affiliation": "IMARES Wageningen UR", "is_presenter": false},
+      {"full_name": "L.A.J. Nagelkerke", "affiliation": "IMARES Wageningen UR", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "For the purpose of this study, the spatiotemporal distribution of Caribbean Reef Sharks Carcharhinus perezii and Nurse Sharks Ginglymostoma cirratum were described using acoustic telemetry and a long-term citizen science project. Detection indices ranged from 0.01 to 1.00 for C. perezii and 0.17 to 0.92 for G. cirratum. Overall results prove high intraspecific variation in spatial behaviour and detection patterns, especially for C. perezii. Diel detection patterns for this species suggests different behavioural patterns for some individuals associated with twilight hours. Detection pattern of G. cirratum corresponds with a nocturnal change in behaviour. The results of the citizen science program also showed a catch-per-unit-effort for each species suggesting high residency or site fidelity for both species. Significantly lower presence of C. perezii during the period January-April coincides with the parturition period known of this species, possibly suggesting partial migration for this species.",
+    "keywords": ["Spatial behaviour", "Temporal distribution", "Diel activity", "Dutch Caribbean", "Acoustic telemetry"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Facebook, the next frontier – using divers and fishermen's posts in social media to collect data on sharks and rays distributions",
+    "authors": [
+      {"full_name": "Adi Barash", "affiliation": "Haifa University, Israel", "is_presenter": true},
+      {"full_name": "S. Salingré", "affiliation": "Haifa University, Israel", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Paucity of data is among the fundamental challenges in formulating any conservation effort. This difficulty is exacerbated when addressing elasmobranch research in the eastern Mediterranean Sea, where very few studies have been carried out, and historical data is scarce. Citizen science can be an effective alternative to otherwise complicated and expensive large-scale surveys aimed to evaluate species occurrence and distribution patterns. We made use of social media platforms to collect current sightings and records of elasmobranchs along Israeli coasts (Mediterranean and Red Sea), and to retrieve documentations dating back to 2005. To date, we collected over 500 records of elasmobranchs, which consisted of 15 species during a time-span of 12 years. Recorded include species that are critically endangered and/or rarely reported such as Gymnura altavela and Isurus oxyrinchus. Other reports revealed previously unrecorded events, such as large schools of Rhinoptera marginata close to shore, and large guitarfish (Rhinobatos sp.) exhibiting what seems to be mating behaviour. According to our records, the most common shark in the region Carcharhinus plumbeus shows clear variation in size throughout the year, as do Dasyatis sp., and Rhinobatos sp. Data collected from dozens of users provide a first start in creating a regional checklist of elasmobranchs in the Mediterranean, as well as provide glimpses into seasonal distributions. Records of rare and endangered species emphasize the potential benefits of record collection through the social media, as well as the major knowledge gaps of elasmobranch occurrence and distribution in the Eastern Mediterranean.",
+    "keywords": ["Species checklist", "Biodiversity", "Citizen science"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Earth, Wind and Fire – a holistic approach to elasmobranchs conservation",
+    "authors": [
+      {"full_name": "Irene Kingma", "affiliation": "Nederlandse Elasmobranchen Vereninging / Dutch Elasmobranch Society", "is_presenter": true},
+      {"full_name": "P. Walker", "affiliation": "Nederlandse Elasmobranchen Vereninging / Dutch Elasmobranch Society", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Globally there are many campaigns for elasmobranchs conservation, both large and small. The overriding objective of all these campaigns is to reduce unwanted mortality in sharks and rays, but in most the focus lies on just one aspect of conservation. In order to create an improved situation over time a more encompassing approach is needed which includes the right legislation as a starting point, coordinated management to ensure the laws can be implemented, effective control and enforcement to dissuade illegal activities and active communication to stakeholders to leverage support for the new measures. Scientific work is the basis for this approach and has an important role to play in strengthening the conservation process by asking the right questions at the onset of a research project. Only by doing the science you need you can get the policy you want. We propose a science-based holistic approach to campaigning which encompasses all four essential elements: legislation, management, control and communication. Using two examples of a management system currently under development, one for the North Sea the other for the Dutch Caribbean, we showcase how such a process can be shaped.",
+    "keywords": ["Conservation", "Management", "Integrated approach"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Vulnerability of reef-associated sharks connecting one of the world's largest marine protected areas",
+    "authors": [
+      {"full_name": "David M.P. Jacoby", "affiliation": "Institute of Zoology, Zoological Society of London", "is_presenter": true},
+      {"full_name": "F. Ferretti", "affiliation": "Hopkins Marine Station, Stanford University", "is_presenter": false},
+      {"full_name": "A.B. Carlisle", "affiliation": "Hopkins Marine Station, Stanford University", "is_presenter": false},
+      {"full_name": "T.K. Chapple", "affiliation": "Hopkins Marine Station, Stanford University", "is_presenter": false},
+      {"full_name": "D.J. Curnick", "affiliation": "Institute of Zoology, Zoological Society of London", "is_presenter": false},
+      {"full_name": "J.J. Dale", "affiliation": "Hopkins Marine Station, Stanford University", "is_presenter": false},
+      {"full_name": "R.J. Schaller", "affiliation": "Hopkins Marine Station, Stanford University", "is_presenter": false},
+      {"full_name": "D. Tickler", "affiliation": "Hopkins Marine Station, Stanford University; The UWA Oceans Institute, University of Western Australia", "is_presenter": false},
+      {"full_name": "B.A. Block", "affiliation": "Hopkins Marine Station, Stanford University", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Remote atolls, such as those found within the Chagos Marine Reserve (CMR), can be connected by large, often predatory fishes that are capable of ranging between them. But the temporal patterns and dynamic nature of this connectivity can vary between species that seemingly utilise similar habitat. In this study, we focus on two species of reef-associated shark, Carcharhinus amblyrhynchos (Grey Reef) and Carcharhinus albimarginatus (Silvertip) and demonstrate, using network analyses, that they connect the northern atolls of the CMR in very different ways and that different mobility patterns have different implications for management and conservation. With Illegal, Unreported and Unregulated (IUU) fishing still a significant problem throughout the Indian Ocean, and historically minimal enforcement capacity to patrol and respond to the threat of IUU fishing within the CMR, we adopt novel methods that allow us to pinpoint key gateways and drivers of connectivity based on the movement ecology of these predators. Furthermore, we employ Bayesian techniques to infer the spatial and temporal shifts in vulnerability as these species periodically aggregate, all with a view to highlighting the times and places where enforcement is most needed to protect these species and the subsequent health of the reef ecosystem.",
+    "keywords": [],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "Fishing to extinction? How to assess sharks at risk of overexploitation",
+    "authors": [
+      {"full_name": "Glenn Sant", "affiliation": "TRAFFIC the wildlife trade monitoring network", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "In both fisheries & conservation, the term \"shark\" is often used to generalise all species as one. This makes determining species most at risk from overfishing difficult. In collaboration with the UK government, TRAFFIC developed a method to evaluate commercially-exploited aquatic species at risk of overexploitation. Life history characteristics of 61 species of sharks were evaluated to determine a score for intrinsic biological vulnerability for each of these species. Minimum age at maturity and size produced a useful approach to ranking the relative intrinsic vulnerability of species to harvesting. To determine the adequacy, or inadequacy, of existing management measures, a Management-Risk Assessment Method (M-Risk) was developed for the forty-two shark species identified as being at medium or high risk. A ranking system was developed against relevant management attributes in order to rate risk, which has the potential to assist the development of a range of conservation and fishery management measures. This can be used to support fisheries management bodies to meet obligations under MEAs such as CITES and CMS.",
+    "keywords": ["Sharks", "Rays", "Risk Method", "Overexploitation", "Vulnerability"],
+    "session_name": "Session 8: Progress in elasmobranch conservation"
+  },
+  {
+    "title": "The presence of White Sharks Carcharodon carcharias related to environmental factors in Guadalupe Island, México",
+    "authors": [
+      {"full_name": "Edgar Eduardo Becerril-García", "affiliation": "CICIMAR - IPN", "is_presenter": true},
+      {"full_name": "E.M. Hoyos-Padilla", "affiliation": "CICIMAR - IPN", "is_presenter": false},
+      {"full_name": "H. Reyes-Bonilla", "affiliation": "CICIMAR - IPN", "is_presenter": false},
+      {"full_name": "R. Martínez-Rincón", "affiliation": "CICIMAR - IPN", "is_presenter": false},
+      {"full_name": "N.T. Roldán-Wong", "affiliation": "CICIMAR - IPN", "is_presenter": false},
+      {"full_name": "J.M. López-Calderón", "affiliation": "CICIMAR - IPN", "is_presenter": false},
+      {"full_name": "F. Galván-Magaña", "affiliation": "CICIMAR - IPN", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "This study describes the presence of White Sharks in relation to environmental factors during the cage diving season in Guadalupe Island. The presence of the shark at the surface and the collection of environmental data was recorded aboard tourist boats during august to November in the years 2012-2014. Data was analysed according to sex, maturity and total of sightings, for each month of the season and in relation to nine environmental factors: sea surface temperature, tide, moonlight, intensity, and the direction of wind and current, cloud cover and visibility. 6,480 sightings were recorded during 98 days. The monthly presence showed that juveniles are equally abundant throughout the season; males are particularly numerous in august and females since September, according to their migration. The effect of the environment on the presence of sharks was different to that reported for other aggregation sites in continental islands. A higher frequency of sightings was observed during temperatures between 20-23 ° C, low wind (<16 kn), low current (<0.6 kn), and high visibility values (> 17m). However, it was not possible to observe a significant effect on the overall presence of the White Shark according to the direction of the wind, current, tidal phase, moonlight or cloudiness. In general, females showed no significant relationship with the environmental factors on the surface, which could be related to sexual segregation or their trophic ecology in deep waters.",
+    "keywords": ["Ecology", "Lamnidae", "Habitat", "Occurrence", "Biosphere reserve"],
+    "session_name": null
+  },
+  {
+    "title": "The 3rd edition of the European Studbook Carcharhinus melanopterus",
+    "authors": [
+      {"full_name": "Chris Brown", "affiliation": "Merlin Animal Welfare and Development SEA LIFE", "is_presenter": true},
+      {"full_name": "J.D. Hibbitt", "affiliation": "Merlin Animal Welfare and Development SEA LIFE", "is_presenter": false},
+      {"full_name": "E. Wordley", "affiliation": "Merlin Animal Welfare and Development SEA LIFE", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "A studbook is a managed breeding programme that tracks the genetics, births, mortalities and transfers across zoos/aquariums and recommends future goals/objectives for the species. It is also a point of contact and information on the species. SEA LIFE runs the European Association of Zoos and Aquaria (EAZA) studbook for Blacktip Reef Sharks Carcharhinus melanopterus. This was established in 2013 and the results are presented each year in an annual edition of the studbook. This is the third edition of the studbook and we continue to learn and build upon our experiences with Blacktip Reef Sharks. There are now 55 aquaria participating in this studbook which covers the period from 01/01/2015 until the 31/12/2015. The total number of animals has risen to 274 (124.150.0) compared to 230 (represented in 48 aquaria) in the previous studbook. Since 2007 fifteen aquaria have recorded birthing events. By documenting and then sharing the details of these breeding experiences we get one step closer to achieving a self-sustaining aquarium bred population. The studbook is looking for an in-situ research/conservation partner that also works with this species to be able to both compare and collaborate on research.",
+    "keywords": ["Blacktip Reef Sharks", "Aquarium", "Breeding", "Studbook"],
+    "session_name": null
+  },
+  {
+    "title": "Monitoring the development and success rate of Scyliorhinus stellaris eggcases",
+    "authors": [
+      {"full_name": "Tegan Consol", "affiliation": "Plymouth University", "is_presenter": true},
+      {"full_name": "C.A. Gordon", "affiliation": "The Shark Trust", "is_presenter": false},
+      {"full_name": "J. Hepburn", "affiliation": "Mewstone Enterprises", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The Nursehound Scyliorhinus stellaris is a species of catshark that resides in the Northeast Atlantic and Mediterranean Sea. Nursehounds are currently listed as Near Threatened on the ICUN Red List of Threatened Species with no accurate data on population size in the Northeast Atlantic. Although they are usually found in shallow coastal waters and can be locally abundant, research on the species egg laying is generally limited and focused on species held in captivity. Off the south coast of Devon, a site has been discovered where Nursehounds have continued to deposit eggs for a number of years. The site is in a sheltered channel and since April 2014, monthly snorkels during low spring tides have been conducted to monitor eggcases within the channel. Small tags are attached to the tendrils of each eggcase and photographs are taken of each side of the capsule. Water temperature, tide height and time, significant weather events and the impact of biofouling are also recorded. When an eggcase is newly deposited they are easily distinguished by their transparency. Over time as the embryo develops, eggcases become biofouled making it difficult to observe the developing embryo. The goal of this research is to monitor the average development period in order to gain further insight on the species population in the wild and to monitor the development of biofouling on the eggcase.",
+    "keywords": ["Nursehound", "Development", "Eggcase", "Nursery Site", "Great Eggcase Hunt"],
+    "session_name": null
+  },
+  {
+    "title": "The potential for using remote camera-traps to detect changes in the population trends of pelagic sharks",
+    "authors": [
+      {"full_name": "David J. Curnick", "affiliation": "Zoological Society of London", "is_presenter": true},
+      {"full_name": "T.C.D. Lucas", "affiliation": "Zoological Society of London", "is_presenter": false},
+      {"full_name": "H.J. Koldewey", "affiliation": "Zoological Society of London", "is_presenter": false},
+      {"full_name": "K.E. Jones", "affiliation": "Zoological Society of London", "is_presenter": false},
+      {"full_name": "B. Collen", "affiliation": "Zoological Society of London", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Effective monitoring of pelagic shark populations in the absence of fisheries data, such as in marine reserves, is a significant challenge. Remote camera-traps have the potential to monitor pelagic sharks, but remain largely untested. Within a simulated environment, we developed a method that modified existing gas models to investigate the number of camera-traps needed to detect pelagic shark populations trends over a five-year period in both un-baited and baited (divided into full- and partial-detection) arrays. We assessed the accuracy and precision of trend estimates obtained from camera trap arrays under different scenarios of population sizes of different spatial and temporal distributions undergoing varying levels of population change. Our results demonstrated that across un-baited and both baited models, scenarios with larger starting populations, faster rates of change, heterogeneous distributions, and absence of seasonal variation required smaller camera-trap arrays to produce accurate and precise population trend estimates. We concluded that camera-trap arrays could serve as a useful fisheries-independent method to monitor pelagic sharks. However, unless the population size is large and/or changing at a high rate, significant numbers of baited camera-traps would be required. Unfortunately, such large arrays would come with significant financial and labour costs and therefore may not be a realistic monitoring option.",
+    "keywords": ["Camera-traps", "Fisheries-independent data", "Gas model", "Marine reserves", "Pelagic sharks", "Random encounter model"],
+    "session_name": null
+  },
+  {
+    "title": "The Shark Aggregation Project needs your data!",
+    "authors": [
+      {"full_name": "David J. Curnick", "affiliation": "Zoological Society of London", "is_presenter": true},
+      {"full_name": "T. Letessier", "affiliation": "Zoological Society of London", "is_presenter": false},
+      {"full_name": "D. Jacoby", "affiliation": "Zoological Society of London", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The spatial and temporal ecology of many shark species is not well known, yet many shark species exhibit aggregation behaviours. We are therefore compiling a global database on the timings, dynamics and locations of shark aggregations. In doing so, we hope we can start to answer questions about the spatial and temporal distribution of predator biomass, how aggregations are changing over time and in response to abiotic and anthropogenic drivers, and how they are currently protected within the existing MPA framework. We have trawled the literature in order to identify published records of shark aggregations. However, we appreciate that this is likely to provide an incomplete picture. Therefore, we are calling upon fellow shark scientists to help us fill in any gaps we may have by providing papers, anecdotal accounts, or grey literature that we may not have discovered during our own search. Please come and view our poster to find out more about the project and how you could help.",
+    "keywords": ["Aggregation", "Behaviour", "Breeding", "Database", "Feeding"],
+    "session_name": null
+  },
+  {
+    "title": "Plastic sharks in the Mediterranean Sea",
+    "authors": [
+      {"full_name": "Eleonora de Sabata", "affiliation": "MedSharks", "is_presenter": true},
+      {"full_name": "S. Clò", "affiliation": "MedSharks", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The Mediterranean is one of the most polluted seas worldwide, with quantities of floating particles comparable to accumulation zones in subtropical gyres. Plastics represents 80% of marine litter floating, stranded on beaches or on the seafloor. A growing series of studies is investigating the impact of plastics on Mediterranean marine biota. Entanglement is a serious mortality factor; many species misidentify litter as natural prey, or may ingest it accidentally during feeding and normal behaviour. Here we present a bibliographic review of Mediterranean elasmobranchs - the most threatened class of marine fishes in Europe, according to the IUCN - known to ingest marine litter. Plastic additives (e.g. phthalates) were detected in tissues from stranded basking sharks collected by MedSharks' Operazione Squalo Elefante, confirming that Cetorhinus maximus (Regional IUCN Red List: VU) is particularly at risk due to the large amount of water it filters. Marine litter was reported in the stomach content of other elasmobranch species such as: Prionace glauca (CR), Squalus blainvillei (DD), Squalus acanthias (END), Raja radula (END), Myliobatis Aquila (VU), Raja clavata (NT), Leucoraja naevus (NT), Dipturus oxyrinchus (NT), Etmopterus spinax (LC), Galeus melastomus (LC), Raja miraletus (LC), Raja montagui (LC), Raja polystigma (LC), Pteroplatytrygon violacea (LC). Although the effects of plastic ingestion on elasmobranch are not known, the high number of red-listed species affected confirms the need to promote effective waste management and raise awareness on the issue, promoting proper behaviour in the public. This review was compiled within the Clean Sea LIFE project, an awareness project targeting marine litter in Italy, co-funded by the European Commission through the LIFE programme.",
+    "keywords": ["Marine litter", "Mediterranean", "Elasmobranchs"],
+    "session_name": null
+  },
+  {
+    "title": "Is a reinforcement program genetically feasible for Thornback Rays Raja clavata in the Dutch North Sea?",
+    "authors": [
+      {"full_name": "Aleksandra Dragozet", "affiliation": "WWF-NL and University of Amsterdam", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "In the NE Atlantic, trends of ray populations have decreased by 72% in the past 30 years (FAO-Fishstat, 2006 & Chevolot, 2006). With declining populations of many threatened species translocation strategies are being used frequently to improve the conservation status of many species. A WWF-NL lead programme is investigating if reinforcement & reintroduction of endangered sharks and rays in the North Sea is feasible. Genetic consideration is important as it is critical to the success of a population restoration. Within the WWF-NL led program, this research project focused on genetic diversity of the Thornback Ray Raja clavata: one of the North Sea Species listed as near threatened on the IUCN Red list, by comparing wild and captive bred populations to see if a reinforcement program would be feasible from a genetic standpoint (Ellis, 2005). This study will act as a pilot study for the reintroduction of rarer species in the North Sea. The aims of this study were to determine whether the captive bred populations displayed evidence of a population bottleneck, high genetic diversity, and if the wild and captive bred populations were genetically similar enough to avoid outbreeding depression. This was investigated by genotyping via amplified fragment length polymorphism polymerase chain reactions (AFLP-PCR). Captive bred populations of R. clavata displayed high genetic diversity (Hj=0.302) and did not show evidence of a population bottle neck, and were genetically similar enough to the wild populations to avoid outbreeding depression (Fst=0.0418 (p=0.07)). From a genetic standpoint, the Blue Linked captive bred population of R. clavata can be used to reinforce the wild populations in the North Sea.",
+    "keywords": ["Reinforcement", "Rays", "Genetic diversity", "North Sea", "Conservation"],
+    "session_name": null
+  },
+  {
+    "title": "The Cabo Verde Elasmobranch Research and Conservation Project",
+    "authors": [
+      {"full_name": "Manuel Dureuil", "affiliation": "Dalhousie University, Halifax, Canada", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The island nation of Cabo Verde, West Africa, holds one of the last remaining hotspots for elasmobranchs in the North Atlantic and an important refuge for several highly threatened and endemic species of sharks, skates and rays. However, there is an increasing exploitation pressure on these species. The Cabo Verde Elasmobranch Research and Conservation Project, initiated in 2015, aims to support the development of comprehensive, long-term and effective science based protections measures for Cabo Verde elasmobranchs, through scientific research, governmental, NGO and community based conservation projects. Therefore, an innovative coalition of various parties has been established. Currently a major focus is the acoustic tagging of Nurse and Atlantic Weasel Sharks, a large tagging program with external marker tags, as well as educational outreach and the collaboration with local communities. We will present first achievements and future aims of this project.",
+    "keywords": ["West Africa", "Cape Verde", "Protection", "Tagging", "Education"],
+    "session_name": null
+  },
+  {
+    "title": "Trace metals in tissues of Galeus melastomus Rafinesque, 1810 from the northern Tyrrhenian Sea (NW Mediterranean)",
+    "authors": [
+      {"full_name": "Andrea Gaion", "affiliation": "South Devon College", "is_presenter": true},
+      {"full_name": "A. Scuderi", "affiliation": null, "is_presenter": false},
+      {"full_name": "D. Sartori", "affiliation": null, "is_presenter": false},
+      {"full_name": "D. Pellegrini", "affiliation": null, "is_presenter": false},
+      {"full_name": "A. Ligas", "affiliation": null, "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Decline of coastal waters resources has forced expansion of fisheries into deeper waters. However, while the increase of industrial activities makes essential to find biological models that can explain pollutants dynamics, little is still known about pollutants distribution and their possible effects on deep-water organisms. Concentrations of trace metals (Arsenic, As; Cadmium, Cd; Copper, Cu; Mercury, Hg; Lead, Pb) in muscle, liver and gonad of Blackmouth Catshark, Galeus melastomus, from Mediterranean are presented. Significant differences between males and females were found in the concentrations of 3 trace elements in gonads. The lower concentrations of trace metals observed in the ovary could be due to the almost continuous vitellogenic activity which could transfer contaminants to developing oocytes. Particularly high values of As and Hg were observed, exceeding the European Regulatory limits, posing a potential risk for human consumption. The high concentrations of metals found in tissues of G. melastomus may represent an issue of great concern, and stress the need for further investigations aimed at deepening the knowledge on heavy metals dynamics in deep-water ecosystems.",
+    "keywords": ["Bioaccumulation", "Galeus melastomus", "Bycatch species", "Arsenic", "Mercury", "Embryogenesis"],
+    "session_name": null
+  },
+  {
+    "title": "Towards traceability systems for CITES-listed Manta rays and proposed Mobula rays",
+    "authors": [
+      {"full_name": "Jane Hosegood", "affiliation": "Molecular Ecology and Fisheries Genetics Laboratory, Environment Centre Wales, Bangor University; The Manta Trust", "is_presenter": true},
+      {"full_name": "D. Fernando", "affiliation": "The Manta Trust; Blue Resources", "is_presenter": false},
+      {"full_name": "E. Humble", "affiliation": "The Manta Trust", "is_presenter": false},
+      {"full_name": "M. de Bruyn", "affiliation": "Molecular Ecology and Fisheries Genetics Laboratory, Environment Centre Wales, Bangor University", "is_presenter": false},
+      {"full_name": "R. Ogden", "affiliation": "TRACE Wildlife Forensics Network", "is_presenter": false},
+      {"full_name": "S. Creer", "affiliation": "Molecular Ecology and Fisheries Genetics Laboratory, Environment Centre Wales, Bangor University", "is_presenter": false},
+      {"full_name": "G. Carvalho", "affiliation": "Molecular Ecology and Fisheries Genetics Laboratory, Environment Centre Wales, Bangor University", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Implementation of effective species level management strategies requires knowledge of species boundaries, while enforcement of conservation regulations such as CITES (Convention on the International Trade in Endangered Species) relies on robust identification of species affected by wildlife trade. Mobulid rays, comprising the two Manta and nine Mobula species, are under pressure from fisheries supplying the international demand for their gill plates. The genus Manta is currently listed on CITES Appendix II, and a proposal to include Mobula is set to be considered at this year's CoP. However, two broad issues potentially encumber monitoring and enforcement of the current and any future regulations: (1) taxonomic ambiguities within the Mobulidae, and (2) challenges in identifying gill plates and other parts down to species level. Species boundaries within the Mobulidae family are debated, with some evidence to support synonymy of species, in addition to a possible description of new species. Furthermore, to date, genetic data evaluating the species involved in the gill plate trade is limited. This ongoing project is exploring the efficacy of double digest Restriction Site Associated DNA Sequencing (ddRAD) as a method of delimiting Mobulid species, with the overall aim of producing a Global Mobulid Genetic ID kit, to identify a sample down to species and later, to population level. Here we present a pilot library of Single Nucleotide Polymorphism data including 10 of the 11 currently described species and discuss experimental design for future libraries.",
+    "keywords": [],
+    "session_name": null
+  },
+  {
+    "title": "Automated White Shark photo identification: towards an international fin-printing database",
+    "authors": [
+      {"full_name": "Benjamin Hughes", "affiliation": "Save Our Seas Foundation", "is_presenter": true},
+      {"full_name": "J. Holmberg", "affiliation": "Wild Me", "is_presenter": false},
+      {"full_name": "J. Van Oast", "affiliation": "Wild Me", "is_presenter": false},
+      {"full_name": "T. Burghardt", "affiliation": "The University of Bristol", "is_presenter": false},
+      {"full_name": "M. Scholl", "affiliation": "Save Our Seas Foundation", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "We present a fully automated photo identification system for recognising the fins of individual great White Sharks. To the best of our knowledge, it is the first fully automated contour-based animal biometrics system. In order to recognise individuals, we combine robust fin contour detection with a multi-scale and combinatorial representation of fin shape. This enables individual sharks to be recognised efficiently and accurately, even when images are unclear or the view of the fin is partly blocked. Overall, the photo identification system demonstrates promising performance in recognising individuals with no need for manual labelling and with an average compute time of one minute per image. On a test-bed dataset representing 85 individuals, up to 82 per cent of images are correctly classified, with a further 10 per cent of correct matches occurring within the top 10 identities returned. The objective for the current phase of the project is to integrate photo identification and online data management technologies to build a scalable and easy-to-use, multi-user White Shark fin-printing database. We report the progress that has been made on this transition from our test-bed system and outline the challenges that lie ahead.",
+    "keywords": ["Photo identification", "Wildlife data management"],
+    "session_name": null
+  },
+  {
+    "title": "Patterns of activity in benthic predators: what skates get up to, when they think we're not watching",
+    "authors": [
+      {"full_name": "Nick Humphries", "affiliation": "The Marine Biological Association", "is_presenter": true},
+      {"full_name": "S. Simpson", "affiliation": "The Marine Biological Association", "is_presenter": false},
+      {"full_name": "D. Sims", "affiliation": "The Marine Biological Association", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Until the advent of electronic tags the patterns of activity in free ranging benthic marine predators, such as skates, remained largely unknown as a result of the difficulties of observing these animals in the wild. However the timing and pattern of activity (and rest) has important ecological consequences, as well as conservation implications relating to catchability. Here, using depth time-series data from 89 skates from 4 species (Raja brachyura, R. clavata, R. microocellata and R. montagui) with a total of 12000 days of data we investigate fine scale activity patterns determined from vertical move step lengths. We find that activity in skates is more complex than expected with significant variation both between individuals and species. However, some clear trends and similarities emerge; in particular we present the first evidence of optimal foraging and searching in skates. Knowing the times of day when skates are most active can be used to restrict fishing efforts to other times in order to reduce the likelihood of these threatened species being captured.",
+    "keywords": ["Benthic", "Predators", "Skates", "Raja", "Activity", "Patterns"],
+    "session_name": null
+  },
+  {
+    "title": "A hidden world: parasites in deep-sea elasmobranchs",
+    "authors": [
+      {"full_name": "Wolf Isbert", "affiliation": "University of Valencia, Spain", "is_presenter": true},
+      {"full_name": "F.E. Montero", "affiliation": "University of Valencia, Spain", "is_presenter": false},
+      {"full_name": "A. Pérez-del-Olmo", "affiliation": "University of Valencia, Spain", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Even though in the last 20 years the exploration of the deep-sea benefited greatly from recent improvements in technologies there are still many unresolved issues which applies also to many elasmobranchs. Per definition the deep-sea starts below 200 meters depth and exhibits extreme conditions with usually low temperatures, high pressures, eternal darkness and compared to shallow waters, food scarcity where deep-water organisms depend on the biomass which rains continuously from the productive surface into the deep. As predators elasmobranchs are important for the deep-sea food webs and owing to their often opportunistic feeding behaviour they are highly susceptible to be infected by parasites. As factors governing the development of parasite communities within a fish host depend on e.g. geographic distribution range, habitat use, host size and diet. Consequently parasite communities of a same host species can vary considerably between areas. Hence, the study of parasites is of special interest to deal with certain aspects in the biology and ecology of deep-sea elasmobranchs and fin-fishes. Parasites can be used as indicators for anthropogenic impacts (e.g. pollution, fisheries), and be helpful in the implementation of protection measures in vulnerable marine ecosystems and their key species. Parasite habitats can be as small as a thimble, which nevertheless can harbour incredible high abundances and biodiversity. Here we present some highlights of this tiny hidden world and some insights to explore the use of parasite communities as a tool enhancing the ecological knowledge of elasmobranchs and their potential use for conservation purposes.",
+    "keywords": ["Parasites", "Elasmobranchs", "Bio-indicators"],
+    "session_name": null
+  },
+  {
+    "title": "Saved and released - successful hatching of selected oviparous shark species with eggs recovered from dead females",
+    "authors": [
+      {"full_name": "Lydia Koehler", "affiliation": "Sharklab-Malta", "is_presenter": true},
+      {"full_name": "G.D. Nowell", "affiliation": "Sharklab-Malta", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "We present a unique approach to shark conservation – the collection of egg capsules obtained from dead female sharks, hatching and raising them successfully to a viable size prior to release back into the wild. The two selected oviparous species, Scyliorhinus canicula and Scyliorhinus stellaris, are regularly landed on the local market. The \"recovery and release program\", which started 2012, has shown increasing success in the last 2 years in growing numbers of hatchings and releases. A refined method on sensing the presence of eggs in 2014 led to a significant increase (x2 (1) = 85.671, p< 0.001) in removed eggcases from S. canicula. Egg capsules from S. stellaris were collected throughout the year, without any significant difference between months (x2 (1) =0.271, p=0.603), similar observations were made for S. canicula (x2 (1) =0.290, p=0.590), indicating that both species breed all year round. Over the past 4 years, 689 eggcases have been collected from the fish market, 141 S. stellaris and 548 S. canicula. A total number of 184 shark pups have been released back into the Maltese waters between March 2013 and March 2016, 147 in 2015 alone, with a number of shark pups remaining at the aquarium awaiting their release. The program led to an \"adopt-a-shark\" campaign initiated in October 2014, which shows increasing public interest with 25 adoptions in 2014 and 103 in 2015.",
+    "keywords": ["Scyliorhinus canicula", "Scyliorhinus stellaris", "Reproduction", "Elasmobranch", "Conservation"],
+    "session_name": null
+  },
+  {
+    "title": "New record of Alopias superciliosus Lowe, 1841 in the Western Mediterranean",
+    "authors": [
+      {"full_name": "Luca Lanteri", "affiliation": "DISTAV – University of Genoa", "is_presenter": true},
+      {"full_name": "F. Garibaldi", "affiliation": "DISTAV – University of Genoa", "is_presenter": false},
+      {"full_name": "L. Castellano", "affiliation": "DISTAV – University of Genoa", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "On 9th September 2015 the head of a shark belonging to the genus Alopias, was landed at Camogli harbour in the Ligurian Sea (North Western Mediterranean). The specimen has been caught 16 miles far from the coast (44° 06' N, 008° 57' E) as by-catch of the mesopelagic longline swordfish fishery, but only the head was recovered, due to the predatory/scavenging activity by other shark specimens. The particular morphology of the head, with deep dorsal horizontal groove on each side and the large eyes vertical developed, allowed to distinguish the species as A. superciliosus an highly migratory species worldwide distributed in tropical and temperate waters listed as \"Vulnerable\" species by the IUCN Shark Specialist Group. The present record is the northernmost reported for this species in the Mediterranean area.",
+    "keywords": ["Alopias superciliosus", "Ligurian Sea", "North Western Mediterranean", "Bycatch"],
+    "session_name": null
+  },
+  {
+    "title": "Taste, Teeth, and Trinity: RNA-Seq reveals shared and unique gene expression profiles between tooth and taste bud progenitors in the shark Scyliorhinus canicula",
+    "authors": [
+      {"full_name": "Kyle Martin", "affiliation": "University of Sheffield", "is_presenter": true},
+      {"full_name": "Z. Johanson", "affiliation": "University of Sheffield", "is_presenter": false},
+      {"full_name": "G. Fraser", "affiliation": "University of Sheffield", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Sharks and other polyphyodont vertebrates retain the crown gnathostome character of continuous successional regeneration of oral teeth. Why the capacity for successional regeneration is maintained in some lineages, but lost from others, is currently unknown. We show that both taste buds and teeth emerge from the odontogustatory band (OGB), a field of sox2+ embryonic oral epithelium equivalent to the odontogenic band (OB) of tetrapods. Later in development, we show that a compound and dynamic sox2+ stem cell population connects the superficial taste-competent oral epithelium at the taste/tooth-junction (T/T-J) with the deep tooth-forming successional lamina (SL) via cells migrating through the lingual margin of the middle dental epithelium. We suggest that a novel collaboration between the generalized odontode gene regulatory network (GRN) shared by teeth and denticles - and the taste bud GRN was key to the evolutionary co-option of denticles into the mouth and their elaboration as teeth. In order to identify candidate members of the GRN from teeth or taste buds which participated in this co-option event, we have produced a de novo oral tissue transcriptome for the lesser spotted catshark Scyliorhinus canicula. Differential gene expression analysis was carried out using RNA libraries produced from microdissected sub-regions of the shark dentition and oral epithelium, including the T/T-J and SL stem niches in addition to developing teeth and taste buds. This revealed > 2000 differentially expressed putative protein-coding genes (FC > 4, FDR < 0.001) which could be further subdivided into tooth-specific, taste-specific, or shared clusters, revealing cryptic molecular similarities between tooth and taste tissue which may reveal how the GRNs of these separate micro-organs became linked.",
+    "keywords": ["Evolution", "Development", "Teeth", "Stem cells", "RNA-seq"],
+    "session_name": null
+  },
+  {
+    "title": "Becoming warm before big: regional endothermy as trigger for giantism in otodontids (Otodontidae; Lamniformes)",
+    "authors": [
+      {"full_name": "H.G. Ferrón", "affiliation": "Palaeontology Area, University of Valencia", "is_presenter": false},
+      {"full_name": "C. Martínez-Pérez", "affiliation": "Palaeontology Area, University of Valencia", "is_presenter": false},
+      {"full_name": "Alba Martín-Lázaro", "affiliation": "Palaeontology Area, University of Valencia", "is_presenter": true},
+      {"full_name": "H. Botella", "affiliation": "Palaeontology Area, University of Valencia", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Otodontids include some of the largest macropredatory sharks that ever lived, being the most bizarre case Otodus (Megaselachus) megalodon. The reasons underlying their giantism, distribution patterns and extinction have been linked with climatic factors and the evolution, radiation and migrations of cetaceans during the Paleogene. However, all these previous interpretations have been based on the idea of otodontids as ectothermic sharks regardless of some ecological, energetic and body size constraints that this implies. This work proposes that regional endothermy was present in otodontids and some close related taxa (cretoxyrhinids), playing an important role in the reach of giantic sizes and allowing an active mode of live. With this aim, it is provided evidence of regional endothermy in these groups from three different approaches: (1) testing the degree of dependence of their body temperature on that of the surrounding water, analysing δ18O differences between teeth of cretoxyrhinids-otodontids and associated ectotherms; (2) checking whether burst swimming speeds of cretoxyrhinids-otodontids, estimated assuming ectothermy, were fast enough for hunting successfully on their potential preys; and (3) assessing the energetic viability of ectothermy in cretoxyrhinids, calculating whether their costs of swimming were long-term sustainable by their metabolic budget. In addition, this finding has different multidisciplinary implications, questioning some previous Mesozoic paleotemperature estimates based partially on these taxa, entailing important changes on the pre-existing hypothesis about the evolution of regional endothermy in fishes and providing key clues for understanding the evolution of giantism in active macropredators.",
+    "keywords": ["Otodontidae", "Cretoxyrhinidae", "Regional endothermy", "Macropredators", "Giantism"],
+    "session_name": null
+  },
+  {
+    "title": "Philippines: a Megamouth hotspot",
+    "authors": [
+      {"full_name": "James Montgomery", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": true},
+      {"full_name": "A.A. Yaptinchay", "affiliation": "Marine Wildlife Watch of the Philippines", "is_presenter": false},
+      {"full_name": "N. Enolva", "affiliation": "Department of Agriculture-Bureau of Fisheries and Aquatic Resources-Region V", "is_presenter": false},
+      {"full_name": "G. Araujo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "A. Ponzo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Megamouth sharks, Megachasma pelagios, are a rare and elusive species found in epipelagic circumtropical waters around the globe. One of only three species of planktivorous sharks, its biology and ecology is unknown and only a few records exist worldwide. A live specimen was found in a net in Pio Duran, Sorsogon in the Philippines on January 28 2015 and died shortly afterwards. The carcass was stored by the Bureau of Fisheries and Aquatic Resources- Region V, in a nearby freezing facility until a full necropsy was performed on February 11. Over one hundred detailed morphometric measurements were recorded and samples collected and preserved for future analysis. The animal was a mature male measuring 441.2cm TL and represents the fifteenth report in the Philippines and only the sixty-sixth encounter worldwide. Anatomical and morphological data have been compiled and compared within the Philippines and globally from stranding and fishery data and presented here. Results show that Megamouths are found predominantly in the Pacific Ocean favouring northerly latitudes, where juveniles (16.2%) and adults (54.4%) are found mostly at latitudes between 30°S-30°N and 40°S-40°N respectively. Accurate sizes range from 365.0cm to 549.0 cm in the Philippines (176.7- 620.6cm worldwide) with the majority being female. The Philippines represent a worldwide hotspot for this species together with Japan and Taiwan that had 18 and 11 specimens respectively. Megamouth #66 is now preserved in formalin and publicly displayed in Albay Park and Wildlife, in Legazpi City, Sorsogon.",
+    "keywords": ["Megamouth", "Philippines", "Planktivores", "Rare shark", "Necropsy"],
+    "session_name": null
+  },
+  {
+    "title": "Micropredator and parasites: an indicator for the status of Angelsharks?",
+    "authors": [
+      {"full_name": "Filip Osaer", "affiliation": "ELASMOCAN, Asociación Canaria para la Investigación y Conservación de los Elasmobranquios; Fundación Colombiana para la Investigación y Conservación de Tiburones y Rayas, SQUALUS", "is_presenter": true},
+      {"full_name": "K. Narváez", "affiliation": "ELASMOCAN, Asociación Canaria para la Investigación y Conservación de los Elasmobranquios; Fundación Colombiana para la Investigación y Conservación de Tiburones y Rayas, SQUALUS", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Recently, novel associations were documented from parasites and a micropredator with elasmobranchs in the Canary Islands, based on long-term observations in their natural habitat. Elasmobranchs sighted during underwater searches in the Canary Islands since 2006 were screened for the presence of ectoparasites. The marine leech Stibarobdella macrothela and the isopod Aegapheles deshaysiana were regularly observed taking blood meals from the Angelshark Squatina squatina, while the marine leech Branchellion torpedinis was rarely encountered while preying on S. squatina and the Marbled Electric Ray Torpedo marmorata. No noteworthy aspects were observed in the attachment area, the behaviour, and the apparent fitness of the hosts and preys. These findings not only provide useful information about biologic diversity and the relationship of marine leeches and an isopod with S. squatina and T. marmorata. They are also relevant for the future conservation management of the mentioned species, although detrimental and beneficial effects on biodiversity and ecosystem health related to parasites are poorly understood.",
+    "keywords": ["Squatina squatina", "Aegapheles deshaysiana", "Branchellion torpedinis", "Stibarobdella macrothela", "Isopod", "Marine leech"],
+    "session_name": null
+  },
+  {
+    "title": "Hammerhead Shark Research: Knowledge from the populations in the Canary Islands",
+    "authors": [
+      {"full_name": "Filip Osaer", "affiliation": "ELASMOCAN, Asociación Canaria para la Investigación y Conservación de los Elasmobranquios; Fundación Colombiana para la Investigación y Conservación de Tiburones y Rayas, SQUALUS", "is_presenter": true},
+      {"full_name": "K. Narváez", "affiliation": "ELASMOCAN, Asociación Canaria para la Investigación y Conservación de los Elasmobranquios; Fundación Colombiana para la Investigación y Conservación de Tiburones y Rayas, SQUALUS", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Hammerhead Shark Research is a project that studies Sphyrna spp. in the Canary Islands with the aim to generate scientific base knowledge that contributes to the development of effective species management strategies. This pioneering initiative, with funding from Loro Parque Fundación and ElasmoCan, responds to the total lack of scientific information about hammerheads in the Canarian Archipelago. Species knowledge in this region is limited to the presence of the scalloped hammerhead shark S. lewini and the smooth hammerhead shark S. zygaena, isolated records about behaviour and scant sighting reports by citizens in social media. Tagging and tissue sampling will be combined with biological and fisheries data collection in 4 of the 7 islands to get insights into the population dynamics of these migratory species, to identify potential critical habitats and to see how species are connected. The professional and recreational communities are actively involved in the study and are, together with citizens, encouraged to report sightings of tagged individuals or report other information about the species that can lead to effective decision making.",
+    "keywords": ["Cornudas", "Sphyrna lewini", "Sphyrna zygaena", "Tagging", "Population dynamics", "Citizen collaboration"],
+    "session_name": null
+  },
+  {
+    "title": "A Genetic Exploration in a Last Refuge: The Common Angelshark Squatina squatina in the Canary Islands",
+    "authors": [
+      {"full_name": "C.K. Fitzpatrick", "affiliation": "Save Our Seas Shark Research Center and Guy Harvey Research Institute, Nova Southeastern University", "is_presenter": false},
+      {"full_name": "K.A. Finnegan", "affiliation": "Save Our Seas Shark Research Center and Guy Harvey Research Institute, Nova Southeastern University", "is_presenter": false},
+      {"full_name": "A. Bernard", "affiliation": "Save Our Seas Shark Research Center and Guy Harvey Research Institute, Nova Southeastern University", "is_presenter": false},
+      {"full_name": "Filip Osaer", "affiliation": "ELASMOCAN; Fundación Colombiana para la Investigación y Conservación de Tiburones y Rayas, SQUALUS", "is_presenter": true},
+      {"full_name": "K. Narváez", "affiliation": "ELASMOCAN; Fundación Colombiana para la Investigación y Conservación de Tiburones y Rayas, SQUALUS", "is_presenter": false},
+      {"full_name": "M. Shivji", "affiliation": "Save Our Seas Shark Research Center and Guy Harvey Research Institute, Nova Southeastern University", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The Common Angelshark Squatina squatina has been extirpated from nearly the entirety of its historical eastern North Atlantic and Mediterranean range and is listed as 'Critically Endangered' by the IUCN Red List of Threatened Species. Currently, only a single known remnant population of any abundance exists, occurring within the waters surrounding the Canary Islands. Nothing is known about the genetic population dynamics of this species. To assess the Common Angelshark's genetic connectivity and diversity, tissue samples (n = 414) were collected between 2007-2016 from three separate islands within the archipelago: Gran Canaria and Tenerife – which are separated by a deep ocean channel (~3000 m) which potentially serves as a barrier to dispersal for this benthic species, and Lanzarote, located ~200 km Northeast of Gran Canaria. To data, DNA sequences have been obtained from four mitochondrial loci [control region (CR) (n = 280), cytochrome c oxidase subunit (COI) (n = 30), NADH dehydrogenase subunit 4 (ND4) (n = 40), and NADH subunit 2 (ND2) (n = 30) revealing exceptionally low genetic diversity across all regions, as identical haplotypes were found in nearly all analysed individuals. Additionally, next-generation sequencing has been used to develop a species-specific library for novel microsatellites and initial screening of 41 markers found only 2 of those markers show any evidence of polymorphism across 32 individuals. Further screening of loci on outgroup individuals and complete mitochondrial genome sequencing is ongoing. Such potentially low levels of genetic diversity may have far reaching implications for the persistence of this species and ultimately underscore the common angelsharks' highly vulnerable state.",
+    "keywords": ["Population genetics", "Conservation", "Endangered", "Mitochondrial DNA", "Mitogenome", "Microsatellites"],
+    "session_name": null
+  },
+  {
+    "title": "The gastronomy of sharks in south Spain and the work of educational centres to teach people to protect sharks",
+    "authors": [
+      {"full_name": "Paco Pinto de la Rosa", "affiliation": "Museum Alborania Aula Del Mar", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "With this work we want to show how sharks are being caught using various fishing methods in southern Spain. We have a total of 18 fishing ports in the region, with many fishing vessels catching elasmobranchs on a daily basis. Consequently, there are many species experiencing over-exploitation. We know elasmobranchs have a low fecundity, slow growth and late sexual maturation, with many species in serious decline. We show landings data for five fishing ports in southern Spain, as well as total catch of sharks during this year. We show how sharks are sold fresh and frozen at markets, as well as dried salted shark in restaurants. Around the world finning continues to be performed to supply the traditional dish of shark fin soup. Similarly, tablets of shark cartilage are sold, as well as teeth, jaws and even the whole shark.",
+    "keywords": ["Education", "Protect", "Sharks"],
+    "session_name": null
+  },
+  {
+    "title": "Deathly impalement of a Blue Shark Prionace glauca by a Swordfish Xiphias gladius",
+    "authors": [
+      {"full_name": "Jaime Penadés-Suay", "affiliation": null, "is_presenter": true},
+      {"full_name": "P. García-Salinas", "affiliation": null, "is_presenter": false},
+      {"full_name": "J. Tomás", "affiliation": null, "is_presenter": false},
+      {"full_name": "F.J. Aznar", "affiliation": null, "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "In September, 2016, an adult female Blue Shark Prionace glauca 247 cm long stranded alive on the coast of Valencia (Spain, Western Mediterranean) but died shortly afterwards. The necropsy revealed ongoing pregnancy, with 65 embryos in early stage of development, and a healthy condition with no signs of starvation. Two fishing hooks surrounded by scarred tissue were detected in the mandible, indicating previous interaction with fisheries. In addition, a fragment of the tip of a Swordfish Xiphias gladius rostrum (length: 18 cm long, width: 0.5 cm (distal) and 3 cm (proximal)) was removed from the head. The fragment had pierced the head producing an incision of 3.5 cm close to the left eye, parallel to the dorsoventral plane, and oriented 30º with respect to the anteroposterior axis. The fragment crossed the head anterior to the pre-orbital process without causing apparent damage to the olfactory capsule or the eye, but penetrated both sides of the skull causing extensive lesions in the brain. Brain damage was inferred to be the cause of death. Allometric analysis suggested that the Swordfish was ca. 130 cm long, corresponding to a juvenile 1-2 yrs old. Swordfish had previously been reported driving their rostrum into pelagic sharks, allegedly as a defensive strategy, but impalement had never been recorded as the direct cause of the death in these animals.",
+    "keywords": [],
+    "session_name": null
+  },
+  {
+    "title": "Efficacy of Marine Protected Areas for shark and ray populations in The Philippines: are they working?",
+    "authors": [
+      {"full_name": "M. Ryan", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "C. Segundo Jr.", "affiliation": "Tubbataha Management Office", "is_presenter": false},
+      {"full_name": "R. Georgina", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "A. Gonzalo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": false},
+      {"full_name": "Alessandro Ponzo", "affiliation": "Large Marine Vertebrates Research Institute Philippines", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Assessing the abundance and richness of species in marine protected areas (MPAs) is crucial for determining their effectiveness in conserving biodiversity. We used a non-invasive survey method, Baited Remote Underwater Video (BRUV), to determine the efficacy of large no-take MPAs in conserving shark and ray populations in the Philippines, as part of a nationwide assessment supported by Global Fin Print. Between January and June 2016, two MPAs were chosen, Apo Reef Natural Park (ARNP) and Tubbataha Reefs Natural Park and World Heritage Site (TRNP) with designated nearby non-protected control sites in Sablayan and in the Cagayancillo Island Group (CIG), respectively. A total of 50 BRUV were conducted in both ARNP and Sablayan. ARNP showed significantly higher overall catch per unit effort (CPUE = 0.33) and species richness (SR = 10) than Sablayan (CPUE = 0.007, SR = 2). A total of 100 BRUV surveys were conducted in both TRNP and CIG. TRNP (CPUE = 1.03, SR = 14) showed significantly higher overall CPUE but similar species richness than Cagayancillo (CPUE = 0.34, SR = 14). Results clearly show that Marine Protected Areas are an indispensable tool for the conservation of elasmobranchs. Moreover, data shows that the CPUE differed greatly between MPAs, underlining the fundamental importance of proper management and enforcement policies. The CPUE of different species in the four areas also suggest that size and location of the protected area play an important role for species specific conservation success.",
+    "keywords": ["Tubbataha Reefs Natural Park", "BRUV", "Global Fin Print", "Philippines", "Apo Reef Natural Park", "MPA"],
+    "session_name": null
+  },
+  {
+    "title": "Fin Fighters: connecting investigation and our citizen shark science program",
+    "authors": [
+      {"full_name": "Lou Ruddell", "affiliation": "Fin Fighters", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Globally, one of the main limitations to shark conservation is data black spots (regionally and for specific species) due to a massive lack of scientific investment and difficulty in acquiring specific samples. Vital science and policy work is currently held back and vulnerable elasmobranch in areas of importance remain at risk. In a five year study, the Fin Fighters team working together with volunteers and researchers as part of a new UK Shark Science Committee, are collecting information and genetic data from fishing ports/ markets in North Africa. The results inform research on the impacts of shark/ray fishing in this region and provide vital scientific samples for various studies on monitoring populations, sexual selection and genetic health. In addition, results are the basis for generating advisory management reports and constructing educational programs. The Moroccan investigation is part of the larger Fin Fighters Citizen Shark Science program – a solution based approach to data black spots, that has the potential to have global impacts through its rapidly growing volunteer participation network and expanding scientific involvement. By collaborating with Phd's to train teams of volunteers and fishermen to collect data; the CSS project has become an efficient way to not only collect much needed information, but to also produce a number of vital scientific papers as well as establish a network of highly trained volunteers.",
+    "keywords": ["Citizen science", "Reports", "Collaboration", "Data", "Education"],
+    "session_name": null
+  },
+  {
+    "title": "Hook removal from a Bull Huss Scyliorhinus stellaris with a complete oesophagus perforation",
+    "authors": [
+      {"full_name": "Lauren Smith", "affiliation": "Saltwater Life UK", "is_presenter": true},
+      {"full_name": "C. Matthews", "affiliation": "Saltwater Life UK", "is_presenter": false},
+      {"full_name": "A. Cliff", "affiliation": "Saltwater Life UK", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Relatively few studies to date have examined recreational hook-and-line capture in elasmobranchs. Those that have report physiological and physical injury due to hook retention as well as metabolic disturbances. This short communication highlights the physiological injuries sustained following hook ingestion by a small shark and the procedures undertaken to remove it, we believe this may be of particular interest to those in the aquarium industry that obtain exhibit animals caught by hook and line.",
+    "keywords": ["Scyliorhinus stellaris", "Hook retention", "Oesophagus perforation", "Elasmobranch"],
+    "session_name": null
+  },
+  {
+    "title": "Home range movements of the Southern Stingray Dasyatis americana in a sub-tropical island system (Bimini, Bahamas)",
+    "authors": [
+      {"full_name": "Fenella Wood", "affiliation": "Bimini Biological Field Station Foundation", "is_presenter": true},
+      {"full_name": "M. van Zinniq Bergmann", "affiliation": "Bimini Biological Field Station Foundation", "is_presenter": false},
+      {"full_name": "S. Samuel Gruber", "affiliation": "Bimini Biological Field Station Foundation", "is_presenter": false},
+      {"full_name": "T. Guttridge", "affiliation": "Bimini Biological Field Station Foundation", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Southern Stingrays Dasyatis americana are a data deficient species, yet occupy a keystone position in ecological communities as benthic mesopredators. Due to the ecological and economic value of Southern Stingrays it is important to gain a greater understanding of the influences driving movement patterns, spatial ecology and habitat preferences. Passive acoustic telemetry was used to determine home range size and quantify movements of Southern Stingrays. Eleven adults were caught via dipnet method and acoustic transmitters were surgically implanted. All tagged females (n = 7) were 87-102 cm in disc width (DW), males (n = 4) were 52-58 cm DW. Individuals were monitored for up to 405 days around the Bimini islands using 56 omnidirectional hydrophones, eight of which had temperature loggers. Centre of activities were calculated per individual using 12 hour time intervals. Minimum Convex Polygons were created to describe home range areas (mean 8862.37 ± 2248.78 m2). Kernel utilisation distributions (KUD) were used to describe the utilisation patterns of each home range, with the extent of movement calculated by 95% KUD (mean 8142.94 ± 1213.97 m2) and core use areas by 50% KUD (mean 1236.47 ± 213.44 m2). Sex, DW, time of year and temperature had no significant effect on home range size (p>0.05). However, there was significant relationship between disc width and 50% KUD when analysed by month. This study contributes important basic spatial ecological insight of Southern Stingrays in a sub-tropical island system and discusses potential influences, focusing on sex, temperature and size.",
+    "keywords": ["Acoustic telemetry", "Temperature influence", "Movement ecology", "Dasyatis americana", "Southern Stingray", "Home range"],
+    "session_name": null
+  }
+]
