@@ -1,0 +1,2623 @@
+© Lill Haugen
+
+
+
+
+                ABSTRACT
+                ABSTRACT   BOOKLET
+                         BOOKLET
+Wednesday 18th October 2023
+Theme Topic: Spatial Management as a tool for protecting elasmobranchs
+
+Ryan Charles
+IUCN Shark Specialist Group - ISRA Project
+
+Important Shark and Ray Areas: Mapping Critical Habitat for Sharks, Rays, and Chimaeras Globally
+
+     1.         Ryan Charles, International Union for Conservation of Nature Species Survival Commission Shark Specialist
+                Group, Dubai, United Arab Emirates
+     2.         Asia O. Armstrong, International Union for Conservation of Nature Species Survival Commission Shark
+                Specialist Group, Dubai, United Arab Emirates, School of Science, Technology and Engineering, University of
+                the Sunshine Coast, Hervey Bay, Qld 4655, Australia
+     3.         Amanda Batlle Morera, International Union for Conservation of Nature Species Survival Commission Shark
+                Specialist Group, Dubai, United Arab Emirates
+     4.         Jenny Bortoluzzi, International Union for Conservation of Nature Species Survival Commission Shark Specialist
+                Group, Dubai, United Arab Emirates
+     5.         Emiliano García-Rodríguez, International Union for Conservation of Nature Species Survival Commission Shark
+                Specialist Group, Dubai, United Arab Emirates
+     6.         Adriana Gonzalez Pestana, International Union for Conservation of Nature Species Survival Commission Shark
+                Specialist Group, Dubai, United Arab Emirates, Carrera de Biología Marina, Facultad de Ciencias Veterinarias y
+                Biológicas, Universidad Científica del Sur, Panamericana Sur, Km 19, Lima, Peru
+     7.         Peter M. Kyne, International Union for Conservation of Nature Species Survival Commission Shark Specialist
+                Group, Dubai, United Arab Emirates, Research Institute for the Environment and Livelihoods, Charles Darwin
+                University, Darwin, NT 0909, Australia
+     8.         Théophile L. Mouton, International Union for Conservation of Nature Species Survival Commission Shark
+                Specialist Group, Dubai, United Arab Emirates
+     9.         Giuseppe Notarbartolo di Sciara, International Union for Conservation of Nature Species Survival Commission
+                Shark Specialist Group, Dubai, United Arab Emirates, Tethys Research Institute, 20121 Milano, Italy
+     10.        Christoph A. Rohner, International Union for Conservation of Nature Species Survival Commission Shark
+                Specialist Group, Dubai, United Arab Emirates, Marine Megafauna Foundation, West Palm Beach, USA
+     11.        Rima W. Jabado, International Union for Conservation of Nature Species Survival Commission Shark Specialist
+                Group, Dubai, United Arab Emirates, College of Science and Engineering, James Cook University, Townsville,
+                Qld 4811, Australia
+
+Sharks, rays, and chimaeras (hereafter ‘sharks’) are often overlooked in spatial planning for biodiversity conservation. The
+Important Shark and Ray Area (ISRA) project, launched by the IUCN Species Survival Commission Shark Specialist Group in
+2022, provides a tool to address this globally. The initiative identifies three-dimensional portions of habitat that are important for
+one or more shark species and have the potential to be managed for conservation. A set of science-based criteria are used to
+delineate these areas and consider species vulnerability, range restriction, life-history (reproduction, feeding, resting,
+movement, undefined aggregations), and special attributes (distinctiveness, diversity). These criteria are being applied to all
+environments where sharks occur across 13 ISRA regions covering the entire globe. Collaboration is paramount with experts
+convening at regional workshops to share information and propose important areas. Sixty five ISRAs have been delineated in
+the Central and South American Pacific and 75 proposals are undergoing review for the Mediterranean and Black Seas. Areas
+are also currently being evaluated for the Western Indian Ocean and other regions will follow. Peer-reviewed and approved
+ISRAs are mapped and added to a publicly available eAtlas (www.sharkrayareas.org). By centralising key information on shark
+habitat use and behaviour, ISRAs provide a foundation to ensure sharks are included in area-based management. This assists
+governments and policymakers in meeting global biodiversity and conservation targets, especially when such areas are
+overlapped with other approaches such as Important Marine Mammal Areas (IMMAs). Results from the ISRA initiative will
+support shark conservation by increasing information available when considering spatial management of these highly
+threatened species.
+
+Keywords: Important Shark and Ray Areas; Mediterranean Sea; Spatial planning; Area-based management; Shark
+conservation
+
+
+
+
+1
+Session 1: Insights into the spatial ecology of elasmobranch fish
+Youri Ivann MVOMO MINKO
+Université de Bretagne Occidentale
+
+Functional role of Gabon's coastal waters for two shark species, Sphyrna lewini (Griffith & Smith, 1834)
+and Carcharhinus limbatus (Müller & Henle, 1839).
+
+     1.   MVOMO MINKO, Youri I.; Université de Bretagne Occidentale
+     2.   LE LOC'H, François; Institut de Recherche au Développement
+     3.   SCHAAL, Gauthier; Université de Bretagne Occidentale
+
+Large sharks are important predators in marine ecosystems, influencing the overall functioning of ecosystems and the trophic
+connectivity between different regions (Heithaus et al., 2008; Estes et al., 2011). However, they face intense fishing pressure,
+particularly in coastal areas that serve as nurseries for many juvenile sharks (Fowler et al., 2005; Heupel et al., 2007).
+Understanding the spatial and temporal ecology of sharks in interaction with fisheries, especially in coastal ecosystems such as
+estuaries and lagoons, is crucial for their conservation. Many shark species, including Sphyrna lewini (scalloped hammerhead
+shark) and Carcharhinus limbatus (blacktip shark), are considered threatened with extinction (Dulvy et al., 2014).
+Recent observations in artisanal fishing in Gabon have revealed an abundance of juvenile sharks belonging to these two
+species, suggesting the presence of undocumented nurseries. The southern coast of Gabon, with its lagoon complexes and
+mangrove habitats, could play a key role in maintaining shark populations in the equatorial Atlantic (Cadenat et al., 1955;
+Mourier et al., 2013).
+This study aims to demonstrate the existence of nurseries for Sphyrna lewini and Carcharhinus limbatus in Gabon by studying
+captures, the maturity of captured individuals, and their trophic ecology.
+
+Keywords: shark; fisheries; nursery; ecology; conservation
+
+
+
+Bríd O'Connor
+Marine Institute of Ireland and University College Cork
+
+Sensitivity analysis and spatial distribution of elasmobranchs in Irish waters
+
+     1.   Bríd, O'Connor; Marine Institute of Ireland and University College Cork
+     2.   Paul, Holloway; University College Cork
+     3.   Emer, Rogan; University College Cork
+     4.   David, Reid; Marine Institute of Ireland
+     5.   Tom, Reed; University College Cork
+     6.   Julia, Calderwood; Marine Institute of Ireland
+
+Over one third of elasmobranch species are threatened with extinction with nearly all species impacted by fisheries, typically
+from bycatch. While much research has been conducted on the impacts of certain threats on elasmobranchs, i.e., fishing,
+climate, discarding, and finning, there is a gap in the knowledge of how elasmobranch distributions might respond to population
+decline as a result of these threats. Furthermore, not all species will recover at the same rate, as some species are intrinsically
+more sensitive than others. Our goal was to determine the sensitivity of local elasmobranch species and highlight areas where
+these species and threats consistently overlap.
+Here we have determined the biological sensitivity of 44 species of elasmobranch found in Irish waters using the metric rmax,
+the maximum intrinsic rate of population increase. Oviparous species were found to have higher rmax than than ovoviviparous
+species in general, and the deep sea species had the lowest rmax, determining these species to be the most sensitive.
+Next we applied a species distribution modelling (SDM) approach to predict the distribution of 3 sensitive elasmobranch
+species found in Irish waters, as determined by rmax. Projections identified a change in the spatial distribution and extent of
+several species, with the results used to identify potential ‘hotspots’ of sensitive elasmobranchs in Irish waters based on
+intrinsic and extrinsic factors.
+Outputs of this work will help to improve the understanding of the local variability of elasmobranch species and provide support
+to expand and improve the management of protected areas and species.
+
+Keywords: Sensitivity; Species distribution models; rmax; Elasmobranchs; Fisheries
+
+
+
+Harriet Allen
+The Shark Trust
+
+The distribution of juvenile stages and eggcases of skates (Rajidae) around the British Isles
+
+     1.   Jim Ellis; Centre for Environment, Fisheries and Aquaculture Science
+     2.   Cat Gordon; The Shark Trust
+     3.   Harriet Allen; The Shark Trust
+
+2
+     4.   Joana Silva; Centre for Environment, Fisheries and Aquaculture Science
+     5.   Christopher Bird; Centre for Environment, Fisheries and Aquaculture Science
+     6.   Sophy Mccully Phillips; Centre for Environment, Fisheries and Aquaculture Science
+     7.   Ali Hood; The Shark Trust
+
+Skates (Rajidae) are important commercial species around the British Isles, yet there is currently limited information to aid the
+identification of potentially important habitats, such as spawning and nursery grounds. The neonates and juveniles of skate
+species have been recorded in scientific trawl surveys, with juveniles of most species proportionally more frequent in beam
+trawl surveys than in otter trawl surveys. The Great Eggcase Hunt is a long-standing (2003 to present) citizen science recording
+project that collates georeferenced data for elasmobranch eggcases, primarily from around the British Isles. This provided
+verified species-specific data for a total of 227,407 specimens from 11 skate species. Purse Search Ireland provided a further
+2,491 records of 10 skate species.
+Eggcases from the genus Raja were the most frequently observed skate eggcases from much of the British coastline, and
+juveniles were captured in inshore waters of England and Wales. The juveniles of Raja microocellata were most common in
+shallow water, and the limited data available for R. undulata also indicates that any nursery grounds for this species would also
+be in shallow water.
+Juveniles of the genus Leucoraja occurred further offshore, although only the eggcases of L. naevus were recorded regularly
+on trawl surveys (with an L. fullonica eggcase recorded just once). The earliest free-living stages also occurred offshore.
+An improved knowledge of spawning and nursery grounds can be used to aid fisheries management and marine spatial
+planning, and may also inform the emerging interest in Important Shark and Ray Areas (ISRAs).
+
+
+Keywords: citizen science; essential fish habitat; northeast Atlantic; Rajiformes; trawl surveys
+
+
+
+Leigh Livne
+Morris Kahn Marine Research Station
+
+First evidence of dusky shark (Carcharhinus obscurus) gestation in eastern Mediterranean Sea.
+
+     1.   Leigh, Livne, University of Haifa
+     2.   Aviad, Scheinin, University of Haifa
+     3.   James, Sulikowski, Oregon State University
+
+
+All elasmobranchs are fully protected from fishing practices in Israel. In this ‘safe haven’, research led by the Morris Kahn
+Marine Research Station’s Marine Apex Predator Laboratory has shown that dusky sharks (Carcharhinus obscurus) and
+sandbar sharks (C. plumbeus) return to aggregate in the winter months (November-May) along the Israeli coastline (1-20 m
+depth; est. 80-100 individuals). We expect that they inhabit these areas due to the warm water discharge relative to the ambient
+winter temperatures (22-25°C from the power plant; ambient 16-18°C). Ours is the only long-term catch-and-release
+programme in the Mediterranean Basin. Currently, both species belong to Annex III of the Barcelona Convention and are
+evaluated as ‘Data Deficient and ‘Endangered’ on the IUCN Mediterranean Red List, respectively. Female sandbar sharks are
+increasingly observed with each tagging season in Israel and since 2018, we have proof that the dusky sharks are inhabiting
+this space during some stage of their gestation, yet we still do not know where their parturition grounds are. To answer this, we
+collaborated with Dr James Sulikowski, leading expert of shark reproductive biology, and co-developer of the innovative Birth-
+Alert Tag with Lotek Wireless. With funding from National Geographic, this state-of-the-art intrauterine satellite tag was
+deployed in one gravid dusky shark in April 2023 after confirmation of pregnancy via ultrasonogram, with further samples taken
+for physiological analyses. Further detections of this shark via acoustic transmitter were made until late May, which is unusual
+for this species. We present this suite of information relating to non-invasive methods.
+
+Keywords: eastern Mediterranean Sea; dusky shark; reproductive physiology; intrauterine tag; habitat usage
+
+
+
+Eleanor Greenway
+Wageningen University and Research; Wageningen Marine Research
+
+Diel vertical migrations of the blonde skate (Raja brachyura) and the spotted skate (R. montagui) in the
+Northeast Atlantic
+
+     1.   Eleanor, Greenway; Wageningen University and Research
+     2.   Jurgen, Batsleer; Wageningen Marine Research.
+     3.   Jan Jaap, Poos; Wageningen University and Research
+
+Horizontal and vertical movements of marine organisms are reflective of habitat preference and behavioural patterns in activity.
+Since the development of electronic monitoring devices, studies into the migrations and movements of many marine species
+are increasing. However, such studies into the vertical movements of benthic predators remain understudied. In this study,
+blonde skates, Raja brachyura, and spotted skates, R. montagui, were tagged with ‘pop-off’ data storage tags in the North Sea
+
+
+3
+and English Channel. Diel vertical migrations, time-at-depth profiles and activity budgets were used to determine space-use
+patterns and preferences concerned with depth and temperature for mature individuals. The outcomes of this research will
+contribute a deeper understanding of the underlying processes that drive fish movements and distribution
+
+Keywords: Diel vertical migration; Tagging; Rajidae; Northeast Atlantic; Behaviour
+
+
+
+
+Jenny R. Bortoluzzi
+Trinity College Dublin
+
+Rapid transboundary movements of vulnerable porbeagle sharks support need for continued cooperative
+research and management approaches
+
+     1.    Jenny R. Bortoluzzi; Trinity College Dublin
+     2.    Grace E. McNicholas; Trinity College Dublin
+     3.    Andrew L. Jackson; Trinity College Dublin
+     4.    C. Antonia Klöcker; Havforskningsinstituttet (Institute of Marine Research, IMR)
+     5.    Claudia Junge; Havforskningsinstituttet (Institute of Marine Research, IMR)
+     6.    Keno Ferter; Havforskningsinstituttet (Institute of Marine Research, IMR)
+     7.    Otte Bjelland; Havforskningsinstituttet (Institute of Marine Research, IMR)
+     8.    Adam Barnett; James Cook University
+     9.    Austin J. Gallagher; Beneath the Waves
+     10.   Neil Hammerschlag; University of Miami
+     11.   William K. Roche; Inland Fisheries Ireland
+     12.   Nicholas L. Payne; Trinity College Dublin
+
+Distribution of species across regulatory and physical boundaries poses a recognised challenge to effective management and
+research, and these transboundary species tend to suffer more-severe population declines. Large pelagic sharks like the
+porbeagle, Lamna nasus, are particularly vulnerable due to their life history characteristics including their highly migratory
+behaviour, whereby the latter is particularly challenging for management in European waters where management jurisdictions
+change over small spatial scales. We used high-resolution satellite tags to demonstrate that individual porbeagles in the region
+display high inter-individual variation in behaviour, undertaking very rapid movements (up to 100 km per day) through multiple
+EEZs and physical habitats, transiting different management zones in a matter of days along different paths. These data
+highlight the value of existing and the urgent need for continued regional collaboration and cross-border funding mechanisms to
+maximise research impact to fill knowledge gaps and improve conservation outcomes for vulnerable and highly mobile shark
+species.
+
+Keywords: Lamna nasus; telemetry; biologging; management; conservation
+
+
+
+
+4
+Session 2: Citizen science I: The utility of social media and Local Ecological
+Knowledge
+Rachel Mawer
+(affiliation at time of research) University of Glasgow; NatureScot
+
+A non-invasive approach to estimate reproductive timing of elasmobranchs using photographs and
+citizen science
+
+     1.   Rachel, Mawer; University of Glasgow; NatureScot
+     2.   Jane, Dodd; NatureScot
+     3.   Neil, Burns; Scotland's Rural College
+     4.   James, Thorburn; University of St Andrews
+     5.   David, Bailey; University of Glasgow
+
+Identifying the timing of key life history events, such as mating, is important for conserving endangered species. Yet, for many
+elasmobranchs, there is a paucity of data on reproductive timings. Developing low-cost and non-invasive methods for
+estimating elasmobranch reproductive timings could assist in closing the knowledge gap and aid collecting reproductive
+information on more species. The flapper skate (Dipturus intermedius) is a critically endangered elasmobranch and the largest
+skate found in European waters. A large flapper skate photo-ID database exists, featuring photographs taken throughout the
+year provided by members of the public. Here, we present novel work making opportunistic use of the flapper skate photo-ID
+database to estimate flapper skate reproductive timing. A methodology was developed to identify the occurrence of three
+indicators of reproductive activity visible in photographs: pelvic swelling, bite wounds, and scratch wounds. Over 2000 images
+were examined for presence of each indicator and the seasonality of their occurrence was analysed via generalised additive
+models. Results suggest flapper skate mate over winter and lay eggs in winter and spring. The findings are corroborated by
+existing literature, supporting the approach as a valid method for estimating elasmobranch reproductive timing. The developed
+approach for analysing images could be applied to other species and make use of citizen science, providing another route for
+understanding reproduction in elusive elasmobranchs.
+
+Keywords: flapper skate; reproductive cycle; citizen science; photo ID; rajidae
+
+
+
+Re'em Neri
+Sharks in Israel; Ben Gurion University of the Negev;Interuniversity Institute for Marine Sciences in Eilat
+
+Mining social media for vital Elasmobranch information in data poor regions and conflict zones: The
+Gaza strip as a case study
+
+     1.   Re'em, Neri; Sharks in Israel; Ben Gurion University of the Negev;Interuniversity Institute for Marine Sciences in Eilat.
+     2.   Adi, Barash; Sharks in Israel.
+     3.   Uri, Neri; Tel Aviv University.
+     4.   Nadav Sh,ashar; Ben Gurion University of the Negev.
+
+A huge gap in environmental information exists in conflict regions where access to scientists ranges from unsafe to impossible.
+Previously unknown knowledge of Elasmobranchii presence, composition, and distribution can provide valuable fisheries
+information regarding the exploitation of elasmobranch species and for creating comprehensive conservation strategies.
+However, the diversity, ecology, behavior, and many other characteristics of these species in conflict zones remain virtually
+unknown, which is a major cause for concern.
+Traditional species assessments rely on in-situ observations, market surveys, and regulatory authorities forcing fisheries to self-
+report their catch. Conflict areas present a unique challenge, lacking formal regulation or scientific access.
+Here, we report the first use of social media monitoring for the extent of the Elasmobranch fishery in the Gaza Strip (east
+Mediterranean), a conflict region previously lacking any information.
+Our database consists of 3 years of daily reported catch from 16 fish stores and social media fishery-related influencers in the
+Gaza Strip. We collected 1530 data points belonging to 4619 individuals of 20 species. The analysis of the data sheds light on
+previously unknown temporal, spatial, and seasonal trends in elasmobranch catch distribution and relations to changes in the
+access to maritime areas due to local conflict escalations.
+We demonstrate this approach as a relatively accurate and inexpensive data mining procedure, allowing the quantification and
+normalization of multiple observations of caught and targeted fish into a uniformed geo-spatial-temporal system- making it a
+prime candidate for future endeavors in other data-poor regions and conflict zones in coastal areas.
+
+Keywords: Elasmobranch fishery; overfishing; iEcology; social media; Mediterranean
+
+
+
+
+5
+Joanna Barker
+Zoological Society of London / Project SIARC / Angel Shark Project
+
+Enabling a wider range of people to engage with marine conservation using elasmobranchs in Wales
+
+     1.   Kathryn Whittey; Zoological Society of London / Bangor University
+     2.   Surshti Patel; Zoological Society of London
+     3.   Joanna Barker; Zoological Society of London
+     4.   Alice Chamberlain; Zoological Society of London
+     5.   Jake Davies; Zoological Society of London / Natural Resources Wales
+     6.   Sarah Davies; Zoological Society of London / Natural Resources Wales
+     7.   Ben Wray; Natural Resources Wales
+     8.   Charlotte Pike; Zoological Society of London
+     9.   Matt Gollock; Zoological Society of London
+
+The environment sector, including organisations working to protect the marine environment, is the second-least diverse in the
+UK. There is an urgent need to address barriers to participation and diversify opportunities for involvement in conservation and
+research, as the marine environment has a vital role in natural, cultural, social and economic heritage for all communities.
+Project SIARC (Sharks Inspiring Action and Research with Communities) uses flagship elasmobranchs in Wales (angelshark,
+blue skate, common stingray, flapper skate, spurdog, and tope) to bring together local communities, fishers, researchers and
+government to cultivate a new appreciation and open-up access to the underwater environment in Wales. A major part of our
+work is to identify approaches that enable a wider range of people to engage with marine conservation in Wales and tackle the
+lack of diversity and inclusion within Project SIARC, thereby contributing to wider systemic change.
+We are on the start of our journey and to-date have focused on Project SIARC’s community initiatives in North Wales.
+Meetings, interviews and discussions with local communities allowed us to listen and learn from personal experiences,
+gathering information to produce a draft ‘Equity, Diversity and Inclusion Strategy’. This presentation will share the approach we
+have taken to date and some of the key learnings
+Project SIARC is a collaboration led by the Zoological Society of London and Natural Resources Wales, with six partners and
+several collaborators. It is made possible thanks to Welsh Government’s Nature Networks Fund, National Lottery Heritage
+Fund and On the EDGE Conservation.
+
+Keywords: Diversity; Inclusion; Elasmobranchs; Wales; Communities
+
+
+
+Lorenzo Minoia
+Department of Integrative Marine Ecology, Genoa Marine Centre, Stazione Zoologica Anton Dohrn - Italian
+National Institute of Marine Biology, Ecology and Biotechnology, Villa del Principe, Piazza del Principe 4, 16126
+Genoa, Italy
+
+First toxicological study in two commercial shark species from a Mediterranean Marine Protected Area
+
+     1.   Lorenzo, Minoia; Department of Integrative Marine Ecology, Genoa Marine Centre, Stazione Zoologica Anton Dohrn -
+          Italian National Institute of Marine Biology, Ecology and Biotechnology, Villa del Principe, Piazza del Principe 4,
+          16126 Genoa, Italy; Department of Physical, Earth and Environmental Sciences, University of Siena, Via Mattioli, 4,
+          53100 Siena, Italy.
+     2.   Massimiliano, Bottaro; Department of Integrative Marine Ecology, Genoa Marine Centre, Stazione Zoologica Anton
+          Dohrn - Italian National Institute of Marine Biology, Ecology and Biotechnology, Villa del Principe, Piazza del Principe
+          4, 16126 Genoa, Italy.
+     3.   Mauro, Sinopoli; Department of Integrative Marine Ecology, Sicily Marine Centre, Stazione Zoologica Anton Dohrn -
+          Italian National Institute for Marine Biology, Ecology and Biotechnology, Lungomare Cristoforo Colombo n. 4521 (Ex
+          Complesso Roosevelt) - Località Addaura, 90149 Palermo, Italy.
+     4.   Sara, Bonanomi; National Research Council (CNR), Institute of Marine Biological Resources and Biotechnologies
+          (IRBIM), Largo Fiera della Pesca 1, 60125 Ancona, Italy.
+     5.   Emilio, Sperone; Department of Biology, Ecology and Earth Sciences, University of Calabria, Via P. Bucci, 87036
+          Rende, Italy.
+     6.   Emilio Riginella; Department of Integrative Marine Ecology, Stazione Zoologica Anton Dohrn - Italian National
+          Institute of Marine Biology, Ecology and Biotechnology, Villa Comunale, 80121 Naples, Italy.
+     7.   Letizia Marsili; Department of Physical, Earth and Environmental Sciences, University of Siena, Via Mattioli, 4, 53100
+          Siena, Italy; Centro Interuniversitario per la Ricerca sui Cetacei (CIRCE), Department of Physical, Earth and
+          Environmental Sciences, University of Siena, Strada Laterina 8, 53100 Siena, Italy.
+
+Large urban and industrial settlements, and the intense maritime traffic make the Mediterranean one of the most polluted areas
+in the world. This basin hosts considerable marine biodiversity, including many elasmobranchs, which are extremely vulnerable
+to environmental contamination due their life history traits. The impact of this threat on the cartilaginous fishes is still poorly
+studied, as well as the possible consequences for human health, in case of consumption of sharks, are uncertain. To fill this
+knowledge gap, quantitative and qualitative assessments of three groups of persistent organic pollutants (POPs) were carried
+out in the muscle and liver of two shark species, Mustelus punctulatus and Mustelus mustelus, caught in the Marine Protected
+Area (MPA) of Egadi Islands (South-Central Mediterranean Sea) between 2021 and 2023. As sharks are one of the top
+
+
+6
+predators inhabiting the MPA, they can be considered a bioindicator of the local environmental status. Paradoxically, although
+M. punctulatus and M. mustelus have considerable commercial value for human consumption in the MPA, they are listed as
+Vulnerable by the IUCN in the Mediterranean. Regarding POPs levels, the results showed a trend of PCBs > DDTs >> HCB in
+liver and muscle for both species. Our results can significantly contribute to clarify the toxicological status of these species,
+allowing a first evaluation of the real risks both for the local marine life and for human health.
+
+Keywords: Elasmobranchs; Conservation; Toxicology; Mediterranean Sea; MPA
+
+
+
+Eleonora de Sabata
+MedSharks
+
+Citizen science in the Mediterranean Sea reveals aspects of the ecology of the nursehound shark,
+Scyliorhinus stellaris
+
+Simona Clò, MedSharks
+
+Very little is known about the biology and ecology of the nursehound shark Scyliorhinus stellaris (Linnaeus, 1758), a medium-
+sized catshark in severe decline in the Mediterranean Sea, assessed as Near Threatened (Vulnerable in the Atlantic) by the
+IUCN.
+Here we present results emerging from the first 10 years of the Stellaris project (2013-2023), an underwater field monitoring
+project in the largest egg-case nursery area known in Italian waters, the Santa Croce Bank (Gulf of Naples, Central Tyrrhenian
+Sea).
+This ongoing citizen science project provides insights on basic reproductive information on this species in the wild, such as:
+seasonality, development, predation and natural mortality rates, and indications that this nursery area is in decline. Photo-
+identification reveals that this area is also a resting area for adults of both sexes, which is used year-round and over multiple
+years.
+This nursery area is a no-fishing zone and falls within a Natura 2000 site. In spite of its protected status, illegal fishing occurs as
+the whole Gulf is subject to intense artisanal and recreational fishing pressure.
+Results of the Stellaris project allowed the Santa Croce Bank to be identified by the IUCN as an ISRA, an Important Shark and
+Ray Area, highlighting the importance of this refuge and the need for increased management and conservation actions for this
+neglected species. These results also highlight the value of citizen science in making tangible conservation contribution.
+
+Keywords: nursehound; citizen science; reproduction; photo-identfiication;
+
+
+
+Adi Barash
+Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel
+
+New findings on the understudied population of sharks and rays in the Red Sea from data collected
+through social media
+
+     1.   Adi, Barash; Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel.
+     2.   Ya’ara, Grossmark; Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel. Faculty
+          of Architecture and Town Planning, Technion – Israel Institute of Technology, Haifa, Israel.
+     3.   Sarai, Burman; Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel.
+     4.   Noa, Gilad; Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel.
+     5.   Inbal, Kahan; Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel.
+     6.   Re’em, Neri; Sharks in Israel, Environmental Organization for the protection of sharks and rays. Israel, Eilat Campus,
+          Department of Life Sciences, Ben Gurion University of the Negev, Israel. Interuniversity Institute for Marine Sciences
+          in Eilat, Israel.
+     7.   Shevy Bat-Sheva, Rothman; Sharks in Israel, Environmental Organization for the protection of sharks and rays,
+          Israel. The Steinhardt Museum of Natural History, Tel Aviv, Israel.
+     8.   Sergey V., Bogorodsky; Senckenberg Research Institute and Natural History Museum Frankfurt, Senckenberganlage
+          25, 60325 Frankfurt a.M., Germany. Station of Naturalists, Omsk, Russia.
+
+
+Sharks and rays in the Red Sea region are under intense fishing pressure, heavy development, and extensive tourism load.
+The IUCN report on the status of sharks and rays in the Arabian Sea and adjacent waters from 2017 found that at least half of
+the species are endangered. Based on these species assessments, in the Red Sea alone the number of endangered species is
+alarmingly higher, presenting a state of danger to almost all cartilaginous fish species that live in it. Research, conservation,
+and enforcement are scarce in the region.
+We have established a citizen science project SRS (sharks and rays in the Red Sea), based on the MECO Protocol, collecting
+observations from the public through social networks with the aim of gathering up-to-date basic biological and ecological
+information.
+Over 2,500 observations have been collected to date, mostly from the Gulf of Aqaba. Observations include 18 species of
+batoids and 14 species of sharks (82% and 18%, respectively).
+
+
+7
+Our collected data has added new species records to the Gulf of Aqaba region and revealed information about their
+seasonality, reproduction, and distribution.
+These data provide essential ecological information in a region that is largely understudied and is crucial for planning
+conservation and management in the future.
+
+Keywords: Red Sea; Citizen science; Social Media; Sharks and Rays; Distribution pattern
+
+
+
+Hector Toledo-Padilla
+Angel Shark Project: Canary Islands
+
+The value of scientific data, citizen science, and collaboration with stakeholders in developing a
+Recovery Plan
+
+     1.   Hector, Toledo-Padilla; Angel Shark Project: Canary Islands
+     2.   Eva, Meyers; Zoological Research Museum Alexander Koenig & Angel Shark Project: Canary Islands
+     3.   Joanna, Barker; Zoological Society of London & Angel Shark Project: Canary Islands
+     4.   David, Jiménez-Alvarado; Universidad de Las Palmas de Gran Canaria & Angel Shark Project: Canary Islands
+     5.   Charlotte, Pike; Zoological Society of London & Angel Shark Project: Canary Islands
+     6.   Michael, Sealey; Angel Shark Project: Canary Islands
+     7.   Belén, Caro; Angel Shark Project: Canary Islands
+
+
+Angelsharks, Squatina squatina, can be seen relatively frequently by divers and fishers in the Canary Islands, a unique
+stronghold for the species. Due to their benthic ecology and coastal location, angelsharks are particularly susceptible to
+accidental capture in fisheries and habitat degradation. As a result of this, angelsharks are now listed as Critically Endangered
+on the IUCN Red List of Threatened Species.
+In 2019, angelsharks were listed under the Spanish Endangered Species List for Canary Island waters as "In danger of
+extinction", the highest level of protection within this legislation. Following this listing, the development of a Recovery Plan was
+mandated, which sets out suitable measures for the management and conservation of angelsharks.
+Angel Shark Project: Canary Islands (ASP:CI) conducted a comprehensive series of in-person and online surveys to compile
+crucial information regarding angelshark interactions, perceptions, and potential protective measures, involving three primary
+interaction groups: divers, recreational fishers, and commercial fishers. This information, combined with ASP:CI scientific
+research, was augmented by a collaborative workshop, which engaged stakeholders representing various interests. Together,
+these efforts facilitated the identification of conservation areas and the co-designing of specific measures to ensure the future
+preservation of Angelsharks within their expansive stronghold. This presentation will delineate the key findings derived from this
+work, emphasizing the importance of employing a participatory approach in designing conservation strategies for this Critically
+Endangered species. This work, led by ASP:CI, was funded by Shark Conservation Fund and through a contract with the
+Canary Islands Government, co-financed by the FEDER 2014-2020 Operational Program.
+
+Keywords: Angelshark; Canary Islands; Recovery Plan; Critical Areas; Conservation Measures
+
+
+
+
+8
+Session 3: Spotlight on Spurdog
+Jack Renwick
+Shark Trust
+
+The History and Current Management of the NE Atlantic Spurdog Fishery
+
+Jack, Renwick; Shark Trust
+
+Spurdog (Squalus acanthias), otherwise known as Spiny or Picked Dogfish, are members of the dogfish (Squalidae) family.
+They are distinguished by the presence of a spine in front of each dorsal fin. They have a wide distribution, mainly inhabiting
+temperate waters. This species was originally listed on the IUCN Red List as Critically Endangered, but through a non-genuine
+change in 2015, Spurdog was changed to Endangered in Europe (IUCN, 2015). In the Northeast Atlantic, there has been a
+fishery for Spurdog since the early 20th century. This population was overexploited which led to population decline. Various
+management measures have been put in place to aid recovery of this population, including placing Spurdog on the Prohibited
+species list. In 2022, ICES gave advice that the population could support a fishery for 2023 and 2024. In 2023, the fishery was
+reopened with a TAC of 17,353 tonnes (t) across the region. The UK has a quota of 4,825 t in Western waters and 2,781 t in
+the North Sea. As of October 2023, 194.0 t (4.0%) and 95.0 t (4.6%) of these quotas have been landed respectively. This
+presentation discusses the management history of Spurdog and the possible dangers of reopening a fishery on tentative signs
+of recovery.
+
+Keywords: Spurdog; Fisheries; Management
+
+
+
+Charlotte Nuyt
+Institute of Marine Research
+
+Unraveling the population structure of Northeast Atlantic spurdog (Squalus acanthias) stock: insights
+from mitochondrial DNA to genome-wide data
+
+     1.   Charlotte, Nuyt; Institute of Marine Research.
+     2.   Claudia, Junge; Institute of Marine Research.
+
+The spurdog (Squalus acanthias Linnaeus, 1758) Northeast Atlantic stock is managed as a single unit and has undergone a
+long period of overfishing, especially in the 1950s/1960s, which has caused its population to collapse. There are now signs of
+population growth but it remains listed as “Endangered” and overexploitation may have had an impact on its genetic
+composition. Limited data are available on the stocks genetic structure and properly delineating a stock unit for fisheries
+management is crucial to allow sustainability of the exploited population. Population genetics provides valuable insights into
+connectivity and genetic distinctions among individuals from different areas. Looking at genetic diversity within and between
+populations is also important in terms of population resilience in the face of climate change or other pressures such as
+overexploitation.
+A first assessment of the population structure was done using the NADH dehydrogenase subunit 2 (ND2) mitochondrial marker
+sequenced from 48 spurdogs sampled along the Norwegian part of the Northeast Atlantic. 25 unique haplotypes were
+distinguished, showing high genetic diversity in Norwegian waters, but no genetic distinction between sampling locations. To
+provide more accurate population level data, over 89 individuals from identical locations were used for genome-wide analysis,
+involving 53492 single nucleotide polymorphisms (SNPs) derived from Restriction-site associated DNA sequencing (RAD-seq).
+Clustering analysis revealed subpopulations along Norwegian waters. This study presents this population structure and
+discusses their relevance for regional fishery management purposes.
+
+Keywords: Population genomics; Spurdog; Conservation genetics
+
+
+
+James Thorburn
+Edinburgh Napier University
+
+Do sharks shiver when it gets warmer?
+
+     1.   James Thorburn; Edinburgh Napier University
+     2.   Émilie Gagnon; University of Ottawa
+     3.   Julien Martin; University of Ottawa
+     4.   Jane Dodd; NatureScot
+     5.   Lea-Anne Henry; University of Edinburgh
+     6.   Peter Wright; Marine Scotland
+     7.   Francis Neat; World Maritime University
+
+In the ocean, mobile species exhibit diverse movements across different spatial and temporal scales. Understanding the drivers
+behind these movements is essential for effective management and predicting responses to a changing ocean environment. A
+
+9
+multitude of environmental cues, such as temperature and salinity, have been shown to affect the movements of elasmobranch
+species. However, it is increasingly recognized that social drivers may also influence movement. We conducted an acoustic
+telemetry study in a partially enclosed sea loch on the west coast of Scotland to investigate the movements and habitat
+selection of spurdog (Squalus acanthias). Spurdog segregate based on size and sex, and these subgroups display a high
+range of movements, from transatlantic movements to coastal residency. Some subgroups also display high levels of
+relatedness, suggesting kinship bonds within subgroups. Our findings revealed that spurdog exhibited a high level of year-
+round residency within the loch and that temperature plays a pivotal role in their habitat selection. Additionally, subgroups within
+the population display different habitat choices, which may be caused by underlying population social processes. This study
+underscores the importance of understanding all drivers of animal movement. Identifying sites that promote residential
+behaviour can aid in developing effective management strategies for species, like the spurdog. However, it is equally crucial to
+comprehend the social drivers of movement, as they can significantly influence habitat choices. By considering the interplay
+between environmental and social factors, we can gain a more comprehensive understanding of animal movements and
+enhance conservation efforts for these mobile ocean species.
+
+Keywords: residency; Movement drivers; spurdog; Squalus acanthias; acoustic telemetry
+
+
+
+Lotte Svengård Dahlmo
+NORCE & UiB
+
+Spiny dogfish behaviour in Norwegian fjords
+
+     1.   Lotte, Dahlmo; NORCE & UiB
+     2.   Robert, Lennox; Ocean Tracking Network, Dalhousie University, & NORCE
+     3.   Keno, Ferter; Institute of Marine Research
+     4.   Claudia, Junge; Institute of Marine Research
+     5.   Dean,s Grubbs; Florida State University
+     6.   Steven J., Cooke; Carleton Universityd
+     7.   Trond Einar, Isaksen; NORCE
+     8.   Gaute, Velle; NORCE & UiB
+     9.   Knut Wiik, Vollset; NORCE
+
+Spiny dogfish (Squalus acanthias) is an Endangered top predator with an antitropical distribution, including extensive use of the
+fjords in southern and western Norway. Increasingly, these fjords are subjected to warming surface water temperatures and
+hypoxic bottom water. Habitat compression of spiny dogfish is predicted to instigate increased conflict between the sharks and
+the fisheries and aquaculture industries. To investigate if varying oxygen levels affect their depth use, we tagged more than 80
+spiny dogfish with acoustic transmitters instrumented with depth, acceleration, and temperature sensors to reveal any
+spatiotemporal depth patterns. Furthermore, spiny dogfish swim in groups based on sex and/or size, thus a social network
+analysis was performed to check whether the tagged individuals exhibited interactions across time or space. Preliminary results
+indicate that the spiny dogfish utilize an extensive part of the water column, and most tagged individuals interact with several
+other spiny dogfish.
+
+Keywords: Squalus acanthias; Deoxygenation; Acoustic telemetry; Social network analysis; Behaviour
+
+
+
+Matteo Barbato
+Department of Biology- University of Padova; National Biodiversity Future Center (NFBC)
+
+Use of space from the population to the individual level of commercial relevant shark species (Mustelus
+spp. and Squalus acanthias) in the Northern Adriatic Sea using a multidisciplinary approach
+
+          1.    Enrico, Arneri; Institute for Marine Biological Resources and Biotechnologies (IRBIM) - Italian National Research
+                Council (CNR)
+          2.    Camilla, Antonini; Italian National Institute for Protection and Research (ISPRA)
+          3.    Jacopo, Bernardi; Department of Biology - University of Padova
+          4.    Gabriele, Boscolo Palo; Department of comparative biomedicine and food science - University of Padova
+          5.    Giulia, Bressan; CoNISMa, National Inter-University Consortium for Marine Sciences, Department of Biology -
+                University of Padova
+          6.    Federico, Calì; Department of Biology - University of Padova; Institute for Marine Biological Resources and
+                Biotechnolo.gies (IRBIM)-Italian National Research Council (CNR); University of Bologna
+          7.    Licia, Finotto; Department of Biology - University of Padova
+          8.    Simone, Niedermuller; World WideFund for Nature (WWF-Mediterranean Marine Initiative)
+          9.    Maria Grazia, Pennino; Instituto Español de Oceanografía Centro Oceanográfico de Vigo (IEO)
+          10.   Giulia, Prato; Italy World Wildlife Fund (WWF)
+          11.   Saša, Raicevich; Italian National Institute for Protection and Research (ISPRA)
+          12.   Tommaso, Russo; Department of Biology - University of Rome Tor Vergata
+          13.   Alberto, Santojanni; Institute for Marine Biological Resources and Biotechnologies (IRBIM)- Italian National
+                Research Council (CNR)
+
+10
+          14. Alice, Sbrana; Department of Biology - University of Rome Tor Vergata
+          15. Carlo, Zampieri; Department of Biology - University of Padova
+          16. Carlotta, Mazzoldi; CoNISMa, National Inter-University Consortium for Marine Sciences, Department of Biology,
+              University of Padova; National Biodiversity Future Center (NFBC)
+
+In the Northern Adriatic Sea (FAO-GSA 17), fishery exploitation of marine resources influenced communities and the
+ecosystem (Sguotti et al., 2022). In the last decades, elasmobranch species, characterized by slow growth rate and low
+fecundity, have been depleted due to fishing activities (Barausse et al., 2014; Ferretti et al., 2013). Despite being landed as by-
+catch or seasonal target catch, first evidence of population increase in abundance is highlighted for the smooth hounds
+(Mustelus spp.), while the spiny dogfish (Squalus acanthias) continues to decline (Maioli et al., 2023). Since several
+approaches suggested the occurrence of seasonal movements of these species (Manfredi et al., 2010; Bonanomi et al., 2018;
+Barbato et al., 2021), this study aims at identifying: (i) seasonal use of space of these species using fishery-dependent data
+from bottom otter trawls (OTB) collected within the European Data Collection Framework; (ii) spatial hotspots of observed
+landing per unit effort (LPUE) from coupled VMS and logbook OTB data; (iii) preliminary movement ecology aspects using
+conventional tagging (2017-2023) and acoustic telemetry (2022-2023) at individual-level. The first objectives allowed to identify
+a different seasonal use of space between the smooth hounds and the spiny dogfish, seasonal hotspot of LPUE and refined
+identification of areas where young-of-the-year, juveniles and adults occur. In addition, preliminary results of movement ecology
+highlighted site fidelity, residency and transboundary movement at individual level. Given the lack of management measures for
+such species, the combination of these approaches can provide essential information to set effective spatial management
+measures for these species.
+
+Keywords: spatial management; fishery; Triakidae; Squalidae; Use of space
+
+
+
+Claudia Junge
+Havforskningsinstituttet (Institute of Marine Research, IMR), Norway
+AQUA, University of Oslo (UiO), Norway
+
+Spurdog all the way
+
+     1. Claudia Junge; Institute of Marine Research (IMR), Norway.
+     2. Ole Thomas Albert; IMR.
+     3. Hector Andrade; IMR.
+     4. Antonia Klöcker; IMR.
+     5. Keno Ferter; IMR.
+     6. Jon Albretsen; IMR.
+     7. Sophia Lind; AQUA, University of Oslo (UiO).
+     8. Otte Bjelland; IMR.
+     9. Romaric Jac; IMR.
+     10. Mikko Vihtakari; IMR.
+     11. Ingrid Bruvold; IMR.
+     12. Penny Liebig; IMR.
+     13. Sofie Gundersen; IMR.
+     14. Charlotte Nuyt; IMR.
+     15. Øystein Langangen; UiO.
+     16. Joel Durant; UiO.
+     17. Caroline A. Tranang; IMR.
+
+Mobile sharks are more at risk of encountering human activities such as fisheries, putting high bycatch pressure
+on shark populations. Spurdog (Squalus acanthias) was historically exploited by a well-documented fishery,
+however, relatively little is known about their large-scale movements, habitat preferences, and population dynamics
+after the stock collapse in the late 1990s. Over the past years, we used a variety of data types and methods, like
+trawl and longline surveys, fishery bycatch and environmental data, dissections, satellite tagging and spatial
+mapping, to decipher the spatial distribution, movement patterns, diet and life history composition of spurdog in
+Norwegian and northern Northeast Atlantic (NEA) waters. We found that they prefer relatively warm and shallow
+waters (<150 m) and stay close within coastal waters while exhibiting diel vertical migrations. The latter could imply
+them following their prey, which we identified as mainly bony fishes based on >500 analysed stomachs. Based on
+overall 5,000 dissected individuals mainly from fisheries bycatch, we found that the recruitment may have increased
+considerably faster in the recent two decades than previously projected, which resulted in a gradually younger
+population of gravid females (50% maturity at 9.3 years). This faster population recovery is reflected in the new
+assessment of the NEA spurdog stock by the International Council for the Exploration of the Sea. The resulting
+fishing quota for the first time since 2009, makes close monitoring and efforts to increase our understanding of its
+dynamics, population structure, and responses to changing environmental conditions even more important.
+
+
+
+
+11
+Session 4: Shark and ray conservation
+
+Sonja Fordham
+Shark Advocates International c/o The Ocean Foundation
+1320 19th Street, NW, Fifth Floor, Washington, DC 20036
+
+Bridging the gaps that hidder elasmobranch conservation: Key findings of a CITES and ICCAT-focused
+policy analysis
+
+The success of international conservation agreements relies on proper implementation at the national level. Because
+elasmobranchs are considered both commodities and wildlife, governments’ approaches to associated fisheries and environment
+treaty obligations are often misaligned. Scrutiny of this performance is lacking and represents a core yet surmountable challenge
+to effective policies and ultimate population rebuilding.
+
+The Shark League (a coalition including Shark Trust, Ecology Action Centre, and Shark Advocates International) will soon release
+a gap analysis that examines the effects of Atlantic shark and ray protection measures under various treaties, primarily the
+Convention on International Trade in Endangered Species (CITES) and the International Commission for Conservation of Atlantic
+Tunas (ICCAT). Based on an evaluation of the performance of ICCAT Parties and Cooperators with respect to various obligations
+for CITES-listed elasmobranchs, we highlight key gaps between concrete restrictions and conservation needs. Recommendations
+for priority improvements at national and international levels extend beyond government action to include specific suggestions
+for elasmobranch conservationists and interested scientists. Aims focus on better integration of fisheries and environmental
+agency activities to fulfill elasmobranch policy commitments across treaties, but also include improved fisheries and trade
+information, more rigorous conservation standards, and expanded assistance, as well as new safeguards for under-protected
+species. Because overfishing is the primary driver of shark and ray depletion, bridging these divides is critical to securing a
+brighter outlook for elasmobranchs in the Atlantic and beyond.
+
+Keywords: fisheries; trade; policy; CITES; ICCAT
+
+
+
+
+Lydia Koehler
+University of Plymouth
+
+What the EU’s Marine Strategy Framework Directive did and did not change for sharks and rays
+
+     1.        Lydia Koehler; University of Plymouth.
+     2.        Paddy Walker; Nederlandse Elasmobranchen Vereniging.
+     3.        Irene Kingma; Nederlandse Elasmobranchen Vereniging.
+     4.        Jason Lowther; University of Plymouth.
+
+The evaluation of policy effectiveness and impact is a crucial step in the policy cycle, to see if the agreed targets are met and to
+give guidance for improving future policies and legislation. One of the fundamental European Union (EU) Directives for Nature
+Conservation, the Habitats Directive, did not include conservation of elasmobranchs at the time it was drafted in 1992 and has
+not been updated to address this gap in the 30 years since. This means that elasmobranchs do not feature in Nature2000,
+which forms the basis for protected areas. However, the Marine Strategy Framework Directive (MSFD) from 2008, opened a
+window of opportunity for elasmobranch- related measures both in spatial protection and fisheries management, but has it
+delivered? Here, we assessed EU Member States’ (EU MS) efforts to integrate elasmobranchs in their national monitoring and
+programmes of measures under the MSFD, and if these filled in the gaps between EU policies. Results are mixed: whilst some
+EU MS, such as the Netherlands and Italy, report shark-specific measures under the MSFD, others generally refer to existing
+obligations in relation to monitoring and conservation under EU, international, and regional legal frameworks. There are no
+Marine Protected Areas set up under the MSFD that aim to protect elasmobranchs specifically in any EU MS. Based on the
+review of EU MS reporting under the MSFD, we provide advice on furthering shark conservation at EU level and how this
+relates to contemporary legal and policy developments in the EU and at international level.
+
+Keywords: Marine policy; Implementation; Shark conservation; European Union; Fisheries management
+
+
+
+Lucas Zaccagnini
+DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+
+Synthesis of ten years of illegal trade of Elasmobranch products in the French online market
+
+     1.   Simon Lassale, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+     2.   Lucas Zaccagnini, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+     3.   Lena Pouliquen, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+     4.   Paul Abaut, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+
+
+12
+     5.   Antoine Gatet, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+     6.   Cecile Brigaudeau, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+     7.   Armelle Jung, DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+
+The illegal wildlife trade is recognized to be the fourth most lucrative transnational crime after drugs, arms and human
+trafficking. Marine species are subject to a vast range of commercial exchange despite their listing under Washington
+Convention (CITES).
+DRDH started an online survey about products of elasmobranch sold on Internet. The study primarily focused on sawfish
+rostrum which represented more than 3000 cases. In 2021, the work was extended to shark jaws and heads, but also reptiles
+such as marine turtles, crocodiles or protected marine mammals.
+A synthesis of 10 years of follow up was produced giving elements on the estimation of amount of money the diversity of
+species and geographic origins of the different pieces.
+The results the juridical victories are discussed in the context of global urgency for marine biodiversity worldwide.
+
+Keywords: Illegal Trade; Sawfish; Juridic; Marine species; CITES
+
+
+
+Paddy Walker
+Dutch Elasmobranch Society
+
+The Netherlands Shark and Ray Action Plan: a case study in international cooperation
+
+     1.   Paddy, Walker; Dutch Elasmobranch Society
+     2.   Irene,Kingma; Dutch Elasmobranch Society
+
+The Netherlands Shark and Ray Action Plan (SARAP) dates from 2017. It was reviewed in 2021 and there is currently a new
+action plan which will run until 2027. The objectives of the SARAP fall under Descriptor 1 of the Marine Strategy Framework
+Directive (MSFD) ‘Biodiversity’ and aim to improve the population size, distribution and condition of sharks and rays in Dutch
+waters. Nine of the 15 actions in the plan address European Regulations, Frameworks and Directives, as well as international
+conventions. All require international cooperation. These actions are not new and have been on the European agenda for a
+number of years. Since 2017 the EU STECF (Scientific, Technical, Economic Commission for Fisheries) has initiated three
+expert working groups specifically on elasmobranchs, covering skate and ray management, the implementation of the EU
+regulation on finning and assessment of the impact of the 2009 European Community Shark Action Plan. These meetings
+resulted in recommendations to advance the management and conservation of the species. Concurrently, the ICES Working
+Group Elasmobranch Fishes provides the science to improve stock assessments and to advise on fishing opportunities. In the
+past years new species have been listed on CITES (Convention on International Trade in Endangered Species of Wild Flora
+and Fauna) and CMS (Convention on Migratory Species), leading to obligations from the contracting parties. Although some
+progress is being made, real change has yet to take place. This paper will present the Netherlands Shark and Ray Action Plan
+as a case study in international cooperation.
+
+Keywords: Action Plan; international cooperation; management; conservation; EU legislation
+
+
+
+Licia Finotto
+University of Padova
+
+Stakeholders' perception of sharks and rays: is there space for conservation?
+
+     1.   Licia Finotto; Department of Biology, University of Padova.
+     2.   Massimiliano Bottaro; Stazione Zoologica Anton Dohrn, Italian National Institute for Marine Biology, Ecology and
+          Biotechnology.
+     3.   Ioannis Giovos; Marine & Environmental Research (MER) Lab Ltd.
+     4.   Periklis Kleitou; Marine & Environmental Research (MER) Lab Ltd.
+     5.   Paolo Pelusi; Consorzio Mediterraneo.
+     6.   Bruna Valettini; Costa edutainment S.p.A.
+     7.   Carlotta Mazzoldi; Department of Biology, University of Padova.
+
+Effective conservation measures are urgently needed for elasmobranchs. People possess significant power in driving
+conservation efforts, but elasmobranchs, known for historically evoking irrational attitudes, have been overlooked. Educational
+events improving peoples’ perception might aid conservation action. Fishery management measures are also necessary, but
+fishers’ willingness to adopt them must be assessed. To investigate propensity for conservation, the LIFE ELIFE project
+(Elasmobranchs Low-Impact Fishing Experience LIFE18 NAT/IT/000846) aims at evaluating stakeholders’ attitude and the
+impact of educational events using questionnaires/interviews.
+Participating to educational events improved people’s attitude towards elasmobranchs. Respondents indicating fear and danger
+as the main feelings decreased from 22.0% and 29.8% in the group not experiencing educational events (N=542) to 11.2% and
+14.6% in the group that experienced them (N=121). Moreover, the percentage of respondents thinking that elasmobranchs are
+
+
+
+
+13
+endangered (76.8% versus 84.8%), that more species should be protected (77.3% versus 88.9%), and of those willing to
+change their behaviours to aid elasmobranchs’ conservation (92.9% versus 100%) increased.
+Regarding fishers (N=136), only 16.0% reported a perception of decrease in elasmobranch abundances; however, fishers
+stated that their category should contribute to elasmobranchs’ conservation (70.4%) and that some species should be protected
+(50.7%). Despite 56.3% of fishers were not aware of potential fishery management measures (i.e., gear modifications), when
+informed, 60.9% declared they would adopt them.
+These preliminary results are promising; people’s positive attitude can be used to urge decision makers to adopt concrete
+conservation initiatives, which are likely to be more easily accepted by fishers given their willingness to collaborate.
+
+Keywords: conservation; social science; stakeholder; fishers; general public
+
+
+
+Irene Kingma
+Dutch Elasmobranch Society
+
+A gap analysis on shark and ray research and conservation in the Caribbean
+
+     1.   Kingma, Irene; Dutch Elasmobranch Society
+     2.   Bervoets, Tadzio; Caribbean Shark Coalition
+     3.   Walker, Paddy; Dutch Elasmobranch Society
+     4.   Leurs, Guido; Groningen University
+
+We present the results of a Gap analysis carried out in the summer of 2023 on the elasmobranchs of the Southeastern
+Caribbean. The geographical scope of this project concerns the whole of the Lesser Antilles, as well as the Dominican
+Republic, Haiti and Jamaica to the west, and the exclusive economic zones of the countries and territories of the Guiana
+plateau to the southeast. As most of this area encompasses the waters of Small Island Developing States (SIDS) and other
+small autonomous nations the marine life in general has not been extensively studied.
+Our approach was threefold, firstly we focussed on establishing an overview of the species present in the area and the
+research effort that had gone in to them, secondly we made an overview of the research conducted in the waters of all
+countries in our area of interest and lastly we made an overview of existing conservation and management measures and the
+level to which these were implemented. We based our findings on information gathered through a literature review as well as
+from interviews with regional and local experts.
+The research is part of the CAMAC project, for CAribbean marine Megafauna and anthropogenic Activities led by the SPAW
+Regional Activities Centre. The CAMAC project works to improve knowledge Caribbean mega fauna (mammals, sharks & rays
+and turtles) and strengthen regional collaboration. The aim is to provide recommendations and tools to reduce the negative
+impacts of interactions between marine megafauna and human activities.
+
+Keywords: review; Caribbean; gap analysis; SIDS
+
+
+
+
+14
+Thursday 19th October 2023
+Theme Topic: CITES: new listings; identification in Trade, and the Non-Detriment
+Finding (NDF) process
+
+Session 5: Threatened elasmobranchs in coastal waters (Part 1)
+
+Ana Espino Ruano
+IU ECOAQUA, University of Las Palmas de Gran Canaria
+
+Where is the Spiny butterfly ray, Gymnura altavela?: aggregative behaviour in the shallow coastal zones.
+
+     1.   Ana, Espino-Ruano; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran Canaria.
+     2.   Jose J., Castro; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran Canaria.
+     3.   Airam, Guerra-Marrero; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+     4.   Lorena, Couce-Montero; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+     5.   David, Jimenez-Alvarado; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+
+The presence of spiny butterfly rays, Gymnura altavela, in waters less than 20 m deep off the Canary Islands shows marked
+seasonality, with relatively high abundances in the summer and autumn. Large aggregations of sometimes hundreds of
+individuals, primarily females, appear in specific shallow areas of the archipelago and seem to be associated with the seasonal
+variation in water temperature. This seasonal pattern of presence or absence in shallow areas suggests that spiny butterfly rays
+migrate into deeper waters or other unknown areas during the rest of the year. G. altavela shows sexual dimorphism; in our
+study, females were larger and more abundant than males, with a sex ratio of 1:18.9. The species’ estimated asymptotic length,
+L∞, was 183.75 cm and thus close to the common length reported for the species (200 cm). The von Bertalanffy growth
+constant (k) oscillated between 0.210 and 0.310 year−1 , as similarly described for the species in the Western North Atlantic off
+the U.S. coast. From June to November, the seawater temperature oscillated between 19 and 24 ◦C, and massive aggregations
+of females occurred at 22–24 ◦C and in a few specific sandy beaches on the islands. Spiny butterfly rays, mostly females, show
+a preference for aggregating in shallow waters during summertime, probably conditionate to mating or breeding behaviour.
+
+Keywords: Behaviour; biodiversity; conservation; movement;
+
+
+
+Maria Pozo-Montoro
+Universidad de Murcia
+
+First insights into the last known population of guitarfishes in the Western Mediterranean. A critical area
+for these and other endangered species of batoids in Spain?
+
+     1.   Maria, Pozo-Montoro; Universidad de Murcia.
+     2.   David, Jimenez-Alvarado; Universidad de las Palmas de Gran Canaria.
+     3.   Johann, Mourier; University of Montpellier.
+     4.   Jose Antonio, Garcia-Charton; Universidad de Murcia.
+
+The Cabo de Palos-Islas Hormigas marine reserve in Southeast Spain stands as an outstanding conservation model, boasting
+one of the highest fish biomasses among Mediterranean Marine Protected Areas (MPAs). However, just beyond its boundaries,
+populations of highly threatened elasmobranchs appear to critically rely on this area unnoticed and unprotected. Since March
+2023, over a hundred photographs from divers, snorkelers, and fishers have been collected and analysed, revealing the area´s
+potential significance for the Common Guitarfish (Rhinobatos rhinobatos), the Spiny Butterfly Ray (Gymnura altavela), the
+Common Stingray (Dasyatis pastinaca) and the Common Eagle Ray (Myliobatis aquila).
+Remarkably, these records indicate the annual presence of the once-though-extinct in the Western Mediterranean Common
+Guitarfish, with potentially pregnant females appearing in June and newborns in September. Additionally, further evidence is
+needed to confirm the occurrence of the Giant Guitarfish (Glaucostegus cemiculus) according to some reported pictures due to
+identification issues. These photographs suggest fisheries-induced mortality due to illegal retention and inadequate handling
+techniques is occurring to an unknown extent.
+Also, pregnant individuals and newborns of Spiny Butterfly Ray can be seen yearly throughout the summer, as well as potential
+aggregations of likely young-of-the-year of Common Stingray. Opportunistic scientific expeditions have further allowed us to
+document annual aggregations of 15-40 individuals of Common Eagle Ray with unknown function.
+These preliminary findings highlight the Murcia Eastern Coast as a potential conservation realm for highly endangered
+elasmobranch species. However, further research efforts are needed and warranted to inform effective management actions to
+ensure their survival.
+
+Keywords: Citizen science; ISRA; ROV; Rhinopristiformes; Rhino rays
+
+
+15
+Lucy Mead
+Zoological Society of London; Queen Mary University of London
+
+Spatiotemporal distribution and sexual segregation in the Critically Endangered angelshark Squatina
+squatina in Spain’s largest marine reserve
+
+          1.    Lucy Mead; Institute of Zoology, Zoological Society of London
+          2.    David Jiménez Alvarado; Universidad de Las Palmas de Gran Canaria
+          3.    Eva Meyers; Zoological Research Museum Alexander Koenig
+          4.    Joanna Barker; Zoological Society of London
+          5.    Michael Sealey; Angel Shark Project: Canary Islands
+          6.    Maria Belén Caro; Angel Shark Project: Canary Islands
+          7.    Hector Toledo; Angel Shark Project: Canary Islands
+          8.    Charlotte Pike; Zoological Society of London
+          9.    Matthew Gollock; Zoological Society of London
+          10.   Adam Piper; Institute of Zoology, Zoological Society of London
+          11.   Gail Schofield; Queen Mary University of London
+          12.   Edy Herraiz; La Graciosa Divers
+          13.   David M.P. Jacoby; Lancaster University
+
+
+Establishing how threatened wildlife are distributed spatially and temporally is essential for effective conservation and
+management planning. While many shark species are threatened globally, knowledge on sex-specific differences in behaviour
+and fine-scale habitat use remains limited, hindering the implementation of appropriate conservation actions. Here, acoustic
+telemetry was used to investigate sex-specific space use in the Critically Endangered angelshark Squatina squatina in the
+Canary Islands (Atlantic Ocean), a key stronghold for the species. We collected data on space use, residency and movement of
+adult males (n = 32) and females (n = 72) in Spain’s largest marine reserve (La Graciosa Marine Reserve) over 4 yr
+(2018−2022). Presence in offshore sites (>80 m depth) indicated long-term utilisation of deep-water habitat, not previously
+observed in this species. Males were more likely to be detected in deep water and displayed significantly greater levels of
+activity and roaming behaviour than females. Patterns of behaviour in shallow waters indicated both social and habitat sexual
+segregation. Diel variability was also recorded, with greater activity occurring nocturnally. This study demonstrates the
+importance of considering the spatiotemporal distribution of both sexes, horizontally and vertically, when designing effective
+conservation measures.
+
+Keywords: Acoustic telemetry; Angelshark; Conservation; Distribution; Spatial ecology
+
+
+
+Aylin Ulman
+Mersea Marine Consulting, The Shark Trust UK, Sea Around Us
+
+First records of critically endangered smoothback angel shark Squatina oculata Bonaparte 1840 and
+angelshark Squatina squatina (Linnaeus 1758) reproductive habitats in Türkiye, and over 50 new records
+demonstrating three Critical Angel Shark Areas (CASA’s)
+
+     1.   Aylin Ulman, Mersea Marine Consulting.
+     2.   Cat Gordon, The Shark Trust UK.
+     3.   Ali Hood, The Shark Trust UK.
+     4.   Daniel Pauly, Sea Around Us, University of British Columbia
+
+In 2023, three records of angelshark stress-induced births onboard fishing vessels in Türkiye were recorded. The first record
+was from Fethiye Bay in January 2023, in which three Squatina oculata pups were aborted on the vessel, with one external yolk
+sac still attached, with the pups deceased pups. The second account was of five Squatina squatina pups aborted onboard a
+fishing vessel from the Dardanelles, in which all pups survived, and the last account was also from Fethiye Bay in March, 2023,
+this time in which three pups survived. This last account provides the only recent account on Squatina oculata reproduction
+from the last two decades. The pups were approximately 19.5 cm, 21.5 cm and 23 cm total length, with an internal yolk sac
+which could be seen iridescently through the body, estimated at about 3-4 cm in width. These records also provide important
+details of reproductive habitats, spawning grounds and spawning seasons, which seems to ocur in spring in Turkey. The data
+presents a new much smaller minimum maturity size for S. oculata. Also, data were summarized from citizen science records
+for Turkish sharks and rays along with other records directly from fishers providing a total of 51 previously unpublished angel
+shark records for Turkey, and highlighting three potential Critical Angel Shark Areas (CASAs) in Turkey; Fethiye Bay,
+Çanakkale Strait and Antalya Bay. We stress the need for better protection of these areas, along with scientific monitoring of
+these sites to learn more about these species.
+
+Keywords: Squatinidae; reproduction; Critical Angel Shark Areas (CASA's); Eastern Mediterranean Sea; length at first maturity
+
+
+
+
+16
+Stephan Bruns
+Biology Department, College of Science, UAE University, Al Ain, United Arab Emirates
+
+Archival tagging reveals new insights in the horizontal and vertical movements of a critically endangered
+wedgefish
+
+          1.   Stephan, Bruns; Biology Department, College of Science, UAE University, Al Ain, United Arab Emirates
+          2.   Shamsa, Al Hameli ; Biology Department, College of Science, UAE University, Al Ain, United Arab Emirates
+          3.   Erik, Sulanke ; Thuenen Institute of Sea Fisheries, Research unit for economic analysis, Bremerhaven,
+               Germany
+          4.   Aaron, Henderson; Biology Department, College of Science, UAE University, Al Ain, United Arab Emirates
+
+The smoothnose wedgefish (Rhynchobatus laevis) is a critically endangered shark-like ray that has received limited research
+attention. To address knowledge gaps in its behaviour and movement patterns, this study utilized satellite tagging over a 51-
+day period in the Arabian Gulf.
+Based on the resulting movement track, the specimen covered a minimum distance of 712 km, traversing the exclusive
+economic zones of three different countries. Its track began in the United Arab Emirates, from where it headed north, entering
+Iranian waters where it spent the majority of its time, before continuing westward across the Arabian Gulf and eventually
+reaching Qatari waters.
+Novel insights in its behaviour recorded a pattern of rapid ascent over the study period. Even though these ascents these
+ascents were observed both diurnal and nocturnal, they occurred predominately in the latter.
+Contrary to the prevailing belief that wedgefish are bottom-associated, the study animal spent a considerable amount of its time
+in the water column. Its use of a variety of depths in both nearshore and offshore waters highlights a potential susceptibility to
+multiple fishing year types. This underscores the need for an international, cooperative approach to the management and
+conservation of shark-like rays in the Arabian Gulf.
+
+Keywords: Satellite tagging; Conservation Biology; Shark-like rays; Movement ecology;
+
+
+
+David Jimenez-Alvarado
+Universidad de Las Palmas de Gran Canaria; IU-ECOAQUA; Angel Shark Project
+
+Cazón Project: Research to determine the true status of dogfish sharks in the Canary Islands.
+
+     1.   David, Jimenez-Alvarado; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+     2.   Ana, Espino-Ruano; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran Canaria.
+     3.   Rosario Luque-Cabrera; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+     4.   Airam, Guerra-Marrero; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+     5.   Lorena, Couce-Montero; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+          Canaria.
+     6.   José J., Castro; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran Canaria.
+
+The Canary Islands, located in the Atlantic Ocean off the northwest coast of Africa, have quickly become an idyllic place for
+elasmobranch species that inhabit their waters, primarily due to the absence of industrial fishing and the use of harmful fishing
+methods such as trawling. In the Canary Islands, fishing activities consist mainly of small-scale artisanal fishing and
+recreational fishing, which is gaining popularity and attracting more enthusiasts each year. However, sharks and rays are
+generally not targeted species in these fishing activities. Only dogfish sharks and various species within this family are
+intentionally fished or captured as bycatch in the islands. This is primarily due to the use of their meat for human consumption
+as "tollos", a typical food of the archipelago made with the dehydrated meat of these sharks.
+Currently, our knowledge of these species is limited to data derived from artisanal fishermen and their captures, which, as often
+is the case in many parts of the world, are underestimated due to poor or non-existent proper identification of each species.
+Including biological data (species, sexes) and/or ecological data (preferred areas, depths, or seasons), severely limiting their
+proper assessment or manage. In this study, the current status of these species in the Canary Islands is evaluated, aiming to
+identify the situation of each species as accurately as possible.
+
+Keywords: Elasmobranch; Fisheries; Endangered species; Archipelago;
+
+
+
+
+17
+Eva Meyers
+Leibniz Institute for the Analysis of Biodiversity Change / Angel Shark Project
+
+Coordinated Action for the Conservation of Critically Endangered Angel Sharks
+
+     1.    Joanna Barker; Zoological Society of London
+     2.    David Jiménez Alvarado; Universidad de Las Palmas de Gran Canaria
+     3.    Hector Toledo; Angel Shark Project: Canary Islands
+     4.    Charlotte Pike; Zoological Society of London
+     5.    Michael Sealey; Angel Shark Project: Canary Islands
+     6.    Tomas Bañeras; Angel Shark Project: Canary Islands
+     7.    Kevin Feldheim; Field Museum - Pritzker Laboratory
+     8.    Lucy Mead; Institute of Zoology, Zoological Society of London
+     9.    David M.P. Jacoby; Lancaster University
+     10.   Sara A.A Al Mabruk; Marine Biology Libya
+     11.   Ioannis Giovos; iSea
+     12.   Roxani Naasan Aga Spyridopoulou, iSea
+     13.   Patrick Krstinic; WWF Adria
+     14.   Simone Niedermueller, WWF
+     15.   Caroline Bousquet; University of Corsica
+     16.   Eric Durieux, University of Corsica
+     17.   Johann Mourier, University of Montpellier
+     18.   Louise Overy; Irish Elasmobranch Group
+     19.   Jake Davies; Natural Resources Wales; Zoological Society of London
+     20.   Ben Wray; Natural Resources Wales
+     21.   Cat Gordon; Shark Trust
+     22.   Ali Hood; Shark Trust
+
+The Angel Shark Project was established with the aim of securing the future of Critically Endangered angel sharks (Squatina
+squatina, S. aculeata and S. oculata) across the range. Among other regions, the Canary Islands, Wales, Libya, Greece,
+Corsica, Croatia and Ireland were identified as important and unique areas for at least one of the three angel shark species.
+The data gathered in these regions has contributed to the implementation of targeted conservation measures across the
+Eastern Atlantic and Mediterranean Sea and to deliver priority policy outcomes across six countries. This two-way exchange of
+information between partners across the angel shark species’ ranges has been vital to better coordinate conservation action.
+This presentation will highlight some of the key milestones from the different regions, including enhancing legal protection in
+priority countries, co-developing regional action plans to minimise threats and promoting the sustainability of shark and ray
+fishing.
+
+Keywords: angelsharks; conservation; policy; squatina; ecology
+
+
+
+
+18
+Session 6: Threatened elasmobranchs in coastal waters (Part 2)
+
+Charlotte Pike
+Zoological Society of London
+
+Re-launch of the Angel Shark Conservation Network: A community working to better protect angel
+sharks
+
+     1.   Charlotte Pike; Zoological Society of London
+     2.   Joanna Barker; Zoological Society of London
+     3.   Eva Meyers; Leibniz Institute for the Analysis of Biodiversity Change
+     4.   David Jimenez Alvarado; University of Las Palmas Gran Canaria
+     5.   Cat Gordon; The Shark Trust
+     6.   Ali Hood; The Shark Trust
+     7.   Àlex Bartolí; Submon
+     8.   Nick Dulvy; IUCN Species Survival Commission Shark Specialist Group
+
+The Angel Shark Conservation Network (ASCN) was established by the authors in 2016, to empower action to restore and
+safeguard angel shark populations throughout their natural range. To date, focusing on the Eastern Atlantic and Mediterranean
+Sea, which encompasses the range of three Critically Endangered angel shark species: Squatina aculeata, S. oculata, and S.
+squatina.
+The ASCN aims to facilitate dialogue and information sharing on angel shark conservation efforts and provides a mechanism
+for developing strategic conservation planning documents at different geographic scales. A number of Action Plans have been
+developed via multidisciplinary workshops, sitting underneath the Eastern Atlantic and Mediterranean Angel Shark
+Conservation Strategy. These documents aim to identify the key actions needed to overcome major threats to angel sharks in
+each specific region to guide future research, management, policy, and conservation. Progress towards actions outlined in
+these documents will be discussed, highlighting how far we have come and what we have left to achieve.
+The ASCN actively encourages individuals and organisations to deliver actions outlined in the angel shark conservation
+planning documents, facilitating a collaborative approach, and working in partnership to support and deliver angel shark
+conservation. Various levels of ASCN membership exist, and recent work has been undertaken to better formalise this process.
+This presentation will outline the ASCN’s re-launch, with clearer guidance on how to get involved and hopes to expand the
+network to enable further action for angel sharks across their range.
+This work is funded by Shark Conservation Fund.
+
+Keywords: Network; Conservation; Collaboration; Angel sharks;
+
+
+
+Yaara Grossmark
+Faculty of Architecture and Town Planning, Technion – Israel Institute of Technology, Haifa, Israel; Sharks in
+Israel, Environmental Organization for the protection of sharks and rays, Israel
+
+Utilizing human-wildlife Interaction data: A game-changer for guitarfish conservation
+
+     1.   Yaara Grossmark, Faculty of Architecture and Town Planning, Technion – Israel Institute of Technology, Haifa,
+          Israel; Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel
+     2.   Adi Barash, Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel.
+     3.   Barak Azrieli-Zohar, Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel.
+     4.   Michelle E. Portman, Faculty of Architecture and Town Planning, Technion – Israel Institute of Technology, Haifa,
+          Israel
+
+Human-wildlife interactions are crucial in shaping our understanding of nature and can significantly impact efforts to conserve
+endangered species and their habitats. As human activities continue to expand in the marine environment, encounters between
+humans and marine wildlife are expected to rise. Addressing and incorporating these interactions into conservation plans can
+provide valuable insights and bolster conservation efforts.
+In this study, we utilized the Marxan software to analyze data from the MECO citizen science project, focusing on two guitarfish
+species, the blackchin guitarfish (Glaucostegus cemiculus) and the common guitarfish (Rhinobatos rhinobatos), along the
+Mediterranean coast of Israel. Our objective was to identify areas of high probability for human encounters with guitarfish
+species while considering the specific activities conducted during these interactions.
+Our findings revealed that human activities varied across different areas during guitarfish encounters. By incorporating human
+activities as conservation targets in the Marxan analysis, in addition to guitarfish distribution data, we observed no significant
+shifts in the location of areas marked for conservation. However, the total area of these conservation zones increased
+significantly. This approach demonstrates how incorporating data on human-wildlife interactions can enhance conservation
+modeling efforts.
+Moreover, our study highlights the significance of including a social dimension in conservation planning, offering a fresh
+perspective on the process. By integrating human-wildlife interaction data, conservation strategies can be better tailored to
+specific locations and activities, facilitating more effective protection for guitarfish species and their habitats.
+Keywords: Human-wildlife interactions; Guitarfish; Conservation planning; Citizen science; Marxan
+
+
+19
+Jaime Penadés-Suay
+Associació LAMNA; Fundación Oceanogràfic
+
+First campaign for the study of blackchin guitarfish (Glaucostegus cemiculus) in waters of Doñana
+National Park (Spain, North East Atlantic)
+
+     1.    Jaime, Penadés-Suay; Associació LAMNA, Fundación Oceanogràfic
+     2.    Ángel, Benítez; Associació LAMNA
+     3.    Ana, Pérez de Ayala; Espacio Natural de Doñana, Junta de Andalucía
+     4.    Pep, Amengual; Servicio de Investigación del Organismo Autónomo Parques Nacionales
+     5.    María Dolores, Cobo; Espacio Natural de Doñana, Junta de Andalucía
+     6.    Pablo, García-Salinas; Associació LAMNA, Fundación Oceanogràfic
+
+In June 2022, an initial expedition comprising members from the Fundación Oceanogràfic, Seville Aquarium, and LAMNA
+Association certified the presence of juvenile and adult 'guitarrón' or blackchin guitarfish (Glaucostegus cemiculus) within the
+protected waters of Doñana National Park in Huelva, Spain. These records confirmed previous non-published reports by
+researchers and data collected through the Mediterranean Elasmobranchs Citizen Observations (MECO) project. This could be
+the first indication of a stable population and a possible nursery area. Sampling was carried out on foot from Matalascañas to
+Guadalquivir river’s mouth (Sanlúcar de Barrameda) over a five-day period. A total of 14 specimens were observed, with
+estimations revealing 5 juveniles and 9 adults or subadults. Furthermore, suspicions about accidental catches by recreational
+and professional fishermen were also confirmed, through interviews with individuals on the beach who provided photos of these
+cases. More serious was the confirmation of the consumption of this protected species by the local population, a fact
+demonstrated through the interviews but also with the discovery of four severed heads on the beach itself, evidencing cases of
+poaching within Doñana’s marine protected area. The results of this expedition have provided hope for a larger study of the
+area, to be conducted during the years 2023-2026, allowing for the creation of a catch and release program and the obtention
+of DNA samples. Further collaborations on these efforts are welcomed.
+
+Keywords: Glaucostegidae; Glaucostegus cemiculus; Habitat; Poaching; Protected areas
+
+
+
+Sarah Davies
+Zoological Society of London / Natural Resources Wales
+
+Detecting the presence of elasmobranchs in Wales using environmental DNA
+
+     1.    Nick Dunn; Zoological Society of London / Natural England,
+     2.    Sophie Ward; Bangor University,
+     3.    Jake Davies; Zoological Society of London / Natural Resources Wales,
+     4.    Sarah Davies; Zoological Society of London / Natural Resources Wales,
+     5.    Peter Robins; Bangor University,
+     6.    Isabelle Apetroaie; Zoological Society of London,
+     7.    Jake Williams; Zoological Society of London,
+     8.    Ben Wray; Natural Resources Wales,
+     9.    Alice Chamberlain; Zoological Society of London,
+     10.   Charlotte Pike; Zoological Society of London,
+     11.   Kathryn Whittey; Zoological Society of London / Bangor University,
+     12.   Francesca Mason; Zoological Society of London / Cardiff University,
+     13.   David Curnick; Zoological Society of London,
+     14.   Joanna Barker; Zoological Society of London
+
+Environmental DNA (eDNA) methodologies allow us to assess biodiversity by taking samples from the environment (e.g water,
+sediment or air) and extracting DNA from the samples to identify the presence of species.
+We designed an eDNA survey to gather information on elasmobranch presence in the Carmarthen Bay and Estuaries (CBAE)
+Special Area of Conservation (SAC) in South Wales. Sampling sites were informed using hydrodynamic and tracer modelling
+based on residual patterns, led by Bangor University. Water samples were taken from 10 sites across CBAE SAC each month,
+for 12 months. These data were brought together with samples taken in 2020/2021 by Angel Shark Project: Wales, which
+covered 10 sites across 12 months in the Pen Llyn A’r Sarnau (PLAS) SAC in North Wales. Further samples were taken and
+analysed concurrently with BRUVS surveys in the PLAS SAC.
+A total of eleven elasmobranch species were detected across the two SACs, including all four Project SIARC focal species –
+angelshark, common stingray, spurdog and tope. This presentation will highlight the key findings from these surveys.
+Project SIARC is a collaboration between the Zoological Society of London, Natural Resources Wales and six partners and
+made possible thanks to the National Lottery Heritage Fund, Welsh Government’s Nature Networks Fund and On the EDGE
+Conservation.
+
+Keywords: eDNA; Wales; Elasmobranch
+
+
+
+
+20
+Valentina Crobe
+GenoDREAM, Department of Biological, Geological & Environmental Sciences (BiGeA), University of Bologna,
+Ravenna, Italy
+
+The cradle of diversity: Central Atlantic Ocean hides a mosaic of skate species (Rajiformes)
+
+     1.   Valentina Crobe; GenoDREAM, Department of Biological, Geological & Environmental Sciences (BiGeA), University
+          of Bologna, Ravenna, Italy
+     2.   Alice Ferrari; GenoDREAM, Department of Biological, Geological & Environmental Sciences (BiGeA), University of
+          Bologna, Ravenna, Italy
+     3.   Fausto Tinti; GenoDREAM, Department of Biological, Geological & Environmental Sciences (BiGeA), University of
+          Bologna, Ravenna, Italy
+     4.   Alessia Cariani; GenoDREAM, Department of Biological, Geological & Environmental Sciences (BiGeA), University of
+          Bologna, Ravenna, Italy
+
+Skates (Rajiformes) represent one of the most intriguing cases of high species richness coupled with extremely conservative
+morphological and ecological traits. Small differences are described within and between species and increasing cases of cryptic
+speciation have been recorded among sister and non-sister taxa. More interestingly, this condition has been frequently
+observed in Central Atlantic Ocean (CAO), along the coasts of Western Africa, between Angola and Senegal, where
+oceanographic heterogeneities such as current systems, may play a key role for ecological speciation in skates. The use of
+multiple mtDNA loci and its integration with nuDNA microsatellite has been successfully applied to estimate the genetic
+variation in skate species inhabiting the CAO. Phylogenetic reconstructions, phylogeographic patterns and genetic connectivity
+estimates were applied to test the hypothesis that restricted gene flow and genetic divergence within Raja species reflect
+known climate and bio-oceanographic discontinuities. The widely distributed Raja miraletus species complex counts five deeply
+distinct lineages three of which co-occur in CAO: the Angolan Raja cf. miraletus, the Senegalese and sympatric R. parva and
+Raja cf. miraletus. In addition, an ancient, hidden lineage nesting in the clade Raja straeleni/R. clavata/R. maderensis was
+identified in Angola. The complexity of oceanographic system acting in the CAO (i.e., the Benguela Current region and the
+intertropical Canary current inflowing from the northeast) may have influenced the diversification of the Angolan and
+Senegalese taxa, boosting the biodiversity of the area, in an unprecedented anthology of species-specific evolutionary
+histories.
+
+Keywords: cryptic species; hidden lineages; Raja; mtDNA; nuDNA
+
+
+
+Chris Taklis
+BiodiversityGR
+
+Common stingray's (Dasyatis pastinaca) first recorded and studied nursery area in Greece.
+
+Chris Taklis, BiodiversityGR
+
+Elasmobranchs, including the common stingray, are pivotal components of marine ecosystems, yet much remains to be
+understood about their habitat requirements and life history characteristics. The identification and investigation of nursery areas
+are critical for effective conservation and management, as these areas offer essential resources for the early life stages,
+contributing significantly to population sustainability.
+A nursery area of Common stingrays has been discovered in Liri Beach in 2018, on the eastern coast of central Greece. Adults
+and juveniles have been recorded at depths of 3 to 6 meters depth on a sandy soil bed.
+By employing field surveys, we have explored the presence and attributes of the common stingray's nursery area in the region.
+Our findings unveil a shallow, nearshore region that provides optimal environmental conditions for the growth and development
+of juvenile stingrays. These habitats afford protection against predation and facilitate access to abundant food resources,
+ensuring the successful survival and subsequent recruitment of young individuals into the adult population.
+Furthermore, we have examined the ecological interactions and connectivity between the identified nursery area in Central
+Greece and the surrounding habitats, underscoring the significance of considering broader ecological networks for effective
+conservation planning. By comprehending the spatial dynamics and connectivity patterns, we can devise strategies to
+safeguard and manage these critical areas, securing the long-term viability of the common stingray population.
+
+Keywords: Common stingray; Dasyatis pastinaca; Nursery area
+
+
+
+Tomas Bañeras Bosch
+Área de Toxicología, Universidad de La Laguna; Angel Shark Project
+
+Geographical distribution influences the accumulation of metals in the liver and muscle of Squatina
+squatina
+
+     1.   Tomàs, Bañeras-Bosch; Área de Toxicología, Universidad de La Laguna, Angel Shark Project
+     2.   Michael J., Sealey; Oceana
+
+
+21
+     3.    Eva, Meyers; Angel Shark Project
+     4.    Joanna, Barker; Zoological Society of London, Angel Shark Project
+     5.    Héctor, Toledo-Padilla; Angel Shark Project
+     6.    Ana, Espino-Ruano; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran Canaria.
+     7.    Airam, Guerra-Marrero; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+           Canaria.
+     8.    David, Jimenez-Alvarado; Biodiversity and Conservation group, IU-ECOAQUA, University of Las Palmas de Gran
+           Canaria; Angel Shark Project
+     9.    Dailos, González-Weller; Área de Toxicología, Universidad de La Laguna
+     10.   Soraya, Paz; Área de Toxicología, Universidad de La Laguna
+     11.   Arturo, Hardisson; Área de Toxicología, Universidad de La Laguna
+     12.   Carmen, Rubio; Área de Toxicología, Universidad de La Laguna
+     13.   María José, Caballero; Instituto Universitario de Sanidad Animal y Seguridad Alimentaria (IUSA), Universidad de las
+           palmas de de Gran Canaria.
+     1.    (Instituto Universitario de Sanidad Animal y Seguridad Alimentaria)
+     14.   Angel J., Gutiérrez; Área de Toxicología, Universidad de La Laguna
+
+The Canary Islands was identified as a unique stronghold for the Angel shark (Squatina squatina), a species considered
+Critically Endangered according to the IUCN Red List of Threatened Species. Angelsharks inhabit coastal and shallow areas,
+being exposed to the effects of anthropogenic pollution, such as the accumulation of heavy metals. In this study, we analysed
+the concentration of twenty-one metals and trace elements in liver and muscle samples from dead specimens, nine from the
+Canary Islands and five from the Celtic Seas region (Wales and Ireland), using optical emission spectroscopy (ICP-OES), cold
+vapor atomic absorption spectroscopy (CV-AAS), and inductively coupled plasma mass spectrometry (ICP-MS). The results did
+not show sex as an influential factor in the concentration of heavy metals in the Canarian population. However, the size and
+weight of individuals were negatively correlated with Hg, Mo, B, and Cr in muscle, and positively correlated with Co, Fe, V, Mn,
+and Cr in the liver. These differences were more pronounced in a prenatal individual. The results indicate that growth may play
+a crucial role in the bioaccumulation and biomagnification of metals in organs. In terms of geographical distribution, we
+observed significant differences between the individuals from the Canary Islands and the Celtic Seas regarding the
+concentration of Hg, Cd, and Cr, which were higher in the Canary Islands, and Zn and Mn, which were higher in the Celtic
+Seas, likely due to differences in pollution levels between the two areas.
+
+Keywords: Squatina squatina; Heavy metals; Bioaccumulation; Muscle; Liver
+
+
+
+
+22
+Session 7: Other anthropogenic pressures - contaminants, climate change and
+recreation (Part 1)
+
+Lorenzo Jacopo De Santis
+CNR IRBIM
+
+Evaluating the historical abundance trends of large sharks in the Pelagie Archipelago using Local
+Ecological Knowledge (LEK)
+
+     1.   Lorenzo Jacopo, De Santis; CNR-IRBIM
+     2.   Sara, Bonanomi; CNR-IRBIM
+     3.   Mauro, Sinopoli; SZN
+     4.   Alessandro, Lucchetti; CNR-IRBIM
+     5.   Massimiliano, Bottaro; SZN
+
+According to the International Union for the Conservation of Nature (IUCN), around 50% of shark and ray species are facing
+high risk of extinction in the Mediterranean Sea. To date, the knowledge of elasmobranchs is fragmented and focused for
+certain species and areas of the basin with poor population assessment, especially in remote sites. The Pelagie Archipleago
+(Pelagie islands), is considered one of the most important hot-spot for sharks in the Mediterranean Sea. This area hosts a wide
+range of species potentially threatened by historical fishing pressure and habitat loss, especially large-bodied sharks, whose
+spatiotemporal patterns of abundance and distribution are poorly known. Evaluating historical dynamics of cartilaginous fish in
+the Pelagie archipelago can be very challenging and it can be crucial to understand their current population status. In the
+present study, we used LEK (Local Ecological Knowledge) through the historical memory and experience of fishers to collect
+information about the elasmobranch species inhabiting the Pelagie islands, with a particular focus of large-bodied sharks.
+Based on fishers’ perception, we recorded a dramatic reduction of large pelagic sharks over 60 years, mainly hammerheads
+(Sphyrna spp.) and sandbar sharks (Carcharhinus plumbeus). We also reconstructed the historical abundance of several
+elasmobranchs inhabiting the area. Our results provide important insights that can be used as a baseline for conservation
+initiatives in a shark data-poor region such as the Pelagie Archipelago.
+
+Keywords: conservation; elasmobranchs; fishery; LEK; Pelagie Archipelago
+
+
+
+Pol Carrasco Puig
+Universitat de València, Paterna, Spain; CATSHARKS, Association for the Study and Conservation of
+Elasmobranchs and Its Ecosystems, Passeig Marítim de la Barceloneta, 37-49, E-08003 Barcelona, Spain
+
+Heavy metal concentrations in muscle tissue of chondrichthyans from the western Mediterranean Sea:
+the tip of the iceberg
+
+     1.   Pol, Carrasco-Puig; Universitat de València, Paterna, Spain; CATSHARKS, Association for the Study and
+          Conservation of Elasmobranchs and Its Ecosystems, Passeig Marítim de la Barceloneta, 37-49, E-08003 Barcelona,
+          Spain.
+     2.   Juan A., Raga; Unidad de Zoología Marina, Instituto Cavanilles de Biodiversidad y Biología Evolutiva, Universitat de
+          València, Paterna, Spain.
+     3.   David, Ruiz-García; Unidad de Zoología Marina, Instituto Cavanilles de Biodiversidad y Biología Evolutiva,
+          Universitat de València, Paterna, Spain.
+     4.   Alejandro, Molera-Arribas; Instituto de Investigación en Medio Ambiente y Ciencia Marina (IMEDMAR-UCV),
+          Universidad Católica de Valencia SVM, Calpe, Alicante, Spain;
+     5.   Ana M., Hernández-Martínez; Instituto de Investigación en Medio Ambiente y Ciencia Marina (IMEDMAR-UCV),
+          Universidad Católica de Valencia SVM, Calpe, Alicante, Spain.
+     6.   Ana I., Colmenero; Institut de Ciències del Mar, CSIC, Barcelona, Spain.
+     7.   Claudio, Barría; Unitat de Zoologia, Universitat Autonoma de Barcelona, Barcelona, Spain.
+
+The western Mediterranean Sea is a region with a high diversity of chondrichthyan species; however, this region is subjected to
+a high discharge of pollutants, such as heavy metals. Consequently, owing to their ecological role, these species are prone to
+heavy metal bioaccumulation. Therefore, an assessment of the concentrations of three heavy metals present in the muscle
+tissue of 17 chondrichthyan species in the western Mediterranean Sea was performed. A total of 116 individuals were used,
+mainly caught by trawling and small-scale fishing. Lead (Pb), cadmium (Cd), and copper (Cu) were quantified using Microwave-
+Assisted Extraction (MAE) and Graphite Furnace Atomic Absorption Spectrometry (GF-AAS). Significant differences were
+observed between some species and taxonomic groups for Pb, Cd, and Cu. Among all the analysed species, the rabbit fish
+(Chimaera monstrosa) presented the highest concentration (mg/kg wet weight) of Pb (0.2924 ± 0.1689), of which some
+individuals exceeded the concentration threshold for Pb established by the Commission Regulation (EU) 2023/915. However,
+the velvet belly lanternshark (Etmopterus spinax) had the highest concentrations (mg/kg wet weight) of Cd (0.0622 ± 0.0244)
+and Cu (0.8179 ± 0.4167), exceeding the maximum concentration of Cd allowed by the (EU) 2023/915. A negative correlation
+between the concentration of Pb and trophic level was found, owing to the high concentrations found in low-trophic level
+
+
+
+
+23
+species, such as C. monstrosa and E. spinax. Overall, the results obtained are important for human consumption. This is
+because these species are consumed and of great commercial interest in this region.
+
+Keywords: Chondrichthyans; Heavy metals; Marine pollution; western Mediterranean Sea; Human consumption
+
+
+
+Alejandro J. Molera Arribas
+IMEDMAR-UCV; Escuela de doctorado Universida Católica de Valencia San Vicente Martir
+
+Heavy metal monitoring via the small-spotted catshark (Scyliorhinus canicula; Linnaeus, 1758):
+Biomonitor potential assesment & multiple-scenario implementation
+
+     1.   Alejandro J. Molera Arribas; Escuela de doctorado Universidad Católica de Valencia San Vicente martir/Instituto de
+          Investigación en Medio Ambiente y Ciencia Marina (IMEDMAR-UCV), Universidad Católica de Valencia San Vicente
+          Martir, Calpe, Alicante, Spain
+     2.   Ana Mª Hernández Martínez; Instituto de Investigación en Medio Ambiente y Ciencia Marina (IMEDMAR-UCV),
+          Universidad Católica de Valencia San Vicente Martir, Calpe, Alicante, Spain
+     3.   Jose Rafael García March; Instituto de Investigación en Medio Ambiente y Ciencia Marina (IMEDMAR-UCV),
+          Universidad Católica de Valencia San Vicente Martir, Calpe, Alicante, Spain
+     4.   Jose Tena Medialde; a1Instituto de Investigación en Medio Ambiente y Ciencia Marina (IMEDMAR-UCV),
+          Universidad Católica de Valencia San Vicente Martir, Calpe, Alicante, Spain
+
+The small-spotted catshark Scyliorhinus canicula, is a demersal Scyliorhinid shark species commonly found in Mediterranean
+and Northeastern Atlantic waters. The philopatric and sedentary nature of adult female individuals, along with its high
+abundance among bottom trawl bycatch; stock exploitation resilience and widespread distribution could support the xenobiotic
+biomonitoring potential of this species. Previous research on the subject concluded the specie´s muscle tissue is capable of
+reflecting space-time persistent Pb, Cd and Cu hotspots.
+To further explore such potential, interspecific monitoring has been attempted between Merluccius merluccius and S. canicula
+for which a total of 49 individuals of each species were gathered and data correlation was performed among individuals
+captured in the same haul. The Cd and Pb biomonitor potential of S. canicula egg capsules was also assessed. A total of 75
+embryos were exposed via solution to different concentration ranges of these xenobiotics (Cd = 0.05-17.12 and Pb = 3-102.78
+mg·Kg-1) for a 2.5 month period. All samples were analysed via GFAAS and matrices were digested via MAE techniques.
+High significant interspecific correlation values were observed in Cd and Pb concentrations between both species (Spearman r
+= 0.817 and 0.833 respectively) as well as moderate positive correlation for Cu (Spearman r = 0.633). Regarding Pb and Cd
+accumulation by egg capsules, high linearity was observed between dissolved concentrations of the elements and those found
+within the egg capsule (r2 = 0.98 and 0.96 respectively) with signifficant differences between trials occurring at higher Cd and
+Pb exposure concentrations.
+
+Keywords: GFAAS; MAE; Biomonitor; Heavy metal; Scyliorhinus canicula
+
+
+
+Jessica Savage
+Royal Holloway University of London; Institution 2: Institute of Zoology; Institution 3: Zoological Society of London
+
+Microplastics in reef manta ray feeding grounds
+
+     1.   Jessica Savage; Royal Holloway University of London.
+     2.   Heather Koldewey; Zoological Society of London.
+     3.   Tom B. Letessier; Institute of Zoology.
+     4.   Marcus Rowcliffe; Institute of Zoology.
+     5.   David Morritt; Royal Holloway University of London.
+
+Microplastics (plastic particles sized under 5mm) are ubiquitous in the marine environment. They are known to have negative
+effects on marine organisms when ingested, including accumulation in digestive systems, causing starvation, and leaching of
+toxic chemicals, impacting development and reproduction. The habitat of reef manta rays (Mobula alfredi), a filter-feeding
+elasmobranch, overlaps with plastic pollution hotspots globally. This makes them at risk of ingesting the particles, with potential
+negative consequences on their fitness. The species is already listed as Vulnerable on the IUCN Red list, due to other
+anthropogenic pressures, such as fishing. It is therefore important to understand the risk of plastic pollution on this charismatic
+megafaunal species. This study is investigating the presence of microplastics in reef manta ray feeding grounds in the Chagos
+Archipelago. This is a no-take Marine Protected Area, home to a resident population of reef manta rays. However remote, the
+beaches of the Archipelago are covered in plastic debris which originates from elsewhere. This suggests there will be plenty of
+microplastics in the Archipelago waters. Quantifying the amount of microplastic in the water will build a better picture of how it
+could impact the local population of reef manta rays. It will also hopefully input into wider conversations about plastic reduction
+on remote islands.
+
+Keywords: Microplastics; filter-feeder; manta ray; pollution;
+
+
+
+
+24
+Session 8: Other anthropogenic pressures - contaminants, climate change and
+recreation (Part 2)
+
+Nicholas Payne
+Trinity College Dublin
+
+Metabolism, biogeography, and range shifts in sharks & rays
+
+     1.   Nicholas, Payne; Trinity College Dublin
+     2.   Yuuki, Watanabe; Graduate University for Advanced Studies, SOKENDAI
+
+Environmental temperature affects physiological functions, representing a barrier for the range expansions of ectothermic
+species. To understand the link between thermal physiology and biogeography, a key question is whether among-species
+thermal sensitivity of metabolic rates is mechanistically constrained or buffered through physiological remodeling over
+evolutionary time. The former conception, the Universal Temperature Dependence hypothesis, predicts similar among- and
+within-species thermal sensitivity. The latter conception, the Metabolic Cold Adaptation hypothesis, predicts lower among-
+species thermal sensitivity than within-species sensitivity. Previous studies that tested these hypotheses for fishes
+overwhelmingly investigated teleosts with elasmobranchs understudied. Here, we show that among-species thermal sensitivity
+of resting metabolic rates is lower than within-species sensitivity in teleosts but not in elasmobranchs. Further, species richness
+declines with latitude more rapidly in elasmobranchs than in teleosts. Metabolic Cold Adaptation exhibited by teleosts might
+underpin their high diversity at high latitudes, whereas the inflexible thermal sensitivity approximated by Universal Temperature
+Dependence of elasmobranchs might explain their low diversity at high latitudes. These findings are discussed in the context of
+range expansions of sharks and rays, including recent examples from Ireland and the UK.
+
+Keywords: Range shifts; Metabolism; Thermal sensitivity
+
+
+
+Catarina Pereira Santos
+MARE – Marine and Environmental Sciences Centre/ARNET – Aquatic Research Network, Laboratório Marítimo
+da Guia, Faculdade de Ciências, Universidade de Lisboa, Cascais, Portugal; Environmental Economics
+Knowledge Center, Nova School of Business and Economi
+
+Shifts in the habitat suitability for large hammerhead sharks under climate change
+
+     1.   Catarina, Pereira Santos; MARE/ARNET; NovaSBE; Sphyrna Association;
+     2.   Francisco, Borges; MARE/ARNET.
+     3.   Miguel, Guerreiro; MARE/ARNET.
+     4.   Jaquelino, Varela; MARE/ARNET; Sphyrna Association.
+     5.   Vasco, Pissarra; MARE/ARNET; Sphyrna Association.
+     6.   Catarina, Frazão-Santos; MARE/ARNET; FCUL DBA; NovaSBE; Sphyrna Association.
+     7.   Rui, Rosa; MARE/ARNET; FCUL DBA; Sphyrna Association.
+
+One of the chief consequences of climate change is the worldwide redistribution of species in the pursue of physiologically and
+ecologically favourable conditions. As part of one of the most threatened groups of vertebrates, assessing how climate change
+may affect the distribution patterns of key shark species is essential for their long-term conservation and management. The
+present study aims to assess how climate change projections (based on the representative concentration pathways 2.6, 4.5,
+6.0, and 8.5) for the middle and end of the century may affect the global patterns of habitat suitability (HS) for large
+hammerhead sharks – a unique and particularly threatened groups of elasmobranchs. Poleward shifts are projected for all
+three species, with considerable tropical declines for both S. lewini and S. zygaena. Additionally, regional shifts in suitability
+have the potential to affect population connectivity, the access to key habitats, and levels of exposure to other anthropogenic
+pressures, along with the effectiveness of conservation and management efforts. Our results showcase the importance of
+climate change for species’ extinction risk assessment and the urgency of its consideration for the design and implementation
+of conservation measures tailored to the oceans of tomorrow.
+
+Keywords: Ecological niche models; habitat suitability; hammerhead sharks; Climate change
+
+
+
+
+25
+Noémie Coulon
+Laboratoire de Biologie des Organismes et Ecosystèmes Aquatiques (BOREA) MNHN, CNRS, IRD, SU, UCN,
+UA, 38 Rue du Port Blanc , Dinard, France
+
+Northeast Atlantic elasmobranch community on the move: functional reorganisation in response to
+climate change.
+
+     1.   Noémie, Coulon, Laboratoire de Biologie des Organismes et Ecosystèmes Aquatiques (BOREA) MNHN, CNRS, IRD,
+          SU, UCN, UA, 38 Rue du Port Blanc , Dinard, France
+     2.   Sophie, Elliott, Game & Wildlife Conservation Trust, Salmon & Trout Research Centre, East Stoke, Wareham BH20
+          6BB, UK
+     3.   Nils, Teichert, Laboratoire de Biologie des Organismes et Ecosystèmes Aquatiques (BOREA) MNHN, CNRS, IRD,
+          SU, UCN, UA, 38 Rue du Port Blanc , Dinard, France
+     4.   Arnaud, Auber, IFREMER, Unité Halieutique Manche Mer du Nord, Laboratoire Ressources Halieutiques, 150 quai
+          Gambetta, BP699, 62321 Boulogne-sur-Mer, France
+     5.   Matthew, McLean, University of North Carolina Wilmington, 601 College Rd, Wilmington, NC 28403, USA
+     1.   6.Thomas, Barreau, Service des stations Marine, Station marine de Dinard, 38 Rue du Port Blanc, Dinard, France
+     6.   Eric, Feunteun, Laboratoire de Biologie des Organismes et Ecosystèmes Aquatiques (BOREA) MNHN, CNRS, IRD,
+          SU, UCN, UA, 38 Rue du Port Blanc , Dinard, France
+     7.   Alexandre, Carpentier, Laboratoire de Biologie des Organismes et Ecosystèmes Aquatiques (BOREA) MNHN,
+          CNRS, IRD, SU, UCN, UA, Université de Rennes, Rennes, France
+
+While spatial distribution shifts have been documented in many marine fishes under global change, the responses of
+elasmobranchs have rarely been studied, despite their irreplaceable role in the ecosystems and their high extinction risk, which
+may have led to an underestimation of their potential additional threats. We used a 24-year-long time series (1997-2020) of
+scientific bottom trawl surveys to examine the effects of climate change on the spatial distribution of nine elasmobranch species
+within Northeast Atlantic waters. We found that suitable habitats for four species increased on average by a factor of 1.6 and,
+for six species, shifted northwestwards and/or in depth over the past two decades. By integrating species traits, we showed
+changes in habitat suitability led to changes in the elasmobranchs trait-composition. Moreover, communities deepened and
+their mean trophic level decreased. We also note an increase in the mean community size at maturity correlated in a less
+pronounced way to a decrease in fecundity. Because skates and sharks are functionally unique and dangerously vulnerable to
+both climate change and fishing, we advocate for urgent considerations of species traits in management measures because of
+their utility to better identify species whose loss could have irreversible impacts in face of the myriad of upcoming threats,
+especially for unmonitored species. In this way, we would gain efficiency in implementing biodiversity conservation.
+
+Keywords: climate change; community; elasmobranch; species traits; shift
+
+
+
+Jaquelino Lopes Varela
+MARE – Marine and Environmental Sciences Centre / ARNET – Aquatic Research Network, Laboratório
+Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, Portugal, Cascais, Portugal; Sphyrna
+Association, Sal Rei 5110, Boa Vista Island, Cabo Verde.
+
+Resilience of juvenile sharks to disease under moderate marine heat wave conditions
+
+     1.   Jaquelino, Varela; MARE – Marine and Environmental Sciences Centre / ARNET – Aquatic Research Network,
+          Laboratório Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, Portugal, Cascais, Portugal; Sphyrna
+          Association, Sal Rei 5110, Boa Vista Island, Cabo Verde.
+     2.   Sandra, Martins; MARE – Marine and Environmental Sciences Centre / ARNET – Aquatic Research Network,
+          Laboratório Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, Portugal, Cascais, Portugal;
+          Comparative Molecular and Integrative Biology, Centro de Ciências do Mar, Universidade do Algarve, 8005-139
+          Faro, Portugal.
+     3.   Melanie, Court; MARE—Marine and Environmetal Sciences Centre/ARNET—Aquatic Research Network, Laboratório
+          Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, 2750-374 Cascais, Portugal.
+     4.   Catarina, Santos; MARE—Marine and Environmetal Sciences Centre/ARNET—Aquatic Research Network,
+          Laboratório Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, 2750-374 Cascais, Portugal;
+          Sphyrna Association, Sal Rei 5110, Boa Vista Island, Cabo Verde; Environmental Economics Knowledge Center,
+          Nova School of Business and Economics, New University of Lisbon, 2775-405 Carcavelos, Portugal.
+     5.   José, Paula; MARE—Marine and Environmetal Sciences Centre/ARNET—Aquatic Research Network, Laboratório
+          Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, 2750-374 Cascais, Portugal; Departamento de
+          Biologia Animal, Faculdade de Ciências, Universidade de Lisboa,2750-374 Cascais, Portugal.
+     6.   Inês, Ferreira; UCIBIO—Applied Molecular Biosciences Unit, Department of Chemistry, School of Science and
+          Technology, NOVA University Lisbon, 2819-516 Caparica, Portugal; Associate Laboratory i4HB, Institute for Health
+          and Bioeconomy, School of Science and Technology, NOVA University Lisbon, 2819-516 Caparica, Portugal;
+     1.   LAQV—Associated Laboratory for Green Chemistry—REQUIMTE, Department of Chemistry, School of Science and
+          Technology, NOVA University Lisbon, 2829-516 Caparica, Portugal;
+     7.   Mário, Diniz; UCIBIO—Applied Molecular Biosciences Unit, Department of Chemistry, School of Science and
+          Technology, NOVA University Lisbon, 2819-516 Caparica, Portugal;
+
+26
+     2.   Associate Laboratory i4HB, Institute for Health and Bioeconomy, School of Science and Technology, NOVA
+          University Lisbon, 2819-516 Caparica, Portugal.
+     8.   Tiago, Repolho; MARE—Marine and Environmetal Sciences Centre/ARNET—Aquatic Research Network,
+          Laboratório Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, 2750-374 Cascais, Portugal;
+          Departamento de Biologia Animal, Faculdade de Ciências, Universidade de Lisboa, 2750-374 Cascais, Portugal.
+     9.   Rui, Rosa; MARE—Marine and Environmetal Sciences Centre/ARNET—Aquatic Research Network, Laboratório
+          Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, 2750-374 Cascais, Portugal; Sphyrna
+          Association, Sal Rei 5110, Boa Vista Island, Cape Verde; Departamento de Biologia Animal, Faculdade de Ciências,
+          Universidade de Lisboa, 2750-374 Cascais, Portugal.
+
+Climate change is affecting the oceans in different ways. Marine heat waves, for example, are becoming more frequent, more
+prolonged, and more intense, endangering marine life. Assessing the impact of these extreme events on disease outbreak and
+dynamics in sharks is poorly understood. Here, we investigated the effects of a simulated (moderate) marine heat wave (MHW;
+Δ2°C; 9 days) on the physiological (ventilation rates) and biochemical (several oxidative-stress biomarkers on gills, muscle,
+brain, and liver tissues) condition of juvenile small-spotted catshark (Scyliorhinus canicula) infected with ectoparasite
+Amyloodinium ocellatum. No mortality differences were observed, but a significant increase in ventilation rates were observed
+under the MHW treatment. Significant changes in enzymatic antioxidant activities were observed among tissues, but only
+superoxide dismutase activity was affected under MHW conditions. Protein repair and removal mechanisms (heat shock protein
+and total ubiquitin), and oxidative damage on lipids (malondialdehyde) and DNA (8-hydroxy-2′- deoxyguanosine) also did not
+significantly change between treatments. Our result is consistent with other studies that have shown that sharks display some
+level of resilience to the effects of climate change-related stressors. However, another category of marine heat wave (IV or V
+for example) could produce other physiological effects.
+
+Keywords: Climate change; Elasmobranch; Parasite; Oxidative stress;
+
+
+
+Gemma Scotts
+Institute of Marine Sciences, University of Portsmouth, Ferry Road, Southsea, Portsmouth, UK; Marine Research
+and Conservation Foundation, Lydeard St Lawrence, Somerset, UK.
+
+A social science story: what motivates recreational shark angling in the UK?
+
+     1.   Gemma, Scotts; Institute of Marine Sciences, University of Portsmouth, Ferry Road, Southsea, Portsmouth, UK;
+          Marine Research and Conservation Foundation, Lydeard St Lawrence, Somerset, UK.
+     2.   Michael, Scales; Institute of Marine Sciences, University of Portsmouth, Ferry Road, Southsea, Portsmouth, UK.
+     3.   Gonzalo, Araujo; Marine Research and Conservation Foundation, Lydeard St Lawrence, Somerset, UK;
+          Environmental Science Program, Department of Biological and Environmental Sciences, College of Arts and
+          Sciences, Qatar University, Doha, Qatar.
+     4.   Hollie, Booth; Interdisciplinary Centre for Conservation Science, Department of Biology, University of Oxford, Oxford,
+          UK; The Biodiversity Consultancy, King’s Parade, Cambridge, UK.
+     5.   Sarah, Marley; Institute of Marine Sciences, University of Portsmouth, Ferry Road, Southsea, Portsmouth, UK;
+          Scotland’s Rural College, Craibstone Estate, Ferguson Building, Aberdeen, UK.
+
+The role of recreational angling as both a threat to shark stocks and an opportunity to support shark conservation tends to be
+overlooked. Sharks have been described as the aquatic ‘big game’ equivalent, displayed as ‘trophies’ and caught for the ‘thrill
+of the fight’. Historical fears of sharks have led to an increase in shark fishing tournaments, increasing the rate of decline of
+shark populations threatened with extinction. However, modern-day social science studies in the United States and Australia
+have contradicted these fears, with a growing desire amongst anglers to become advocates for shark conservation. Here, we
+examine anglers’ motivations behind shark fishing in the United Kingdom (UK) a popular but understudied location for
+recreational shark fishing. Angler demographics, perceptions towards sharks and perceptions of shark population trends were
+also explored. A total of seven shark fishing operators and 44 recreational anglers responded to our structured surveys
+throughout Aug-Nov 2021. Respondents primarily comprised of over-fifty, educated and wealthy male anglers. Anglers were
+motivated by the ‘appreciation for sharks and nature’ (n=43) and the ‘thrill/challenge’ (n=38). Obtaining a photo (status) was the
+least popular reason for taking part in shark fishing, further contradicting historical studies. Recreational shark fishing in the UK
+is strictly catch and release, with anglers demonstrating best practice techniques to minimise stress to caught sharks. We also
+identify a population of anglers who are knowledgeable about local shark species and recognise their role in contributing to
+shark conservation but identify a lack of higher-level management to legislate change.
+
+Keywords: Recreational fisheries; Social science; Fisheries management; Blue sharks; Conservation
+
+
+
+
+27
+Luke Cameron
+Trinity College Dublin
+
+A review of elasmobranch catch-and-release science: synthesis of current knowledge, implications for
+best practice and future research directions
+
+     1.   Cameron, Luke W J; Trinity College Dublin.
+     2.   Roche, William K; Inland Fisheries Ireland.
+     3.   Beckett, Katy; Trinity College Dublin.
+     4.   Payne, Nicholas L; Trinity College Dublin.
+
+Until relatively recently commercial fisheries have been considered the main driving factor for elasmobranch population
+declines. However, this belief has begun to shift with the realisation that recreational elasmobranch catches may equal or
+exceed commercial catches in some regions. Many recreational angling fisheries for elasmobranchs involve high participation
+in catch-and-release angling practices. However, high release rates may not necessarily equate to high survival rates.
+Therefore, to assist accurate assessment of the potential impact of recreational angling on elasmobranchs, we attempted to
+summarise and integrate currently available information on specific risk factors associated with recreational angling, alongside
+associated mortality rates, as well as information on angler behaviour as it relates to identified risk factors. We categorised the
+major angling-related effects into two groups: injury-induced effects; and biochemical disruption-induced effects; providing a
+summary of each group and outlining the main lethal and sub-lethal outcomes stemming from these. These outcomes include
+post-release mortality, behavioural recovery periods (which may in-turn confer increased predation risks), chronic health
+impacts, and capture-induced parturition and abortion. Additionally, we detailed a range of angling practices and equipment,
+including hook-type, hook removal and emersion, as well as inter- and intra-specific factors, including aerobic scope,
+respiratory mode, body size and species-specific behaviours, which may influence injury and/or mortality rates and should
+therefore be considered when assessing angling-related impacts. We then utilised these data to provide a range of actionable
+recommendations for both anglers and policymakers which would serve to reduce the population-level impact of recreational
+angling on these enigmatic animals.
+
+Keywords: Recreational angling; Rod and line; Lamniformes; Carcharhiniformes; Rajiformes
+
+
+
+
+28
+Friday 20th October 2023
+
+
+Theme topic: Elasmobranch stranding events: what can we learn?
+
+Pablo García-Salinas
+Fundación Oceanogràfic de la Comunitat Valenciana; Associació LAMNA; Grupo de Acuicultura y Biodiversidad,
+Instituto de Ciencia y Tecnología Animal, Universitat Politècnica de València.
+
+Use of CT scan reveals necropsy-overlooked swordfish (Xiphias gladius) impalement injuries in stranded
+blue sharks (Prionace glauca)
+     1.   Pablo, García-Salinas; Fundación Oceanogràfic de la Comunitat Valenciana; Associació LAMNA; Grupo de
+          Acuicultura y Biodiversidad, Instituto de Ciencia y Tecnología Animal, Universitat Politècnica de València.
+     2.   Jaime, Penadés-Suay; Associació LAMNA; Fundación Oceanogràfic de la Comunitat Valenciana; ; Unidad de
+          Zoología Marina ICBiBE, Universitat de València.
+     3.   Javier, Aznar; ICBiBE, Unidad de Zoología Marina ICBiBE, Universitat de València.
+     4.   Aitor, Campos-Sosa; Fundación Oceanogràfic de la Comunitat Valenciana; Associació LAMNA; Facultad de
+          Veterinaria, Universidad CEU Cardenal Herrera.
+     5.   Jose Luis, Crespo-Picazo; Fundación Oceanogràfic de la Comunitat Valenciana.
+     6.   Marta, Muñoz-Baquero; Instituto de Ciencias Biomédicas, Facultad de Veterinaria, Universidad CEU Cardenal
+          Herrera; Fundación Oceanogràfic de la Comunitat Valenciana.
+     7.   Carlos, Rojo-Solís; Veterinary Services, Oceanogràfic, Ciudad de las Artes y las Ciencias; Pharmacology &
+          Toxicology Department, Veterinary Faculty, Complutense University of Madrid.
+     8.   Daniel, García-Párraga; Veterinary Services, Oceanogràfic, Ciudad de las Artes y las Ciencias.
+
+Recently, analysis of eighteen strandings in eastern Spain has identified fourteen lethal interactions between blue sharks and
+swordfish. In these cases, the sharks were impaled in the cephalic region by swordfish rostra. While some signs of interaction
+were easily identifiable, others proved elusive despite thorough physical examinations and dissection on necropsy.
+Computed Tomography (CT) has emerged as a valuable diagnostic tool for identifying and characterizing these distinctive
+injuries, even revealing healed wounds from previous impalements. The detailed imagery obtained enables the evaluation of
+tissue damage and wound trajectory, offering a unique insight into each interaction. We show the efficiency of this technique by
+using a Somatom Volume Access (Siemens) scanner located at the Oceanogràfic veterinary hospital. Parameters for body
+exploration included a 5 mm slice thickness and interval, with a retro-recon acquisition of 0.5 mm utilizing lung and mediastinal
+algorithms.
+Rostra fragments were discovered embedded in soft tissues or cranial cartilage in twelve sharks, four of which have multiple
+rostra from past impalements. Two other animals exhibited signs of impalement without fragments. Analysis of the cases
+always shows adult sharks impaled by juvenile swordfish. The high prevalence (77.8%) and similarity of the interactions
+diminish the likelihood of chance accidents, suggesting intentional ofensive or defensive behaviour by the swordfish.
+These data suggest that agonistic interactions between swordfish and blue sharks may be more common than previously
+thought Due to challenges in lesion detection, impalement may have been overlooked in the past, highlighting the importance
+of employing CT scans whenever possible.
+
+Keywords: Behaviour; Interspecific relations; Agonistic interactions; Causes of Stranding, Diagnostic Tools
+
+
+
+
+Aitor Campos
+Fundación Oceanogràfic de la Comunitat Valenciana; Associació LAMNA; Facultad de Veterinaria, Universidad
+CEU Cardenal Herrera.
+
+What do the lesions found in stranded blue sharks (Prionace glauca) reveal about their interactions with
+swordfish (Xiphias gladius)
+
+     1.   Aitor, Campos-Sosa; Fundación Oceanogràfic de la Comunitat Valenciana; Associació LAMNA; Facultad de
+          Veterinaria, Universidad CEU Cardenal Herrera.
+     2.   Jose Luis, Crespo-Picazo; Fundación Oceanogràfic de la Comunitat Valenciana.
+     3.   Marta, Muñoz-Baquero; Instituto de Ciencias Biomédicas, Facultad de Veterinaria, Universidad CEU Cardenal
+          Herrera; Fundación Oceanogràfic de la Comunitat Valenciana.
+     4.   Emma, Pla-Gonzalez; Fundación Oceanogràfic de la Comunitat Valenciana.
+     5.   Saubidet, Mariana; Fundación Oceanogràfic de la Comunitat Valenciana.
+     6.   Pablo, García-Salinas; Fundación Oceanogràfic de la Comunitat Valenciana; Associació LAMNA; Grupo de
+          Acuicultura y Biodiversidad, Instituto de Ciencia y Tecnología Animal, Universitat Politècnica de València.
+     7.   Jaime, Penadés-Suay; Associació LAMNA; Fundación Oceanogràfic de la Comunitat Valenciana; ; Unidad de
+          Zoología Marina ICBiBE, Universitat de València.
+     8.   Daniel, García-Párraga; Veterinary Services, Oceanogràfic, Ciudad de las Artes y las Ciencias.
+     9.   Ortega-Porcel, Joaquín; Grupo de Patología y Sanidad Animal, Dpto. PASAPTA, Facultad de Veterinaria,
+          Universidad CEU Cardenal Herrera-CEU Universities.
+
+
+29
+Fatal interactions between blue sharks (Prionace glauca) and swordfishes (Xiphias gladius) have been described in the
+western Mediterranean Sea as a cause of stranding and death of the former in the last years. This study describes, both
+macroscopic and microscopically, the lesions found in eight blue sharks, stranded in Spanish coasts, presenting evidence of
+impalement from swordfish´s rostrum.
+All the analysed animals presented the fatal injuries in the head, mainly grouped around the eyes in the frontal plane. Injures
+were characterized by multiple haemorrhages, predominant heterophilic cell infiltrates, and the presence of fibrin in the fatal
+injury, which are typical signs of an acute lesion. The most affected tissue was the brain, which showed meningeal and brain
+haemorrhage, accompanied by encephalitis and encephalomalacia. Additionally, we observed lesions in some eyes that were
+stabbed, displaying acute panophthalmitis. Furthermore, chronic signs such as the presence of fibroblasts and mononuclear
+infiltrates in the wounds, as well as rostrums from past interactions completely surrounded by fibrotic connective tissue, were
+clear indications of past interactions that had healed. These findings suggest that sharks have the potential to survive these
+types of interactions.
+The animals showing signs of chronicity exhibited other lesions repeatedly, such as hepatic emaciation, necrotic haemorrhagic
+ulcers with mononuclear infiltrates in the spiral valve, and enlargement of the renal glomerulus. The complete necropsy and
+study of the tissues of the stranded sharks proved to be a useful tool to better understand the nature and the consequences of
+the interaction between these two species.
+
+Keywords: Agonistic interactions; Stranding causes; Veterinary; Pathology; Necropsy procedures
+
+
+
+
+Session 9: Citizen science II: Citizen scientists collecting novel samples or data
+
+Alice Chamberlain
+Zoological Society of London
+
+Below the surface of the Welsh coast using BRUVS
+
+     1.    Jake Davies; Zoological Society of London / Natural Resources Wales
+     2.    Tom Letessier; Zoological Society of London
+     3.    Joanna Barker; Zoological Society of London
+     4.    Ben Wray; Natural Resources Wales
+     5.    Jessica Meeuwig; University of Western Australia / Blue Abacus
+     6.    Jason Meeuwig; Blue Abacus
+     7.    Kate Moses; Zoological Society of London
+     8.    Alice Chamberlain; Zoological Society of London
+     9.    Sarah Davies; Zoological Society of London / Natural Resources Wales
+     10.   Charlotte Pike; Zoological Society of London
+
+Baited Remote Underwater Video Systems (BRUVS) are widely used as a non-destructive electronic tool to investigate the
+abundance and diversity of fish in marine and freshwater environments.
+Project SIARC is working with local fishers and their charter vessels to deploy BRUVS off the coast of North Wales to obtain
+footage that improves our understanding of species, including elasmobranchs present in North Wales and their habitat
+utilisation. So far, from 90 BRUV deployments, 41 different fish species have been recorded, including five elasmobranchs.
+This presentation will highlight the key findings from the first year of BRUVS deployment.
+In parallel, the footage obtained from the BRUVS allows us to make life under the Welsh waters visible to citizen scientists
+globally. Video footage captured is shared via Instant Wild (an online tool that allows the general public to identify wildlife
+species from remote camera footage across the world) , allowing individuals to identify species, contributing to data collection
+and increasing awareness of the elasmobranchs present in Welsh waters whilst enhancing inclusivity and access of the natural
+environment.
+Project SIARC is a collaboration between the Zoological Society of London, Natural Resources Wales and six partners and
+made possible thanks to the National Lottery Heritage Fund, Welsh Government’s Nature Networks Fund and On the EDGE
+Conservation.
+
+Keywords: BRUVS; Fishers; Citizen Science; Technology; Wales
+
+
+
+
+30
+Jenny Hickman
+Mareco
+
+Tourism-led monitoring of a migratory oceanic shark in the UK
+
+     1.   Jenny Hickman; Mareco.
+     2.   Gemma Scotts; Mareco.
+     3.   Mark Johns; Blue Shark Snorkel
+     4.   Emma Nicol; Mareco
+     5.   Samuel Matthews; Mareco
+     6.   Richard Rees; Celtic Deep
+     7.   Victoria Walker; Blue Shark Snorkel
+     8.   Emma William; Celtic Deep
+     9.   Gonzalo Araujo; Mareco
+
+Monitoring pelagic highly migratory species is challenging, particularly in regions where weather conditions can be
+unpredictable and adverse. The blue shark Prionace glauca is no exception, and recent estimates of ~10M individuals fished
+annually, understanding their distribution and habitat preference is important for area-based management. Blue shark swim-
+with tourism is increasing across various countries, including the UK, providing both a need to understand the nature of these
+interactions, and an opportunity to gather novel data on this highly migratory species. UK tour operators reported blue shark
+interaction data 2021-2023, maxN, swimmer numbers and environmental parameters. Further data were obtained on tidal
+state, depth, SST, and chlorophyll-a concentration. Chum soak time and maxN were used as response variables to understand
+the drivers of shark occurrence and relative abundance. Preliminary results show that tidal phase, sea surface temperature and
+depth are likely to be important factors influencing blue shark occurrence, distribution and relative abundance. This study
+provides not only a unique insight into the ecology and behaviour of a globally important shark species, but has also created a
+valuable opportunity for ongoing collaboration between science and industry, and a springboard for long-term data collection
+and active management of a growing blue economy sector.
+
+Keywords: Oceanic shark monitoring; Blue Shark; Remotely sensed data; Swim-with tourism; Prionace glauca
+
+
+
+Arthur ORY
+Des Requins et Des Hommes (DRDH)
+
+First porbeagle shark photo- Identification catalogue : free diving and social science to enhance
+ecological knowledge Lamna nasus off Brittany costs (France)
+
+     1.   Arthur Ory, Des Requins et Des Hommes (DRDH), 15 Rue Dumont d'Urville, BLP Technopole Brest-Iroise, 29280
+          Plouzane - FRANCE
+     2.   Paul Abaut, Des Requins et Des Hommes (DRDH), 15 Rue Dumont d'Urville, BLP Technopole Brest-Iroise, 29280
+          Plouzane - FRANCE
+     3.   Lucas Zaccagnini, Des Requins et Des Hommes (DRDH), 15 Rue Dumont d'Urville, BLP Technopole Brest-Iroise,
+          29280 Plouzane - FRANCE
+     4.   Armelle Jung, Des Requins et Des Hommes (DRDH), 15 Rue Dumont d'Urville, BLP Technopole Brest-Iroise, 29280
+          Plouzane - FRANCE
+
+Photo identification is a non-invasive method used to distinguish individuals in the wild based on some external visual criterium.
+As a capture-recapture methodology photo-ID allows to evaluate important ecological parameters such as spatio-temporal
+preferences, philopatry, abundance up to growth rates estimation.
+Porbeagle shark has encountered a severe decrease all other its range of distribution and was subject to a fishing regulation by
+European Council (No 23/2010) ; since that access to biological information on the species is scarce.
+DRDH team started in 2021 a free diving protocol to follow hotspots of porbeagle (Lamna nasus) established in the northern
+cost of Brittany. A data set of videos and photos was gathered through regular standardized dives from DRDH team as well as
+social media and stakeholder inquiries.
+We defined 5 different phenotypic marks which allow us to identify more than 100 individual sharks and thus initiate the first
+and build up a working catalog. Sightings occurred from may to October between 2015 and 2023 with some re sightings
+confirmed within weeks, months or years distance. All encountered sharks were females, ranging from 1,5 to 3 meters Lt
+documented for their maturity status.
+The initial results of this study support the ecological importance of the area for the species in regards to biotic and abiotic
+parameters. The participatory science dimension of the project offers interesting public awareness possibilities in addition to
+data provisioning and collaborative tool for other international research teams. Outputs will be discussed in the context of a
+growing interest for shark and underwater tourism.
+
+Keywords: Photo-ID; Porbeagle shark; Conservation; Free-diving; Tourism
+
+
+
+
+31
+Alicia Rodríguez-Juncá
+BIOECOMAC, Dept. Animal Biology, Edaphology and Geology, University of La Laguna, Tenerife, Canary
+Islands, SPAIN
+
+Mobulids in the Canary Islands: what do we know?
+
+     1.   Alicia, Rodríguez-Juncá; BIOECOMAC, Dept. Animal Biology, Edaphology and Geology, University of La Laguna,
+          Tenerife, Canary Islands, SPAIN
+     2.   Ana F., Sobral; Manta Catalog, Azores, PORTUGAL
+
+
+Despite the charismatic status of the Mobulidae family, our current understanding of this group remains limited. Given their
+highly migratory nature and the current global vulnerability they face, it is imperative to gain a comprehensive understanding of
+their ecology and behaviour in order to support conservation actions. Up until now, there has been a significant knowledge gap
+in mobulid research in the Canary Islands. Situated in the Eastern Atlantic, the Canary Islands offer unique opportunities for
+studying these animals. Manta Catalog represents the first line of work focused on the Mobulidae family in the region. Through
+community science, engaging the fishing and diving sectors, and by reviewing historical sources of information, we have
+compiled baseline information on the occurrence of this group in the archipelago. This work significantly contributes to our
+knowledge on these threatened animals in the Canary Islands and emphasises the importance of community science in long-
+term studies of migratory and pelagic species.
+
+Keywords: Mobulidae; species occurrence; community science; historical records; Canary Islands
+
+
+
+Annemiek Hermans
+Wageningen University
+
+The egg case: Successful extraction of DNA from beached egg cases enables elasmobranch genetic
+diversity assessment
+
+     1.   Annemiek Hermans; WUR.
+     2.   Daniël van Berkel; WUR.
+     3.   Reindert Nijland; WUR.
+
+Most elasmobranch populations are under pressure, and to advise policy makers on appropriate conservation measures, data
+on abundance, life history traits, spawning grounds and population structure are required. The application of DNA based
+techniques can provide some of this information, but commonly is dependent on tissue sampling (e.g., muscle, scale and
+blood) which requires handling and potentially underestimate less common species. Environmental DNA (eDNA) is shown as a
+reliable tool for the assessment of elasmobranch species diversity, but so far is unable to provide reliable data on population
+diversity. Egg cases of oviparous elasmobranchs can form a valuable aid in determining a species spatial distribution, defining
+spawning areas and DNA based analysis of population structure. So far, egg cases for this type of research were collected
+from both commercial fisheries and scientific surveys, generally with the embryo still inside, ensuring the quality of DNA.
+However, many of the egg cases wash up on shore after hatching departure or predation. When exposed to the elements, the
+genetic material in the egg case will start degrading, but DNA fragments of sufficient quality could still be viable for population
+genetics. We now present the successful isolation and sequencing of 2kb long mtDNA fragments from 14-day-old, hatched egg
+cases using a combination of liquid nitrogen, keratinase and collagenase. Developing this method further, beached egg cases
+collected by means of citizen science can provide a useful tool to determine oviparous elasmobranch population structure with
+limited resources and the added bonus of creating public awareness.
+
+Keywords: egg cases; population genetics; oviparous; mtDNA; elasmobranch
+
+
+
+
+32
+Session 10: Informing fisheries science
+
+Romaric Jac
+Institute of Marine Research - Norway
+
+Are deep-sea chimaeras a hidden conservation priority we've ignored?
+
+     1.    Fabian Zimmermann; Institute of Marine Research
+     2.    Caroline A. Tranang; Institute of Marine Research
+     3.    Claudia Junge; Institute of Marine Research
+
+Deep-sea chondrichthyans have been underestimated and overshadowed. This misconception assumes they are unaffected by
+global changes and face minimal fishing threats. Among chondrichthyans, the order Chimaeriformes, specifically the rabbitfish
+Chimaera monstrosa, is one of the most striking examples. Our three-year research focused on unravelling the mysteries
+surrounding C. monstrosa in the Northeast Atlantic, where it is commonly caught as bycatch. It is classified as 'Near
+Threatened' by IUCN in European waters. Although we documented its abundance, habitat preferences, and responses to
+warming waters, significant gaps persist in understanding its life history traits and ecology, hindering targeted conservation
+measures. Using models and mapping tools, our study aimed to identify diverse populations and critical areas in need of
+protection. Along the Norwegian coast, we observed variations in growth rates and maturity, indicating potential adaptations to
+fisheries or environmental conditions. We located some areas that could arguably function as mating or nursery areas. Our
+research suggests that the newly colonized waters of northern Norway host a well-developed population of C. monstrosa. This
+colonization and potential further expansion northward, driven by warmer waters, underscore the necessity for monitoring
+critical areas, vulnerability to warming waters, and potential changes in the food web, particularly in the warming and heavily
+impacted North Sea. By providing insights into C. monstrosa's distribution patterns, regional variations, and implications for
+conservation, these findings contribute to the development of species-specific conservation measures.
+
+Keywords: Chimaera monstrosa; Critical areas; Fisheries management; Life history traits; Northeast Atlantic Ocean
+
+
+
+Giulia Bressan
+Department of Biology, University of Padova
+
+Exploration of management strategies for a sustainable fishery of elasmobranchs in the Adriatic Sea
+
+     1.    Carlotta Mazzoldi, Department of Biology, University of Padova, Italy
+     2.    Camilla Antonini, ISPRA Italian Institute for Environmental Protection and Research, Italy
+     3.    Alberto Barausse, Department of Biology, University of Padova, Italy
+     4.    Matteo Barbato, Department of Biology, University of Padova, Italy
+     5.    Giulia Bressan, Department of Biology, University of Padova, Italy
+     6.    Marco Costantini, WWF World Wide Fund for Nature
+     7.    Licia Finotto, Department of Biology, University of Padova, Italy
+     8.    Simone Niedermüller, WWF World Wide Fund for Nature
+     9.    Giulia Prato, WWF World Wide Fund for Nature
+     10.   Jennifer Pytka, Department of Biology, University of Padova, Italy
+     11.   Carlo Zampieri, Department of Biology, University of Padova, Italy
+     12.   Saša Raicevich, ISPRA Italian Institute for Environmental Protection and Research, Italy
+
+High bycatch of elasmobranchs and their decline in the Adriatic Sea call for management actions. Within the Italian monitoring
+programs of the Marine Strategy Framework Directive, we investigated the post-release survival rates of juveniles of
+commercial species to explore the efficacy and feasibility of the implementation of a minimum conservation reference size
+(MCRS). From May 2020 to June 2023, through 90 on-board fishing trips using different fishing gears we evaluated the At-
+Vessel Mortality (AVM; 3443 individuals, 14 species), Short-term post-release mortality (St-PRM; two hours after capture, on
+board, 788 individuals, 14 species) and Long-term PRM (Lt-PRM; 72 hours after capture, at laboratory, 121 individuals, 3
+species). AMV was on average 16%, varying among species, fishing gears and seasons and depending on factors such as
+temperature and duration of air exposure. St-PRM and Lt-PRM were generally low, below 16% and 20%, respectively. To
+better estimate mortality, by combining conventional tagging and acoustic telemetry, in the framework of the MedBycatch
+project, we investigated Lt-PRM in the field. We tagged 1816 individuals of 16 species with spaghetti tags, 61 individuals of 3
+species with acoustic tags. The tagging study contributed also to the understanding of the use of space and to highlight
+residency and site fidelity behaviours. To rigorously explore the potential efficacy and sustainability of the release of juveniles,
+we constructed individual based population dynamics models to assess the expected recovery of populations according to
+different MCRS and survival rates.
+
+Keywords: fishery; survival; acoustic telemetry; tagging; management
+
+
+
+
+33
+Martina Ciprian
+iSea, Environmental Organisation for the Preservation of Aquatic Ecosystems
+
+By ElasmoCatch: a multidisciplinary approach to improve knowledge and conservation of
+elasmobranchs in Amvrakikos Gulf.
+
+     1.   Martina, Ciprian; iSea, Environmental Organisation for the Preservation of Aquatic Ecosystems, 54645 Thessaloniki,
+          Greece.
+     2.   Ioannis, Giovos; iSea, Environmental Organisation for the Preservation of Aquatic Ecosystems, 54645 Thessaloniki,
+          Greece; Department of Fisheries and Aquaculture, University of Patras, 30200 Messolonghi, Greece; Department of
+          Biology, University of Padova, Via U. Bassi 58/B, 35121 Padova, Italy.
+     3.   Vasilis, Minasidis; Department of Fisheries and Aquaculture, University of Patras, 30200 Messolonghi, Greece.
+     4.   Roxani, Naasan Aga-Spyridopoulou; iSea, Environmental Organisation for the Preservation of Aquatic Ecosystems,
+          54645 Thessaloniki, Greece.
+     5.   Georgios, Rallis; iSea, Environmental Organisation for the Preservation of Aquatic Ecosystems, 54645 Thessaloniki,
+          Greece.
+     6.   Carlotta, Mazzoldi; Department of Biology, University of Padova, Via U. Bassi 58/B, 35121 Padova, Italy.
+     7.   Dimitrios K., Moutopoulos; Department of Fisheries and Aquaculture, University of Patras, 30200 Messolonghi,
+          Greece.
+
+The poor conservation status of Chondrichthyes in the Mediterranean Sea requires effective management strategies. Ad-hoc
+conservation measures for different areas and species are needed. In this perspective, the By ElasmoCatch Project is focusing
+on the Amvrakikos Gulf (Greece). Here, only small-scale fishery is operating, using set-nets and longlines, in some cases
+targeting Mustelus mustelus and Myliobatidae. From 2022 until now, 547 fishing operations have been monitored through
+interviews (532) and onboard surveys (45). A total of 1176 elasmobranchs have been recorded. Among the 10 species present,
+2 Critically Endangered (Mediterranean Region) stingrays Aetomylaeus bovinus and Gymnura altavela were commonly caught
+(25.5% of recorded elasmobranchs). Moreover, identification issues for specimens of the family Dasyatidae emerged. To better
+understand the biology and ecology of elasmobranchs in the area and clearly identify the species, a multidisciplinary approach
+is used (e.g., data on life-history traits, stomach contents, genetic). Finally, we are investigating post-release mortality (through
+40 minutes tank maintenance, 92; and a conventional-tagging program, 189) to understand the efficacy of release as a
+management strategy.
+Given the high biodiversity and presence of both pregnant females and newborns of different species, this region appears to be
+crucial for elasmobranchs, and it was proposed as Important Shark and Ray Area (ISRA).
+Future steps will include an acoustic-tagging program to further understand survival after capture and use of space, heavy-
+metal analyses, and testing of other mitigation measures (e.g., gear modifications), with the final aim to find the best
+management strategy and its implementation by the local community.
+
+Keywords: Amvrakikos Gulf; Bycatch; Management strategy; Multidisciplinary approach; Small-scale fishery
+
+
+
+
+Manuel Seixas
+CIIMAR/CIMAR, Interdisciplinary Centre of Marine and Environmental Research, University of Porto and FCUP,
+Faculty of Sciences of University of Porto
+
+Enhancing Elasmobranch Mitogenomic Knowledge: Transcriptome-Based Assembly Approach
+
+     1.   Manuel Seixas; CIIMAR/CIMAR, Interdisciplinary Centre of Marine and Environmental Research, University of Porto,
+          Terminal de Cruzeiros do Porto de Leixões, Av. General Norton de Matos, s/n, 4450-208 Porto, Portugal and FCUP,
+          Faculty of Sciences of University of Porto, Department of Biology, Rua do Campo Alegre, s/n, 4169-007 Porto,
+          Portugal
+     2.   Rodrigo Domingues; CIIMAR/CIMAR, Interdisciplinary Centre of Marine and Environmental Research, University of
+          Porto, Terminal de Cruzeiros do Porto de Leixões, Av. General Norton de Matos, s/n, 4450-208 Porto, Portugal
+          FCUP, Faculty of Sciences of University of Porto, Department of Biology, Rua do Campo Alegre, s/n, 4169-007
+          Porto, Portugal Oceanographic Institute, Department of Biological Oceanography, University of Sao Paulo, Praça do
+          Oceanográfico, 191, Cidade Universitária, 05508-120, São Paulo, Brazil
+     3.   Agostinho Antunes; CIIMAR/CIMAR, Interdisciplinary Centre of Marine and Environmental Research, University of
+          Porto, Terminal de Cruzeiros do Porto de Leixões, Av. General Norton de Matos, s/n, 4450-208 Porto, Portugal and
+          FCUP, Faculty of Sciences of University of Porto, Department of Biology, Rua do Campo Alegre, s/n, 4169-007
+          Porto, Portugal
+
+
+Commonly, there is a shortage of available omics resources from elasmobranchs on public databases, such as genomes,
+transcriptomes, and mitogenomes. This highlights the importance of taking the most advantage of available resources. Thus,
+we assessed the potential of using transcriptomes from elasmobranchs to computationally recover their mitogenomes.
+Within this work, we gathered more than 30 transcriptomic entries from the NCBI Database from elasmobranch species whose
+mitogenome was not available. We were able to perform mitochondrial genome assemblies for 10 species whose mitogenome
+was previously unreported: Isistius brasiliensis, Negaprion brevirostris, Potamotrygon amandae, P. leopoldi, Rhizoprionodon
+
+34
+taylori, R. terraenovae, Scyliorhinus rotifer, Squalus suckleyi, Tetronarce californica, and Urobatis jamaicensis. The recovered
+assemblies ranged from 16,620 to 17,710 nucleotides, and half of the final assemblies presented a 100% recovery rate (the
+lowest reached 92%).
+The assembly of these mitogenomes will empower further studies that can be relevant to understanding the evolutionary and
+ecological framework of elasmobranchs, especially considering the important role of the mitochondrial genes on oxidative
+phosphorylation. Additionally, it will assist population genomic studies that often rely on partial mitochondrial genomes,
+extending the already powerful tool of transcriptomics.
+
+Keywords: Mitogenomes; Transcriptomics; Bioinformatics
+
+
+
+Francesco Garzon
+Hatherly Laboratories, Faculty of Health and Life Sciences, University of Exeter, Exeter, Devon, United Kingdom
+
+Survival and post-release behaviour of pelagic sharks caught in recreational catch-and-release fisheries
+in Europe revealed by electronic tagging.
+
+     1.    Francesco Garzon; Hatherly Laboratories, Faculty of Health and Life Sciences, University of Exeter, Exeter, Devon,
+           United Kingdom
+     2.    Matteo Barbato; Department of comparative biomedicine and food science - University of Padova; National
+           Biodiversity Future Center (NFBC)
+     3.    Jacopo Bernardi; Department of Biology - University of Padova
+     4.    Owen M. Exeter; Centre for Ecology and Conservation, Penryn campus, University of Exeter
+     5.    Cat Gordon; The Shark Trust
+     6.    Lucy A. Hawkes; Hatherly Laboratories, Faculty of Health and Life Sciences, University of Exeter, Exeter, Devon,
+           United Kingdom
+     7.    Ali Hood; The Shark Trust
+     8.    Tom W. Horton; Centre for Ecology and Conservation, Penryn campus, University of Exeter
+     9.    Cat Gordon; The Shark Trust
+     10.   Carlotta Mazzoldi; CoNISMa, National Inter-University Consortium for Marine Sciences, Department of Biology,
+           University of Padova;National Biodiversity Future Center (NFBC)
+     11.   David Righton; Centre for Environment, Fisheries and Aquaculture Science
+     12.   Joana F. Silva; Centre for Environment, Fisheries and Aquaculture Science
+     13.   Matthew J. Witt; Hatherly Laboratories, Faculty of Health and Life Sciences, University of Exeter, Exeter, Devon,
+           United Kingdom
+
+Recreational shark fishing accounts for millions of shark captures each year across the world, with many fishers now employing
+a "catch and release" (C&R) approach. In Europe, C&R fisheries for sharks are widespread and involve thousands of sharks
+each year, including the blue shark (Prionace glauca) and the porbeagle shark (Lamna nasus). Despite this, studies on the
+potential impacts of C&R fishing are generally lacking, with only one investigation conducted on porbeagle sharks in North
+America and none on blue sharks globally.
+To address the potential impacts of a range of handling and environmental conditions, this ongoing study uses short-term
+electronic tags (45 days) to assess the effects of C&R fishing on the behaviour and mortality of blue and porbeagle sharks
+caught recreationally in southwest UK waters and the northern Adriatic Sea. To date, no mortalities have been observed among
+tagged sharks (n=18). However, high-resolution data obtained from retrieved tags (n=5) suggests differences in diving patterns
+between the immediate post-release period and later stages of tracking, indicating a potential behavioural impact of capture.
+These preliminary results suggest that, within the range of handling and environmental conditions studied so far, C&R fishing
+for blue and porbeagle sharks is unlikely to results in mortality with 45 days of release, although sublethal short-term effects on
+animal welfare may require further attention. Further research is necessary to examine the short- and long-term behavioural
+effects of C&R fishing and identify specific aspects of the practice that may be refined to improve outcomes for sharks.
+
+Keywords: angling; catch and release; telemetry; conservation; ecology
+
+
+
+Ana Filipa Sobral
+Okeanos R&D Centre, Department of Oceanography and Fisheries, University of the Azores, Portugal; Manta
+Catalog, Portugal
+
+Filling the gap: conservation genetics of the Sicklefin devil ray - from oceanic islands to ocean basins
+
+     1.    Emily, Humble; Royal (Dick) School of Veterinary Studies and the Roslin Institute, University of Edinburgh, EH25
+           9RG, UK
+     2.    Rob, Ogden; Royal (Dick) School of Veterinary Studies and the Roslin Institute, University of Edinburgh, EH25 9RG,
+           UK
+
+The survival of chondrichthyans is a major marine conservation concern, with over one-third of species currently at risk of
+extinction due to their exceptional vulnerability and low resilience to high levels of exploitation. However, our extremely limited
+
+
+35
+knowledge of their basic ecology hampers the implementation of proper management and conservation actions. There is also a
+knowledge gap on the genetic diversity and population structure of these species at different spatial scales. This is especially
+true for migratory species, such as the Sicklefin devil ray (Mobula tarapacana), that utilizes the restricted coastal habitats of
+oceanic islands. Understanding the degree of genetic connectivity allows to define population boundaries and infer dispersal
+patterns, while describing genetic diversity will allow to inform appropriate measures to preserve it. To fill this knowledge gap,
+we used a genetic multi-marker approach. We evaluated population structure and assessed connectivity at different spatial
+scales – from ocean basins to the island groups within the Azores archipelago - through the analysis of Single Nucleotide
+Polymorphism (SNP) markers and Mitochondrial DNA (mtDNA). The results of this project will provide science-based
+knowledge to support suitable management and conservation actions, regionally and globally.
+
+Keywords: Mobula; Genetics; Connectivity; Population structure; Single Nucleotide Polymorphisms
+
+
+
+Andrew J. Temple
+King Abdullah University of Science and Technology
+
+Small-scale fishers are incentivised to overfish threatened sharks and exacerbate their own vulnerability
+
+     1.   Andrew Temple; King Abdullah University of Science and Technology
+     2.   Per Berggren; Newcastle University
+     3.   Narriman Jiddawi; University of Dar es Salaam
+     4.   Nina Wambiji; Kenya Marine and Fisheries Research Institute
+     5.   Chris Poonian; Community Centered Conservation
+     6.   Yussuf Salmin; The State University of Zanzibar
+     7.   Michael Berumen; King Abdullah University of Science and Technology
+     8.   Selina Stead; Leeds University
+
+
+To achieve sustainable shark fisheries, it is as important to understand the social and economic drivers of overfishing as it is
+the biological drivers and environmental consequences. The extinction risk of sharks is disproportionately higher in coastal
+tropical waters where small-scale fisheries dominate, presenting unique management challenges. Small-scale fisheries provide
+a critical source of economic and nutritional security, but fishers are among the most vulnerable socio-economic groups
+because their exposure to economic, social, and environmental shocks is combined with limited adaptive capacity. Using
+Kenya and Zanzibar as a case study, we examine the interactions between sharks and small-scale fisheries. We find that
+sharks are an important source of economic and nutritional security, primarily from species threatened with extinction. Further,
+the most economically valuable sharks are larger, slower reproducing, and more likely to be threatened with extinction,
+providing a strong economic incentive to target endangered species. Given the high economic motivation and intensive fishing
+pressure, small-scale fisheries are undoubtedly important contributors to the ongoing decline of many threatened shark
+species. The decline of sharks may have damaging consequences for wider marine ecosystems and ecosystem services. In
+the absence of effective fisheries management, we show that within small-scale fisheries the conditions exist for an
+economically incentivised positive feedback loop in which vulnerable fishers are driven to persistently overfish vulnerable and
+declining resources. In doing so, they undermine their own economic and nutritional security and that of their communities. To
+be successful management must break the feedback loop or be doomed to failure.
+
+Keywords: fisheries; endangered species; food security; nutrition; economics
+
+
+
+
+36
+Adetola Adebowale
+University of Cape Town, South Africa
+adbade024@myuct.ac.za
+
+Harriet Allen
+The Shark Trust
+harrieta@sharktrust.org
+
+Sara A.A AlMabruk
+Marine Biology in Libya Society
+sara.almabruk@mb.org.ly
+
+Tomas Bañeras Bosch
+Área de Toxicología, Universidad de La Laguna; Angel Shark Project
+11banyerastomas@gmail.com
+
+Adi Barash
+Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel
+adibarash@hotmail.com
+
+Mateo Barbato
+Department of Biology- University of Padova; National Biodiversity Future Center (NFBC)
+mateo.barbato.1@phd.unipd.it
+
+Joanna Barker
+Zoological Society of London / Project SIARC / Angel Shark Project
+joanna.barker@zsl.org
+
+Stephan Bruns
+Biology Department, College of Science, UAE University, Al Ain, United Arab Emirates
+bruns-stephan@web.de
+
+Rachel Bustamante
+Earth Law Center
+rbustamante@earthlaw.org
+
+Luke Cameron
+Trinity College Dublin
+CAMEROLU@tcd.ie
+
+Aitor Campos
+Aitor, Campos-Sosa; Fundación Oceanogràﬁc de la Comunitat Valenciana; Associació LAMNA;
+Facultad de Veterinaria, Universidad CEU Cardenal Herrera.
+aitor.campos@alumnos.uchceu.es
+
+
+
+
+37
+Pol Carrasco Puig
+Universitat de València, Paterna, Spain; CATSHARKS, Association for the Study and Conservation of
+Elasmobranchs and Its Ecosystems, Passeig Marítim de la Barceloneta, 37-49, E-08003 Barcelona,
+Spain
+pol.carrasco.puig@gmail.com
+
+Alice Chamberlain
+Zoological Society of London
+alice.chamberlain@zsl.org
+
+Ryan Charles
+IUCN Shark Specialist Group - ISRA PRoject
+ryancharles@live.co.uk
+
+Mar�na Ciprian
+iSea, Environmental Organisation for the Preservation of Aquatic Ecosystems
+mar�na.ciprian@isea.com.gr
+
+Noémie Coulon
+Laboratoire de Biologie des Organismes et Ecosystèmes Aquatiques (BOREA) MNHN, CNRS, IRD, SU,
+UCN, UA, 38 Rue du Port Blanc , Dinard, France
+noemie.coulon@mnhn.fr
+
+Valen�na Crobe
+GenoDREAM, Department of Biological, Geological & Environmental Sciences (BiGeA), University of
+Bologna, Ravenna, Italy
+valen�na.crobe2@unibo.it
+
+Sarah Davies
+Zoological Society of London / Natural Resources Wales
+sarah.davies@zsl.org
+
+Eleonora de Sabata
+MedSharks
+ele@medsharks.org
+
+Lorenzo Jacopo De San�s
+CNR IRBIM
+lorenzo.desan�s@irbim.cnr.it
+
+Ana Espino Ruano
+IU ECOAQUA, University of Las Palmas de Gran Canaria
+anamaria.espino@ulpgc.es
+
+
+
+
+38
+Ana Filipa Sobral
+Okeanos R&D Centre, Department of Oceanography and Fisheries, University of the Azores, Portugal;
+Manta Catalog, Portugal
+aﬂsobral@gmail.com
+
+Licia Finoto
+University of Padova
+licia.ﬁnoto@unipd.it
+
+Pablo García-Salinas
+Fundación Oceanogràﬁc de la Comunitat Valenciana; Associació LAMNA; Grupo de Acuicultura y
+Biodiversidad, Instituto de Ciencia y Tecnología Animal, Universitat Politècnica de València.
+pgarcia@oceanograﬁc.org
+
+Francesco Garzon
+Hatherly Laboratories, Faculty of Health and Life Sciences, University of Exeter, Exeter, Devon, United
+Kingdom
+fg350@exeter.ac.uk
+
+Eleanor Greenway
+Wageningen University and Research; Wageningen Marine Research
+eleanor.greenway@wur.nl
+
+Yaara Grossmark
+Faculty of Architecture and Town Planning, Technion – Israel Institute of Technology, Haifa, Israel;
+Sharks in Israel, Environmental Organization for the protection of sharks and rays, Israel
+yaarag@sharks.org.il
+
+Annemiek Hermans
+Wageningen University
+annemiek.hermans@wur.nl
+
+Jenny Hickman
+Mareco
+jenny@mareco.org.uk
+
+Alejandro J. Molera Arribas
+IMEDMAR-UCV; Escuela de doctorado Universida Católica de Valencia San Vicente Martir
+ale.mole@mail.ucv.es
+
+Romaric Jac
+Institute of Marine Research - Norway
+romaric.jac@zohomail.eu
+
+David Jimenez-Alvarado
+Universidad de Las Palmas de Gran Canaria; IU-ECOAQUA; Angel Shark Project
+david.jimenez@ulpgc.es
+
+
+1
+Irene Kingma
+Dutch Elasmobranch Society
+kingma@elasmobranch.nl
+
+Lydia Koehler
+University of Plymouth
+lydia.koehler@plymouth.ac.uk
+
+Leigh Livne
+Morris Kahn Marine Research Station
+leigh.livne@gmail.com
+
+Jaquelino Lopes Varela
+MARE – Marine and Environmental Sciences Centre / ARNET – Aquatic Research Network,
+Laboratório Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, Portugal, Cascais,
+Portugal; Sphyrna Association, Sal Rei 5110, Boa Vista Island, Cabo Verde.
+jaquelinovarela1987@gmail.com
+
+Sol Lucas
+Newcastle University, Marine Research and Conservation Foundation
+s.a.lucas2@newcastle.ac.uk
+
+Federico Maioli
+University of Bologna
+f.maioli@unibo.it
+
+Rachel Mawer
+(aﬃliation at time of research) University of Glasgow; NatureScot
+rmawer98@gmail.com
+
+Giulia Bressan
+Department of Biology, University of Padova
+carlota.mazzoldi@unipd.it
+
+Soﬁa Mazzone
+University of Plymouth; Abigail McQuatters-Gollop
+soﬁamazz1@live.co.uk
+
+Lucy Mead
+Zoological Society of London; Queen Mary University of London
+lucy.mead@ioz.ac.uk
+
+Eva Meyers
+Leibniz Institute for the Analysis of Biodiversity Change / Angel Shark Project
+angelshark2014@gmail.com
+
+
+
+
+1
+Youri Ivann MVOMO MINKO
+Université de Bretagne Occidentale
+youri.minko@univ-brest.fr
+
+Lorenzo Minoia
+Department of Integrative Marine Ecology, Genoa Marine Centre, Stazione Zoologica Anton Dohrn -
+Italian National Institute of Marine Biology, Ecology and Biotechnology, Villa del Principe, Piazza del
+Principe 4, 16126 Genoa, Italy; Department of Physical,
+lorenzo.minoia@szn.it
+
+Re'em Neri
+Sharks in Israel; Ben Gurion University of the Negev;Interuniversity Institute for Marine Sciences in
+Eilat;
+reemneri@gmail.com
+
+Charlote Nuyt
+Institute of Marine Research
+charlotenuyt@gmail.com
+
+Bríd O'Connor
+Marine Institute of Ireland and University College Cork
+brid.o'connor@marine.ie
+
+Arthur ORY
+Des Requins et Des Hommes (DRDH)
+arthur.ory@desrequinsetdeshommes.org
+
+Nicholas Payne
+Trinity College Dublin
+paynen@tcd.ie
+
+Jaime Penadés-Suay
+Associació LAMNA; Fundación Oceanogràﬁc
+jaime.penades@associaciolamna.org
+
+Catarina Pereira Santos
+MARE – Marine and Environmental Sciences Centre/ARNET – Aquatic Research Network, Laboratório
+Marítimo da Guia, Faculdade de Ciências, Universidade de Lisboa, Cascais, Portugal; Environmental
+Economics Knowledge Center, Nova School of Business and Economi
+catarina.cp.santos@gmail.com
+
+Felix Petersma
+University of St Andrews; Centre for Research into Ecological and Environmental Modelling
+�p@st-andrews.ac.uk
+
+Charlote Pike
+Zoological Society of London
+charlote.pike@zsl.org
+
+1
+Maria Pozo-Montoro
+Universidad de Murcia
+mpozo-montoro@outlook.com
+
+Jenny R. Bortoluzzi
+Trinity College Dublin
+bortoluj@tcd.ie
+
+Alicia Rodríguez-Juncá
+BIOECOMAC, Dept. Animal Biology, Edaphology and Geology, University of La Laguna, Tenerife,
+Canary Islands, SPAIN
+mantacatalogcanarias@gmail.com
+
+Jessica Savage
+Institution 1: Royal Holloway University of London; Institution 2: Institute of Zoology; Institution 3:
+Zoological Society of London
+jessica.savage@ioz.ac.uk
+
+Gemma Scots
+Institute of Marine Sciences, University of Portsmouth, Ferry Road, Southsea, Portsmouth, UK; Marine
+Research and Conservation Foundation, Lydeard St Lawrence, Somerset, UK.
+gemmalouise.scots@gmail.com
+
+Manuel Seixas
+CIIMAR/CIMAR, Interdisciplinary Centre of Marine and Environmental Research, University of Porto
+and FCUP, Faculty of Sciences of University of Porto
+manueljrcseixas@gmail.com
+
+Lote Svengård Dahlmo
+NORCE & UiB
+losv@norceresearch.no
+
+Chris Taklis
+BiodiversityGR
+ctaklis@gmail.com
+
+Mariana Arguero Tejeda
+CICIMAR - IPN
+marianaarguerot@gmail.com
+
+Andrew J. Temple
+King Abdullah University of Science and Technology
+andrew.j.l.temple@gmail.com
+
+James Thorburn
+Edinburgh Napier University
+j.thorburn2@napier.ac.uk
+
+
+1
+Hector Toledo-Padilla
+Angel Shark Project: Canary Islands
+hectortp92@gmail.com
+
+Aylin Ulman
+Mersea Marine Consulting, The Shark Trust UK, Sea Around Us
+uaylin@hotmail.com
+
+Paddy Walker
+Dutch Elasmobranch Society
+walker@elasmobranch.nl
+
+Lucas Zaccagnini
+DRDH, 15 rue Dumont d'Urville, BLP Technoopole Brest-Iroise, 29280 Plouzane
+lucas.zaccagnini@desrequinsetdeshommes.org
+
+
+
+
+2
+
