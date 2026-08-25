@@ -53,6 +53,10 @@ def classify_pdf(path, is_ocr: bool = False) -> dict:
             page_count = int(mm.group(1))
     except Exception:
         pass
+    # A "programme" of 200+ pages is an abstract book in all but name
+    # (2008 JMIH.pdf: 520pp, 585 abstracts with bodies).
+    if doc_type == "program_book" and page_count and page_count >= 200:
+        doc_type = "abstract_book"
     return dict(meeting=meeting, year=year, doc_type=doc_type,
                 page_count=page_count, is_ocr=int(is_ocr),
                 source_pdf=str(path))
