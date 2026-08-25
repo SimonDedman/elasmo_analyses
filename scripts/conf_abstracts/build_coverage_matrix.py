@@ -64,11 +64,11 @@ SI = {2010: ("Cairns", "Missing", "find source"),
       2026: ("Colombo", "Ingested", "")}
 # JMIH/ASIH years where we hold a PDF that is NOT an ingestable abstract book:
 # a grid programme (2017/2019 — detail doesn't extract; get the abstract book)
-# or an image-only programme (2026 — needs OCR + abstract book).
+# or a schedule-only programme (2026 — has a text layer, no abstract bodies).
 JMIH_PROGRAMME = {
     2017: "grid programme only — abstract book needed (Carylanne)",
     2019: "grid programme only — abstract book needed (Carylanne)",
-    2026: "image-only programme — needs OCR; abstract book needed",
+    2026: "schedule-only programme (OCR text layer OK, not yet parsed) — abstract book needed",
 }
 SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "SI"]
 
@@ -91,14 +91,23 @@ JMIH_LOC.setdefault(2026, "New Orleans, LA")
 def db_meeting_status():
     con = sqlite3.connect(str(DB))
     out = {}
-    for yr, meeting, doc, isocr, n, el in con.execute(
-        """select m.year,m.meeting,m.doc_type,m.is_ocr,count(*) n,sum(a.is_elasmo) el
-           from meetings m join abstracts a on a.meeting_id=m.meeting_id
+    # LEFT JOIN so a held-but-unparsed book (e.g. a degraded scan that yielded
+    # 0 records) still surfaces; body count makes the status content-aware
+    # (a 520-page "programme" whose records carry bodies IS an abstract book).
+    for yr, meeting, doc, isocr, n, el, bodies in con.execute(
+        """select m.year,m.meeting,m.doc_type,m.is_ocr,count(a.abstract_id) n,
+                  sum(a.is_elasmo) el,
+                  sum(case when length(a.abstract_text) > 50 then 1 else 0 end) bodies
+           from meetings m left join abstracts a on a.meeting_id=m.meeting_id
            where m.meeting in ('JMIH','ASIH') group by m.meeting_id"""):
-        d = out.setdefault(yr, dict(abstract=False, schedule=False, ocr=False, elasmo=0))
-        if doc == "abstract_book" and n > 1:
+        d = out.setdefault(yr, dict(abstract=False, schedule=False, ocr=False,
+                                    ocr_failed=False, elasmo=0))
+        has_bodies = (bodies or 0) >= max(2, 0.5 * n)
+        if n > 1 and (doc == "abstract_book" or has_bodies):
             d.update(abstract=True, ocr=bool(isocr))
             d["elasmo"] += el or 0
+        elif doc == "abstract_book" and isocr:
+            d["ocr_failed"] = True  # scan held; OCR recovered nothing usable
         elif doc == "program_book" and n > 20:
             d["schedule"] = True
             d["elasmo"] += el or 0
@@ -131,6 +140,8 @@ def meeting_cell(year, db):
         if d["ocr"]:
             return loc, "OCR", "degraded scan (needs_review) — flatbed re-scan planned", d["elasmo"]
         return loc, "Ingested", "", d["elasmo"]
+    if d and d["ocr_failed"]:
+        return loc, "OCR", "degraded phone scan — 0 abstracts recovered — flatbed re-scan needed (Carylanne)", 0
     if d and d["schedule"]:
         return loc, "Schedule", "programme ingested (no abstract bodies)", d["elasmo"]
     if year in JMIH_PROGRAMME:
