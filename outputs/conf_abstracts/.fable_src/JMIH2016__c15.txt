@@ -1,0 +1,2060 @@
+Mexico. Therefore, this study examined spatial and temporal
+trends in carbon (δ13C) and nitrogen (δ15N) stable isotopes along the Texas coast, as well
+as the influence of size and sex of individuals on stable isotopes by quantifying isotopic
+niches via Bayesian ellipses created within the R package 'Stable Isotope Bayesian
+Ellipses in R' (Jackson et al. 2011). Epidermal samples, from the trailing edge of the
+pectoral fin, were collected for isotopic analysis during in-water entanglement netting
+surveys conducted along the Texas coast from 2009 – 2012. Isotopic niche size was
+comparable across Texas bay systems in 2012, with only the lower Laguna Madre
+(spring) significantly different. However, mean δ13C and δ15N signatures varied spatially
+across bay systems. Isotopic niche size varied seasonally within the lower Laguna
+Madre, with summer 2012 significantly different than all other sampling periods.
+Additionally, female mean δ13C signatures were significantly enriched compared to
+those of males, indicating female rays are foraging over longer periods of time within
+inshore habitats. There was also evidence of differential foraging between life history
+stages, with mean δ13C signatures of subadults differing significantly from adult rays in
+Aransas Bay. Future studies should utilize a multi-tissue approach to enable
+
+
+                                            593
+comparisons of trophic ecology over both short- and long-term timescales, as well as
+incorporate stomach content analysis to identify prey species consumed.
+
+______________________________________________________________________________
+
+0897 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Daniel Stadtmauer1, Mark Sabaj2
+1Yale University, New Haven, CT, USA, 2The Academy of Natural Sciences of Drexel
+
+University, Philadelphia, PA, USA
+Taxonomic Overview of Mongolian Stone Loaches (Cypriniformes:
+Nemacheilidae)
+
+Kottelat (2006) reported five nominal valid species of Nemacheilidae (stone loaches) in
+Mongolia: Barbatula compressirostris, B. dgebuadzei, B. toni, Lefua costata, and Triplophysa
+gundriseri. He also noted two unnamed species of Barbatula from the Selenge Basin, one
+of which was subsequently described as B. sawadai from the Tuul/Yeruu subbasin
+(Prokofiev 2007). The second unnamed Barbatula was from the Eg River, the sole outflow
+of Lake Hovsgol. Kottelat also noted an unnamed species of Triplophysa in the Tuul
+River (Selenge Dr.). Prokofiev (2007) recognized four Barbatula in Mongolia: B. barbatula
+toni, B. dgebuadzei, B. sawadai, and B. golubtsovi and the lattermost was treated as a
+questionable synonym of B. compressirostris by Kottelat (2006). Over the course of three
+expeditions to Mongolia in 2006, 2011 and 2012, large series of nemacheilid loaches were
+collected throughout Mongolia except for its westernmost limits. From those samples,
+analyses of internal and external morphology have identified three distinct lineages:
+Barbatula toni group, “Barbatula” sawadai group, and Triplophysa group. Morphotypes
+within the Barbatula toni group are relatively uniform and appear to be conspecific (i.e.,
+B. dgebuadzei is a junior synonym of B. toni). “Barbatula” sawadai is restricted to the
+Selenge Basin, morphologically uniform, and unlikely related to true Barbatula. At least
+two nominal valid species of Triplophysa occur in Mongolia: T. arnoldii and T. gundriseri.
+Three potentially undescribed species of Triplophysa occur in the rivers draining the
+Hangay Plateau south into the Gobi desert, west into the Central Depression, and north
+into the Selenge Basin.
+
+______________________________________________________________________________
+
+0737 Lightning Talks, Galerie 2, Saturday 9 July 2016
+Bruce Stallsmith, Tiffany Bell
+University of Alabama in Huntsville, Huntsville, AL, USA
+Unusual Female-Biased Sex Ratios in Syntopic Populations of Two Species of
+Ulocentra Darters, Etheostoma simoterum and E. duryi, in the Flint River of
+Alabama
+
+Etheostoma simoterum (Tennessee Snubnose Darter) and E. duryi (Blackside Darter) are
+similar species in the subgenus Ulocentra often found syntopically in stream systems
+
+                                            594
+tributary to the Tennessee River in north Alabama. We made 12 monthly collections of
+these species from September, 2014, through August, 2015, at a site on the Flint River in
+Madison County, Alabama. Fish were collected with a four meter long seine along a 300
+meter stretch of river characterized by alternating runs and riffles over a substrate that is
+variously gravel, cobble and boulder. For almost all of these months we have 16 or more
+adults of both species, typically 30–40 and sometimes as many as 100. Our primary
+interest was to examine reproductive schedules of the two species to see if there are any
+significant differences in timing, gonadal maturation, and oocyte number and size. Our
+initial assumption was that we would find roughly equal numbers of males and females
+in collections of both species. We found instead that in 11 of 12 monthly collections of E.
+simoterum there was a female skew of as much as 6:1, while E. duryi collections were less
+female skewed with seven months showing a female skew, three months a male skew,
+and two months with equal numbers. We have not seen or heard of other darter
+collections with consistent sex ratio skews. We are curious if anyone has seen such sex
+ratios in any species of darter, and hopefully why this might be.
+
+______________________________________________________________________________
+
+
+
+
+1021 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+
+Nathanael Stanek, Evon Hekkala
+Fordham University, New York, NY, USA
+Phylogeography of the Forest Hinged Tortoise, Kinixys erosa
+
+We examined the phylogeographic differentiation of forest hinged tortoises, Kinixys
+erosa, using sequence fragments from three regions of mitochondrial DNA: 12S rRNA,
+ND4, and cyt-b from archived specimens representing much of the known geographic
+
+
+                       CANCELED
+distribution of the species. Maximum parsimony, maximum likelihood, and haplotype
+network analysis congruently defined three distinct mitochondrial lineages
+corresponding to major geographic regions of African rainforest. Most notably, our
+preliminary results have identified a highly-divergent Congo Basin group. Since the
+archival tissues available for this study do not represent the full extent of K. erosa
+populations, there is potential for uncovering additional cryptic lineages in other
+biogeographic regions. To rule out competing explanations for the phylogeography and
+evolutionary history of K. erosa, additional sampling should be directed towards these
+data gaps. We are optimistic that the conservation of K. erosa will be advanced by this
+and future work that seeks to define significant management units.
+
+______________________________________________________________________________
+
+
+
+
+                                            595
+0792 General Herpetology, Balconies L & M, Sunday 10 July 2016
+Edward Stanley
+Florida Museum of Natural History, Gainesville, Florida, USA
+Phylogenetic and ecological diversity within the widespread melanistic
+species Hemicordylus capensis
+
+The Cape Fold Mountains (CFM) are a topologically and ecologically diverse range of
+shale and sandstone formations that run the length and breadth of South Africa’s
+Western Cape Province. Melanism has evolved multiple times in ectotherms of the CFM,
+invariantly as an adaptation to cold environments. Hemicordylus capensis is unique
+among melanistic lizards from the Western Cape in having a broad distribution,
+occurring across the entire range, and is seemingly able to tolerate a large range of
+climatic conditions. In the warm northern extremes of its range, for example, H.capensis
+utilizes specific habitats that allow the lizards to thermoregulate more effectively.
+Despite receiving attention from ecologists and conservation biologists, the evolutionary
+history of Hemicordylus is poorly known and a phylogenetic assessment of the group is
+overdue. This study utilizes sequence data from H. capensis collected from across the full
+extent of its range and combines multi-locus molecular phylogenetic analyses with CT-
+based morphological analysis and ecological niche modeling to identify the extent of
+populations’ genetic, phenotypic and ecological divergence within H. capensis. Five
+major clades were recovered from the phylogenetic analysis, corresponding to four
+major mountain ranges in the CFM. CT scans of representatives from each clade
+revealed that the “heat-tolerant” northern forms were morphologically distinct from all
+the other clades, being much more gracile and poorly armored. Significant breaks in
+suitable habitat exists between four of the five populations and significant ecological
+divergence is seen between all populations, suggesting that the group may contain
+significant amounts of unrecognized species diversity.
+
+______________________________________________________________________________
+
+0224 Herp Morphology & Genetics, Galerie 3, Sunday 10 July 2016
+C. Tristan Stayton
+Bucknell University, Lewisburg, PA, USA
+What Proportion of Turtle Shell Shape Evolution Can Be Explained by
+Functional Performance?
+
+The turtle shell is a unique morphological structure that performs a number of
+functional roles. Most obviously the turtle shell serves as armor to resist forces imposed
+on the shell by predators. In addition, the shell is a hydrodynamic element that
+generates drag during swimming, an obstacle to righting when the turtle is overturned,
+and a structure which exchanges heat with the environment. The shape of a turtle's shell
+can affect its performance in all of these roles. This study addresses two questions: first,
+is it possible to integrate performance measures among all these functions to determine
+optimal shell shapes, or ranges of shell shapes, for various ecological categories of
+
+                                            596
+turtles? Second, what proportion of the variation in shell shape can be explained by
+reference to performance in these functions? Using engineering optimization principals
+(including reference to Pareto optimization) and newly-developed comparative
+techniques, the actual distribution of turtles in shell shape space is compared with
+predicted optimal ranges. Although the optimal shapes for certain ecological groups
+generally conform to the observed shell shapes for those groups, there are many
+exceptions. Surprisingly little variation - only ~30% - is explained by functional
+performance. Together, these findings point towards the presence of additional and
+highly influential functional factors affecting shell shape evolution, or towards the action
+of non-adaptive processes (such as developmental constraints) in the evolution of turtle
+shell shape. In either case, the results suggest a number of fruitful avenues for future
+research in understanding the diversification of this fascinating structure.
+
+______________________________________________________________________________
+
+
+
+1060 Fish Conservation, Galerie 3, Sunday 10 July 2016
+Clare Steele1, Vanessa van Heerden1, Mark Steele2, Sean Anderson1
+1California State University, Channel Islands, Camarillo, CA, USA, 2California State
+
+University, Northridge, Northridge, CA, USA
+Evidence for Human Impacts on Reef Fish Communities on an isolated
+Oceanic Island
+
+Remote oceanic islands offer an opportunity to study the interaction of human and
+natural systems in relative isolation. Aitutaki Island (Cook Islands) offers a unique
+location to observe the coupled dynamics between human systems and coral reefs.
+
+                       CANCELED
+Aitutaki is an almost-atoll in the South Pacific that is subject to a variety of synergistic
+threats, including poor water quality, overfishing, ciguatera, marine debris and climate
+change. The coral reefs surrounding Aitutaki present a gradient of human influence,
+with reefs around the inhabited main island suffering the effects of increased turbidity
+and elevated nutrients from freshwater runoff. We evaluated how reef fish communities
+differed between reefs near the main island versus those more distant from human
+influence. Along transects at twelve shallow reef sites, we assessed reef fish abundance
+and diversity, and evaluated the habitat. Reefs closer to human populations had lower
+species richness of reef fishes, less coral, and higher densities of macroalgae. Reefs
+further from the inhabited island had a significantly greater diversity of fishes, as well as
+higher densities of coral-dependent species, and harvested species such as Lethrinids
+and Serranids. Coral reefs are a vital marine resource for Cook Islanders, yielding a
+variety of foods, supporting sustainable tourism and providing coastal protection.
+Understanding the influence of anthropogenic impacts is an important step in restoring
+and maintaining the health of these systems.
+
+______________________________________________________________________________
+
+
+
+
+                                            597
+1071 Fish Reproduction, Physiology, & Conservation, Balconies J & K, Sunday
+10 July 2016
+Mark Steele, Mia Adreani
+California State University Northridge, CA, USA
+Effects of temperature on interannual variation in reproduction of three batch-
+spawning kelp forest fishes
+
+The extent to which reproductive success of fishes varies from year to year is seldom
+known, even for ecologically and economically important species. We studied the
+reproductive ecology of three key species in kelp forests in southern California: kelp
+bass (Paralabrax clathratus), California sheephead (Semicossyphus pulcher), and señorita
+(Oxyjulis californica) over 7 years that varied widely in temperature regime and included
+one of the largest El Niño events ever recorded. We tested the general hypothesis that
+interannual variation in reproductive parameters could be predicted from water
+temperature. Spawning season duration, spawning frequency, batch fecundity, and total
+annual reproductive output were measured at 3 large reefs (>70 hectares each).
+Specifically we tested the hypotheses that in warmer years (1) the onset of reproduction
+would occur earlier, (2) the reproductive season duration would be longer, (3) total
+annual reproduction would be higher, but (4) batch fecundity would be unrelated to
+temperature. Reproduction started earlier in warm years for one species, but not the
+other two. Contrary to our expectation, the duration of the reproductive season was
+unrelated to water temperature, and it tended to end earlier in warm years in all three
+species. Batch fecundity and total reproductive output varied markedly (2-4 fold)
+among years, but were not related to water temperature. Thus, for this suite of
+temperate reef species from families with tropical affinities, our expectation that warm
+years would be better for reproduction was not generally upheld.
+
+______________________________________________________________________________
+
+0070 NIA BEST STUDENT PAPER, Salon A-C, Friday 8 July 2016
+Sarah E. Steele1, Hernán López-Fernández2
+1University of Toronto, Toronto, Canada, 2Royal Ontario Museum, Toronto, Canada
+
+Examining the Role of Ontogeny and Body Size Evolution in the
+Diversification of Neotropical Cichlid Fishes
+
+The association between body size diversity and species, morphological and ecological
+diversity has been explored in fishes yet the role, if any, of body size in fish
+macroevoutionary divergence is still poorly understood. Changes in body size and
+shape are ultimately driven by changes in the timing of developmental events.
+Perturbations of growth rate and duration during ontogenetic development lead to the
+natural variation in populations that natural selection acts upon and directly determines
+the variation in traits that we study in adults. Trajectories of species growth (i.e.
+morphological shape change over age or size) have commonly been studied in
+vertebrates, yet the macroevolution of ontogenetic information and how ontogenetic
+
+                                           598
+development influences adult variation have rarely been studied. Using geometric
+morphometrics, we studied the ontogenetic allometry of Neotropical cichlids to
+determine when the morphological and ecological diversity seen in adult fishes is
+produced and to describe the patterns of ontogenetic changes over the phylogeny of
+Neotropical cichlids. Divergence in morphology among species occurs early in
+ontogeny, with species developing into an adult-like form at early ontogenetic stages
+followed by relative stasis of morphology and proportional growth. Functionally
+specialized groups are also highly divergent even in their early ontogenetic stages,
+suggesting ontogenetic shifts occur rapidly in early development. Understanding the
+growth of organisms and the variation among individuals across population can aid in
+understanding the divergence of adult morphology and ecology across species that is so
+commonly studied in macroevolution.
+
+______________________________________________________________________________
+
+
+
+0354 Amphibian Ecology & General Herpetology, Salon F-H, Sunday 10 July
+2016
+John Steffen, Stephen Drozda, Jessica Hultberg
+Penn State Erie, The Behrend College, Erie, PA, USA
+The effects of carotenoid and food supplementation on Blood Plasma Reactive
+Oxygen Species levels in Painted Turtles
+
+Animals use a variety of pigments to color their integument, including pigments known
+as carotenoids. Carotenoids are photosynthetic pigments in plants that animals must
+acquire from their diet and play diverse and important roles in photo-protection and
+free-radical scavenging. As a result, carotenoid-based skin colors are hypothesized to
+function as honesty-reinforcing mechanisms that underlie the use of colorful ornamental
+traits in sexual selection. The Painted Turtle (Chrysemys picta) has red and yellow patches
+and stripes on the skin and carapace which are colored by two carotenoids: an
+apocarotenoid (which generates yellow colors) and astaxanthin (which generates red
+colors). We performed a two factor lab experiment to investigate the effect of carotenoid
+access and food amount (i.e., food quantities to facilitate weight maintenance vs weight
+gain) on Reactive Oxygen Species (ROS) level in blood plasma. ROS levels are known to
+increase dramatically during times of environmental stress (e.g., UV or heat exposure)
+and promote tumor development. We found no evidence that male Painted Turtles
+mediate ROS levels by using carotenoids as free-radical scavengers in the blood.
+However, we found that weight maintained turtles had significantly higher ROS levels
+than weight gained individuals suggesting that a) turtles that eat only enough to
+maintain weight are stressed, or b) turtles that gain weight are gaining anti-oxidant
+benefits.
+
+______________________________________________________________________________
+
+
+
+
+                                           599
+0491 Lightning Talks, Galerie 2, Saturday 9 July 2016
+Ehlana Stell2, Glen Parsons1, Jan Hoover2
+1University of Mississippi, Oxford, Mississippi, USA, 2ERDC, Vicksburg, Mississippi,
+
+USA
+Estimating Burst Swim Speeds and Jumping Characteristics of Silver Carp
+(Hypophthalmichthys molitrix) Using Video Analyses and Projectile Physics
+
+Invasive fish species management has long been an issue for consideration in all wildlife
+and fishery industries. Without management control, invasive species such as the Asian
+silver carp (Hypophthalmichthys molitrix) will continue to exploit already vulnerable
+habitats disrupting native fisheries and inflicting unknown ecological damage. In this
+study we used on-line videography to estimate burst swim speeds, horizontal and
+vertical distance traveled, and angle of exit of silver carp during leaps. Additionally, we
+tested the hypothesis that carp exit the water at an angle that maximizes distance
+traveled. Our data show that silver carp reach speeds near 10 body lengths per second
+which is much higher than previously believed. Carp reach mean heights of 1.93 body
+lengths and travel a mean distance of 4.76 per leap. Maximum height and distance
+traveled were 4.58 and 11.5 body lengths, respectively. Our results, while preliminary,
+suggest the leaping abilities of silver carp may be greater than previously documented.
+These data may be valuable in the development of control methods to halt or slow the
+spread of Asian carp. Further investigation is needed particularly regarding the effects
+of environment on leaping characteristics in this fish.
+
+______________________________________________________________________________
+
+0814 SSAR SEIBERT AWARD CONSERVATION, Galerie 3, Friday 8 July 2016
+Anne Stengle1, Paul Sievert1, Tom Tyning2, Alan Richmond1
+1University of Massachusetts, Amherst, MA, USA, 2Berkshire Community College,
+
+Pittsfield, MA, USA
+Conserving Snake Species of Greatest Conservation Need Threatened by an
+Emerging Fungal Skin Disease
+
+Within the past several years, there appears to be an increase of observations of snake
+species exhibiting facial lesions, leading to many studies as too the cause. Recent work
+has correlated these facial lesions to fungal species Ophiodiomyces ophiodiiocola, also
+known as snake fungal disease (SFD). These lesions often involve the orbit, pit-organ, or
+labial region, causing concern for the individuals’ survivorship. Following protocols of
+the New England Timber Rattlesnake (Crotalus horridus) research of SFD by Roger
+Williams Park Zoo (Providence, RI), we currently have a 9 state SWG grant (2014-2015)
+to investigate effects of SFD on populations. With this study we assess the presence of
+SFD in all snake species in nine states by submitting biopsies to the National Wildlife
+Health Center. We’re also assessing treatment strategies for severely infected
+individuals. In addition, the one MA population of Timber Rattlesnakes with the
+highest report of SFD is currently being radio tracked to assess if there are any
+
+                                           600
+differences between infected and non-infected regarding overwintering, movements,
+and habitat use. We are currently assessing management strategies of headstarting and
+captive breeding for populations not only suffering from SFD, but isolation, inbreeding,
+and increased mortality from road kill, poaching, and intentional killings. Our future
+project includes introducing a new population in a protected area within the Quabbin
+Reservoir, in Massachusetts.
+
+______________________________________________________________________________
+
+0452 Lightning Talks, Galerie 2, Saturday 9 July 2016
+Sean Sterrett1, Todd Dubreuil2, Evan Grant2
+1Penn State University, University Park, PA, USA, 2U.S. Geological Survey, Turners
+
+Falls, MA, USA
+Development of a novel passive integrated transponder (PIT) vertical
+telemetry system for studying hypogean movements of woodland salamanders
+(Plethodon)
+
+Woodland salamanders (genus Plethodon) are the most abundant vertebrate group in
+Eastern temperate forests, have their center of diversity in the U.S., and have unique
+roles in ecosystem function. Widespread declines have been recently suggested based on
+re-visits to historically occupied sites. However, we know that up to 80% of a
+salamander population is belowground, which means that perceptions of population
+declines may result from most individuals simply hiding underground with greater
+frequency in contemporary surveys compared to historic visits. This difficulty in
+detecting surface-active individuals, combined with their known sensitivity to
+temperature and moisture, has implications for their conservation. Woodland
+salamanders are known to make daily and seasonal vertical movements in the forest
+floor, although no technology exists to quantify these fine scale movements. Here, we
+report on the development and testing of an antenna and experimental mesocosm
+system for tracking salamander movements in an environment aimed to mimic forest
+floor conditions. We monitored the vertical movements of twelve PIT-tagged red-backed
+salamanders (P. cinereus), using this new technique over three months in a laboratory
+environment. The development of these methods will guide our understanding and
+broaden our ability to test hypotheses related to salamander microhabitat ecology,
+which is critical for setting management goals for resource management agencies and
+predicting true population declines under changing environmental conditions. Based on
+this successful testing, we are developing field-deployed arrays to observe and map
+below-ground movements in response to real environmental conditions and at real
+population densities.
+
+______________________________________________________________________________
+
+
+
+
+                                          601
+0781 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Duane Stevenson, Gerald Hoff, James Orr, Ingrid Spies, Chris Rooper
+NOAA/National Marine Fisheries Service, Alaska Fisheries Science Center, Seattle, WA,
+USA
+Fishery Interactions with Skate Nursery Areas in the Eastern Bering Sea
+
+Since early 2015, fishery observers in the North Pacific Groundfish and Halibut Observer
+Program have been receiving training in the identification and sampling of skate egg
+cases. The goal of this training has been to support an NPRB project examining the
+unique properties of skate nursery sites in the eastern Bering Sea and the interactions of
+fisheries with skate egg cases. During the 2015 training year, over 230 observers received
+training in egg case identification and sampling, and recorded data on over 1000 skate
+egg cases. A total of 11 skate taxa were identified from egg cases, and over half (58%) of
+the egg cases were identified as Alaska skate (Bathyraja parmifera). Observers scored each
+egg case as either “viable”, meaning it contained an intact egg or embryo in some stage
+of development, or “non-viable”, meaning it was either empty or full of mud.
+Approximately 33% of the egg cases sampled by observers were classified as viable.
+Program wide, over 10,000 skate egg cases were encountered by observers. The majority
+of those egg cases (87%) were encountered on longliners targeting Pacific cod in the
+Bering Sea. Egg case encounters were concentrated on the outer shelf of the eastern
+Bering Sea, and over half of all egg cases reported were encountered in the area of
+Bering Canyon. Data collection for this project will continue through 2017, by which
+time we hope to have a comprehensive overview of fishery interactions with skate
+nursery areas in the eastern Bering Sea.
+
+______________________________________________________________________________
+
+1006 NIA II, Galerie 3, Sunday 10 July 2016
+Donald Stewart
+SUNY Coll. Envir. Sci. & For., Syracuse, NY, USA
+Taxonomic and Conservation Status of Arapaima mapae: Data Deficient Fishes
+in Limited Habitat
+
+Conservation status of all five nominal species of Arapaima remain uncertain; these
+fishes should be considered ‘data deficient' based on IUCN criteria. Arapaima mapae was
+described from a 2-m long, dried/stuffed mount. It was collected in 1837 from Lago do
+Amapá, a coastal lagoon in Brazil north of the Amazon delta. Arapaima mapae is
+distinguished from all other Arapaima by a distinctive, horizontally-elongate first lateral-
+line scale (versus such scales transversely ovate in other Arapaima); A. mapae is further
+distinguished from A. arapaima by its slender body form, and from A. arapaima, A. gigas
+and A. leptosoma by its slender caudal peduncle (~4% SL vs. ~6% SL in latter three taxa);
+it is readily distinguished from A. agassizii by its relatively larger eye, longer anal-fin
+base and other characters. Lago do Amapá is one of a series of lagoons along the
+Brazilian coast between the Amazon mouth and French Guiana (or Guyane) from which
+
+                                            602
+not a single specimen of Arapaima has been collected since 1837. A 1949 report from
+Guyane indicated that Arapaima occurred in most of the larger rivers of that country, but
+recent studies by French biologists failed to find any. Much farther south in the Brazilian
+state of Bahia, a single Arapaima specimen was collected about 1851, but there are no
+records from that area since then. Implications are that coastal drainages may have
+limited habitat for Arapaima, and such populations may be vulnerable to extirpation.
+Assessment of conservation status of A. mapae is urgently needed.
+
+______________________________________________________________________________
+
+0379 Fish Systematics I, Salon F-H, Saturday 9 July 2016
+Melanie Stiassny1, Prosanta Chakrabarty2, Fernando Alda2
+1American Museum of Natural History, New York, NY, USA, 2Louisiana State
+
+University, Museum of Natural Science, Baton Rouge, LA, USA, 3Louisiana State
+University, Museum of Natural Science, Baton Rouge, LA, USA
+Out of Tanganyika or into Tanganyika? Genome-wide UCE data elucidate the
+relationships and biogeographic history of the enigmatic lamprologines of the
+Lower Congo River
+
+The large cichlid tribe Lamprologini numerically dominates inshore fish communities in
+Lake Tanganyika (LT) and due, in large part, to their ecological, behavioral, and
+reproductive diversity lamprologines have been subject to extensive field and lab-based
+study. Unlike the other LT cichlid lineages, lamprologines are represented not just in the
+lake but also throughout the Congo basin, with a noteworthy concentration of species
+diversity centered along the lower reaches of the Congo River (LCR). While monophyly
+of the tribe is strongly supported by both morphological and molecular data, no
+consensus has yet been reached regarding lamprologine intrarelationships, and in
+particular the placement of the riverine taxa remains unresolved. Most previous studies
+have focused on LT species and relied primarily on mtDNA data to resolve their
+intrarelationships; a strategy driven principally by a noteworthy lack of ncDNA
+variation in commonly sampled markers. Of the few mtDNA studies that have included
+one or more riverine taxon, all have them as nested within the lacustrine radiation. A
+single study utilizing ncDNA (RAG1) suggests an alternative placement with riverine
+species resolved as sister to the LT radiation. In the present study we investigate the
+utility of genome-wide UCE data to resolve lamprologine phylogenetics at multiple
+scales; from the placement of riverine taxa in relation to the lamprologine radiation as a
+whole, as well as for elucidating species-level relationships and population structuring
+within and between LCR and upstream Congo River species.
+
+______________________________________________________________________________
+
+
+
+
+                                           603
+1000 General Ichthyology I, Balconies J & K, Sunday 10 July 2016
+Warren Stiles, Carol Johnston
+Auburn University, Auburn, AL, USA
+Hydrologic Change as a Driver in Fish Assemblage Shifts in Alabama, USA
+
+Past studies within single watersheds in the Southeast have found that unnatural
+changes in stream hydrology affect the fish assemblage negatively. With increases in
+land development and water withdrawals, significant declines in discharge and
+increases in flashiness have been seen in some Southeastern streams over the past 50
+years. In this study, contemporary fish assemblage data collected in the summers of 2013
+and 2014 were compared to historic collections in 6 unregulated watersheds across the
+physiographic regions of Alabama. Using redundancy analysis (RDA) relationships
+between land cover, hydrologic variation, and stream fish assemblages were
+investigated. Hydrology was found to have a significant effect on the fish assemblages
+in 4 of the watersheds. Where hydrologic regimes were found to have been altered, the
+assemblages were dominated by generalist species and were variable through time. In a
+watershed on the Talladega National Forest, the fish assemblage was found to be more
+stable over time than those in more developed watersheds. In another watershed that
+drains to the Tennessee River, it was found that flashiness had decreased over the past
+30 years and this was coincided with stable assemblages that were dominated by a mix
+of generalists and specialist. Many of the hydrologic changes seen in this study were
+related to changes in land cover that in some instances led to an increase in flashiness
+and sometimes a decrease in average discharge. These changes are important to keep in
+mind for the conservation of the diverse and distinct fish fauna of Alabama.
+
+______________________________________________________________________________
+
+0207 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Andrew Stites1, Joshua Sherwood1, Jeremy Tiemann1, Michael Dreslik1
+1Illinois Natural History Survey, Champaign, IL, USA, 2University of Illinois Urbana-
+
+Champaign, Champaign, IL, USA
+Reassessment of Iowa Darter Habitat in Illinois
+
+The Iowa Darter (Etheostoma exile) is a state-threatened fish species inhabiting a limited
+range in northern Illinois. Historical surveys (from 1901-1995) found Iowa Darters at
+only 40 sites, with 19 sites being from glacial lakes near the Wisconsin border leading to
+the conclusion they primarily inhabited glacial lakes. Recent surveys (since 1995) have
+found E. exile at 37 sites, with only 13 of those sites being from glacial lakes. Many of the
+recent surveys have focused on headwater streams that have had limited to no previous
+records of fish sampling. The combined findings illustrate the need to evaluate whether
+populations of Iowa Darters routinely inhabit the headwater streams of northern Illinois.
+Using the recent collection locations, species distribution models were created to guide
+future sampling in streams potentially having E. exile populations. Models indicated
+many of the potential locations for E. exile are headwater streams with no previous
+
+                                            604
+history fish community sampling. This might be because small streams having
+predications for occurrence are not routinely sampled by natural resource agencies.
+With the information we have provided, targeted surveys in areas of high predicted
+probability will afford assessing the frequency which E. exile occupy headwater streams
+in northern Illinois and determining their local habitat needs.
+
+______________________________________________________________________________
+
+0739 AES GRUBER AWARD, Balconies J & K, Thursday 7 July 2016
+Ashley Stoehr1, Jeanine Donley2, Scott Aalbers3, Doug Syme4, Chugey
+Sepulveda3, Diego Bernal1
+1University of Massachusetts Dartmouth, Dartmouth, MA, USA, 2MiraCosta College,
+
+Oceanside, CA, USA, 3Pfleger Institute of Environmental Research, Oceanside, CA,
+USA, 4University of Calgary, Calgary, Alberta, Canada
+Thermal sensitivity of red muscle function in a deep-diving shark
+
+Amongst pelagic elasmobranchs, bigeye thresher sharks (Alopias supercilious) exhibit
+robust vertical mobility, undertaking routine long-duration dives from the surface (18-
+20˚C) to beneath the thermocline (5-10˚C). Unlike pelagic fishes capable of regional
+endothermy (e.g., common thresher sharks, swordfish), the subcutaneous red muscle
+(RM) morphology of bigeye threshers precludes heat retention and results in large RM
+temperature fluctuations during prolonged dives. This study used the work loop
+technique to determine if bigeye thresher RM was impaired at cool temperatures or
+functioned across naturally-occurring temperatures (8, 16, 24˚C). Bigeye thresher RM did
+not produce positive power above a presumed tail beat frequency of 0.5 Hz, even when
+warmed to 24˚C. However, RM produced positive power at 8-24˚C and 0.25-0.5 Hz. The
+lower thermal sensitivity of bigeye thresher RM suggests that fishes lacking RM
+endothermy exhibit greater thermal independence. This thermal strategy may provide a
+cost-effective mechanism to facilitate sustained swimming in disparate thermal
+environments, but may compromise swimming speeds during prolonged cold exposure.
+
+______________________________________________________________________________
+
+0542 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; STORER AWARD
+HERPETOLOGY
+Jason Strickland1, Miguel Borja2, Andrew Mason1, Darin Rokyta3, Christopher
+Parkinson1
+1University of Central Florida, Orlando, Florida, USA, 2Universidad Juárez del Estado
+
+de Durango, Gómez Palacio, Durango, Mexico, 3Florida State University, Tallahassee,
+Florida, USA
+Convergence within a Species? Venom Evolution in Mojave Rattlesnakes
+
+Convergent phenotypes typically arise through independent mechanisms in highly
+divergent taxa due to similar selection pressures. However, recent research indicates
+
+                                          605
+convergence may be common in closely related species when a phenotypic trait, such as
+venom, is highly adaptive. Rattlesnake venom can be broadly characterized as either
+hemorrhagic (found in most species) or neurotoxic. Interestingly, in Mojave
+Rattlesnakes, Crotalus scutulatus, the majority have neurotoxic venom which is
+hypothesized to be ancestral. The exceptions are two populations, one in Arizona and
+one in Mexico, that are hemorrhagic suggesting convergence. To test this hypothesis, we
+collected venom and tissue from 120 C. scutulatus from throughout their range. We
+identified individuals of each phenotype as well as eight individuals with a hybrid
+phenotype and found higher proteomic variation among individuals than previously
+documented. Neurotoxic and hemotoxic individuals were not phylogenetically distinct
+indicating gene flow between phenotypes and we determined the two hemorrhagic
+populations are not closely related but have similar venom. Species distribution models
+of both phenotypes and of the two populations did not indicate significant differences in
+range suitability, suggesting environmental variables are not entirely responsible for the
+venom phenotypes. Based on these data, the venom polymorphism is being maintained
+in spite of gene flow and without an obvious environmental difference and the two
+hemorrhagic populations could be a result of convergent changes. Future work will
+compare venom gland transcriptomes among phenotypes and populations to determine
+if changes in expression are facilitating the convergence in phenotype.
+
+______________________________________________________________________________
+
+1019 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Tyler Stuck, Shaojie Zhang, Yier Jin, Anna Savage
+University of Central Florida, Orlando, Florida, USA
+SmartPhrog: A Long-Term, Active Bioacoustic Monitoring Solution Using
+Raspberry Pi For Frog Population Monitoring
+
+This project aims to develop a bioacoustic monitoring device using a computer system
+called Raspberry Pi. Raspberry Pi is a low cost, credit-card sized computer that is
+designed for programming education and ease of use. As a consequence of these design
+goals, it can be easily modified to fit many different applications. Population
+demographics can be challenging to assess for cryptic species such as amphibians, but
+accurate data on population size and activity are critical to determine overall population
+health. Long term monitoring using acoustics is a viable solution, but often requires
+sorting through many hours of data manually. The Raspberry Pi’s processing
+capabilities enhance its potential functionality beyond the recording capabilities of
+current bioacoustic devices and also cost a fraction of the price. Specifically, our
+“SmartPhrog” will be programmed to change behavior based on what it records. With
+proper instruction it will be able to determine optimal recording times to save power,
+take pictures when a frog is within range, and potentially recognize and respond to
+certain calls. Based on current data sampled with the SmartPhrog prototype that has
+been transformed using a frequency based principal component analysis, an untrained
+observer is able to separate and identify frog calls visually. This is the first step towards
+automatic classification of frog calls. The low cost of this system in applications for
+
+
+                                            606
+monitoring vocalizing animals make SmartPhrog a strong contender in bioacoustics as a
+tool for biologists in the future.
+
+______________________________________________________________________________
+
+0898 Fish Conservation & Morphology, Galerie 2, Sunday 10 July 2016
+Kristine Stump1, Craig Dahlgren2, Krista Sherman3, Charles Knapp1
+1John G. Shedd Aquarium, Chicago, IL, USA, 2Bahamas National Trust, Nassau, NP,
+
+Bahamas, 3University of Exeter, Exeter, UK
+Discovery of an Unknown Grouper Spawning Aggregation in The Bahamas
+Through the Use of Acoustic Telemetry
+
+Globally, many fish species migrate to fish spawning aggregations (FSAs). Temporal
+and spatial predictability of these migrations and FSA locations make species vulnerable
+to overfishing, since the majority of a region's adult population may be harvested
+quickly with minimized effort. Historically, the Nassau Grouper (Epinephelus striatus)
+was an important fishery throughout the Caribbean, but due to FSA overfishing, it is
+now rare in many reef ecosystems. In The Bahamas, stocks continue to decline despite
+the implementation of FSA protections. While more Nassau Grouper FSAs have been
+reported in The Bahamas than any other country, very few have been validated, and the
+dynamics of migrations to and from these sites is even less understood. We used
+acoustic telemetry to describe, for the first time, Nassau Grouper migrations along
+Andros Island, Bahamas, which is bordered by one of the longest barrier reefs in the
+world. We report the likely extirpation of a historically important FSA and suggest
+Nassau Grouper are migrating to an unreported spawning location. Synchronous with
+winter full moons, fish migrated in groups along the barrier reef shelf edge at an average
+speed of 1.67 km/hr and traveled roundtrip distances of 71.5 km to 260.3 km (x = 164.5 ±
+65.7 km, n = 10). These results are critical to assessing the efficacy of current
+management strategies in The Bahamas. Thus far, all known FSAs have been reported to
+the scientific community by fishermen. Our study represents the first time an FSA has
+been identified using telemetry.
+
+______________________________________________________________________________
+
+0294 Snake Ecology, Galerie 3, Sunday 10 July 2016
+Eric Suarez1, Christina Romagosa1, Carla Dove2, Bryan Falk3, Robert Reed3
+1University of Florida, Gainesville, FL, USA, 2Smithsonian Institution, Washington,
+
+DC, USA, 3US Geological Survey, Fort Collins, CO, USA
+Prey species composition and dietary shifts of the Burmese python (Python
+molurus bivittatus) in southern Florida
+
+The impact of invasive species has emerged as a high-priority issue in planning the
+restoration and conservation of the Greater Everglades Ecosystem. Resource managers
+in Florida are particularly interested in one of the most direct impacts of the invasive
+
+                                           607
+Burmese python population: what are they eating, and has it changed over time? We
+identified prey species from the digestive tract contents of 350 pythons collected from
+2010 to 2016 using a morphological approach (i.e., using hair, feather, and scale
+morphology). Digestive tract contents were derived from the southern Everglades, north
+to Water Conservation Area 3A, and west to Collier County. We found that shifts are
+occurring over time in diet composition for pythons collected from within Everglades
+National Park (ENP) boundaries, with birds becoming more prevalent in the diet as
+compared to data collected before 2008. The percentage of birds found in the python diet
+north and west of ENP remained near previously reported numbers (~25%). The
+mammalian component of the diet for pythons collected within the ENP boundaries
+consisted of primarily rodents (85%). The mammalian component north and west of
+ENP was more diverse, and rodents were only 45% of the diet. These results suggest
+spatial and temporal shifts in prey species composition for pythons throughout their
+range, which supports previous studies showing declining trends for some mammal
+species throughout the ENP. Dietary shifts in this common invasive species may have
+implications for ecosystem stability, as well as Everglades restoration.
+
+______________________________________________________________________________
+
+0747 AES Morphology & Reproduction, Balconies L & M, Friday 8 July 2016
+James Sulikowski1, Carolyn Wheeler1, Bianca Prohaska2, Neil Hammerschlag3
+1University of New England, Biddeford, Maine, USA, 2Florida State University,
+
+Tallahassee, Florida, USA, 3University of Miami, Miami, Florida, USA
+Stick it where the sun don’t shine: Advances in the non lethal study of
+elasmobranch reproductive biology for conservation management
+
+Data on maturity state, gestation period, and fecundity are essential for proper
+conservation and management of elasmobranchs. Historically, this information has been
+collected by lethal sampling, an approach that is problematic for threatened and
+endangered species. Recent studies have demonstrated that non-lethal approaches can
+be as effective as lethal ones for assessment of the reproductive status of elasmobranchs.
+Using examples from various species and reproductive modes, this study summarizes
+our current knowledge of several techniques: 1) analysis of circulating plasma
+hormones; 2) concentrations of steroid hormones from skeletal muscle tissue; and 3) the
+use of ultrasonography to discern pregnancy and follicular development and their use
+as reliable indicators of reproductive status in elasmobranchs.
+
+______________________________________________________________________________
+
+
+
+
+                                           608
+0159 Fish Morphology & Biogeography, Salon A-C, Sunday 10 July 2016
+Adam P. Summers1, Kevin Conway2, Thaddaeus Buser3
+1University of Washington, Friday Harbor, WA, USA, 2Texas A&M University, College
+
+Station, Texas, USA, 3Oregon State University, Corvallis, Oregon, USA
+Scan All the Fishes - Open Source CT data
+
+Computed tomography scanning with x-rays is an effective technique for visualizing
+radiodense skeletal tissues. With the addition of contrast techniques, iodine or
+phosphotungstic acid for example, it is also capable of revealing soft tissue anatomy. CT
+scanning has been expensive and the reconstructions of specimens a time consuming
+process that required expensive software. I will report on simple techniques for scanning
+large numbers of specimens at the same time. The data are then digitally dissected into
+single specimen scans. An important question to consider when bulk scanning is
+resolution – it will certainly be less than can be achieved scanning a single specimen. I
+propose a policy of scanning fishes at a resolution that allows morphometric
+measurements at higher resolution than traditional 2-d techniques (i.e. calipers, ocular
+micrometers). The throughput that is possible with a single CT scanner and a single
+person doing reconstructions is demonstrated at 32 species per day. We expect it is
+possible for a single person to scan 50 species a day of similarly sized fishes. We are
+engaged in scanning a specimen of every species of fish. Each species will be scanned at
+a resolution sufficient for many purposes. Slice data, STL files, PLY files and JPGs of
+volume and surface renderings are being made available immediately through a open
+access model. Our first groups of interest are the Cottoids, Gobeisocids, and Blennies.
+Uploading the data to the web remains a bottleneck. The processes we have developed
+for rapidly scanning, tracking and returning specimens are also available open access as
+living documents.
+
+______________________________________________________________________________
+
+0401 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; STORER AWARD
+HERPETOLOGY
+Jenny Sutherland1, 3, Amber Stedman1, David Mifsud2, Maegan Stapleton2,
+Edward Roseman3, Katherine Greenwald1
+1Eastern Michigan University, Ypsilanti, MI, USA, 2Herpetological Resource
+
+Management, Chelsea, MI, USA, 3USGS Great Lakes Science Center, Ann Arbor, MI,
+USA
+Use of Landcover Data and eDNA to Determine Occupancy of the Mudpuppy
+(Necturus maculosus maculosus) in the St. Clair-Detroit River System
+
+The Mudpuppy (Necturus maculosus maculosus) is a fully aquatic salamander with a
+range that spans the Great Lakes region. Although this species was once abundant
+throughout its range, evidence suggests that there have been widespread declines as a
+result of habitat modification, pollution, and over collection. Land use practices in the St.
+Clair-Detroit River System (SCDRS) have altered habitat, reducing shelter and breeding
+
+                                            609
+sites for mudpuppies, but information on their current status is lacking. We used
+trapping records and Geographic Information Systems (GIS) analysis to determine if
+landcover predicts the presence of mudpuppies along the project area. Additionally, we
+are investigating the utility of environmental DNA (eDNA) to aid future monitoring
+efforts. A number of sites along the St. Clair River have recently been restored,
+providing cover objects suitable for use as mudpuppy nesting habitat. We use eDNA
+sampling and quantitative PCR (qPCR) to compare mudpuppy presence in restored
+versus unrestored locations. These data will help prioritize management on a local and
+range-wide scale, resulting in more successful conservation of this ecologically
+important species.
+
+______________________________________________________________________________
+
+0780 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Tracey Sutton1, April Cook1, Kevin Boswell2, Heather Bracken-Grissom2, Sergio
+deRada3, Ron Eytan5, Dante Fenolio6, Tamara Frank1, Chuamin Hu4, Matthew
+Johnston1, Heather Judkins7, Jose Lopez1, Jon Moore8, Brad Penta3, Isabel
+Romero4, Mahmood Shivji1, Michael Vecchione4, Jay Rooker5, David Wells5,
+Marsh Youngbluth10
+1Guy Harvey Oceanographic Center, Nova Southeastern University, Dania Beach, FL,
+
+USA, 2Florida International University, North Miami, FL, USA, 3Naval Research
+Laboratory at Stennis Space Center, Bay St. Louis, MS, USA, 4University of South
+Florida College of Marine Science, St. Petersburg, FL, USA, 5Texas A&M University
+Galveston, Galveston, TX, USA, 6San Antonio Zoo, San Antonio, TX, USA, 7University
+of South Florida St. Petersburg, St. Petersburg, FL, USA, 8Wilkes Honors College,
+Florida Atlantic University, Jupiter, FL, USA, 9NOAA NMFS National Systematics
+Lab, Washington, DC, USA, 10Harbor Branch Oceanographic Institute at Florida
+Atlantic University, Ft. Pierce, FL, USA
+Deep-Pelagic Research in the Gulf of Mexico: the DEEPEND Consortium
+
+The Deepwater Horizon oil spill (DWHOS) was unique not only for its volume, but also
+for its depth of influence (0-1500 m). Variable amounts of hydrocarbons reached the
+ocean surface and/or seafloor, whereas 100% occurred within the water column.
+Understanding this pelagic habitat is important because about half of all fish species that
+occur in the Gulf of Mexico (GoM) spend all or part of their lives in the open ocean.
+Many mesopelagic and bathypelagic fishes vertically migrate each night to feed in the
+upper water column and return to deep water during the day. This behavior promotes
+rapid cycling of natural and anthropogenic material in the water column. Deep-pelagic
+fishes are prey for gamefishes, seabirds, and marine mammals. Given the steady growth
+of oil exploration and operations, the likelihood of future spills emphasizes the need to
+document acute and chronic effects on the pelagic fauna. The GoMRI-funded DEEPEND
+(Deep-Pelagic Nekton Dynamics) consortium was created for that purpose. DEEPEND is
+beginning the second of a 3-year program that builds on two intensive NOAA-
+supported surveys during 2010-11. DEEPEND will focus on short-term and long-term
+timescales to appraise the dynamic nature of communities using a suite of integrated
+
+                                           610
+approaches. These investigations include: 1) a direct assessment of GoM deep-pelagic
+community structure including the physical and biological drivers of this structure; 2) a
+time-series analysis/comparison of biophysical data; 3) a time-series examination of
+differences in genetic diversity among key species; and 4) a biogeochemical analysis of
+the effect of DWHOS on pelagic biota.
+
+______________________________________________________________________________
+
+0305 Fish Ecology II, Salon A-C, Saturday 9 July 2016
+Tracey Sutton1, April Cook1, Jon Moore2
+1Guy Harvey Oceanographic Center, Nova Southeastern University, Dania Beach, FL,
+
+USA, 2Wilkes Honors College, Florida Atlantic University, Jupiter, FL, USA
+Active Linkage of Large Vertebrates and the Deep-Pelagic Fauna of the
+Oceanic Gulf of Mexico after Deepwater Horizon: Vertical Dynamics of the
+Epipelagic, Mesopelagic and Bathypelagic Ichthyofauna
+
+Large predatory fishes, toothed whales, and smaller cetaceans rely on deep-pelagic
+nekton as primary or secondary prey. This trophic interaction is mediated by downward
+and upward vertical migration (e.g., sperm whales and mesopelagic lanternfishes,
+respectively). This interaction also links particulate-feeding lower trophic levels with top
+predators in a manner that spans the gamut of depth domains. This is particularly
+important with respect to a whole-water column disturbance such as the Deepwater
+Horizon oil spill. Here we present highly resolved vertical distribution and migration
+data collected during a large-scale, NOAA-supported, deep-pelagic (0-1500 m) survey in
+2011, along with data collected during ongoing GoMRI-supported DEEPEND
+consortium surveys. The deep-pelagic nekton community of the Gulf of Mexico is a
+complex mixture of migrating, non-migrating, and partially migrating assemblages that
+connect surface waters with depths well in excess of 1000 m. Major patterns of the
+vertical distribution of 151 species of fishes are summarized and quantified with the goal
+of highlighting potential vectors of anthropogenic contamination transfer in the deep-
+pelagial, the Gulf’s largest ecosystem. Among the key findings: 1) the epipelagial is truly
+two ecosystems, depending on time of day; 2) the largest active flux is that of the
+synchronous migrators, but a large biomass component of the epipelagial at night is
+contributed by deep-to-very-deep asynchronous migrators; and 3) vertical migration by
+the bathypelagic fauna is readily apparent. In summary, the deep-pelagic nekton
+provide an essential intermediate service with respect to ecosystem functioning,
+efficiently linking lower and higher trophic levels through movement and consumption.
+
+______________________________________________________________________________
+
+
+
+
+                                            611
+0671 Herp Conservation, Galerie 3, Saturday 9 July 2016
+William Sutton1, Kyle Barrett2, Cynthia Loftin3, Phillip deMaynadier4, Priya
+Nanjappa5, Allison Moody6
+1Tennessee State University, Nashville, TN, USA, 2Clemson University, Clemson, SC,
+
+USA, 3Maine Cooperative Fish and Wildlife Research Unit, Orono, ME, USA, 4Maine
+Department of Inland Fisheries and Wildlife, Bangor, ME, USA, 5Association of Fish and
+Wildlife Agencies, Washington, DC, USA, 6University of Maine, Orono, ME, USA
+Determining Vulnerability of Priority Amphibian and Reptile Conservation
+Areas to Climate Change and Urbanization in the Northeastern United States
+
+Climate change represents one of the most complex and globally important ecological
+stressors. As virtually all ecosystems will face impacts from climate change, it is essential
+to develop strategies that include pro-active conservation planning measures. The effort
+to establish Priority Amphibian and Reptile Conservation Areas (PARCAs) was initiated
+to identify valuable habitat for priority herpetofauna throughout the United States.
+Implicit in the identification of these habitats includes understanding long-term
+persistence to ecological stressors. We developed a framework for assessing the long-
+term vulnerability of proposed PARCAs in the North Atlantic Landscape Conservation
+Cooperative region to climate change. Our framework determines vulnerability by
+incorporating exposure (i.e., extent of climate change experienced by a species or locale),
+sensitivity (i.e., degree to which survival, persistence, or fitness may be impacted), and
+adaptive capacity (i.e., capacity of a species or locale to cope with climate change). We
+used a variety of spatially-explicit metrics that included projected temperature change,
+projected precipitation change, projected landuse change, priority amphibian and reptile
+species sensitivity, geographic context, and topographic relief to assess vulnerability. We
+found that projected temperature increases, landscape urbanization, and climatic niche
+loss of priority herpetofaunal species led to higher landscape vulnerability. Collectively,
+our efforts provide a science-based structure to assess the long-term vulnerability of
+these habitats to climate change, which will aid in the allocation of conservation efforts
+to priority landscapes based on projected climate resiliency.
+
+______________________________________________________________________________
+
+0655 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+William Sutton1, Michael Osborne2, Jeff Bailey3, Thomas Pauley4
+1Tennessee State University, Nashville, TN, USA, 2Appalachian State University,
+
+Boone, NC, USA, 3West Virginia Department of Environmental Protection, Charleston,
+WV, USA, 4Marshall University, Huntington, WV, USA
+Landuse Impacts on Stream Salamanders in West Virginia: An Ecoregion-
+Wide Analysis
+
+Globally, amphibians represent one of the most endangered vertebrate taxa. A variety of
+stressors, including landscape destruction and landuse change, emerging pathogens,
+aquatic pollution, and global climate threaten amphibian populations. Salamanders in
+
+                                            612
+the family Plethodontidae represent the only amphibian family where species lack lungs
+and rely completely on cutaneous respiration. These adaptations increase the
+vulnerability of these organisms to ecological disturbance, which makes them keen
+indicators of ecological condition. We evaluated the impacts of landscape disturbance on
+streamside salamanders at 45 streams in West Virginia over a three-year period. We
+used a combination of transect and quadrat surveys to survey and capture salamanders.
+We used both ordination and occupancy modeling approaches to evaluate potential
+impacts of stream disturbances. We captured over 2500 total adult and larval
+salamanders representing 9 species throughout the study period. The most commonly
+captured species included the Northern and Southern Two-lined Salamander (Eurycea
+bislineata and E. cirrigera), which tended to be common at most sites. We detected an
+effect of landscape disturbance on salamander populations and found that both richness
+and abundance of adult and larval salamanders were significantly lower in degraded
+streams versus streams of intermediate and reference conditions. A variety of landscape
+disturbances, including both agricultural and mining operations appear to be the
+greatest threat to salamanders in streams throughout West Virginia. Collectively, our
+study defines the greatest threats to stream salamanders throughout the state and also
+provides an additional evaluation of using salamanders as indicators of aquatic
+biological condition.
+
+______________________________________________________________________________
+
+0219 General Herpetology, Balconies L & M, Sunday 10 July 2016
+Jennifer Swanson1, Clay Pierce2, Erin Muths3, Kelly Smalling4, Mark Vandever3
+1Iowa State University, Ames, IA, USA, 2U.S. Geological Survey, Iowa Cooperative Fish
+
+and Wildlife Research Unit, Iowa State University, Ames, IA, USA, 3U.S. Geological
+Survey, Fort Collins Science Center, Fort Collins, CO, USA, 4U.S. Geological Survey,
+Lawrenceville, NJ, USA
+Habitat Use and Pesticide Exposure in Northern Leopard Frogs in
+Conservation Reserve Enhancement Program Wetlands
+
+Amphibian populations are declining, with habitat alternation due to land use change
+consistently identified as one of the biggest contributing factors. In agricultural
+landscapes, habitat loss may interact with other stressors such as environmental
+contaminants to exacerbate declines. Much of the landscape in northern Iowa has been
+transformed from a mosaic of seasonal wetlands and grasslands to row crops. In 2001,
+the Conservation Reserve Enhancement Program (CREP) was created to improve water
+quality through construction of wetlands positioned on the landscape to catch runoff
+from tile drainage systems and reduce nutrient effluent. However, these CREP wetlands
+may provide additional benefits, particularly as wildlife habitat. Our objective was to
+radio track northern leopard frogs (Lithobates pipiens) to record their movement at CREP
+wetlands and assess the pesticides in which they may come in contact. Although these
+sites are surrounded by vegetative buffers, they are often located in close proximity to
+agricultural fields where pesticides and fertilizers are applied. During the summer of
+2015 we captured and radio tracked frogs (n=38) at two CREP wetlands in Iowa. Passive
+
+                                          613
+pesticide samplers (PPSs) were placed in locations frequented by frogs to test for
+presence and concentration of contaminants to which frogs were exposed. Presence and
+concentrations of pesticides on PPSs were compared to corresponding values found in a
+subset of frogs that were euthanized after they had been tracked. Frogs moved from
+their original capture points to a variety of habitats at each site and traveled up to
+1,000m during the tracking period.
+
+______________________________________________________________________________
+
+0924 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; STORER AWARD
+HERPETOLOGY
+Meredith Swartwout1, Philip Vogrinc1, Joseph Alex Baecher2, Chelsea Kross1,
+John Willson1
+1University of Arkansas, Fayetteville, AR, USA, 2Eastern Kentucky University,
+
+Richmond, KY, USA
+Growth and Phenotypic Plasticity of Nerodia sipedon in Response to Feeding
+Frequency and Prey Size
+
+Because snakes are gape-limited predators, plasticity in trophic morphology may allow
+them to modify the sizes of prey that they are able to consume. Evidence suggests that
+some snakes can alter their head morphology in response to larger prey, but it is
+unknown whether this effect is mediated by growth rate. To test how prey size and
+feeding frequency influences head morphology and growth of a common water snake,
+we randomly assigned 33 lab-born neonate Nerodia sipedon to feeding treatments
+representing a factorial combination of two prey sizes and two feeding frequencies: Big-
+High (BH), Big-Low (BL), Small-High (SH), Small-Low (SL). Snakes in the BH treatment
+were offered one sunfish (Lepomis sp.) weekly that was 30% of their body mass; BL were
+offered one sunfish that was 30% of their body mass every other week; SH were offered
+two sunfish that were each 15% of their body mass weekly; and SL were offered one
+sunfish that was 15% of their body mass every other week. We photographed snakes at
+the beginning of the experiment and when they reached 400 mm snout-vent length
+(SVL) and analyzed images to compare head morphometrics among treatment groups.
+Snakes in the High treatments (SH and BH) had higher growth rates, while snakes in the
+Low treatments (BL and SL) had low growth rates. However, due to high variability in
+head morphology among individuals, we found limited evidence for plastic responses
+of trophic morphology to prey size or growth rate.
+
+______________________________________________________________________________
+
+
+
+
+                                          614
+0824 Lightning Talks, Galerie 2, Saturday 9 July 2016
+John Swenson, Karen Crow
+San Francisco State University, San Francisco, CA, USA
+How the Devil Ray Got Its Horns: The Evolution and Development of
+Cephalic Lobes
+
+Devil rays and their relatives (Family: Myliobatidae) are derived and highly divergent
+batoids, with some taxa considered the only living vertebrates with three functional
+paired appendages. The third set of appendages, termed "cephalic lobes", are
+modifications of the anterior pectoral fin that evolved to assist with feeding as the
+myliobatids transitioned from a benthic to a more pelagic lifestyle. To investigate the
+genetic underpinnings of these unique appendages, we collected embryos from the
+cownose ray (Rhinoptera bonasus) and will sequence the transcriptome of developing
+cephalic lobes for comparison with pectoral fin. Preliminary data indicate previously
+underappreciated genetic pathways may be responsible for modifying multiple regions
+of the body in this taxon.
+
+______________________________________________________________________________
+
+0807 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; STORER AWARD
+HERPETOLOGY
+
+Shantel Swierc1, Kim Withers1, J. Derek Hogan1, Michael R.J. Fostner2
+1Texas A&M University- Corpus Christi, Corpus Christi, Texas, USA, 2Texas State
+
+University, San Marcos, Texas, USA
+Demographics, distribution, and genetic variation in the Texas diamondback
+terrapin (Malaclemys terrapin littoralis) within the Corpus Christi and
+Aransas bay systems
+
+The goals of this research are to determine the population genetics and population
+dynamics of the Texas diamondback terrapin (Malaclemys terrapin littoralis) within the
+Nueces/Corpus Christi Bay and Aransas Bay estuaries on the central Texas coast. The
+genetic data produced by this study can be integrated with previous DNA analyses on
+Nueces Bay populations and provide needed information for development of
+management strategies. It will also provide the first genetic data on populations located
+within Oso Bay (Nueces/Corpus Christi Bay estuary) and Aransas Bay. An
+understanding of the population genetics from these terrapins will help answer various
+questions for conservation management in an underrepresented region from bays that
+are relatively isolated from one another. Terrapins were captured between April 2015
+and December 2015. Sex was determined based on morphological characteristics and
+females were checked for gravidity. Photographs, standard measurements, body
+condition score, age estimates, physical abnormalities, scute notches and PIT tags were
+all performed and applied for each individual. Blood samples were drawn from all
+captured individuals to genetically compare individuals within, and across, these bay
+
+                                           615
+systems using microsatellite DNA analysis. Preliminary captures, sex ratios, and
+standard measurement data for individual males and females are currently being
+analyzed, providing insight on the demographics of Texas diamondback terrapins in the
+study sites. DNA analysis will be performed on a ABI 3730xl DNA Analyzer, utilizing a
+multiplex PCR strategy involving M13 fluorescent labeled forward primers and the
+same 12 SSR primers that multiple previous studies have used for this species.
+
+______________________________________________________________________________
+
+0201 Poster Session I, Acadia/Bissonet, Friday 8 July 2016
+Dominic Swift, David Portnoy
+Texas A&M University-Corpus Christi, Corpus Christi, TX, USA
+High-throughput Sequencing for Genetic Monitoring and Stock Structure
+Assessment of Blacktip Sharks (Carcharhinus limbatus)
+
+Blacktip sharks (Carcharhinus limbatus) are one of the dominant large coastal species
+landed by commercial and recreational fisheries in the U.S. Atlantic and Gulf of Mexico.
+Blacktips give birth in nursery areas which are vital for juvenile survival and are
+considered essential fish habitat. In blacktips and other large coastal sharks, females may
+show philopatry to these nurseries and this may result in substructure, making these
+sharks more vulnerable to localized overfishing. Further, nurseries along the U.S.
+Atlantic and Gulf of Mexico coasts differ in environmental conditions which may lead to
+localized adaption, important for population viability when the environment is
+heterogeneous in space and time. We will sample 500-600 young-of-the-year and mature
+blacktip sharks across the U.S. Atlantic and Gulf of Mexico. We will use double digest
+restriction-site associated DNA (ddRAD) sequencing to (i) establish baseline genetic
+monitoring data for blacktips, (ii) provide high-resolution genetic data for blacktip stock
+assessment, (iii) develop replicable methods for genetic monitoring and stock structure
+assessment of other shark species. Genomic monitoring will involve estimating the
+effective number of breeders (Nb) and the minimum number of female breeders (Nmf) at
+each nursery area, as well as characterizing baseline genetic diversity of the breeding
+stock. We also will investigate the potential for localized adaptation associated with
+nurseries and develop fine-scale genetic tags to be used in future mark-and-recapture
+studies.
+
+______________________________________________________________________________
+
+0864 Fish Behavior & Development, Salon A-C, Sunday 10 July 2016
+Stephen Szedlmayer, Megan McKinzie
+Auburn University, Auburn, Alabama, USA
+Gray Triggerfish, Balistes capriscus, Movement Patterns, Residency, and
+Mortality on Artificial Reefs in the Northern Gulf of Mexico
+
+
+
+                                           616
+Gray triggerfish, Balistes capriscus, are ecologically and economically important in the
+northern Gulf of Mexico, yet little is known on their movement patterns, habitat use and
+residency to artificial reef structures. In the present study we successfully tagged and
+acoustically tracked gray triggerfish (N = 22) using the Vemco VR2W Positioning
+System (VPS). Individual fish were remotely tracked for 8 to 622 d from Oct 2012
+through Jul 2015. Gray triggerfish showed diel and seasonal movement patterns, high
+site fidelity and long term residency to reef sites. Mean ± SD home range (95% KDE) =
+3238 ± 3687 m2 and core areas (50% KDE) = 278 ± 331 m2, and were larger during the day
+than night time periods. Fall home range (mean ± sd = 4966 ± 4713 m2) was significantly
+greater than spring home range (1950 ± 1587 m2). Tracked individuals remained close to
+reef structures (mean distance from reef = 46.3 ± 1.3 m) and residency was estimated at
+163 d. Several individuals (N = 8) made large-scale directed movements to other nearby
+reef sites. Three fish returned to their release site after emigration periods of 8 to 200 d.
+Due to high residency and close proximity to reef structures, gray triggerfish may be
+highly susceptible to increased fishing mortality.
+
+______________________________________________________________________________
+
+0927 Fish Conservation & Morphology, Galerie 2, Sunday 10 July 2016
+Stephen Szedlmayer, Peter Mudrak
+Auburn University, Auburn, Alabama, USA
+A Comparison between Conventional and Transmitter Tagged Red Snapper,
+Lutjanus campechanus, to estimate Fishing Mortality in the Northern Gulf of
+Mexico
+
+Estimates of fishing mortality (F) are critical for valid management of red snapper,
+Lutjanus campechanus, in the Gulf of Mexico. To reduce difficulties of fisher non-
+reporting, unknown tag shedding and tagging artifact mortality with conventional
+tagging, telemetry methods have been developed. One difficulty with telemetry
+methods are low sample sizes compared to conventional tagging. The present study
+applied both conventional tagging (to increase sample size) and telemetry methods (to
+reduce error inherent with conventional tagging). For telemetry, we used the Vemco
+VR2W Positioning System to estimate red snapper F on artificial reefs in 2015. We
+released 63 transmitter tagged red snapper on 4 artificial reefs with Vemco VPS receiver
+arrays. Telemetry methods are unique in that they are entirely independent of fisher
+reported recaptures. For conventional tagging we release 364 Floy tagged red snapper
+on 38 artificial reefs at close to 10 tagged fish per reef. Conventional tagging methods
+are dependent on fisher returns, but we increased the probability of fisher returns by
+offering $150 rewards for retuned tagged fish. In 2015, telemetry tagged fish showed a
+high F = 0.33 based on fisher reported recaptures. Conventional tagging also showed
+the same high F = 0.33. After applying non-reporting rate (35 %) based on telemetry,
+estimates increased to F = 0.46. Thus telemetry based estimates were validated by
+conventional tagging methods and indicate that even with low sample sizes they
+provided accurate estimates, but at the same time can provide critical information that is
+not attainable with conventional tagging.
+
+
+                                            617
+______________________________________________________________________________
+
+0190 AES Ecology & Behavior I, Balconies L & M, Thursday 7 July 2016
+Elena Tamburin1, Mauricio Hoyos Padilla Hoyos Padilla2, Felipe Galván
+Magaña1, Sora Kim3, Alberto Sánchez González1, Agustín Hernández Herrera1,
+José Leonardo Castillo-Geniz4
+1Instituto Politécnico Nacional. Centro Interdisciplinario de Ciencias Marinas, La Paz,
+
+BCS, Mexico, 2Pelagios-Kakunjá A.C., La Paz, BCS, Mexico, 3Department of the
+Geophysical Sciences, Chicago, Illinois, USA, 4Centro Regional de Investigación
+Pesquera. Instituto Nacional de la Pesca (INAPESCA), Ensenada, B.C., Mexico
+Trophic habitat of mako and white shark in a nursery area
+
+Juveniles of white sharks (Carcharodon carcharias) and mako sharks (Isurus oxyrinchus) are
+captured in the artisanal fishery on the western coast of Baja California (B.C.): white
+sharks as by-catch with bottom gillnets and mako sharks as a target species with gillnets
+and pelagic longlines. The aim of this research is to study the habitat use of both species
+
+                       CANCELED
+using stable isotopes analysis of C and N in muscles tissues, which reflected the diet
+integrated in a large time scale. Sebastian Vizcaino Bay represents a nursery area in B.C.
+for both species and Isla Cedros likely represents a new pupping area for white sharks,
+based on observations and tissue collection (n=2). During 2015, 45 muscle samples were
+collected in Laguna Manuela (n=30), Bahia Tortugas (n=13) and Isla Cedros (n=2). We
+observed mako sharks between 67- 196 cm total length (TL) and white sharks between
+97-240 cm TL, which represent young of the year and juvenile sharks. The mean isotopic
+values in muscle were δ13C =-17.3‰ ± 0.3 and δ15N = 18.4‰ ± 0.9 for mako sharks and
+δ13C = -15.7 ± 0.4 and δ15N = 17.3 ± 0.9 for white sharks. In addition, smaller
+individuals have greater nitrogen isotope values, which could be due to maternal
+contributions or foraging in 15N-enriched environments. The isotopic niche for white
+and mako sharks do not overlap suggesting that sharks are not sharing feeding
+resources. Mako sharks of different age and sex classes showed a similar habitat use
+(δ13C) and segregation between neonates and juveniles.
+
+______________________________________________________________________________
+
+0664 ASIH STOYE AWARD GENETICS, DEVELOPMENT, &
+MORPHOLOGY, Salon F-H, Friday 8 July 2016
+Milton Tan, Jonathan Armbruster
+Auburn University, Auburn, AL, USA
+Transcriptome Evolution of Paedomorphic Cyprinidae
+
+The relationship between functional genomic evolution and evolution of extreme
+phenotypes is of major interest in evolutionary biology. Cypriniformes includes multiple
+genera of paedomorphic taxa, such as Paedocypris, Sundadanio, and Danionella,
+representing some of the world’s smallest vertebrates. Previous phylogenomic
+investigation demonstrated these taxa do not form a clade, and thus there have been
+
+                                           618
+multiple, independent transitions to paedomorphism. To study the relationship of
+phenotypic convergence in paedomorphic taxa and functional genomic evolution, we
+sequenced transcriptomes of Paedocypris, Sundadanio, and Danionella and compared their
+transcriptome sequences to publically available cypriniform transcriptomes. We first
+inferred the phylogeny of Cypriniformes using transcriptomic data. We then explored
+the relationship of transcriptomic sequence evolution with the evolution of
+paedomorphism, and tested for shifts in the level of selection specific to paedomorphic
+taxa relative to other cypriniforms in functional genes across the transcriptome.
+
+______________________________________________________________________________
+
+0547 Fish Systematics I, Salon F-H, Saturday 9 July 2016
+Kevin Tang
+University of Michigan–Flint, Flint, MI, USA
+Systematics of Damselfishes
+
+The family Pomacentridae is a widespread and species-rich group, forming a major
+component of the world’s reef communities. Over 250 damselfish species, representing
+all 29 pomacentrid genera, were examined for this study. Over 100 acanthomorph
+species were also included for analysis. Sequence data from mitochondrial (12S, 16S,
+ATPase 8/6, cytochrome b, cytochrome c oxidase I) and nuclear (histone 3,
+recombination activating gene 1, and tmo-4c4) genes were used for the phylogenetic
+analyses. The results of these analyses found support for the monophyly of the family
+as well as the monophyly of many previously recognized groups, corroborating other
+recent molecular phylogenies of this family. These relationships, particularly their
+implications for the classification and taxonomy of Pomacentridae, will be discussed.
+
+______________________________________________________________________________
+
+0728 Fish Morphology & Biogeography, Salon A-C, Sunday 10 July 2016
+Juliette Tariel2, Gary Longo1, Giacomo Bernardi1
+1UC Santa Cruz, Santa Cruz, CA, USA, 2Ecole Normale Supérieure de Lyon, Lyon,
+
+France
+Tempo and Mode of Speciation in Holacanthus Angelfishes Based on RADseq
+Markers
+
+In this study we estimated the timing of speciation events in a group of angelfishes
+using 1186 RADseq markers corresponding to 94,880 base pairs. The genus Holacanthus
+comprises seven species, including two clades of Panama trans-Isthmian geminates,
+which diverged approximately 3-3.5 Mya. These clades diversified within the tropical
+Eastern Pacific (TEP, three species) and tropical Western Atlantic (TWA, two species),
+which our data suggest to have occurred within the past 1.5 My in both ocean basins,
+but may have proceeded via different mechanisms. In the TEP, speciation is likely to
+have followed a peripatric pathway, while in the TWA, sister species are currently
+
+                                          619
+partially sympatric, thus raising the possibility of sympatric speciation. This study
+highlights the use of RADseq markers for estimating both divergence times and modes
+of speciation at a 1-3 My timescale.
+
+______________________________________________________________________________
+
+0466 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Christopher Taylor
+University of Texas Rio Grande Valley, Edinburg, TX, USA
+The spatial scale of similarity and patterns of homogenization and
+differentiation in Chihuahuan Desert riverine fish assemblages
+
+Desert aquatic ecosystems around the world are declining in water quantity, quality and
+native species diversity. Fish assemblages in these ecosystems are increasingly
+becoming homogenized, although the degree of homogenization is dependent on the
+magnitude and direction of change following extirpation and colonization events and
+the spatial scale of observation. The frequency of species loss and gain, the identity of
+those species, and the regional extent of these changes interact with historical patterns of
+species diversity and environmental change, and determine resulting patterns. We
+examined the spatial scale of similarity for fish assemblages in the highly modified Rio
+Grande basin in the Chihuahuan desert of West Texas using a well-documented
+historical data set and recent collections that provided a paired analytical design across
+29 localities spanning approximately 30 years of time. Results indicated that
+homogenization and differentiation occurred, but these patterns depended on the spatial
+resolution of comparison. The greatest changes were found between stream reaches
+within a sub-basin. The Rio Grande sub-basin showed strong convergence between
+upstream and downstream reaches that corresponded to declining water quality and
+quantity from the Rio Conchos in Mexico. The Pecos River sub-basin showed strong
+differentiation between upstream and downstream reaches that was associated with a
+strong shift in geomorphology. Assemblage similarities within specific river reaches of
+each sub-basin were variable in their degree of historical change, which was largely
+dependent on anthropogenic modification to the flow regime change and variability in
+the success of invasive species.
+
+______________________________________________________________________________
+
+0946 Lightning Talks, Galerie 2, Saturday 9 July 2016
+Emily Taylor
+California Polytechnic State University, San Luis Obispo, CA, USA
+What's behind the critical thermal maximum?
+
+The critical thermal maximum (CTmax) is a commonly used measure of thermal
+tolerance in ectotherms. It is defined as the temperature at which they lose coordinated
+locomotor function. The physiological mechanism responsible for the CTmax is largely
+
+                                            620
+unknown in air-breathing ectotherms. Recent studies in my lab have tested the oxygen
+limitation hypothesis, which suggests that the CTmax is reached when metabolic
+demand for oxygen exceeds the cardiovascular system's ability to supply it. I will briefly
+discuss the results of these studies and describe current studies underway to further test
+the hypothesis, which so far is being strongly supported in our studies on Sceloporus
+lizards.
+
+______________________________________________________________________________
+
+0238 AES Physiology, Paleontology, & Collections, Balconies L & M, Friday 8
+July 2016
+Jordan Taylor, Gavin Naylor
+College of Charleston, Charleston, SC, USA
+A Morphometric approach for assessing the Elasmobranch Fishes from the
+Late Eocene of South Carolina
+
+Isolated chondrichthyan teeth are the most abundant vertebrate fossils represented in
+the fossil record, and are widely distributed along the southeastern United States. The
+coastal plain in South Carolina contains an abundance of chondrichthyan remains from
+the Eocene epoch. It is distinguishable from other epochs by the presence of distinct,
+calcareous nannofossil assemblages and levels of dissolved carbon. The Eocene lasted
+from 55.8 to 33.9 million years ago and is characterized by accelerated global cooling,
+changes in ocean circulation, and a drop in global temperature of about 2°C. The effects
+of this climatic transition on fauna diversity have been observed in the calcareous
+nannofossil assemblage, but have yet to be observed in vertebrate macrofauna,
+specifically elasmobranchs. The present study aims to identify the diversity and
+distribution of the elasmobranch fauna using isolated teeth found in the Parkers Ferry
+formation (33.239068° N, -80.425665°W), which represents a period of cooling in South
+Carolina. Many extant sharks can be identified on the basis of tooth morphology, which
+has been typically qualitative in nature. This sorting "technique" has led to taxonomic
+problems in the fossil record, because there are several patterns of heterodonty that
+influence tooth shape. In this study, a geometric morphometric technique will be
+applied to extant and fossil teeth as a quantitative approach to identify the elasmobranch
+taxa from the late Eocene. The results of the present study will provide a reliable and
+unbiased method to identifying sharks' teeth.
+
+______________________________________________________________________________
+
+
+
+
+                                           621
+0388 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; SSAR VICTOR
+HUTCHISON STUDENT POSTER AWARD: ECOLOGY, NATURAL
+HISTORY, DISTRIBUTION, & BEHAVIOR
+Julie Taylor, Matthew Lattanzio
+Christopher Newport University, Newport News, Virginia, USA
+Blue Gets the Boulder, but Yellow is Bolder: Territorial Dynamics of a Color
+Polymorphic Lizard
+
+Social dynamics in territorial species reflect the outcome of interactions between
+multiple traits, including dominance and boldness, yet these traits are often treated
+independently. For example, in ornate tree lizards (Urosaurus ornatus), males differing in
+dewlap color diverge in social dominance: whereas blue males are aggressive and
+always territorial, yellow males usually exhibit a less-aggressive satellite behavioral
+tactic. However, in habitats with fewer available microhabitats, yellow males defend
+territories and increase in relative abundance, despite still losing to blue males in
+controlled dominance experiments. These observations suggest that consideration of
+social dominance alone may be insufficient to explain U. ornatus’ territorial dynamics in
+the wild. In this study we tested how both dominance and boldness contribute to the
+outcome of territorial disputes in tree lizards. We recorded the territory-use behavior of
+blue and yellow male tree lizards (entered in pairs) in the lab. At the end of each trial,
+we approached each male and recorded whether it fled (shy) or not (bold) in response to
+our approach. Our results support previous findings for U. ornatus; namely, dominant
+blue males occupied the higher-quality territory more often than yellow males.
+However, when approached by a simulated predator, blue males were more likely to
+flee than yellow males. Thus, while blue males are more dominant, yellow males may be
+bolder. In conclusion, although social dominance may drive initial territory acquisition
+patterns among competing males, asymmetries in their boldness behavior may perturb
+the nature of these patterns across environments.
+
+______________________________________________________________________________
+
+0392 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; SSAR VICTOR
+HUTCHISON STUDENT POSTER AWARD: ECOLOGY, NATURAL
+HISTORY, DISTRIBUTION, & BEHAVIOR
+William Ternes, Matthew Lattanzio
+Christopher Newport University, Newport News, Virginia, USA
+Trophic Niche Variation in a Widespread Lizard
+
+A growing body of evidence supports that dietary differentiation among populations
+may contribute to the ecological success of widespread taxa. However, the degree that
+populations vary in foraging tactics (i.e., generalist versus specialist with respect to
+resource availability) and prey selection (i.e., variation in trophic level) remains poorly
+understood. Here we will evaluate the degree of dietary divergence among 17
+populations of the ornate tree lizard (Urosaurus ornatus), and characterize the
+
+                                            622
+mechanism(s) contributing to observed inter-population differences in diet. At each
+population we captured 10 lizards with a noose-pole, recorded their body size, and
+collected a tissue sample for stable isotope analysis of their carbon and nitrogen content.
+At each site of capture, we also estimated the percent vegetation cover. We will use our
+stable isotope data to describe each population's diet and test whether populations
+diverge in foraging tactics (carbon), prey selection (nitrogen), or both. Preliminary
+analyses from a subset of our populations support that U. ornatus populations vary in
+diet selection (P<0.05), and do not generalize on available resources (P>0.05). Currently,
+we are in the process of analyzing our remaining data. If populations occupy distinct
+ecological roles in terms of their diet, then this would suggest ecological heterogeneity
+among populations plays a role in the ability of widespread species to occupy diverse
+microhabitats. In this manner, we will provide key insights into the factors contributing
+to and the nature of diet variation in a widespread taxon.
+
+______________________________________________________________________________
+
+1073 Herp Conservation, Galerie 2, Sunday 10 July 2016
+Kimberly Terrell1, Daniel Breaux2, Shelley Stiaes2
+1Memphis Zoo, Memphis, TN, USA, 2Southeast Louisiana Refuge Complex, US Fish
+
+and Wildlife Service, Lacombe, LA
+High Incidence of Snake Mortality at Bayou Sauvage National Wildlife
+Refuge (New Orleans, LA)
+
+Bayou Sauvage National Wildlife Refuge (NWR) is located entirely within the city limits
+of New Orleans and is considered the nation's largest urban wildlife refuge. It
+encompasses ~24,000 acres of intermediate and brackish marsh, as well as ~200 acres of
+forested lands on low ridges. The refuge is highly impacted by anthropogenic
+development. It is located in an area of high industrial/petrochemical activity and is
+intersected by a major interstate. In early 2006, wetlands along the eastern edge of the
+refuge were developed into a landfill to accept 2.6 million tons of residential debris from
+Hurricane Katrina. We conducted a herpetological inventory of Bayou Sauvage NWR
+from Jan - Dec 2015, funded by the US Fish and Wildlife Service. We detected 27
+amphibian and reptile species, including 10 snake species. Dead or moribund snakes
+were encountered throughout the year, including Agkistrodon piscivorus, Coluber
+constrictor, Farancia abacura, Lampropeltis nigra, Liodytes rigida, Nerodia cyclopion, and
+Thamnophis proximus. In many cases, no gross abnormalities were observed. Freshly-
+dead carcasses of three species were submitted to the National Wildlife Health Center
+for necropsy. Severe internal infections were identified in T. proximus and F. abacura, but
+the cause of death was undetermined in six necropsied L. rigida. Chemical or thermal
+skin burns were observed in the T. proximus carcass and in a live C. constrictor (not
+collected). Additional tests for environmental contaminants are ongoing. There is an
+urgent need to identify and mitigate the causes of mortality, disease susceptibility, and
+skin abnormalities in this population.
+
+______________________________________________________________________________
+
+
+                                            623
+0053 Herp Ecology, Salon F-H, Sunday 10 July 2016
+Christopher Thawley, Tracy Langkilde
+Penn State University, University Park, PA, USA
+Invasive Fire Ant (Solenopsis invicta) Predation of Eastern Fence Lizard
+(Sceloporus undulatus) Eggs
+
+Invasive species are a threat to biodiversity, and understanding their impacts on native
+ecosystems is a research priority. Red imported fire ants (Solenopsis invicta) are invasive
+in the southeastern United States and have multiple effects on a variety of native species.
+In some species, particular life stages, including juveniles and eggs, may be especially
+vulnerable to fire ants, but research on these impacts has been limited. Fire ants occupy
+microhabitats used for nesting by Eastern Fence Lizards (Sceloporus undulatus) across
+much of their range. We examined the extent of fire ant predation on fence lizard eggs
+by constructing artificial nests at a fire ant-invaded location and monitoring them for
+predation for up to 20 days. During this period, 24% of nests were predated by fire ants,
+and survival curves suggest 61% of nests may be vulnerable to fire ant predation over
+the entire incubation period. Distance of nests to the nearest fire ant mound and canopy
+cover above nests were not significant predictors of predation, indicating that nest site
+choice by fence lizards may not be able to avert fire ant predation. Invasive fire ants
+likely represent a novel level of predation pressure on many species, and these effects
+should be accounted for in management and conservation strategies.
+
+______________________________________________________________________________
+
+0923 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; STORER AWARD
+ICHTHYOLOGY
+Cheryl Theile, Terry Grande
+Loyola University Chicago, Chicago, IL, USA
+Developmental Changes in Lower Jaw Functional Morphology of North
+American Esocids
+
+Northern Pike (Esox lucius) and Muskellunge (Esox masquinongy) are two closely related
+fishes within the order Esociformes. Their geographical distributions overlap in North
+America and they are known to compete for resources in many localities. While both are
+voracious ambush predators later in life, Muskellunge appears to transition to a
+piscivorous diet sooner than Northern Pike. The development of Northern Pike and
+Muskellunge was examined to study how changes in the functional morphology of the
+lower jaw might be correlated to the timing of their diet shifts. The theoretical
+mechanical advantage (MA) for jaw opening and closing was calculated using
+ontological measurements of cleared and stained hatchery specimens (330.25 to 1,577.5
+hours post fertilization). In addition, the effective mechanical advantage (EMA) was for
+stained and dissected specimens (960.75 to 2131.25 hours post fertilization) for two
+subsections of the abductor mandibulae muscle, A2 and A3. Preliminary data for
+Northern Pike and Muskellunge suggest shifting MA for jaw opening and closing is
+
+                                           624
+correlated to age and size. Both species display a decrease in MA for jaw opening.
+However, MA for jaw closing increased with age for both species. The timing of these
+changes in MA are similar in both species and occur once the yolk sac is fully consumed
+but before their ontogenetic diet shifts. In addition, EMA was lower than MA for each
+muscle subsection, while both MA and EMA was lower for A3 than for A2. EMA did not
+change significantly over the time period studied for either muscle section.
+
+______________________________________________________________________________
+
+0265 Poster Session I, Acadia/Bissonet, Friday 8 July 2016; SSAR VICTOR
+HUTCHISON STUDENT POSTER AWARD: ECOLOGY, NATURAL
+HISTORY, DISTRIBUTION, & BEHAVIOR
+Alex A Thomas, Peter A Zani
+University of Wisconsin - Stevens Point, Stevens Point, WI, USA
+Experimental Test of Overwinter Site Selection by Ectotherms Based on
+Thermal and Spatial Cues: Side-blotched Lizards Prefer Smaller Crevices over
+Warmer Sites
+
+Winter site selection by ectotherms is often complex and the factors influencing this
+process are not yet fully understood. In many reptilian species microhabitat temperature
+appears to influence overwintering site selection, but the importance of spatial cues
+cannot be ruled out. To clarify the role of thermal and spatial cues, we independently
+tested how temperature and crevice size affects overwintering site selection of side-
+blotched lizards in the lab. Winter-acclimated lizards were allowed crevice selection in
+an artificial hibernaculum (winter habitat) in which heat and space were altered
+separately. This allowed us to test gradients of heat (~5–15 °C), or space (6, 13, or 19
+mm-tall crevices), or both. Experiments were preformed i) with a heat gradient, but
+without a space gradient, ii) without a heat gradient, but with a space gradient, and iii)
+with both heat and space gradients. The results of this experiment show that thermal or
+spatial cues by themselves may influence site selection, but when both heat and space
+gradients are available, lizards prefer smaller crevices over warmer sites. These results
+indicate that for overwintering ectotherms, crevice size may be more influential than
+temperature for site selection.
+
+______________________________________________________________________________
+
+0534 Lightning Talks, Galerie 2, Saturday 9 July 2016
+Meagan Thomas, Alanna Horton, Michael Dorcas
+Davidson College, Davidson, North Carolina, USA
+Predicting Total Body Length of Incomplete Rattlesnake Skeletons Through X-
+ray Technology and Vertebral Measurements
+
+The Eastern diamondback rattlesnake (Crotalus adamanteus) is the largest species of
+rattlesnake in the world, with adults typically reaching lengths of 1.2-1.5 m (4-5 ft).
+
+                                            625
+Although there are reports of individuals up to 2.4 m (7.8 ft), physical evidence (e.g.
+museum specimens, skins, scalable photographs) is limited for individuals over 2.1 m (7
+ft). In this study we used museum specimens (skeletal and preserved) to develop a
+model that would allow determination of body length from skeletal remains of C.
+adamanteus. We X-rayed 15 preserved known-length specimens of varying size and
+measured the pre- and post- zygapophyseal articular facets of the largest vertebra for
+each specimen. We used these data to develop body length estimates for three partially
+complete C. adamanteus skeletons with highly variable vertebral size (largest vertebra of
+each specimen measured 14.16, 16.60, 27.04 mm long). We discuss our findings and how
+they relate to what is currently known about C. adamanteus body size and natural
+history. Studies such as this are important for developing new techniques which can
+further our understanding of the natural history of extinct, rare, or understudied
+organisms that are difficult to acquire in nature, but are available through museums or
+other similar collections.
+
+______________________________________________________________________________
+
+0690 ASIH STOYE AWARD GENERAL ICHTHYOLOGY, SALON F-H,
+Thursday 7 July 2016
+Andréa T. Thomaz1, Mark R. Christie2, L. Lacey Knowles1
+1University of Michigan, Ann Arbor, MI, USA, 2Purdue University, West Lafayette, IN,
+
+USA
+Riverscape genetics: modeling genomic expectations to test hypotheses about
+river network architecture as drivers of evolutionary dynamics in aquatic
+populations
+
+It is widely recognized that physical landscapes can shape genetic variation within and
+between populations. However, it is not well understood how riverscapes, with their
+complex architectures, affect patterns of neutral genetic diversity. Using a spatially
+explicit agent-based modeling (ABM), we evaluate the genetic consequences of dendritic
+river shapes on local population structure. We disentangle the relative contribution of
+specific river properties to observed patterns of genetic variation by evaluating how
+different branching architectures and downstream flow regimes affect the genetic
+structure of populations within rivers. Irrespective of the river length, our results
+illustrate that the extent of river branching, confluence position, and asymmetric
+downstream migration dictate patterns of genetic variation in riverine populations.
+Comparisons between simple and highly branched rivers show a 20-fold increase in the
+overall genetic diversity and a 7-fold increase in the genetic differentiation between local
+populations. Given that most rivers have complex architectures, our findings highlight
+the importance of incorporating riverscape information into evolutionary models of
+aquatic species to disentangle neutral divergence caused by river architecture from
+adaptive processes. Also, the high genetic differentiation observed in complex
+architectures could help explain why riverine fishes represent a disproportionately large
+amount of global vertebrate diversity. In addition to exploring the genetic consequences
+of the riverscape theoretically, the framework is also useful for addressing how different
+
+                                            626
+aspects of river architecture might impact observed patterns of genetic variation in
+empirical systems; in this case, tests of hypotheses about genomic variation in the tetra
+Mimagoniates microlepis (Characidae) from southern Brazil.
+
+______________________________________________________________________________
+
+0427 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Andrew Thompson1, Andrew Furness2, Guillermo Orti1
+1The George Washington University, Washington D.C., USA, 2University of California,
+
+Irvine, Irvine, California, USA
+Phylo-transcriptomics of Annual Killifishes
+
+Annualism or seasonality is hypothesized to have evolved multiple times in
+Aplocheiloid killifishes (Cyprinodontiformes). These are fishes that live in ephemeral
+bodies of water subject to seasonal desiccation. When the pools dry up, adults bury
+their eggs in the soil, and embryos enter diapause stages and tolerate desiccation until
+the rains return. Once the rains return, they are then able to hatch. The phylogeny of
+this group has never been inferred with “big data” and many interrelationships in this
+clade are undetermined. Here, the phylogeny is inferred with orthologous genes of
+nearly 30 transcriptomes of aplocheiloid killifishes from most annual and non-annual
+lineages. This phylogeny is the foundation for future comparative work on the
+evolution of annualism in this group of organisms.
+
+______________________________________________________________________________
+
+0423 Fish Genetics, Salon D, Sunday 10 July 2016
+Andrew Thompson1, Jason Podrabsky2, Guillermo Orti1
+1The George Washington University, Washington, D.C., USA, 2Portland State
+
+University, Portland, Oregon, USA
+The Tanscriptomics of Delayed Hatching and Desiccation Tolerance in the
+Non-Annual Killifish Aplocheilus lineatus
+
+Annual killifish (Cyprinodontiformes: Aplocheiloidei) are known for their seasonality
+and their ability to inhabit temporary or ephemeral environments, which are subject to
+desiccation. Embryos undergo a diapause stage in the pre-hatching stage and they can
+also tolerate desiccation. This is a convergent trait that has evolved multiple times in this
+suborder of fishes. However, all related non-annual species also have embryos that
+possess the ability to tolerate desiccation and delay their hatching in a way that is similar
+to annual species. To explore the evolution of annualism and investigate the
+intermediate phenotype of non-annual fishes, replicated transcriptomes were sequenced
+for water-incubated pre-hatching and air-incubated delayed hatching embryos of the
+non-annual fish Aplocheilus lineatus. Hundreds of candidate genes involved in delayed
+hatching and desiccation tolerance have been identified. Results are compared to other
+transcriptomic studies of diapause and desiccation tolerance in cyprinodontiform fishes.
+
+                                            627
+______________________________________________________________________________
+
+0490 General Ichthyology II, Balconies J & K, Sunday 10 July 2016
+Kenneth Thompson
+Lock Haven University of Pennsylvania, Lock Haven, Pennsylvania, USA
+Karyotypes of Two Species of Sculpin (Cottus) and their Hybrid in Central
+Pennsylvania with a Discussion of Chromosomal Evolution in the Cottidae
+
+Specimens of Cottus cognatus, C. bairdi and their hybrids were collected from the West
+Branch of the Susquehanna River in Lycoming and Clinton Counties in Central
+Pennsylvania. Air dried, C-metaphase chromosome preparations were produced from
+gill epithelium. Diploid counts (2N) of 48 were determined for all three of these.
+Diploid counts for 19 specimens of C. cognatus, (nine males and nine females), eight
+specimens of C. bairdi (three males and five females) and seven hybrids (two males and
+five females) were determined. A total of 372 spreads were counted, 237 (63.7%) were
+determined to have 2N counts of 48 chromosomes. Metaphase spreads with 2N=48 were
+considered to be complete diploid sets and these were measured and classified by type
+(metacentric, submetacentric or subtelocentric/telocentric). It was found that there were
+eight bi-armed (msm) and 40 uni-armed (stt) chromosomes. The chromosome formulae
+(2N/NF) for all three were thus determined to be 48/56. Karyotypes for 34 species in 16
+genera are known for the family Cottidae. Twenty-four (70.6%) have 2N values of 46 -
+48. Ten (14.5%) of the 69 species in the genus Cottus have been karyotyped and nine of
+these (90.0%) have 2N=48. Eight of these (80.0%) have NF values of 56 - 58 indicating
+the conservative nature of chromosomal evolution within this genus.
+
+______________________________________________________________________________
+
+0209 ASIH STOYE AWARD CONSERVATION, SALON E, Thursday 7 July
+2016
+Michelle E. Thompson, Maureen A. Donnelly
+Florida International University, Miami, FL, USA
+Recovery of Amphibian Communities in Regenerating Forest: Two Case
+Studies in Riparian and Upland Habitats of Secondary Forest, Costa Rica
+
+The extensive degradation of natural systems caused by anthropogenic activities is a
+pressing global conservation concern. There is hope that some of the negative impacts
+caused by forest loss such as reduction of ecosystem services and loss of biodiversity
+may be offset by the regeneration of altered landscapes to secondary forests. However,
+the value of secondary forests to fauna is poorly understood. In our study, we examined
+the differences in species richness among riparian and upland habitats in a
+chronosequence of secondary forest in two tropical lowland wet forest regions of Costa
+Rica. We found that riparian habitats maintain high species diversity in modified
+habitats and early successional stages of forests. In harsh landscapes, such as those
+
+
+                                          628
+generated as a result of land-use change, riparian zones may be especially crucial to
+maintaining amphibian populations by serving as a refuge for a variety of species.
+
+______________________________________________________________________________
+
+0592 ASIH: ASIH at 100 Symposium, Salon D, Saturday 9 July 2016
+Mike Thompson
+University of Sydney, Sydney, NSW, Australia
+Eggs and Live Birth: A Retrospective and Prospective Look at the Evolution of
+Viviparity in Reptiles
+
+The 100th anniversary of ASIH is a terrific milestone and it is timely to reflect on the next
+100 years. The evolution of viviparity has been the major focus of my research career.
+From the seminal paper by Packard, Tracy and Roth in 1977, the field developed in a
+number of ways, from understanding the selective pressure leading to the evolution of
+live birth to the morphology and ontogeny of placental development, with squamate
+reptiles playing a major role in those studies. In last 40 years, methodological advances
+have pushed our studies further than we ever imagined. First, major advances in
+imaging technology and rapid development of sophisticated molecular techniques now
+allow us to address many new questions. We now combine the morphology of placental
+development, especially in skinks, and next generation sequencing to understand both
+the function and the evolution of gestational structures. The hunt for "the" gene for
+viviparity proved naïve and we now know that all of the same genes present in
+oviparous species are also present in viviparous species, but their timing and level of
+expression varies. The evolution of viviparity from oviparity seemingly involves 100s of
+genes, making it extremely complex. Many fields of biology, viviparity included, had
+firm roots in studies of reptiles, but they are now developing as broader evolutionary
+questions where reptiles act as a model. Consequently, many of us now use multiple
+models to address our questions (for me that includes marsupials and fishes), although
+our passions remain with reptiles.
+
+______________________________________________________________________________
+
+0951 Herp Biogeography, Phylogeography, & Systematics, Salon E, Saturday 9
+July 2016
+Robert Thomson1, Phillip Spinks2, Bradley Shaffer2, Anthony Barley1
+1University of Hawaii, Honolulu, Hawaii, USA, 2University of California, Los Angeles,
+
+California, USA
+Phylogeny of the Map Turtles (Graptemys)
+
+The emydid turtle genus Graptemys primarily inhabits large river systems that are
+drainages of the Gulf of Mexico. The species shows strong endemism, with each major
+system typically supporting one or two species within the genus. This radiation appears
+to have occurred both rapidly and recently, which has made phylogenetic resolution
+
+                                            629
+within the clade difficult. Here we present a well sampled molecular phylogeny
+comprising all species and subspecies recognized in the genus. We recover a well
+resolved phylogeny that is congruent with the presumed biogeographic history of the
+group. We also find a complicated history within the false map turtle complex, a group
+that contains several morphologically similar species, which may be due to incomplete
+lineage sorting, hybridization, or a combination of these factors. To further elucidate this
+history, we present preliminary results on a follow-up population genetic study
+comprising many thousands of SNP markers for several hundred individuals.
+
+______________________________________________________________________________
+
+0677 Fish Genetics, Salon D, Sunday 10 July 2016
+Jeremy Tiemann1, Trent Thomas2, John Epifanio1, Wendy Schelsky1
+1Illinois Natural History Survey, Champaign, IL, USA, 2Illinois Department of Natural
+
+Resources, Gibson City, IL, USA
+The Redspotted Sunfish Saga: From statewide surveys to genetic analyses,
+captive propagation, and reintroduction efforts
+
+The Redspotted Sunfish (Lepomis miniatus) occurs in clear, slow-flowing, well-vegetated
+streams and backwater lakes from the Illinois River basin south through the Mississippi
+River Valley. The range of L. miniatus in Illinois has been greatly reduced since the pre-
+1908 collections of Forbes and Richardson. Our surveys of known historical collection
+sites and other promising sites with favorable habitat in the mid-2000s suggested that
+only two populations now exist in the state – one in the Saline River basin (Ohio River
+drainage) and one in the Sangamon River basin (Illinois River drainage). Subsequent to
+our surveys, L. miniatus was designated as a state-endangered species in Illinois.
+Decimation of the species was probably the result of the drainage of swamps and
+bottomland lakes, loss of aquatic vegetation, and the general deterioration of water
+quality. We established a Redspotted Sunfish recovery team and established goals that
+included propagating the fish and releasing young-of-year (YOY) into restored Illinois
+River backwater lakes. From 2008-2010, L. miniatus was collected from Fish Creek
+(Sangamon River basin) and stocked into nursery ponds. Approximately 8,500 YOY
+were released into the 72-acre Fish Preserve Lake, a protected waterbody at Emiquon
+Nature Preserve near the Sangamon – Illinois confluence. These individuals spawned
+the following summer, allowing us to expand our stocking efforts by translocating the
+fish to five additional suitable waters in the region. Testing of the F2 generation
+suggested we were able to maintain the genetic diversity of this population of L.
+miniatus.
+
+______________________________________________________________________________
+
+
+
+
+                                            630
+0241 AES Ecology & Behavior II, Balconies J & K, Saturday 9 July 2016
+Thomas TinHan, R.J. David Wells
+Texas A&M University at Galveston, Galveston, Texas, USA
+Feeding Ecology of Juvenile Bull Sharks in the Northwest Gulf of Mexico
+
+Estuaries along the Gulf coast provide valuable nursery habitat for juveniles of several
+species of elasmobranchs (e.g. Bull Sharks), but questions remain as to how young
+sharks exploit resources along the marine-freshwater continuum. In this study, we
+examine spatial and temporal patterns in the feeding ecology of juvenile (<210 cm total
+length) Bull Sharks in estuaries along the Texas coast. Juvenile sharks (N = 142) were
+collected opportunistically from five estuarine complexes along the Texas coast over a
+two-year period. Stomach contents from all individuals were identified to the lowest
+possible taxon, and four metrics of dietary composition were calculated: 1) percent
+number, 2) percent weight, 3) percent frequency of occurrence, and 4) index of relative
+importance (IRI and % IRI) as an omnibus metric of dietary composition. Stomach
+contents were dominated by teleost prey, particularly drums/croakers (45% IRI),
+mullets (25% IRI), and catfishes (13% IRI), and taxonomic contributions to dietary
+composition were consistent across multiple metrics. Stable isotopes of carbon (δ13C),
+nitrogen (δ15N) and sulfur (δ34S) obtained from epaxial tissue of juvenile sharks were
+used to infer trophic position and sources of organic matter in Bull Shark diets. In
+addition, we examined differences in feeding ecology among sharks from distinct
+estuarine complexes, and the shifts in diet or trophic position occurring with respect to
+season or ontogeny. Here we present the results of these analyses and discuss the role
+Bull Sharks may play in the trophic connectivity of Texas nearshore systems.
+
+______________________________________________________________________________
+
+0093 Herp Ecology, Salon F-H, Sunday 10 July 2016
+Brian Todd1, Justin Nowakowski1, Steven Whitfield2, Evan Eskew1, Michelle
+Thompson3, Jonathan Rose1, Benjamin Caraballo4, Jacob Kerby5, Maureen
+Donnelly3
+1UC Davis, Davis, CA, USA, 2Zoo Miami, Miami, FL, USA, 3Florida International
+
+University, Miami, FL, USA, 4Renaissance Charter High School for Innovation, New
+York, NY, USA, 5University of South Dakota, Vermillion, SD, USA
+Variation in Host Thermal Tolerances Explains Patterns of Batrachochytrium
+dendrobatidis Infection in Amphibians
+
+The fungal pathogen Batrachochytrium dendrobatidis (Bd) has caused the greatest known
+wildlife pandemic to date, infecting over 500 amphibian species. Although many species
+develop disease as a result of infection and suffer from consequent mortality, others
+persist despite infection or avoid infection altogether. Our understanding of factors
+shaping differences in chytridiomycosis susceptibility among amphibians remains
+incomplete, limiting our ability to effectively predict infection and disease risk. Here, we
+introduce a conceptual model that explains differential susceptibility of ectothermic
+
+                                            631
+hosts to a generalist pathogen. Our model predicts that, given a conducive environment,
+infection risk will be lower for amphibian host species whose thermal tolerances exceed
+that of the Bd pathogen. We tested this prediction with a global database of Bd infection
+prevalence records representing 11,435 assays from 53 species across five continents. We
+supplemented this global database with infection data we collected in Costa Rica for 16
+additional species. Host species with higher thermal tolerances had lower Bd infection
+prevalence than did species with lower thermal tolerances. The relationship between
+host thermal tolerance and infection prevalence was generalizable across multiple
+amphibian families and spatial scales, and depended on environmental context, but host
+thermal tolerance was always the single best predictor of infection risk. Our study is the
+first to show how variation in thermal tolerance among host species underlies
+differential disease susceptibility. Given parallels in other disease systems, tolerance
+mismatches between host and pathogen may broadly shape disease risk among many
+ectotherm hosts besieged by host-generalist pathogens.
+
+______________________________________________________________________________
+
+1054 ASIH STOYE AWARD CONSERVATION, Salon F-H, Friday 8 July 2016
+Erin Toffemier, H. Bradley Shaffer
+University of California, Los Angeles, Los Angeles, CA, USA
+Metapopulation dynamics of the critically endangered Santa Barbara Distinct
+Population Segment of the California tiger salamander, Ambystoma
+californiense
+
+The Santa Barbara county population of the California tiger salamander, Ambystoma
+californiense, is recognized as a Distinct Population Segment (DPS) under the Federal
+Endangered Species Act (2000) and is one of the most endangered salamanders in the
+United States. The entire range of this lineage is contained in a 30 by 40 km region in
+northern Santa Barbara County, virtually all of which is in privately owned. Current
+recovery and management efforts focus on six geographically isolated metapopulations
+with the goals of maintaining and developing suitable habitat to support population
+growth and connectivity among breeding ponds. However, our understanding of
+current and historical movement patterns is extremely limited. Using both existing
+microsatellite data and newer genomic level target capture markers, we examined the
+genetic connectivity and effective population sizes of 23 breeding ponds across the
+metapopulations sampled from 1986 to 2001. Preliminary analyses show that there is
+strong genetic subdivision both among metapopulations and among breeding sites
+within these metapopulations, suggesting a history of restricted gene flow and local
+differentiation. These results indicate that metapopulations may not be interchangeable,
+and that local, on-site conservation methods may be called for, even in a geographically
+restricted species.
+
+______________________________________________________________________________
+
+
+
+
+                                           632
+0649 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Samantha Tomczewski1, Gary S. Casper2, John D. Peterson1
+1University of Wisconsin - Platteville, Platteville, Wisconsin, USA, 2University of
+
+Wisconsin - Milwaukee Field Station, Saukville, Wisconsin, USA
+Comparing Survey Techniques for Monitoring Wisconsin’s Endangered
+Cricket Frog
+
+Manual calling surveys have historically been the method of choice for monitoring frog
+populations. During these surveys researchers travel to wetlands and listen for frog
+species following a standard protocol. These surveys can be time intensive and occur
+late into the evening. Additionally, incorrect detections, observer differences, logistics,
+and safety and environmental factors can constrain data collection in manual surveys.
+The development of automated recording systems and their accompanying software can
+offer a solution to some of the drawbacks of manual calling surveys. In our study we
+used a combination of manual calling surveys and automated recording systems to
+monitor three populations of the state Endangered Blanchard’s Cricket Frog (Acris
+blanchardi) at 3 sites in Grant County Wisconsin. Results from manual calling surveys
+done by novice observers were compared to the audio playback of recordings from the
+same time. During manual calling surveys, observers made an error of omission 7% of
+time compared to zero commission errors in the audio playback. Current DNR
+management guidelines for this species involve assessing populations via manual
+calling surveys. Our data suggest that automated recording systems have several
+advantages over manual calling surveys. Our results may lead to improved guidelines
+for monitoring this species, especially as regards increasing sample sizes for statistical
+analysis, thereby improving the conservation of this imperiled species.
+
+______________________________________________________________________________
+
+0735 Turtle Ecology, Salon A-C, Sunday 10 July 2016
+Pilar Santidrián Tomillo1, Meritxell Genovart1, Frank Paladino2, James Spotila3,
+Daniel Oro1
+1Institut Mediterrani d’ Estudis Avançats, IMEDEA (CSIC-UIB), Esporles, Spain,
+2Indiana Perdue University Fort Wayne University, Fort Wayne/Indiana, USA, 3Drexel
+
+University, Philadelphia, PA, USA
+Temperature-dependent sex determination (TSD) is linked to temperature-
+dependent embryo mortality in sea turtles
+
+Sea turtles have temperature-dependent sex determination (TSD) and high temperatures
+in the nest reduce hatching success and emergence of hatchlings. We modeled the effect
+of increasing nest temperature on a critically endangered population of leatherback
+turtles (Dermochelys coriacea) and assessed the relationship between TSD and
+temperature-dependent hatchling output. Our results showed that TSD is advantageous
+for sea turtle populations when temperatures rise to the levels that increase their embryo
+mortality. Populations compensate for the increased mortality of hatchlings by
+
+                                           633
+increasing production of female hatchlings and therefore, future fecundity. This
+mechanism seems advantageous under fluctuating environments but it may become
+ineffective under climate change, as temperatures are projected to rise over the levels
+that produce 100% female hatchlings and cause death.
+
+______________________________________________________________________________
+
+0248 AES Morphology & Reproduction, Balconies L & M, Friday 8 July 2016
+Taketeru Tomita1, Chip Cotton2, Minoru Toda3
+1Okinawa Churashima Research Center, Motobu, Okinawa, Japan, 2Florida State
+
+University Coastal and Marine Laboratory, St. Teresa, FL, USA, 3Okinawa Churaumi
+Aquarium, Motobu, Okinawa, Japan
+Gas diffusion model indicates that oxygen diffusion through uterine wall is
+insufficient to sustain dogfish embryo
+
+Unlike mammals or some "placental viviparous" sharks, most viviparous elasmobranchs
+lack connection with the mother, and thus, the embryos must acquire oxygen from the
+surrounding uterine fluid for a period ranging from several months to more than a year.
+However, the mechanisms underlying oxygen delivery and uptake in elasmobranchs
+remain largely unknown. Diagnostic sonography performed on a captive Japanese
+dogfish (Squalus japonicus) at the Okinawa Churaumi Aquarium demonstrated that a
+late-stage embryo used buccal movement to pump uterine fluid, suggesting that the
+embryo acquires oxygen from uterine fluid via gill ventilation. A previous study
+hypothesized that embryonic respiration in aplacental elasmobranchs depends on
+oxygen supplied by the uterine wall. To test this hypothesis, the rate of oxygen supply
+from the uterus was estimated by applying a "gas diffusion model" to the uterine wall of
+two dogfish species (Squalus cf. mitsukurii and Squalus cubensis). Our model calculations
+suggested that the supply of oxygen via diffusion through the uterine wall contributes
+less than 15-30% of the total oxygen demand of late-stage embryos, indicating that
+uterine wall is not the main source of oxygen for embryonic respiration. Previously,
+some authors have suggested that pregnant dogfish intermittently exchange uterine
+fluid with external seawater during late gestation. Thus, late-stage embryos may acquire
+oxygen primarily from uterine seawater introduced from the external environment.
+
+______________________________________________________________________________
+
+
+
+
+                                           634
+0629 HL GRADUATE RESEARCH AWARD, Galerie 2, Thursday 7 July 2016
+João Tonini1, Karen Beard2, Rodrigo Ferreira3, Walter Jetz4, R. Alexander Pyron1
+1The George Washington University, Washington, DC, USA, 2Utah State University,
+
+Logan, UT, USA, 3Universidade Vila Velha, Vila Velha, ES, Brazil, 4Yale University,
+New Haven, CT, USA
+Fully-sampled phylogenies of squamates reveal evolutionary patterns in threat
+status
+
+Macroevolutionary rates of diversification and anthropogenic extinction risk differ
+vastly throughout the Tree of Life. This results in a highly heterogeneous distribution of
+evolutionary distinctiveness (ED) and threat status among species. We examine the
+phylogenetic distribution of ED and threat status for squamates (amphisbaenians,
+lizards, and snakes) using fully-sampled phylogenies containing 9,574 species and
+expert-based estimates of threat status for ~4,000 species. We ask whether threatened
+species are more closely related than would be expected by chance and whether high-
+risk species represent a disproportionate amount of total evolutionary history. We found
+currently-assessed threat status to be phylogenetically clustered at broad level in
+Squamata, suggesting it is critical to assess extinction risks for close relatives of
+threatened lineages. Our findings show no association between threat status and ED,
+suggesting that future extinctions may not result in a disproportionate loss of
+evolutionary history. Lizards in degraded tropical regions (e.g., Madagascar, India,
+Australia, and the West Indies) seem to be at particular risk. A low number of
+threatened high-ED species in areas like the Amazon, Borneo, and Papua New Guinea
+may be due to a dearth of adequate risk assessments. It seems we have not yet reached a
+tipping point of extinction risk affecting a majority of species; 63% of the assessed
+species are not threatened and 56% are Least Concern. Nonetheless, our results show
+that immediate efforts should focus on geckos, iguanas, and chamaeleons, representing
+67% of high-ED threatened species and 57% of unassessed high-ED lineages.
+
+______________________________________________________________________________
+
+0633 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+João Tonini1, Karen Beard2, Rodrigo Ferreira3, Walter Jetz4, R. Alexander Pyron1
+1The George Washington University, Washington, DC, USA, 2Utah State University,
+
+Logan, UT, USA, 3Universidade de Vila Velha, Vila Velha, ES, Brazil, 4Yale University,
+New Haven, CT, USA
+Fully-sampled phylogenies of squamates reveal evolutionary patterns in threat
+status
+
+Macroevolutionary rates of diversification and anthropogenic extinction risk differ
+vastly throughout the Tree of Life. This results in a highly heterogeneous distribution of
+evolutionary distinctiveness (ED) and threat status among species. We examine the
+phylogenetic distribution of ED and threat status for squamates (amphisbaenians,
+lizards, and snakes) using fully-sampled phylogenies containing 9,574 species and
+
+                                           635
+expert-based estimates of threat status for ~4,000 species. We ask whether threatened
+species are more closely related than would be expected by chance and whether high-
+risk species represent a disproportionate amount of total evolutionary history. We found
+currently-assessed threat status to be phylogenetically clustered at broad level in
+Squamata, suggesting it is critical to assess extinction risks for close relatives of
+threatened lineages. Our findings show no association between threat status and ED,
+suggesting that future extinctions may not result in a disproportionate loss of
+evolutionary history. Lizards in degraded tropical regions (e.g., Madagascar, India,
+Australia, and the West Indies) seem to be at particular risk. A low number of
+threatened high-ED species in areas like the Amazon, Borneo, and Papua New Guinea
+may be due to a dearth of adequate risk assessments. It seems we have not yet reached a
+tipping point of extinction risk affecting a majority of species; 63% of the assessed
+species are not threatened and 56% are Least Concern. Nonetheless, our results show
+that immediate efforts should focus on geckos, iguanas, and chamaeleons, representing
+67% of high-ED threatened species and 57% of unassessed high-ED lineages.
+
+______________________________________________________________________________
+
+0921 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+Luke Tornabene1, D. Ross Robertson2, James Van Tassell3, Carole Baldwin1
+1National Museum of Natural History: Smithsonian Institution, Washington, DC, USA,
+2Smithsonian Tropical Research Institute, Balboa, Panama, 3American Museum of
+
+Natural History, New York, NY, USA
+A cache of new gobies (Gobiiformes: Gobiidae) from mesophotic reefs in the
+Caribbean discovered by manned submersibles
+
+The Smithsonian’s Deep Reef Observation Project (DROP) has reinvigorated the
+exploration of mesophotic and other deep-reefs in the Caribbean. Through the use of
+Substation Curacao’s manned submersible Curasub, along with its tender vessel the R/V
+Chapman, DROP has discovered a cache of undescribed fish biodiversity from reefs
+below traditional scuba diving depths (~150-1000 ft). Many of the new species
+discovered by DROP belong to the family Gobiidae (gobies), the most diverse family of
+marine fishes in the world. Here we present an overview of the different gobiid taxa
+found on deep reefs in the Caribbean, including several species and genera that have
+been recently described as well as many other taxa that await formal description.
+
+______________________________________________________________________________
+
+
+
+
+                                          636
+0668 Poster Session II, Acadia/Bissonet, Saturday 9 July 2016
+
+Josiah Townsend1, Kayla Weinfurther1, Ileana Luque-Montes1, Thomas Firneno1,
+James Austin2
+1Indiana University of Pennsylvania, Indiana, Pennsylvania, USA, 2University of
+
+Florida, Gainesville, Florida, USA
+Underestimated diversity in Mesoamerican true frogs (Family Ranidae)
+
+True frogs (Family Ranidae) are a taxonomically and ecologically diverse radiation of
+with New World distributions reaching from Alaska to the Amazon. The taxonomy of
+ranids has historically been underestimated, particularly in reference to leopard frogs
+(Rana pipiens complex). In Mesoamerica, our understanding of species-level diversity in
+these ubiquitous frogs is poor, and lacks a well-resolved phylogenetic hypothesis to
+
+                         CANCELED
+guide species delimitation. Recognized taxa include Rana brownorum (low and moderate
+elevations along Caribbean versant of northern Mesoamerica), R. forreri (low elevations
+along Pacific versant), R. macroglossa (western Nuclear Central American highlands), R.
+maculata (Nuclear Central American highlands), R. taylori (low and moderate elevations
+along Caribbean versant of southern Mesoamerica), and R. warszewitschii (humid
+lowlands southern Mesoamerica). We sampled for over 200 Mesoamerican ranids
+representing six recognized species, and used DNA sequence data from three
+mitochondrial (12S, 16S, and COI) and four nuclear (BDNF, RAG1, Rhodopsin, and
+Seventh in Absentia) gene regions to estimate a new phylogeny. Our results suggest at

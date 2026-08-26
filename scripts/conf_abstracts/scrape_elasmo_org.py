@@ -34,7 +34,7 @@ from pathlib import Path
 import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from conf_abstracts import config as C, schema, load  # noqa: E402
+from conf_abstracts import config as C, schema, load, names  # noqa: E402
 
 YEARS = range(1985, 2006)
 URL = "https://elasmo.org/meetings/abstracts/abst{y}/"
@@ -109,7 +109,7 @@ def split_authors(raw: str):
         n = n.replace("*", "").strip(" ,")
         if not n:
             continue
-        authors.append(dict(full_name=n, position=i, is_presenter=int(pres),
+        authors.append(dict(full_name=names.normalise(n), position=i, is_presenter=int(pres),
                             raw_author_string=raw))
     if not authors:
         doubtful = True
