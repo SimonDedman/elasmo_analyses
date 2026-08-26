@@ -42,15 +42,21 @@ def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str):
                 affiliation_country=(au.get("affiliation_country") or None)))
     authors = [x for x in authors if x["full_name"]]
 
+    # society from the session heading's society prefix ("AES GRUBER",
+    # "SSAR SEIBERT ECOLOGY", "Session 7: ASIH Stoye ...") — same rule as the
+    # programme-book parser, so JMIH multi-society books tag per abstract.
+    from conf_abstracts.parse_program_book import _session_society
+    session = (a.get("session_name") or None)
+    soc = _session_society(session) if session else None
     rec = dict(
         program_number=a.get("program_number"),
         title=title or None,
         presentation_type=ptype,
-        session_name=(a.get("session_name") or None),
+        session_name=session,
         abstract_text=body,
         keywords=keywords,
         authors=authors,
-        society=None, societies_explicit=None, society_inferred=None,
+        society=None, societies_explicit=[soc] if soc else None, society_inferred=None,
     )
     rec = tag.resolve(rec, meeting)          # EEA/SI meeting -> is_elasmo=1
     # non-elasmo-meeting books: fall back to the lexicon on title+body

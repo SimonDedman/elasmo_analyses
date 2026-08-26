@@ -10,7 +10,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from conf_abstracts import config as C, schema, export  # noqa: E402
+from conf_abstracts import config as C, schema, export, names  # noqa: E402
 
 FABLE = C.REPO / "database" / "conference_abstracts_fable.db"
 
@@ -46,6 +46,7 @@ def merge():
                 n_u += 1
     main.execute("UPDATE meetings SET n_abstracts=(SELECT COUNT(*) FROM abstracts WHERE abstracts.meeting_id=meetings.meeting_id)")
     main.commit()
+    print(f"author names normalised: {names.normalise_db(main)}")
     print(f"replaced {len(old)} main meetings (EEA + Fable-superseded books) with {n_m} from Fable: {n_a} abstracts, {n_u} authors")
     tot = main.execute("SELECT COUNT(*), SUM(is_elasmo) FROM abstracts").fetchone()
     print(f"main DB now {tot[0]} abstracts / {tot[1]} elasmo")
