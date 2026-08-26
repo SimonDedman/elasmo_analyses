@@ -14,11 +14,11 @@ We assembled a near-complete corpus of elasmobranch literature (~31,650 papers, 
 
 The work began as a panel session at the **European Elasmobranch Association (EEA) Conference 2025** in Rotterdam, and is intended to become a **living database**, updated annually.
 
-**New here? Start with the [results index](docs/results.html)** — live links to the interactive Author Atlas, the collaboration network, key figures, and the validation report.
+**New here? Start with the [results index](https://simondedman.github.io/elasmo_analyses/results.html)** — live links to the interactive Author Atlas, the collaboration network, key figures, and the validation report.
 
 **Helping with downloads?** The [publisher & journal index](https://simondedman.github.io/elasmo_analyses/downloads/) lists every source with papers still missing, each linking to a pre-filtered view of the [download helper](https://simondedman.github.io/elasmo_analyses/remaining_downloads.html).
 
-**Want the tour?** The [slide deck with speaker notes](https://simondedman.github.io/elasmo_analyses/slides/) walks through the whole project in 17 slides, each with the notes spoken alongside it, so the argument reads end to end without the talk. Also available as a [PDF](https://simondedman.github.io/elasmo_analyses/slides/elasmo_analyses_slides.pdf).
+**Want the tour?** The [slide deck with speaker notes](https://simondedman.github.io/elasmo_analyses/slides/elasmo_analyses_slides.pdf) walks through the whole project in 17 slides, each with the notes spoken alongside it, so the argument reads end to end without the talk.
 
 ---
 
