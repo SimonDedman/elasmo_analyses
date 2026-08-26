@@ -79,6 +79,7 @@ PROGRAM_BOOK_FILES = {
     "2023_JMIH_ProgrammeBook": ("JMIH", 2023),
     "2024_JMIH_ProgrammeBook": ("JMIH", 2024),  # "N.N | Title"
     "2025_JMIH_ProgrammeBook": ("JMIH", 2025),
+    "2026_JMIH_ProgrammeBook": ("JMIH", 2026),  # Whova export: "N.N: Title" + "Speaker:"
 }
 
 # SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).

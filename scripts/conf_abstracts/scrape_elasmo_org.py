@@ -82,6 +82,9 @@ def split_authors(raw: str):
         award = {"G": "student (Gruber)"}.get(m.group(1), m.group(1))
         s = s[m.end():]
     s = s.rstrip(" .")
+    # generational suffixes are not authors: glue ", Jr." / ", III" to the
+    # preceding token so the Surname, Given pairing keeps its parity
+    s = re.sub(r",\s*(Jr|Sr|II|III|IV)\.?(?=\s*(,|;|$|\s+and\b))", r" \1.", s)
     doubtful = False
     if ";" in s:
         parts = [p for p in re.split(r"\s*;\s*", _AND.sub("; ", s)) if p.strip(" ,")]
