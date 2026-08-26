@@ -129,7 +129,7 @@
     "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2017/2017_EEA_ProgrammeBook_provisional.pdf",
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2017.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2017.json",
-    "n_chars": 20000,
+    "n_chars": 17701,
     "book_key": "EEA2017",
     "chunk": 0,
     "index": 8
@@ -225,36 +225,6 @@
     "index": 14
   },
   {
-    "key": "EEA2021",
-    "meeting": "EEA",
-    "year": 2021,
-    "city": null,
-    "society_hint": "AES",
-    "is_elasmo_meeting": true,
-    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2021/2021_EEA_ProgrammeBook.pdf",
-    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2021.txt",
-    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2021.json",
-    "n_chars": 11508,
-    "book_key": "EEA2021",
-    "chunk": 0,
-    "index": 15
-  },
-  {
-    "key": "EEA2023",
-    "meeting": "EEA",
-    "year": 2023,
-    "city": "Brighton",
-    "society_hint": "AES",
-    "is_elasmo_meeting": true,
-    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2023/2023_EEA_ProgrammeBook.pdf",
-    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2023.txt",
-    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2023.json",
-    "n_chars": 17502,
-    "book_key": "EEA2023",
-    "chunk": 0,
-    "index": 16
-  },
-  {
     "key": "EEA2023_oral",
     "meeting": "EEA",
     "year": 2023,
@@ -267,7 +237,7 @@
     "n_chars": 168364,
     "book_key": "EEA2023_oral",
     "chunk": 0,
-    "index": 17
+    "index": 15
   },
   {
     "key": "EEA2023_poster",
@@ -282,21 +252,6 @@
     "n_chars": 87213,
     "book_key": "EEA2023_poster",
     "chunk": 0,
-    "index": 18
-  },
-  {
-    "key": "EEA2025",
-    "meeting": "EEA",
-    "year": 2025,
-    "city": "Rotterdam",
-    "society_hint": "AES",
-    "is_elasmo_meeting": true,
-    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2025/2025_EEA_ProgrammeBook.pdf",
-    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2025.txt",
-    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2025.json",
-    "n_chars": 21400,
-    "book_key": "EEA2025",
-    "chunk": 0,
-    "index": 19
+    "index": 16
   }
 ]
