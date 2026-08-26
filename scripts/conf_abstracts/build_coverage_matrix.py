@@ -70,7 +70,7 @@ JMIH_PROGRAMME = {
     2019: "grid programme only — abstract book needed (Carylanne)",
     2026: "schedule-only programme (OCR text layer OK, not yet parsed) — abstract book needed",
 }
-SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "SI"]
+SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "EEA", "SI"]
 
 
 def load_asih_locations():
@@ -115,15 +115,25 @@ def db_meeting_status():
     return out
 
 
+def db_aes_web():
+    """AES abstracts harvested from elasmo.org (meeting='AES'): year -> count."""
+    con = sqlite3.connect(str(DB))
+    out = {yr: n for yr, n in con.execute(
+        "select m.year, count(*) from meetings m join abstracts a using(meeting_id) "
+        "where m.meeting='AES' group by m.year")}
+    con.close()
+    return out
+
+
 def db_year_society():
     con = sqlite3.connect(str(DB))
     cnt = defaultdict(int)
     for yr, soc, meeting, n in con.execute(
         """select m.year,a.society,m.meeting,count(*) from abstracts a
            join meetings m on a.meeting_id=m.meeting_id
-           where m.meeting in ('JMIH','ASIH','SI') group by m.year,a.society,m.meeting"""):
-        if meeting == "SI":
-            cnt[(yr, "SI")] += n
+           where m.meeting in ('JMIH','ASIH','SI','EEA','AES') group by m.year,a.society,m.meeting"""):
+        if meeting in ("SI", "EEA", "AES"):
+            cnt[(yr, meeting)] += n
         else:
             for s in (soc or "").split("|"):
                 if s in SERIES:
@@ -143,7 +153,7 @@ def meeting_cell(year, db):
     if d and d["ocr_failed"]:
         return loc, "OCR", "degraded phone scan — 0 abstracts recovered — flatbed re-scan needed (Carylanne)", 0
     if d and d["schedule"]:
-        return loc, "Schedule", "programme ingested (no abstract bodies)", d["elasmo"]
+        return loc, "Schedule", "programme ingested (no abstract bodies) — abstract book needed", d["elasmo"]
     if year in JMIH_PROGRAMME:
         return loc, "Programme", JMIH_PROGRAMME[year], 0
     if 1992 <= year <= 2024:
@@ -154,6 +164,7 @@ def meeting_cell(year, db):
 def build():
     db = db_meeting_status()
     yr_soc = db_year_society()
+    aes_web = db_aes_web()
     wb = Workbook()
     wb.remove(wb.active)
     thin = Side(style="thin", color="CCCCCC")
@@ -181,9 +192,10 @@ def build():
         "- 'ASIH/JMIH' = the American joint meeting (ASIH pre-1997, JMIH from 1997). ASIH/JMIH/HL/SSAR/NIA share one source book, collapsed to this column to remove duplicates.",
         "- 'AES' (American Elasmobranch Society, founded 1983) kept separate — cell shows elasmo-abstract count where ingested. Pre-1983 = no conference (blank).",
         "- Host cities 1916-2025 from github.com/SimonDedman/AESconfLocations; 2026 = New Orleans.",
-        "- 'OCR' = degraded 1997-2004 JMIH phone-photo scans (all needs_review); Carylanne's flatbed re-scans will upgrade these.",
-        "- No abstracts collected pre-1992 (Carylanne's archive starts 1992) → 1916-1991 show host city but 'Missing'.",
-        "- EEA 2010-2026 from Cat Gordon (Shark Trust); pre-2010 in Ali's archive. EEA 2004-2019 + 2023 ingested via Fable (731 abstracts, 2026-08-14); 2024/2025 PDFs corrupt (await clean copies from Cat). SI2022 Valencia PDF received (Digital).",
+        "- 'OCR' = degraded 1997-2004 JMIH phone-photo scans (all needs_review); Carylanne's flatbed re-scans would upgrade the non-AES content.",
+        "- AES 1985-2005: full abstracts harvested from elasmo.org/meetings/abstracts/abst<YYYY>/ (1,305 abstracts, 2026-08-25); JMIH-book copies of the same AES talks were removed. No AES source found for 1983-84 or 2006+ online.",
+        "- ASIH/JMIH pre-1992: Carylanne's archive starts 1992 → host city shown but 'Missing'.",
+        "- EEA 2010-2026 from Cat Gordon (Shark Trust); pre-2010 in Ali's archive. EEA 2004-2019 + 2023 ingested via Fable (731 abstracts, 2026-08-14) and merged into the main DB 2026-08-25; 2024/2025 PDFs corrupt (await clean copies from Cat). SI2022 Valencia schedule ingested.",
         "- OCS (Oceania Chondrichthyan Soc, ~2011+, biennial): Brit Finucci collating, pending council — years/locations TBC.",
         "- Blank/unshaded cell = no conference that year for that series.",
         "- Per-society counts & trends: see the Dashboard tab.",
@@ -220,7 +232,11 @@ def build():
         loc, st, note, el = meeting_cell(year, db)
         put(r, 2, txt(loc, st, note), st)
         # AES (founded 1983)
-        if year >= 1983:
+        if year in aes_web:
+            # AES abstracts harvested from elasmo.org supersede the JMIH-book status
+            put(r, 3, txt(f"{loc} ({aes_web[year]})", "Ingested",
+                          "AES abstracts from elasmo.org (full bodies)"), "Ingested")
+        elif year >= 1983:
             aloc = f"{loc}" + (f" ({el})" if el else "")
             put(r, 3, txt(aloc, st, note), st)
         else:
