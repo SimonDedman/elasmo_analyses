@@ -76,7 +76,10 @@ def _chunk_text(text: str):
 # EEA books are wholly elasmo (meeting=EEA -> AES society). The Cat/ folder holds
 # the EEA abstract books; extend this list to sweep JMIH/ASIH/SI later.
 SCOPE = [
-    (str(C.REPO / "database/others_libraries/Cat/EEA*.pdf"), "EEA", "AES", True),
+    # abstract books only: programme-only PDFs (2015/2017/2021/2023/2025) carry no
+    # bodies and would collide with the same year's abstract-book key.
+    (str(C.CONFERENCES / "*" / "*_EEA_AbstractBook*.pdf"), "EEA", "AES", True),
+    (str(C.REPO / "database/others_libraries/Cat/EEA*.pdf"), "EEA", "AES", True),  # legacy inbox
 ]
 
 
@@ -84,8 +87,14 @@ def _key(pdf: Path) -> str:
     """Stable short key from the filename, e.g. EEA2004_London -> EEA2004.
     A year split across two books (oral/poster) gets an _oral/_poster suffix so
     they don't collide (e.g. EEA2023_oral, EEA2023_poster)."""
-    m = re.match(r"([A-Za-z]+)_?(\d{4})", pdf.stem)
-    base = f"{m.group(1)}{m.group(2)}" if m else re.sub(r"[^A-Za-z0-9]+", "_", pdf.stem)[:32]
+    m = re.match(r"([A-Za-z]+)_?(\d{4})", pdf.stem)          # EEA2004_London
+    m2 = re.match(r"(\d{4})_([A-Za-z]+)_", pdf.stem)          # 2004_EEA_AbstractBook
+    if m:
+        base = f"{m.group(1)}{m.group(2)}"
+    elif m2:
+        base = f"{m2.group(2)}{m2.group(1)}"
+    else:
+        base = re.sub(r"[^A-Za-z0-9]+", "_", pdf.stem)[:32]
     low = pdf.stem.lower()
     if "oral" in low:
         base += "_oral"
@@ -169,7 +178,10 @@ def build(only=None):
         by_key[key] = dict(
             key=key, meeting="EEA", year=yr, city=_EEA_CITIES.get(yr),
             society_hint="AES", is_elasmo_meeting=True,
-            source_pdf=str(C.REPO / "database/others_libraries/Cat" / f"{key}.pdf"),
+            source_pdf=next((str(f) for f in sorted((C.CONFERENCES / str(yr)).glob(f"{yr}_EEA_*.pdf"))
+                             if "AbstractBook" in f.name), None)
+            or next((str(f) for f in sorted((C.CONFERENCES / str(yr)).glob(f"{yr}_EEA_*.pdf"))),
+                    str(C.CONFERENCES / str(yr) / f"{yr}_EEA_AbstractBook.pdf")),
             src_txt=str(txt), cache_path=str(CACHE_DIR / f"{key}.json"),
             n_chars=txt.stat().st_size)
 

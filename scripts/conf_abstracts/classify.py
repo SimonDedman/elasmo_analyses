@@ -12,7 +12,8 @@ def _meeting(name: str) -> str:
         return "JMIH"
     if "ASIH" in up:
         return "ASIH"
-    if re.search(r"\bSI\d{2,4}\b", up) or "SHARKS_INTERNATIONAL" in up or "SHARKS INTERNATIONAL" in up:
+    if (re.search(r"\bSI\d{2,4}\b", up) or re.search(r"(^|[_ ])SI([_ ]|$)", up)
+            or "SHARKS_INTERNATIONAL" in up or "SHARKS INTERNATIONAL" in up):
         return "SI"
     if "EEA" in up:
         return "EEA"
@@ -21,6 +22,8 @@ def _meeting(name: str) -> str:
 
 def _doc_type(name: str) -> str:
     low = name.lower()
+    if "copeia" in low or "meetingsummary" in low:
+        return "meeting_summary"   # ASIH business minutes (Copeia), no abstracts
     if "abstract" in low:
         return "abstract_book"
     if "poster" in low:

@@ -34,18 +34,26 @@ def log(msg):
 
 
 def list_pdfs(only=None):
-    pdfs = []
-    for d, is_ocr in ((config.DIGITISED, False), (config.UNDIGITISED, True)):
-        if d.exists():
-            # case-insensitive: catch both .pdf and .PDF
-            seen = set()
-            for p in sorted(d.iterdir()):
-                if p.suffix.lower() != ".pdf" or p.name in seen:
-                    continue
-                seen.add(p.name)
-                if only and not fnmatch.fnmatch(p.name, only):
-                    continue
-                pdfs.append((p, is_ocr))
+    """Conference PDFs from the library tree (Conferences/YYYY/*.pdf) plus any
+    not-yet-migrated files in the legacy inbox folders. Phone-scan books and
+    Copeia meeting summaries are skipped (see config.SKIP_NAME_FRAGMENTS)."""
+    pdfs, seen = [], set()
+    dirs = []
+    if config.CONFERENCES.exists():
+        dirs += [(d, False) for d in sorted(config.CONFERENCES.iterdir()) if d.is_dir()]
+    dirs += [(config.DIGITISED, False), (config.UNDIGITISED, True)]
+    for d, is_ocr in dirs:
+        if not d.exists():
+            continue
+        for p in sorted(d.iterdir()):
+            if p.suffix.lower() != ".pdf" or p.name in seen:
+                continue
+            if any(f in p.name for f in config.SKIP_NAME_FRAGMENTS):
+                continue
+            seen.add(p.name)
+            if only and not fnmatch.fnmatch(p.name, only):
+                continue
+            pdfs.append((p, is_ocr or "_phonescan" in p.name))
     return pdfs
 
 
