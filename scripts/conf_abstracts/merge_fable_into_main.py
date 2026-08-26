@@ -19,7 +19,11 @@ def merge():
     main = schema.create_db(C.DB_PATH)
     fab = sqlite3.connect(str(FABLE))
     fab.row_factory = sqlite3.Row
-    old = main.execute("SELECT meeting_id FROM meetings WHERE meeting='EEA'").fetchall()
+    # replace every main meeting that the Fable set supersedes: all EEA rows, plus
+    # any regex-parsed book whose source_pdf Fable has also extracted (JMIH 2005/2016)
+    fab_srcs = [r[0] for r in fab.execute("SELECT source_pdf FROM meetings")]
+    old = main.execute("SELECT meeting_id FROM meetings WHERE meeting='EEA' OR source_pdf IN (%s)"
+                       % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
     for (mid,) in old:
         main.execute("DELETE FROM authors WHERE abstract_id IN (SELECT abstract_id FROM abstracts WHERE meeting_id=?)", (mid,))
         main.execute("DELETE FROM abstracts WHERE meeting_id=?", (mid,))
@@ -42,7 +46,7 @@ def merge():
                 n_u += 1
     main.execute("UPDATE meetings SET n_abstracts=(SELECT COUNT(*) FROM abstracts WHERE abstracts.meeting_id=meetings.meeting_id)")
     main.commit()
-    print(f"replaced {len(old)} EEA meetings with {n_m} from Fable: {n_a} abstracts, {n_u} authors")
+    print(f"replaced {len(old)} main meetings (EEA + Fable-superseded books) with {n_m} from Fable: {n_a} abstracts, {n_u} authors")
     tot = main.execute("SELECT COUNT(*), SUM(is_elasmo) FROM abstracts").fetchone()
     print(f"main DB now {tot[0]} abstracts / {tot[1]} elasmo")
     for base in (C.OUT, C.REPO / "database"):

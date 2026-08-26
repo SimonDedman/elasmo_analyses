@@ -93,8 +93,78 @@ def _parse_time_delimited(text: str):
     return blocks
 
 
+_TALK26 = re.compile(r"^\s*(P?\d+\.\d+[A-Za-z]?)\s*:\s*(.+)$")          # "2.1: Title"
+_TIMERANGE = re.compile(r"^\s*\d{1,2}:\d{2}\s*(AM|PM)\s*-\s*\d{1,2}:\d{2}\s*(AM|PM)\s*$", re.I)
+_SPEAKER = re.compile(r"^\s*Speakers?\s*:\s*(.+)$", re.I)
+_LOCATION = re.compile(r"^\s*Location\s*:", re.I)
+
+
+def _parse_2026_format(text: str):
+    """2026 (Whova export) format: 'N.N: Title' (may wrap) -> 'h:mm AM - h:mm PM'
+    -> 'Location: ...' -> 'Speaker: Name'. Sessions 'Session N: <Society> Name'."""
+    lines = text.splitlines()
+    blocks = []
+    cur_session = cur_society = cur_day = None
+    cur_type = "talk"
+    i, n = 0, len(lines)
+    while i < n:
+        s = lines[i].strip()
+        if not s:
+            i += 1
+            continue
+        if _DAY.match(s):
+            cur_day = s
+            i += 1
+            continue
+        sm = _SESSION.match(s)
+        if sm:
+            cur_session = sm.group(1).strip()
+            cur_society = _session_society(cur_session)
+            cur_type = "poster" if _POSTER.search(cur_session) else "talk"
+            i += 1
+            continue
+        tm = _TALK26.match(s)
+        if tm and not _TIMERANGE.match(s):
+            num, title = tm.group(1), tm.group(2).strip()
+            j = i + 1
+            while j < n:
+                nxt = lines[j].strip()
+                if not nxt or _TIMERANGE.match(nxt) or _TALK26.match(nxt) or _SESSION.match(nxt) \
+                        or _DAY.match(nxt) or _LOCATION.match(nxt) or _SPEAKER.match(nxt):
+                    break
+                title += " " + nxt
+                j += 1
+            # speaker follows within the next few lines
+            speaker = ""
+            k = j
+            while k < n and k < j + 8:
+                t = lines[k].strip()
+                if _TALK26.match(t) or _SESSION.match(t):
+                    break
+                spm = _SPEAKER.match(t)
+                if spm:
+                    speaker = spm.group(1).strip()
+                    break
+                k += 1
+            ptype = "poster" if (num.startswith("P") or cur_type == "poster") else cur_type
+            blocks.append(dict(
+                program_number=num, title=title.strip(), author_raw=speaker,
+                presentation_type=ptype, session_name=cur_session,
+                societies_explicit=[cur_society] if cur_society else [],
+                session_datetime=cur_day))
+            i = max(j, k if speaker else j)
+            continue
+        i += 1
+    return blocks
+
+
 def parse_program_book_blocks(text: str):
     lines = text.splitlines()
+    # 2026: "N.N: Title" + "Speaker:" lines (Whova export)
+    if sum(1 for l in lines if _SPEAKER.match(l)) >= 20 and sum(1 for l in lines if _TALK26.match(l)) >= 20:
+        b26 = _parse_2026_format(text)
+        if b26:
+            return b26
     # 2024/2025 use "N.N | Title"; 2021-2023 are time-delimited with no number.
     if sum(1 for l in lines if _TALK.match(l)) < 20:
         td = _parse_time_delimited(text)

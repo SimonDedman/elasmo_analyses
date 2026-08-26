@@ -79,6 +79,11 @@ SCOPE = [
     # abstract books only: programme-only PDFs (2015/2017/2021/2023/2025) carry no
     # bodies and would collide with the same year's abstract-book key.
     (str(C.CONFERENCES / "*" / "*_EEA_AbstractBook*.pdf"), "EEA", "AES", True),
+    # JMIH abstract books (multi-society; society resolved per abstract from the
+    # session heading, elasmo flag from the lexicon). Simon approved Fable for
+    # 2005 and 2016 on 2026-08-25; the glob lists every book, extraction is
+    # launched per index so the others stay unextracted until asked for.
+    (str(C.CONFERENCES / "*" / "*_JMIH_AbstractBook.pdf"), "JMIH", "", False),
     (str(C.REPO / "database/others_libraries/Cat/EEA*.pdf"), "EEA", "AES", True),  # legacy inbox
 ]
 
@@ -194,6 +199,12 @@ def build(only=None):
             print(f"  DROP {key}: no surviving text ({w['src_txt']})")
             continue
         w["n_chars"] = txt.stat().st_size
+        if w.get("meeting") == "JMIH" and not w.get("city"):
+            try:
+                from conf_abstracts.build_coverage_matrix import JMIH_LOC
+                w["city"] = JMIH_LOC.get(w.get("year"))
+            except Exception:
+                pass
         w.setdefault("city", _EEA_CITIES.get(w.get("year")))
         worklist.append(w)
 
