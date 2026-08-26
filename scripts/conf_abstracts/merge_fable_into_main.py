@@ -56,6 +56,14 @@ def merge():
         export.to_xlsx(main, str(base / "conference_abstracts.xlsx"))
         print(f"exports refreshed in {base}")
     main.close(); fab.close()
+    # the Fable set re-introduces AES talks that elasmo.org already holds, and
+    # loses any society backfill — always finish the chain here so a bare
+    # re-merge can't leave duplicates behind (bitten 2026-08-26).
+    from conf_abstracts import scrape_elasmo_org as S
+    S.dedup(0.6)
+    S.supersede()
+    print("NOTE: prefix-less society tags were reset for the replaced books — "
+          "run infer_society_missing.py to backfill them.")
 
 
 if __name__ == "__main__":
