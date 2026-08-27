@@ -28,16 +28,48 @@ ASIH_CSV = REPO / "database" / "asih_meetings.csv"
 # status order (red -> green). 'Programme' distinguishes a schedule/grid PDF we
 # hold (NO abstract bodies, abstract book still needed) from 'Digital' = a
 # parseable abstract-book PDF we hold and can ingest.
+# Colour = distance from a complete, searchable set of abstracts, worst first.
+# The ramp runs red -> orange -> amber -> yellow -> green in this order:
+#   Missing < Schedule < Hardcopy < Programme < Pending < OCR < Digital < Ingested
+# Rationale (Simon, 2026-08-27): "Digital" means the book is in hand and only
+# needs processing, so it is nearly done and reads light green; "OCR" means the
+# abstracts are in but from a degraded scan we still want re-sourced, so it sits
+# further back, in yellow; "Schedule" is titles without abstract text, useful but
+# not abstracts, so it sits just above Missing; "Hardcopy" and "Programme" are
+# the same practical problem (we need the abstract book) and sit adjacent.
+STATUS_ORDER = ["Missing", "Schedule", "Hardcopy", "Programme",
+                "Pending", "OCR", "Digital", "Ingested"]
 FILL = {
-    "Missing": "E06666", "Hardcopy": "F6B26B", "Programme": "F9CB9C",
-    "Digital": "FFE599", "OCR": "FFD966", "Schedule": "B6D7A8",
-    "Ingested": "6AA84F", "Pending": "D9D2E9", "NA": None,
+    "Missing": "E06666",    # red: nothing exists anywhere
+    "Schedule": "F0A868",   # red-orange: titles/authors only, no abstract text
+    "Hardcopy": "F6B26B",   # dark orange: paper book known, nothing digital
+    "Programme": "F9CB9C",  # light orange: digital programme, book still needed
+    "Pending": "FFD966",    # amber: a named contact is getting it
+    "OCR": "FFE599",        # yellow: abstracts in, degraded scan, re-source wanted
+    "Digital": "B6D7A8",    # light green: book in hand, extraction pending
+    "Ingested": "6AA84F",   # green: done
+    "NA": None,
 }
 # (location, status, action-note). status conveys what we HOLD; the note says
 # what's still NEEDED so the sheet is self-documenting.
 # EEA abstract books extracted via Fable (2026-08-14): 731 abstracts across 11
 # meetings into conference_abstracts_fable.db. "Ingested" notes carry the count.
-# Host group per year (Cat Gordon, 2026-07-28) — drives the per-group asks.
+# Host cities for the meetings we have no book for. 2003 and 2005-2009 from the
+# EEA's own meetings page (eulasmo.org/scientific-meetings, read 2026-08-27);
+# meeting numbers there confirm an unbroken annual series from 1997 (1st), which
+# matches the 2002 Cardiff booklet calling itself the 6th. 1998 Lisbon is from
+# APECE's account of hosting that year. 1997, 1999-2001 still unknown.
+EEA_EARLY = {
+    2003: ("San Marino", "7th EEA; Ali Hood searching her paperwork (2026-08-27)"),
+    2005: ("Monaco", "9th EEA; Ali Hood searching her paperwork (2026-08-27)"),
+    2006: ("Hamburg", "10th EEA; Ali Hood searching her paperwork (2026-08-27)"),
+    2007: ("Brest", "11th EEA; Ali Hood searching her paperwork (2026-08-27)"),
+    2008: ("Lisbon", "12th EEA; Ali Hood searching her paperwork (2026-08-27)"),
+    2009: ("Palma de Majorca", "13th EEA; Ali Hood searching her paperwork (2026-08-27)"),
+}
+EEA_EARLY_LOC = {1998: "Lisbon"}
+
+# Host group per year (Cat Gordon, 2026-07-28), drives the per-group asks.
 EEA_HOST = {
     2010: "IEG (Ireland)", 2011: "DEG (Germany)", 2012: "GRIS (Italy)",
     2013: "Shark Trust (UK)", 2014: "NEV (Netherlands)", 2015: "APECE (Portugal)",
@@ -79,6 +111,13 @@ JMIH_PROGRAMME = {
     2017: "grid programme only — abstract book needed (Carylanne)",
     2019: "grid programme only — abstract book needed (Carylanne)",
     2026: "schedule-only programme (OCR text layer OK, not yet parsed) — abstract book needed",
+}
+# OCS meetings we can evidence from public sources (read 2026-08-27); Brit
+# Finucci is confirming the full series and locations.
+OCS = {
+    2012: ("Adelaide", "joint with ASFB; Brit Finucci confirming"),
+    2018: ("North Stradbroke Is.", "Moreton Bay Research Station; Brit Finucci confirming"),
+    2024: ("Geelong", "Brit Finucci confirming"),
 }
 SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "EEA", "SI"]
 
@@ -185,14 +224,18 @@ def build():
     leg.append(["Status", "Meaning", "Colour"])
     for c in leg[1]:
         c.font = Font(bold=True)
-    order = [("Missing", "No known source anywhere"),
-             ("Hardcopy", "Physical book exists (Carylanne / Cat / Ali), not digitised"),
-             ("Programme", "Digital PROGRAMME/schedule held, but NOT full abstracts — the abstract book is still needed (see note)"),
-             ("Digital", "Digital ABSTRACT BOOK held & ingestable, not yet ingested"),
-             ("OCR", "Full abstracts ingested but from degraded scans (needs_review) — flatbed re-scan planned"),
-             ("Schedule", "Programme ingested: titles/authors/type, NO abstract bodies"),
-             ("Ingested", "Full abstracts ingested into the DB"),
-             ("Pending", "Available from an external contact, not yet obtained (EEA: Cat; OCS: Brit)")]
+    # listed worst-to-best so the colour ramp reads top to bottom
+    MEANING = {
+        "Missing": "No known source anywhere.",
+        "Schedule": "Programme ingested: titles, authors, presentation type. NO abstract text. Useful, but it isn't abstracts.",
+        "Hardcopy": "A physical book is known to exist (Carylanne, Cat, Ali) but nothing digital. Needs scanning, or a digital copy from the host.",
+        "Programme": "A digital programme is held, but not the abstract book. Same practical need as Hardcopy: get the book.",
+        "Pending": "A named contact has it or is looking for it, not yet received (EEA: Cat and Ali; OCS: Brit).",
+        "OCR": "Abstracts ingested, but from a degraded scan and flagged needs_review. Still worth re-sourcing a clean copy.",
+        "Digital": "Abstract book in hand and ingestable. Only extraction remains.",
+        "Ingested": "Full abstracts ingested into the database.",
+    }
+    order = [(st, MEANING[st]) for st in STATUS_ORDER]
     for i, (st, mean) in enumerate(order, 2):
         leg.cell(row=i, column=1, value=st)
         leg.cell(row=i, column=2, value=mean)
@@ -254,15 +297,23 @@ def build():
         # EEA
         if year in EEA:
             l, s, n = EEA[year]; put(r, 4, txt(l, s, n), s)
-        elif 2003 <= year <= 2009:
-            put(r, 4, "?; Pending — Ali Hood searching her paperwork (2026-08-27)", "Pending")
+        elif year in EEA_EARLY:
+            loc_e, note_e = EEA_EARLY[year]
+            put(r, 4, txt(loc_e, "Pending", note_e), "Pending")
         elif 1997 <= year <= 2001:
-            put(r, 4, "?; Missing — EEA conferences 1-5, no known source", "Missing")
+            loc_e = EEA_EARLY_LOC.get(year, "?")
+            nth = {1997: "1st", 1998: "2nd", 1999: "3rd", 2000: "4th", 2001: "5th"}[year]
+            put(r, 4, txt(loc_e, "Missing",
+                          f"{nth} EEA; no known abstract source"
+                          + ("" if year in EEA_EARLY_LOC else "; host city also unknown")), "Missing")
         else:
             put(r, 4, "", "NA")
         # OCS (biennial ~2012+)
-        if year >= 2012 and year % 2 == 0:
-            put(r, 5, "?; Pending — Brit collating (council approval)", "Pending")
+        if year in OCS:
+            oloc, onote = OCS[year]
+            put(r, 5, txt(oloc, "Pending", onote), "Pending")
+        elif year >= 2012 and year % 2 == 0:
+            put(r, 5, "?; Pending — Brit Finucci collating; year/location to confirm", "Pending")
         else:
             put(r, 5, "", "NA")
         # SI (quadrennial)
