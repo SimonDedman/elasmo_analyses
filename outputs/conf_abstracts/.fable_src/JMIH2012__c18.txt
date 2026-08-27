@@ -1,0 +1,1747 @@
+versity, distribution, Iyanomo, Nigeria
+
+
+
+Ohmer, Michel E. (University of Otago); McKenzie, Kate; Daglish, Lisa (Department of Conservation,
+New Zealand, Canada); Bishop, Phillip J. (University of Otago, Canada)
+
+Long-term monitoring of the effects of endemic disease and predator exclusion on survival in a
+population of threatened New Zealand amphibians
+
+We have witnessed a dramatic decline in amphibian populations globally. While we can identify many
+factors contributing to those declines, there is comparatively less evidence for the combined effects of
+multiple stressors, particularly in wild populations. In New Zealand, two introduced threats have been
+considered to be the leading causes of declines in endemic frog species: the fungal pathogen,
+Batrachochytrium dendrobatidis (Bd), and mammalian predators (e.g. rats and mice). Utilizing a 5-year
+mark-recapture dataset from a population of the endemic species Leiopelma archeyi , we investigated
+the combined effects of disease and introduced predators on individual survival and population dynamics.
+We applied multistate models in the program MARK to four 10 x 10 m grids of equal habitat quality re-
+sampled twice yearly, all of which experience endemic levels of Bd infection and two of which were
+predator excluded. Initial analyses indicate a reduction in survival probability (approximately 13%) in
+infected frogs within predator-accessible grids. A similar reduction in survival was not observed in infected
+frogs within predator-excluded grids. Analyses incorporating individual and time-varying environmental
+covariates are currently underway. Recent work indicates New Zealand‘s endemic Leiopelmatid frogs
+experience low susceptibility to Bd infection in the laboratory. However, the interaction of multiple
+stressors, such as introduced predators and disease, may lead to reduced immunocompetence in this
+species. Thus, investigations of the effects of multiple stressors within threatened populations, such as
+this one, can better focus management decisions.
+
+
+
+Okada, Sumio (Tottori University); Fukuda, Yukihiro; Yuki, Etsuko (TopOutImages, Canada); Okada,
+Tamami (Mt.Hyonosen Forest Museum, Canada)
+
+Field observations of parental care of egg masses by male Japanese giant salamanders, Andrias
+japonicus
+
+Although it is well-documented that male parental care occurs in Andrias japonicus and other
+Cryptobranchid salamanders, no one has described how males actually care for eggs in breeding nests.
+We recorded parental care behavior of male Andrias japonicus in one natural and one artificial nest in
+Tottori and Hyogo Prefectures using a video camera between August and November, 2010. We analyzed
+den masters‘ behavior over 6 days (34hrs total) and 5 days (29 hrs total) in the natural and artificial nest,
+respectively, as percentage of total time observed displaying a given behavior per day. Parental care
+behaviors were classed into four main categories: agitation (moving of eggs with head or body), tail
+
+
+
+
+                                                                                                         521
+fanning, feeding (eating of eggs, skin, etc.) and swaying (side-to-side male body movements). Agitation
+was observed at a similar frequency in both nests (artificial nest: 9.6-19.8%, natural nest: 2.2-19.8%). In
+the artificial nest, tail fanning was frequently observed, and averaged 30.6% (range: 12.6-46.2%). In
+contrast, in the natural nest, tail fanning was observed an average of 0.2% (range: 0-1.2%). We observed
+denmasters taking eggs out of masses with their mouths and we think that this behavior functions to
+remove undeveloped eggs. We estimated water quality of both nests three times between July and
+September, 2011. DO (dissolved oxygen) in the artificial nest was noticeably lower than in the center of
+the adjacent stream (nest: 4.6-5.9 mg/L, stream: 8.6-9.2 mg/L), whereas DO in the natural nest was only
+slightly lower than the center of the adjacent stream (nest: 7.7-8.5 mg/L, stream: 8.8-9.7 mg/L). We
+hypothesize that lower DO levels in the artificial nest resulting from low levels of water inflow from the
+adjacent stream led to the high frequency of tail fanning behavior by males. These behaviors likely help
+facilitate the diffusion of oxygen into the egg mass, thereby preventing yolk adhesion and spread of fungi.
+Our observations also indicate the need for future experimental studies of relationships between male
+behavior and DO levels and egg mortality, and also for observation of post-hatching male behaviors.
+
+
+
+Okada, Sumio (Tottori University); Okada, Tamami (Mt.Hyonosen Forest Museum, Canada); Felix, Zach
+(Reinhardt University, Canada)
+
+Natural History and Conservation Status of the Japanese giant salamander, Andrias japonicus in
+the Chugoku Mountains
+
+The Japanese giant salamander ( Andrias japonicus ) is one of the largest extant amphibians in the world.
+Western Honshu Island, especially the Chugoku Mountains contains a major portion of A. japonicus ‘s
+range. Although A. japonicus is threatened with extinction as a consequence of habitat degradation,
+baseline data on population structure, size, and density are limited. We conducted mark-recapture and
+radio-telemetric studies of A. japonicus to evaluate population demography, reproductive ecology
+including breeding migrations, diet composition and dam impact within relatively natural and disturbed
+habitats in the Hino River, Tottori Prefecture between 2001 and 2011. One section of the river, the upper
+portion, was relatively undisturbed and ran through a wooded area, and the other section, the lower
+portion, was more heavily disturbed and ran through an agriculturally-dominated area. Our results
+revealed that adult A. japonicus are abundant in both the relatively natural and disturbed areas. Giant
+salamanders in the lower portion were larger and heavier than those in the upper portion, and we
+recorded fewer salamanders in small size classes (younger individuals) in the lower portion than the
+upper portion. These data suggest that giant salamanders experience lower recruitment in the lower
+portion than in the upper portion, possibly due to reduced availability of nesting sites and/or larval and
+juvenile microhabitats as a result of habitat degradation. In the upper portion, females moved between
+stream sections to reach nesting sites and spawn, and in the lower more disturbed portion many
+salamanders used nesting sites within branch streams and migrated multiple directions within both main
+and branch streams. Availability of spawning nests is relatively limited and nests are frequently destroyed
+by disturbances such as floods throughout the study area. Because of the ephemeral nature and limited
+availability of nests, A. japonicus must be able to migrate between sections to reach newly create nests.
+In the lower portion however, the movements of many salamanders were interrupted by dams during the
+breeding season. These data provide essential baseline information on an A. japonicus population
+across a habitat gradient from relatively natural habitat to disturbed stream habitat flowing through
+human-dominated areas.
+
+
+
+
+                                                                                                       522
+Okamoto, Taku (Center for Environmental Biology and Ecosystem Studies, National Institute for
+Environmental Studies);
+
+Recent taxonomic changes of the common skinks of genus Plestiodon (Scincidae, Squamata) on
+the Japanese main islands, the Izu Islands, and far eastern Russia
+
+The skinks of genus Plestiodon (formerly Eumeces ) in the Japanese main islands and far eastern
+Russia had long been recognized as Eumeces latiscutatus (Hallowell, 1861), and the populations on
+the Izu Islands, central Japan, had been treated as Eumeces okadae Stejneger, 1907 (e . g., Taylor,
+1936; Uetz, 2011). However, several recent molecular systematic studies have clarified the followings:
+the population of the Izu Peninsula (including the type locality of E. latiscutatus ) is distinct from those of
+remaining parts of the entire Japanese main islands, and closely related to E. okadae (Motokawa and
+Hikida, 2003); and the populations of eastern and western part of the Japanese main islands are
+genetically distinct with reproductive isolation (Okamoto and Hikida, 2009). After the generic classification
+has been revised (Smith, 2005; Brandley et al . 2005), the Japanese species are currently placed in
+Plestiodon . Thus, the following three parapatric species should be recognized at present: Plestiodon
+latiscutatus on the Izu Peninsula and the Izu Islands ( E. okadae is a junior synonym of it); P.
+japonicus (Peters, 1864) on the western part of Japan; and an undescribed species on the eastern part
+of Japan. Our recent taxonomic revision have clarified that these three species can be identified by
+diagnoses of scale morphology and DNA barcode, and far eastern Russian population should be
+conspecific with the undescribed species of the eastern Japan (Okamoto and Hikida, submitted).
+
+
+
+Olave, Melisa (CONICET-CENPAT); Avila, Luciano; Sites, Jack W (CONICET-CENPAT, Canada);
+Morando, Mariana (CONICET-CENPAT, Puerto Madryn, Argentina)
+
+A well-supported species tree of the Eulaemus clade (SQUAMATA: LIOLAEMUS): Evidence of an
+ancient radiation
+
+The lizard genus Liolaemus is endemic to an extensive area of temperate South America and includes
+235 recognized species. Since Laurent‘s (1983) morphological study, the genus has been divided into
+two subgenera: Liolaemus (or the chiliensis group) and Eulaemus (or the Argentinean group),
+distributed mainly to the west (Chile) and east (Argentina) of the Andes, respectively. Morphological and
+mitochondrial characters have been used to propose phylogenetic hypotheses for different clades within
+this genus, and most of these are based on incomplete taxon sampling and limited intraspecific sampling.
+In this work we present the first well-supported molecular phylogenetic hypothesis for the clade
+Eulaemus , based on 12 nuclear molecular markers (protein coding loci &amp; anonymous loci) as well
+as two mitochondrial markers (cytb-12S; ~ 10,500 bp total). This clade includes 77 described species,
+and we included multiple representatives from all larger groups within it, including new candidate species.
+We analyzed the dataset using different species tree approaches (*BEAST, BEST, STEM and MDC) and
+compare these results with traditional concatenated analyses. We also present fossil-calibrated
+divergence estimates (using BEAST), and discuss a possible ancient radiation for most of the larger
+Eulaemus clades.
+
+
+
+
+                                                                                                           523
+Olgun, Kurtulus (Adnan Menderes University);
+
+Systematics and Phylogeny of Genus Ophisops (Reptilia:Sauria) in Mainland and Islands of
+Turkey
+
+Genus Ophisops (Snake-eyed Lizard) is represented by eight species world-wide. Only one of these
+species Ophisops elegans is present in Turkey as well as is recorded from Israel, Lebanon, Syria,
+Jordan, Iraq and Iran. This species was first discovered from Bakû by Ménétriés in 1832. Ophisops
+elegans is very common in the Mediterranean ecological zone. But it is also distributed around the Irano-
+Turanian ecozone. It can be seen in suitable biotopes from 400 meters below to and 1.100 meters above
+sea level. Taking the previous studies carried out into consideration, evaluations on the taxonomic
+status of the Ophisops elegans can be divided into the three time periods. First of these periods is the
+studies accomplished up to 1978 and they suggests three subspecies for O. elegans . Second one
+comprises the works carried out between 1978 and 1993 that suggests a fourth subspecies in addition to
+existing three subspecies. At this period, it has been proposed that subspecies present in Turkey,
+particularly in Lake District and South-eastern Anatolia region, need to be studied in detail. Lastly, studies
+have been published from 1993 to date have put forwarded that it is not possible to solve the taxonomic
+status of Ophisops elegans using only morphological characteristics. In order to resolve the taxonomic
+status of this species, molecular systematic approaches could be very useful. In the light of this
+information, specimens of Ophisops were collected from all over Turkey and some of the islands located
+in Aegean Sea of the Turkish cost. Then various morfometric measurements and folidosis values were
+taken and analysed statistically in order to determine the differences between populations from different
+localities. Cyt b and 16S rRNA sequences of mitochondrial DNA of Ophisops specimens were
+analysed to clarify taxonomical position of differentiated population and to construct a phylogenetic tree.
+Based on the phylogenetic analyses, two main monophyletic groups (species taxon) of Ophisops have
+been recovered in Turkey; one includes Artvin (Eastern Blacksea Region), Ardahan, Kars, Iğdır, Van,
+Hakkari, Şırnak, Muş (East Anatolia Region), Mardin and Batman (Southeast Anatolia Region)
+populations and the other comprises the remaining populations. There are a total of nine difrentiated
+populations (subspecies taxon) beloning to these two monophyletic groups.
+
+
+
+Oliveira, Adriele Karlokoski Cunha de (Universidade Federal do Paraná); Oliveira, Igor Soares de
+(Universidade Estadual de Campinas, Campinas, Brazil)
+
+Natural history and cytogenetic of Sphaenorhynchus surdus (Anura: Hylidae): an endemic frog of
+Brazilian Southern Atlantic forest
+
+Sphaenorhynchus Tschudi, 1838 is a genus with fourteen species and it is currently considered a sister
+genus of Dendropsophus and Xenohyla. This genus is distributed throughout South America with ten
+species restricted to the Brazilian Atlantic forest. Sphaenorhynchus surdus (Cochran, 1953) is one of
+these species and it is distributed in the states of Paraná, Santa Catarina and Rio Grande do Sul, in
+Southern Brazil. This taxon was recently divided in two species, S. surdus and S. caramaschii. However,
+there is a lack of information about the biology of both species. Hereby we provide a description of natural
+history traits and show preliminary data of cytogenetic for S. surdus. Information about this species is very
+scarce and we provide the first karyotype approach for this taxa, as well as to the genus
+Sphaenorhynchus. Our study was conducted in the Atlantic forest, in the Araucaria forest domain. We
+conducted our surveys from August 2009 to July 2010. We collected data about activity patterns and use
+of microhabitat. For the karyotype analysis we performed conventional staining to determine the
+chromosome number and morphology, and location of the Nuclear Organization Region (NOR) by Ag-
+
+
+
+
+                                                                                                          524
+NOR staining. Sphaenorhynchus surdus was observed in exclusively nocturnal calling activity during
+eight months (August 2009 to March 2010). The abundance of calling males was positively related with
+temperature, an expected pattern for a Southern species. Sphanorhyncus surdus was observed in
+permanent ponds on floating vegetation inside lentic water during calling activity, probably due to its
+reproductive mode (presumably number 1). The karyotype of S. surdus comprises 24 metacentric and
+submetacentric chromosomes with Fundamental Number (FN) equal to 48. Secondary constriction was
+detected in the terminal region of both homologues of chromosome 11, which were detected as NOR.
+The karyotype number of S. surdus is different of its sister genus Dendropsophus, which has 2n=30. This
+is a preliminary approach of cytogenetic of S. surdus and further studies are necessary with more
+resolute techniques to understand the karyotype evolution of the genus.
+
+
+
+Oliveira, Igor Soares de (Universidade Estadual de Campinas); Toledo, Luís Felipe (Universidade
+Estadual de Campinas, Campinas, Brazil); Rödder, Dennis (Zoologisches Forschungsmuseum Alexander
+Koenig, Bonn, Germany)
+
+One more threat to frogs: a modeling approach
+
+Currently, climate change is the focus for several studies, due its potential consequences on society and
+global biodiversity. One of the main effects of climate change is global warming, which in turn, could
+cause the sea level rising. The rise of the sea level may threat the terrestrial fauna, particularly species
+with home ranges restrict to coastal zones. Among terrestrial vertebrates, several species of anurans
+worldwide are distributed exclusively in these areas. Hereby we present a list of anurans potentially
+threatened by sea level rising. We analyzed 5609 species available from the IUCN database, considering
+only the species with available distribution maps and information about altitudinal distribution. We filtered
+for those species with distribution from sea level up to 500 meters in altitude. Then we compared each
+map with a six meters sea elevation scenario, selecting species with small range distribution areas and
+distributed in future flooded zones. We identified 177 taxa of 30 families (3,15% of the species of our
+dataset), under potential threat of flooding, with partial or total area loss, based on the present
+distribution. Among these species, 65 are considered ―Data Deficient‖ (DD), 44 ―Least Concern‖ (LC), six
+―Near Threat‖ (NT), 23 ―Vulnerable‖ (VU), 25 ―Endangered‖ (EN), and 14 ―Critically Endangered‖ (CR),
+according to IUCN endangered species list. We found a difference of 113 species between taxa indicated
+by IUCN database as threatened by flooding (64) and our results. Thus we indicate the sea level rising as
+an important threat to anurans in the near future. Amphibians are already the most threatened animal
+group, being affected mainly by pandemic diseases, pollution, habitat loss and fragmentation. One more
+cause can severely accelerate the group decline, jeopardizing entire ecosystems, ultimately affecting
+human society.
+
+
+
+Oliveira, Igor Soares de (Universidade Estadual de Campinas); Pereira, Elder Ribeiro; Ribeiro, Vanessa
+Maria; Vitule, Jean Ricardo Simões (Laboratório de Ecologia e Conservação, Canada)
+
+Predation of alien invasive vertebrates on brazilian amphibians: report of two cases in the atlantic
+forest hotspot
+
+Predation, in the sense of an organism killing another for nutritional purposes, is probably as old as life
+itself and has originated many times during the history of life. Amphibians are often preyed by
+vertebrates, which in turn serve as meal for amphibians in a few cases. Natural dynamics of predator-prey
+interactions may result in different effects on prey. However, invasive predators may cause decline in
+
+
+
+                                                                                                         525
+natural prey population. Rats are ubiquitous opportunistic predator, introduced in several islands and
+continents, often pressuring native species. In a similar way, fishes are organisms largely introduced and
+may to affect severely native populations. Herein we report two cases of predation on native frogs in
+Atlantic forest hotspot. One individual of Rattus norvegicus was observed preying on an adult individual
+male of Rhinella icterica. In the second case, a native Hypsiboas sp. was found in stomach contents of an
+individual of Black Bass (Micropterus salmoides), a North American introduced fish. These observations
+may indicate that native species are suffering direct interference by invaders, due to predation on native
+prey or competition for the same niche as native predators. Invasive predators are one of the causes of
+amphibian population decline worldwide. A possible negative impact of predation by introduced
+vertebrates probably are further significant on anuran species than we can detect, once there are few
+cases reported. Thus, studies with invasive species are needed to clarify its biology and its impacts on
+native species, providing a more effective conservation.
+
+
+
+Oliver, Lauren (Louisiana State University); Rittmeyer, Eric (Louisiana State University, Baton Rouge,
+LA, United States); Kraus, Fred (Bernice P. Bishop Museum, Honolulu, HI, United States); Richards,
+Stephen (Museum and Art Gallery of the Northern Territory, Darwin, NT, Australia); Austin, Christopher
+(Louisiana State University, Baton Rouge, LA, United States)
+
+Phylogeny and phylogeography of Mantophryne (Anura: Microhylidae) reveals cryptic diversity in
+New Guinea
+
+The island of New Guinea is one of only five high-biodiversity regions in the world and frog diversity is
+exceptionally large on the island with more than 400 known species with many new species described
+annually. The terrestrial frog genus Mantophryne is composed of four species, three of which have
+narrow geographic distributions. In contrast, the fourth species, Mantophryne lateralis, is wide-ranging
+and distributed throughout the lowland forests on the eastern half of the island. This broad range is
+concordant with many other amphibian groups and thus makes M. lateralis a good initial candidate for
+examining patterns of genetic diversity in eastern New Guinea. Here, we sequence 104 ingroup samples
+for 3 mitochondrial and 3 nuclear loci to reconstruct the phylogeny of the genus and examine spatial and
+temporal patterns of diversity. Biogeographic analysis suggests the genus may have evolved on the
+eastern Papuan peninsula before dispersing west along the north and south coasts and east to the
+D‘Entrecastaux and Louisidade archipelagos. Phylogenetic results show that M. infulata is more closely
+related to the sister genus Hylophorbus and that the monotypic genus Pherohapsis is nested within
+Mantophryne. The wide ranging M. lateralis is composed of at least nine geographically separated and
+well supported lineages that represent putative species and these results imply that other amphibian
+species with similar distributions might also contain cryptic diversity.
+
+
+
+Oliver, Paul (The University of Melbourne);
+
+Understanding the origins and diversification of a diverse continental fauna: insights from
+downunder.
+
+Despite a long history of isolation Australia has one of the most diverse squamate faunas in the world
+(900+ species). It is only in last decade that a suite of molecular dating studies have provided a believably
+accurate window into history of this fauna. Work to date has confirmed that the majority of lineages are
+relatively recent overwater migrants from Asia; with only one lineage of geckos showing clear evidence of
+persistence since the break up of Gondwana. Irregardless of biogeographic origins, it now also appears
+
+
+
+                                                                                                         526
+that diversity in all extent lineages is relatively young, current evidence suggests that at most ten extant
+lineages were present more 30 million years ago.
+
+
+
+Olker, Jennifer (Natural Resources Research Institute - University of Minnesota Duluth); Schoff, Patrick
+(Natural Resources Research Institute - University of Minnesota Duluth, Canada); Wagner, Angela
+(USDA ARS, North Central Agricultural Research, Canada); Guntenspergen, Glenn (USGS Patuxent
+Wildlife Research Center, Canada); Johnson, Lucinda (Natural Resources Research Institute - University
+of Minnesota Duluth, Canada)
+
+Lessons learned from multiscale studies of somatic and gonadal development in two native
+amphibian species
+
+Aquatic organisms are exposed to a variety of stressors that may be benign individually but interact to
+negatively impact health and survival of individuals and populations. Understanding how anthropogenic
+and natural stressors interact in aquatic ecosystems is challenging because the complexity produced by
+multiple stressors is not easily replicated in controlled experiments. We investigated multiple stressors
+using a multiscale approach, with amphibians as models for wildlife populations and indicators of wetland
+health. We assessed the range and distribution of landscape and within-wetland stressors across the
+upper Midwest US, focusing on atrazine (a commonly used herbicide) and climate change for in-depth
+investigations. Organismal responses included growth, development, and gonadal morphology in two
+native frogs ( Rana pipiens and Rana sylvatica ) in field surveys and mesocosm experiments, which
+were conducted 1) across a range of environmentally relevant atrazine concentrations, and 2) in
+combination and interaction with accelerated pond-drying as an anticipated consequence of climate
+change. Field analyses indicated that potential amphibian stressors were widely distributed across the
+region, with few areas free of detectable atrazine. In mesocosm experiments, atrazine exposure altered
+development and slightly reduced survival in both species, while accelerated pond-drying had no
+independent or strong interactive effects. Testicular oocytes, which indicate potential endocrine
+disruption, were found in experimental and field-collected specimens with no relationship to atrazine
+concentration and significantly different prevalence between species. Lessons from this series of
+investigations emphasize that effective understanding of the role of agrochemicals in amphibian
+population declines and ecosystem impacts must include studies at multiple scales, combining controlled
+experimental exposures and field observations using standard laboratory models as well as native
+species.
+
+
+
+Olson, Deanna (US Forest Service, Pacific Northwest Research Station); Burnett, Kelly (US Forest
+Service, Pacific Northwest Research Station, Corvallis, United States)
+
+Aquatic-terrestrial connectivity designs in forests: funnels and chains across landscapes
+
+Our managed forest landscape connectivity design targets headwater streams to create a web of
+connections across the landscape, likely benefiting numerous forest-dependent species, especially
+amphibians. In managed forests, stream-riparian management zones are used as foraging, breeding, and
+dispersal habitat by a wide variety of species with both aquatic and terrestrial affiliations. Overland
+dispersal of organisms between watersheds serves to connect populations of many taxonomic groups
+among basins across forested landscapes. Small streams and their associated riparian areas are useful
+points within a landscape for linking basins across ridgelines because such headwaters are frequent and
+are in relatively close proximity to adjacent drainages. Riparian management designs that serve to
+
+
+
+
+                                                                                                        527
+―funnel‖ organisms to headwater areas where ―chains‖ of habitat across ridgelines are provided may aid
+landscape-scale population connectivity. Landscape management considerations for placement of
+headwater linkage areas include: 1) targeting connections at landscape nodes where three discrete
+watersheds (―triads‖) join; 2) maintaining north-south, east-west, and elevational habitat connectivity in
+the face of climate change; 3) incorporation of place-based disturbance regimes such as headwater
+debris-flow-prone areas; 4) targeting connectivity areas to address sensitive species conservation
+strongholds; and 5) geometric considerations at the forest-stand scale of a single project or proposed
+timber sale, including managing habitats to connect adjacent forest ownerships, such as to connect
+corners of checkerboard landscape blocks along diagonals. At finer spatial scales, management
+approaches for habitat ―funnels‖ along riparian zones and ―chains‖ across ridgelines include retention or
+restoration of forest structural components and green tree retention. Data from our headwater stream
+amphibian studies in the U.S. northwest suggest that our ‗funnel and chain‘ linkage area design would
+address forest fragmentation effects from timber harvesting and benefit multiple species.
+
+
+
+Olson, Deanna (US Forest Service, Pacific Northwest Research Station); Nanjappa, Priya (Association
+of Fish and Wildlife Agencies, Washington, D.C., United States); Riley, Terry (Partners in Amphibian and
+Reptile Conservation, Denver, United States); Breisch, Alvin (Partners in Amphibian and Reptile
+Conservation, Altamont, United States); Conrad, Polly (Partners in Amphibian and Reptile Conservation,
+Logan, United States)
+
+Herpetological Conservation Paradigms: The PARC Kaleidoscope
+
+To encourage a more in-depth focus on the long-term goals of herpetofauna species and habitat
+sustainability, Partners in Amphibian and Reptile Conservation is exploring new paradigms of
+conservation program implementation. Our historical partnership model engages government agencies in
+formal memoranda of understanding, and other entities such as private industry, non-governmental
+organizations, nature centers, educators, researchers, and individuals in informal volunteer liaisons. Our
+rotating ―Year of‖ campaigns (2011−Year of the Turtle; 2012−Year of the Lizard; 2013−Year of the Snake)
+are proving to have numerous benefits, on practical, sociological, and professional fronts. For our fast-
+paced world, focusing on a single, annually-changing taxon piques and sustains public interest.
+Additionally, our diverse professional workforce can address and develop tools effectively relative to one
+set of topics at a time. Each year involves a different suite of partners and reaches out to different sectors
+of the public, demographically and geographically. Emphasizing taxon-specific issues provides depth to
+our campaigns. Raising awareness for conservation and research needs continues to yield resources to
+expand capabilities in these dimensions after the ―year‖ ends. For instance, the earlier 2008−Year of the
+Frog led by the Association of Zoos and Aquariums had a focus on disease issues and ex-situ
+conservation, and this advocacy was leveraged by many others and has resulted in tremendous growth in
+our global research capacity in these areas since 2008. Year of the Turtle (www.yearoftheturtle.org)
+highlighted conservation and trade issues, with new regulatory emphasis emerging now for the
+sustainable use of all herpetofauna. Year of the Lizard (www.yearofthelizard.org) is developing a strong
+emphasis in both research and education in 2012, and Year of the Snake likely will be even more closely
+focused on education in order to raise awareness for the most misunderstood reptile group. Our diverse
+portfolio of activities is a conservation kaleidoscope, offering a colorful palette of tools and approaches.
+We hope to expand our toolbox of approaches to match emerging topics.
+
+
+
+
+                                                                                                          528
+Olson, Deanna (US Forest Service, Pacific Northwest Research Station); Leirness, jeffery; Cunningham,
+Patrick (US Forest Service, Corvallis, United States); Steel, Ashley (US Forest Service, Seattle, United
+States)
+
+Riparian buffers and forest thinning: Effects on headwater amphibians after 5 and 10 years
+
+The Density Management and Riparian Buffer Study of western Oregon, USA was initiated in 1994 to
+assess: 1) upland forest density management approaches to accelerate development of late-successional
+forest characteristics in managed federal forests; and 2) the efficacy of alternative riparian buffer widths
+along headwater streams, in the context of upland thinning, to retain key aquatic resources. Instream-
+and streambank-dwelling amphibians were monitored as part of the riparian component, using a
+before/after/control methodology. We analyzed animal counts along 45 stream reaches at 8 study sites,
+distributed from the foothills of Mount Hood to Coos Bay, Oregon from data collected in one year pre-
+treatment and years 1, 2, 5 and 10 post-treatment. Using linear regression, we sought the simplest model
+to explain the variability in post-treatment animal abundances at the reach scale, after accounting for pre-
+treatment counts. Bank models analyzed all amphibians, all terrestrial-breeding amphibians, Plethodon
+dunni and P. vehiculum. Instream models analyzed all vertebrates, all amphibians, stream-breeding
+amphibians, Dicamptodon tenebrosus, and Rhyacotriton species. Streambank models included buffer
+treatment, survey area, stream width, re-treatment count, and no. days post-treatment. Instream models
+also included survey method, hand sampling or electrofishing. Along banks, pre-treatment counts alone
+were adequate to explain variation in amphibian numbers, but there was support for a negative effect of
+the narrowest buffer for all groups analyzed except P. vehiculum. For all species groups analyzed
+instream, more complex relationships resulted, with important covariates including pre-treatment counts,
+stream width, and buffers. Decreasing counts over time in reaches with the narrowest buffer were
+evident.
+
+
+
+O'Regan, Sacha (Simon Fraser University); Palen, Wendy (Simon Fraser University, Burnaby, BC,
+Canada)
+
+Extending the utility of species-specific data for amphibian conservation; using population data to
+evaluate density-dependence and predict the relative vulnerability of species
+
+Enigmatic amphibian declines have stimulated a tremendous amount of research into potential drivers of
+decline. Over a decade of research, however, has revealed few predictive lessons that can be applied to
+prevent declines in advance of their occurrence. We evaluated whether a population dynamics
+framework, and specifically the presence of density-dependent bottlenecks in complex life cycles, can be
+used to predict how resilient a population might be to perturbation by stressors in specific life-stages. We
+investigated whether there are patterns between life-history traits and the strength of stage-specific
+density-dependence (e.g compensatory, over-compensatory, depensatory) by summarizing published
+studies where stage-specific densities varied experimentally or naturally. We quantified the functional
+relationship between density and survival for as many species and life-stages as there were data
+available by fitting a range of models to the data (e.g. Beverton-Holt, theta-logistic, compensation ratios).
+The strength of density-dependence was compared across studies to evaluate correlations with life-
+history traits and taxonomic groupings. We summarized 71 papers comprising 105 studies, and found
+that 68% were conducted with fewer than 4 densities, the threshold required for fitting relationships
+between density and survival. We identified a strong bias in life-history representation among the studies
+(primarily larval, pool breeding, and temperate) that restricted the conclusions that could be drawn about
+patterns between the strength of density-dependence and life-history traits. Ten studies were suitable for
+model-fitting and comparison, and while they represent a limited sub-set of species and life histories, the
+
+
+
+                                                                                                         529
+strength of density-dependence can be used to evaluate the relative importance of stage-specific
+stressors in each case. We conclude that the utility of using a population dynamics framework is currently
+limited by the availability of data in the published literature, but propose that ecologists studying
+amphibians consider contributing unpublished population and life-history data to centralized online
+databases. Such information would accelerate our ability to evaluate threats to potentially even poorly
+studied amphibian species, extending the value of individual studies and broadening the scope of
+conservation efforts beyond species by species triage.
+
+
+
+Orrico, Bill (Wildlife Conservation Society);
+
+Color Recognition in a Captive Juvenile Cuban Crocodile (Crocodylus rhombifer) During
+Conditioning
+
+Although the structure of the modern crocodilian eye suggests the ability to see in a broad range of
+colors, very little research has been done to understand the ability of crocodilian species to differentiate
+between colors in a captive setting. A broader understanding of the visual ability of crocodilians will have
+a significant effect on captive crocodilian husbandry primarily relating to modern enrichment and training
+techniques employed by captive facilities. Using a juvenile Cuban Crocodile (Crocodylus rhombifer) The
+Wildlife Conservation Society‘s Bronx Zoo facility conducted a study of color recognition and decision
+making use of the animal‘s previously observed responses to positive reinforcement training. We
+presented the animal with a choice between its regularly reinforced color target and a randomized
+secondary color target and recorded how long it took for a ―choice‖ to be made. The crocodile showed an
+ability to recognize its target, indicating the ability to differentiate between the choices given. This
+aptitude to distinguish between different color targets can be very helpful in the husbandry and
+conditioning of crocodilians, as well as providing insights into crocodilian cognitive abilities.
+
+
+
+Ortega Andrade, Hugo Mauricio (Fundación EcoCiencia and Instituto de Ecología, A.C.); Cisneros-
+Heredia, Diego (Universidad San Francisco de Quito, Colegio de Ciencias Biológicas y Ambientales,
+Quito, Columbia)
+
+Twenty-one years supporting research and conservation of threatened species in Ecuador based
+on a research fellowship program
+
+EcoCiencia, an Ecuadorian NGO, has developed a research fellowship program to promote conservation
+projects in Ecuador since 1990:       Programa de Becas de Investigación para la Conservación        PBIC.
+This program focuses on the promotion of biodiversity research and in-situ conservation actions
+developed by young Ecuadorian investigators (both students and professionals). Since 2005, in
+collaboration with Conservation International and other partner organizations, Ecociencia focused PBIC
+on projects related with threaten species (under the ―Fernando Ortíz Crespo‖ Threatened Species
+Initiative). So far, about 80 projects have been funded, dealing with several threatened species and their
+habitats along continental and insular Ecuador. PBIC and its Threatened Species Initiative has been an
+important support to herpetological research, with 13 projects developed by five young Ecuadorian
+herpetologists since 2005. These projects have contributed with new information on the systematics,
+ecology, population dynamics, biogeography, ethology, conservation status, and disease-related issues
+of frogs of the families Centrolenidae (glassfrogs), Hylidae (treefrogs), Dendrobatidae (poison frogs), and
+several species of lizards and crocodylians. In particular, for glassfrogs a great deal of information has
+been produced, including the description of five new species, a revision of the anatomical and ecological
+
+
+
+                                                                                                        530
+characteristics of the family, and assessments of the impacts produced by habitat and climate changes
+on their populations. Nowadays, EcoCiencia has partnered with Fundación Zoológica del Ecuador to
+enhance the Threatened Species Initiative by incorporating into a program that aims to support the
+conservation of threatened amphibians by including environmental education, institutional strengthening,
+and government lobbying together with research and in-situ conservation. We hope to continue the
+support of young scientific talents, and suggest that this program-model should be developed in other
+countries.
+
+
+
+O'Shea, Owen (Australian Institute of Marine science);
+
+Bioturbation by stingrays at Ningaloo Reef,
+
+Stingrays are an important part of the biomass of the fishes in shallow coastal ecosystems, particularly in
+interreefal      areas. In these habitats, they are considered keystone species – modifying physical and
+biological habitats through      their foraging and predation. Here, we quantify the effects of bioturbation
+by rays on sand flats of Ningaloo Reef lagoon in Western Australia. We measured the daily length,
+breadth and depth of 108 feeding pits over three 7-day periods, created by stingrays ( Pastinachus
+atrus, Himantura spp. Taeniura lymma and Urogymnus asperrimus) in Mangrove Bay. Additionally, an
+area of , 1km 2 of the lagoon at Coral Bay was mapped three times over 18 months, to record patterns
+of ray and pit presence. Over 21 days at Mangrove Bay, a total of 1.08m 3 of sediment was excavated
+by rays, equating to a sediment wet weight of 760.8 kg, and 2.42% of the total area sampled, or 0.03% of
+the whole intertidal zone. We estimate that up to 42% of the soft sediments in our study area would be
+reworked by stingrays each year. Based on a model predicting the probability of pit presence over time,
+there was a 40% probability of ray pits persisting for 4 days before being filled in but only a 15%
+probability of a pit being present after 7 days. Changes in pit volume over time were static, providing
+evidence for secondary use. Our results imply that rays play an important ecological role creating
+sheltered habitats for other taxa in addition to the turnover of sediments
+
+
+
+Oswald, Heather (University of South Carolina); Waldron, Jayme; Welch, Shane (University of South
+Carolina, Canada); Bennett, Steve (South Carolina Department of Natural Resources, Canada);
+Mousseau, Timothy (University of South Carolina, Canada)
+
+Environmental Effects on Southern Two-Lined Salamander (Eurycea cirrigera) Nest Site Selection
+
+Nest site selection is a critical process in the life history of amphibians directly influencing offspring
+survival and fitness of the parent. Females use both abiotic (temperature, moisture, and site composition)
+and biotic (presence of conspecifics, predators, and competitors) factors as cues to discriminate among
+oviposition sites. In this study, we evaluated nest site selection of the Southern Two-lined salamander,
+Eurycea cirrigera , in relation to a range of environmental conditions. We monitored nesting E. cirrigera
+under coverboards at two seepage wetlands in the South Carolina inner Coastal Plain during the E.
+cirrigera breeding season. For each coverboard, we recorded environmental and habitat data. We
+analyzed photographs of nesting landscapes under coverboards and egg mass ( n =51) locations using a
+GIS. We examined E. cirrigera nest site selection at two scales (seep and within coverboard) using
+logistic regression and AIC model selection. We constructed a priori candidate models that included
+abiotic and biotic predictors. Within board nest site selection was positively associated with flowing, free
+water and negatively associated with distance to board edge. At the seep scale, nest site selection
+appeared to be driven by water temperature and depth. Although Coastal Plain seepage wetlands are
+
+
+
+                                                                                                        531
+radically different from montane E. cirrigera habitats, seepages provide a unique combination of flowing
+water and temperature regimes that provide suitable nesting habitats for E. cirrigera within an atypical
+landscape.
+
+
+
+Ota, Hidetoshi (University of Hyogo and Museum of Nature and Human Activities); Takeuchi, Misato
+(University of Hyogo, Canada); Kawamura, Kouichi (Mie University, Canada); Oh, Hong-Shik (Cheju
+National University, Canada); Orlov, Nikolai; Ananjeva, Natalia (Institute of Zoology, Russian Academy of
+Sciences, Canada)
+
+Systematics and biogeography of the soft-shell turtles, Pelodiscus sinensis sensu lato
+
+The soft-shell turtles of the genus Pelodiscus are broadly distributed in East Asia, from southeastern
+Russia through Korea and eastern continental China down to northern Vietnam in the eastern Eurasian
+Continent, and several off-shore islands, such as Taiwan and the Main islands of Japan. Due to their
+popularity as food materials in most East Asian countries, the soft-shell turtles have been artificially
+transported, occasionally leading to establishment of feral populations. We have examined molecular
+phylogeography of Pelodiscus sinensis sensu lato and related taxa. Our purposes are: (1) To create a
+plausible hypothesis on the history of divergence, and natural and artificial dispersals in this group of
+turtles in East Asia; and (2) to revise their taxonomic arrangement accordingly. Tissue samples from
+approximately 250 specimens, representing nearly whole range of P. sinensis sensu lato and related
+taxa, were subjected to sequencing of mitochondrial ND4 gene, and resultant data were subjected to
+phylogenetic and network analyses along with additional sequence data available from free data-bases.
+The results of the analyses demonstrated complicated genetic structure in several local assemblages of
+the turtles, Japanese assemblages in particular, most likely as a result of artificial introduction of exotic
+individuals to areas where native populations with unique haplotypes had occurred already. Conservation
+implications of the present findings are also discussed.
+
+
+
+Otani, Lye (Department of Biological Science - Federal University of São Paulo); Navas Iannini, Carlos
+Arturo (Department of Physiology - University of São Paulo, São Paulo, Brazil); Carvalho, José Eduardo
+(Department of Biological Science - Federal University of São Paulo, Diadema, Brazil)
+
+Does Exercise Physiology Differ Between Anuran Species From Continuous And Fragmented
+Forested Habitats?
+
+Habitat fragmentation is considered one of the main factors associated to amphibian population decline
+worldwide. Among the complex causal relationship between these two processes, landscape connectivity
+is an important factor for gene flow maintenance and thus important for populations persistence in
+fragmented habitats. Therefore, our main hypothesis is that anuran species that are extinct in fragmented
+habitats have lower locomotor capacity than persistent species. To test this hypothesis, we compared
+morphological, physiological and locomotor performance traits of 3 different anuran species from the
+genus Physalaemus and Leptodactylus that occur in continuous and fragmented habitats in two locations
+of the Brazilian Atlantic Forest. In comparison with the forest specialists Leptodactylus notoakitites and L.
+marmoratus, the species L. mystacinus is frequently found in open and fragmented habitats. In contrast
+with the congenerics species studied, individuals of L. mystacinus have large body size, high endurance
+capacity (i.e. number of jumps, maximal distance jumped and time until exhaustion) and maximum activity
+of the metabolic enzymes citrate sintase and lactate dehydrogenase in the hindlimb muscles. It is
+possible that such characteristics enable a greater movement among fragments or between fragments
+
+
+
+
+                                                                                                         532
+and the breeding sites. A similar pattern, however, could not be identified across populations of the same
+species or across species within the genus Physalaemus. Differences among populations of the
+fragmented habitat persistent species, Physalaemus cuvieri, seem dependent on the geographic location
+and independent of landscape features. Moreover, individuals of P. cuvieri have intermediate body size,
+endurance capacity and hindlimb muscles enzyme activity when compared with P. olfersii and P. spiniger,
+the forest specialists species studied. Therefore, our hypothesis was corroborated for the genus
+Leptodactylus and not for the genus Physalaemus. Our study highlights the importance of the relationship
+between physiology, conservation and landscape ecology from the perspective of ability to circulate
+across a fragmented forest matrix. However, whereas movement may be a key factor for some taxa,
+other aspects such as tolerance to the matrix conditions may be more relevant. Therefore, we emphasize
+the importance of an integrative approach to understand the complex relationship between forest habitat
+fragmentation and anuran declines.(Financed by FAPESP)
+
+
+
+Otero, Luisa (University of Puerto Rico); Huey, Raymond (University of Washington, Seattle, WA, United
+States); Gorman, George (retired, Berkeley, CA, United States)
+
+Habitat influence on annual reproductive cycle of Anolis cristatellus in Puerto Rico
+
+At many Caribbean localities, different species of Anolis occupy open (sunny, hot) versus forest (shady,
+cool) habitats [1, 2]. Open-habitat species thermoregulate carefully &amp; have high body temperatures (
+T b ); forest species are thermoconformers &amp; have low T b [1, 2]. At some localities, however, a
+single species occupies both habitats:, individuals in the open are thermoregulators &amp; relatively
+warm, but those in shade are thermoconformers &amp; cool [3, 4].             What are the consequences of
+living in thermally distinct habitats? A case in point involves A. cristatellu s, which occupies both open
+&amp; forest habitats at Pta Salinas, Puerto Rico [3]. In the morning in summer, open A. cristatellus are
+warm &amp; fast relative to forest lizards, but in the afternoon, open lizards are heat stressed &amp;
+relatively slow [3]. Whether habitat also influences reproductive intensity &amp; cycles is unknown, but
+likely, because temperature drives reproductive cycles in Puerto Rican Anolis [6, 7].      We are studying
+female reproductive cycles of A. cristatellus at Pta Salinas. Every month we captured ≥ 15 females in
+each habitat and determined reproductive condition. Females with ≥ one egg were classified as gravid [6].
+We also recorded size (SVL), body and air temperature, perch height, sun exposure, and weather.            In
+both habitats females had highest reproduction in summer and lowest in winter, a cycle typical of Puerto
+Rican Anolis [6]. In every month, lizards in the open were warmer and more frequently gravid than were
+forest females. Differences in winter months were striking: 37% of open females had eggs (N=70), but no
+forest female did (N=57).      To our knowledge, such habitat-scale variation in reproduction at single sites
+has not been documented for lizards. In any case, thermal habitat clearly alters reproduction (and
+probably demography) of A. cristatellus at Pta Salinas. In particular, the forest appears suboptimal
+because forest lizards have reduced reproduction every month. Climate warming might reverse that
+disadvantage. [1] Ruibal, R. 1961 Evolution 15:98-111. [2] Rand, A.S. 1964 Ecology 45:745-752. [3]
+Huey, R.B. 1974 Science 184:1001-1003. [4] Lister, B.C. 1976 Evolution 30:659-676. [5] Huey, R.B.
+1983 In Advances in Herpetology &amp; Evolutionary Biology: Essays in Honor of Ernest E. Williams ,
+A.G.J. Rhodin &amp; K. Miyata, Eds. Mus Comp Zool: Cambridge, MA. p. 484-490. [6] Gorman, G.C.
+&amp; Licht, P. 1974 Ecology 55:360-369. [7] Licht, P. and Gorman, G.C. 1975 Copeia 1975:496-504.
+
+
+
+
+                                                                                                         533
+Owen, Dustin (Ball State University); Jacquemin, Stephen; Doll, Jason; Pyron, Mark; Lauer, Thomas
+(Ball State University, Canada)
+
+Age and rate of growth of freshwater drum (Aplodinotus grunniens) in the Wabash River, USA
+
+Understanding age and growth characteristics is a key component of assessing population dynamics,
+ecosystem status, and for imploring best management practices. The freshwater drum ( Aplodinotus
+grunniens ) is a long lived, highly fecund, benthivore that comprises the largest geographic range of all
+North American freshwater fishes. We analyzed otolith cross-sections to assess age and growth patterns
+of 460 freshwater drum sampled from the Wabash River, Indiana. Our objective was to evaluate age
+and growth patterns in relation to sex, size, position in the river system (upstream vs. downstream of a
+large tributary) using the linearized von Bertalanffy growth model. Age ranged from 0 to 32 years and
+length ranged from 68mm to 595mm. Growth patterns indicated that males exhibit faster growth rates
+than females during the first few years of growth. However, females ultimately attain longer lengths and
+display faster growth rates after age two. Position in the river system (upstream vs. downstream) was not
+related to growth rates of either sex. We suggest that differences in growth rate may be attributable to diet
+and sexual maturity energy cost. In addition, we suggest that overall rates of growth have been influenced
+by hydrology and ecosystem processes.
+
+
+
+Owen, Dustin (Ball State University); Islam, Kamal (Ball State University, Canada)
+
+Physiological Impacts of Roads on Free-Ranging Copperheads (Agkistrodon contortrix)
+
+Chronic stress has been linked to impaired reproduction, suppressed immunity, and neural cell death in
+many vertebrate species.          While numerous studies have been conducted on birds and mammals,
+comparatively few studies have been undertaken on reptiles. This paucity of data effectively limits the
+capacity for and direction of potential conservation efforts. This project will implement a novel approach
+for investigating whether anthropogenic disturbances influences the stress physiology in free-ranging
+copperheads ( Agkistrodon contortrix ). The ecology and behavioral aspects of copperheads have been
+extensively studied; their physiological reactions however, when exposed to road obstructions remain
+undocumented. For 3 months (May, June, and July) in 2012, snakes will be captured from 3 study sites,
+Yellowwood and Clark state forests, and Brown County State Park in southern Indiana. A control group
+of snakes captured from nearby natural areas (found by walking within the area at least 100 m away from
+the road), and a treatment group of snakes captured while crossing, attempting to cross, or have just
+recently crossed a road will be collected.       Blood will be drawn and analyzed using an ELISA CORT
+assay kit. There is a growing need to understand that, in addition to visible impacts (behavioral and
+ecological) of the organism in response to human alterations of habitat, invisible effects (physiological)
+may be equally important. A review of the literature indicates this is the first study to address this issue.
+I will present data that will examine if crossing roads causes stress in snakes and thus, may offer a
+physiological explanation for previously documented cases of roads as barriers to gene flow.             The
+ramifications of this study should shed light onto the ever growing field of anthropogenic studies on
+wildlife, but will take a new approach in observing the physiological impacts rather than behavioral. The
+results of this study will provide a better understanding of roads as chronic stressors.
+
+
+
+
+                                                                                                         534
+Owens, Hannah (University of Kansas);
+
+Niche Conservatism in Gadine Fishes
+
+Niche conservatism, the tendency of the fundamental niche of a species to remain the same over time, is
+a growing area of interest in a number of organismal groups. This study aims to test the hypothesis that
+niche conservatism has led to a negative correlation between phylogenetic relatedness and niche
+similarity in the subfamily Gadinae. The Gadinae is a group of marine fish that includes Atlantic, Pacific,
+and walleye cod ( Gadus morhua, G. macrocephalus , and Theragra chalcogramma, respectively), as
+well as Greenland, Polar, Arctic, and East Siberian cod ( G. ogac , Boreogadus saida, Artogadus
+glacialis, and A. borisovi ), haddock ( Melanogrammus aeglefinus ) and whiting ( Merlangius merlangus).
+These species are distributed throughout the Arctic and subarctic and occupy niches ranging from the
+temperate benthos to the edges of Arctic sea ice; some sister species exist in close distributional
+proximity, and others are geographically isolated. As a result of their economic importance, many of these
+species are very well known and sampled throughout their ranges, resulting in a wealth of available
+genetic and geographic information, and providing an ideal system in which to investigate patterns of
+niche conservatism. Employing molecular phylogenetic data from GenBank, genetic similarity was
+determined by calculating patristic differences between species based on several mitochondrial gene
+trees, as well as a concatenated gene tree. Occurrence data from the Global Biodiversity Information
+Facility database and the Russian Academy of Sciences Zoological Institute, in combination with
+environmental data from NOAA‘s World Ocean Atlas 2009, were used to calculate ecological niche
+similarity using both the niche overlap and background similarity tests provided by ENMTools. Resulting
+patterns of niche similarity and genetic relatedness of species were complex, although allopatric sister
+species tended to display a lesser degree of niche similarity to one another compared to sympatric
+species. Although these results were born out by both niche overlap and background similarity tests, they
+emphasize the great care that is necessary when attempting such a niche similarity analysis, from the
+conception of the distributional range of a species through the interpretation of results.
+
+
+
+Oyamaguchi, Hilton (UCLA); Smith, Thomas (UCLA, Los Angeles, United States)
+
+Divergence along a Brazilian rainforest-savanna gradient and the role in generating diversity
+
+Although a growing number of studies have shown that ecological speciation may be common, previous
+work has largely used vicariant events to explain patterns of diversity in the Amazon rainforest. Evaluating
+the relative roles of genetic drift and divergent selection is fundamental to understanding the mechanisms
+of rainforest speciation, yet few studies have simultaneously examined these processes. Our research
+investigates the relative roles of natural selection and genetic drift resulting in differentiation in the frog
+Dendropsophus minutus examining populations from the Amazon rainforest and the Brazilian savanna
+(Cerrado). Environmental differences between these habitats may result in contrasting selection
+pressures and may, as a consequence, be important in speciation. To understand the effects of divergent
+selection and genetic drift on intraspecific differentiation in D. minutus populations, we analyzed museum
+and field data from both habitats. Multivariate analysis (PCA) of morphological data from museum
+collections shows significant differences between habitats. Similar to museum specimens, PCA analyses
+of morphological data collected in the field shows significant differences between Cerrado and
+Amazonian populations. In addition, D. minutus calls show differences between these two habitats.
+Finally, morphology analyses show that the divergence between habitat types is greater than within
+habitat comparisons. This result suggests that natural selection along the gradient might be important in
+generating intraspecific divergence between populations. This study demonstrates that the Amazon
+
+
+
+
+                                                                                                           535
+forest-Cerrado gradient may play an important role in the speciation process; and may have important
+implications for conservation decision makers in this region.
+
+
+
+Pabijan, Maciej (Jagiellonian University); Wollenberg, Katharina (Trier University, Trier, Germany);
+Vences, Miguel (Technical University of Braunschweig, Braunschweig, Germany)
+
+The influence of body size on diversification in anurans: a case study from Madagascar
+
+The processes affecting species diversification may also exert an influence on patterns of genetic
+variability within species. We evaluated the contributions of five potential explanatory variables affecting
+rates of species formation (body size, reproductive mode, range size, microhabitat and skin texture) on
+nucleotide divergence between populations and polymorphism within populations in the mitochondrial
+16S rRNA gene for 40 species of frogs (Mantellidae) from two rainforest communities in Madagascar. We
+find that with the exception of body size, none of the proposed factors correlate with regional
+differentiation or levels of genetic variation within populations of mantellid frogs. However, we detected a
+significant but weak (ca. 11% of the explained variation in nucleotide divergence) inverse relationship
+between body size and divergence between populations, and in most cases a complete lack of haplotype
+sharing between populations of small-bodied species. This implies considerable population subdivision
+and low levels of gene flow in small and medium sized frogs. Lower vagility and shorter generation times,
+both putatively associated with small body size, are hypothesized to be the proximate mechanisms
+producing this pattern. The biological correlates of small body size may thus establish a basis for regional
+genetic fragmentation, which in turn may accelerate rates of allopatric speciation in small-bodied frogs
+relative to large species. Our results are corroborated by a recent phylogeny-based study in mantellids
+that found a link between small body size and higher mtDNA substitution rates. Taken together, our
+findings suggest a mechanism through which variation in body size might influence species formation and
+thus has important implications for diversification rates in tropical amphibians and possibly other
+vertebrate groups.
+
+
+
+Page, Larry (Florida Museum of Natural History);
+
+iDigBio, the National Resource for Advancing Digitization of Biological Collections (ADBC)
+
+iDigBio, the National Resource for the NSF-funded "Advancing Digitization of Biological Collections" is
+working to build the teams and infrastructure that are required to successfully digitize information in
+biological collections throughout the U.S. iDigBio will provide core resources and coordination for the
+national digitization effort, oversee implementation of standards and best practices for digitization, provide
+a cloud computing environment for collections data, and plan for long-term sustainability of the national
+digitization effort. As the national repository grows, iDigBio will work to improve the understanding and
+appreciation of biodiversity, and of the collections that document biodiversity, by demonstrating the
+connection between biodiversity and scientific and societal benefits.
+
+
+
+
+                                                                                                          536
+Palen, Wendy (Earth to Ocean Research Group, Dept. of Biological Sciences, Simon Fraser University);
+Monteith, Zachary; Munshaw, Robin; Courcelles, Danielle; Atlas, William (Earth to Ocean Research
+Group, Department of Biological Sciences, Simon Fraser University, Canada)
+
+Ecological roles and population dynamics of Dicamptodon tenebrosus in stream ecosystems
+
+In tributaries of the Pacific Northwest, coastal giant salamanders ( Dicamptodon tenebrosus ) often co-
+occur at high densities with steelhead trout ( Oncorhynchus mykiss ) and are top aquatic predators in
+many stream food webs. Nearly two decades of research has demonstrated the primacy of predation by
+stream-dwelling fishes in structuring stream food webs. Despite achieving body sizes and total biomass
+that can exceed that of fishes in many streams, the role of salamanders in these systems has received far
+less attention. Over the past three years we combined experiments of stream food webs with surveys,
+mark-recapture studies, and population dynamics models to estimate the strength of trophic interactions
+and nutrient recycling by juvenile steelhead and coastal giant salamanders. Here we synthesize the
+results of these diverse approaches to present an overview of the ecological roles and population
+dynamics of D. tenebrosus in stream ecosystems. We find that the density and total biomass of stream
+vertebrates is often strongly skewed, with D. tenebrosus biomass more than three times that of all
+juvenile salmonids. Despite these differences, we estimate that the total amount of consumer recycled
+nutrients (N, P) is dominated by juvenile steelhead (2x higher TN, 1.3x higher TP). Field-based
+experiments in small tributaries where both species coexist suggest that terrestrial invertebrates directly
+subsidize juvenile steelhead, constituting approximately 50% of prey biomass, but represent only a small
+fraction of coastal giant salamander diets (&lt;10%). When terrestrial prey was experimentally reduced
+over summer months, we found no changes in salamander growth rates but dramatic reductions in
+steelhead growth. These patterns of resource use are supported by stable isotope samples from streams
+containing both species, with D. tenebrosus populations deriving energy from more aquatic (algal)
+sources (δ 13 C -25.5) compared to juvenile steelhead (δ 13 C -24.2). Despite the potential for release
+from resource competition, we find that D. tenebrosus in streams without salmonids experience slower
+growth rates, and using stochastic population dynamics models, estimate that these differences in growth
+translate into smaller salamander populations that have a higher probability of extinction over a simulated
+30-year time horizon. We conclude that anthropogenic changes in the relative abundance of coastal giant
+salamanders and juvenile steelhead have the potential to alter stream food web dynamics and ecosystem
+level nutrient availability.
+
+
+
+Palmeri-Miles, Amber (Central Washington University); Irwin, Jason (Central Washington University,
+Canada); Griswold, Trish; Browitt, Lisa (Walter Strom Middle School, Canada)
+
+Middle School Students Conduct Conservation Research by Tracking Toads
+
+Sixth, seventh, and eighth-grade students from Walter Strom Middle School in Cle Elum, Washington,
+were an integral part of a Master‘s of Science project at Central Washington University (CWU) examining
+movement patterns and home ranges of Western Toads ( Anaxyrus boreas ) near Snoqualmie Pass, WA
+(USA). Students who participated in the ―Watershed Club‖ as part of CWU‘s Yakima WATERS program
+(funded by a National Science Foundation GK-12 grant) had the opportunity to conduct fieldwork and
+collect real data. These students learned to use Telonics TR-4 and Communication Specialist Inc. R1000
+receivers with a Telonics RA-14 directional antenna to track Western Toads. Toads were outfitted with
+radio transmitters (BD-2 or BD-2T Holohil Inc.) mounted on waist belts made of polyethylene tubing.
+Approximately once a month, active participants in the Watershed Club were selected to conduct
+fieldwork. These students used radio telemetry to locate toads in various habitats throughout three
+
+
+
+
+                                                                                                       537
+seasons in all weather conditions. Western Toads show great capacity for movement (e.g., &gt;3.5 km in
+a week), use a wide variety of habitats, and show strong seasonal and annual site fidelity. Estimates of
+Western Toads‘ home ranges were 0.002-1.346 km2 (n= 10). Due to the duration of this study (2 yr)
+students were able to observe differences in seasonal habitat selection and movement patterns. In
+addition to collecting data, students were filmed and interviewed while conducting fieldwork. A
+documentary is being assembled that will be used to educate community members about the importance
+of wildlife conservation and demonstrate Walter Strom Middle School‘s connection with local
+environmental issues.
+
+
+
+Palmeri-Miles, Amber (Central Washington University); Irwin, Jason (Central Washington University,
+Canada)
+
+Western Toad (Anaxyrus boreas) overwintering and hibernacula temperatures near Snoqualmie
+Pass, WA, USA
+
+Amphibians use a variety of methods to survive harsh winter temperatures. Some avoid freezing
+temperatures by overwintering aquatically; others are freeze tolerant, and some species use
+subterranean refuges. Because Western Toads ( Anaxyrus [= Bufo ] boreas ) are not freeze tolerant,
+overwintering sites must buffer toads from freezing temperatures, although few studies have examined
+overwintering in this species. We investigated the timing of A. boreas overwintering and movements
+around overwintering sites, identified and described hibernacula, and measured temperatures
+experienced by overwintering toads. Twelve A. boreas were radio tracked to hibernacula in 2009 and
+2010 in the Snoqualmie Pass area of the Cascade Mountains of Washington State (USA). This area is
+characterized by heavy snowfall (mean= 11 m annually) and snow is often present when toads breed in
+mid-April to mid-May (weather dependent). Toads entered hibernacula between 5 October and 20
+November. Spring emergence was more variable, ranging from 11 March and 1 June. Some toads made
+distinct movements from summer foraging range to overwintering sites (0.074-2.3 km), while others
+overwintered within their summer range. Distance moved to overwintering sites was not correlated with
+size or sex. Hibernacula sites were located in a variety of habitats ranging from wetlands to upland
+forests. Most toads selected pre-existing burrows and natural tunnels often adjacent to subsurface
+streams, although others appeared to have burrowed directly into the soil. Communal overwintering (at
+least 2 individuals) was observed at two sites. The two largest males and females were outfitted with
+Thermochron iButton (DS1922L) attached to radio transmitter belts. Radio transmitter-iButton complexes
+weighed 7.0-7.5 g (4.0-8.6% of body weight). To record environmental temperatures, additional iButtons
+were placed at the entrances of hibernacula, and in nearby trees (2 m height). iButtons recorded
+temperatures at 1.2 or 1.5 h intervals. The minimum temperature recorded amongst hibernacula was
+0.13°C, although air temperatures reached -20.8°C. Toads‘ temperature data indicate that they emerge
+from hibernacula, bask in the sun and retreat below ground before traveling away from overwintering
+sites. A. boreas overwintering seems highly variable. Some toads traveled towards breeding sites to
+overwinter, others overwintered within their summer range then traveled to breeding sites, yet other
+mature adults did not breed at all.
+
+
+
+
+                                                                                                     538
+Palomares, M.L. Deng (Fisheries Centre, UBC); Bailly, Nicolas (WorldFish Center, Canada)
+
+Documenting the marine biodiversity of island ecosystems through FishBase and SeaLifeBase
+
+FishBase (www.fishbase.org) and SeaLifeBase (www.sealifebase.org), free-access online biodiversity
+information systems on fish and other marine animals of the world, collate bits of data from published
+sources into a structure that was originally designed to provide data for analyses by aquatic resource
+scientists and managers. These two databases jointly have the potential to give a full coverage of the
+marine life of the world‘s oceans and can become a strong ecosystem management tool, especially for
+well-documented ecosystems. Both databases use valid species (scientific) names as the hook to all
+information and are designed to provide checklists of species by locality, i.e., by ecosystem within a
+country, by country, or by large marine ecosystem. Checklists contain, in addition to valid and nominal
+species, common names used in several languages, the status of the species in that locality, where it is
+found within the water column, and its largest recorded maximum length. Attached to each valid scientific
+name is a suite of structured diagnostic and ecological data that characterize the species in general,
+along with population-specific biological data (e.g., growth parameters, length-weight relationships, food
+items, predators, details on spawning and reproduction, etc.). This suite of data represents the bulk of
+information needed for an ecosystem approach to the management of exploited living marine resources
+or the assessment of the biological and economic impacts of large marine ecosystems, as done, e.g., by
+the Sea Around Us project. This contribution describes the process of this documentation exemplified
+with checklists of marine vertebrates in island ecosystems. We also discuss a mechanism for the efficient
+transfer of pertinent data to and from projects requiring the wide range of data stored in these two
+information systems, e.g., for building Ecopath models.
+
+
+
+Paluh, Daniel (John Carroll University); Saporito, Ralph (John Carroll University, Canada)
+
+An experimental test of aposematism in the dendrobatid poison frog Oophaga pumilio using
+moving clay models
+
+Brightly colored frogs of the family Dendrobatidae contain alkaloid-based chemical defenses, which
+appear to be utilized as an effective deterrent to predators. The conspicuous coloration of these frogs is
+generally considered an aposematic signal to potential color-visioned predators. A previous field-based
+experiment tested this hypothesis using stationary red clay model frogs and brown clay model frogs to
+assess the natural predation rates of the dendrobatid frog Oophaga pumilio as a function of color at the
+La Selva Biological Station in Costa Rica. Predation rates on brown models were almost twice that of red
+models, suggesting that predators avoided the brightly colored models. These results support the
+hypothesis that coloration in O. pumilio is an aposematic signal. In the present study, we utilize similar
+methods to further study aposematism in O. pumilio. Herein, we report the results of a field study in which
+natural predation rates were measured for moving clay models of O. pumilio and brown frogs. Stationary
+models may not provide realistic assessments of natural predation rates, as predators may be
+‗suspicious‘ or not perceive motionless models as prey, and thus avoid attacking the models. Moving
+models are likely to be more realistic, and therefore provide a better assessment of natural predator
+responses. The results of our study will provide additional information on the function of aposematic
+coloration in dendrobatid frogs.
+
+
+
+
+                                                                                                       539
+Park, Daesik (Kangwon National University); Kim, Ja-Kyeong (Kangwon National University, Chuncheon,
+Kangwon, Korea)
+
+Arginine vasotocin (AVT) induces the courtship behavior of male Hynobius leechii (Urodela,
+Amphibia) without external stimuli
+
+In Hynobius , the body undulation, a male stiffens his body intermittently so that his tail and the hind part
+of this body move from side to side, is one of representative male courtship behaviors and both males
+and females respond to the behavior via the mechanosensory system. During a mating, a male often
+displays more than 100 times body undulation per 10 min over 2-4 hours. A recent study showed that
+water currents generated by male body undulations function to attract females towards the site where she
+can attach her egg sacs and also in male-male competition. In this study, we have investigated if arginine
+vasotocin (AVT) induces the body undulation of male Hynobius leechii as it similarly functioned in
+Cynops pyrrhogaster and Taricha granulosa and if it is, tried to determine which AVT receptor is
+involved in the response. Breeding and non-breeding males intraperitoneally injected 100 ug AVT started
+within approximately 10 min and highly, actively displayed the body undulation where any external stimuli
+were not present. In a long-term study of the response, the effect by AVT persisted over 4 hours. When
+injected 100 ug AVT 20 min after injection of AVT V1 receptor antagonist to the males, the frequency of
+the body undulation was decreased. However, the suppressive effect by AVT V1 receptor antagonist was
+not distinct when the males which were injected the AVT V1 receptor antagonist were allowed to interact
+with a female. Injection of AVT V2 receptor antagonist did not induce any significant changes in the male
+body undulation. Our results suggest that in this species, AVT might influence central motivational states
+of male salamanders to start their body undulation unlikely known in other urodele species and the effect
+is evoked through AVT V1 receptors. This study is supported by Kangwon National University.
+
+
+
+Parker, Mickey (University of Arizona); Goode, Matt; Albert, Kristin (University of Arizona, Canada)
+
+Using Fluorescent Powder Tracking to Observe Fine-Scale Movements of Gila Monsters
+(Heloderma suspectum)
+
+Radiotelemetry is a useful technique that can yield valuable data on the movement paths of animals,
+especially secretive species. Despite its advantages, radiotelemetry yields no information regarding
+movement paths and behaviors between successive relocations. However, fluorescent powder tracking
+is a technique that can be used to observe such fine-scale movements. This technique involves applying
+fluorescent powder to an individual, allowing it to move about its environment, and following the resulting
+trail with a portable source of UV light. From 2008-2010, we used fluorescent powder tracking to observe
+fine scale movements of Gila Monsters (Heloderma suspectum) in and around Stone Canyon, a
+residential development in the foothills of the Tortolita Mountains near Tucson, AZ, USA. Stone Canyon
+is a mosaic of land-use types, including natural and grazed Sonoran Desert habitat, an 18-hole golf
+course surrounded by areas of highly irrigated desert vegetation, houses in various stages of
+construction, and a network of roads. Because Gila Monsters have large home ranges and are capable
+of moving hundreds of meters in a single bout of surface activity, they are very likely to encounter
+anthropogenic landscape features as they move through Stone Canyon‘s urban matrix. Using fluorescent
+powder tracking, we recorded the movement paths of 121 individual Gila Monsters and recorded them
+using handheld GPS units. We found that the average total distance of these paths were over twice that
+of their straight line distance, which has important implications for this species‘ behavioral and
+physiological ecology. We will discuss characteristics of these movement paths, as well as behaviors we
+were able to document using this technique that would not be possible using other methods. We will also
+
+
+
+
+                                                                                                         540
+discuss the conservation implications of our results as they pertain to making urban developments more
+compatible with wildlife.
+
+
+
+Parker, Scott (Coastal Carolina University); Murphy, Christopher (The University of Sydey, Canada);
+Thompson, Michael (The University of Sydney, Canada)
+
+Influence of the progesterone receptor antagonist mifepristone on uterine blood vessel
+development and epithelial surface morphology in oviparous and viviparous Australian skinks
+
+Many of the structural and functional changes to the uterus associated with maintenance of pregnancy
+are controlled by steroid hormones such as progesterone. We tested the hypothesis that progesterone
+regulates uterine blood vessel development and epithelial surface morphology in the oviparous skink
+Ctenotus taeniolatus and the viviparous skink Eulamprus quoyii by treating females with the
+progesterone receptor antagonist mifepristone at different stages of gestation. We used
+immunofluorescent confocal microscopy and scanning electron microscopy to quantify uterine vascularity
+and to describe uterine surface morphology during gestation. Overall, mifepristone treatment resulted in
+increased uterine blood vessel proliferation in in C. taeniolatus but did not affect uterine vascular density
+and surface area at any stage of pregnancy in E. quoyii . In contrast, there was no apparent effect of
+mifepristone treatment on uterine epithelial surface morphology during gestation in gravid/ pregnant
+females of either species. Both species exhibit distinct regionalization in shape of uterine epithelial cells
+which may relate to different functional roles during gestation. Our comparative studies of these and
+other species of Australian skinks suggest that differences in uterine sensitivity to progesterone during
+gravidity/pregnancy may exist among species. Alternatively, variation in progesterone receptor amino
+acid sequence could result in failure of mifepristone to effectively block binding of progesterone to its
+receptor and thus account for differences in treatment effects observed among skink species.
+
+
+
+Parkinson, Chris (University of Central Florida); Fenwick, Allyson (Univeristy of Central Florida,
+Canada); Daza, Juan M. (Universidad de Antioquia, Canada)
+
+Systematics, taxonomy and biogeography of New World pitvipers (Serpentes: Crotalinae)
+
+Understanding the historical processes that have shaped the evolution of biotic assemblages is an
+important aspect of evolutionary biology. An excellent, well-defined, model system for investigating
+historical processes is New World pitvipers. These snakes, characterized by a distinct facial pit, are of
+interest to several biological fields due to their medical and ecological importance. Resolving the
+evolutionary relationships of the group is paramount as it informs an understanding of the evolution of
+venom proteins and composition as well as the evolution of phenotype, behavior, natural history,
+geographic range, and other aspects of pitviper biology. A taxonomy that differentiates distinct
+evolutionary lineages facilitates communication on group members, as species binomials are the most
+broadly utilized result of systematists‘ classifications. Because of long interest in pitvipers multiple
+morphological and mitochondrial phylogenies have been generated, but taxon-comprehensive trees are
+still lacking and key intra- and intergeneric relationships are still unclear. We generate the most taxon-
+comprehensive phylogenies of New World pitvipers to date (N=114), evaluating 93% of currently-
+recognized species through combining morphological (~100) and molecular (~4700) characters. We use
+parsimony and model-based approaches to infer phylogeny and interpret the relationships in light of
+geological and climatic events. Results indicate that numerous geological and biogeographic boundaries
+have played a role in shaping pitviper diversity in the New World.Understanding the historical processes
+
+
+
+                                                                                                         541
+that have shaped the evolution of biotic assemblages is an important aspect of evolutionary biology. An
+excellent, well-defined, model system for investigating historical processes is New World pitvipers. These
+snakes, characterized by a distinct facial pit, are of interest to several biological fields due to their
+medical and ecological importance. Resolving the evolutionary relationships of the group is paramount as
+it informs an understanding of the evolution of venom proteins and composition as well as the evolution of
+phenotype, behavior, natural history, geographic range, and other aspects of pitviper biology. A taxonomy
+that differentiates distinct evolutionary lineages facilitates communication on group members, as species
+binomials are the most broadly utilized result of systematists‘ classifications. Because of long interest in
+pitvipers multiple morphological and mitochondrial phylogenies have been generated, but taxon-
+comprehensive trees are still lacking and key intra- and intergeneric relationships are still unclear. We
+generate the most taxon-comprehensive phylogenies of New World pitvipers to date (N=114), evaluating
+93% of currently-recognized species through combining morphological (~100) and molecular (~4700)
+characters. We use parsimony and model-based approaches to infer phylogeny and interpret the
+relationships in light of geological and climatic events. Results indicate that numerous geological and
+biogeographic boundaries have played a role in shaping pitviper diversity in the New World.
+
+
+
+Passerotti, Michelle (NOAA/NMFS); Andrews, Allen (NOAA/NMFS, Aiea, HI, United States); Carlson,
+John (NOAA/NMFS, Panama City, FL, United States); Wintner, Sabine (KwaZulu-Natal Sharks Board,
+Umhlanga Rocks, South Africa); Natanson, Lisa (NOAA/NMFS, Narragansett, RI, United States)
+
+Age validation in sand tiger shark, Carcharias taurus, using bomb radiocarbon analysis
+
+There is a great deal of ambiguity in the age and growth data of sand tiger shark (Carcharias taurus). Of
+particular concern is the observed maximum age based on vertebral band counts. To address this
+uncertainty, archival vertebrae of sand tiger sharks from both the north Atlantic and south Indian Oceans
+were processed for bomb radiocarbon analysis in an effort to validate growth band periodicity and
+longevity in the species. Vertebral centra from 10 individuals were chosen for analysis based on capture
+date and size at capture, and sectioned to a thickness of 2mm using an Isomet low speed saw. One half
+of the section was left at this thickness and mounted for micromilling, while the other half was sanded to a
+thickness of 0.5mm and mounted for ageing. Age estimates for each shark were obtained by counting
+growth band-pairs assuming annual band-pair deposition, and were used in conjunction with date of
+capture to assign a year of formation for each band-pair. Thin sections were used to guide marking of
+band-pairs on thick sections. A total of 36 growth band-pairs were milled from thick sections (n= 2 to 6 per
+vertebrae) for Δ14C/δ13C analysis. The measured Δ14C values for band-pairs/formation years will be
+compared with regional Δ14C reference chronologies including known-age porbeagle shark (Lamna
+nasus) and hermatypic corals. This comparison will either validate age estimates or will provide evidence
+for discrepancies in age from growth band counting. New estimates of age at maturity and longevity will
+be used to update the productivity for this species, which current data estimates to be strikingly low (i.e.
+population growth rates are negative) even in the absence of fishing pressure.
+
+
+
+Pasukonis, Andrius (Universitaet Wien); Hödl, Walter (University of Vienna, Canada)
+
+Homing behavior in territorial dendrobatoid frog Allobates femoralis
+
+Dendrobatoid frogs exhibit some of the most complex spatial behavior of the amphibian world, such as
+territoriality and tadpole transportation from terrestrial clutches to widely distributed deposition sites. High
+homing performance of tadpole transporting adults is often assumed, but experimental evidence is
+
+
+
+                                                                                                            542
+lacking. Allobates femoralis is a common neotropical leaf litter frog. Males occupy vocally advertised
+territories, which are used for oviposition by females. Tadpoles are later transported by males to aquatic
+deposition sites, which are located tens to hundreds of meters away from the territory. Anecdotal
+evidence suggests that artificially displaced males successfully home back to their territories from as far
+as 300 meters within just a few days. To quantify the homing success and speed of A. femoralis, we
+conducted a field translocation experiment. Multiple territorial males were displaced up to 800 meters and
+their initial capture sites were revisited daily. Individually unique belly patterns allowed the identification of
+recaptured males. We question if senses that are most familiar to humans, such as vision, hearing, or
+olfaction alone can explain successful homing at this scale.
+
+
+
+Paszkowski, Cynthia (University of Alberta);
+
+Herpetological Conservation on Canadian Landscapes Altered by Industry
+
+Industries based on the extraction of renewable and nonrenewable natural resources have long been
+fundamental to the Canadian economy. Agriculture, forestry, hard rock mining, hydropower generation,
+oil and gas extraction can have profound and lasting effects on terrestrial and freshwater habitats used by
+amphibian and reptile species. The application of systems designed to classify and calculate threats
+offers a promising approach for assessing the potential impact of industrial activities on individual species
+over a broad geographical area, for example, at the provincial level. Integrated landscape management,
+which recognizes the combined effects of multiple industries, offers a promising approach for conserving
+multiple species simultaneously on a smaller, but still regional, scale.       Meaningful conservation of
+individual populations of amphibians and reptiles on industrial landscapes often requires a mix of habitat
+preservation, restoration, and creation. For many species, a lack of knowledge of their basic biology in
+Canada still remains among the biggest threats to their persistence on landscapes shaped by resource-
+based industries.
+
+
+
+Pauly, Greg (Natural History Museum of Los Angeles County); Shaffer, H. Bradley (University of
+California, Los Angeles, Canada)
+
+Phylogenetic relationships and species boundaries among the musk turtles, with a focus on the
+federally threatened Flattened Musk Turtle, Sternotherus depressus
+
+The musk turtles include three largely allopatric species in the southeastern United States as well as the
+more widespread common stinkpot, Sternotherus odoratus . Of particular note is the federally
+threatened Flattened Musk Turtle, Sternotherus depressus , an endemic to the Black Warrior River
+System of Alabama and whose range is completely encircled by that of the Stripe-necked Musk Turtle,
+Sternotherus minor peltifer . Since its description as a distinct species in 1955, the Flattened Musk Turtle
+has been treated both as a distinct species and as a subspecies of S. minor . Further, hybridization with
+S. minor , possibly resulting from damn construction and habitat modification, has been suggested as one
+potential threat to S. depressus . Here, we examine species boundaries and phylogenetic relationships
+among Sternotherus species through analyses of nine nuclear and two mitochondrial genes. All
+analyses strongly argue that S. depressus is a unique, strongly differentiated lineage that is well
+deserving of species status. However, hybridization has been important in the history of this lineage with
+evidence of both ancient and more recent hybridization. The former is suggested by discordant
+mitochondrial and nuclear gene trees which mirror previous conflicts between allozyme and mitochondrial
+DNA analyses. More recent hybridization is suggested between S. depressus and S. minor , and we
+
+
+
+                                                                                                              543
+examine whether this gene flow results from ongoing hybridization or recent historical processes. Lastly,
+we consider evidence for recognizing S. m. minor and S. m. peltifer as distinct species.
+
+
+
+Payne, Samantha (University of Guelph); Petrik, Jim; Vickaryous, Matthew (University of Guelph,
+Guelph, ON, Canada)
+
+Angiogenesis during tail regeneration: an investigation using the leopard gecko (Eublepharis
+macularius)
+
+As for many lizards, leopard geckos can self-shed (autotomize) their tails as an anti-predation strategy
+and spontaneously regenerate a replacement. The regenerate tail forms from an aggregation of
+proliferating, mesenchymal-like cells termed the blastema. Cells of the blastema ultimately give rise to
+the replacement appendage, a multi-tissue structure including nerves, skeletal muscle and blood vessels.
+To date, the role of angiogenesis during regeneration is poorly understood and limited to studies of
+zebrafish and urodeles. We investigated angiogenesis throughout the process of tail regeneration in the
+leopard gecko using a panel of common angiogenic markers including vascular endothelial growth factor
+(VEGF), alpha-smooth muscle actin (α-SMA), thrombospondin-1 (TSP-1), and cluster differentiation 36
+(CD36). The sequence of protein expression during regeneration corresponds with that observed during
+embryonic angiogenesis. Early during regeneration, VEGF expression is widespread among cells of the
+blastema, including endothelial cells of the newly sprouted capillaries. Maturation of these vessels is
+characterized by the appearance of α-SMA immunopositive pericytes. As regeneration progresses,
+tissues begin to differentiate and the once diffuse expression of VEGF becomes localized to blood
+vessels. TSP-1 and its receptor CD36 are not expressed until the late stages of tail regeneration,
+corresponding with the complete differentiation of tail tissues. Overall the organization and relative
+distribution of blood vessels in the regenerate tail is comparable but not identical to that of the original
+(e.g., the caudal artery of the original tail is replaced by one or more smaller vessels). To further explore
+the role of TSP-1 during regeneration we administered a TSP-1 mimetic (the angiogenic compound ABT-
+510) to late stage tail regenerating geckos. Our data indicates that the TSP-1 mimetic alters the
+distribution and architecture of newly formed blood vessels. Our work suggests that angiogenesis has a
+critical role in tail regeneration in the leopard gecko.
+
+
+
+Paz, Andrea (Universidad de los Andes); Ibáñez, Roberto (Smithsonian Tropical Research Institute,
+Canada); Lips, Karen R. (University of Maryland, Canada); Crawford, Andrew J. (Universidad de los
+Andes, Bogotá, Columbia)
+
+Testing the role of ecology and life history in structuring genetic variation across a landscape: A
+comparative ecophylogeographic approach
+
+Traditional hypotheses to explain phylogeographic structure and species diversity such as rivers,
+mountains and refugia often fail to constitute general explanations for observed patterns, especially in
+lower latitudes. Limits to dispersal may vary in strength according to organisms‘ intrinsic biology.
+Ecological and life history variables may thus be important in explaining the observed patterns of genetic
+variation. Amphibians are particularly tied to their environment and have a wide variety of life history
+characteristics that may influence their ability to disperse or survive in novel environments.
+Phylogeographic studies of Central American amphibians have revealed a variety of historical patterns
+with little commonality among species. We developed a novel approach to elucidate the role of life history
+variation in generating phylogeographic structure that may be a precursor to species formation. We
+
+
+
+                                                                                                         544
+sampled three amphibian communities in Panama. We employed DNA barcode data, the mitochondrial
+genes COI and 16S, to quantify genetic variation among sites in 31 anuran species. To evaluate
+congruence in divergence times between species we used HABC analyses in two comparisons between
+the three localities in Panama. Simultaneous divergence between all species was rejected in both cases
+however, congruence in divergence times between groups of species was found. We generated
+ecological niche models for each species to estimate landscape resistance between localities. Ecological
+and life history variables were used to evaluate their importance in explaining the observed genetic
+divergence and congruence in divergence times. Preliminary results suggest that landscape resistance is
+important in explaining genetic variation. The value of environmental factors in generating
+phylogeographic structure and species diversity may thus be greater than usually thought and may
+provide a more general explanation than physical barriers for the genetic patterns we observe.
+
+
+
+Pearson, Marianne (University College London and The Natural History Museum);
+
+Biogeographical history and radiation of early salamanders: A review
+
+Living salamanders are represented by over 580 species within ten families, and are commonly found in
+the Northern Hemisphere. Within this diverse and abundant clade of lissamphibians only two relatively
+recent southward migrations into South America and Africa have been documented. The earliest
+recorded fossil salamanders date from the Middle Jurassic (165 million years ago) and are known from
+both Europe and Asia, with North American records beginning in the Late Jurassic. This distribution has
+lead many workers to suggest a Laurasian origin for this group. However, discoveries of enigmatic
+Cretaceous and Palaeogene salamander fossils in Bolivia, Sudan and Niger raise questions as to how
+they might have arrived on the historically Gondwanan continents, and whether early salamanders, like
+frogs, might once have had a more global distribution. After more than a century of morphological and
+molecular analysis, some degree of consensus has been reached regarding the interrelationships of living
+salamanders, although the position of some clades (e.g. sirenids) still remains controversial, in part
+because of widely prevalent paedomorphosis. Incorporating fossil taxa into the phylogeny is more difficult,
+but is crucial for an understanding of early salamander radiation and biogeography. Most fossil
+salamander remains are incomplete but the discovery of exceptionally well preserved material from the
+Late Jurassic/Early Cretaceous of China and Spain offers the potential for more rigorous phylogenetic
+analysis.
+
+
+
+Pearson, Monica (University of British Columbia); Mooney, P. (R.P. Bio, Canada)
+
+Spotties vs. Bullies: Differentiation of Microhabitat Selection by Endangered Oregon Spotted
+Frogs and Invasive American Bullfrogs in Shallow Water Wetland Habitats.
+
+The Oregon Spotted Frog ( Rana pretiosa ) is a critically endangered species in Canada. Reintroduction
+into historic and new habitats is essential for the survival and recovery of this species. However,
+American bullfrog ( Lithobates catesbianus ) introductions to remnant Oregon spotted frog habitats have
+been proposed as a direct cause of local extinctions, as both species are highly aquatic and bullfrogs are
+known as aggressive predators of less sizeable frogs. Bullfrogs now exist across approximately 90% of
+the historic Oregon spotted frog range in BC, and bullfrog control efforts have been largely ineffective. As
+both Oregon spotted frog and bullfrogs prefer shallow warm slow-moving wetland habitats,
+reintroductions of Oregon spotted frogs to areas with bullfrog presence must consider habitat selection of
+both species, and restoration efforts must seek to provide appropriate habitat for Oregon spotted frogs
+
+
+
+                                                                                                        545
+while deterring high density colonization by invasive bullfrogs. Our paper describes a research project
+that used radio-telemetry to identify and differentiate microhabitat selection of both Oregon spotted frogs
+and bullfrogs in a shared habitat, and developed criteria for habitat modification and creation. Fifteen
+adult Oregon spotted frogs and fourteen adult bullfrogs were tracked from June through September 2011
+and microhabitat variables were measured at each frog location. Multivariate analyses were applied to
+identify structural habitat variables significant to each species, and to contrast habitat selection between
+species. In addition, microhabitat variables were measured across the wetland, which had been stratified
+into habitat typologies through orthophoto analysis. Cluster analysis was used to confirm categorical
+habitat typologies, and assess selection by frog species. Adults of the two species used different habitat
+typologies, with endangered Oregon spotted frogs using shallower and more structurally complex sites
+than the bullfrogs. Adult bullfrogs almost exclusively used deeper water with a low density of emergent
+islands or hummocks and dominated by rooted floating vegetation. Habitat alterations to reduce bullfrog
+densities should include water level controls that maintain depths that promote islands of clumped
+emergent vegetation rather than rooted floating vegetation. Habitats designed to benefit Oregon spotted
+frogs should provide a shallow yet complex topology with a high density of vegetation clumps and leafy
+emergents. This project will inform the Canadian Oregon Spotted Frog Recovery Team‘s efforts to restore
+Oregon spotted frog populations across its historic range in BC‘s Lower Mainland Region.
+
+
+
+Pearson, Steven (Drexel University); Avery, Harold (Drexel University, Canada)
+
+Competition between IUCN, near-threatened, red-bellied turtles (Pseudemys rubriventris) and
+invasive red-eared slider turtle (Trachemys scripta elegans)
+
+Invasive species affect populations and communities of wildlife worldwide through predation and
+competition for limited resources. Globally, the invasive red-eared slider turtle ( Trachemys scripta
+elegans ) may compete with native turtles for limited food, basking and other wetland resources. In the
+mid-Atlantic region of the United States, the red-eared slider turtle is ecologically similar to the red-bellied
+turtle (Pseudemys rubriventris). Red-bellied turtles have undergone population declines in wetlands
+where red-eared slider turtles have been introduced. In anthropogenically degraded wetlands the
+potential for competition may be greater between red-eared slider turtles and red-bellied turtles due to
+extensive overlap for dietary resources and habitat use. We performed manipulative experiments with
+juvenile turtles of both species to determine the underlying mechanisms of how red-eared slider turtles
+may compete with red-bellied turtles for limited resources. Using mesocosms, we housed single and
+mixed species groups at low and high densities to determine the mechanisms of competition for limited
+dietary and thermoregulatory resources. We determined ingestion rates, growth rates and behavioral
+interactions of turtles to determine whether red-eared slider turtles outcompete red-bellied turtles for
+limited dietary and thermoregulatory resources. Preliminary results indicate that the growth rate and
+ingestion rates of red-bellied turtles can be suppressed when housed with red-eared slider turtles under
+limited resource conditions. Understanding the mechanisms of competition between red-eared slider
+turtles and red-bellied turtles will allow us to understand the long term impacts of the red-eared slider
+turtle invasions on ecologically similar native species.
+
+
+
+
+                                                                                                            546
+Pechmann, Joseph (Western Carolina University); Tupy, John (Western Carolina University, Canada);
+Sisson, Michael (North Carolina Wildlife Resources Commission, Canada); Baxley, Danna (Kentucky
+Department of Fish and Wildlife Resources, Canada); Thurgate, Nicole (University of Adelaide, Canada);
+Murphy, Michael (The Nature Conservancy, Canada); Whitfield, Steven (University of South Dakota,
+Canada)
+
+Demography and supplemental juvenile recruitment for the endangered dusky gopher frog, Rana
+sevosa
+
+We studied the population dynamics of Rana sevosa from 1996-2012 at Glen‘s Pond, Harrison County,
+MS, USA using a drift fence with pitfall traps, mark-recapture, and egg mass counts. The pond held
+water long enough for natural metamorphosis of tadpoles during only four years: 1997 (221 juveniles
+metamorphosed), 1998 (2488 metamorphosed), 2008 (171 metamorphosed), and 2010 (60
+metamorphosed). We and our colleagues supplemented natural juvenile recruitment by maintaining pond
+water levels with well water in 2001 and 2005, producing 172 juveniles, and by raising tadpoles in tanks
+adjacent to the pond from 2002-2012, producing &gt; 2500 juveniles. The mean number of egg masses
+observed in years when breeding occurred was 35 during the first six years of the study, dropped to 21
+during the next six years, and increased to 40 during the last five years. No breeding occurred during
+three of 17 years due to low water levels. Age at first reproduction for individuals reared in tanks
+averaged 3.1 years and ranged from 2-5 years for males, and averaged 3.5 years and ranged from 3-7
+years for females. Larval rearing conditions influenced age at first reproduction. The number of breeding
+seasons which an adult participated in during its lifetime averaged 1.8 and ranged from 1-6 for males, and
+averaged 2.1 and ranged from 1-5 for females. Only 8% of males and 25% of females documented to be
+alive skipped breeding during any year in which other gopher frogs bred. The population would likely
+have gone extinct during the 1999-2007 dry period without the supplemental juvenile recruitment provided
+by human management.
+
+
+
+Peloso, Pedro (American Museum of Natural History); Forlani, Maurício (University of Richmond,
+Canada); Motta, Ana Paula (Museu Nacional do Rio de Janeiro, Canada); Gaucher, Philippe (CNRS,
+Canada); Sturaro, Marcelo (Museu Paraense Emílio Goeldi, Canada)
+
+A taxonomic assessment of the frog genus Chiasmocleis in the Amazon river basin, with report of
+three unnamed species
+
+The humming-frog genus Chiasmocleis Méhely, 1904 is the most speciose (25 valid nominal species)
+and is distributed in Panama and Tropical South America east of the Andes. The genus lack of a
+phylogenetic framework and this results in systematic works to be based on a geographical perspective,
+rather than on evolutionary relationships. Based on analysis of discrete external morphology,
+morphometrics, and acoustic data we provide an assessment of populations occurring on the Amazon
+river basin. Preliminary results suggests we recognize thirteen species to occur in the area of study, of
+which 10 are previously known [ Chiasmocleis albopunctata (Boettger, 1885) , C. anatipes Walker and
+Duellman 1973, C. avilapiresae Peloso and Sturaro, 2008, C. bassleri Dunn 1949, C. devriesi Funk
+and Cannatella 2009, C. hudsoni Parker 1940, C. magnova Moravec and Köhler 2007, C.
+shudikarensis Dunn 1949, C. supersilialbus Morales and McDiarmid 2009, C. ventrimaculata
+(Andersson 1945)], and three considered new species. New species ―A‖ was previously confounded with
+C. ventrimaculata and is widespread over western Amazonia, in Peru, Bolivia and Brazil (state of Acre).
+New species ―B‖ is similar to C. hudsoni but shows a strikingly distinct color pattern and a unique
+advertisement call. It is known from few localities in the Guiana Shield, in French Guiana and Brazil (state
+
+
+
+
+                                                                                                        547
+of Amapá). New species ―C‖ is knows from a couple of localities on eastern Amazonia, near the city of
+Belém, Brazil (state of Pará)
+
+
+
+Penner, Johannes (Museum für Naturkunde Berlin - Leibniz Institute for Research on Evolution and
+Biodiversity); Barej, Michael F. (Museum für Naturkunde - Leibniz Institute for Research on Evolution and
+Biodiversity, Berlin, Germany)
+
+Biogeographical patterns of West African amphibians - searching for causes in time and space
+
+The detailed distribution of many amphibians is rarely known. Especially in tropical regions fine grained
+information is lacking. Furthermore, the reasons for the observed patterns are even harder to unlock. One
+way to close these gaps is via environmental niche modelling (ENM). Our study area, the forests of
+Upper Guina are one of the worlds hotspots and therefore of special importance. We used ENMs to
+model the distribution of all West African amphibian species, hence including Upper Guinea . The
+resulting pattern of diversity is compared against major barriers (altitude and rivers) as well as against
+patterns derived from phylogenetic data for selected families. Explanations are searched for all species in
+the selected niche parameters used in the ENMs but also in parameters not modelled. Unfortunately, all
+identified important and unique areas in the region experience an ever increasing pressure from habitat
+alteration and destruction. Gained results are compared against the current set of conservation areas,
+depending on their formal status. In our opinion a regional conservation plan is urgently required.
+
+
+
+Penniket, Sophie (University of Otago); Cree, Alison (University of Otago, Dunedin, New Zealand)
+
+Variation in life-history traits with elevation in a nocturnal, viviparous gecko
+
+Bergmann‘s rule describes an increase in body size with increasing altitude and decreasing temperature;
+however, recent studies suggest that the reverse pattern holds for the majority of lizards studied. Lizards
+are generally smaller at higher elevations, possibly due to benefits of an increased surface area allowing
+for faster heating during sun basking. However, this explanation does not necessarily apply to species
+that do not sun-bask. For a nocturnal species, it is possible that a small body size at high elevations is not
+advantageous. We investigated the relationships between altitude, temperature, and body size in the
+Otago-Southland gecko ( Woodworthia ―Otago-Southland‖), a primarily nocturnal, viviparous gecko from
+southern New Zealand. Adult and juvenile geckos were measured from seven sites with mean elevations
+of 54-1039 metres above sea level, and environmental temperatures were recorded using data loggers.
+Reproductive frequency of females (which have the potential to reproduce annually or biennially) was
+also examined. We observed a significant increase in body size with altitude, the opposite pattern to that
+in most diurnal lizards. Female size at maturity, maximum size of adult females and males, and size at
+birth were all larger at higher elevations and lower temperatures. Reproductive frequency showed no
+significant trend with elevation or temperature; however, it was clear that not all females reproduced
+annually. These results contrast with those found in other studies, suggesting that, for this nocturnal
+lizard, large body size at high elevations is advantageous. Possible benefits include larger energy stores
+to manage the challenges of reproduction and of inactivity over longer winters, and the better
+conservation of heat afforded by larger sizes.
+
+
+
+
+                                                                                                          548
+Pereira, Isabel (University of São Paulo); Carvalho, José (Federal University of São Paulo, Canada);
+Navas, Carlos (University of São Paulo, Canada)
+
+Physiological and behavioral strategies in Brazilian anurans from the semi-arid: implications for
+water balance
+
+The Brazilian Caatinga is a semi-arid bioma characterized by the limited rains, high temperatures and
+unpredictable timing of the rainy season. Although such conditions would seem harsh for anurans,
+several species are found in this biome. These species exhibit notoriously different strategies for avoiding
+hydric stress during the long dry season (usually ten months). Individuals of Pleurodema diplolistris and
+Physalaemus albifrons (Leiuperidae), and Proceratophrys cristiceps (Cycloramphidae) bury themselves
+in the Caatinga soil. These frogs exhibit lower activity during this phase, but do not remain immobile, and
+can even perform a vertical migration in the substrate. During the rainy and reproductive season
+individuals of these three species exhibit intense vocal activity and share a similar microhabitat. We
+conducted a comparative study on blood plasma osmolality and locomotor behavior to investigate the
+influence of water balance in the muscle performance of these anurans during reproductive phase. Our
+results indicate that P. cristiceps and P. albifrons show similar plasma osmolality, hematocrit and
+locomotor performance. However, P. diplolistris display higher plasma osmolality (280mmol/kg ±14) than
+the other species observed ( P. albifrons , 224mmol/kg ±21 and P. cristiceps , 228mmol/kg ±15), even if
+they exhibit similar seasonality. P. diplolistris develops higher speeds (0,38m/s±0,06) compared with P.
+albifrons (0,25m/s±0,04) and P. cristiceps (0,21m/s±0,09). It is possible that P.diplolistris takes some
+advantages of the higher plasma osmolality as a physiological mechanism to preserve the locomotory
+performance during aestivation. This work contributes for the understanding of the physiological and
+behavioral strategiesin anurans form the semi-arid. Supported by: FAPESP
+
+
+
+Pérez i de Lanuza, Guillem (University of Valencia); Font, Enrique (University of Valencia, Canada);
+Carazo, Pau (University of Valencia, Valencia, Spain)
+
+Colours of quality: structural and pigment-based chromatic signals predict different performance
+traits in male wall lizards (Podarcis muralis)
+
+Colour signals comprise a rich diversity of anatomical and physical mechanisms that open many different
+avenues to communication. Animal colours result either from the differential absorption of light by
+chemical compounds (i.e. pigment-based colours), or from differential scattering of light by integumental
+nano-structures (i.e. structural colours). Both structural and pigment-based colours can be costly to
+produce and maintain, and have been shown to inform about a variety of individual quality traits. The
+distinct nature of the developmental and physiological mechanisms underlying structural vs. pigment-
+based colourations seems to offer opportunities for signalling about different quality traits that vary at
+different time scales. For example, many of the pigments involved in pigment-based colour production,
+such as carotenoids, are directly derived from the diet and/or seem to play a direct role in vital
+physiological functions (e.g. immunocompetence and free radical scavenging). This suggests that purely
+pigmentary colours may be more adequate honest indicators of short-term physiological-dependent traits.
+In contrast, structural colour signals may seem better suited as indicators of more stable traits depending
+on long term developmental changes. Male wall lizards ( Podarcis muralis ) exhibit two different types of
+conspicuous colour patches: throat and belly colorations are pigment-dependent, and include orange,
+yellow and white (i.e. absence of pigment) colours, while blue outer ventral scales (OVS) on their flanks
+have their peak of reflectance in the UV range, and are structural in nature. We investigated whether
+throat and OVS colour variables are good predictors of male body condition index (a relatively labile trait)
+and/or male bite force (a relatively stable trait that strongly depends on head size in lizards). Our results
+
+
+
+                                                                                                         549
+show that pigment-based colour variables (i.e. throat chroma) strongly associate with body condition,
+whereas bite force seems to be exclusively related to OVS chroma and hue measures. These findings
+lend support to the idea that pigment-based and structural colours are ideally suited to signalling about
+different male characteristics.
+
+
+
+Pérez i de Lanuza, Guillem (University of Valencia); Font, Enrique; Monterde, Juan Luis (University of
+Valencia, Canada); Carazo, Pau (University of Valencia, Valencia, Spain)
+
+Sexual selection drives the evolution of sexual dichromatism in lacertid lizards
+
+Sexual selection has often been invoked as a major force in the evolution of secondary sexual traits,
+including sexually dimorphic colouration. Previous studies have shown that display complexity and
+elaborate ornamentation in lizards are associated with variables that reflect the intensity of intrasexual
+selection. However, these studies have relied on techniques of colour analysis based on human – rather
+than lizard – visual perception, and have focused on iguanians, a clade of lizards that communicate
+primarily using visual signals. Here, we use visual modelling to quantify sexual dichromatism considering
+the overall colour patterns of lacertids, a group of scleroglossan lizards. We then use a comparative
+phylogenetic approach to investigate the relationship between sexual dichromatism and body size
+dimorphism (as an index of intrasexual selection). Sexual dichromatism is positively associated with size
+dimorphism, suggesting that conspicuous colouration in male lacertids may have evolved in order to
+improve opponent assessment under conditions of intense male-male competition. Our findings provide
+the first evidence for the coevolution of sexual dichromatism and size dimorphism in lacertids and suggest
+that the prevalent role of intrasexual selection in the evolution of visual signals is not restricted to the
+iguanian lineage, but rather seems to be a general trend in diurnal lizards.
+
+
+
+Perkins, Susan (American Museum of Natural History); Amato, George; Feinstein, Julie (American
+Museum of Natural History, Canada)
+
+Collections in the 21st Century: an overview of issues in storing samples for genomic analysis
+with an emphasis on the AMNH collection.
+
+Repositories of frozen tissues and genetic isolates from the world's organisms represent an invaluable
+resource for the study of biodiversity and evolution. However, best practices for the establishment,
+organization, and maintenance are necessary if these collections are to have utility. The Ambrose Monell
+Cryo Collection for Molecular and Microbial Research was established at the American Museum of
+Natural History in New York in 2001 and quickly rose to prominence as one of the world's major frozen
+tissue collections. With a current holding of 70,000 tissues and a capacity for up to one million tissues,
+we are poised to continue to grow and expand this important resource. Critical to the value of this
+collection are the following attributes. The facility is a ―state of the art‖, passive, liquid nitrogen system
+ensuring best preservation of samples and protection against power failure. All of the samples are
+accessioned with complete collecting, metadata and permit information. Curation of the collection allows
+for retrieval of any sample within minutes and, facilitates the loaning of thousands of samples each year.
+In terms of herpetological diversity, this collection holds over 9,500 samples representing 1,231 species.
+Samples range from recent, comprehensive, population level, field collections numbering in hundreds of
+individuals to DNA samples extracted from the Museum‘s traditional, historical collections including 100
+year-old type specimens. Examples from recent herpetological research on cryptic diversity in
+
+
+
+
+                                                                                                          550
+crocodilians, using recently collected and historical samples will be used to illustrate the value and
+importance of frozen tissue repositories for biodiversity and evolutionary studies.
+
+Perkins, Susan (American Museum of Natural History);
+
+Value-added collections: Detection of parasites in herpetological museum specimens.
+
+It has been casually estimated that each vertebrate species is host to between one and ten "macro"
+parasite species and innumerable microbial symbionts and pathogens. Thus, each specimen in a
+collection may, in fact, be several specimens in one. Depending on the method of preservation, these
+parasites or symbionts may be preserved intact or may just have their genetic material preserved along
+with that of the host and can be detected and studied. Blood parasites may be particularly well captured
+in tissue collections given that their presence is not confined to a particular organ. The malaria parasites
+of lizards are extremely diverse, with over 100 described species from all over the planet. However, it is
+certain that this number is a gross underestimate of the true diversity of these parasites. The sampling of
+these taxa has also been largely opportunistic and so may result in skewed perceptions of biodiversity
+and evolution of the group. Here, I will present results from PCR-screening of lizard specimens from
+Vietnam and other areas as well as similar molecular detection work on other herpetological samples
+such as turtles and snakes, many of which indicate that several undiscovered taxa are present in these
+hosts. However, I will also offer a strong cautionary note about the reliance on PCR alone as a detection
+method and encourage all collectors to endeavor to take appropriate samples in the future to allow for
+proper parasite detection and description.
+
+
+
+Perry, Gad (Texas Tech University); Farmer, Michael (Texas Tech University, Canada)
+
+Reducing risk of invasives via policy in the pet trade
+
+Invasive species, whether herpetofaunal or ones that affect herpetofauna – are increasingly common, and
+many are unlikely to be eradicated. Moreover, the social and economic factors that result in the majority
+of these introductions are here to stay. Thus, there is urgency in devising ways to identify causes and
+effectively manage invasive species as a chronic and broad problem, rather than an acute and species-
+or location-specific one. Data from the US and the Caribbean help identify factors contributing to the
+problem, which include – but are far from limited to – the pet trade. Standard responses, such as
+belatedly banning pythons in        Florida    after they have become broadly established, are rarely
+operationally effective and often result in poor public relations and unintended consequences. We
+propose a decentralized approach that includes identifying particularly risky behaviors and locales,
+employing the precautionary principle in making decisions, and empowering local communities to act as
+both sentinels and first responders. Funding would come through a tax on the pet trade, with taxation
+level to vary based on actual performance. Thus, instilling effective practices and responsible conduct
+would result in reduction of the tax, whereas incidents of costly problems would result in penalties - a tax
+increase. Funds would primarily be used to train and support local prevention, monitoring, and response.
+Prevention could take the form of encouraging pet stores to take back unwanted animals, for example.
+Monitoring would include volunteers, such as regional herpetological societies, as first responders who
+may be called to deal with a found animal, and utilizing wildlife rehabilitation centers as well as, when
+appropriate for a community, fire departments, police, and animal control professionals. Response would
+mobilize some of the same people to identify the cause of an incursion and eliminate incipient populations
+before they become problematic. This process also addresses problems originating beyond the pet trade.
+
+
+
+
+                                                                                                        551
+Peskov, Andrey (Institute of Ecology of Volga river Basin of Russian Academy of Science); Pavlov,
+Alexey (Volzhsko-Kamsky National Nature Biosphere Reserve, Canada); Garanin, Valerian (Kazan
+Federal University, Canada); Bakiev, Andrey; Malenyov, Andrey (Institute of Ecology of Volga river Basin
+of Russian Academy of Science, Canada)
+
+On hybridization of genus Vipera in the Volga River basin
+
+In the first decade of the XXI century, it was widely accepted by most herpetologists that three Vipera
+species inhabit the Volga River basin, the longest river in Europe. These include the adder V. berus ,
+Nikolsky‘s viper V. nikolskii , and east steppe viper V. renardi . Both V. berus and V. renardi are
+represented by nominal subspecies, whereas V. nikolskii is monotypic. The V. berus and V. nikolskii
+belong to the berus complex, and the V. renardi to the ursinii complex. Here we present that the
+Volga River basin is inhabited only by two species: V. berus , with subspecies V. b. berus and V. b.
+nikolskii , and the species V. renardi , with subspecies V. r. renardi and V. r. bashkirovi . In the last
+few years, our research together with our collaborators, U. Joger, N. Stümpel (Germany) and O.I. Zinenko
+(Ukraine), showed that based on vipers‘ external morphology, ecological data, properties of venoms and
+DNA analysis, natural hybridization of the above mentioned taxa occur, and result in fertile hybrids.
+Hybridization range of V. b. berus and V. b. nikolskii covers several areas in the Middle Volga River
+Region, and the specific distribution needs to be elucidated. Meanwhile, the most similar populations to
+V. b. nikolskii are found at the borders between the Volga River and the Don River basins. Viper venom
+from those populations has peptide composition typical to V. b. nikolskii , while the venom composition in
+other parts of the Volga River basin is typical of V. b. berus . Most obvious populations of V. b. berus
+are located in the north and the east of the Volga River basin. Natural hybridization between V. berus
+and V. renardi is a unique and local phenomenon. The early described subspecies, Bashkirov‘s viper
+V. r. bashkirovi , is likely a result of the hybridization between V. berus and V. renardi. Populations
+concerning the subspecies are found in a sympatric area of these two species (Tatarstan Republic,
+Samara and Ulyanovsk region; Russia). Most populations from the sympatric area, in Russia, and all the
+populations out of the sympatric
+
+
+
+Pessier, Allan (San Diego Zoo Institute for Conservation Research);
+
+Disease Considerations and Risk Assessment for Amphibian Reintroductions and Translocations
+
+Global amphibian declines and the rapidity in which they have occurred has resulted in expansion of
+survival assurance populations as a conservation strategy for threatened species. The goal of assurance
+populations is to reintroduce species to the wild when the original cause of population declines has been
+mitigated and increasingly these captive populations are the last representatives of a species. Therefore,
+the need to consider disease as a limiting factor to amphibian reintroductions has reached a heightened
+level of importance.        Many of the most devastating examples of amphibian population decline are
+linked to anthropogenic introduction of the amphibian chytrid fungus and this highlights the need to
+reduce the risk of infectious diseases in the management of reintroduction and translocation programs. It
+is nearly impossible to design programs that are completely free of disease risk, but risk can be reduced
+by careful planning and adherence to recommendations for risk mitigation. One of the biggest risks for
+introducing detrimental infectious agents into wild amphibian populations via a reintroduction or
+translocation program is exposure of reintroduction candidates to other amphibians from outside their
+native range.To avoid this risk the ideal reintroduction candidates are housed in long-term isolation from
+cosmopolitan amphibian collections.The need for pre-release disease testing in a reintroduction or
+translocation program and the extent of the screening procedures needed is dependent on a risk
+assessment. Risk assessments and disease testing are usually simple and minimal for animals kept in
+
+
+
+                                                                                                      552
+long-term isolation and become much more complicated and extensive for animals exposed to a
+cosmopolitan collection. Besides consideration of how animals have been housed a critical element of a
+risk assessment is assembly of disease information from the source captive populations and the wild
+populations at reintroduction sites. This information is gathered by necropsy examination of animals that
+die and targeted testing such as PCR for specific pathogens of interest (e.g. the chytrid fungus or
+ranaviruses). In general, if an identical pathogen is present in both the captive and wild populations, the
+presence of that pathogen should not impact the decision on whether to reintroduce captive animals to
+the wild. However, this decision becomes more complicated when acknowledging that currently used
+tests for the chytrid fungus or ranaviruses cannot always discern between different strains of these
+pathogens. Development of better guidelines to assist program managers and veterinary consultants in
+making risk assessments and disease testing protocols are in progress.
+
+
+
+Peterson, Bill (NOAA, National Marine Fisheries Service); Mantua, Nate (University of Washington,
+Canada); Kosro, Mike (Oregon State University, Canada)
+
+An evaluation of freshwater and marine habitat cues for migrating salmon - to what degree are
+they coherent?
+
+Waples and Douglas pose several questions to ponder relative to this symposium and this talk addresses
+one of their questions: ―For species like salmon (and birds) that migrate between different environments,
+adaptive plasticity requires high cue reliability (e.g., freshwater cues that trigger smolt migration must
+reliably predict optimal times to enter the ocean). What effects will climate change have on cue reliability
+and adaptive plasticity?‖ The general idea behind our talk is (1) are the cues which trigger migration from
+freshwater (FW) towards the ocean (OCN) in spring correlated with cues that indicate that the ocean is
+ready to receive the fish? That is, is the initiation of spring in FW correlated with initiation of spring in the
+OCN? In our talk we will be looking at a collection of different measures relevant to the timing of ―spring‖
+in both freshwater and the northern part of the California Current system:
+
+snowmelt timing in western US rivers
+
+coastal upwelling and coastal sea level
+
+seasonal shifts in coastal current from coastal radar
+
+the timing of the appearance of cold salty water at depth as a result of the initiation of upwelling
+
+zooplankton community changes from hydrographic surveys
+
+We will also attempt to generate other temperature-based measure of terrestrial spring, something like
+"initiation of growing season/date of the last frost" for western OR/WA. Finally, we will consider how these
+measures might change under different climate change scenarios and speculate as to how salmon might

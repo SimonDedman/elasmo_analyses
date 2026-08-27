@@ -199,13 +199,18 @@ def build(only=None):
             print(f"  DROP {key}: no surviving text ({w['src_txt']})")
             continue
         w["n_chars"] = txt.stat().st_size
-        if w.get("meeting") == "JMIH" and not w.get("city"):
+        # host city is per-SERIES: never let the EEA table touch a JMIH/ASIH
+        # book (it silently labelled JMIH 2015 "Peniche" and 2016 "Bristol"
+        # via a stale setdefault — fixed 2026-08-27). Authoritative, not
+        # setdefault, so a stale value from an earlier run is corrected.
+        if w.get("meeting") in ("JMIH", "ASIH"):
             try:
                 from conf_abstracts.build_coverage_matrix import JMIH_LOC
-                w["city"] = JMIH_LOC.get(w.get("year"))
+                w["city"] = JMIH_LOC.get(w.get("year")) or w.get("city")
             except Exception:
                 pass
-        w.setdefault("city", _EEA_CITIES.get(w.get("year")))
+        elif w.get("meeting") == "EEA":
+            w["city"] = w.get("city") or _EEA_CITIES.get(w.get("year"))
         worklist.append(w)
 
     # split oversized books that didn't extract healthily into overlapping chunks

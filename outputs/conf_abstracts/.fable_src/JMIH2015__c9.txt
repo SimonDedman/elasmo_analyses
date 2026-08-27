@@ -1,0 +1,1561 @@
+g habitat conversion from
+agriculture and renewable energy development. Future work will focus on fine-scale
+population differentiation and contemporary gene flow in order to provide for the
+preservation and long-term viability of the subspecies.
+
+______________________________________________________________________________
+
+0575 AES Conservation & Management, Carson 2, Thursday 16 July 2015
+Bradley Wetherbee1, Michael Byrne5, Jeremy Vaudo2, Guy Harvey3, Mahmood
+Shivji4
+1University of Rhode Island, Kingston, RI, USA, 2Guy Harvey Research Institute, Ft
+
+Lauderdale, FL, USA, 3Guy Harvey Ocean Foundation, Ft Lauderdale, FL, USA, 4Save
+Our Seas Foundation Shark Center, Ft Lauderdale, FL, USA, 5Warnell School of Forestry
+and Natural Resources University of Georgia, Athens, GA, USA
+Orientation of Mako Sharks (Isurus oxyrinchus) to Environmental Conditions
+in the Open Ocean
+
+Mako sharks (Isurus oxyrinchus) are frequently captured in long line fisheries and are
+heavily targeted by recreational anglers in many parts of the world. Given the fishing
+pressure on mako shark populations there is a great deal of interest in management of
+their stocks. However, information about movements and migrations of mako sharks
+that would enable comprehensive understanding of interactions with fisheries and
+delineation of distribution patterns in waters under the jurisdiction of numerous
+countries is sparse. We tagged 45 mako sharks with satellite transmitters and tracked
+their movements over the span of several years. A state space model was used to
+construct continuous tracks for sharks and to categorize their locations into two
+behavioral states – searching and transiting. Remote sensing databases were used to
+determine environmental conditions of sea surface temperature, chlorophyll,
+productivity, upwelling and frontal index at each location and values in areas searched
+were compared with those for locations when sharks were transiting. Environmental
+conditions of specific water temperature and productivity were associated with the
+searching behavioral mode indicating that mako sharks orient towards a specific set of
+water conditions for presumably engaging in foraging behavior.
+                                           360
+______________________________________________________________________________
+
+0024 Poster Session I, Reno Ballroom & Tahoe Room, Friday 17 July 2015
+John Whalen, Jim Gelsleichter
+University of North Florida, Jacksonville, FL, USA
+Multibiomarker Evaluation of Pollutant Effects in Atlantic Stingray (Dasyatis
+sabina) Populations in Florida's St. Johns River
+
+The goal of this study was to examine the potential health effects of polychlorinated
+biphenyl (PCB) and polycyclic aromatic hydrocarbon (PAH) exposure on Atlantic
+stingray (Dasyatis sabina) populations in Florida's St. Johns River (SJR). Special emphasis
+was placed on identifying PAH- and/or PCB-related effects in stingrays from areas of
+the lower SJR basin that have been shown to possess elevated levels of these
+compounds, as well as characterizing baseline levels of pollutant exposure in other areas
+that may be subjected to dredging in the near future, potentially resuspending
+contaminated sediments and increasing pollutant associated effects. To accomplish this,
+we measured PCB and PAH biomarker levels in D. sabina collected from contaminated
+sites and reference locations. Animals were collected using seine nets and trotlines. We
+specifically examined the biomarkers cytochrome P4501a1 (CYP1a1), a Phase I
+detoxification enzyme; Glutathione-S-Transferase (GST), a Phase II detoxification
+enzyme; and fluorescent aromatic compounds (FACs), PAH bile metabolites. Enzymatic
+activity of CYP1a1 and GST was measured using the EROD assay and a commercially
+available GST Assay Kit, whereas FACs were measured using fixed wavelength
+fluorescence. Biomarker levels of individuals collected from contaminated sites were
+compared to individuals collected from reference sites. Previous research in our lab has
+detected elevated biomarker levels in D. sabina and bony fish from known contaminated
+areas in the St. Johns River. Expecting parallel results, we anticipate that the pollutants
+in the St. Johns River are negatively affecting D. sabina, and that dredging has the
+possibility to create a broader source of contamination.
+
+______________________________________________________________________________
+
+0023 AES Morphology & Physiology, Carson 2, Sunday 19 July 2015
+John Whalen1, Jim Gelsleichter1, Dean Grubbs2
+1University of North Florida, Jacksonville, FL, USA, 2Florida State University Coastal
+
+and Marine Laboratory, St. Teresa, FL, USA
+Using DNA Adducts to Examine Polycyclic Aromatic Hydrocarbon Exposure
+in Shark Populations Affected by the Deepwater Horizon Oil Spill
+
+The Deepwater Horizon oil spill (DWH) released 5 million barrels of crude oil into the
+Gulf of Mexico (GOM) between April and July of 2010, posing significant health risks to
+deepwater shark species because of the high concentration of oil and its most toxic
+components, polycyclic aromatic hydrocarbons (PAHs). Exposure to PAHs results in
+
+                                           361
+increased expression of metabolic enzymes necessary for the biotransformation and
+excretion of these compounds. Occasionally, metabolites resulting from this process can
+bind to DNA, forming adducts and creating the potential for mutagenic effects. The
+objective of this study was to determine if increased PAH-DNA adduct formation
+occurred in two abundant and ecologically important Gulf of Mexico shark species:
+Squalus cf. mitsukurii and Centrophorus granulosus. Animals were collected using
+demersal long lines from the Northeast GOM at varying distances from the origin of the
+DWH in 2011 and 2014. The presence of DNA adducts was determined in peripheral
+blood cells using immunofluorescence. Adduct formation was examined in relation to
+relative levels of oil exposure. A total of 52.5% of individuals examined possessed DNA
+adducts, ranging from 0 to 19 per 500 cells. The proportion of C. granulosus with
+adducted cells increased from 0.273 to 0.875 while the proportion of S. mitsukurii
+remained constant at 0.571, suggesting possible oil-related effects in the former. This is
+the first study to examine and detect the presence of PAH-DNA adducts in sharks,
+suggesting that they may provide a useful tool for assessing PAH effects in these fishes.
+
+______________________________________________________________________________
+
+0330 AES GRUBER AWARD, Carson 2, Friday 17 July 2015
+Connor White1, Yukun Lin2, Jerry Hsiung2, Christopher Clark2, Christopher
+Lowe1
+1California State University Long Beach, Long Beach, CA, USA, 2Harvey Mudd College,
+
+Claremont, CA, USA
+Habitat Selection of the Leopard Shark, Triakis semifasciata, Using Fine
+Spatio-Temporal Movement and Temperature Data
+
+Environmental conditions are largely considered to be drivers of elasmobranch
+movements and behaviors. However, conditions are in constant flux and can be highly
+variable over small spatial extents. Thus to understand how individuals interact with
+surrounding environmental conditions, researchers must be able to measure the
+movements of individuals and environmental conditions at high spatio-temporal
+resolutions. We developed an autonomous underwater vehicle (AUV) designed to
+actively track an acoustically tagged elasmobranch, providing better spatial accuracy
+than a human (AUV: 6.1 ± 4.8 m, Researcher: 16.6 ± 9.7 m, F = 31.1, p = 0.005), while
+generating significantly more localizations (AUV: 45.2 ± 10.5 detection/min, Researcher:
+12.2 ± 9.1 detections/min, t2.41= 3.96, p = 0.04). These positions were further refined by
+integrating magnetic heading of the animal provided by animal-borne inertial
+measurement units (IMU). Using this system 5 leopard sharks were tracked in Big
+Fisherman’s Cove (BFC), Catalina Island. Seafloor temperature was collected every 5
+min from 20 locations in the cove to derive interpolated temperature maps. Comparing
+the fine-scale shark movements with the fine-scale temperatures availability in the cove,
+showed leopard sharks disproportionately utilized warmer areas of the cove (χ2 =432.3,
+p <0.001). By utilizing tools that provide fine-scale information on the movement and
+behaviors of animals, researchers will be able to begin to tease apart how elasmobranchs
+
+
+                                           362
+interact with their environment, and ultimately, how these interactions structure the
+distributions of species.
+
+
+
+
+0215 Poster Session I, STORER ICHTHYOLOGY AWARD, Reno Ballroom &
+Tahoe Room, Friday 17 July 2015
+Macaulay White
+Texas A&M University - Corpus Christi, Corpus Christi, TX, USA
+The Impact of a Variable Marine Larval Stage on the Extent of Endemism in a
+Group of Amphidromous Fishes from Indonesia (Gobiidae: Sicydiinae:
+Stiphodon)
+
+Sicydiine gobies are a diverse group of fishes belonging to the family Gobiidae. They
+inhabit rivers on oceanic islands and are highly adapted for island living due to their
+amphidromous life history (adults spawn in freshwater and larvae are carried to the
+open ocean to feed, grow, and later return to freshwater). Oftentimes, freshwater gobies
+make up the only native fish fauna in island streams. The subfamily Sicydiinae currently
+consists of nine genera and the genus Stiphodon exhibits the most diversity and is found
+throughout the Indo-Pacific. Many species of Stiphodon have very large distributional
+ranges, while others are found only in localized regions. Because of the high levels of
+endemism in Stiphodon, they are threatened by habitat destruction due to deforestation,
+mining, and damning of rivers. It is currently unclear as to why Stiphodon species have
+such varying distributional ranges. Otolith microchemistry analysis can aid in
+determining if all individuals go to sea as larvae. This variation in the percent of
+individuals traveling to the sea may influence dispersal capabilities, which may
+ultimately dictate the geographic range size for a given species. This study will be
+helpful in understanding the amphidromous life history of Stiphodon and whether or not
+there are a percentage of individuals that do not spend time in the marine environment.
+This information is critical for understanding the mechanisms that promote endemism,
+and thus is vital data for managing and conserving island stream gobies that may be at
+risk of local and global extinction.
+
+______________________________________________________________________________
+
+0264 Donn Rosen and the Assumptions Symposium I, Crystal 3 & 4, Saturday
+18 July 2015
+Mary White
+Southeastern Louisiana University, Hammond, LA, USA
+Developmental Macromutations and the "Hopeful Monster"
+
+Donn Rosen’s 1985 list of assumptions that inhibit scientific progress in comparative
+biology includes, “Goldschmidt’s ideas must be wrong because they conflict with
+
+                                           363
+neodarwinism.” Richard Goldschmidt proposed two very different ideas to explain the
+leap from microevolution to macroevolution. His first idea rejected the classical gene
+model and argued for what he termed “systemic mutations” such as chromosomal
+rearrangements to give variation for macroevolution. His forceful defense of this
+scenario often overshadowed his proposal suggesting that “developmental
+macromutations” might be an important agent of evolution at the level of speciation.
+While neoDarwinists were focusing on accumulation of small mutations over long
+periods of time, Goldschmidt recognized that mutations in controlling genes early in
+developmental pathways could lead to large-scale body plan alterations. Current
+research in evolutionary developmental biology, including the importance of regulatory
+genes such as hox genes in formation of body pattern, supports the idea that “hopeful
+monsters” may exist after all.
+
+______________________________________________________________________________
+
+0102 AES Integrative Elasmobranch Biology Symposium, Carson 2, Saturday
+18 July 2015
+Lisa B. Whitenack1, Matthew Kolmann2
+1Allegheny College, Meadville, PA, USA, 2University of Toronto, Toronto, Ontario,
+
+Canada
+Integrative Chondrichthyan Paleobiology: The Present is the Key to the Past
+
+The chondrichthyan fossil record is composed primarily of teeth, though occasionally
+other body parts are preserved. This often translates into using fossils for studying
+taxonomy, biostratigraphy, paleoecology, and evolutionary history. Studies that
+integrate across disciplines are few, and those that do tend to utilize extant taxa. We will
+discuss those studies that have used integrative techniques, focusing on the use of fossil
+teeth to understand chondrichthyan evolution in a broad sense. We then will examine
+trends in tooth morphology coincident with trends in prey availability across geological
+time. Finally, we will identify holes in our knowledge of chondrichthyan evolution and
+look forward to how integrative techniques can help us explore this topic.
+
+______________________________________________________________________________
+
+
+
+
+                                            364
+0413 Herp Conservation I, Carson 1, Saturday 18 July 2015
+Steven Whitfield1, Gilbert Alvarado2, Juan Abarca2, Hector Zumbado2, Adrian
+Pinto2, Valerie McKenzie4, Jacob Kerby3
+1Gonzaga University, Spokane, WA, USA, 2Universidad de Costa Rica, San Pedro, Costa
+
+Rica, 3University of South Dakota, Vermillion, SD, USA, 4University of Colorado -
+Boulder, Boulder, CO, USA
+Enigmatic Survival Follows Enigmatic Decline: Conservation Ecology of
+Presumed Extinct Amphibians in Costa Rica
+
+Approximately 41% of the world’s amphibian species are threatened with extinction,
+and species in tropical regions are disproportionately threatened with extinction.
+Anthropogenic factors associated with apparent extinctions and mass mortality events
+have been contentious for decades, and have largely diverged on interpretations of
+whether a single anthropogenic stressor (emergence of the amphibian chytrid
+fungus, Batrachochytrium dendrobatidis “Bd”) or multiple anthropogenic stressors
+(interactions among Bd and climate, Bd and contaminants, Bd and other emerging
+infectious diseases) have driven population declines and/or extinctions. Here, we
+summarize evidence that amphibian species from Central America that are widely
+perceived to be globally extinct are instead persistent in small, fragile “relict
+populations” that comprise the last known living individuals of their species. We show
+that while the extinction of these species is presumably driven by the emergence Bd, all
+relict populations co-exist with Bd, and we evaluate evidence for the disparate adaptive
+strategies of tolerance or resistance to infection by Bd among species. We explore
+evidence that resistance or tolerance to Bd is driven by cutaneous microbial symbionts
+as a primary line of immune defense, and interpret these results in the context of
+potential probiotic supplementation programs for amphibian populations vulnerable to
+Bd emergence elsewhere. Finally, we demonstrate that while controversy lingers over a
+single-stressor versus multiple stressor causality of amphibian declines, we show that
+restoration of threatened amphibian will require a detailed understanding of the
+multiple stressor environment in which relict amphibian populations now survive.
+
+______________________________________________________________________________
+
+0595 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Brigid Wieman1, Peter Berendzen2
+1University of Arkansas, Fayetteville, AR, USA, 2University of Northern Iowa, Cedar
+
+Falls, IA, USA
+Conservation Genetics and Habitat Associations of Rhinichthys cataractae: a
+Fish of Conservation Need in Iowa
+
+A pressing issue in conservation is to assess demographic and population genetic
+patterns of species of conservation concern and elucidate the cause of these signatures.
+Rhinichthys cataractae, the longnose dace, is a fish species of greatest conservation need
+
+                                            365
+listed in the Iowa Wildlife Action Plan. Within Iowa, the distribution of longnose dace is
+primarily isolated to four drainages in the northeastern portion of the state. This
+distribution largely coincides with the Paleozoic plateau landform region which was not
+glaciated during the last glacial maximum. The aim of this study was to use habitat,
+genetic and GIS data to elucidate the demographic patterns of this species and the
+environmental factors impacting its distribution and population structure in Iowa.
+Multiple sites within each of the four drainages were sampled for habitat and genetic
+data. Landscape level variables were obtained with GIS techniques and an ecological
+niche model (ENM) was constructed with these data to predict habitat and
+environmental variables influencing suitability of habitat for R. cataractae. The ENM
+indicated that geologic factors (e.g., geologic history, depth to bedrock) likely play a key
+role in determining the distribution and abundance of R. cataractae in Iowa. Population
+genetic analyses of 7 microsatellite loci revealed two distinct, but somewhat admixed
+genetic populations corresponding with a signature of isolation by distance (IBD) and
+possessing moderate to high levels of intra-group diversity. These results suggest that
+IBD, historical processes, and underlying geology are primarily responsible for the
+genetic and distributional patterns of R. cataractae in Iowa.
+
+______________________________________________________________________________
+
+0087 HERPETOLOGISTS’ LEAGUE GRADUATE RESEARCH AWARD,
+Carson 1, Friday 17 July 2015
+Kristoffer H. Wild, C.M. Gienger
+Austin Peay State University, Clarksville, TN, USA
+Fire-altered Landscapes Influence Locomotor Performance of Eastern Fence
+Lizards
+
+Habitat disturbance through fire plays a key role in shaping the biodiversity of forest
+communities in the Southeastern US. Prescribed burns are an essential management
+technique used to help maintain the persistence of oak-hickory savanna, an early seral
+stage vegetative community. Sceloporus undulatus is a sexually dimorphic forest lizard
+that is relatively common throughout the eastern US, which makes it well-suited for
+studying the effects of fire-altered landscapes on lizard ecology. Our objective is to
+quantify the effect of fire-altered landscapes on S. undulatus locomotor performance. We
+compared performances of lizards from habitats with three different known fire
+histories; a control habitat, which had not experienced fire in more than 60 years, a
+recovering burn habitat that has not experienced fire in four years, and a recent burn
+habitat that was burned three months prior to the study. There were significant
+differences in locomotor performance among lizards from the different habitats, and
+lizards in the recent burn habitat had significantly faster maximum sprint speeds than
+lizards in recovering and control habitats. Understanding how performance of S.
+undulatus is influenced by fire-altered habitats is essential for assessing the effect of
+human activities (e.g. prescribed fire) on wildlife. Such data are crucial for implementing
+conservation and management strategies for similar organisms in fire managed
+landscapes.
+
+                                            366
+______________________________________________________________________________
+
+0175 Donn Rosen and the Assumptions Symposium I, Crystal 3 & 4, Saturday
+18 July 2015
+E. O. Wiley
+University of Kansas, Lawrence, KS, USA
+Species Concepts
+
+Macroevolution in the age of phylogenetic systematics is precisely the dynamics of
+speciation and extinction. What we recognize as the products of speciation depends on
+finding the best species concept that is consistent with what we understand to be the
+various ways species can form (that is, speciation) and how we understand the
+relationships among species as reflected in genealogical history (phylogeny). The
+evolutionary species concept, formulated by an opponent of phylogenetics, G. G.
+Simpson, turns out to be consistent with Hennig's understanding of the nature of species
+and with the nature of phylogenetic trees as we presently understand them. That is:
+species are lineages and individuals and the effect of speciation through time is a
+phylogenetic tree that may be at least partly discovered using phylogenetic techniques.
+All other species concepts are either synonyms of the evolutionary species concept or
+concepts about how one might discover a species. For example, Donn Rosen's concept
+that a species is a population or group of populations defined by one or more
+apomorphous feature is not a species concept per se but Donn's method of discovering
+species. He seemed to be pretty good at it and along the way exposed weaknesses in the
+biological species concept.
+
+______________________________________________________________________________
+
+0282 Fish Ecology II, Carson 3, Sunday 19 July 2015
+Jonathan P. Williams, Daniel J. Pondella II, Jeremy T. Claisse
+Biology Department and Vantuna Research Group, Moore Laboratory of Zoology,
+Occidental College, Los Angeles, CA, USA
+Kelp Forest Fish Communities at San Clemente Island, California
+
+San Clemente Island, the southernmost of California’s Channel Islands, is located
+approximately 85 km from the Ports of Los Angeles and Long Beach, and approximately
+100 km from Mission Bay and San Diego Bay. The 150-km2 island is owned, operated,
+and occupied entirely by the United States Navy and is an active naval warfare training
+and ship-to-shore live firing area. Due to the frequent use of nearshore waters for
+military training and live fire exercises, much of the kelp forest/rocky reef area
+surrounding the island is closed to commercial and recreational fishing on either a
+temporary or permanent basis. The distant location from urban areas, combined with
+entry restrictions for non-military vessels and personnel, creates a unique opportunity to
+examine reduced and relative levels of fishing pressure around the island where
+
+                                           367
+restrictions are based solely on when any of the eight “Safety Zones” are in use by the
+Navy. This study looks at the community and size structure characteristics of kelp
+forest/rocky reef fishes at San Clemente Island using data from scuba surveys (to 30 m
+depth) at 17 sites from 2004-2013, and compares those results among Safety Zones as
+well as other island and mainland sites in the Southern California Bight.
+
+______________________________________________________________________________
+
+0198 Fish Genetics, Carson 3, Saturday 18 July 2015
+Stuart Willis, Christopher Hollenbeck, Jonathon Puritz, David Portnoy, John
+Gold
+Marine Genomics Lab, Harte Research Institute, Dept. Life Sciences, Texas A&M
+University-Corpus Christi, Corpus Christi, TX, USA
+Identifying Recruitment Patterns Among Silk Snapper (Lutjanus vivanus) off
+the West Coast of Puerto Rico: Challenges and Solutions with Using
+ddRADseq-based Single Nucleotide Polymorphisms
+
+Silk snapper (Lutjanus vivanus) represent a major fishery along the west coast of Puerto
+Rico that is overexploited and at risk of collapse. One of the major issues facing the
+fishery is whether recruitment patterns are predictable and whether some areas serve to
+supplement the fishery more than others. We are using a genetic approach to assess
+whether recruitment across the region is random across fishing sites or correlated with
+geographic proximity and mediated by current patterns. Settling larvae also may
+experience habitat-specific selective regimes that produce non-random, predictable
+patterns of recruitment. To address these questions, we tested stability (homogeneity) in
+genetic variance of recruits among sites, among years, and within years by using a
+ddRAD approach to generate single nucleotide polymorphisms (SNPs) among samples
+of age-0 and adult silk snapper from Puerto Rico. We identified a few small but
+significant genetic differences among fish sampled at different sites or in different years.
+We also found that at low levels of genetic divergence, library-generation artifacts
+potentially confound biological signal, particularly with reference SNP loci built de novo
+from the same short-read data. We discuss approaches for circumventing this bias. We
+also show that generating haplotypes in contiguous RAD sequences can avoid signal
+bias without loss of information content. Using haplotypes also enables filtering of
+paralogous loci and genotyping errors based on the expected number of haplotypes per
+individual.
+
+______________________________________________________________________________
+
+
+
+
+                                            368
+0514 Herp Conservation I, Carson 1, Saturday 18 July 2015
+John Willson1, Jacquelyn Guzy1, William Hopkins2
+1University of Arkansas, Fayetteville, AR, USA, 2Virginia Tech, Blacksburg, VA, USA
+
+Influence of Landcover, Spatial Configuration, and Species Life-history on
+Amphibian Abundance and Productivity in Fragmented Landscapes
+
+Although inter-wetland dispersal is thought to play an important role in regional
+persistence of pond-breeding amphibians, few studies have modeled the dynamics of
+amphibians inhabiting multi-wetland networks. Previously, we used a stochastic
+structured metapopulation model to demonstrate that spatial configuration of wetland
+networks within a homogeneous landscape was important in driving source-sink
+dynamics and landscape-scale productivity of pond-breeding anurans. Here, we extend
+this analysis to consider how loss of forested upland habitat interacts with spatial
+configuration of wetlands to influence amphibian population density and productivity.
+Specifically, we modified our model to incorporate reduced movement distance and
+behavioral avoidance of non-forested habitats by dispersing juveniles and loss of critical
+upland habitat for adults. We parametrized models to represent the contrasting life-
+histories of a terrestrial anuran (Anaxyrus sp.) and a pond-breeding salamander
+(Ambystoma sp.) and conducted simulations evaluating the effects of increasing inter-
+wetland distance and decreasing forest cover on adult population size and annual
+metamorph production. We found that decreasing the proportion of forested upland
+habitat decreased the inter-wetland distance at which maximal productivity was
+observed, but that this optimal distance varied strongly among species. Anaxyrus, which
+was characterized by high vagility and fecundity, benefitted from close spacing of
+wetlands and was relatively resilient to forest loss. Ambystoma, conversely, displayed a
+much narrower range of optimal distances and was strongly affected by forest loss. Our
+results have implications for understanding regional dynamics and productivity of
+pond-breeding amphibians and for maximizing the efficacy of restoration activities such
+as re-forestation and wetland creation.
+
+______________________________________________________________________________
+
+0022 Chemical Ecology Symposium, Crystal 3 & 4, Sunday 19 July 2015
+Natasha Wilson1, Edmund Brodie, Jr2, Craig Williams1
+1University of South Australia, Adelaide, South Australia, Australia, 2Utah State
+
+University, Logan, UT, USA
+The Role of Toxin Tolerance in Predator-prey Relationships Between
+Freshwater Crustaceans and Amphibians
+
+Freshwater invertebrates reportedly consume toxic amphibians with little or no ill
+effects. In this research we aimed to identify common invertebrate predators of
+amphibians in Australia, to determine levels of toxin tolerance, and understand how this
+tolerance may have evolved. Field collections and laboratory experiments revealed that
+
+                                           369
+freshwater crayfish are a major predator of native frog eggs and tadpoles. Literature
+analysis revealed that freshwater crayfish from both superfamilies are tolerant of a range
+of toxic amphibians, suggestive that toxin tolerance may be a primitive trait in these
+predators. To explore this, the ability of crayfish from both Australia and North America
+to consume toxic amphibians was assessed. Studies of Australian freshwater crayfish
+revealed that they were able to consume toxic cane toad (Rhinella marina) eggs and
+tadpoles. However, dose response experiments revealed that these animals lack cellular-
+level resistance to bufotoxins and bufadienolides. The capacity of North American
+crayfish to tolerate tetrodotoxin (TTX) was also investigated by studying predation of
+toxic newt Taricha granulosa eggs, and via intramuscular injection of toxin. Once again,
+whilst crayfish were capable consumers of highly toxic newt eggs they did not
+demonstrate cellular-level resistance to TTX. These findings suggest that crayfish have
+some functional (organismal-level) resistance that renders them capable of consuming
+toxic prey despite a lack of cellular resistance to these amphibian toxins. Demonstration
+of this functional resistance in crayfish on two continents is suggestive of it being a basal
+trait acquired early in crayfish diversification.
+
+______________________________________________________________________________
+
+0599 Herp Ecology, Carson 4, Saturday 18 July 2015
+Kevin Wiseman, Ronald Jackman, Joseph Drennan, Karla Marlow, Ian Chan
+Garcia and Associates, San Francisco, CA, USA
+Feeding Ecology of the Sierra Garter Snake (Thamnophis couchii) from the
+North Fork Feather River, California
+
+We studied the feeding ecology of the Sierra garter snake (Thamnophis couchii) from three
+regulated reaches of the North Fork Feather River, California, during field surveys
+conducted annually from 2002-2014 focused on river-breeding foothill yellow-legged
+frogs (Rana boylii). Prey items were primarily obtained from palpation of live snakes in
+the field supplemented by the examination of museum specimens. A total of 739 snakes
+were observed during 4,359 person-hours surveying, including 262 snakes that were
+palped, yielding 131 prey from 77 snakes. Sixty-six percent of prey were fish and 44%
+were amphibians in relative frequency, however amphibians, especially Rana boylii, were
+the most important prey taxa in terms of biomass. Relative prey mass values averaged
+0.16 (range= 0.01-0.53; n=32) and larger snakes continued to eat relatively small prey
+items. The most frequent prey item taken in our study was the smallmouth bass,
+demonstrating the capability of a dietary shift to invasive prey as observed in other
+species of Thamnophis.
+
+______________________________________________________________________________
+
+
+
+
+                                            370
+0442 Herp Systematics & Genetics, Carson 4, Saturday 18 July 2015
+
+Guinevere Wogan
+UC Berkeley, Berkeley, CA, USA
+Model Selection, Partitioning Schemes, and Phylogenetic Informativeness: A
+Case Study from the Dicroglossidae (Amphibia:Anura)
+
+Partitioning schemes and model selection can have dramatic impact on phylogenetic
+inference, with partitioning affecting tree topology, branch lengths, and support
+estimates. In this study I use a multi-locus dataset for the Old World frog family
+Dicroglossidae to first evaluate model adequacy using simulations and the multinomial
+likelihood statistic (Tx). I then assess the impact of model selection and partitioning
+schemes on phylogenetic informativeness (PI), tree topology, and a series of tree-based
+statistics (tree length, tree height, symmetry, and treeness). I found that for several loci,
+the selected models of nucleotide substitution were not adequately able to model the
+empirical data adequately. Phylogenetic informativenss was greatly impacted by
+partitioning scheme, with un-partitioned analyses possessing low values of PI, and
+Bayesian estimates possessing higher levels of PI relative to Maximum likelihood
+estimates. I also found that PI was highest for simpler models with gene rather than
+gene/codon codon partitioning. While tree topology remained statistically congruent
+across partitioning schemes, there was topological variation in accord with partitioning
+and model selection choices. The family Dicroglossidae was recovered as monophyletic
+in all analyses as were the two subfamilies Occidozyginae and Dicroglossinae. Within
+Dicroglossinae, multiple genera were recovered as paraphyletic, suggesting that
+additional work is needed to fully resolve the evolutionary history of the lineages within
+this group of frogs.
+
+______________________________________________________________________________
+
+0124 ASIH STOYE AWARD CONSERVATION, Carson 4, Thursday 16 July
+2015
+Zachary Wolf, Rebecca Blanton
+Austin Peay State University, Clarksville, TN, USA
+Conservation Status and Phylogeography of the Tennessee-endemic Egg-
+mimic Darter (Etheostoma pseudovulatum)
+
+Restricted to two counties in the Duck River system of Tennessee, Etheostoma
+pseudovulatum is state endangered and has been petitioned for federal listing. In addition
+to its small range, the mainstem Duck River may act as a barrier isolating smaller
+tributary populations. Despite this, little is known about the species and a recent status
+survey has not been conducted. Thus, objectives were to describe the current status,
+habitat use, and genetic diversity of E. pseudovulatum. To evaluate its current status,
+historical localities were sampled using standard seining techniques to assess presence
+and estimate abundance using the Petersen method. Microhabitat variables were
+
+                                            371
+measured and analyzed for association with E. pseudovulatum presence, and range-wide
+genetic diversity was examined using the mitochondrial ND2 gene. Etheostoma
+pseudovulatum was present at all 25 historical localities sampled and abundance
+estimates ranged from 5 to 258 individuals per locality, comparable to those observed
+historically. The species was associated with pools and presence of root wads. Nine
+haplotypes were detected, including one haplotype shared across five of the six
+tributaries. One tributary, Beaverdam Creek, had a unique haplotype assemblage.
+Haplotypes were recovered in two clades: 1) Beaverdam Creek, and 2) the other five
+tributary populations. These results suggest recent gene flow among all tributaries
+except Beaverdam Creek, which has potentially been isolated. Overall, the species was
+locally abundant and appears stable, however future management efforts should
+monitor the species with special focus on smaller tributaries, which had the lowest
+abundances, and the genetically distinct Beaverdam Creek population.
+
+______________________________________________________________________________
+
+0312 Lightning Talks, Crystal 1 & 2, Friday 17 July 2015
+Calvin Won, Larry Allen
+California State University, Northridge, Northridge, CA, USA
+Spatial Characterization of Barred Sand Bass Spawning Aggregations Using
+Active Acoustic Technology
+
+Spawning aggregations have long been essential to commercial and recreational fish
+harvest around the world. Predictability of aggregations in both time and space allows
+for plentiful yield with relatively low fishing effort. However, this places certain species
+at risk of overharvest. One such species, the Barred Sand Bass (Paralabrax nebulifer), has
+been shown to be exhibiting the characteristics of an aggregation-based fishery that is on
+the verge of collapse, as annual catch estimates have shown a greater than 90% decrease
+in the last decade. Population declines of aggregation-based fisheries have a tendency of
+going unnoticed, as fishery-dependent stock assessments do not generally account for
+spatio-temporal variability. This phenomenon is known as hyperstability. The present
+study aims to investigate the spatial and temporal dynamics of spawning in the Barred
+Sand Bass at Huntington Flats, California. Preliminary transect surveys were conducted
+using split-beam SONAR to examine spatial and temporal variability of spawning
+aggregations in relation to environmental factors (e.g., temperature, thermocline, lunar
+phase). The objective was to identify any environmental factors that would aid in the
+predictability of aggregating behaviors. However, spawning activity during the summer
+of 2014 appeared to be minimal and is mostly likely explained by environmental
+conditions associated with El Niño Southern Oscillation. Future plans will take an
+ethological approach to reproductive behaviors using videography on SCUBA.
+
+______________________________________________________________________________
+
+
+
+
+                                            372
+0451 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Kirsten Work, Missy Gibbs, Vanessa Rubio, Cliff Bryan
+Stetson University, DeLand, FL, USA
+Abundant Feces from an Exotic Armored Catfish, Pterygoplichthys
+disjunctivus, Create Nutrient Hotspots in a Florida Spring
+
+Over the past 15 years, Pterygoplichthys disjunctivus has colonized many Florida systems,
+including Volusia Blue Spring. Unlike any other species in the spring run,
+Pterygoplichthys disjunctivus grazing repackages periphyton with sand into a fecal
+structure that remains relatively intact in the spring. Not only does P. disjunctivus
+produce copious feces, but the fecal persistence allows the feces to contribute to nutrient
+loading when the fish are not present. What, then, is the effect of this nutrient loading
+on the spring ecosystem? We surveyed the spring run to assess fecal abundance,
+analyzed fecal samples from live fish and from the substrate for nutrient content, and
+conducted flume experiments to measure nutrient content of leachate. We found that
+feces were abundant in the spring and, although each sample leached minute quantities
+of nutrients (NO3-, TKN, SRP), the total quantity of nutrients released from local
+accumulations of feces was substantial. Our results suggest that leachate from P.
+disjunctivus fecal deposition could create transient biogeochemical hotspots lasting
+longer than those described for excreta, and thus it is likely that it alters nutrient cycling
+in this spring system significantly.
+
+______________________________________________________________________________
+
+0156 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Bryenna Workman1, Callahan Clarke1, Melissa Gall2, Paul Hampton1
+1Colorado Mesa University, Grand Junction, CO, USA, 2Carroll University, Waukesha,
+
+WI, USA
+Single Large or Several Small: Prey Size Selection and Its Effect on Terrestrial
+Locomotion of Ribbon Snakes
+
+It has been suggested that extra weight in the form of carrying offspring or ingested
+meals may reduce locomotor performance in snakes. In general, colubrids move by
+serpentine locomotion, creating lateral undulations and using push-points in their
+environment. Consequently, a rigid prey item may confound the adverse effects of a
+meal on locomotion by limiting the maneuverability. We hypothesized that
+consumption of several small fish will have less hindered movement of the spinal
+column compared to a single large fish. We chose western ribbon snakes (Thamnophis
+proximus) as our study species. This is a slender snake that depends upon speed to avoid
+predation. Ribbon snakes were fed meals approximately 20% of the snake's mass. The
+large meal treatment was a single fish that was approximately 20% of the snake's mass.
+For the several small treatment, snakes were offered four fish that were each
+approximately 5% of the snakes size, thus totaling an equivalent meal size. After
+
+                                             373
+feeding, individuals were video-recorded while crawling through a track with push-
+points. Using Logger Pro, a motion-analysis program, we determined the maximum
+velocity and we used Image J to determine the amplitude and angle of spinal flexion
+from the fastest trial for each snake. Preliminary results suggest that meal type had no
+impact on maximum velocity, amplitude or spinal flexion.
+
+______________________________________________________________________________
+
+0613 Plenary, Carson 1, 2 & 3, Thursday 16 July 2015
+Jennifer Wyffels
+South-East Zoo Alliance for Reproduction and Conservation, Yulee, FL, USA
+The Changing Face or AES
+
+There has been a steady demographic shift occurring in life sciences over the last 30
+years, so maybe it’s not so unexpected to see it in the field of elasmobranch science as
+well. While all fields of science have historically been largely male-dominated, there are
+now far more women training in biological fields than men; however, the proportion of
+women entering and remaining within professional careers is still proportionally behind
+that of males. This trend is particularly true for women and underrepresented groups in
+AES. Not unlike other fields in the life sciences, pioneers like Eugenie Clark, one of the
+first women to establish herself as force among elasmobranch scientists in the 1960s, led
+the way for the next generation of female scientists. Despite increasing numbers of
+female student members, the number of women remaining in the society as professional
+members has not increased proportionally. Male AES members have served as
+president for 26 out of the 30 year history of the society and only two women have been
+elected as President of AES, the first being Merry Camhi in 2002. There has been a
+growing number of women serving important leadership roles in AES, particularly over
+the last 10 years, which is needed to support the needs of our changing society.
+However, there is also a need to further enrich our ranks with greater diversity.
+______________________________________________________________________________
+
+
+
+0461 ASIH STOYE AWARD ECOLOGY & ETHOLOGY I, Crystal 3 & 4,
+Thursday 16 July 2015
+Katharine T. Yagi1, David M. Green1, 2
+1McGill University, Montreal, Canada, 2Redpath Museum, Montreal, Canada
+
+Strategies of Dispersal in Pond Breeding Amphibians
+
+Dispersal is a necessary process for any species living in a fragmented landscape and
+therefore the dispersal strategies of endangered amphibians are important
+considerations for population recovery and effective management. Fowler’s toads,
+Anaxyrus fowleri, exist in three remnant populations in Canada, one of which is at Long
+Point, Ontario. Although adult body size in this population negatively correlates with
+
+                                           374
+density, it is unknown precisely how body size is related to dispersal. If dispersal is in
+some way size-dependent, then by manipulating larval density conditions to produce
+toads of varying sizes in the field, we should see a correlation between movement and
+body size among individuals. To address this, we reared Fowler’s toad tadpoles in eight
+density treatments within four ponds located in the Long Point National Wildlife Area.
+A random sample of eighteen tadpoles at stage 40 were placed alone in a dish of water
+and filmed for one hour to assess activity level. A similar test was conducted on the
+same treatment groups as toadlets. Six individuals were filmed in a terrestrial enclosure
+for 6 hours and activity was scored based on whether the subject changed positions
+every 1 minute. We predicted tadpole activity level will correlate positively with density
+because crowded conditions can cause increased competitive behaviour, and we
+predicted a negative relationship for toadlets because high density toadlets emerge at
+small sizes suggesting smaller energy stores will be allocated towards movement. These
+results will be a component in predicting the effect of larval density on amphibian
+dispersal.
+
+______________________________________________________________________________
+
+0050 Cypriniformes Inventory Symposium, Crystal 1 & 2, Sunday 19 July 2015
+Lei Yang, Richard Mayden
+Saint Louis University, St. Louis, MO, USA
+Nuclear Gene Cloning, Polyploid Evolution and the Subdivision of the
+Subfamily Cyprininae
+
+ Cyprininae is the largest subfamily of Cyprinidae and contains more polyploid species
+than any other group of fishes. The large number of polyploid taxa poses significant
+challenges for phylogenetic studies of this subfamily. Our recent study with several of
+our collaborators explored the polyploid evolution and subdivision of the Cyprininae
+based on extensive taxon sampling and DNA sequence data from mitochondrial genes
+and the cloned nuclear RAG1 gene. In the present study, we cloned and sequenced
+RAG1 for 13 more species and two additional single-copy nuclear loci EGR2B and IRBP
+for 27 species to further investigate these interesting questions. Species of different
+ploidy levels (diploids, tetraploids, and hexaploids) were analyzed and all tribes are
+represented. Partitioned Maximum Likelihood searches and bootstrap analyses were
+performed separately on the RAG1 dataset (110 taxa, 1497 bp), EGR2B dataset (62 taxa,
+801 bp), and IRBP dataset (62 taxa, 815 bp). Topologies of the resulting trees were
+compared with those of previously published mitochondrial trees and the nuclear RAG1
+tree. New data provided in the present study provide further support for the
+subdivision of the subfamily Cyprininae into 11 tribes. This study also provided further
+corroboration for the phylogenetic placements of some important taxa and the hybrid
+origins of the tribes Torini, Cyprinini, Spinibarbini, and Barbini.
+
+______________________________________________________________________________
+
+
+
+                                           375
+0159 Fish Systematics II, Carson 3, Sunday 19 July 2015
+Lei Yang, Shannon Corrigan, Gavin Naylor
+College of Charleston, Charleston, SC, USA
+Phylogenetic Relationships of Batoids Inferred from Gene Capture Data of
+1076 Nuclear Loci and the Mitogenome
+
+Batoids (skates and rays) are a large group of fishes that account for more than half of
+the species diversity of cartilaginous fishes. The present study is aimed at resolving the
+phylogenetic relationships among batoid fishes based on the largest taxon and genomic
+sampling to date. A preliminary Neighbor-Joining tree was estimated from
+mitochondrial ND2 sequences derived from more than 10,000 tissue samples collected as
+part of an NSF funded Tree of Life project. Representative samples of batoid lineages
+identified as distinct in the Neighbor-Joining analysis were subsequently subjected to
+cross-species single-copy nuclear gene capture and sequenced on an Illumina MiSeq.
+Counterpart complete mitogenomic sequences were also collected through next-
+generation sequencing. Partitioned Maximum Likelihood searches and bootstrap
+analyses were performed for 1076 single-copy nuclear exons and the complete
+mitogenome sequences obtained. Most nodes were resolved with high bootstrap
+support in both the nuclear tree and the mitochondrial tree. Topologies of the two trees
+were compared and relationships among major lineages were discussed. Monophyly of
+some currently recognized genera were evaluated and taxonomic revisions are planned.
+
+______________________________________________________________________________
+
+0189 Fish Biology, Crystal 1 & 2, Saturday 18 July 2015
+Hyo-Jae Yu, Jin-Koo Kim
+Department of Marine Biology, Pukyong National University, Busan, Republic of Korea
+Early Life History of Sebastes koreanus (Pisces, Scorpaenoidei) in the Yellow
+Sea
+
+The early life history of Sebastes koreanus, an endemic marine fish species of the Yellow
+Sea, was investigated using wild-captured larvae [6.11-11.10 mm body length (BL)] and
+a juvenile (18.60 mm BL). The flexion of the notochord tip started at ca. 6.75 mm BL and
+was complete at ca. 8.84 mm BL. The caudal and pectoral fin rays first appeared at the
+preflexion stage (6.11 mm BL), the dorsal and anal fin rays appeared later, at the flexion
+stage (7.66 mm BL), and the pelvic fin rays appeared at the postflexion stage (8.84 mm
+BL). Head spines began to appear at the flexion stage (6.75 mm BL) and their appearance
+was complete at the postflexion stage (more than 8.84 mm BL). Among the cephalic
+bones, which are related to feeding, breathing, and swimming, the jaw bone, opercle,
+pectoral girdle, and hyoid arch were first observed at ca. 6.27 mm BL. The neurocranium
+began to ossify in the frontal, pterotic, and parietal regions at ca. 6.27 mm BL, and then
+in the parasphenoid and basioccipital regions at ca. 8.17 mm BL. The vertebrae began to
+ossify at ca. 7.17 mm BL and their ossification was almost complete at ca. 11.10 mm BL.
+
+                                           376
+Melanophores were present on the head and abdominal region during the larval stage,
+and were often present behind the nape (which may be an intraspecies variation). Three
+transverse stripes were present in the juvenile stage, corresponding to the coloration
+observed in the adult.
+
+______________________________________________________________________________
+
+0190 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Hyo-Jae Yu1, Yoshiaki Kai2, Jin-Koo Kim1
+1Department of Marine Biology, Pukyong National University, Busan, Republic of
+
+Korea, 2Maizuru Fisheries, Research Station, Field Science Education and Research
+Center, Kyoto University, Maizuru, Kyoto 625-0086, Japan, Kyoto, Japan
+Significantly Low Levels of Genetic Diversity in Hyporhamphus sajori (Pisces,
+Hemiramphidae) from Korea and Japan Inferred from Mitochondrial DNA
+Control Region Sequence Data
+
+The genetic diversity, relationships, and population structure of Hyporhamphus sajori
+collected from Korea (five locations, n = 30) and Japan (three locations, n = 27) were
+analyzed using 484-base-pair sequences of the mitochondrial DNA control region. All H.
+sajori individuals were indistinguishable, on the basis of their location, as demonstrated
+with a neighbor-joining tree and minimum spanning network. All individuals collected
+from the eight locations comprised a single panmictic species. Analysis of molecular
+variance revealed a lack of significant differentiation among the eight locations. The
+prevalent lack of genetic differentiation is probably attributable to the reproductive
+behavior and spawning ecology of H. sajori. For example, the eggs of H. sajori are
+attached to drifting seaweed, and larvae are also dispersed with drifting seaweed.
+Therefore, we speculate that the eggs and larvae of H. sajori are highly dispersed, far
+from their natal grounds. Further research with more sensitive DNA, such as
+microsatellite DNA, is required to clarify more recent differentiation events.
+
+______________________________________________________________________________
+
+0037 Herp Ecology, Carson 4, Saturday 18 July 2015
+Peter A. Zani
+Univ. Wisconsin-Stevens Point, Stevens Point, WI, USA
+The Life and Demography of Side-blotched Lizards, Uta stansburiana, in
+Eastern Oregon: A Tribute to Don Tinkle
+
+Five decades ago Don Tinkle published several classic studies of side-blotched lizards
+including comparative demography of northern (Colorado) and southern (Texas)
+populations. In the spirit of Tinkle’s work, and in an attempt to understand how climate
+affects lizard life histories, I have conducted a long-term mark-recapture study of a
+population of Uta stansburiana in eastern Oregon. For 12 years (2004-15) I have marked
+
+                                           377
+150-500 lizards annually. Timing of reproductive bouts has been estimated from
+abdominal palpations in the field and oviposition in the lab, which has also yielded data
+on clutch size. Results confirm Tinkle’s finding that Uta experience reduced mortality at
+higher latitudes (annual adult mortality is only 65%), but also achieve fewer
+reproductive bouts. Field observations indicate that fluctuations in the onset of the
+growing season may constrain Uta to two clutches in some years, but enable three
+clutches in other years. Demographic analyses suggest that resulting population growth
+oscillates between negative and positive values depending on the number of
+reproductive bouts possible in a season. Thus, while Tinkle suggested that northern Uta
+are limited to as many as three clutches per year by the shorter growing season, my
+analyses indicate that side-blotched lizards actually require three clutches per year to
+avoid population decline.
+
+______________________________________________________________________________
+
+0276 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Peter A. Zani, Bridget Walker, Elizabeth Wagner
+University of Wisconsin-Stevens Point, Stevens Point, WI, USA
+Effects of Drought on Reproductive Life History of Side-blotched Lizards, Uta
+stansburiana
+
+During 2013, drought conditions in central Nevada appeared to cause some populations
+of side-blotched lizards to terminate breeding earlier than usual in an apparent shift
+from reproduction to survival. This observation led us to investigate which aspects of
+drought are the causal agent of this shift in life history. To do so we kept adult wild-
+caught side-blotched lizards in identical lab conditions for six months (including a
+winter inactivity period) before assigning them to drought (no supplemental watering)
+or non-drought (supplemental watering) treatment groups. Animals were fed ad libitum
+to test the hypothesis that lack of water, but not lack of food, was sufficient to induce a
+reproductive response. Although body condition was not affected by drought during
+the lab breeding season, results indicate that as the drought progressed animals lacking
+water were negatively affected in terms of reproductive timing and success. These
+findings suggest that for desert-adapted reptiles drought conditions and the lack of
+drinking water alone may be enough to affect life history even if the food supply is not
+altered in nature.
+
+______________________________________________________________________________
+
+
+
+
+                                            378
+0046 Fish Biogeography, Carson 3, Saturday 18 July 2015
+Fernando A. Zapata1, D. Ross Robertson2
+1Universidad del Valle, Cali, Colombia, 2Smithsonian Tropical Research In, Balboa,
+
+Panama
+How Big is the Greater Caribbean Shore-fish Fauna, and How Long to
+Describe It?
+
+To estimate the size of the shallow shore-fish fauna of the Greater Caribbean (GC), we
+examined the long-term dynamics of description of species in relation to their biological
+characteristics, using the 1,549 named species from that region that were described
+between1758-2013. The rate of accumulation of species-descriptions for the entire fauna
+has remained unchanged for the past 100y, while that of non-endemic species has
+slightly declined, and that of regional endemics has increased. Species-accumulation
+curves of minor habitat groups of the fauna may be declining, but those of the largest
+subsets (soft-bottom and reef species, especially reef endemics), have generally
+accelerated. These curves indicate that there must be many undiscovered species in the
+GC fauna. Both body-size and latitudinal-range of newly described species have
+declined in recent years, while the upper limit of the depth range has deepened. Hence,
+many of the undiscovered species are small fishes living in deeper reef and soft-bottom
+habitats in the Caribbean heart of the GC. The exponential scaling relationship between
+the number of higher taxa and their rank predicts, with very low reliability, that there
+are more than twice as many species as currently named. Proportional increases in
+species richness across a range of genera due to recent descriptions of new species
+indicate that the fauna is ~45% larger than currently known. At the currently low
+species-description rate a full faunal inventory will take a very long time.
+
+______________________________________________________________________________
+
+0081 Poster Session I, STORER ICHTHYOLOGY AWARD, Reno Ballroom &
+Tahoe Room, Friday 17 July 2015
+Zachery D. Zbinden, William J. Matthews, Edie Marsh-Matthews
+University of Oklahoma, Norman, OK, USA
+A Contemporary Fish Survey of the Muddy Boggy River Drainage, Southeast
+Oklahoma, U.S.A.
+
+Sixty-six fish-community collections were made between May and September 2014 at
+sites throughout the Muddy Boggy River basin, a major tributary of the Red River in
+southeastern Oklahoma. The primary objective was to document the distribution of fish
+species and community composition within the basin. Samples were taken by
+exhaustively seining approximately 100 m of stream reach (mean sampling duration 47
+min.), and also measuring 22 environmental variables (e.g., substrate, habitat, water
+quality, land use, etc.) at each study site. Study sites were widely distributed from
+headwaters to lower mainstream to maximize coverage across the watershed, and the
+
+                                           379
+survey resulted in 63 species found throughout the Muddy Boggy River system (mean
+per site= 11.2 species). The purpose of this study is to i.) Use environmental variables to
+determine which factors are correlated with variation we see in contemporary fish
+community structure throughout the watershed, ii.) Compare results of this survey to a
+past survey conducted by Mr. Jimmie Pigg in the same drainage which yielded 90
+species (1974-1975, sites=277), and iii.) Draw conclusions about the factors likely
+responsible for changes seen in the fishes of this watershed over time. Special attention
+is given to anthropogenic disturbance within the Muddy Boggy drainage area, which
+has a long history of producing and exporting oil and natural gas, and has been
+experiencing an increase in production in recent years.
+
+______________________________________________________________________________
+
+0355 Herp Conservation I, Carson 1, Saturday 18 July 2015
+Lu Zhang1, Wei Jiang3, Hongxing Zhang3, Qijun Wang3, Hu Zhao3, Ruth Marcec2,
+Scott Willard2, Andrew Kouba1
+1Memphis Zoo, Memphis, TN, USA, 2Mississippi State University, Mississippi State,
+
+MS, USA, 3Shaanxi Institute of Zoology, Xi'an, Shaanxi, China
+Post-release Survival of Juvenile Captive-reared Chinese Giant Salamander
+(Andrias davidianus) Reintroduced to the Wild
+
+Reintroduction of captive-reared Chinese giant salamanders may help to augment the
+declining wild populations and conserve this critically endangered species. We released
+32 juvenile salamanders surgically implanted with radio transmitters at two sites in the
+Qinling Mountains of central China and monitored their survival from March 2013 to
+July 2014: 3 year-old head-started animals (n = 16) at the Heihe River, and captive-born 5
+year-old animals (n =16) at the Donghe River. Two salamanders at Heihe River and 10
+animals at Donghe River survived through the entirety of the project timeline. Ten
+salamanders were confirmed dead, two were possibly poached, while the status of the
+other eight animals was undetermined. The annual survival rate of salamanders at the
+Heihe River was 0.593 (95% CI: 0.387 - 0.907), which was lower than the rate of 0.800
+(95% CI: 0.621 - 1.000) at the Donghe River (χ2 = 3.6, P = 0.056). All salamanders
+recaptured from the Donghe River site (n = 8) increased in mass (0.50 ± 0.13 kg) and
+length (5.5 ± 1.5 cm) after approximately 11 months in the wild. Their body condition
+indexes were smaller to wild conspecifics; however, this difference was reduced by the
+end of the project such that they were only 7% lighter than wild animals of the same
+length. No external parasites or diseases were discovered on recaptured giant
+salamanders. Our results indicate that captive-reared giant salamanders can survive in
+the wild, although adequate surgical recovery time is extremely important to post-
+release survival.
+
+______________________________________________________________________________
+
+
+
+
+                                            380
+0333 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Xuguang Zhang, Hongyi Guo, Jiakun Song
+Shanghai Ocean University, Shanghai, China
+Sound Production in Marbled Rockfish, Sebastiscus marmoratus, and
+Implications for Fisheries
+
+Recently, several rockfish species (genus Sebastes) have been reported to be soniferous.
+To determine whether an additional rockfish species produces sounds, passive acoustic
+recordings were analyzed from captive marbled rockfish (Sebastiscus marmoratus Cuvier,
+1929) during the non-spawning season. Three distinct sounds were identified based on
+frequency features. The common characteristics among all sounds were low frequency
+(below 300 Hz) and rapidly dampened pulses consisting of 3-5 acoustic energy cycles.
+During free-swimming conditions in the canvas tank, the fish produced voluntary
+sounds with lower frequencies than the disturbance sounds produced by individuals
+during prodding. Two types of sounds were identified in the disturbance context: one
+type consists of single or double pulses with 2 peak frequencies, and another type
+consists of a series of pulses with a single peak frequency. These results suggest that
+specific-species and behavior-associated sounds are potentially useful in passive
+acoustical surveys to monitor rockfish populations and distributions remotely.
+
+______________________________________________________________________________
+
+0045 Cypriniformes Inventory Symposium, Crystal 1 & 2, Sunday 19 July 2015
+Yahui Zhao1, Danté B. Fenolio2, Daphne Soares3, Chunguang Zhang1
+1Institute of Zoology, Chinese Academy of Sciences, Beijing, China, 2San Antonio Zoo,
+
+San Antonio, TX, USA, 3New Jersey Institute of Technology, Newark, NJ, USA
+Beauty Under Ground: Cavefishes in China
+
+Cavefishes, or hypogean fishes, are a distinctive group of fishes restricted to
+subterranean environments for at least for part of their lives. Based on their
+troglomorphism, which includes morphological adaptations to the cave environment
+such as the reduction or loss of eyes and pigmentation, cavefishes can be divided to two
+types: troglobites (troglomorphic) and troglophiles (non-troglomorphic). China is home
+to the highest number of cavefish species in the world, with more than 60 troglobitic
+species out of about 120 cavefish species. As fieldwork continues, more species are being
+found and described. All of these cavefish species in China are endemic to China. With
+the exception of Onychostoma macrolepis in north China, all species are found in
+southwest China, mostly in the karst environment of the Yunnan-Guizhou Plateau.
+Sinocyclocheilus, the largest cavefish genus, has experienced rapid evolution and
+diversification. Species from this genus possess horns and humpbacks (i.e. horn-like
+structures and hyperdevelopment of a dorsal protuberance similar to a humpback),
+probably resulting from parallel evolution. Sympatric distribution of Chinese cavefishes
+is common, and sometimes several species are found in the same cave or subterranean
+
+                                          381
+river. Caves and karsts are very fragile, balanced habitats, and cavefish species are
+extremely sensitive to environmental change. Threats from rapid economic growth have
+increased the need for conservation efforts for cave-dwelling communities in recent
+decades. Conservation of Chinese cavefishes is an urgent issue.
+
+______________________________________________________________________________
+
+0236 Herp Morphology & Biogeography, Crystal 1 & 2, Friday 17 July 2015
+Mingna Zhuang, Timothy E. Higham
+University of California Riverside, Riverside, CA, USA
+The Modulation of Foot Position and Adhesion During Arboreal Locomotion
+in Day Geckos (Phelsuma)
+
+By using adhesion, geckos can navigate through challenging habitats. Behaviorally
+modulating how the adhesive system is applied can occur by altering the alignment of
+the foot relative to the long axis of the body and/or the angles between the digits
+(interdigital angle). Given the directionality of the adhesive system, we expect geckos to
+vary the application of the system via these mechanisms as they run. We quantified 3D
+movements (with high-speed video) of Phelsuma madagascariensis running on a range of
+ecologically relevant inclines (0°, 45°, 90 °) and perch diameters (1.5cm, 10cm and flat).
+We measured instantaneous interdigital angle and foot alignment relative to the body
+across each condition, as well as other kinematic variables. The geckos decreased speed
+with decreasing perch diameter, but increased speed at 45°. This suggests that P.
+madagascariensis may favor inclined perches. Additionally, proximal limb variables
+respond to substrate condition in a manner to increase stability and reduce toppling.
+Finally, foot alignment in the forelimb acts in opposition to that of the hindlimb,
+suggesting that P. madagascariensis is able to maintain multiple directions of adhesion at
+one time. The modulation of interdigital angle and foot alignment suggests that aspects
+other than the mechanism of adhesion are important for arboreal movement in geckos.
+Our study reveals patterns of foot usage in arboreal locomotion, which can lead to a
+better understanding of adhesive system constraints. This is essential for understanding
+how biomechanical traits respond to the evolution of novel adaptations and
+morphologies. Supported by NSF IOS-1147043.
+
+______________________________________________________________________________
+
+
+
+
+                                           382
+0553 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Nicholas Zielinski, Kaleb Price, Ian Bollinger, Jeff Eble
+University of West Florida, Pensacola, FL, USA
+Measuring Gene Flow Among Populations Within the Reef Fish
+Species, Melichthys niger
+
+The black triggerfish, Melichthys niger, is one of just a few tropical reef fish thought to
+have a circumglobal distribution. Considering the rarity of circumglobal reef fishes, and
+the challenges reef fish larvae face crossing large stretches of open-ocean, the objective of
+this research is to determine whether M. niger is truly circumglobal or rather, if M. niger
+is really a complex of closely related, but evolutionarily isolated sub-species or species.
+Gene flow between collection sites in the Atlantic, Indian, and Pacific oceans is being
+investigated by examining sequence data from three genes: control region (D-Loop),
+cytochrome oxidase I (CO1), and the second intron of the large ribosomal subunit (S7-
+2). Preliminary analysis of mtDNA diversity (D-loop and CO1 genes) indicates extensive
+genetic connectivity with no evidence of cryptic evolutionary divergence. Investigations
+are ongoing and will include an analysis of the S7-2 nuclear marker as well as additional
+samples from sites in the Eastern Pacific and Western Atlantic, which have been
+geographically isolated from one another for more than 3 million years.
+
+______________________________________________________________________________
+
+0137 HERPETOLOGISTS’ LEAGUE GRADUATE RESEARCH AWARD,
+Carson 1, Thursday 16 July 2015
+Julie Ziemba, Carl Anthony, Cari-Ann Hickerson
+John Carroll University, University Heights, OH, USA
+Invasive Asian Earthworms (Amynthas spp.) Negatively Affect Juvenile
+Abundance, Alter Microhabitat Use, and Reduce Foraging Efficiency of
+Woodland Salamanders (Plethodon cinereus)
+
+Asian earthworms (Amynthas spp.) are invading North American forests and consuming
+the vital detrital layer that forest-floor biota (including the Eastern Red-backed
+Salamander, Plethodon cinereus) rely on for protection, food, and habitat. Salamander
+population decline has been associated with European earthworm-mediated leaf litter
+loss, but there have been no studies on the interactions between Amynthas and P.
+cinereus. Since the large, active Amynthas earthworms spatially overlap with salamanders
+beneath natural cover objects and in detritus, they may compound the negative
+consequences of resource degradation by physically disturbing important salamander
+activities (foraging, mating, and egg brooding). I predicted that Amynthas would exclude
+salamanders from high quality microhabitat, reduce foraging efficiency, and negatively
+affect salamander fitness. In laboratory trials, salamanders used lower quality
+microhabitat and consumed fewer flies in the presence of earthworms than when alone.
+In a field experiment conducted on salamander populations from “non-invaded” and
+
+                                            383
+“Amynthas-invaded” sites in Ohio, salamanders and earthworms shared cover objects
+~60% less than expected. Amynthas density was negatively associated with juvenile
+density, but had no relationship with overall, male, or gravid female salamander
+density. Also, Amynthas invasion had no effect on salamander body condition. Juvenile
+salamanders do not hold stable territories, which results in reduced access to prey and a
+higher risk of desiccation. Thus, they may be more vulnerable to the negative effects of
+Amynthas invasion than adults. If habitat degradation and physical exclusion of
+salamanders from cover objects reduce juvenile salamander performance, then
+recruitment and ultimately salamander abundance may decline following Amynthas
+invasion.
+
+______________________________________________________________________________
+
+0157 Poster Session II, Reno Ballroom & Tahoe Room, Saturday 18 July 2015
+Menemsha Zotstein
+California State University Long Beach, CA, Long Beach, CA, USA
+Geographic Variation in Agonistic Push-up Displays Across a Contact Zone in
+the Side-Blotched Lizard Uta stansburiana
+
+This study examined the pattern of behavioral, genetic, and morphological
+variation occurring between phenotypically divergent populations of Uta stansburiana
+across a contact zone between the Mojave Desert and Colorado Desert ecosystems. I
+characterized the shift in agonistic display type across the zone to determine if
+individuals in the intergrade zone displayed intermediate phenotypes or enhanced
+variation in display. Individuals with diverse behavioral repertoires were found in all
+populations, but display type changed gradually and continuously along the transect of
+sampled populations, indicating a complex and possibly polygenic or multi-allelic mode
+of inheritance. Nuclear and mitochondrial markers indicate restricted gene flow though
+the discordance of the genetic data type suggest female-biased dispersal. Selection
+appears to be shaping the evolution of morphological traits such as size and limb length
+as these were significantly related to elevation differences along the transect.
+
+______________________________________________________________________________
+
+
+
+
+                                           384
+A                                                                              Jairo Arroyave ............................................... 14
+Juan Abarca .................................................. 365             Kiyoshi Asahina .......................................... 228
+Jessica Abbott............................................... 242              Roy Averill‐Murray ...................................... 15
+David Acuna ................................................ 189               Michael L. Avery......................................... 269
+Connor Adams ........................................ 1, 150                   Agnes Awharitoma ...................................... 15
+Cory Adams ............................................. 1, 300
+Dean Adams .................................................. 89               B
+Douglas H. Adams ...................................... 213                    Dean Bagley ................................................. 312
+Collette Adkins ............................................ 205               Carole Baldwin ........................ 16, 68, 124, 342
+Joseph Agugliaro ............................................. 2               Vikram Baliga ................................................ 17
+Greg Ahearn ................................................ 146               Charles Bangley ............................................ 17
+Martins Aisien ....................................... 15, 104                 Max Bangs ...................................................... 18
+Matthew Ajemian.......................... 3, 40, 41, 98                        Amanda Barker ............................................. 18
+Sophia Alcaraz ............................................. 111               Henry Bart ............................................. 19, 130
+Joni Aldinger................................................ 358              Ryan Barton ................................................... 20
+Michael Alfaro ............................................. 250               Maria Delia Basanta...................................... 20
+Larry G. Allen ............ 24, 50, 56, 158, 271, 372                          Ryan Battleson ............................................. 240
+Matthew C. Allender .................................. 186                     Aaron Bauer ................................................. 123
+Linda Allison ................................................... 4            Daniel Baum ................................................ 310
+Abdulaziz Alqahtani ...................................... 5                   Christopher Beachy ...................................... 59
+Elizabeth Alter ............................................. 327              Steven Beaupre ...................... 21, 180, 201, 260
+Gilbert Alvarado ......................................... 365                 Daniel Beck .................................................. 208
+Kayla Anatone ............................................. 294                Christine Bedore ........................................... 22
+Brenda Anderson ............................................ 5                 Mark Bee ...................................................... 336
+James Anderson .............................................. 6                Carolyn Belcher ............................................... 5
+Jim Anderson ............................................... 236               Rayna Bell ...................................................... 53
+Krystal Anderson ............................................ 7                Edith A. Beltrán‐Ortega ............................. 309
+Rachel Anderson ............................................. 7                Katherine Bemis ...................................... 22, 64
+Roger Anderson ...................................... 8, 197                   William E. Bemis ................................... 22, 243
+Allen Andrews ................................................ 8               Oliver Bender .............................................. 356
+Jennifer Andrews ............................................ 9                Kasey Benesh ................................................. 23
+Julio Angel ................................................... 294            Amanda Bennett ........................................... 24
+Carl D. Anthony ............................ 48, 102, 383                      Stephanie Benseman..................................... 24
+Whitney Anthonysamy .......................... 10, 62                          Peter Berendzen .......................................... 365
+Lucianna Araujo .......................................... 234                 Brian Bergamaschi ........................................ 26
+Randall Arauz .............................................. 189               Diego Bernal ........................................ 210, 223
+Mariangeles Arce H. ............................ 10, 212                       Andrea Bernard............................................. 25
+Thomas Archdeacon ................................... 153                      Giacomo Bernardi ............................... 206, 359
+James Archie .......................................... 11, 197                Henry Berns ................................................. 167
+Csilla Ari......................................................... 12         Sandra Bessudo ........................................... 189
+Jonathan Armbruster ........................................                   Dana Bethea ................................................. 119
+ ..................... 13, 23, 46, 147, 148, 329, 334, 335                     Catherine Bevier............................................ 26
+Lauren M. Armstrong................................... 13                      Ke Bi .............................................................. 164
+
+                                                                         385
+James Biardi ................................................. 157          Lauran Brewster .......................................... 146
+David Bickford ............................................ 281             Rachel Brewton ................................. 40, 41, 98
+Nate Bickford ............................................... 156           Richard Brill ................................................. 223
+Joseph Bidwell ............................................... 93           Ralf Britz....................................................... 194
+Jennifer Bigman ............................................. 26            Eric Britzke................................................... 169
+Joseph Bizzarro .............................................. 27           Edmund Brodie III ...................................... 122
+David Blackburn ......................................... 279               Edmund Brodie, Jr. ....................... 87, 122, 369
+Rebecca Blanton..................................... 28, 371                Allison Bronson ............................................. 42
+Barbara Block ................................................. 49          Edward Brooks ............................................ 334
+Devin Bloom .................................................. 29           James Brooks ............................................... 153
+Michael Blouin ............................................... 63           Ronald J. Brooks .......................................... 183
+Michael J. Blum............................................ 156             Deirdre Brophy ....................................... 84, 85
+Michael Blumer ........................................... 310              Richard Broughton ....................................... 42
+Brooke Bodensteiner ................................... 337                 Chris Brown ................................................. 209
+Christiana Boerger ........................................ 38              Christopher Brown ..................................... 103
+Steven Bograd ................................................ 49           Simon Brown ................................................. 27
+Ian Bollinger ................................................. 383         Corey Brumbaugh ........................................ 43
+Sarah K. Bolton .............................................. 29           Kale Bruner .................................................. 263
+Karine Bonatto ............................................... 30           Cliff Bryan .................................................... 373
+Damien Bontemps ......................................... 31                Walter Bubley ...................................... 104, 348
+David Boseto ................................................ 207           Gary Bucciarelli ............................................. 44
+Kevin Boswell ...................................... 331, 333               Scott Buchanan .............................................. 44
+Nassima Bouzid .................................... 31, 197                 Lauren Buckley ............................................. 31
+Katie Bowen ................................................... 32          Kiristin Budd ................................................. 45
+Lizabeth Bowen ........................................... 100              Bill Buffum ..................................................... 44
+Beth Bowers ................................................... 33          Frank Burbrink .................................... 246, 297
+Brandon Bowers .............................................. 1             Michael D. Burns..................................... 46, 47
+David Boyd .................................................... 33          Edward Burress ............................................. 46
+Sunny Boyd .................................................. 235           Christopher Burridge ................................. 211
+Megan A. Boyk ............................................ 158              Thaddaeus Buser........................................... 47
+Sean P. Boyle .................................... 34, 35, 254              Janis Bush ..................................................... 330
+Kristina Bozanich .......................................... 35             Peter Bushnell .............................................. 223
+Kenzie Bozeman ............................................ 36              Michael Byrne.............................................. 360
+Heather Bracken‐Grissom .................. 331, 333
+Gideon S. Bradburd .................................... 231                 C
+Darcy Bradley .......................................... 37, 38             Miguel Ángel Cabrera‐Pérez..................... 111
+Marina Brand ................................................. 26           Steve Cadrin ................................................ 146
+Corina Brdar ............................................ 34, 35            Joshua Cahal .................................................. 47
+Jessica Bredvik ............................................... 38          Aram Calhoun ..................................... 135, 136
+Jesse Breinholt.............................................. 264           David Camak ............................................... 107
+Heather Brekke .............................................. 39            Alexander Cameron ..................................... 48
+Michael Bresette .......................................... 248             Griffin Capehart ............................................ 49
+Casey Brewster ........................................ 40, 62              Aaron Carlisle ............................................... 49
+
+                                                                      386
+Bella Carriker ............................................... 293            Shane Conway............................................. 235
+Marcelo Carvalho ................................ 204, 316                    April Cook ................................... 331, 332, 333
+Michael Casazza .................................. 109, 142                   Drew Corder ................................................ 203
+Jennifer E. Caselle.................................... 37, 38                Gerardo Cordero ......................................... 337
+William Ben Cash ........................................ 234                 Justin Cordova....................................... 68, 275
+Mollie F. Cashner ........................................ 244                Jeffrey Corneil ............................................... 69
+Ted Cavender .............................................. 327               Maria Correa.................................................. 70
+Chris L. Chabot.............................................. 50              Shannon Corrigan ............................... 179, 376
+Prosanta Chakrabarty ........... 51, 184, 211, 236                            Joel Corush............................................... 70, 71
+Ian Chan ....................................................... 370          Taylor Cotton ........................................ 71, 199
+Chia‐Hao Chang............................ 52, 230, 290                       Brad Coupe .................................................. 295
+Jeffrey P. Chanton ....................................... 239                Ryan Couture ................................................ 63
+Eric Chapman .............................................. 240               Adam Crane ................................................ 169
+Kristin Charles ............................................... 53            Dan Crear ....................................................... 72
+Wei‐Jen Chen ......................................... 52, 230                Kristine Crippen............................................ 73
+Barry Chernoff ............................... 53, 249, 294                   Brian Crother ........................... 47, 73, 245, 351
+Douglas Chivers .................................. 169, 170                   Karen Crow............................................ 74, 359
+Jacqueline Chivers................................. 54, 178                   Clayton Crowder .......................................... 74
+Chad Chordes ................................................ 34              Elvira Cuevas ................................................ 31
+Terry Christopher ......................................... 15                Peterson Cullimore ..................................... 127
+Diana A. Churchill ........................................ 55                Paul Cupp ...................................................... 75
+Patrick Ciccotto.............................................. 55             Mary Carla Curran ..................................... 288
+Jeremy T. Claisse ......................................... 367               Judson Curtis ................................................. 41
+Brian Clark ..................................................... 56
+Christopher Clark ................................. 57, 362                   D
+Rulon Clark .................................... 57, 284, 285                 Dominic D`Agostino .................................... 12
+Will Clark ............................................... 58, 354            Wasila Dahdul ............................................... 75
+Callahan Clarke ..................................... 59, 373                 Caio Isola do Amaral Dallevo‐Gomes . 76, 77
+Maurice Clarke ........................................ 84, 85                Toby S. Daly‐Engel ......... 77, 81, 275, 344, 345
+Pamela Clarkson...................................... 59, 60                  Marc Dando ................................................. 266
+Robert Clarkson ............................................. 97              Schuyler Dartez ........................................... 271
+Paul J. Clerkin ........................................ 60, 275              Stephen Davenport ..................................... 153
+Jonathan Clinger............................................ 61               Solomon David.............................................. 78
+Daniel Coffey ................................................. 62            Lindsay Davidson ......................................... 79
+Jared Cole ....................................................... 62         Heidi Davis .................................................. 111
+Kathleen S. Cole ...................... 63, 87, 229, 347                      Jonathan Davis .............................................. 79
+Bruce Collette................................................. 64            Mark A. Davis ............................................. 199
+Michael Colley ......................................... 65, 66               Matthew Davis .......................... 20, 80, 81, 224
+Michael Collyer ........................................... 200               Christina De Jesús‐Villanueva .................... 82
+Luis A. Coloma ............................................ 293               Kevin de Queiroz .......................................... 83
+Eric Conklin ................................................... 37           Antony Dean ................................................. 99
+Paul Converse ................................................ 66             Mason Dean ................................................. 310
+Kevin W. Conway ........................... 67, 68, 194                       Raelynn Deaton Haynes .............................. 83
+
+                                                                        387
+Summer Decker ........................................... 160                 Mark Drawbridge ....................................... 283
+Simon Dedman ........................................ 84, 85                  Joseph Drennan ........................................... 370
+Lesley DeFalco ............................................. 322              Michael J. Dreslik .................................. 10, 186
+Hayley DeHart ........................................ 85, 86                 William Driggers................................. 119, 155
+Brian Deis ....................................................... 87         Drew Duckett .............................................. 101
+Robert del Carlso ........................................... 87              Jessica Dudley ............................................. 344
+Maria Laura Delapieve ................................. 88                    Nicholas (Nick) K. Dulvy ...... 39, 79, 266, 351
+Tim Dempster .............................................. 313               Mike Durkalec ............................................. 193
+Brandon Demuth ......................................... 170                  Andrew M. Durso ....................................... 101
+Pam Dennis .................................................. 193             Lee Dyer ....................................................... 170
+Mark Denny ................................................... 49
+John Denton ............................................. 14, 89              E
+Sergio deRada .............................................. 333              David A. Ebert ........................................ 27, 60,
+Anne Devan‐Song ......................................... 89                   68, 159, 167, 171, 216, 251, 275, 346, 352, 353
+Heidi Dewar................................................... 49             Jeff Eble......................................................... 383
+Andrew DeWoody ...................................... 256                     Mallory Eckstut ........................................... 102
+Katia M. Díaz‐Lara ...................................... 310                 Cameron Eddy ............................................ 102
+Daniela Dick................................................... 90            Michael Edgehouse..................................... 103
+Matthew Dickson .......................................... 91                 Robert Edman.............................................. 104
+Casey Dillman ............................................... 91              Omoyemwen Edo‐Taiwo ..................... 15, 104
+Pavel Dimens ................................................. 92             Laura Edsberg ............................................. 211
+Baoqing Ding ............................................... 335              Josh Egan ...................................................... 105
+Elizabeth Dinsdale ........................................ 94                Tomo Eguchi.................................................. 72
+Drew Dittmer ................................................. 93             Augustus Ehiorobo ....................................... 15
+José Pedro do Amaral ................................. 201                    Samantha Ehnert ......................................... 106
+Michael Doane ............................................... 94              Llewellyn Ehrhart ....................................... 312
+Mark Dodd ................................................... 312             Jennifer Eichelberger .................................. 148
+Terry Donaldson ........................................... 95                Diego Elias ................................... 106, 107, 238
+Caroline Dong................................................ 95              Amanda Ellis ............................................... 203
+Kate C. Donlon .............................................. 96              Lilly Eluvathingal ....................................... 108
+Maureen A. Donnelly .......................................                   Erica Ely ....................................................... 108
+ ................................. 97, 108, 188, 202, 256, 339                Alison Enchelmaier .................................... 109
+Michael Doosey ........................................... 130                David English ...................................... 331, 333
+Patrick Doran ................................................. 78            Tag Engstrom ................................................ 95
+Michael Dorcas ............................................ 340               Eugenia Errico ............................................. 220
+Alex Dornburg ............................................... 43              Julia Ersan .................................................... 109
+Marlis R. Douglas ............................ 10, 62, 199                    Evan Eskew.................................................. 110
+Michael E. Douglas ............................... 62, 199                    Eduardo Espinosa ....................................... 189
+Thomas Dowling ................................... 97, 192                    Hector Espinosa .................................. 226, 308
+Charles Downey ............................................ 98                Robert Espinoza .................................... 91, 291
+Alan Downey‐Wall ....................................... 99                   Todd Esque .................................................. 100
+Danielle Drabeck ........................................... 99               Andrew Evans ............................................. 146
+Kristina Drake.............................................. 100              Vasilyev Evgeny.......................................... 203
+
+                                                                        388
+Ron Eytan ............................................. 331, 333             Kealoha Freidenburg .................................. 119
+                                                                             Susannah French ......................................... 355
+F                                                                            Bryan Frenette ............................................. 120
+Matthew Fagan ............................................ 256               Ryan Friebertshauser.................................. 242
+Brant Faircloth ............................................. 250            Sarah Friedman ................................... 120, 349
+Wilfredo Falcón ............................................. 82             Michael Frisk ............................................... 225
+Bryan Falk .................................................... 241          John Froeschke ................................................ 3
+Brett Falterman ............................................ 155             Jared Fuller .................................................. 121
+Rebecca Farr ................................................. 166
+Kevin Feldheim ..................................... 25, 345                 G
+Chris Feldman ................. 35, 87, 108, 182, 247                        Meaghan Gade ............................................ 122
+Danté B. Fenolio .......................... 331, 333, 381                    Steven D. Gaines ..................................... 37, 38
+Maud Ferrari ........................................ 169, 170               Brian Gall ..................................................... 122
+Lara Ferry ..................................................... 265         Melissa Gall ........................................... 59, 373
+Jean‐Sebastien Finger.................................. 184                  Ramón Gallo‐Barneto ................................. 111
+Alexandra Fireman ..................................... 294                  Tony Gamble ............................................... 123
+LeeAnn Fishback ......................................... 234                Eric Gangloff................................................ 337
+Robert Fisher ................................ 111, 292, 359                 Harry Ganz .................................................. 314
+Samuel Fisher .............................................. 111             Andrés García................................................ 20
+Daniel Fitzgerald ......................................... 299              Timothy Garrett .......................................... 150
+Lee Fitzgerald .............................................. 198            Donnell Gasbarrini ..................................... 123
+Brenda Flack ................................................ 201            Nicholas Geist ............................................. 181
+James P. Flaherty ......................................... 112              James (Jim) Gelsleichter ...................................
+Brooke Flammang ....................................... 113                  ....................................... 5, 25, 81, 106, 146, 361
+Noelle Fletcher ............................................. 113            Anna George................................................ 203
+Gilberto Flores ............................................. 291            Marina Gerson............................................. 136
+Brook Fluker ................................ 114, 176, 243                  Michael Ghedotti .......................................... 20
+Alex Fogg ..................................................... 173          Ava Ghezelayagh ........................................ 124
+Janet Foley .................................................... 110         H. Lisle Gibbs .............................................. 157
+Clifford Fontenot ................................. 230, 279                 Missy Gibbs ......................................... 125, 373
+Jonathan Ford .............................................. 160             Sarah Gibson................................................ 125
+Sonja Fordham ............................................. 115              Nathan Gichuki ............................................. 19
+Kimberly Foster ........................... 115, 116, 238                    Keith Gido ............................................ 260, 278
+James W. Fourqurean ................................. 257                    Christopher (C.M.) Gienger............................
+Dewayne Fox ............................................... 117              ................................... 28, 61, 112, 262, 303, 366
+Benjamin Frable ........................................... 117              Anthony Gill ................................................ 241
+Ethan France ................................................ 118            James F. Gilliam .......................................... 156
+Travis Francis............................................... 269            Marty Gingras ............................................. 240
+Tamara Frank............................... 331, 332, 333                    Matthew Girard .......................................... 126
+James Franks ................................................ 155            Robert Gitzen............................................... 172
+Deborah Fraser ............................................ 305              Adrian Gleiss ................................................. 49
+Thomas Fraser ............................................... 68             Gary Glowacki .............................................. 10
+Bryan Frazier ......................... 86, 104, 119, 348                    Scott Goetz ........................................... 126, 241
+
+                                                                       389
+Tamera Goetz............................................... 127               H
+Alp Gokgoz .................................................. 334             Nicholas Haertle ......................................... 139
+John Gold ....................................... 18, 280, 368                Bridgette E. Hagerty ........................... 140, 231
+Martin Gomon ............................................. 313                Dominik Halas ............................................ 140
+Melissa Gonzalez De Acevedo .................... 81                           Kelly M. Halloran ............................... 138, 141
+Shawn Goodchild ........................................ 128                  Brian Halstead ..................................... 109, 142
+Brett Goodman .............................................. 93               Erik Halverson .................................... 142, 217
+Andrea Goodnight ...................................... 181                   Bryan Hamilton ................................... 143, 151
+Michelle Gordon.......................................... 128                 Neil Hammerschlag.................... 109, 252, 314
+Marika Gotschall ......................................... 305                Paul Hampton ............................... 59, 144, 373
+Andrew Gottscho ........................................ 129                  Sang‐Yun Han ............................. 144, 188, 299
+Mark Grace................................................... 130             James Hanken.............................................. 145
+Michael S. Grace .................. 130, 132, 191, 269                        Alexander Hansell .............................. 146, 186
+Molly Grace .................................................. 131            Eriek Hansen ......................................... 73, 269
+River Grace................................................... 132            Peter Harlow ............................................... 111
+Katherine Graham....................................... 132                   Hannah Hart ................................................ 146
+Suzanne Graham ........................................... 38                 Kristen Hart ................................................. 312
+Taran Grant .......................................... 158, 168               Pamela Hart ................................................. 147
+John Graves .................................................... 64           Paul Hartfield ...................................... 148, 195
+David Green ................................................... 44            Christopher Hartleb ................................... 218
+David M. Green ................................... 239, 374                   Guy Harvey ................................................. 360
+Eli Greenbaum ............................................. 123               Johanna Harvey .......................................... 150
+Cathryn Greenberg ..................................... 330                   Philip Hastings ............................................ 255
+Dan A. Greenberg ....................................... 133                  Jeff Hathaway .............................................. 233
+Beau Gregory ............................................... 277              Holly A. Hawk .............................................. 50
+Patrick Gregory ........................................... 134               Malorie Hayes ....................................... 13, 148
+Oliver Griffith .............................................. 344            Megan E. Hazell .......................................... 321
+Ashley Grimsley .................................. 134, 197                   Elliot Hazen ................................................... 49
+Luke Groff ............................................ 135, 136              Fabio Hazin.................................................. 297
+Elizabeth Grolle ........................................... 136              Sarah Hazzard ............................................. 203
+R. Dean Grubbs .................................................              Shunping He .................................................. 52
+ ... 55, 77, 165, 273, 275, 282, 334, 344, 345, 361                           Alex Hearn ................................................... 189
+Ralph D. Grubbs .......................................... 239                Daniel Heath ................................................ 311
+Samuel Gruber ............................. 146, 184, 186                     Nicholas Heatwole ..................................... 134
+Chaiwut Grudpan ....................................... 137                   Edward Heist....................................... 148, 195
+Jarungjit Grudpan ....................................... 137                 Michael R. Heithaus ............................. 55, 257
+Jared Grummer ............................................ 197                Jill Hendon ................................................... 155
+Jill Guillette .................................................. 180         Dean Hendrickson ...................................... 212
+Hongyi Guo ......................................... 138, 381                 Brian Henen ................................................... 15
+Tristan Guttridge......................... 146, 184, 186                      Clint Henke .................................................. 149
+Craig Guyer.................... 54, 126, 241, 245, 253                        Matthew Herbert .......................................... 78
+Hector Guzman ........................................... 189                 Andrea Hernandez ..................................... 155
+Jacquelyn C. Guzy....................... 138, 141, 369                        Diana L. Herrera‐Rodelo ........................... 149
+
+                                                                        390
+Thomas Hetherington ................................ 232                    Johanna Imhoff ............................................ 165
+Brittainy Hewitt ........................................... 183            Siobhan Ingersoll ........................................ 166
+Toby Hibbitts ................................... 1, 150, 300               Duncan Irschick .......................................... 252
+Cari‐Ann M. Hickerson ................ 48, 102, 383                         Michael Izumiyama .................................... 359
+Timothy E. Higham .................................... 382
+Elizabeth Hiltbold ....................................... 126              J
+Eric J. Hilton ................................. 150, 161, 190              Rima Jabado ................................................. 297
+Brian Hinds .................................................. 151          Jerry Jacka .................................................... 330
+Christopher Hoagstrom ..................... 152, 153                        Ronald Jackman .......................................... 370
+Keith Hobson ....................................... 169, 170               Todd Jackman.............................................. 123
+Jennifer Hodge............................................. 153             Laura Jackson .............................................. 166
+Hillary Hoffman .......................................... 154              David Jacobs ................................................ 325
+Sarah Hoffmann .......................................... 155               Jef Jaeger....................................................... 171
+Eric Hoffmayer ............................................ 155             Jessica Jang ........................................... 167, 275
+J. Derek Hogan ...................... 99, 156, 173, 311                     Seo‐Ha Jang ................................................. 188
+Kaitlyn Holden ............................................ 337             Sharon Jansa .................................................. 99
+Matthew Holding ................................ 157, 262                   Fredric Janzen.............................................. 337
+Kim Holland .............................................. 6, 62            Nishad Jayasundara ..................................... 49
+Christopher Hollenbeck ..................... 280, 368                       Bruce Jayne .......................................... 167, 177
+Bradford Hollingsworth............................. 359                     Adriana Jeckel ............................................. 168
+Jessica A. Homyack............................. 138, 141                    Dale Jefferson ...................................... 169, 170
+William Hopkins ......................................... 369               Christopher Jeffrey ..................................... 170
+Margaret Horner ......................................... 143               Shoou Jeng Joung ........................................ 159
+Parker House ............................................... 158            John B. Jensen ................................................ 96
+Kyle J. Hovey ............................................... 158           Matthew Jew ........................................ 171, 275
+Mauricio Hoyos ........................................... 189              Tereza Jezkova ............................................ 171
+Jerry Hsiung ........................................... 57, 362            Wei Jiang ...................................................... 380
+Hua Hsun Hsu............................................. 159               Rafael Joglar................................................... 31
+Chuanmin Hu ...................................... 331, 333                 Rebecca John ................................................ 172
+Daniel Huber ....................................... 160, 310               David Johnson ............................................. 173
+Jeanette Huber ............................................. 160            Erin E. Johnson ............................................ 158
+Sarah K. Huber .................................... 161, 190                Jarrett Johnson ............................................. 200
+Robert Hueter .............................................. 119            John Johnson ................................................ 173
+Geoffrey N. Hughes .................................... 162                 Symone Johnson.......................................... 117
+Peter Hundt.................................................. 163           Kelsey Johnson‐Sapp .................................. 125
+Kelly Hunt .................................................... 164         Matthew Johnston............................... 331, 333
+Todd Huspeni ...................................... 142, 217                Michelle Johnston ....................................... 173
+Nigel Hussey ............................................... 186            Bruce Jones................................................... 171
+John Hyde ............................ 179, 255, 283, 357                   Cristina Jones ............................................... 174
+Sarah M. Hykin ........................................... 164              Jason L. Jones ....................................... 164, 175
+                                                                            Kenny Jones ................................................. 176
+I                                                                           Leonard Jones .............................................. 176
+Edema Imalele ............................................... 15            Sarra L. Jones ............................................... 175
+
+                                                                      391
+George Jordan ...................................... 148, 195                   R. Manjunatha Kini..................................... 232
+Ryan Jorgensen ............................................ 177                 Vanessa Kinney Terrell .............................. 328
+Salvador Jorgensen ....................................... 49                   John Kinsella ................................................ 241
+Philip Jose ......................................................... 3         David Kizirian ............................................. 188
+Kathlene Joyce ............................................. 178                A. Peter Klimley .................................. 189, 240
+Heather Judkins........................... 331, 332, 333                        George Klut.................................................... 10
+                                                                                David Knoetel.............................................. 310
+K                                                                               Nicole Koballa ............................................. 354
+Ingrid Kaatz ................................................. 178              Matthew Kolmann .............................. 190, 364
+Dovi Kacev ................................................... 179              Peter Konstantinidis ........... 150, 161, 173, 190
+Yoshiaki Kai ......................................... 144, 377                 Hyeyoung Koo .............................................. 52
+Stephen Kajiura ..................................... 33, 179                   Kristin Kopperud ........................................ 191
+Larry Kamees ............................................... 180                Andrew Kouba .................................... 132, 380
+Jung‐Ha Kang .............................................. 322                 Trevor Krabbenhoft .................................... 192
+Nancy Karraker ............................... 44, 89, 349                      Michelle Kraczkowski ........................ 249, 294
+Nicole Karres ............................................... 181               Fred Kraus ................................................... 259
+Kristopher Karsten ...................................... 182                   Chelsea Kross .............................................. 192
+Lee Kats .......................................................... 44          Kathy Krynak .............................................. 193
+Junro Kawauchi ........................................... 341                  Kole Kubicek ............................................... 194
+Richard Kazmaier ....................................... 121                    Shawn Kuchta ....................................... 66, 194
+Benjamin Keck ............................................... 71                John Kucklick .............................................. 104
+Jade Keehn ........................................... 182, 247                 Bernard Kuhajda ................. 114, 148, 176, 195
+Matthew G. Keevil .............................. 183, 254                       Andrew Kuhns .............................................. 10
+Bryan Keller ................................................. 184              Anjali Kumar ................................................. 38
+Valerie Kells ................................................... 64
+Jenny M. Kemper .......................................... 60                   L
+Christopher Kenaley ........................... 184, 185                        Stephani Lane .............................................. 140
+Bruce E. Kendall ............................................ 37                Cecilia Langhorne ....................................... 132
+Jacob Kerby .......................................... 314, 365                 Michael Lannoo........................................... 328
+Leslie Kerr ...................................................... 24           Rafael Lara‐Resendiz .................................. 171
+Lisa Kerr ........................................................... 8         Gillian Larson ................................................ 91
+Steve Kessel .................................................. 146             Shawn Larson ................................................ 77
+Steven Kessel ............................................... 186               Gwen Lattin ................................................... 38
+Ethan J. Kessler ............................................ 186               George Lauder..................................... 185, 348
+James Ketchum ............................................ 189                  Brian Lavin .................................................. 196
+Mary Khoury ................................................. 78                Sébastien Lavoué .......................................... 52
+James Kilfoil ................................................. 117             Sharon Lawler ................................................. 7
+Jin‐Koo Kim .......................................................             Dan Lawson ................................................... 72
+ ............... 144, 187, 188, 248, 299, 322, 376, 377                         Adam Leaché ......................... 31, 176, 197, 234
+Sungmim Kim ................................................ 52                 Daniel Leavitt .............. 134, 154, 197, 198, 199
+Won Kim ........................................................ 52             Normand Leblanc ......................................... 87
+Bruce Kimball .............................................. 268                Jae‐Seong Lee................................................. 52
+Tim King ......................................................... 66           Soo‐Jeong Lee .............................. 187, 188, 299
+
+                                                                          392
+Woo‐Jun Lee ................................................ 188                 J. Andres Lopez ............................................. 47
+Yoo‐Jun Lee .................................................. 299               José Lopez ............................................ 331, 333
+Pablo A. Lehmann......................................... 88                     Michelle Lopez ............................................ 136
+Chad Lembke ............................................... 331                  Yer Lor .......................................................... 207
+Alan Lemmon .............................................. 297                   Stephen C. Lougheed ............. 65, 66, 292, 321
+Emily Lemmon ............................................ 297                    Caleb Loughran........................................... 208
+Robin LeRoux ................................................ 72                 Nathan Lovejoy ........................................... 190
+David Lesbarrères ........................... 34, 35, 254                        Irby Lovette.................................................... 22
+Brenna A. Levine ................................... 62, 199                     Kim Lovich .................................................. 209
+Nicholas Levis ............................................. 200                 Robert Lovich .............................. 134, 198, 209
+Debbie Lewis ............................................... 208                 Christopher (Chris) G. Lowe ...........................
+Mattie Lewis ................................................ 244                ................................... 57, 72, 210, 237, 305, 362
+Rebecca Lewison ................................. 100, 179                       Bethany Loya ............................................... 160
+Mara Leyendecker....................................... 201                      Lourdes Lozano‐Vilano ............................. 308
+Fan Li .............................................................. 52         Kyle Luckenbill ........................................... 212
+Xiaobing Li ................................................... 335              William Ludt ....................................... 184, 211
+Yue Li ............................................................ 236          Carl Luer ...................................................... 211
+Garrett Liles ................................................... 26             John Lundberg ............................................ 212
+Matthew Lim ............................................... 232                  Erik Lundgren ............................................. 231
+Yeong‐Shin Lin .............................................. 52                 Mack Lunn ................................................... 203
+Yukun Lin............................................... 57, 362                 Dustin Lynch ............................................... 213
+Craig Lind ............................................ 180, 201                 Kady Lyons .......................................... 213, 214
+Luke Linhoff ................................................ 202
+Megan Linn .................................................. 208                M
+Melissa Liotta ............................................... 242               Paula Mabee ................................ 166, 212, 215
+Peter J. Lisi.................................................... 156            Catherine Macdonald ................................. 314
+Kevin Liska .................................................. 203               Daniel MacGuigan ...................................... 215
+Sam Liska ..................................................... 203              Breanna Machuca................................ 216, 275
+Krista Little................................................... 203             Stephen Mackessy....................................... 217
+Jacqueline D. Litzgus ........................................                   Daniel Magoulick ........................................ 213
+ ....................... 34, 35, 65, 66, 162, 183, 233, 254                      Richard Mahoney........................ 142, 217, 218
+Huanzhang Liu............................................ 335                    Luiz Malabarba ............................. 30, 219, 317
+Juan Liu ........................................................ 244            Maria Malabarba ......................................... 219
+Heather Liwanag ........................................... 91                   Lacey Malarky ............................................. 219
+Phillip Lobel ................................................. 178              Nichole Maloney ......................................... 303
+Thiago Loboda ............................................. 204                  John Mandelman......................................... 334
+Jenny Loda ................................................... 205               Katherine Mansfield ................................... 312
+Cynthia Loftin...................................... 135, 136                    Ruth Marcec ................................................. 380
+Alejandro Londoño‐Burbano .................... 205                               Benjamin Marcy‐Quay ................................. 22
+Douglas J. Long ........................................... 346                  Mikhaila Marecki ........................................ 185
+Jessica Longhi ................................................ 24               Karla Marlow............................................... 370
+Gary Longo .......................................... 206, 359                   Alejandro Marquez ..................................... 220
+Sarah Longo ................................................. 207                Nicholas Marra ............................................ 221
+
+                                                                           393
+Ashley N. Marranzino ................................ 221                    José G. Mestra‐Ricardo ............................... 273
+Paul Marsh ..................................................... 97          Abrial Meyer................................................ 294
+Heather Marshall ........................................ 223                Savannah Michaelsen ......................... 237, 238
+Edie Marsh‐Matthews ................ 222, 228, 379                           Alejandra Mickle ......................................... 239
+Bradley Martin............................................... 62             Jessica Middleton ........................................ 239
+Karen Martin ........................................ 223, 276               Keith Miles ................................................... 100
+Rene Martin.................................................. 224            Emily Miller ................................................. 240
+Christopher Martinez ......................... 225, 226                      Melissa Miller .............................................. 241
+Ninon Martinez ........................................... 226               Michael Miller ............................................. 110
+Katherine P. Maslenikov ............................ 227                     Joe Milliano .................................................. 307
+Alicia Mathis ................................................ 169           Kwang Ming Liu ......................................... 159
+Rui Matsumoto ............................................ 228               Sarah Mitchell.............................................. 337
+Yosuke Matsumoto ..................................... 228                   Timothy Mitchell ........................................ 337
+William J. Matthews ................... 222, 228, 379                        Masaki Miya .......................................... 52, 301
+David Mauger ................................................ 10             Ashley Moerke .............................................. 78
+Laurie Mauger ............................................... 45             Shabnam Mohammadi ............................... 305
+Jessica Maxfield ........................................... 229             Chad Montgomery ............................... 69, 307
+Richard L. Mayden ...........................................                Arne Ø. Mooers ........................................... 133
+ ......................... 52, 226, 230, 290, 301, 308, 375                  Randall Mooi ............................................... 241
+Diogo Mayrinck........................................... 262                Brad Moon ................................... 139, 271, 272
+Marc J. Mazerolle ........................................ 292               Jon Moore ..................................... 331, 332, 333
+Logan McCardle .......................................... 230                Christopher Moorman ............................... 330
+Evan McCartney‐Melstad .......................... 231                        Steve Morey ................................................. 359
+Douglas J. McCauley .................................... 37                  Akira Mori ................................................... 305
+Ryan McCleary .................................... 232, 281                  Naoki Mori................................................... 305
+Eric McCluskey............................................ 232               Takahiro Morosawa...................................... 52
+Hannah McCurdy‐Adams ......................... 233                           Edward Morris ............................................ 123
+Matthew McElroy ....................................... 234                  Molly Morris ................................................ 242
+Thomas C. McElroy .............................. 96, 234                     Bruce Morrison.............................................. 63
+Matthew McGee .......................................... 207                 Joshua K. Moyer .......................................... 243
+Jimmy McGuire ........................................... 290                Alexsis Mross .............................................. 243
+Jimmy A. McGuire ...................................... 164                  Andy Mueller .............................................. 244
+Peter B. McIntyre ................................... 78, 156                Daniel Mulcahy ........................................... 171
+Valerie McKenzie ........................................ 365                Joseph Munoz ................................................ 20
+Jennifer McKinney ...................................... 155                 Kiyomi Murakumo ..................................... 228
+James McLister ............................................ 235              Christopher Murphy .................................. 344
+Ann McLuckie ................................................. 4             Robert Murphy............................................ 264
+Caleb McMahan .......................... 107, 236, 245                       Alison Murray ............................................. 244
+Lauren McPherson ...................................... 236                  Chris Murray ............................................... 245

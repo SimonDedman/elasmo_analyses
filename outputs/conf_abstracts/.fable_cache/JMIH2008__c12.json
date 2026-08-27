@@ -1,0 +1,523 @@
+[
+  {
+    "title": "The Interaction between Mean and Variance of Nest Temperature Affects Primary Sex Ratios in an Agamid Lizard",
+    "authors": [
+      {"full_name": "Daniel Warner", "affiliation": "Iowa State University, Ames, Iowa, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Temperature-dependent sex determination (TSD) may enhance parental fitness because it enables male and female offspring to be produced at their respective optimal incubation temperatures. Indeed, recent work suggests that male and female offspring of many agamid lizards may differ in their optimal timing of hatching, and that TSD in these species may have evolved to generate adaptive seasonal shifts in offspring sex ratios. To explore this hypothesis, I studied how changes in the mean and variance of nest temperature over the season may influence seasonal shifts in offspring sex ratios in an Australian agamid lizard with TSD (Amphibolurus muricatus). By radio-tracking gravid females, I located 44 nests spanning the entire reproductive season (Oct-Feb). Nest temperatures and the resultant sex ratios were recorded from each nest. Although both mean and variance in nest temperatures changed seasonally, a concomitant shift in clutch sex ratio was not statistically significant. This non-significant relationship between nest temperature and predicted primary sex ratios in the field may have been obscured by egg mortality and/or confounding maternal effects. A subsequent laboratory-based egg incubation experiment that mimicked natural nest temperatures (and minimized egg mortality and confounding maternal effects) demonstrated that both mean and variance in nest temperature induces variation in offspring sex ratios. Moreover, a significant interactive effect of thermal mean and variance on primary sex ratios illustrates that complex interactions among different environmental parameters during embryonic development affect offspring phenotypes in ways that could impact fitness.",
+    "keywords": [],
+    "session_name": "HL Graduate Research Award"
+  },
+  {
+    "title": "Fish Faunal Regions of the Southern United States: Isolation by Distance as a Structuring Mechanism",
+    "authors": [
+      {"full_name": "Melvin Warren", "affiliation": "Southern Research Station, US Forest Service, Oxford, Mississippi, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The southern United States supports one of the richest temperate freshwater fish faunas on Earth. Fishes of the region also show high levels of drainage endemism, suggesting isolation as an important mechanism structuring the fauna spatially. I examined geo-spatial structure of this large, rich fauna using a database of 685 fish taxa with each taxon allocated across 51 drainage units. I used the total native fauna and faunal subsets (darters, minnows, catfishes, and suckers) to define fish faunal regions and to examine the association of isolation by distance and fish assemblage structure among drainage units. I used distance matrices and cluster analyses to compare geo-spatial structuring among faunal subsets and drainage networks. I used non-metric multidimensional scaling analysis as an independent test of the adequacy of cluster-derived faunal regions. The analysis revealed eight, highly distinctive faunal regions (Atlantic North; Atlantic South; Florida Peninsula and Panhandle; Mississippi River (including Interior Highland tributaries) plus the Ohio River, and Red River mainstems; Western Gulf Slope; Tennessee and Cumberland Rivers and Ohio River tributaries; and Missouri River and tributaries plus the Illinois-Neosho River). The phenetic relationships of the fauna of drainage units (all native and subsets) were significantly and strongly congruent with geographical linkages of drainages (isolation by distance). Overall, the results indicate highly, distinct, strongly geo-spatially structured inter-drainage and inter-regional native fish faunas.",
+    "keywords": [],
+    "session_name": "Fish Phylogeography"
+  },
+  {
+    "title": "Ecological Effects of Food Supplementation in Fer-de-Lance (Bothrops asper)",
+    "authors": [
+      {"full_name": "Dennis Wasko", "affiliation": "University of Miami, Coral Gables, FL, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "A growing body of work has shown that food limitation can have wide-ranging effects on predators. In reptiles, energetic resources can directly influence life-history parameters including growth, reproduction, and survivorship; less well-documented is the relationship between food availability and spatial ecology under field conditions. Ambush-hunting snakes such as pitvipers may be particularly well-suited to such studies as they are typically infrequent feeders with relatively low space usage, and whose activities are often correlated with prey availability. I investigated the effects of food supplementation on a population of fer-de-lance (Bothrops asper) in Costa Rica. Free-ranging snakes were assigned to either a “control” (n=6) or “fed” group (n=5) and monitored via radiotelemetry for up to one year. Fed snakes were offered a pre-killed rat in the field once every two weeks, to simulate increased but not unnaturally high prey availability. I compared spatial patterns between treatment groups in terms of home range (minimum convex polygons, 95% kernel density), movement rate, and both macro- and microhabitat usage. Differences in body condition (mass-length ratio), survivorship, and non-spatial behaviors (percentage of evenings spent ambushing, shelter usage) are also reported.",
+    "keywords": [],
+    "session_name": "Reptile Ecology"
+  },
+  {
+    "title": "Macroecological Patterns at the Mesoscale: Distribution, Abundance, and Body Size of Amphibians and Reptiles on Forest Islands in Northeastern Bolivia",
+    "authors": [
+      {"full_name": "James Watling", "affiliation": "Washington University St. Louis, St. Louis, MO, United States", "is_presenter": true},
+      {"full_name": "Maureen Donnelly", "affiliation": "Florida International University, Miami, FL, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Here we explore three common macroecological patterns on naturally-occurring forest islands in a forest-savannah transition zone in northeastern Bolivia: the distribution-abundance relationship, the abundance-body size relationship, and the distribution-body size relationship. We utilized partial correlation analysis to investigate associations between pairs of variables independent of the effects of the third variable, and we partitioned our total data set taxonomically to explore variation in relationships among variables. For both amphibians and reptiles, there were strong, positive correlations between distribution and abundance: abundant species were widespread in the environment. Large-bodied amphibians were widely distributed among forest islands, but this was not the case for reptiles. We attribute the positive association between distribution and body size seen in amphibians to dispersal limitation of small-bodied species. There was an inverse relationship between abundance and body size for amphibians; small bodied species are more abundant than large-bodied species, but this was not the case for reptiles. We explore the implications of the differences in the abundance-body size relationship between amphibians and reptiles in light of competing ideas about how resources are partitioned among species in local communities.",
+    "keywords": [],
+    "session_name": "Amphibian Conservation"
+  },
+  {
+    "title": "Thermal Physiology and Field Observations Support Microhabitat Diversification and Spatial Resource Partitioning Among Plestiodon fasciatus, P. laticeps, and P. inexpectatus",
+    "authors": [
+      {"full_name": "Charles M. Watson", "affiliation": "The University of Texas at Arlington, Arlington, Texas, United States", "is_presenter": true},
+      {"full_name": "Warren Burggren", "affiliation": "The University of North Texas, Denton, Texas, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Three species of five-lined skinks (Plestiodon fasciatus, P. laticeps, and P. inexpectatus) occur in syntopy across much of the Southeastern United States. These closely-related species, at one or more levels of development, all exhibit a like phenotype and a high amount of prey resource overlap as documented by published gut content data. Under competitive exclusion hypotheses, these species should therefore not locally co-occur. This study confirms, through analysis of habitat type and canopy cover at the point of capture, that P. inexpectatus and P. fasciatus do not typically inhabit the same forest habitat. In fact, where their ranges overlap, P. fasciatus inhabits closed-canopy hardwood forests, while P. inexpectatus inhabits open forested habitats such as Longleaf Pine Savannah and coastal scrub forests. Outside of the range of P. inexpectatus, P. fasciatus inhabits a wider variety of habitats. P. laticeps is routinely found in sympatry with either species. Due to their large adult size, P. laticeps may be able to utilize larger prey, thereby partitioning available resources. Physiological data - oxygen consumption and its temperature response (Q10) - supports the hypothesis that these species differ with respect to their metabolic response to temperature. P. fasciatus exhibits a high Q10 at the interval that exceeds the mean daily summer temperature of sampled closed canopy forests (~25°C). P. inexpectatus exhibits a dramatic decrease in metabolic rate on the interval that falls below the mean daily summer temperatures of sampled Longleaf Pine Savannah habitat. The VO2 of P. laticeps is the least temperature sensitive. Collectively, these findings indicate that an evolutionarily conserved physiological niche among species/populations may play an important role in spatial resource partitioning and maintenance of biodiversity between two of these three closely-related species.",
+    "keywords": [],
+    "session_name": "Herp Physiology/Bar Codes"
+  },
+  {
+    "title": "An Adaptive Physiological Response to Thermal Habitat Alteration by the Globally Invasive Species, Gambusia affinis",
+    "authors": [
+      {"full_name": "Rebbekah Watson", "affiliation": "The University of Texas at Arlington, Arlington, Texas, United States; Luminant Power, Dallas, Texas, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The Invasive Species Specialist Group of the World Conservation union (IUCN) has included the western mosquitofish, Gambusia affinis, as one of the world’s 100 worst invasive species. Initially introduced in many areas as a means to control the mosquito populations, G. affinis is currently the most widely distributed freshwater fish in the world, inhabiting every continent except Antarctica. The ability to tolerate or adapt to diverse environmental conditions is commonly considered a trait of invasive species. A broad thermal tolerance, in particular, allows potentially invasive species to disperse across a larger latitudinal gradient. The results of this study establish upper and lower critical thermal limits for three populations of G. affinis across seasons at two acclimation temperatures, including a population exposed to artificially elevated temperatures produced by a steam-electric power station. Thermal temperature polygons were established to describe this species’ eurythermicity, and to assess the capacity of this invasive species to adapt to anthropogenic alterations of its thermal habitat, which has broad implications for invasive species exposed to ongoing, global climate change.",
+    "keywords": [],
+    "session_name": "Fish Physiology"
+  },
+  {
+    "title": "The Intrinsic Elasmobranch Gill Design Potentially Limits Gas Exchange and the Aerobic Performance of the Shortfin Mako, Isurus oxyrinchus, a Lamnid Shark",
+    "authors": [
+      {"full_name": "Nicholas Wegner", "affiliation": "Scripps Institution of Oceanography, La Jolla, CA, United States", "is_presenter": true},
+      {"full_name": "Chugey Sepulveda", "affiliation": "Pfleger Institute of Environmental Reseach, Oceanside, CA, United States", "is_presenter": false},
+      {"full_name": "Jeffrey Graham", "affiliation": "Scripps Institution of Oceanography, La Jolla, CA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The lamnid sharks (family Lamnidae) demonstrate a remarkable evolutionary convergence with tunas (family Scombridae) for high-performance swimming. Analysis of gill structure and function in the shortfin mako, Isurus oxyrinchus, a lamnid shark, reveals similarities to tunas in the presence of specializations to maintain gill rigidity during ram ventilation and to permit the O2 transfer required for fast, sustainable swimming. However, mako and tuna gill specializations have structurally different bases due to intrinsic differences in the gill design of elasmobranchs and teleosts. The elasmobranch gill has a more tortuous water pathway, and in vivo measurements of mako gill resistance suggest that this design limits total gill surface area in comparison to some teleosts. Thus, while mako gill areas are larger than non-lamnid shark species, they are significantly less than those of tunas. The larger size of elasmobranch erythrocytes also increases mako respiratory lamellar thickness and gas diffusion distances in comparison to tunas. These intrinsic characters limit gas exchange and may prevent lamnid sharks from reaching the scope of sustainable aerobic performance achieved by tunas.",
+    "keywords": [],
+    "session_name": "AES Student Papers I"
+  },
+  {
+    "title": "Crystallaria cincotta, a New Species of Darter (Teleostei: Percidae) from the Elk River of the Ohio River drainage, West Virginia",
+    "authors": [
+      {"full_name": "Stuart Welsh", "affiliation": "USGS, West Virginia Cooperative Fish and Wildlife Research Unit, Morgantown, WV, United States", "is_presenter": true},
+      {"full_name": "Robert Wood", "affiliation": "Saint Louis University, Saint Louis, MO, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "A new species of percid, Crystallaria cincotta (Diamond Darter) was described recently from the Cumberland, Elk, Green, and Muskingum river drainages of the Ohio River basin, USA. It differs from populations of Crystallaria asprella (Crystal Darter) of the Gulf Coast, lower Mississippi River, middle Mississippi River, upper Mississippi River, and Wabash River drainages by having a reduced number of cheek scale rows restricted to the post-orbital region, a falcate margin on the pelvic fins, a preorbital blotch distinctly separate from the anterior orbital rim, and a wide mouth gape. The Diamond Darter population of the Elk River is also divergent genetically from Crystal Darters of the Gulf Coast, lower Mississippi River, and upper Mississippi River drainages. Since 1980, sampling efforts have produced a total of 12 Diamond Darters from the lower 36 km section of the Elk River, West Virginia. The relatively small number of Diamond Darters collected from the lower Elk River likely indicates species rarity, but may also reflect sampling gear avoidance. Based on museum specimens and sampling efforts, the distribution of the Diamond Darter has decreased dramatically since the late 1800s with population extirpations in Kentucky, Ohio, and Tennessee.",
+    "keywords": [],
+    "session_name": "Fish Systematics III"
+  },
+  {
+    "title": "Development of a Handbook on Gopher Tortoise (Gopherus polyphemus) Health Evaluation Procedures",
+    "authors": [
+      {"full_name": "Lori Wendland", "affiliation": "University of Florida, Gainesville, FL, United States", "is_presenter": true},
+      {"full_name": "Harold Balbach", "affiliation": "US Army ERDC, Champaign, IL, United States", "is_presenter": false},
+      {"full_name": "Mary Brown", "affiliation": "University of Florida, Gainesville, FL, United States", "is_presenter": false},
+      {"full_name": "Joan Berish", "affiliation": "Florida Fish & Wildlife Conservation Commission, Gainesville, FL, United States", "is_presenter": false},
+      {"full_name": "Ramon Littell", "affiliation": "University of Florida, Gainesville, FL, United States", "is_presenter": false},
+      {"full_name": "Melissa Clark", "affiliation": "University of Florida, Gainesville, FL, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The gopher tortoise is a widespread species, but one at risk. Recently, greater interest in the survival of the species has led to a series of programs and proposals for a region-wide program of cooperative management. Relocating the animals when their habitat is threatened by human disturbance is a common management practice on both public and private lands. However, numerous diseases and health conditions affecting the species have the potential to influence the success of these relocations. A process to better incorporate health and disease related information into management decision-making was identified as an important missing element. The newly developed manual contains decision trees, charts and other such aids, including a special section identifying warning flags of potentially serious health problems. The manual thus facilitates decision-making regarding the health status of gopher tortoises by land managers, military and otherwise, when developing management plans involving relocation or augmentation of tortoise populations on their lands. The primary emphasis is on basic physical examinations of gopher tortoises because the manual was specifically designed for use by land management personnel. Additional information and resources are provided for instances when more comprehensive health assessments are needed. This manual is part of a larger project initiated within the US Army environmental research program to address specific gaps in information regarding gopher tortoise population ecology and health.",
+    "keywords": [],
+    "session_name": "Poster Session III"
+  },
+  {
+    "title": "Migration of a High Trophic Level Predator, the Salmon Shark, Between Distant Ecoregions",
+    "authors": [
+      {"full_name": "Kevin Weng", "affiliation": "University of Hawaii at Manoa, Honolulu, HI, United States", "is_presenter": true},
+      {"full_name": "David Foley", "affiliation": "NOAA Fisheries, Pacific Grove, CA, United States", "is_presenter": false},
+      {"full_name": "James Ganong", "affiliation": "Hopkins Marine Station, Stanford University, Pacific Grove, CA, United States", "is_presenter": false},
+      {"full_name": "Christopher Perle", "affiliation": "Hopkins Marine Station, Stanford University, Pacific Grove, CA, United States", "is_presenter": false},
+      {"full_name": "George Shillinger", "affiliation": "Hopkins Marine Station, Stanford University, Pacific Grove, CA, United States", "is_presenter": false},
+      {"full_name": "Barbara Block", "affiliation": "Hopkins Marine Station, Stanford University, Pacific Grove, CA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Knowledge of how animals move through the environment, and the characteristics of habitats they select, are essential to understanding the ecological functions they are fulfilling in each habitat, which in turn is necessary to predict responses to environmental change. High trophic level organisms are known to exert structural influences through the food web, so understanding the range, migration and foraging strategy of abundant predators is necessary to understand ecosystem function. As a result of the difficulty of studying pelagic marine animals, our knowledge of their life history and ecology has developed slowly. Recent advances in monitoring technologies have enabled researchers to remotely follow individual animals over seasonal and multi-year timescales, revealing long-distance migrations in a variety of marine taxa. In this study, satellite telemetry is used to monitor the behaviour of salmon sharks, and remote sensing to characterize their environment, thereby obtaining both animal behaviour and habitat data. Salmon sharks undertook long-range migrations wherein behavioural indices were correlated with regional habitat characteristics. Quantitative movement analyses to determine speed, path straightness and first passage time revealed focal area behaviours in northern and southern regions, with transiting behaviours at mid-latitudes. Individuals migrating to a highly productive southern region stayed longer than those moving to a low productivity region. The combination of multi-year time-series of animal behaviour with synoptic environmental data allows us to understand how the habitats that animals select differ from one another, the key factors influencing habitat selection, and the likely responses to change.",
+    "keywords": [],
+    "session_name": "Poster Session I"
+  },
+  {
+    "title": "Migration and Habitat Use of Blue Sharks in the Eastern North Pacific Ocean",
+    "authors": [
+      {"full_name": "Kevin Weng", "affiliation": "University of Hawaii at Manoa, Honolulu, HI, United States", "is_presenter": true},
+      {"full_name": "Heidi Dewar", "affiliation": "NOAA Fisheries, La Jolla, CA, United States", "is_presenter": false},
+      {"full_name": "Suzanne Kohin", "affiliation": "NOAA Fisheries, La Jolla, CA, United States", "is_presenter": false},
+      {"full_name": "Oscar Sosa-Nishizaki", "affiliation": "CICESE, Ensenada, Baja California, Mexico", "is_presenter": false},
+      {"full_name": "Erick Cristóbal Oñate González", "affiliation": "CICESE, Ensenada, Baja California, Mexico", "is_presenter": false},
+      {"full_name": "Barbara Block", "affiliation": "Hopkins Marine Station, Stanford University, Pacific Grove, CA, United States", "is_presenter": false},
+      {"full_name": "David Holts", "affiliation": "NOAA Fisheries, La Jolla, CA, United States", "is_presenter": false},
+      {"full_name": "James Wraith", "affiliation": "NOAA Fisheries, La Jolla, CA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The blue shark is the most abundant pelagic shark in the world and is likely to be an important predator in open ocean ecosystems. Blue sharks have been captured in enormous numbers in high seas fisheries over many decades, sustained only by the wide distribution and high fecundity of the blue shark, but major reductions in abundance have occurred in some ocean basins and the IUCN lists the species as ‘Lower Risk Near Threatened’. Knowledge of the biology of this species is important to help us understand how pelagic communities function, and why some elasmobranch species are more vulnerable to overexploitation and extinction than others. We studied the spatial ecology of blue sharks via satellite telemetry by tagging sharks in two locations within the California Current System of North America. Sharks made extensive use of the rich upwelling system off Baja California, California and Oregon, and also made long distance movements into oligotrophic regions of the subtropical gyre and the eastern tropical Pacific. Blue sharks did not appear to undertake movements in a coordinate manner as they dispersed from the tagging locations. Blue sharks inhabited cool upwelled waters, warm tropical waters to near 30°C, and waters beneath the thermocline to 7°C. The sharks undertook extensive diving to depths in excess of 700 m. Diving was frequently greatest during daytime, but sharks undertook dives at all times of the day. Knowledge of the movements and habitat usage of this abundant pelagic shark will improve our understanding of pelagic ecosystems and inform the development of high seas fishery management schemes.",
+    "keywords": [],
+    "session_name": "AES Habitat & Movement I"
+  },
+  {
+    "title": "Evolution of Neurotoxins in Rattlesnakes: DNA and Peptide comparisons",
+    "authors": [
+      {"full_name": "Steven Werman", "affiliation": "Mesa State College, Grand Junction, CO, United States", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "A number of rattlesnakes possess PLA 2, β-neurotoxins in their venoms, which contributes to high toxicity and low LD50 values. These toxins exist in heterodimeric form as complexed A (acidic) and B (basic) subunits, and include crotoxin, Mojave toxin, and sistruxin, among others. Published DNA and amino acid sequences for these three toxins were compared to determine patterns of evolution related to individual subunits, species phylogeny and relationships to related taxa. Based on mRNA constructs and cDNA sequences, A (chaperone) subunits are conserved relative to B (neurotoxic) subunit DNA sequences. The reverse was observed for peptide sequences of these toxins. Previous hypotheses of gene duplication and parallels to species differentiation are supported.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Phylogenetics and Bioinformatics of Fishes and Herps: Web Tools for Taxonomy and Evolution in the Encyclopedia of Life",
+    "authors": [
+      {"full_name": "Mark Westneat", "affiliation": "Field Museum of Natural History, Chicago, Illinois, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Rapid access to information is arguably the defining revolution of our times. This is true of all fields in biology, as the growth of accessible information on species, geography, genetics, evolution and ecology transcends our ability to process and analyze it. Large-scale, web-based bioinformatics projects provide opportunities for biologists to aggregate multiple kinds of information about organisms, and will create new ways of conceiving of exciting biological questions, analyzing data, and rapidly communicating about biodiversity. The Encyclopedia of Life is one of many bioinformatics projects that may offer opportunities for the ASIH audience to rapidly integrate multiple sources of data for synthesizing information on taxonomy, specimen collections, biogeography and phylogenetics. The EOL will develop web content for all described species on Earth, including fossil taxa, and by collaborating with FishBase, Catalog of Fishes, Catalog of Life, and the Tree of Life Web Project (among others) we now have over 50,000 species pages, most of them depending on FishBase content. Web tools for contributing to and editing the EOL are nearly ready, and will enable ASIH members to make EOL pages according to our vision. In addition, a dynamic phylogenetic tree browser is a top priority of the Biodiversity Synthesis Center (BioSynC), a branch of the EOL in Chicago. We propose to begin construction of a supertree for Fishes (contributed to by many) that will provide a browser for EOL fish content, as a model for other groups of organisms (like Herps) as more content becomes available on the site. BioSynC welcomes proposals for synthesis meetings on topics in lower vertebrate taxonomy, biogeography and evolution as a means of jump-starting web-based tools that will accelerate the pace of our science. We also are interested in discussing the process of linking to information about Fishes and Herps, from collection databases and genetics, to images, video, and other data sets that will help web-based projects evolve into the kinds of useful, interactive tools that we can all see on the horizon.",
+    "keywords": [],
+    "session_name": "Fish Systematics I"
+  },
+  {
+    "title": "Quantitative Genetics Meets the Evolutionarily Significant Unit: The Case of the Endangered San Francisco Garter Snake, Thamnophis sirtalis tetrataenia",
+    "authors": [
+      {"full_name": "Michael Westphal", "affiliation": "Kansas State University, Manhattan, Kansas, United States", "is_presenter": true},
+      {"full_name": "Suzanne Estes", "affiliation": "Portland State University, Portland, Oregon, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Molecular genetic studies of neutral markers have suggested that an endangered subspecies of garter snake, Thamnophis sirtalis tetrataenia, is not a distinct entity. However, T.s. tetrataenia is readily diagnosable at the phenotypic level by color pattern. The most parsimonius explanation for the discrepancy between neutral genotypic markers and phenotypic markers is that T.s. tetrataenia has diverged phenotypically from other populations of T. sirtalis through rapid adaptive evolution. We propose that quantitative genetic theory can be used to assess the evolutionary significance of the of T.s. tetrataenia phenotype. Specifically, we ask whether the shift from an ancestral blotched morph to a derived striped morph could have occurred through a simple change in population trait means, or whether a more fundamental genetic reorganization occurred. We quantify blotch width at scale rows four and six using a dataset obtained from a large scale breeding study of T. sirtalis color patterns and present estimates of heritability and genetic correlation for the two traits. Our results reveal that sufficient heritable variation exists for dorsolateral blotches to evolve into a variety of novel shapes. However, a positive genetic correlation between the blotch widths at scale row four and six render a rapid evolutionary shift towards a striped form relatively unlikely. We conclude that analysis of genetic architectures can be a useful tool for evaluating the evolutionary significance of diagnostic traits.",
+    "keywords": [],
+    "session_name": "Herp Stressors/Snake Conservation"
+  },
+  {
+    "title": "A mtDNA Phylogeny of the Subfamily Amphistichinae Sheds Light on Anal Fin Color Polymorphism in the Silver Surfperch, Hyperprosopon ellipticum",
+    "authors": [
+      {"full_name": "Michael Westphal", "affiliation": "Kansas State University, Manhattan, Kansas, United States", "is_presenter": true},
+      {"full_name": "Steven Morey", "affiliation": "U.S. Fish and Wildlife Service, Portland, Oregon, United States", "is_presenter": false},
+      {"full_name": "Theodore Morgan", "affiliation": "Kansas State University, Manhattan, Kansas, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Polymorphisms within populations can provide insights into microevolutionary processes. However, before polymorphisms can be truly considered as such, the assumption must be met that all individuals belong to one panmictic population, rather than multiple sympatric species. A case in point is the silver surfperch, Hyperprosopon ellipticum. Individuals collected from the same time and locality express a striking polymorphism for anal fin color (orange vs. black vs. colorless). Previous work has established that the trait is not sexually dimorphic. We used mtDNA sequence data to obtain a phylogeny for the genus Hyperprosopon (3 species) and its sister genus, Amphistichus (3 species), which together comprise the subfamily Amphistichinae. We also obtained sequence data for each color morph within H. ellipticum. We discuss our results in light of ecological factors that may contribute to the observed polymorphism.",
+    "keywords": [],
+    "session_name": "Poster Session I"
+  },
+  {
+    "title": "Effects of Amphibian Population Declines on the Structure and Function of Neotropical Streams",
+    "authors": [
+      {"full_name": "Matt Whiles", "affiliation": "Southern Illinois University, Carbondale, IL, United States", "is_presenter": true},
+      {"full_name": "Karen Lips", "affiliation": "Southern Illinois University, Carbondale, IL, United States", "is_presenter": false},
+      {"full_name": "Sue Kilham", "affiliation": "Drexel University, Philadelphia, PA, United States", "is_presenter": false},
+      {"full_name": "Cathy Pringle", "affiliation": "University of Georgia, Athens, GA, United States", "is_presenter": false},
+      {"full_name": "Piet Verburg", "affiliation": "University of Georgia, Athens, GA, United States", "is_presenter": false},
+      {"full_name": "Roberto Brenes", "affiliation": "Southern Illinois University, Carbondale, IL, United States", "is_presenter": false},
+      {"full_name": "Scott Connelly", "affiliation": "University of Georgia, Athens, GA, United States", "is_presenter": false},
+      {"full_name": "Checo Colon-Gaud", "affiliation": "Southern Illinois University, Carbondale, IL, United States", "is_presenter": false},
+      {"full_name": "Meshagae Hunte-Brown", "affiliation": "Drexel University, Philadelphia, PA, United States", "is_presenter": false},
+      {"full_name": "Chad Montgomery", "affiliation": "Truman State University, Kirksville, MO, United States", "is_presenter": false},
+      {"full_name": "Scot Peterson", "affiliation": "Southern Illinois University, Carbondale, IL, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Amphibians can be important consumers in both aquatic and terrestrial habitats and likely represent an important link between the two, particularly in the tropics where amphibian diversity and abundance are high. In the last two decades, amphibian populations have declined dramatically around the world, with catastrophic declines occurring even in protected upland regions of the tropics. Studies of amphibian declines generally focus on identifying causes and documenting patterns, but we know little of the ecological consequences of these losses. Through the Tropical Amphibian Declines in Streams (TADS) project, we have been examining the ecological roles of amphibians in Central American headwater streams and quantifying the consequences of their declines. Our studies indicate that stream-dwelling tadpoles in these systems perform a variety of ecological functions, ranging from grazing to detritus processing, and that their loss influences algal communities and primary production, quality of particulate organic material (seston) exported from the streams, populations of other consumers such as stream invertebrates and riparian snakes, and reach-scale food web structure and nutrient cycling. In general, amphibian declines result in increased algal biomass, changes in grazing invertebrate communities, decreased internal recycling of nutrients and seston quality, and reduced abundances of some riparian snake species. Hence, along with the inherent tragedy of these losses, tangible ecological changes in stream and riparian ecosystems are occurring. Understanding the ecological consequences of amphibian declines provides insight into the consequences of declining biodiversity and is central to the conservation and management of remaining amphibian populations.",
+    "keywords": [],
+    "session_name": "Amphibians in Ecosystems Symposium"
+  },
+  {
+    "title": "Do Snakes Have Predetermined Germ Cells?",
+    "authors": [
+      {"full_name": "Mary White", "affiliation": "Southeastern Louisiana University, Hammond LA, United States", "is_presenter": true},
+      {"full_name": "Brian Crother", "affiliation": "Southeastern Louisiana University, Hammond LA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Among vertebrates there are two major mechanisms for determining primordial germ cells, the founder cells of the germ lineage. In birds, frogs, and some fish, PGCs are determined by molecules localized in a specific germ plasm of oocytes and/or early embryos. Salamanders and mammals do not have germ plasm early in development. Instead, in these animals germ cells must be induced much later during embryogenesis by mechanisms similar to the induction of other mesodermal tissues. Although the mechanism for germ cell determination is not known for squamates, it has been suggested that snakes and some groups of lizards predetermine germ cells, while other groups of lizards have induced germ cells. We will review morphological evidence and present molecular evidence for the mechanism of germ cell determination used by snakes.",
+    "keywords": [],
+    "session_name": "Herp Genetics, Development & Morphology"
+  },
+  {
+    "title": "A Re-examination of Relationships Among the Palm Pit Vipers (Bothriechis)",
+    "authors": [
+      {"full_name": "Mary White", "affiliation": "Southeastern Louisiana University, Hammond LA, United States", "is_presenter": true},
+      {"full_name": "Jacob Keeling", "affiliation": "Southeastern Louisiana University, Hammond LA, United States", "is_presenter": false},
+      {"full_name": "Brian Crother", "affiliation": "Southeastern Louisiana University, Hammond LA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The genus Bothriechis consists of seven to nine currently-recognized species of Palm Pit Vipers from South and Central America. Relationships among species of the genus Bothriechis have been hypothesized using morphology, allozymes, and mitochondrial DNA. Although phylogenies derived using morphology and allozymes are largely congruent, mitochondrial DNA suggests a different set of relationships. For example, morphology and allozymes point to a sister relationship between B. lateralis and B. bicolor, while mitochondrial DNA suggests that B. lateralis and B. nigroviridis are sisters; this has been explained as the result of possible introgression because the species are syntopic (Note that these studies did not include B. thalassinus which was described more recently). The combined morphology/allozyme data set hypothesized a sister relationship between B. aurifer and B. rowleyi, while mitochondrial discovered a B. marchi/ B.rowleyi clade, B. aurifer as sister to B. bicolor. It has been hypothesized that the mtDNA is misleading this case. To test this, we have re-examined relationships among member of the genus Bothriechis using a nuclear DNA data set. Results will be discussed in context of nuclear and mitochdrial phylogenies.",
+    "keywords": [],
+    "session_name": "Poster Session III"
+  },
+  {
+    "title": "The Bycatch Fishery for Mobulid Rays in Eastern Indonesia",
+    "authors": [
+      {"full_name": "William White", "affiliation": "CSIRO Marine & Atmospheric Research, Hobart, Tasmania, Australia", "is_presenter": true},
+      {"full_name": "Dharmadi Dharmadi", "affiliation": "Research Centre for Capture Fisheries, Jakarta, West Java, Indonesia", "is_presenter": false},
+      {"full_name": "Ian Potter", "affiliation": "Centre for Fish and Fisheries Research, Murdoch University, Perth, Western Australia, Australia", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Although mobulids are taken in a variety of fisheries throughout much of their range, details of these fisheries are poorly documented. In Indonesia, mobulid rays are landed as bycatch by artisanal gillnet fishers targeting skipjack tuna. Between April 2001 and March 2006, more than 20 surveys of Indonesian fish landing sites were carried out to determine the species, size and sex compositions of the chondrichthyan catches. This study contributes to the limited knowledge on biological aspects and fisheries information for the Mobulidae. The data were derived from 409 mobulids that were examined during the fish landing site surveys. At one particular landing site, it was estimated that 1575 mobulid rays (equivalent to ~320 tonnes) are landed annually. The most abundant of the five species was Mobula japanica (~50%), followed by Mobula tarapacana (~24%), Manta birostris (~14%), Mobula thurstoni (9%) and Mobula cf kuhlii (2%). The four most abundant species were represented by a wide size range of each species and, in the case of Mobula japanica, by embryos, neonates and fully-mature individuals. The disc width at maturity (DW50) of males, derived from the proportion of males at each size class with fully-calcified claspers, ranged from 1538 mm for M. thurstoni to 3752 mm for M. birostris. In recent years, there has been an increasing demand for various body parts of mobulids. Branchial filter plates, which are used for traditional Chinese medicines, are the most valuable, fetching as much as 30 $US a kilo (dry weight). The skins are dried and deep fried and the flesh salted and dried and these are used for human consumption, while cartilage is dried for export as a filler for shark-fin soup. The very low fecundity of the large and probably long-lived mobulid rays make the stocks of their species particularly susceptible to further increases in fishing.",
+    "keywords": [],
+    "session_name": "AES Devil Ray Symposium"
+  },
+  {
+    "title": "Correlated Evolution of Selachian Tooth Morphology, Diet, and Ecology",
+    "authors": [
+      {"full_name": "Lisa B. Whitenack", "affiliation": "University of South Florida, Tampa, FL, United States", "is_presenter": true},
+      {"full_name": "Philip J. Motta", "affiliation": "University of South Florida, Tampa, FL, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Due to the cartilaginous nature of the skeleton, the fossil record for sharks is overwhelming composed of teeth. Hypotheses regarding diet, feeding habit, and evolution are therefore usually inferred from a combination of qualitative dentition characteristics and the possible prey items that are contemporaneous in the fossil record. To date, a rigorous evolutionary analysis of the above characters has not been undertaken. The goal of this study is to assess the correlated evolution of tooth morphology, diet, and ecology in extant selachian families using independent contrast analysis. Each family was represented by one to four species, dependant on the degree of tooth morphology variation in the family, with filter-feeding species excluded. For each species, a series of morphometric measurements were taken on teeth on the right side of the upper and lower jaws of up to five individuals. These measurements were used to calculate quantitative tooth morphology characters, including cusp aspect ratio, notch angle, cusp inclination indices, and percent of tooth base overlap. Data about ecology and diet were taken from the literature. The above characters were mapped onto an existing phylogeny. Independent contrast analysis was then used to search for correlated evolution of these characters, with branch lengths set to unity. Preliminary results indicate no phylogenetic pattern for teeth of the upper jaw. These teeth tend to be highly variable in morphology intraspecifically, even within families such as Lamnidae and Carcharhinidae. However for teeth in the lower jaw, families with cusps that are less broad tend to have teeth that are also angled more distally relative to the jaw symphysis and deeper notches. There appears to be no pattern for degree of tooth base overlap in either the upper or lower jaws; this instead appears to be correlated with prey handling behaviour.",
+    "keywords": [],
+    "session_name": "AES Student Papers III"
+  },
+  {
+    "title": "Decline and Conservation of Amphibians in Central America",
+    "authors": [
+      {"full_name": "Steven Whitfield", "affiliation": "Florida International University, Miami, FL, United States", "is_presenter": true},
+      {"full_name": "Karen Lips", "affiliation": "Southern Illinois University, Carbondale, IL, United States", "is_presenter": false},
+      {"full_name": "Harold Heatwole", "affiliation": "North Carolina State University, Raleigh, NC, United States", "is_presenter": false},
+      {"full_name": "Maureen Donnelly", "affiliation": "Florida International University, Miami, FL, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The status of amphibians in Central America was reviewed as part of a volume in the Amphibian Biology series. We describe the Central American environment, describe patterns of amphibian species richness and patterns of endemism in the context of ecological associations and biogeographic patterns. We use the Global Amphibian Assessment (GAA) dataset to explore the conservation status of amphibians in the region. We review conservation threats in light of a meta-analysis of conservation of Central American amphibians; 43 papers out of 401 valid studies of amphibians in Central America from 1967 to 2007 dealt with conservation. Our analysis revealed gaps in spatial coverage for the region and a paucity of studies focused on particular processes. Most research in Central America has focused on losses associated with the spread of chytridiomycosis. We also review conservation actions in place and conclude with statements concerning future research in Central America.",
+    "keywords": [],
+    "session_name": "Amphibian Conservation"
+  },
+  {
+    "title": "The Effect of Wood Frog Tadpole Presence on Boreal Chorus Frog Growth and Metamorphosis",
+    "authors": [
+      {"full_name": "Arthur Whiting", "affiliation": "University of Alberta, Edmonton, Alberta, Canada", "is_presenter": true},
+      {"full_name": "Cynthia Paszkowski", "affiliation": "University of Alberta, Edmonton, Alberta, Canada", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Recruitment to metamorphosis in temporary ponds depends on rapid growth and development of aquatic larvae. Reduction in larval growth and/or development may reduce recruitment affecting local population persistence. We investigated the effect of wood frog tadpole presence on the growth and recruitment to metamorphosis of boreal chorus frogs in the Aspen Parkland of Alberta. Both species are abundant and co-occur at 95% of sites surveyed within Elk Island National Park. Growth rates of chorus frog tadpoles in the field decreased with increasing wood frog density. Manipulations within mesocosms explored the effect of wood frog presence and nutrient addition on the growth and metamorphosis of boreal chorus frog larvae. Results were consistent with field observations – boreal chorus frog tadpoles grew faster and larger in the absence of wood frogs and at higher nutrient concentrations. Laboratory experiments examined the non-interactive effects of wood frog tadpoles on boreal chorus frog tadpole growth and metamorphosis. Presence of wood frogs in dark mesh cages and removal of wood frog feces showed no effect on growth of chorus frog tadpoles. Slower growth and smaller chorus frog metamorphs were found in the presence of wood frog when their feces were moved from the mesh cages into the chorus frog tank. A third experiment is to be conducted to determine the influence of wood frog feces without wood frog presence on the growth of boreal chorus frog tadpoles. The laboratory results suggest that growth inhibition is not the result of food based competition or physical interference within mesocosm or field locations, but rather some metabolic inhibitor present in the feces of wood frog tadpoles.",
+    "keywords": [],
+    "session_name": "Conservation in Canada"
+  },
+  {
+    "title": "The Role of Tadpoles in Temporary Pond Food Webs within the Aspen Parkland of Alberta",
+    "authors": [
+      {"full_name": "Arthur Whiting", "affiliation": "University of Alberta, Edmonton, Alberta, Canada", "is_presenter": true},
+      {"full_name": "Cynthia Paszkowski", "affiliation": "University of Alberta, Edmonton, Alberta, Canada", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Little is known about the role of larval amphibians in aquatic food webs. Stable isotope analysis provides a means to examine the trophic roles of amphibian larvae and explore potential resource overlap with other web members. We were interested in the potential resource overlap between wood frog and boreal chorus frog tadpoles and its effect on tadpole growth within temporary ponds in the Aspen Parkland of Alberta. Few studies have performed stable isotope analysis on amphibian tissues to examine the role of larvae and adults within food webs of temporary ponds. We sampled from six ponds within Elk Island National Park and five ponds in the surrounding agricultural areas. The isotopic signals of tadpoles suggested that resource overlap occurred in some locations, but was not related to differences in growth of chorus frogs across ponds. Both species tended to be at the same low trophic position, but food source varied with pond. In addition to food web structure, we collected larval samples from eggs through to metamorphosis and from adults. Isotopic signals through ontogeny show differences between terrestrial diets and aquatic resources.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Can She-male Flat Lizards (Platysaurus broadleyi) use Multiple Signals to Deceive Male Rivals?",
+    "authors": [
+      {"full_name": "Martin Whiting", "affiliation": "University of the Witwatersrand, Johannesburg, South Africa", "is_presenter": true},
+      {"full_name": "Jonathan Webb", "affiliation": "University of Sydney, Sydney, Australia", "is_presenter": false},
+      {"full_name": "Scott Keogh", "affiliation": "Australian National University, Canberra, Australia", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "A central theme in animal communication is understanding what constrains signalling and keeps a signal honest. An equally fruitful approach is to examine cases of dishonest signalling. Female mimicry, when certain males take on the appearance of females, is most commonly a male alternate reproductive tactic that is condition-dependent, but which can be frequency-dependent. A number of adaptive explanations for female mimicry have been proposed that include avoiding the costs of aggression, gaining the upper hand in combat, sneaking copulations with females on the territories of other males, and gaining physiological and survival benefits. Previous studies of female mimicry have focused on a single mode of communication, although most animals communicate using multiple signals. Male Augrabies flat lizards adopt alternate reproductive tactics in which one group of males (she-males) mimic females. We tested whether she-males are able to mimic females using both visual and chemical cues. We tested chemical recognition in the field by removing scent and relabelling females and she-males with either male or female scent. At a distance, typical males (he-males) could not distinguish she-males from females using visual cues. During close encounters, he-males correctly determined the gender of she-males using chemical cues. She-males are therefore able to deceive he-males using visual, but not chemical, cues. To effectively deceive he-males, she-males avoid close contact with he-males during which chemical cues would reveal their deceit. This strategy is likely adaptive because he-males are aggressive and territorial and by mimicking females, she-males are able to move about freely and gain access to females on the territories of resident males.",
+    "keywords": [],
+    "session_name": "Herp Behavior"
+  },
+  {
+    "title": "AmphibiaWeb; A Dynamic Online Resource Aiding Amphibian Conservation",
+    "authors": [
+      {"full_name": "Kellie Whittaker", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": true},
+      {"full_name": "Carol Spencer", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": false},
+      {"full_name": "Joyce Gross", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": false},
+      {"full_name": "Michelle Koo", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": false},
+      {"full_name": "Vance Vredenburg", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": false},
+      {"full_name": "Tate Tunstall", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": false},
+      {"full_name": "David Wake", "affiliation": "UC Berkeley, Berkeley, CA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "AmphibiaWeb provides on-line information on amphibian conservation, declines, and natural history, including an ever-growing database containing an up-to-date list of all amphibian species recognized worldwide, by family, striking a balance between the most current taxonomic research and standards accepted by the herpetological community at large; more than 11,000 photos of amphibians from around the world via CalPhotos; and over 1,700 species accounts, including many for new species. We now provide cutting-edge dynamic mapping for amphibian species by overlaying vouchered, georeferenced museum specimen data (via HerpNET) onto Global Amphibian Assessment’s expert opinion maps. Among other new features, we also provide a separate, publicly available compendium of newly named amphibian species from the scientific literature. Additionally, AmphibiaWeb is serving as a testing ground for new ways to map phylogenetic information by integrating amphibian phylogenetic data from AmphibiaTree with georeferenced specimen data from HerpNET.",
+    "keywords": [],
+    "session_name": "Poster Session III"
+  },
+  {
+    "title": "Composition, Distribution, and Diversity of Pelagic Fishes around Oceanic Islands",
+    "authors": [
+      {"full_name": "Rupert Wienerroither", "affiliation": "Institute of Marine Research, Bergen, Norway", "is_presenter": true},
+      {"full_name": "Franz Uiblein", "affiliation": "Institute of Marine Research, Bergen, Norway", "is_presenter": false},
+      {"full_name": "Fernando Bordes", "affiliation": "Instituto Canario de Ciencias Marinas, Telde, Gran Canaria, Spain", "is_presenter": false},
+      {"full_name": "Teresa Moreno", "affiliation": "Instituto Canario de Ciencias Marinas, Telde, Gran Canaria, Spain", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Oceanic islands of vulcanic origin have a narrow shelf and a steep slope that enhance the spatial overlap among coastal and oceanic fauna. During six pelagic surveys in the Canary archipelago, Eastern Central Atlantic, over 65 000 fishes belonging to 211 species were collected at depths between 8 and 1035 m. The mesopelagic families of the bristlemouths (Gonostomatidae) and the lanternfishes (Myctophidae) accounted for about 50 % of all specimens. Four different assemblages associated with mesopelagic, epipelagic-oceanic or neritic-coastal habitats could be identified using multivariate classification and ordination methods. Two of these assemblages were shelf-associated differing in the proportion of meso- and epipelagic species. These data indicate intense horizontal migrations of mesopelagic fishes (mainly Myctophidae) into the neritic realm and increased spatial interactions between neritic and oceanic habitats. No marked differences among oceanographically similar areas of the entire archipelago were found. A considerable heterogeneity in species distribution was found off SE Fuerteventura in an area with high hydrographic variability and abrupt topography. We conclude that both topography and hydrography are important factors influencing the distribution and abundance of pelagic fishes in this oceanic archipelago.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Not All Nursery Areas Are Created Equal: The Importance of Small Scale Nursery Habitat for Delaware Bay Sandbar Sharks",
+    "authors": [
+      {"full_name": "Naeem Willett", "affiliation": "Delaware State University Department of Agriculture and Natural Resources, Dover, Delaware, United States", "is_presenter": true},
+      {"full_name": "Dewayne Fox", "affiliation": "Delaware State University Department of Agriculture and Natural Resources, Dover, Delaware, United States", "is_presenter": false},
+      {"full_name": "Brad Wetherbee", "affiliation": "University of Rhode Island Department of Biological Sciences, Kingston, Rhode Island, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Due to declines in sandbar shark populations, efforts are underway to better understand habitat use in nursery areas for rebuilding depleted stocks. Large numbers of young-of-the-year (YOY) and age 1+ juvenile sandbar sharks reside in Delaware Bay from early summer through early fall. We utilized an automated telemetry array (Vemco VR-2) to monitor sandbar shark habitat utilization patterns during their residency in Delaware Bay. We hypothesized that our principal receiver array was near or within primary nursery habitat based on previous studies. Additional receivers were attached to navigational buoys within Delaware Bay. We monitored the movement patterns of 59 sandbar sharks that were surgically implanted with coded acoustic transmitters during the summers of 2005 and 2006. In total over 46,000 detections of telemetered sandbar sharks were recorded. The vast majority (92%) of total detections occurred within the hypothesized nearshore primary nursery habitat compared to receivers located in deeper waters and at the entrance to Delaware Bay. Site fidelity for returning sandbar sharks was high (42%) in years following the implantation of transmitters. Of the returning individuals (n=25), a high proportion (80%) were comprised of age 1+ juvenile sandbar sharks. The low rate of returning YOY sandbar sharks to Delaware Bay suggests either a high mortality rate during the first year of life or low fidelity to Delaware Bay in the second summer. The high degree of site fidelity and abundance of near shore detections illustrate the importance of such a small portion of Delaware Bay to juvenile sandbar shark stocks. Data from this research may improve the protection and understanding of sandbar shark habitat while residing in Delaware Bay.",
+    "keywords": [],
+    "session_name": "AES Student Papers II"
+  },
+  {
+    "title": "Evaluating the Effects of Multiple Stressors in Agricultural Streams Using In Situ Tadpole Enclosures",
+    "authors": [
+      {"full_name": "Bethany Williams", "affiliation": "University of Missouri, Columbia, MO, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "There has been a recent push in aquatic ecotoxicology for studies to demonstrate more realistic exposure conditions and more explicit connections with the natural contexts in which exposures to contaminants typically occur. This desire for increased realism has led to an increase in in situ enclosure experiments, which may be especially suitable for agricultural streams and other systems experiencing multiple natural and anthropogenic stressors. Studies with caged amphibian larvae have a fairly long history in lentic systems, but have been much more limited in streams. I tested two tadpole enclosure designs for stream systems—a submerged hemicylindrical steel mesh cage, and a floating plastic enclosure after my own design. Enclosures were deployed for one month at five agriculturally impacted stream sites in northern Missouri. Plains leopard frog (Rana blairi) tadpoles showed survival up to 100% in floating enclosures and higher survival in floating than submerged enclosures across all sites, despite the fact that both enclosure designs occupied nearly the same portion of the water column in these shallow streams. Tadpole length, mass, and developmental stage differed among sites, but not always predictably across the gradient of agricultural land use. Interactions between site and enclosure type were also strong. These results indicate that floating plastic enclosures may be a valuable means of evaluating the effects of complex contaminant exposures on amphibian larvae in a near-natural context.",
+    "keywords": [],
+    "session_name": "Herp Stressors/Snake Conservation"
+  },
+  {
+    "title": "Reproductive Success And Sexual Selection In Wild Tiger Salamanders (Ambystoma tigrinum)",
+    "authors": [
+      {"full_name": "Rod Williams", "affiliation": "Purdue University, West Lafayette, United States", "is_presenter": true},
+      {"full_name": "J. Andrew DeWoody", "affiliation": "Purdue University, West Lafayette, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Variation in reproductive success is most pronounced in species where mate competition and mate choice are likely, sexual dimorphisms exist, and in populations containing strongly biased operational sex ratios. This situation occurs in many Ambystomatid salamanders, and thus they have served well as evolutionary models for the study of sexual selection. We used molecular genetic markers to study sexual selection in a breeding congregation of adult tiger salamanders (Ambystoma tigrinum) from northwestern Indiana. Using hypervariable microsatellite loci, we genotyped 155 mature adults and 1341 larvae from 90 egg masses. Parentage analyses revealed 108 crosses among 31 dams and 60 sires. Both sexes engaged in multiple successful matings, which was three times more common among females (64%) than males (27%). However, the standardized variance in mating and reproductive success was higher in males. Bateman gradients were significant and nearly identical in both sexes, suggesting that reproductive success was enhanced by increased mating success and that the intensity of sexual selection was roughly equal between sexes. The adult morphological attributes we measured (snout-vent length, tail height, tail length, and mass) were not correlated with mating or reproductive success in either sex. The apparent lack of sexual selection on morphological characteristics may be a result of sperm storage, sperm competition among males, alternative mating tactics utilized by smaller males, and/or random induction of spermatophores by females.",
+    "keywords": [],
+    "session_name": "Amphibian Ecology"
+  },
+  {
+    "title": "Effects of Prey Type on Prey Handling, Digestive Metabolism, and Post-prandial Locomotor Performance in the Banded Watersnake, Nerodia fasciata",
+    "authors": [
+      {"full_name": "John Willson", "affiliation": "Savannah River Ecology Laboratory, Aiken, SC, United States", "is_presenter": true},
+      {"full_name": "William Hopkins", "affiliation": "Virginia Tech, Blacksburg, VA, United States", "is_presenter": false},
+      {"full_name": "J. Whitfield Gibbons", "affiliation": "Savannah River Ecology Laboratory, Aiken, SC, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Despite the importance of prey availability to predator populations, assessments of prey availability seldom consider differences in quality among prey types. To aid our understanding of factors that influence the distribution and abundance of the banded watersnake (Nerodia fasciata), we compared quality of prey characteristic of ephemeral and permanent wetlands: paedomorphic salamanders (Ambystoma talpoideum) and sunfish (Lepomis marginatus), respectively. Specifically, we compared nutritional composition and morphology of the prey taxa and used a series of repeated-measures experiments to examine handling (number of prey consumed, maximum prey size, and handling time), digestive metabolism (specific dynamic action, SDA), and post-prandial locomotor performance (reduction in maximum crawling speed) of snakes fed Ambystoma and Lepomis. Although the two prey types were similar in nutritional composition, snakes consumed larger Ambystoma than Lepomis (maximum meal sizes 105% vs. 50% of snake body mass), consumed more individual Ambystoma than Lepomis of similar size per feeding event, and exhibited longer handling times for Lepomis than Ambystoma within prey size treatments. Overall, SDA profiles were similar for snakes digesting the two prey types, with no significant effect of prey type on total volume of O2 consumed above standard metabolic rate, peak rate of O2 consumption, digestive scope, or SDA coefficient and only subtle differences between the prey types in the shapes of the SDA curves (time to 50% and 75% decrease from peak O2 consumption). However, prey types differed in their impact on post-prandial locomotor performance; snakes fed Lepomis suffered a 45% reduction in maximum crawling speed 1 h post-feeding, compared to a 23% reduction for Ambystoma. Our results indicate that prey taxa may differ substantially in quality, even when their nutritional compositions are similar. Differences in quality of available prey may have substantial ecological consequences and may contribute to variation in density and demography among snake populations.",
+    "keywords": [],
+    "session_name": "SSAR Seibert Competition"
+  },
+  {
+    "title": "Sexual Size Dimorphism and Body Size Allometry in a European Pipefish Species",
+    "authors": [
+      {"full_name": "Jasmin D Winkler", "affiliation": "Zoological Museum, University of Zurich, Zurich, Switzerland", "is_presenter": true},
+      {"full_name": "Kai N Stölting", "affiliation": "Zoological Museum, University of Zurich, Zurich, Switzerland", "is_presenter": false},
+      {"full_name": "Valeria Rispoli", "affiliation": "Zoological Museum, University of Zurich, Zurich, Switzerland", "is_presenter": false},
+      {"full_name": "Anthony B Wilson", "affiliation": "Zoological Museum, University of Zurich, Zurich, Switzerland", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Mating success and fecundity are positively correlated with body size in both sexes of male-pregnant Syngnathus pipefish. As male pipefish brood eggs on their tail and female egg production occurs in her ovaries located in her trunk, fecundity selection is predicted to act differently on male and female size. Female body size is also under sexual selection, as large females are preferred by males. We investigated sexual size dimorphism and body size allometry in the broad-nosed pipefish Syngnathus typhle, based on the hypothesis that fecundity and sexual selective pressures act differently in males and females. Measurements of overall body size and body proportions were taken from seven populations of S. typhle sampled across a wide geographical range. Males and females differ significantly in trunk length, tail length and total body size. Patterns of female growth in the trunk and the tail vary significantly among populations, while male tail grows more rapidly than does his trunk in all populations. This results in sexual size dimorphism that is specific for a body region: for a given body size, females have a longer trunk than do males, while males have a longer tail. Female biased dimorphism in overall body size was found in three populations. Morphological variation in the broad-nosed pipefish supports the hypothesis that fecundity selection on male tail length is responsible for a region-specific sexual size dimorphism and different patterns of growth in male and female S. typhle. Female biased dimorphism in overall body size is likely a product of sexual selection.",
+    "keywords": [],
+    "session_name": "General Ichthyology II"
+  },
+  {
+    "title": "Interactions between Fishes and Invasive Jellyfish in the Upper San Francisco Estuary, USA",
+    "authors": [
+      {"full_name": "Alpa Wintzer", "affiliation": "University of California, Davis, Davis, CA, United States", "is_presenter": true},
+      {"full_name": "Peter Moyle", "affiliation": "University of California, Davis, Davis, CA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Jellyfish populations are increasing around the world in response to anthropogenic alterations of the oceanic environment. Jellyfish invasions are often harmful to planktivorous fishes, because they can successfully compete for planktonic prey and will feed upon fish eggs and larvae. In the upper San Francisco Estuary, there are three abundant invasive jellyfish (Maeotias marginata, Blackfordia virginica, and Moerisia sp.). We present a conceptual model of the potential impact of jellyfish competition and predation on four declining planktivorous fish populations (Delta smelt, YOY striped bass, threadfin shad, and longfin smelt) and describe studies on jellyfish abundance and distribution, prey selectivity, and dietary overlap with fishes. Invasive jellyfish are potentially contributing to the decline and/or recovery failure of plankivorous fishes in the upper San Francisco Estuary.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Brown Tree Snake Invasion Risk Assessment for the Continental United States",
+    "authors": [
+      {"full_name": "Samantha Wisniewski", "affiliation": "Texas A&M University - Kingsville, Kingsville, TX, United States", "is_presenter": true},
+      {"full_name": "Scott Henke", "affiliation": "Texas A&M University - Kingsville, Kingsville, TX, United States", "is_presenter": false},
+      {"full_name": "Robert Pitman", "affiliation": "Texas A&M University - Kingsville, Kingsville, TX, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Brown tree snakes (Boiga irregularis) are a mildly venomous, rear-fanged constrictor which is native to Australia, Papua New Guinea, and other Melanesian Islands. These snakes were unintentionally introduced to the island of Guam sometime after WWII, possibly on a cargo shipment from Australia. Due to population explosions around 1960, the brown tree snake (BTS) is now an invasive species causing significant economic, biological, and human health problems on Guam. Brown tree snakes have been found in Hawaii, Texas, Alaska, and Oklahoma as hitchhikers in planes, ships, and cargo coming from Guam. This is why it is important to identify the areas within the continental United States which are at the highest risk for brown tree snake invasion. A similarity assessment was done between areas within the BTS home range and areas within the continental United States using distance analysis. Using aspects of climatic tolerance for BTS, we were able to identify areas at the highest risk for BTS invasion. Another assessment was also done between Guam and areas in the continental United States to examine the differences between invasion from Guam and invasion from the BTS home range. In both assessments, areas with the most similar temperature and precipitation to that of the compared area (either the home range or Guam) are identified as highest risk. The high-risk areas which are identified in this assessment will be important targets for increased public education, training and awareness. The North America Brown Tree Snake Control Team (NABTSCT) will use this assessment for mapping high-risk locations on the NABTSCT website for public access, leading to increased awareness.",
+    "keywords": [],
+    "session_name": "Poster Session III"
+  },
+  {
+    "title": "Investigating Rural Kenyan Teachers’ Attitudes Toward Snakes: New Perspectives for Teaching",
+    "authors": [
+      {"full_name": "David Wojnowski", "affiliation": "University of North Texas, Denton, Texas, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "A 3-month quasi-experimental mixed-methods study was conducted mid-September through mid-December 2005 to investigate rural southeast Kenyan teachers’ attitudes toward snakes. 60 teachers from 6 villages near Mt. Kasigau were surveyed and interviewed about their attitudes toward snakes to obtain baseline data before and after a herpetofauna institute. 25 teachers representing 5 of the 6 villages attended a 6-hour seminar on reptiles and amphibians. From these 25 teachers, 8 teachers from 3 villages were afforded additional educational opportunities about snakes, and 2 teachers from this group of 8 were teamed with 2 herpetologists as mentors. Findings suggest that teachers’ attitudes toward snakes, within a culture where all snakes are feared and killed onsite, can change toward a more favorable orientation when faced with a scientific perspective of snakes, learn taxonomic/ecological information about snakes, and observe positive modeling of snake handling.",
+    "keywords": [],
+    "session_name": "Herp Stressors/Snake Conservation"
+  },
+  {
+    "title": "A Preliminary Phylogeny of the Genus Acanthosaura Gray 1931, Inferred from Mitochondrial and Nuclear DNA",
+    "authors": [
+      {"full_name": "Perry Wood", "affiliation": "Villanova University, Pennsylvania, United States", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The Southeast Asian agamid lizard genus Acanthosaura Gray, 1931 currently contains six recognized species (A. armata, A. capra, A. coronata, A. crucigera, A. lepidogaster, and A. nataliae). It ranges throughout Myanmar, Thailand, Cambodia, Laos, China, and Malaysia (including its off shore islands, Pulau Tioman, Pulau Aur, Pulau Perhintian, Pulau Perhintian Kecil and Pulau Langkawi). An analysis of the mitochondrial and nuclear DNA coupled with maximum parsimony (MP) and maximum likelihood (ML) analyses were used to test the hypotheses (1) Acanthosaura cf. crucigera from the Cardamom Mountains forms a distinct group separate from Acanthosaura crucigera from its type locality in Thailand (2) A. armata, A. crucigera, and A. lepidogaster are composed of multiple cryptic species (3) Acanthosaura cf. armata from Pulau Aur and Pulau Tioman form the sister group to other A. armata, (4) Acanthosaura cf. crucigera from Pulau Langkawi is more closely related to Cambodian A. cf. crucigera then to A, crucigera from Thailand, following other biogeographic patterns. This will be the first time nuclear DNA and all recognized species will be included in a phylogenic context.",
+    "keywords": [],
+    "session_name": "Herp Systematics"
+  },
+  {
+    "title": "The Phylogenetic Distribution of Siluriform Venom Glands",
+    "authors": [
+      {"full_name": "Jeremy Wright", "affiliation": "University of Michigan, Ann Arbor, United States", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Though many species of catfishes have long been known to produce venoms associated with the dorsal and pectoral-fin spines, the distribution of this trait throughout the Order Siluriformes has yet to be determined. The histological examination of fin spines taken from museum specimens, including representatives from 32 of the 34 currently recognized (extant) catfish families (including over 100 genera) has revealed the presence of venom glands in species from at least 20 families. For several of these families, this represents the first time that venomous representatives have been demonstrated. The results of this study indicate that approximately 1500-1700 species of catfishes should be presumed venomous. Mapping of the presence of venom glands onto recently generated siluriform phylogenies indicates at least two independent developments of venom glands in catfishes. Multiple losses of venom glands are found throughout the Order, in lineages in which the fin spines have been lost or extensively modified. Though the presence of venom glands was consistent in most families examined, cases were found in which two genera from the same family differed in the presence vs. absence of venom glands. Robust species level phylogenies of siluriform families and genera are needed to more clearly trace the evolutionary history of venom glands (and their secretions) in these groups, and may also offer insight into the ecological factors that have favored this intrafamilial incongruence.",
+    "keywords": [],
+    "session_name": "Poster Session III"
+  },
+  {
+    "title": "Body Temperature Selection and Thermoregulatory Efficiency of the Giant Garter Snake",
+    "authors": [
+      {"full_name": "Glenn Wylie", "affiliation": "United States Geological Survey, Western Ecological Research Center, Dixon Field Station, Dixon, California, United States", "is_presenter": true},
+      {"full_name": "Michael Casazza", "affiliation": "United States Geological Survey, Western Ecological Research Center, Dixon Field Station, Dixon, California, United States", "is_presenter": false},
+      {"full_name": "Christopher Gregory", "affiliation": "United States Geological Survey, Western Ecological Research Center, Dixon Field Station, Dixon, California, United States", "is_presenter": false},
+      {"full_name": "Brian Halstead", "affiliation": "United States Geological Survey, Western Ecological Research Center, Dixon Field Station, Dixon, California, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The Giant Garter Snake (Thamnophis gigas) is a threatened species precinctive to the Central Valley of California. Despite a large body of literature on the thermal ecology of garter snakes, relatively few studies have examined body temperature selection and thermoregulatory efficiency of these snakes where they occur in benign thermal environments. The thermal ecology of the Giant Garter Snake is of particular interest because it is the largest of the garter snakes, is highly aquatic, and is restricted to a Mediterranean climate. We examined multiple hypotheses regarding temporal, sexual, and behavioral differences in the selection of body temperatures and thermoregulatory precision of the Giant Garter Snake using temperature-sensitive radio telemetry and an information-theoretic analytical approach. Similar to other garter snakes, individual Giant Garter Snakes selected body temperatures near 30°C. Male and female Giant Garter Snakes did not exhibit differences in body temperature selection or thermoregulatory efficiency most of the year, including the midsummer gestation period. Resting individuals thermoregulated more precisely than individuals active on land or in water. Despite potential energetic costs, individuals emerged from hibernacula to bask on warm, sunny days in winter. The relatively benign Mediterranean climate, coupled with the Giant Garter Snake’s occurrence in a complex and variable thermal environment, contribute to the apparent reduced importance of thermoregulatory behavior for the Giant Garter Snake relative to its congeners.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Phylogenetic Relationships of Labeonini (Teleostei: Cyprinidae) Inferred from Four Nuclear and Three Mitochondrial Loci",
+    "authors": [
+      {"full_name": "Lei Yang", "affiliation": "Saint Louis University, St. Louis, MO, United States", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The Labeonini (sensu Rainboth, 1991) is a tribe of the subfamily Cyprininae, the largest subfamily of Cyprinidae. Species of this tribe are widely distributed in the freshwaters of tropical Africa and Asia. Currently, around 31 genera and 400 species are included in this tribe. Most species are adapted to inhabit fast-flowing water and exhibit unique modifications of their oromandibular morphology. The monophyly of this tribe has been tested and generally accepted by previous morphological and molecular studies. The major objective of this study was to reconstruct the phylogenetic relationships of the tribe Labeonini, test its monophyly and explore its subdivisions, their intrarelationships and their biogeography. Nucleotide sequences of four nuclear and three mitochondrial loci were collected from 21 Labeonini genera, 47 species throughout its distribution range. Maximum parsimony, maximum likelihood and Bayesian analyses were conducted using combined dataset. The monophyly of Labeonini was well supported. Three clades could be recovered within the tribe. These clades are not consistent with the groupings of previous workers and with current taxon resampling, do not exhibit any logical geographic pattern.",
+    "keywords": [],
+    "session_name": "Poster Session I"
+  },
+  {
+    "title": "Predicting Invasions of Gars (Actinopterygii: Lepisosteidae) in Mainland China Using Native Range Data and Ecological Niche Modeling",
+    "authors": [
+      {"full_name": "Lei Yang", "affiliation": "Saint Louis University, St. Louis, Missouri, United States", "is_presenter": true},
+      {"full_name": "Karl Anderson", "affiliation": "Saint Louis University, St. Louis, Missouri, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Gars (Lepisosteidae) are top predators in freshwater systems. Their native distributions range from southeastern Canada and eastern North America south to Costa Rica and the Caribbean. No fossil or extant gars have ever been described from China. In 1990s, however, gars were imported into Mainland China as pet fish. In recent years, more and more gars have been found in natural waters across the country. We have compiled records in China, and found gar reported more frequently in coastal provinces and with a general trend inland. Up to four gar species may have been found: longnose gar Lepisosteus osseus, shortnose gar L. platostomus, spotted gar L. oculatus, and alligator gar Atractosteus spatula. Native range data and ecological niche modeling were used to predict the invasive potential of each species and also Florida gar L. platyrhincus in Mainland China: all except the Florida gar have the potential to be able to spread broadly in southern, eastern and central China. Alligator gar may also be able to spread to northern and eastern China, while Longnose gar may be able to invade the northeast. Florida gar may only restrict to small areas of southern China. The consequences of potential establishment of gars could be profound for Chinese aquatic diversity: gars may feed mainly on small cyprinids, loaches, and some catfishes in China, and they may also compete with native piscivorous fishes. Gars also have the potential to spread from China into Southeast Asia.",
+    "keywords": [],
+    "session_name": "Fish Conservation"
+  },
+  {
+    "title": "Evolution of the Spinous Dorsal- and Anal-fin Rays of Cyprinine Fishes (Ostariophysi: Cyprinidae: Cyprininae)",
+    "authors": [
+      {"full_name": "Lei Yang", "affiliation": "Saint Louis University, St. Louis, MO, United States", "is_presenter": true},
+      {"full_name": "Kevin W Conway", "affiliation": "Saint Louis University, St. Louis, MO, United States", "is_presenter": false},
+      {"full_name": "Eric J. Hilton", "affiliation": "Virginia Institute of Marine Science, Williamsburg, VA, United States", "is_presenter": false},
+      {"full_name": "Richard L Mayden", "affiliation": "Saint Louis University, St. Louis, MO, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Several members of the Cyprininae possess a thickened, spine-like leading fin ray in the dorsal and anal fins. These 'spines' are formed by the ontogentic fusion of individual lepidotrichia segments and thus differ from the true spines of acanthomorph fishes, which are never segmented. Though the presence or absence of spinous rays are important characters in taxonomic keys of cyprinine fishes, little is known about their evolutionary origins. We investigated the evolution of the spinous rays of cyprinine fishes using a molecular phylogeny of the subfamily. Four characters relating to the spinous rays were investigated using ancestral character state reconstruction: (1) presence/absence (p/a) of the spinous dorsal-fin ray; (2) p/a of spinous dorsal-fin ray serrations; (3) p/a of the spinous anal-fin ray; (4) p/a of the spinous anal-fin ray serrations. We predicted a priori that the spinous rays of cyprinine fishes were each the result of a single evolutionary event. Due to ambiguous optimization on our molecular phylogeny, it is not possible to definitively state the number of independent acquisitions of the spinous dorsal-fin ray of cypinine fishes and it appears that there have been numerous losses of this structure. The evolution of the spinous anal-fin ray of cyprinine fishes is much clearer and is the result of two independent evolutionary events (once on the branch leading to Cyprinus + Carassius and once on the branch leading to Puntioplites). Previous authors had hypothesised a close relationship between Cyprinus, Carassius and Puntioplites based on the presence of the spinous anal-fin ray in these taxa. We hypothesize that, based on differences in morphology (presence vs. absence of spinous anal-fin ray serrations) and our molecular phylogeny, the spinous anal-fin rays of Puntioplites and Cyprinus + Carassius are not homologous.",
+    "keywords": [],
+    "session_name": "Poster Session I"
+  },
+  {
+    "title": "A Neural Basis for a Shark’s Motor Repertoire? Quantifying the Complexity of the Cerebellum using Magnetic Resonance Imaging (MRI)",
+    "authors": [
+      {"full_name": "Kara Yopak", "affiliation": "University of California San Diego, Center for Scientific Computation in Imaging, San Diego, CA, United States", "is_presenter": true},
+      {"full_name": "Larry Frank", "affiliation": "University of California San Diego, Center for Scientific Computation in Imaging, San Diego, CA, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The cerebellum appeared at the onset of the chondrichthyan radiation and is known to be essential for executing fast, accurate, and efficient movement, yet there is still much controversy surrounding its absolute function, which remains unresolved. Comparative data on cerebellar anatomy from cartilaginous fishes with disparate behavioral repertoires can provide critical information on cerebellar function and development, and ultimately vertebrate evolutionary trajectories. Recent work has shown patterns of brain organization in sharks that are correlated with ecological parameters. Cerebellum size has strong allometric correlations, but there exists significant interspecific variation in corpus folding. We have previously developed a visual grading method, ranging from 1-5, which provided a classification scheme for cerebellar foliation. When applied to a range of species (n=81), the highest foliation levels (4-5) were found in agile predators that lived in 3D environments, such as Isurus oxyrinchus, Alopias vulpinus, and Sphyrna mokarran. However, visual classification is limited as it does not parameterize structural variations, and thus does not provide a quantitative method for characterization and comparison of foliation; these methods can often miss subtle but important differences between species that may have high evolutionary significance. Here we provide such a quantitative method using Magnetic Resonance Imaging (MRI) in conjunction with shape analysis methods. The degree of foliation was quantified using three different measures of geometric variation following image segmentation: (1) local tissue curvature (2) cortical flattening, and (3) spherical harmonic decomposition. These methods were preliminarily applied to 5 shark species with varying levels of foliation (based on the visual classification scheme). These methods greatly extend the visual foliation index by providing quantitative methods for interpreting and analyzing the architecture and surface structure of chondrichthyan brains. Through these, we plan to explore the extent to which adaptive, developmental, and phylogenetic processes are driving neural evolution.",
+    "keywords": [],
+    "session_name": "AES Functional Morphology"
+  },
+  {
+    "title": "Osmoregulation in the Diamond-backed Watersnake (Nerodia rhombifer): Salt Stress is Stressful",
+    "authors": [
+      {"full_name": "Frederic Zaidan III", "affiliation": "University of Texas - Pan American, Edinburg, TX, United States", "is_presenter": true},
+      {"full_name": "Joana Cordoba", "affiliation": "University of Texas - Pan American, Edinburg, TX, United States", "is_presenter": false},
+      {"full_name": "Edward Sanchez", "affiliation": "University of Texas - Pan American, Edinburg, TX, United States", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Changes within the physical environment of freshwater systems have begun to affect the natural distribution of native species. Increases in water salinity, due to agricultural inputs, have forced some freshwater organisms out of previously inhabited areas. In addition, riverine species may reach a local range limit if the river drains into salt water. On the physiological side, previous work speaks of salt stress without examining if the stress hormones (e.g., cortisol, corticosterone) increase after exposure. As an ecophysiological model, we used a species that frequently inhabits lotic systems with an estuarine zone (N. rhombifer). The extent of N. rhombifer’s salinity tolerance is unknown, as is whether this exposure causes the animal to experience inordinate amounts of physiological stress. We subjected 28 adult snakes to a one-week constant exposure to 0, 9, 18, and 27 ppt saline solutions in a repeated measures design. Plasma osmolality and corticosterone concentrations were measured before and after the exposure. To test salt tolerance in small snakes, we divided 39 neonates into one of three treatments (0, 9, and 18 ppt saline solutions) for one-week constant exposure and measured survivorship. Under the testing regime, the LD50 for salt was 27.0 ppt in adults and calculated to be 22.8 ppt in neonates. Baseline plasma osmolality and corticosterone in adults averaged 312.6 ± 22.5 mMol/kg and 5.5 ± 4.2 ng/ml, respectively. Nerodia rhombifer is a strong hyper-/hypo-osmoregulator, but shows decreased osmoregulatory performance and signs of salt stress above 9 ppt, with increases in plasma osmolality of up to 150 mMol/kg over baseline and a corresponding increase (up to 5-fold) in corticosterone. Increases in corticosterone have been shown to negatively affect the sex steroids, which may affect reproductive success. Salt intolerance may potentially play a role in limiting the species’ distribution along rivers that have an estuarine zone.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Ecophysiological Research on Cottonmouths: Model Species and Special Cases",
+    "authors": [
+      {"full_name": "Frederic Zaidan III", "affiliation": "University of Texas - Pan American, Edinburg, TX, United States", "is_presenter": true},
+      {"full_name": "Harvey Lillywhite", "affiliation": "University of Florida, Gainesville, FL, United States", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The ecology of cottonmouths (Agkistrodon piscivorus) has been well studied in a variety of systems. Despite being a ubiquitous feature of both natural and man-made habitats throughout the southeastern United States, cottonmouths have received surprisingly little attention in physiological investigations. Cottonmouths are not only interesting in their local ecophysiological context, but also potentially important as model organisms. Krogh’s principle states, as cited in Bennett (2003), “For a large number of problems there will be some animal of choice, or a few such animals, on which it can be most conveniently studied. (August Krogh [1929])”. In many ways, cottonmouths embody this principle. Cottonmouths serve as key members of both aquatic and terrestrial food webs and their generalist diet provides links to many species. The species has wide latitudinal and altitudinal ranges and occurs in a variety of freshwater, terrestrial, and insular habitats where they exhibit considerable local adaptation. From a practical viewpoint, cottonmouths are ideal focal species. They are often locally abundant and easily captured. In the laboratory setting, cottonmouths are easily maintained, tractable, and require a relatively small amount of space. Adequate precautions must be taken, of course, to ensure their safe care and use. In our presentation, we will review and discuss the ecophysiological literature related to cottonmouths, organized according to sub-disciplines of investigation (e.g., thermal biology and energetics, osmoregulation and water balance, digestive physiology, toxicology, etc.). We will examine current research and propose future directions in the hope of better understanding this organism and promoting its use in research.",
+    "keywords": [],
+    "session_name": "Cottonmouth Symposium"
+  },
+  {
+    "title": "Two New Species of Hypostomus Lacépède (Teleostei: Loricariidae) from the Rio Paranaíba and Rio Grande, Upper Rio Paraná Basin, Central Brazil",
+    "authors": [
+      {"full_name": "Claudio Henrique Zawadzki", "affiliation": "Universidade Estadual de Maringá, Maringá, Paraná, Brazil", "is_presenter": true},
+      {"full_name": "Claude Weber", "affiliation": "Muséum d´histoire naturelle, Genève, Switzerland", "is_presenter": false},
+      {"full_name": "Carla Simone Pavanelli", "affiliation": "Universidade Estadual de Maringá, Maringá, Paraná, Brazil", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Widespread through Neotropical region species of the genus Hypostomus constitutes one of the most speciose genus of the Siluriformes encompassing from 117 species (without synonymization of Squaliforma, Aphanotorulus and Isorineloria) to 138 species (with synonymization). However, misidentification are commonly found in the literature. These errors were attributed to the broad morphological variation of most species, great number of available names, very old original descriptions, and ill-conserved type specimens. Aggravating that situation, molecular data has shown that about one-third of the current Hypostomus species are still undescribed. Monthly ichthyological surveys were carried out from March 1996 to March 2002 in the rio Corumbá basin, a tributary to the rio Paranaíba, upper rio Paraná basin, Goiás State, Brazil. The analysis of several collected Hypostomus specimens allowed the recognition of two undescribed species of Hypostomus. One of them, Hypostomus sp. n. 1, is distinguished from all congeners, except H. albopunctatus, by having pectoral-fin spine equal or smaller than pelvic-fin spine. From H. albopunctatus, it is distinguished by having roundish dark spots over body and fins (vs. clear spots). The second, Hypostomus sp. n. 2, is distinguished from all its congeners, except H. multidens, by having more than 115 dentary and premaxillary teeth (vs. less than 109) and by having teeth with two symmetrical cusps (vs. asymmetrical). It is distinguished from H. multidens by having dark roundish spots over body and fins (vs. clear spots). Additional samples of Hypostomus revealed that the two new species were also found in the rio Paranaíba and in the rio Grande, upper rio Paraná basin.",
+    "keywords": [],
+    "session_name": "Poster Session I"
+  }
+]

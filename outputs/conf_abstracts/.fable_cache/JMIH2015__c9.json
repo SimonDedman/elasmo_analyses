@@ -1,0 +1,454 @@
+[
+  {
+    "title": "Orientation of Mako Sharks (Isurus oxyrinchus) to Environmental Conditions in the Open Ocean",
+    "authors": [
+      {"full_name": "Bradley Wetherbee", "affiliation": "University of Rhode Island, Kingston, RI, USA", "is_presenter": true},
+      {"full_name": "Michael Byrne", "affiliation": "Warnell School of Forestry and Natural Resources University of Georgia, Athens, GA, USA", "is_presenter": false},
+      {"full_name": "Jeremy Vaudo", "affiliation": "Guy Harvey Research Institute, Ft Lauderdale, FL, USA", "is_presenter": false},
+      {"full_name": "Guy Harvey", "affiliation": "Guy Harvey Ocean Foundation, Ft Lauderdale, FL, USA", "is_presenter": false},
+      {"full_name": "Mahmood Shivji", "affiliation": "Save Our Seas Foundation Shark Center, Ft Lauderdale, FL, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Mako sharks (Isurus oxyrinchus) are frequently captured in long line fisheries and are heavily targeted by recreational anglers in many parts of the world. Given the fishing pressure on mako shark populations there is a great deal of interest in management of their stocks. However, information about movements and migrations of mako sharks that would enable comprehensive understanding of interactions with fisheries and delineation of distribution patterns in waters under the jurisdiction of numerous countries is sparse. We tagged 45 mako sharks with satellite transmitters and tracked their movements over the span of several years. A state space model was used to construct continuous tracks for sharks and to categorize their locations into two behavioral states – searching and transiting. Remote sensing databases were used to determine environmental conditions of sea surface temperature, chlorophyll, productivity, upwelling and frontal index at each location and values in areas searched were compared with those for locations when sharks were transiting. Environmental conditions of specific water temperature and productivity were associated with the searching behavioral mode indicating that mako sharks orient towards a specific set of water conditions for presumably engaging in foraging behavior.",
+    "keywords": [],
+    "session_name": "AES Conservation & Management"
+  },
+  {
+    "title": "Multibiomarker Evaluation of Pollutant Effects in Atlantic Stingray (Dasyatis sabina) Populations in Florida's St. Johns River",
+    "authors": [
+      {"full_name": "John Whalen", "affiliation": "University of North Florida, Jacksonville, FL, USA", "is_presenter": true},
+      {"full_name": "Jim Gelsleichter", "affiliation": "University of North Florida, Jacksonville, FL, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The goal of this study was to examine the potential health effects of polychlorinated biphenyl (PCB) and polycyclic aromatic hydrocarbon (PAH) exposure on Atlantic stingray (Dasyatis sabina) populations in Florida's St. Johns River (SJR). Special emphasis was placed on identifying PAH- and/or PCB-related effects in stingrays from areas of the lower SJR basin that have been shown to possess elevated levels of these compounds, as well as characterizing baseline levels of pollutant exposure in other areas that may be subjected to dredging in the near future, potentially resuspending contaminated sediments and increasing pollutant associated effects. To accomplish this, we measured PCB and PAH biomarker levels in D. sabina collected from contaminated sites and reference locations. Animals were collected using seine nets and trotlines. We specifically examined the biomarkers cytochrome P4501a1 (CYP1a1), a Phase I detoxification enzyme; Glutathione-S-Transferase (GST), a Phase II detoxification enzyme; and fluorescent aromatic compounds (FACs), PAH bile metabolites. Enzymatic activity of CYP1a1 and GST was measured using the EROD assay and a commercially available GST Assay Kit, whereas FACs were measured using fixed wavelength fluorescence. Biomarker levels of individuals collected from contaminated sites were compared to individuals collected from reference sites. Previous research in our lab has detected elevated biomarker levels in D. sabina and bony fish from known contaminated areas in the St. Johns River. Expecting parallel results, we anticipate that the pollutants in the St. Johns River are negatively affecting D. sabina, and that dredging has the possibility to create a broader source of contamination.",
+    "keywords": [],
+    "session_name": "Poster Session I"
+  },
+  {
+    "title": "Using DNA Adducts to Examine Polycyclic Aromatic Hydrocarbon Exposure in Shark Populations Affected by the Deepwater Horizon Oil Spill",
+    "authors": [
+      {"full_name": "John Whalen", "affiliation": "University of North Florida, Jacksonville, FL, USA", "is_presenter": true},
+      {"full_name": "Jim Gelsleichter", "affiliation": "University of North Florida, Jacksonville, FL, USA", "is_presenter": false},
+      {"full_name": "Dean Grubbs", "affiliation": "Florida State University Coastal and Marine Laboratory, St. Teresa, FL, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The Deepwater Horizon oil spill (DWH) released 5 million barrels of crude oil into the Gulf of Mexico (GOM) between April and July of 2010, posing significant health risks to deepwater shark species because of the high concentration of oil and its most toxic components, polycyclic aromatic hydrocarbons (PAHs). Exposure to PAHs results in increased expression of metabolic enzymes necessary for the biotransformation and excretion of these compounds. Occasionally, metabolites resulting from this process can bind to DNA, forming adducts and creating the potential for mutagenic effects. The objective of this study was to determine if increased PAH-DNA adduct formation occurred in two abundant and ecologically important Gulf of Mexico shark species: Squalus cf. mitsukurii and Centrophorus granulosus. Animals were collected using demersal long lines from the Northeast GOM at varying distances from the origin of the DWH in 2011 and 2014. The presence of DNA adducts was determined in peripheral blood cells using immunofluorescence. Adduct formation was examined in relation to relative levels of oil exposure. A total of 52.5% of individuals examined possessed DNA adducts, ranging from 0 to 19 per 500 cells. The proportion of C. granulosus with adducted cells increased from 0.273 to 0.875 while the proportion of S. mitsukurii remained constant at 0.571, suggesting possible oil-related effects in the former. This is the first study to examine and detect the presence of PAH-DNA adducts in sharks, suggesting that they may provide a useful tool for assessing PAH effects in these fishes.",
+    "keywords": [],
+    "session_name": "AES Morphology & Physiology"
+  },
+  {
+    "title": "Habitat Selection of the Leopard Shark, Triakis semifasciata, Using Fine Spatio-Temporal Movement and Temperature Data",
+    "authors": [
+      {"full_name": "Connor White", "affiliation": "California State University Long Beach, Long Beach, CA, USA", "is_presenter": true},
+      {"full_name": "Yukun Lin", "affiliation": "Harvey Mudd College, Claremont, CA, USA", "is_presenter": false},
+      {"full_name": "Jerry Hsiung", "affiliation": "Harvey Mudd College, Claremont, CA, USA", "is_presenter": false},
+      {"full_name": "Christopher Clark", "affiliation": "Harvey Mudd College, Claremont, CA, USA", "is_presenter": false},
+      {"full_name": "Christopher Lowe", "affiliation": "California State University Long Beach, Long Beach, CA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Environmental conditions are largely considered to be drivers of elasmobranch movements and behaviors. However, conditions are in constant flux and can be highly variable over small spatial extents. Thus to understand how individuals interact with surrounding environmental conditions, researchers must be able to measure the movements of individuals and environmental conditions at high spatio-temporal resolutions. We developed an autonomous underwater vehicle (AUV) designed to actively track an acoustically tagged elasmobranch, providing better spatial accuracy than a human (AUV: 6.1 ± 4.8 m, Researcher: 16.6 ± 9.7 m, F = 31.1, p = 0.005), while generating significantly more localizations (AUV: 45.2 ± 10.5 detection/min, Researcher: 12.2 ± 9.1 detections/min, t2.41= 3.96, p = 0.04). These positions were further refined by integrating magnetic heading of the animal provided by animal-borne inertial measurement units (IMU). Using this system 5 leopard sharks were tracked in Big Fisherman’s Cove (BFC), Catalina Island. Seafloor temperature was collected every 5 min from 20 locations in the cove to derive interpolated temperature maps. Comparing the fine-scale shark movements with the fine-scale temperatures availability in the cove, showed leopard sharks disproportionately utilized warmer areas of the cove (χ2 =432.3, p <0.001). By utilizing tools that provide fine-scale information on the movement and behaviors of animals, researchers will be able to begin to tease apart how elasmobranchs interact with their environment, and ultimately, how these interactions structure the distributions of species.",
+    "keywords": [],
+    "session_name": "AES GRUBER AWARD"
+  },
+  {
+    "title": "The Impact of a Variable Marine Larval Stage on the Extent of Endemism in a Group of Amphidromous Fishes from Indonesia (Gobiidae: Sicydiinae: Stiphodon)",
+    "authors": [
+      {"full_name": "Macaulay White", "affiliation": "Texas A&M University - Corpus Christi, Corpus Christi, TX, USA", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Sicydiine gobies are a diverse group of fishes belonging to the family Gobiidae. They inhabit rivers on oceanic islands and are highly adapted for island living due to their amphidromous life history (adults spawn in freshwater and larvae are carried to the open ocean to feed, grow, and later return to freshwater). Oftentimes, freshwater gobies make up the only native fish fauna in island streams. The subfamily Sicydiinae currently consists of nine genera and the genus Stiphodon exhibits the most diversity and is found throughout the Indo-Pacific. Many species of Stiphodon have very large distributional ranges, while others are found only in localized regions. Because of the high levels of endemism in Stiphodon, they are threatened by habitat destruction due to deforestation, mining, and damning of rivers. It is currently unclear as to why Stiphodon species have such varying distributional ranges. Otolith microchemistry analysis can aid in determining if all individuals go to sea as larvae. This variation in the percent of individuals traveling to the sea may influence dispersal capabilities, which may ultimately dictate the geographic range size for a given species. This study will be helpful in understanding the amphidromous life history of Stiphodon and whether or not there are a percentage of individuals that do not spend time in the marine environment. This information is critical for understanding the mechanisms that promote endemism, and thus is vital data for managing and conserving island stream gobies that may be at risk of local and global extinction.",
+    "keywords": [],
+    "session_name": "Poster Session I, STORER ICHTHYOLOGY AWARD"
+  },
+  {
+    "title": "Developmental Macromutations and the \"Hopeful Monster\"",
+    "authors": [
+      {"full_name": "Mary White", "affiliation": "Southeastern Louisiana University, Hammond, LA, USA", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Donn Rosen’s 1985 list of assumptions that inhibit scientific progress in comparative biology includes, “Goldschmidt’s ideas must be wrong because they conflict with neodarwinism.” Richard Goldschmidt proposed two very different ideas to explain the leap from microevolution to macroevolution. His first idea rejected the classical gene model and argued for what he termed “systemic mutations” such as chromosomal rearrangements to give variation for macroevolution. His forceful defense of this scenario often overshadowed his proposal suggesting that “developmental macromutations” might be an important agent of evolution at the level of speciation. While neoDarwinists were focusing on accumulation of small mutations over long periods of time, Goldschmidt recognized that mutations in controlling genes early in developmental pathways could lead to large-scale body plan alterations. Current research in evolutionary developmental biology, including the importance of regulatory genes such as hox genes in formation of body pattern, supports the idea that “hopeful monsters” may exist after all.",
+    "keywords": [],
+    "session_name": "Donn Rosen and the Assumptions Symposium I"
+  },
+  {
+    "title": "Integrative Chondrichthyan Paleobiology: The Present is the Key to the Past",
+    "authors": [
+      {"full_name": "Lisa B. Whitenack", "affiliation": "Allegheny College, Meadville, PA, USA", "is_presenter": true},
+      {"full_name": "Matthew Kolmann", "affiliation": "University of Toronto, Toronto, Ontario, Canada", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The chondrichthyan fossil record is composed primarily of teeth, though occasionally other body parts are preserved. This often translates into using fossils for studying taxonomy, biostratigraphy, paleoecology, and evolutionary history. Studies that integrate across disciplines are few, and those that do tend to utilize extant taxa. We will discuss those studies that have used integrative techniques, focusing on the use of fossil teeth to understand chondrichthyan evolution in a broad sense. We then will examine trends in tooth morphology coincident with trends in prey availability across geological time. Finally, we will identify holes in our knowledge of chondrichthyan evolution and look forward to how integrative techniques can help us explore this topic.",
+    "keywords": [],
+    "session_name": "AES Integrative Elasmobranch Biology Symposium"
+  },
+  {
+    "title": "Enigmatic Survival Follows Enigmatic Decline: Conservation Ecology of Presumed Extinct Amphibians in Costa Rica",
+    "authors": [
+      {"full_name": "Steven Whitfield", "affiliation": "Gonzaga University, Spokane, WA, USA", "is_presenter": true},
+      {"full_name": "Gilbert Alvarado", "affiliation": "Universidad de Costa Rica, San Pedro, Costa Rica", "is_presenter": false},
+      {"full_name": "Juan Abarca", "affiliation": "Universidad de Costa Rica, San Pedro, Costa Rica", "is_presenter": false},
+      {"full_name": "Hector Zumbado", "affiliation": "Universidad de Costa Rica, San Pedro, Costa Rica", "is_presenter": false},
+      {"full_name": "Adrian Pinto", "affiliation": "Universidad de Costa Rica, San Pedro, Costa Rica", "is_presenter": false},
+      {"full_name": "Valerie McKenzie", "affiliation": "University of Colorado - Boulder, Boulder, CO, USA", "is_presenter": false},
+      {"full_name": "Jacob Kerby", "affiliation": "University of South Dakota, Vermillion, SD, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Approximately 41% of the world’s amphibian species are threatened with extinction, and species in tropical regions are disproportionately threatened with extinction. Anthropogenic factors associated with apparent extinctions and mass mortality events have been contentious for decades, and have largely diverged on interpretations of whether a single anthropogenic stressor (emergence of the amphibian chytrid fungus, Batrachochytrium dendrobatidis “Bd”) or multiple anthropogenic stressors (interactions among Bd and climate, Bd and contaminants, Bd and other emerging infectious diseases) have driven population declines and/or extinctions. Here, we summarize evidence that amphibian species from Central America that are widely perceived to be globally extinct are instead persistent in small, fragile “relict populations” that comprise the last known living individuals of their species. We show that while the extinction of these species is presumably driven by the emergence Bd, all relict populations co-exist with Bd, and we evaluate evidence for the disparate adaptive strategies of tolerance or resistance to infection by Bd among species. We explore evidence that resistance or tolerance to Bd is driven by cutaneous microbial symbionts as a primary line of immune defense, and interpret these results in the context of potential probiotic supplementation programs for amphibian populations vulnerable to Bd emergence elsewhere. Finally, we demonstrate that while controversy lingers over a single-stressor versus multiple stressor causality of amphibian declines, we show that restoration of threatened amphibian will require a detailed understanding of the multiple stressor environment in which relict amphibian populations now survive.",
+    "keywords": [],
+    "session_name": "Herp Conservation I"
+  },
+  {
+    "title": "Conservation Genetics and Habitat Associations of Rhinichthys cataractae: a Fish of Conservation Need in Iowa",
+    "authors": [
+      {"full_name": "Brigid Wieman", "affiliation": "University of Arkansas, Fayetteville, AR, USA", "is_presenter": true},
+      {"full_name": "Peter Berendzen", "affiliation": "University of Northern Iowa, Cedar Falls, IA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "A pressing issue in conservation is to assess demographic and population genetic patterns of species of conservation concern and elucidate the cause of these signatures. Rhinichthys cataractae, the longnose dace, is a fish species of greatest conservation need listed in the Iowa Wildlife Action Plan. Within Iowa, the distribution of longnose dace is primarily isolated to four drainages in the northeastern portion of the state. This distribution largely coincides with the Paleozoic plateau landform region which was not glaciated during the last glacial maximum. The aim of this study was to use habitat, genetic and GIS data to elucidate the demographic patterns of this species and the environmental factors impacting its distribution and population structure in Iowa. Multiple sites within each of the four drainages were sampled for habitat and genetic data. Landscape level variables were obtained with GIS techniques and an ecological niche model (ENM) was constructed with these data to predict habitat and environmental variables influencing suitability of habitat for R. cataractae. The ENM indicated that geologic factors (e.g., geologic history, depth to bedrock) likely play a key role in determining the distribution and abundance of R. cataractae in Iowa. Population genetic analyses of 7 microsatellite loci revealed two distinct, but somewhat admixed genetic populations corresponding with a signature of isolation by distance (IBD) and possessing moderate to high levels of intra-group diversity. These results suggest that IBD, historical processes, and underlying geology are primarily responsible for the genetic and distributional patterns of R. cataractae in Iowa.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Fire-altered Landscapes Influence Locomotor Performance of Eastern Fence Lizards",
+    "authors": [
+      {"full_name": "Kristoffer H. Wild", "affiliation": "Austin Peay State University, Clarksville, TN, USA", "is_presenter": true},
+      {"full_name": "C.M. Gienger", "affiliation": "Austin Peay State University, Clarksville, TN, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Habitat disturbance through fire plays a key role in shaping the biodiversity of forest communities in the Southeastern US. Prescribed burns are an essential management technique used to help maintain the persistence of oak-hickory savanna, an early seral stage vegetative community. Sceloporus undulatus is a sexually dimorphic forest lizard that is relatively common throughout the eastern US, which makes it well-suited for studying the effects of fire-altered landscapes on lizard ecology. Our objective is to quantify the effect of fire-altered landscapes on S. undulatus locomotor performance. We compared performances of lizards from habitats with three different known fire histories; a control habitat, which had not experienced fire in more than 60 years, a recovering burn habitat that has not experienced fire in four years, and a recent burn habitat that was burned three months prior to the study. There were significant differences in locomotor performance among lizards from the different habitats, and lizards in the recent burn habitat had significantly faster maximum sprint speeds than lizards in recovering and control habitats. Understanding how performance of S. undulatus is influenced by fire-altered habitats is essential for assessing the effect of human activities (e.g. prescribed fire) on wildlife. Such data are crucial for implementing conservation and management strategies for similar organisms in fire managed landscapes.",
+    "keywords": [],
+    "session_name": "HERPETOLOGISTS’ LEAGUE GRADUATE RESEARCH AWARD"
+  },
+  {
+    "title": "Species Concepts",
+    "authors": [
+      {"full_name": "E. O. Wiley", "affiliation": "University of Kansas, Lawrence, KS, USA", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Macroevolution in the age of phylogenetic systematics is precisely the dynamics of speciation and extinction. What we recognize as the products of speciation depends on finding the best species concept that is consistent with what we understand to be the various ways species can form (that is, speciation) and how we understand the relationships among species as reflected in genealogical history (phylogeny). The evolutionary species concept, formulated by an opponent of phylogenetics, G. G. Simpson, turns out to be consistent with Hennig's understanding of the nature of species and with the nature of phylogenetic trees as we presently understand them. That is: species are lineages and individuals and the effect of speciation through time is a phylogenetic tree that may be at least partly discovered using phylogenetic techniques. All other species concepts are either synonyms of the evolutionary species concept or concepts about how one might discover a species. For example, Donn Rosen's concept that a species is a population or group of populations defined by one or more apomorphous feature is not a species concept per se but Donn's method of discovering species. He seemed to be pretty good at it and along the way exposed weaknesses in the biological species concept.",
+    "keywords": [],
+    "session_name": "Donn Rosen and the Assumptions Symposium I"
+  },
+  {
+    "title": "Kelp Forest Fish Communities at San Clemente Island, California",
+    "authors": [
+      {"full_name": "Jonathan P. Williams", "affiliation": "Biology Department and Vantuna Research Group, Moore Laboratory of Zoology, Occidental College, Los Angeles, CA, USA", "is_presenter": true},
+      {"full_name": "Daniel J. Pondella II", "affiliation": "Biology Department and Vantuna Research Group, Moore Laboratory of Zoology, Occidental College, Los Angeles, CA, USA", "is_presenter": false},
+      {"full_name": "Jeremy T. Claisse", "affiliation": "Biology Department and Vantuna Research Group, Moore Laboratory of Zoology, Occidental College, Los Angeles, CA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "San Clemente Island, the southernmost of California’s Channel Islands, is located approximately 85 km from the Ports of Los Angeles and Long Beach, and approximately 100 km from Mission Bay and San Diego Bay. The 150-km2 island is owned, operated, and occupied entirely by the United States Navy and is an active naval warfare training and ship-to-shore live firing area. Due to the frequent use of nearshore waters for military training and live fire exercises, much of the kelp forest/rocky reef area surrounding the island is closed to commercial and recreational fishing on either a temporary or permanent basis. The distant location from urban areas, combined with entry restrictions for non-military vessels and personnel, creates a unique opportunity to examine reduced and relative levels of fishing pressure around the island where restrictions are based solely on when any of the eight “Safety Zones” are in use by the Navy. This study looks at the community and size structure characteristics of kelp forest/rocky reef fishes at San Clemente Island using data from scuba surveys (to 30 m depth) at 17 sites from 2004-2013, and compares those results among Safety Zones as well as other island and mainland sites in the Southern California Bight.",
+    "keywords": [],
+    "session_name": "Fish Ecology II"
+  },
+  {
+    "title": "Identifying Recruitment Patterns Among Silk Snapper (Lutjanus vivanus) off the West Coast of Puerto Rico: Challenges and Solutions with Using ddRADseq-based Single Nucleotide Polymorphisms",
+    "authors": [
+      {"full_name": "Stuart Willis", "affiliation": "Marine Genomics Lab, Harte Research Institute, Dept. Life Sciences, Texas A&M University-Corpus Christi, Corpus Christi, TX, USA", "is_presenter": true},
+      {"full_name": "Christopher Hollenbeck", "affiliation": "Marine Genomics Lab, Harte Research Institute, Dept. Life Sciences, Texas A&M University-Corpus Christi, Corpus Christi, TX, USA", "is_presenter": false},
+      {"full_name": "Jonathon Puritz", "affiliation": "Marine Genomics Lab, Harte Research Institute, Dept. Life Sciences, Texas A&M University-Corpus Christi, Corpus Christi, TX, USA", "is_presenter": false},
+      {"full_name": "David Portnoy", "affiliation": "Marine Genomics Lab, Harte Research Institute, Dept. Life Sciences, Texas A&M University-Corpus Christi, Corpus Christi, TX, USA", "is_presenter": false},
+      {"full_name": "John Gold", "affiliation": "Marine Genomics Lab, Harte Research Institute, Dept. Life Sciences, Texas A&M University-Corpus Christi, Corpus Christi, TX, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Silk snapper (Lutjanus vivanus) represent a major fishery along the west coast of Puerto Rico that is overexploited and at risk of collapse. One of the major issues facing the fishery is whether recruitment patterns are predictable and whether some areas serve to supplement the fishery more than others. We are using a genetic approach to assess whether recruitment across the region is random across fishing sites or correlated with geographic proximity and mediated by current patterns. Settling larvae also may experience habitat-specific selective regimes that produce non-random, predictable patterns of recruitment. To address these questions, we tested stability (homogeneity) in genetic variance of recruits among sites, among years, and within years by using a ddRAD approach to generate single nucleotide polymorphisms (SNPs) among samples of age-0 and adult silk snapper from Puerto Rico. We identified a few small but significant genetic differences among fish sampled at different sites or in different years. We also found that at low levels of genetic divergence, library-generation artifacts potentially confound biological signal, particularly with reference SNP loci built de novo from the same short-read data. We discuss approaches for circumventing this bias. We also show that generating haplotypes in contiguous RAD sequences can avoid signal bias without loss of information content. Using haplotypes also enables filtering of paralogous loci and genotyping errors based on the expected number of haplotypes per individual.",
+    "keywords": [],
+    "session_name": "Fish Genetics"
+  },
+  {
+    "title": "Influence of Landcover, Spatial Configuration, and Species Life-history on Amphibian Abundance and Productivity in Fragmented Landscapes",
+    "authors": [
+      {"full_name": "John Willson", "affiliation": "University of Arkansas, Fayetteville, AR, USA", "is_presenter": true},
+      {"full_name": "Jacquelyn Guzy", "affiliation": "University of Arkansas, Fayetteville, AR, USA", "is_presenter": false},
+      {"full_name": "William Hopkins", "affiliation": "Virginia Tech, Blacksburg, VA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Although inter-wetland dispersal is thought to play an important role in regional persistence of pond-breeding amphibians, few studies have modeled the dynamics of amphibians inhabiting multi-wetland networks. Previously, we used a stochastic structured metapopulation model to demonstrate that spatial configuration of wetland networks within a homogeneous landscape was important in driving source-sink dynamics and landscape-scale productivity of pond-breeding anurans. Here, we extend this analysis to consider how loss of forested upland habitat interacts with spatial configuration of wetlands to influence amphibian population density and productivity. Specifically, we modified our model to incorporate reduced movement distance and behavioral avoidance of non-forested habitats by dispersing juveniles and loss of critical upland habitat for adults. We parametrized models to represent the contrasting life-histories of a terrestrial anuran (Anaxyrus sp.) and a pond-breeding salamander (Ambystoma sp.) and conducted simulations evaluating the effects of increasing inter-wetland distance and decreasing forest cover on adult population size and annual metamorph production. We found that decreasing the proportion of forested upland habitat decreased the inter-wetland distance at which maximal productivity was observed, but that this optimal distance varied strongly among species. Anaxyrus, which was characterized by high vagility and fecundity, benefitted from close spacing of wetlands and was relatively resilient to forest loss. Ambystoma, conversely, displayed a much narrower range of optimal distances and was strongly affected by forest loss. Our results have implications for understanding regional dynamics and productivity of pond-breeding amphibians and for maximizing the efficacy of restoration activities such as re-forestation and wetland creation.",
+    "keywords": [],
+    "session_name": "Herp Conservation I"
+  },
+  {
+    "title": "The Role of Toxin Tolerance in Predator-prey Relationships Between Freshwater Crustaceans and Amphibians",
+    "authors": [
+      {"full_name": "Natasha Wilson", "affiliation": "University of South Australia, Adelaide, South Australia, Australia", "is_presenter": true},
+      {"full_name": "Edmund Brodie, Jr", "affiliation": "Utah State University, Logan, UT, USA", "is_presenter": false},
+      {"full_name": "Craig Williams", "affiliation": "University of South Australia, Adelaide, South Australia, Australia", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Freshwater invertebrates reportedly consume toxic amphibians with little or no ill effects. In this research we aimed to identify common invertebrate predators of amphibians in Australia, to determine levels of toxin tolerance, and understand how this tolerance may have evolved. Field collections and laboratory experiments revealed that freshwater crayfish are a major predator of native frog eggs and tadpoles. Literature analysis revealed that freshwater crayfish from both superfamilies are tolerant of a range of toxic amphibians, suggestive that toxin tolerance may be a primitive trait in these predators. To explore this, the ability of crayfish from both Australia and North America to consume toxic amphibians was assessed. Studies of Australian freshwater crayfish revealed that they were able to consume toxic cane toad (Rhinella marina) eggs and tadpoles. However, dose response experiments revealed that these animals lack cellular-level resistance to bufotoxins and bufadienolides. The capacity of North American crayfish to tolerate tetrodotoxin (TTX) was also investigated by studying predation of toxic newt Taricha granulosa eggs, and via intramuscular injection of toxin. Once again, whilst crayfish were capable consumers of highly toxic newt eggs they did not demonstrate cellular-level resistance to TTX. These findings suggest that crayfish have some functional (organismal-level) resistance that renders them capable of consuming toxic prey despite a lack of cellular resistance to these amphibian toxins. Demonstration of this functional resistance in crayfish on two continents is suggestive of it being a basal trait acquired early in crayfish diversification.",
+    "keywords": [],
+    "session_name": "Chemical Ecology Symposium"
+  },
+  {
+    "title": "Feeding Ecology of the Sierra Garter Snake (Thamnophis couchii) from the North Fork Feather River, California",
+    "authors": [
+      {"full_name": "Kevin Wiseman", "affiliation": "Garcia and Associates, San Francisco, CA, USA", "is_presenter": true},
+      {"full_name": "Ronald Jackman", "affiliation": "Garcia and Associates, San Francisco, CA, USA", "is_presenter": false},
+      {"full_name": "Joseph Drennan", "affiliation": "Garcia and Associates, San Francisco, CA, USA", "is_presenter": false},
+      {"full_name": "Karla Marlow", "affiliation": "Garcia and Associates, San Francisco, CA, USA", "is_presenter": false},
+      {"full_name": "Ian Chan", "affiliation": "Garcia and Associates, San Francisco, CA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "We studied the feeding ecology of the Sierra garter snake (Thamnophis couchii) from three regulated reaches of the North Fork Feather River, California, during field surveys conducted annually from 2002-2014 focused on river-breeding foothill yellow-legged frogs (Rana boylii). Prey items were primarily obtained from palpation of live snakes in the field supplemented by the examination of museum specimens. A total of 739 snakes were observed during 4,359 person-hours surveying, including 262 snakes that were palped, yielding 131 prey from 77 snakes. Sixty-six percent of prey were fish and 44% were amphibians in relative frequency, however amphibians, especially Rana boylii, were the most important prey taxa in terms of biomass. Relative prey mass values averaged 0.16 (range= 0.01-0.53; n=32) and larger snakes continued to eat relatively small prey items. The most frequent prey item taken in our study was the smallmouth bass, demonstrating the capability of a dietary shift to invasive prey as observed in other species of Thamnophis.",
+    "keywords": [],
+    "session_name": "Herp Ecology"
+  },
+  {
+    "title": "Model Selection, Partitioning Schemes, and Phylogenetic Informativeness: A Case Study from the Dicroglossidae (Amphibia:Anura)",
+    "authors": [
+      {"full_name": "Guinevere Wogan", "affiliation": "UC Berkeley, Berkeley, CA, USA", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Partitioning schemes and model selection can have dramatic impact on phylogenetic inference, with partitioning affecting tree topology, branch lengths, and support estimates. In this study I use a multi-locus dataset for the Old World frog family Dicroglossidae to first evaluate model adequacy using simulations and the multinomial likelihood statistic (Tx). I then assess the impact of model selection and partitioning schemes on phylogenetic informativeness (PI), tree topology, and a series of tree-based statistics (tree length, tree height, symmetry, and treeness). I found that for several loci, the selected models of nucleotide substitution were not adequately able to model the empirical data adequately. Phylogenetic informativenss was greatly impacted by partitioning scheme, with un-partitioned analyses possessing low values of PI, and Bayesian estimates possessing higher levels of PI relative to Maximum likelihood estimates. I also found that PI was highest for simpler models with gene rather than gene/codon codon partitioning. While tree topology remained statistically congruent across partitioning schemes, there was topological variation in accord with partitioning and model selection choices. The family Dicroglossidae was recovered as monophyletic in all analyses as were the two subfamilies Occidozyginae and Dicroglossinae. Within Dicroglossinae, multiple genera were recovered as paraphyletic, suggesting that additional work is needed to fully resolve the evolutionary history of the lineages within this group of frogs.",
+    "keywords": [],
+    "session_name": "Herp Systematics & Genetics"
+  },
+  {
+    "title": "Conservation Status and Phylogeography of the Tennessee-endemic Egg-mimic Darter (Etheostoma pseudovulatum)",
+    "authors": [
+      {"full_name": "Zachary Wolf", "affiliation": "Austin Peay State University, Clarksville, TN, USA", "is_presenter": true},
+      {"full_name": "Rebecca Blanton", "affiliation": "Austin Peay State University, Clarksville, TN, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Restricted to two counties in the Duck River system of Tennessee, Etheostoma pseudovulatum is state endangered and has been petitioned for federal listing. In addition to its small range, the mainstem Duck River may act as a barrier isolating smaller tributary populations. Despite this, little is known about the species and a recent status survey has not been conducted. Thus, objectives were to describe the current status, habitat use, and genetic diversity of E. pseudovulatum. To evaluate its current status, historical localities were sampled using standard seining techniques to assess presence and estimate abundance using the Petersen method. Microhabitat variables were measured and analyzed for association with E. pseudovulatum presence, and range-wide genetic diversity was examined using the mitochondrial ND2 gene. Etheostoma pseudovulatum was present at all 25 historical localities sampled and abundance estimates ranged from 5 to 258 individuals per locality, comparable to those observed historically. The species was associated with pools and presence of root wads. Nine haplotypes were detected, including one haplotype shared across five of the six tributaries. One tributary, Beaverdam Creek, had a unique haplotype assemblage. Haplotypes were recovered in two clades: 1) Beaverdam Creek, and 2) the other five tributary populations. These results suggest recent gene flow among all tributaries except Beaverdam Creek, which has potentially been isolated. Overall, the species was locally abundant and appears stable, however future management efforts should monitor the species with special focus on smaller tributaries, which had the lowest abundances, and the genetically distinct Beaverdam Creek population.",
+    "keywords": [],
+    "session_name": "ASIH STOYE AWARD CONSERVATION"
+  },
+  {
+    "title": "Spatial Characterization of Barred Sand Bass Spawning Aggregations Using Active Acoustic Technology",
+    "authors": [
+      {"full_name": "Calvin Won", "affiliation": "California State University, Northridge, Northridge, CA, USA", "is_presenter": true},
+      {"full_name": "Larry Allen", "affiliation": "California State University, Northridge, Northridge, CA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "lightning",
+    "abstract_text": "Spawning aggregations have long been essential to commercial and recreational fish harvest around the world. Predictability of aggregations in both time and space allows for plentiful yield with relatively low fishing effort. However, this places certain species at risk of overharvest. One such species, the Barred Sand Bass (Paralabrax nebulifer), has been shown to be exhibiting the characteristics of an aggregation-based fishery that is on the verge of collapse, as annual catch estimates have shown a greater than 90% decrease in the last decade. Population declines of aggregation-based fisheries have a tendency of going unnoticed, as fishery-dependent stock assessments do not generally account for spatio-temporal variability. This phenomenon is known as hyperstability. The present study aims to investigate the spatial and temporal dynamics of spawning in the Barred Sand Bass at Huntington Flats, California. Preliminary transect surveys were conducted using split-beam SONAR to examine spatial and temporal variability of spawning aggregations in relation to environmental factors (e.g., temperature, thermocline, lunar phase). The objective was to identify any environmental factors that would aid in the predictability of aggregating behaviors. However, spawning activity during the summer of 2014 appeared to be minimal and is mostly likely explained by environmental conditions associated with El Niño Southern Oscillation. Future plans will take an ethological approach to reproductive behaviors using videography on SCUBA.",
+    "keywords": [],
+    "session_name": "Lightning Talks"
+  },
+  {
+    "title": "Abundant Feces from an Exotic Armored Catfish, Pterygoplichthys disjunctivus, Create Nutrient Hotspots in a Florida Spring",
+    "authors": [
+      {"full_name": "Kirsten Work", "affiliation": "Stetson University, DeLand, FL, USA", "is_presenter": true},
+      {"full_name": "Missy Gibbs", "affiliation": "Stetson University, DeLand, FL, USA", "is_presenter": false},
+      {"full_name": "Vanessa Rubio", "affiliation": "Stetson University, DeLand, FL, USA", "is_presenter": false},
+      {"full_name": "Cliff Bryan", "affiliation": "Stetson University, DeLand, FL, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Over the past 15 years, Pterygoplichthys disjunctivus has colonized many Florida systems, including Volusia Blue Spring. Unlike any other species in the spring run, Pterygoplichthys disjunctivus grazing repackages periphyton with sand into a fecal structure that remains relatively intact in the spring. Not only does P. disjunctivus produce copious feces, but the fecal persistence allows the feces to contribute to nutrient loading when the fish are not present. What, then, is the effect of this nutrient loading on the spring ecosystem? We surveyed the spring run to assess fecal abundance, analyzed fecal samples from live fish and from the substrate for nutrient content, and conducted flume experiments to measure nutrient content of leachate. We found that feces were abundant in the spring and, although each sample leached minute quantities of nutrients (NO3-, TKN, SRP), the total quantity of nutrients released from local accumulations of feces was substantial. Our results suggest that leachate from P. disjunctivus fecal deposition could create transient biogeochemical hotspots lasting longer than those described for excreta, and thus it is likely that it alters nutrient cycling in this spring system significantly.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Single Large or Several Small: Prey Size Selection and Its Effect on Terrestrial Locomotion of Ribbon Snakes",
+    "authors": [
+      {"full_name": "Bryenna Workman", "affiliation": "Colorado Mesa University, Grand Junction, CO, USA", "is_presenter": true},
+      {"full_name": "Callahan Clarke", "affiliation": "Colorado Mesa University, Grand Junction, CO, USA", "is_presenter": false},
+      {"full_name": "Melissa Gall", "affiliation": "Carroll University, Waukesha, WI, USA", "is_presenter": false},
+      {"full_name": "Paul Hampton", "affiliation": "Colorado Mesa University, Grand Junction, CO, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "It has been suggested that extra weight in the form of carrying offspring or ingested meals may reduce locomotor performance in snakes. In general, colubrids move by serpentine locomotion, creating lateral undulations and using push-points in their environment. Consequently, a rigid prey item may confound the adverse effects of a meal on locomotion by limiting the maneuverability. We hypothesized that consumption of several small fish will have less hindered movement of the spinal column compared to a single large fish. We chose western ribbon snakes (Thamnophis proximus) as our study species. This is a slender snake that depends upon speed to avoid predation. Ribbon snakes were fed meals approximately 20% of the snake's mass. The large meal treatment was a single fish that was approximately 20% of the snake's mass. For the several small treatment, snakes were offered four fish that were each approximately 5% of the snakes size, thus totaling an equivalent meal size. After feeding, individuals were video-recorded while crawling through a track with push-points. Using Logger Pro, a motion-analysis program, we determined the maximum velocity and we used Image J to determine the amplitude and angle of spinal flexion from the fastest trial for each snake. Preliminary results suggest that meal type had no impact on maximum velocity, amplitude or spinal flexion.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "The Changing Face or AES",
+    "authors": [
+      {"full_name": "Jennifer Wyffels", "affiliation": "South-East Zoo Alliance for Reproduction and Conservation, Yulee, FL, USA", "is_presenter": true}
+    ],
+    "presentation_type": "plenary",
+    "abstract_text": "There has been a steady demographic shift occurring in life sciences over the last 30 years, so maybe it’s not so unexpected to see it in the field of elasmobranch science as well. While all fields of science have historically been largely male-dominated, there are now far more women training in biological fields than men; however, the proportion of women entering and remaining within professional careers is still proportionally behind that of males. This trend is particularly true for women and underrepresented groups in AES. Not unlike other fields in the life sciences, pioneers like Eugenie Clark, one of the first women to establish herself as force among elasmobranch scientists in the 1960s, led the way for the next generation of female scientists. Despite increasing numbers of female student members, the number of women remaining in the society as professional members has not increased proportionally. Male AES members have served as president for 26 out of the 30 year history of the society and only two women have been elected as President of AES, the first being Merry Camhi in 2002. There has been a growing number of women serving important leadership roles in AES, particularly over the last 10 years, which is needed to support the needs of our changing society. However, there is also a need to further enrich our ranks with greater diversity.",
+    "keywords": [],
+    "session_name": "Plenary"
+  },
+  {
+    "title": "Strategies of Dispersal in Pond Breeding Amphibians",
+    "authors": [
+      {"full_name": "Katharine T. Yagi", "affiliation": "McGill University, Montreal, Canada", "is_presenter": true},
+      {"full_name": "David M. Green", "affiliation": "McGill University, Montreal, Canada; Redpath Museum, Montreal, Canada", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Dispersal is a necessary process for any species living in a fragmented landscape and therefore the dispersal strategies of endangered amphibians are important considerations for population recovery and effective management. Fowler’s toads, Anaxyrus fowleri, exist in three remnant populations in Canada, one of which is at Long Point, Ontario. Although adult body size in this population negatively correlates with density, it is unknown precisely how body size is related to dispersal. If dispersal is in some way size-dependent, then by manipulating larval density conditions to produce toads of varying sizes in the field, we should see a correlation between movement and body size among individuals. To address this, we reared Fowler’s toad tadpoles in eight density treatments within four ponds located in the Long Point National Wildlife Area. A random sample of eighteen tadpoles at stage 40 were placed alone in a dish of water and filmed for one hour to assess activity level. A similar test was conducted on the same treatment groups as toadlets. Six individuals were filmed in a terrestrial enclosure for 6 hours and activity was scored based on whether the subject changed positions every 1 minute. We predicted tadpole activity level will correlate positively with density because crowded conditions can cause increased competitive behaviour, and we predicted a negative relationship for toadlets because high density toadlets emerge at small sizes suggesting smaller energy stores will be allocated towards movement. These results will be a component in predicting the effect of larval density on amphibian dispersal.",
+    "keywords": [],
+    "session_name": "ASIH STOYE AWARD ECOLOGY & ETHOLOGY I"
+  },
+  {
+    "title": "Nuclear Gene Cloning, Polyploid Evolution and the Subdivision of the Subfamily Cyprininae",
+    "authors": [
+      {"full_name": "Lei Yang", "affiliation": "Saint Louis University, St. Louis, MO, USA", "is_presenter": true},
+      {"full_name": "Richard Mayden", "affiliation": "Saint Louis University, St. Louis, MO, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Cyprininae is the largest subfamily of Cyprinidae and contains more polyploid species than any other group of fishes. The large number of polyploid taxa poses significant challenges for phylogenetic studies of this subfamily. Our recent study with several of our collaborators explored the polyploid evolution and subdivision of the Cyprininae based on extensive taxon sampling and DNA sequence data from mitochondrial genes and the cloned nuclear RAG1 gene. In the present study, we cloned and sequenced RAG1 for 13 more species and two additional single-copy nuclear loci EGR2B and IRBP for 27 species to further investigate these interesting questions. Species of different ploidy levels (diploids, tetraploids, and hexaploids) were analyzed and all tribes are represented. Partitioned Maximum Likelihood searches and bootstrap analyses were performed separately on the RAG1 dataset (110 taxa, 1497 bp), EGR2B dataset (62 taxa, 801 bp), and IRBP dataset (62 taxa, 815 bp). Topologies of the resulting trees were compared with those of previously published mitochondrial trees and the nuclear RAG1 tree. New data provided in the present study provide further support for the subdivision of the subfamily Cyprininae into 11 tribes. This study also provided further corroboration for the phylogenetic placements of some important taxa and the hybrid origins of the tribes Torini, Cyprinini, Spinibarbini, and Barbini.",
+    "keywords": [],
+    "session_name": "Cypriniformes Inventory Symposium"
+  },
+  {
+    "title": "Phylogenetic Relationships of Batoids Inferred from Gene Capture Data of 1076 Nuclear Loci and the Mitogenome",
+    "authors": [
+      {"full_name": "Lei Yang", "affiliation": "College of Charleston, Charleston, SC, USA", "is_presenter": true},
+      {"full_name": "Shannon Corrigan", "affiliation": "College of Charleston, Charleston, SC, USA", "is_presenter": false},
+      {"full_name": "Gavin Naylor", "affiliation": "College of Charleston, Charleston, SC, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Batoids (skates and rays) are a large group of fishes that account for more than half of the species diversity of cartilaginous fishes. The present study is aimed at resolving the phylogenetic relationships among batoid fishes based on the largest taxon and genomic sampling to date. A preliminary Neighbor-Joining tree was estimated from mitochondrial ND2 sequences derived from more than 10,000 tissue samples collected as part of an NSF funded Tree of Life project. Representative samples of batoid lineages identified as distinct in the Neighbor-Joining analysis were subsequently subjected to cross-species single-copy nuclear gene capture and sequenced on an Illumina MiSeq. Counterpart complete mitogenomic sequences were also collected through next-generation sequencing. Partitioned Maximum Likelihood searches and bootstrap analyses were performed for 1076 single-copy nuclear exons and the complete mitogenome sequences obtained. Most nodes were resolved with high bootstrap support in both the nuclear tree and the mitochondrial tree. Topologies of the two trees were compared and relationships among major lineages were discussed. Monophyly of some currently recognized genera were evaluated and taxonomic revisions are planned.",
+    "keywords": [],
+    "session_name": "Fish Systematics II"
+  },
+  {
+    "title": "Early Life History of Sebastes koreanus (Pisces, Scorpaenoidei) in the Yellow Sea",
+    "authors": [
+      {"full_name": "Hyo-Jae Yu", "affiliation": "Department of Marine Biology, Pukyong National University, Busan, Republic of Korea", "is_presenter": true},
+      {"full_name": "Jin-Koo Kim", "affiliation": "Department of Marine Biology, Pukyong National University, Busan, Republic of Korea", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "The early life history of Sebastes koreanus, an endemic marine fish species of the Yellow Sea, was investigated using wild-captured larvae [6.11-11.10 mm body length (BL)] and a juvenile (18.60 mm BL). The flexion of the notochord tip started at ca. 6.75 mm BL and was complete at ca. 8.84 mm BL. The caudal and pectoral fin rays first appeared at the preflexion stage (6.11 mm BL), the dorsal and anal fin rays appeared later, at the flexion stage (7.66 mm BL), and the pelvic fin rays appeared at the postflexion stage (8.84 mm BL). Head spines began to appear at the flexion stage (6.75 mm BL) and their appearance was complete at the postflexion stage (more than 8.84 mm BL). Among the cephalic bones, which are related to feeding, breathing, and swimming, the jaw bone, opercle, pectoral girdle, and hyoid arch were first observed at ca. 6.27 mm BL. The neurocranium began to ossify in the frontal, pterotic, and parietal regions at ca. 6.27 mm BL, and then in the parasphenoid and basioccipital regions at ca. 8.17 mm BL. The vertebrae began to ossify at ca. 7.17 mm BL and their ossification was almost complete at ca. 11.10 mm BL. Melanophores were present on the head and abdominal region during the larval stage, and were often present behind the nape (which may be an intraspecies variation). Three transverse stripes were present in the juvenile stage, corresponding to the coloration observed in the adult.",
+    "keywords": [],
+    "session_name": "Fish Biology"
+  },
+  {
+    "title": "Significantly Low Levels of Genetic Diversity in Hyporhamphus sajori (Pisces, Hemiramphidae) from Korea and Japan Inferred from Mitochondrial DNA Control Region Sequence Data",
+    "authors": [
+      {"full_name": "Hyo-Jae Yu", "affiliation": "Department of Marine Biology, Pukyong National University, Busan, Republic of Korea", "is_presenter": true},
+      {"full_name": "Yoshiaki Kai", "affiliation": "Maizuru Fisheries, Research Station, Field Science Education and Research Center, Kyoto University, Maizuru, Kyoto 625-0086, Japan, Kyoto, Japan", "is_presenter": false},
+      {"full_name": "Jin-Koo Kim", "affiliation": "Department of Marine Biology, Pukyong National University, Busan, Republic of Korea", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The genetic diversity, relationships, and population structure of Hyporhamphus sajori collected from Korea (five locations, n = 30) and Japan (three locations, n = 27) were analyzed using 484-base-pair sequences of the mitochondrial DNA control region. All H. sajori individuals were indistinguishable, on the basis of their location, as demonstrated with a neighbor-joining tree and minimum spanning network. All individuals collected from the eight locations comprised a single panmictic species. Analysis of molecular variance revealed a lack of significant differentiation among the eight locations. The prevalent lack of genetic differentiation is probably attributable to the reproductive behavior and spawning ecology of H. sajori. For example, the eggs of H. sajori are attached to drifting seaweed, and larvae are also dispersed with drifting seaweed. Therefore, we speculate that the eggs and larvae of H. sajori are highly dispersed, far from their natal grounds. Further research with more sensitive DNA, such as microsatellite DNA, is required to clarify more recent differentiation events.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "The Life and Demography of Side-blotched Lizards, Uta stansburiana, in Eastern Oregon: A Tribute to Don Tinkle",
+    "authors": [
+      {"full_name": "Peter A. Zani", "affiliation": "Univ. Wisconsin-Stevens Point, Stevens Point, WI, USA", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Five decades ago Don Tinkle published several classic studies of side-blotched lizards including comparative demography of northern (Colorado) and southern (Texas) populations. In the spirit of Tinkle’s work, and in an attempt to understand how climate affects lizard life histories, I have conducted a long-term mark-recapture study of a population of Uta stansburiana in eastern Oregon. For 12 years (2004-15) I have marked 150-500 lizards annually. Timing of reproductive bouts has been estimated from abdominal palpations in the field and oviposition in the lab, which has also yielded data on clutch size. Results confirm Tinkle’s finding that Uta experience reduced mortality at higher latitudes (annual adult mortality is only 65%), but also achieve fewer reproductive bouts. Field observations indicate that fluctuations in the onset of the growing season may constrain Uta to two clutches in some years, but enable three clutches in other years. Demographic analyses suggest that resulting population growth oscillates between negative and positive values depending on the number of reproductive bouts possible in a season. Thus, while Tinkle suggested that northern Uta are limited to as many as three clutches per year by the shorter growing season, my analyses indicate that side-blotched lizards actually require three clutches per year to avoid population decline.",
+    "keywords": [],
+    "session_name": "Herp Ecology"
+  },
+  {
+    "title": "Effects of Drought on Reproductive Life History of Side-blotched Lizards, Uta stansburiana",
+    "authors": [
+      {"full_name": "Peter A. Zani", "affiliation": "University of Wisconsin-Stevens Point, Stevens Point, WI, USA", "is_presenter": true},
+      {"full_name": "Bridget Walker", "affiliation": "University of Wisconsin-Stevens Point, Stevens Point, WI, USA", "is_presenter": false},
+      {"full_name": "Elizabeth Wagner", "affiliation": "University of Wisconsin-Stevens Point, Stevens Point, WI, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "During 2013, drought conditions in central Nevada appeared to cause some populations of side-blotched lizards to terminate breeding earlier than usual in an apparent shift from reproduction to survival. This observation led us to investigate which aspects of drought are the causal agent of this shift in life history. To do so we kept adult wild-caught side-blotched lizards in identical lab conditions for six months (including a winter inactivity period) before assigning them to drought (no supplemental watering) or non-drought (supplemental watering) treatment groups. Animals were fed ad libitum to test the hypothesis that lack of water, but not lack of food, was sufficient to induce a reproductive response. Although body condition was not affected by drought during the lab breeding season, results indicate that as the drought progressed animals lacking water were negatively affected in terms of reproductive timing and success. These findings suggest that for desert-adapted reptiles drought conditions and the lack of drinking water alone may be enough to affect life history even if the food supply is not altered in nature.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "How Big is the Greater Caribbean Shore-fish Fauna, and How Long to Describe It?",
+    "authors": [
+      {"full_name": "Fernando A. Zapata", "affiliation": "Universidad del Valle, Cali, Colombia", "is_presenter": true},
+      {"full_name": "D. Ross Robertson", "affiliation": "Smithsonian Tropical Research In, Balboa, Panama", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "To estimate the size of the shallow shore-fish fauna of the Greater Caribbean (GC), we examined the long-term dynamics of description of species in relation to their biological characteristics, using the 1,549 named species from that region that were described between1758-2013. The rate of accumulation of species-descriptions for the entire fauna has remained unchanged for the past 100y, while that of non-endemic species has slightly declined, and that of regional endemics has increased. Species-accumulation curves of minor habitat groups of the fauna may be declining, but those of the largest subsets (soft-bottom and reef species, especially reef endemics), have generally accelerated. These curves indicate that there must be many undiscovered species in the GC fauna. Both body-size and latitudinal-range of newly described species have declined in recent years, while the upper limit of the depth range has deepened. Hence, many of the undiscovered species are small fishes living in deeper reef and soft-bottom habitats in the Caribbean heart of the GC. The exponential scaling relationship between the number of higher taxa and their rank predicts, with very low reliability, that there are more than twice as many species as currently named. Proportional increases in species richness across a range of genera due to recent descriptions of new species indicate that the fauna is ~45% larger than currently known. At the currently low species-description rate a full faunal inventory will take a very long time.",
+    "keywords": [],
+    "session_name": "Fish Biogeography"
+  },
+  {
+    "title": "A Contemporary Fish Survey of the Muddy Boggy River Drainage, Southeast Oklahoma, U.S.A.",
+    "authors": [
+      {"full_name": "Zachery D. Zbinden", "affiliation": "University of Oklahoma, Norman, OK, USA", "is_presenter": true},
+      {"full_name": "William J. Matthews", "affiliation": "University of Oklahoma, Norman, OK, USA", "is_presenter": false},
+      {"full_name": "Edie Marsh-Matthews", "affiliation": "University of Oklahoma, Norman, OK, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Sixty-six fish-community collections were made between May and September 2014 at sites throughout the Muddy Boggy River basin, a major tributary of the Red River in southeastern Oklahoma. The primary objective was to document the distribution of fish species and community composition within the basin. Samples were taken by exhaustively seining approximately 100 m of stream reach (mean sampling duration 47 min.), and also measuring 22 environmental variables (e.g., substrate, habitat, water quality, land use, etc.) at each study site. Study sites were widely distributed from headwaters to lower mainstream to maximize coverage across the watershed, and the survey resulted in 63 species found throughout the Muddy Boggy River system (mean per site= 11.2 species). The purpose of this study is to i.) Use environmental variables to determine which factors are correlated with variation we see in contemporary fish community structure throughout the watershed, ii.) Compare results of this survey to a past survey conducted by Mr. Jimmie Pigg in the same drainage which yielded 90 species (1974-1975, sites=277), and iii.) Draw conclusions about the factors likely responsible for changes seen in the fishes of this watershed over time. Special attention is given to anthropogenic disturbance within the Muddy Boggy drainage area, which has a long history of producing and exporting oil and natural gas, and has been experiencing an increase in production in recent years.",
+    "keywords": [],
+    "session_name": "Poster Session I, STORER ICHTHYOLOGY AWARD"
+  },
+  {
+    "title": "Post-release Survival of Juvenile Captive-reared Chinese Giant Salamander (Andrias davidianus) Reintroduced to the Wild",
+    "authors": [
+      {"full_name": "Lu Zhang", "affiliation": "Memphis Zoo, Memphis, TN, USA", "is_presenter": true},
+      {"full_name": "Wei Jiang", "affiliation": "Shaanxi Institute of Zoology, Xi'an, Shaanxi, China", "is_presenter": false},
+      {"full_name": "Hongxing Zhang", "affiliation": "Shaanxi Institute of Zoology, Xi'an, Shaanxi, China", "is_presenter": false},
+      {"full_name": "Qijun Wang", "affiliation": "Shaanxi Institute of Zoology, Xi'an, Shaanxi, China", "is_presenter": false},
+      {"full_name": "Hu Zhao", "affiliation": "Shaanxi Institute of Zoology, Xi'an, Shaanxi, China", "is_presenter": false},
+      {"full_name": "Ruth Marcec", "affiliation": "Mississippi State University, Mississippi State, MS, USA", "is_presenter": false},
+      {"full_name": "Scott Willard", "affiliation": "Mississippi State University, Mississippi State, MS, USA", "is_presenter": false},
+      {"full_name": "Andrew Kouba", "affiliation": "Memphis Zoo, Memphis, TN, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Reintroduction of captive-reared Chinese giant salamanders may help to augment the declining wild populations and conserve this critically endangered species. We released 32 juvenile salamanders surgically implanted with radio transmitters at two sites in the Qinling Mountains of central China and monitored their survival from March 2013 to July 2014: 3 year-old head-started animals (n = 16) at the Heihe River, and captive-born 5 year-old animals (n =16) at the Donghe River. Two salamanders at Heihe River and 10 animals at Donghe River survived through the entirety of the project timeline. Ten salamanders were confirmed dead, two were possibly poached, while the status of the other eight animals was undetermined. The annual survival rate of salamanders at the Heihe River was 0.593 (95% CI: 0.387 - 0.907), which was lower than the rate of 0.800 (95% CI: 0.621 - 1.000) at the Donghe River (χ2 = 3.6, P = 0.056). All salamanders recaptured from the Donghe River site (n = 8) increased in mass (0.50 ± 0.13 kg) and length (5.5 ± 1.5 cm) after approximately 11 months in the wild. Their body condition indexes were smaller to wild conspecifics; however, this difference was reduced by the end of the project such that they were only 7% lighter than wild animals of the same length. No external parasites or diseases were discovered on recaptured giant salamanders. Our results indicate that captive-reared giant salamanders can survive in the wild, although adequate surgical recovery time is extremely important to post-release survival.",
+    "keywords": [],
+    "session_name": "Herp Conservation I"
+  },
+  {
+    "title": "Sound Production in Marbled Rockfish, Sebastiscus marmoratus, and Implications for Fisheries",
+    "authors": [
+      {"full_name": "Xuguang Zhang", "affiliation": "Shanghai Ocean University, Shanghai, China", "is_presenter": true},
+      {"full_name": "Hongyi Guo", "affiliation": "Shanghai Ocean University, Shanghai, China", "is_presenter": false},
+      {"full_name": "Jiakun Song", "affiliation": "Shanghai Ocean University, Shanghai, China", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Recently, several rockfish species (genus Sebastes) have been reported to be soniferous. To determine whether an additional rockfish species produces sounds, passive acoustic recordings were analyzed from captive marbled rockfish (Sebastiscus marmoratus Cuvier, 1929) during the non-spawning season. Three distinct sounds were identified based on frequency features. The common characteristics among all sounds were low frequency (below 300 Hz) and rapidly dampened pulses consisting of 3-5 acoustic energy cycles. During free-swimming conditions in the canvas tank, the fish produced voluntary sounds with lower frequencies than the disturbance sounds produced by individuals during prodding. Two types of sounds were identified in the disturbance context: one type consists of single or double pulses with 2 peak frequencies, and another type consists of a series of pulses with a single peak frequency. These results suggest that specific-species and behavior-associated sounds are potentially useful in passive acoustical surveys to monitor rockfish populations and distributions remotely.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Beauty Under Ground: Cavefishes in China",
+    "authors": [
+      {"full_name": "Yahui Zhao", "affiliation": "Institute of Zoology, Chinese Academy of Sciences, Beijing, China", "is_presenter": true},
+      {"full_name": "Danté B. Fenolio", "affiliation": "San Antonio Zoo, San Antonio, TX, USA", "is_presenter": false},
+      {"full_name": "Daphne Soares", "affiliation": "New Jersey Institute of Technology, Newark, NJ, USA", "is_presenter": false},
+      {"full_name": "Chunguang Zhang", "affiliation": "Institute of Zoology, Chinese Academy of Sciences, Beijing, China", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Cavefishes, or hypogean fishes, are a distinctive group of fishes restricted to subterranean environments for at least for part of their lives. Based on their troglomorphism, which includes morphological adaptations to the cave environment such as the reduction or loss of eyes and pigmentation, cavefishes can be divided to two types: troglobites (troglomorphic) and troglophiles (non-troglomorphic). China is home to the highest number of cavefish species in the world, with more than 60 troglobitic species out of about 120 cavefish species. As fieldwork continues, more species are being found and described. All of these cavefish species in China are endemic to China. With the exception of Onychostoma macrolepis in north China, all species are found in southwest China, mostly in the karst environment of the Yunnan-Guizhou Plateau. Sinocyclocheilus, the largest cavefish genus, has experienced rapid evolution and diversification. Species from this genus possess horns and humpbacks (i.e. horn-like structures and hyperdevelopment of a dorsal protuberance similar to a humpback), probably resulting from parallel evolution. Sympatric distribution of Chinese cavefishes is common, and sometimes several species are found in the same cave or subterranean river. Caves and karsts are very fragile, balanced habitats, and cavefish species are extremely sensitive to environmental change. Threats from rapid economic growth have increased the need for conservation efforts for cave-dwelling communities in recent decades. Conservation of Chinese cavefishes is an urgent issue.",
+    "keywords": [],
+    "session_name": "Cypriniformes Inventory Symposium"
+  },
+  {
+    "title": "The Modulation of Foot Position and Adhesion During Arboreal Locomotion in Day Geckos (Phelsuma)",
+    "authors": [
+      {"full_name": "Mingna Zhuang", "affiliation": "University of California Riverside, Riverside, CA, USA", "is_presenter": true},
+      {"full_name": "Timothy E. Higham", "affiliation": "University of California Riverside, Riverside, CA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "By using adhesion, geckos can navigate through challenging habitats. Behaviorally modulating how the adhesive system is applied can occur by altering the alignment of the foot relative to the long axis of the body and/or the angles between the digits (interdigital angle). Given the directionality of the adhesive system, we expect geckos to vary the application of the system via these mechanisms as they run. We quantified 3D movements (with high-speed video) of Phelsuma madagascariensis running on a range of ecologically relevant inclines (0°, 45°, 90 °) and perch diameters (1.5cm, 10cm and flat). We measured instantaneous interdigital angle and foot alignment relative to the body across each condition, as well as other kinematic variables. The geckos decreased speed with decreasing perch diameter, but increased speed at 45°. This suggests that P. madagascariensis may favor inclined perches. Additionally, proximal limb variables respond to substrate condition in a manner to increase stability and reduce toppling. Finally, foot alignment in the forelimb acts in opposition to that of the hindlimb, suggesting that P. madagascariensis is able to maintain multiple directions of adhesion at one time. The modulation of interdigital angle and foot alignment suggests that aspects other than the mechanism of adhesion are important for arboreal movement in geckos. Our study reveals patterns of foot usage in arboreal locomotion, which can lead to a better understanding of adhesive system constraints. This is essential for understanding how biomechanical traits respond to the evolution of novel adaptations and morphologies. Supported by NSF IOS-1147043.",
+    "keywords": [],
+    "session_name": "Herp Morphology & Biogeography"
+  },
+  {
+    "title": "Measuring Gene Flow Among Populations Within the Reef Fish Species, Melichthys niger",
+    "authors": [
+      {"full_name": "Nicholas Zielinski", "affiliation": "University of West Florida, Pensacola, FL, USA", "is_presenter": true},
+      {"full_name": "Kaleb Price", "affiliation": "University of West Florida, Pensacola, FL, USA", "is_presenter": false},
+      {"full_name": "Ian Bollinger", "affiliation": "University of West Florida, Pensacola, FL, USA", "is_presenter": false},
+      {"full_name": "Jeff Eble", "affiliation": "University of West Florida, Pensacola, FL, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "The black triggerfish, Melichthys niger, is one of just a few tropical reef fish thought to have a circumglobal distribution. Considering the rarity of circumglobal reef fishes, and the challenges reef fish larvae face crossing large stretches of open-ocean, the objective of this research is to determine whether M. niger is truly circumglobal or rather, if M. niger is really a complex of closely related, but evolutionarily isolated sub-species or species. Gene flow between collection sites in the Atlantic, Indian, and Pacific oceans is being investigated by examining sequence data from three genes: control region (D-Loop), cytochrome oxidase I (CO1), and the second intron of the large ribosomal subunit (S7-2). Preliminary analysis of mtDNA diversity (D-loop and CO1 genes) indicates extensive genetic connectivity with no evidence of cryptic evolutionary divergence. Investigations are ongoing and will include an analysis of the S7-2 nuclear marker as well as additional samples from sites in the Eastern Pacific and Western Atlantic, which have been geographically isolated from one another for more than 3 million years.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  },
+  {
+    "title": "Invasive Asian Earthworms (Amynthas spp.) Negatively Affect Juvenile Abundance, Alter Microhabitat Use, and Reduce Foraging Efficiency of Woodland Salamanders (Plethodon cinereus)",
+    "authors": [
+      {"full_name": "Julie Ziemba", "affiliation": "John Carroll University, University Heights, OH, USA", "is_presenter": true},
+      {"full_name": "Carl Anthony", "affiliation": "John Carroll University, University Heights, OH, USA", "is_presenter": false},
+      {"full_name": "Cari-Ann Hickerson", "affiliation": "John Carroll University, University Heights, OH, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Asian earthworms (Amynthas spp.) are invading North American forests and consuming the vital detrital layer that forest-floor biota (including the Eastern Red-backed Salamander, Plethodon cinereus) rely on for protection, food, and habitat. Salamander population decline has been associated with European earthworm-mediated leaf litter loss, but there have been no studies on the interactions between Amynthas and P. cinereus. Since the large, active Amynthas earthworms spatially overlap with salamanders beneath natural cover objects and in detritus, they may compound the negative consequences of resource degradation by physically disturbing important salamander activities (foraging, mating, and egg brooding). I predicted that Amynthas would exclude salamanders from high quality microhabitat, reduce foraging efficiency, and negatively affect salamander fitness. In laboratory trials, salamanders used lower quality microhabitat and consumed fewer flies in the presence of earthworms than when alone. In a field experiment conducted on salamander populations from “non-invaded” and “Amynthas-invaded” sites in Ohio, salamanders and earthworms shared cover objects ~60% less than expected. Amynthas density was negatively associated with juvenile density, but had no relationship with overall, male, or gravid female salamander density. Also, Amynthas invasion had no effect on salamander body condition. Juvenile salamanders do not hold stable territories, which results in reduced access to prey and a higher risk of desiccation. Thus, they may be more vulnerable to the negative effects of Amynthas invasion than adults. If habitat degradation and physical exclusion of salamanders from cover objects reduce juvenile salamander performance, then recruitment and ultimately salamander abundance may decline following Amynthas invasion.",
+    "keywords": [],
+    "session_name": "HERPETOLOGISTS’ LEAGUE GRADUATE RESEARCH AWARD"
+  },
+  {
+    "title": "Geographic Variation in Agonistic Push-up Displays Across a Contact Zone in the Side-Blotched Lizard Uta stansburiana",
+    "authors": [
+      {"full_name": "Menemsha Zotstein", "affiliation": "California State University Long Beach, CA, Long Beach, CA, USA", "is_presenter": true}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "This study examined the pattern of behavioral, genetic, and morphological variation occurring between phenotypically divergent populations of Uta stansburiana across a contact zone between the Mojave Desert and Colorado Desert ecosystems. I characterized the shift in agonistic display type across the zone to determine if individuals in the intergrade zone displayed intermediate phenotypes or enhanced variation in display. Individuals with diverse behavioral repertoires were found in all populations, but display type changed gradually and continuously along the transect of sampled populations, indicating a complex and possibly polygenic or multi-allelic mode of inheritance. Nuclear and mitochondrial markers indicate restricted gene flow though the discordance of the genetic data type suggest female-biased dispersal. Selection appears to be shaping the evolution of morphological traits such as size and limb length as these were significantly related to elevation differences along the transect.",
+    "keywords": [],
+    "session_name": "Poster Session II"
+  }
+]

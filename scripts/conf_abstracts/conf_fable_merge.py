@@ -82,6 +82,25 @@ def merge(db_path):
         dbp.unlink()
     con = schema.create_db(db_path)
     missing = []
+
+    # COMPLETENESS GUARD (2026-08-27): a book whose chunks are only partly
+    # extracted must NOT be folded in — merge_fable_into_main replaces the
+    # matching main-DB meeting wholesale, so a partial Fable book would
+    # silently discard a complete regex parse (JMIH 2008: 13/14 chunks vs 585
+    # good regex records). Skip every chunk of an incomplete book.
+    chunks_by_book = {}
+    for w in wl:
+        chunks_by_book.setdefault(w.get("book_key", w["key"]), []).append(w)
+    incomplete = set()
+    for bk, chunks in chunks_by_book.items():
+        done = sum(1 for c in chunks
+                   if Path(c["cache_path"]).exists() and Path(c["cache_path"]).stat().st_size >= 2)
+        if done < len(chunks):
+            incomplete.add(bk)
+            print(f"  SKIP {bk}: only {done}/{len(chunks)} chunks extracted — "
+                  f"book left as-is in the main DB")
+    wl = [w for w in wl if w.get("book_key", w["key"]) not in incomplete]
+
     for w in wl:
         cache = Path(w["cache_path"])
         if not cache.exists() or cache.stat().st_size < 2:

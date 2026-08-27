@@ -1,0 +1,2230 @@
+ to interpreting the origin and transformation of
+complex structures in a phylogenetic framework. Developmental studies on catfishes
+(Siluriformes) adopting an evolutionary perspective are scarce in the literature. In an
+attempt to provide a new anatomical foundation for these studies, we describe the
+developmental morphology of the caudal fin skeleton of the South American catfish
+Lophisilurus alexandri, the single species of this genus, which is thought to be endemic
+to the Rio São Francisco basin, Brazil. The present study represents the first treatment
+on the ontogeny of the caudal skeleton for a species of the family
+Pseudopimelodidae. The developmental series was obtained through induced
+spawning in wild specimens; eggs were incubated until hatching, and larvae were
+reared under laboratory conditions. Specimens were fixed daily and cleared and
+double-stained for bone and cartilage. The sequence of chondrification and
+ossification was recorded for each day. The poverty of ontogenetic information about
+the caudal complex in siluriforms widely precludes an evolutionary interpretation
+for most of our findings. Presently, however, it is possible to highlight some relevant
+observations, such as the complex composition of the neural and hemal spines
+associated with the caudal fin, the early ossification of the second ural centrum, the
+sudden anterior displacement of the posteriormost basidorsal (associated to the
+second ural centrum) which obfuscates its delimitation in late stages, and on the
+nature of the uroneural, which is likely homologous to the neural arch of the second
+ural centrum.
+
+
+
+
+                                          79
+0144 Fish Systematics I, Salons A&B, Friday July 25, 2008
+
+Taxonomic Review of the Species of Hisonotus (Siluriformes: Loriicaridae)
+from the Rio Uruguay Basin and the Laguna dos Patos System
+
+Tiago Carvalho, Roberto Reis
+
+PUCRS, Porto Alegre, Rio Grande do Sul, Brazil
+
+Hisonotus belongs to Hypoptopomatinae, a group of loricariids including more than
+80 species grouped in 18 genera. Hisonotus has about 18 species distributed in
+southeastern basins of South America. Here, we review the taxonomic composition
+of the genus in Laguna dos Patos system and in Rio Uruguay basin. Laguna dos
+Patos system has the species: H. nigricauda, H. laevior (senior synonym of H.
+leptochilus), H. taimensis, plus seven new species. Hisonotus laevior, H. nigricauda, plus
+one of the new species are widely distributed and sympatric in most of the Laguna
+dos Patos system, contrasting to H. taimensis and the other new species which have
+limited distributions. Most of the new taxa are restricted to upper portions of Rio
+Jacuí drainage where the widely distributed species are not present. Hisonotus laevior,
+Hisonotus taimensis plus a new species from the Rio Camaquã drainage share some
+derived features which are likely synapomorphies of a clade inhabiting almost the
+entire Laguna dos Patos. Rio Uruguay basin has the species: H. nigricauda, H.
+ringueleti (senior synonym of H. candombe), H. aky, H. charrua, plus four new species.
+Epactionotus aky is transferred to the genus Hisonotus because it does not have the
+diagnostic characters of Epactionotus, and by sharing derived features with the
+Hisonotus species from upper Rio Uruguay basin. The new species described from
+Rio Uruguay basin are restricted to its upper portions. The greater diversity in the
+upper Rio Uruguay compared to the lower portions can be explained by its complex
+relief. Rapids and waterfalls are dispersal barriers for most Hisonotus species, and are
+likely the cause of allopatric speciation during the process of drainage evolution. A
+similar aspect is found in the headwaters of Rio Jacuí basin, which possesses several
+endemic and restrictedly distributed species.
+
+___________________________________________________________________________
+
+0091 General Ichthyology III, Drummond, Sunday July 27, 2008; STOYE
+GENERAL ICHTHYOLOGY
+
+Phylogenetic Relationships among Members of the Notropis Subgenus
+Hydrophlox
+
+Mollie Cashner
+
+Tulane University, New Orleans, LA, United States
+
+The Notropis subgenus Hydrophlox (Jordan 1878) has contained as many as 33
+species since its description. In 1970, Swift redefined the subgenus to include nine
+taxa: N. rubellus, N. baileyi, N. nubilus, N. chlorocephalus, N. lutipinnis, N. chiliticus, N.
+chrosomus, N. rubricroceus, and N. leuciodus based primarily on breeding coloration
+and scale and pectoral fin tuberculation. Since then, N. rubellus has been shown to be
+allied with members of the subgenus Notropis and placement of other members of
+Hydrophlox has been questioned. A molecular phylogeny generated from three
+                                             80
+markers, (mtDNA: ND2; and nuclear DNA: ITS1 and partial Rhodopsin) reveals a
+core Hydrophlox monophyletic clade comprised of five taxa: N. rubricroceus, N.
+chiliticus, N. chlorocephalus, N. lutipinnis, and N. chrosomus. Morphology, distribution
+and behavior support the conclusion that Hydrophlox as it is currently known is
+polyphyletic and warrants redescription.
+
+___________________________________________________________________________
+
+0122 Amphibian Conservation, Salons 4&5, Saturday July 26, 2008
+
+Getting Closer to Reality: Amphibian and Reptile Detection Probabilities
+for Western Great Lakes Inventory and Monitoring Programs
+
+Gary S. Casper1, Stephen J. Hecnar2, Ashley E. Spenceley2, Stefanie M.
+Nadeau3
+1Great Lakes Ecological Services, LLC, Slinger, WI, United States, 2Lakehead
+University, Thunder Bay, ON, Canada, 3Ozaukee Washington Land Trust, West
+Bend, WI, United States
+
+Ever search for something, not find it, but wonder if you simply over-looked it? We
+investigated this problem for amphibian and reptile sampling methods in the
+western Great Lakes. Effective inventory and monitoring programs are critically
+important in determining species status, and documenting changes in abundance
+and geographic distribution. However, data on the effectiveness of various survey
+methods are scarce. We tested the effectiveness of several herp monitoring methods
+in the Lake Superior and Lake Michigan basins, over-sampling to develop detection
+probabilities and minimum sampling requirements for each method and species, for
+use in proportion of area occupied modelling, which allows the use of less robust
+data from existing programs for regional analyses (i.e. calling frog surveys). We
+detected up to 20 species per sampling area. Call surveys, aquatic funnel traps, and
+casual observations detected the most species, but method success varied with the
+species present. Detection probabilities greater than 0.3 (recommended for
+occupancy modelling) were obtained for most species by standard methods, but
+many species had high variance in detection probabilities, among samples, sites, and
+season. The minimum number of samples required for 95% confidence in detection
+was calculated for each species and method. We identify overlaps in sampling
+methods for maximizing species detection and sampling efficiency. Species with low
+variance in detection and low sampling requirements are best suited to long term
+monitoring programs. Species with high variance in detection and/or high sampling
+requirements are more difficult to inventory, monitor, or manage, and a trade off
+exists between sampling effort required and confidence in knowing the occupancy of
+any specific site. Obtaining detection probabilities, understanding the variance in
+detection probabilities among sites, species, and over time, and correcting for false
+negatives in data analyses where species are under-sampled, is recommended for
+developing successful inventory and monitoring programs.
+
+
+
+
+                                          81
+0284 HL Graduate Research Award, Salons A&B, Sunday July 27, 2008; HL
+
+Phylogenetic Relationships of the Dactyloa Clade of Anolis Lizards
+
+Maria del Rosario Castaneda1, Kevin de Queiroz2
+1George   Washington University, Washington, DC, United States, 2Smithsonian
+Institution, National Museum of Natural History, Washington, DC, United States
+
+The clade Anolis is composed of nearly 370 species distributed from southern North
+America to northern South America, including Central America and the Caribbean
+islands. Previous phylogenetic studies on Anolis have focused on Caribbean and/or
+Central American species. What little is known of South American anoles is mostly
+from morphological characters or molecular data from a limited number of species.
+We present new nucleotide sequence data from one nuclear (RAG-1, ~2900b) and
+two mitochondrial (ND2, ~1500b; COI, ~700b) genes to resolve phylogenetic
+relationships of a major subgroup of South American anoles, the Dactyloa clade. We
+included 38 Dactyloa species from Colombia, Ecuador, Panama, Venezuela and the
+Lesser Antilles, as well as 12 outgroup species (4 non-Anolis Polychrotinae and 7
+non-Dactyloa Anolis). Preliminary Bayesian analyses of all three genes combined do
+not support Dactyloa as a monophyletic group, but only because Anolis occultus (a
+non-Dactyloa Anolis) is nested within it. In addition, the data provide strong support
+for the monophyly of the species previously referred to Phenacosaurus, and the Lesser
+Antillean Dactyloa species (the roquet series). The series punctatus, latifrons and
+aequatorialis previously circumscribed based on morphological characters appear to
+be non-monophyletic.
+
+___________________________________________________________________________
+
+0483 Herp Genetics, Salons A&B, Sunday July 27, 2008
+
+Adaptive Evolution and Functional Redesign of Core Metabolic Proteins in
+Snakes – Does Broad-Scale Molecular Adaptation Underlie Snake
+Evolution?
+
+Todd Castoe1, Zhi Jiang3, Wanjun Gu1, Zhengyuan Wang2, Jason de Koning1,
+David Pollock1
+1University   of Colorado - School of Medicine, Aurora, CO, United States,
+2Washington University School of Medicine, St. Louis, MO, United States, 3Scripps
+
+Florida, Jupiter, FL, United States
+
+Adaptive evolutionary episodes in core metabolic proteins are uncommon, and are
+even more rarely linked to major macroevolutionary shifts. We conducted extensive
+molecular evolutionary analyses on snake mitochondrial proteins and have
+discovered compelling evidence suggesting that the proteins at the core of aerobic
+metabolism in snakes have undergone a process of functional evolutionary redesign.
+We demonstrate that mitochondrially-encoded oxidative phosphorylation proteins in
+snakes have endured a remarkable process of accelerated and apparently adaptive
+evolution, with unprecedented levels of positive selection, coevolution, convergence,
+and reversion at functionally critical residues. Cytochrome C oxidase subunit I (COI)
+has experienced extensive modification of normally conserved residues involved in
+                                         82
+proton transport and delivery of electrons and oxygen. Thus, the core of snake
+aerobic metabolism appears to have been selectively reorganized. This presumably
+adaptive process of evolutionary redesign of snake COI coincided with adaptive
+bursts in other mitochondrial proteins and substantial changes in mitochondrial
+genome structure. These also generally coincided with or preceded major shifts in
+ecological niche and the evolution of extensive physiological adaptations related to
+lung reduction, large prey consumption, and venom evolution. The parallel timing of
+these major adaptive events suggests that adaptive redesign of metabolic and
+mitochondrial function may have substantially contributed to the evolution of
+snakes, and may underlie the extreme physiological and metabolic efficiency,
+flexibility, and innovation observed in snakes.
+
+___________________________________________________________________________
+
+0651 AES Reproduction, Kafka/Lamartine, Saturday July 26, 2008
+
+The Reproductive Cycles of North American Sharks
+
+Jose I Castro
+
+NOAA/Mote Marine Laboratory, Sarasota, Florida, United States
+
+The reproductive cycle of sharks is how often a species breeds and consists of two
+parts or periods. The first is the vitellogenesis period, when nutrients stored in the
+liver are transferred to the developing oocytes, and when oocytes accumulate yolk
+and grow rapidly. The second part consists of the gestation period, or the time of
+embryonic development from fertilization to birth.                These two periods,
+vitellogenesis and gestation, can run concurrently or consecutively, and the
+duration of each period is variable. In a given population, the females can be
+reproductively synchronous or asynchronous. Synchronous females are in the
+same stage of the reproductive cycle, while in a population of asynchronous
+females, all are at different stages of the cycle. Different types of reproductive
+cycles can be discerned: 1. Biennial cycle with concurrent vitellogenesis and
+gestation, as in the spiny dogfish and other squaloid sharks. 2.Biennial cycle with
+consecutive vitellogenesis and gestation, the type of reproduction found in many of
+the sharks of the genus Carcharhinus and Sphyrna mokarran. The nurse shark
+(Ginglymostoma cirratum) exhibits a similar biennial cycle but with a much shorter
+gestation period. 3. Annual cycle with concurrent vitellogenesis and gestation, a
+type cycle found in the more advanced sharks of the genera Rhizoprionodon and
+some Sphyrna (e.g., S. lewini and tudes). 4. Lamnoid annual cycle with discontinuous
+ovulation, as in the sand tiger shark (Carcharias taurus) and probably the mako
+(Isurus oxyrinchus). 5. Lamnoid annual cycle with continuous vitellogenesis, as in
+thresher sharks (Alopias). 6. Triennial cycle with consecutive vitellogenesis and
+gestation. A triennial cycle with an 18 month gestation period has been postulated
+for the dusky shark (Carcharhinus obscurus) and for the tiger shark (Galeocerdo
+cuvier). Caribbean data shows the tiger shark to have a 12 month gestation period.
+It is likely that there are many other patterns of reproductive cycles but it may take
+a long while to elucidate these, given the difficulties of obtaining specimens.
+
+
+
+
+                                          83
+0723 Poster Session I, Friday July 25, 2008
+
+Construction of a Cyprinid Prototype
+
+Ted Cavender
+
+The Ohio State University Museum of Biological Diversity, Columbus, Ohio, United
+States
+
+The origin of the Cyprinidae remains hidden in a yet to be discovered fossil record.
+Without this information it might be helpful to construct a hypothetical ancestral
+form to see what it would look like. It could be assembled using the plesiomorphic
+character states taken mostly from the skeleton. To attempt such a project a character
+survey was conducted on a fairly large representation of the family Cyprinidae plus
+extensive literature review. Comparative specimens were included from the
+Catostomidae, Cobitidae, Botiidae, Balatoridae and Gyrinocheilidae. Out-group
+study specimens were drawn from the Characiformes, Siluriformes, Clupeiformes
+and Salmoniformes. Published information was also relied on for these groups plus
+the Gonorynchiformes, fossil Anotophysi and fossil Otophysi. Results of the survey
+thus far have determined the plesiomorphic character states for the following:
+median fin placement and shape, scale morphology, caudal skeleton and tail,
+portions of the anterior axial skeleton, pectoral and pelvic girdles, opercular series,
+suspensorium, hyoid bar, infraorbital series, basicranium, skull roof and cephalic
+canal pattern. There is little doubt that the Cyprinidae are plesiomorphic within the
+Cypriniformes but it is not known how well the prototype, when completed; might
+serve as a hypothetical ancestor for the order.
+
+___________________________________________________________________________
+
+0747 Poster Session III, Sunday July 27, 2008
+
+Photo Identification of Manta Rays in the Indo-Pacific Ocean
+
+Florencia Cerutti-Pereyra1,        Frazer    McGregor3,      Guy     Stevens5,    Corey
+Bradshaw4, Mark Meekan2
+1Charles Darwin University, Darwin, NT, Australia, 2Australian Institute of Marine
+
+Science, Darwin, NT, Australia, 3Murdoch University, Perth, WA, Australia,
+4University of Adelaide, Adelaide, SA, Australia, 5Four Seasons Resort, Maldives,
+
+Maldives
+Mark-recapture (or sight-resight) studies are one of the most prevalent and widely
+tested methods of estimating demographic parameters such as population size,
+survival, movement rate, and age/sex structure. This method uses natural skin
+pigmentation patterns, marks or scars present on animals, which makes it less
+disruptive to the animal and their environment than conventional tagging
+techniques. Photo-id libraries from the Maldives, Ningalooo Reef, WA and Yap
+Islands are being used to study population parameters and migration of manta rays
+from the Indo-Pacific Ocean. The aim of this study is to identify if there is a “typical”
+aggregation of manta rays and which size and /or sex is the most common. Cleaning
+stations and feeding grounds have been identified as the most important aggregation
+sites in each location but the number of mantas participating in them and the reasons
+                                            84
+why they are grouping in such places are some of the questions we intend to answer.
+Using libraries with photos from several years, it is possible to determine residency
+of individuals and site fidelity, which helps in the understanding of population
+dynamics and sexual-biased migrations. The understanding of manta ray population
+traits and migration patterns is essential to 1) maintain the ecotourism industries that
+these rays support in hot spots like Ningaloo Reef, W.A. or Maldives Islands, and 2)
+to improve the local management plans and regulations. Moreover, the ongoing
+long-term project this study is a part of will improve the general understanding of
+manta ray movement through international waters, allowing the possibility of
+designing protected areas in international and shared waters.
+
+___________________________________________________________________________
+
+0246 Poster Session I, Friday July 25, 2008
+
+Abundance, Seasonal Occurrence, and Biological Information ff Devil Rays
+(Batoidea:Mobulidae) in the Gulf Of California, Mexico.
+
+Florencia Cerutti-Pereyra1, Felipe Galvan-Magaña2, John O’Sullivan3
+1Charles Darwin University, Darwin, Australia, 2Centro Interdisciplinario de
+Ciencias Marinas, :a Paz, Baja California Sur, Mexico, 3Monterey bay aquarium,
+Monterey, California, United States
+Devil rays have been harvested to an unsustainable level due to a strong fishery
+in the Gulf of California. The life strategy of this group, make them very
+vulnerable to over fishing, so studies are necessaries for management and
+conservation plans in the area. Two fishery camps were sampled during May to
+July of 2002 and from February to October of 2004. A total of 356 organisms were
+caught, 135 of Mobula japanica (74 females, 61 males), 112 of Mobula munkiana (50
+females, 62 males) and 109 of Mobula thurstoni (51 females, 58 males). Mobula
+japanica occurs mainly on summer months, we found that the most abundant
+size was 210 cm disc width (DW) and 61% of the organisms sampled were
+smaller that the estimated size at maturity (ESM); we also found gravid females.
+Mobula munkiana is known to be a winter species; however, we found it from
+February to July. The most abundant size was 50 cm DW and we found that 78%
+of the sample is smaller than the ESM; we also found gravid females and small
+organisms with the size suggested for birth. Mobula thurstoni occurs all year-
+round with a seasonal size segregation. The most abundant size in this study
+were 130 and 150 cm DW; 60% of the catch were organisms smaller that the
+ESM. Also gravid females were found in this species. The presence of juveniles,
+neonates and/or gravid females of the three species on the nets, make evident
+not only that this area have been used by these mobulids as mating and nursery
+ground, but also that the fishery is targeting on juveniles, which may collapse
+populations in a short period of time as happened with other species of
+elasmobranchs in the world.
+
+
+
+
+                                          85
+0444 Herp Biogeography, Salons 4&5, Saturday July 26, 2008
+
+Phylogeography of Necturus beyeri (Amphibia: Proteidae)
+
+Ryan Chabarria1, Brian Crother1, Mary White1, Henry L. Bart, Jr2, Karen
+Tenaglia3, Craig Guyer3
+1Southeastern Louisiana University, Department of Biological Sciences, Hammond,
+
+LA, United States, 2Tulane University, Museum of Natural History, Belle Chasse,
+LA, United States, 3Auburn University, Department of Biological Sciences, Auburn,
+AL, United States
+
+Necturus beyeri, the Gulf Coast Waterdog, is a paedomorphic salamander inhabiting
+streams and rivers along the gulf coast region of the southeastern United States from
+eastern Texas to western Georgia. The complex history of the gulf coast drainages of
+southeastern North America has lead to incongruent patterns among taxa in
+previous comparative phylogeographic analyses. Because these salamanders are
+aquatic, the history of the drainages they inhabit likely affects the current genetic
+diversity of this species. In this study we utilized the mitochondrial encoded ND2
+gene to infer the historical relationships of gene lineages within N. beyeri. Samples
+were collected from throughout the range of N. beyeri. Because of debated species
+classification within the genus Necturus and the recent distributional changes of N.
+beyeri all currently recognized species of Necturus were included in the analysis. This
+will allow for the understanding of the historical processes that have shaped the
+current distribution of N. beyeri. The overall pattern shows both the influence of
+historical events as well as contemporary drainages on the phylogeography of this
+species. Findings show that gene lineages of N. beyeri are paraphyletic. The
+implications of these findings as well as the utility of mtDNA genes will be
+discussed.
+
+___________________________________________________________________________
+
+0265 Fish Systematics IV, Salons A&B, Monday July 28, 2008
+
+The Influence of Sexual Selection in the Diversification of Ponyfishes
+
+Prosanta Chakrabarty, John Sparks
+
+American Museum of Natural History, New York, United States
+The phylogenetic relationships of ponyfishes (Teleostei: Leiognathidae) are
+reconstructed and morphological shape diversity (disparity) is measured and
+compared among clades. We test hypotheses suggesting that sexual selection on the
+light organ system (LOS) has influenced the rate of cladogenesis and morphological
+diversification within the family. Because of the presence of a sexually dimorphic
+LOS in the majority of species of leiognathids, it is hypothesized that sexual selection
+has led to increased rates of diversification. Increased rates of diversification are
+potentially correlated with changes in morphology associated with the LOS or
+flashing pattern rather than other systems (e.g., pigmentation pattern or external
+body shape), given that these other systems vary little among species of ponyfishes.
+Therefore, we would expect evolution of body shape variation to be limited or
+outpaced by evolution of variation in the LOS in sexually dimorphic leiognathids.
+                                          86
+We recover a single origin of sexual dimorphism of the LOS in leiognathids, a
+pattern consistent with sexual selection increasing rates of cladogenesis given that
+the vast majority of species are recovered in this clade. We also find that
+leiognathids that are sexually dimorphic for the LOS are significantly more disparate
+in body shape than their non-dimorphic counterparts.
+
+___________________________________________________________________________
+
+0263 SSAR Seibert Competition, Salons 4&5, Friday July 25, 2008; SEIBERT
+PHYSIOLOGY/MORPHOLOGY
+
+Water Quality Parameters Can Influence Baseline Corticosterone Levels in
+Larval Amphibians
+
+David Chambers, Lisa Belden
+
+Virginia Tech, Blacksburg, VA, United States
+
+Anthropogenic disturbances are altering nearly every habitat type on a global scale.
+In freshwater systems, these changes have resulted in one of the highest extinction
+rates in the world. In addition to overt extinction, these alterations can generate
+significant changes in biotic and abiotic components of these systems that can act as
+stressors upon system inhabitants. Vertebrate organisms possess a highly conserved
+physiological mechanism for coping with stress – the hormonal stress response. Our
+study examined stress hormone levels in larval Jefferson Salamanders (Ambystoma
+jeffersonianum) in relation to water quality parameters in eight natural ponds across
+Maryland, Pennsylvania, and West Virginia. Baseline stress hormone levels were
+significantly different across all ponds. In addition, we found a significant negative
+correlation between pH and baseline stress hormone levels. There was also a trend
+for baseline stress hormone levels to be positively correlated with chloride levels and
+negatively correlated with conductivity.       To supplement our field findings, we
+manipulated pH in the laboratory to determine the extent of pH influence on stress
+hormone levels. We used A. jeffersonianum, A. maculatum, Rana sylvatica, and Hyla
+versicolor as models. Reduced pH significantly increased baseline stress hormone
+levels in all four amphibian species. In addition, reduced pH significantly decreased
+survivorship in A. jeffersonianum, A. maculatum, and R. sylvatica. Our findings suggest
+that stress hormone levels can act as a physiological endpoint in assessing freshwater
+habitat quality. The establishment of a physiological endpoint, such as stress
+hormones, will hopefully alert conservation and management practices pertaining to
+freshwater habitats before irreversible problems arise.
+
+
+
+
+                                          87
+0671 Poster Session II, Saturday July 26, 2008
+
+Form, Function & Fitness—Selection and Performance Gradients for
+Mosquitofish Exposed to Predatory Sunfish
+
+Samantha Chan1, Brandon Thomas2, James B. Johnson2, Christian A.
+Kaufman3, Thomas J. DeWitt3
+1Dept. Plant Pathology & Microbiology, Texas A&M University, College Station,
+
+TX, United States, 2Dept. Biological Sciences, Texas A&M University, College
+Station, TX, United States, 3Dept. Wildlife & Fisheries Sciences, Texas A&M
+University, College Station, TX, United States
+
+Predators exert strong selection on prey traits. However, selection on traits is
+mediated by contributions of the traits toward enhancing performance. The most
+complete understanding of selection will take into account both primary traits and
+performance, and typically is best analyzed by path analysis. We refer to the ‘form,
+function, fitness’ concept as the Arnold paradigm after Stevan Arnold’s seminal
+synthesis of selection and performance gradients (Am. Zool. 23:347–361). We found
+strong effects of prey morphology on their swimming speed, effects of predators on
+prey behavior, and effects of prey traits on survival with predators. Among the most
+effective prey defensive behaviors was to leap from the water and stick to emergent
+objects for up to several minutes, before flipping back into the water. Analysis for
+complex trait relationships, such as trait compensation (Anim. Behav. vol:pp-pp) is
+ongoing. This study documents the utility of analyzing multiple trait effects in a
+fully-specified path model to understand cause and effect in a multiply-determined
+selection regime.
+
+___________________________________________________________________________
+
+0443 Poster Session II, Saturday July 26, 2008
+
+The Occurrence of Large-sized Blueberry Roughy Gephyroberyx japonicus
+off the Southwestern Taiwan Coast
+
+Chih-Wei Chang1, Yung-Chun Ju2, Chia-Hui Wang3, Cheng-Feng You4
+1National Museum of Marine Biology and Aquarium, Pintung, Taiwan, 2Institute of
+
+Marine Biodiversity and Evolution, National Donghwa University, Hualien,
+Taiwan, 3Earth Dynamic System Research Center, National Chengkung University,
+Tainan, Taiwan, 4Department of Earth Sciences, National Chengkung University,
+Tainan, Taiwan
+
+Nine uncommon Trachichthyidae fish, identified as the blueberry roughy
+Gephyroberyx japonicus, were recently trawled in 280-290 m depth off the
+southwestern Taiwan coast between September and October 2007. Sizes of the fish
+ranged 401-525 mm (mean±SD, 482±41 mm) in total length and 939-2735 g (2056±584
+g) in body weight, which were the known largest records in comparison with the
+conspecific specimens. Gonadosomatic indexes of the fish were 0.2-1.5 (0.9±0.9) for
+two males and 1.3-5.6 (2.9±1.6) for seven females. Preliminary otolith annuli
+examination and trace elements transect analysis indicated that the fish were of great
+
+                                         88
+longevity, slow-growing and might be served as a proxy for the anthropogenic lead
+pollution sunk in the deep-sea.
+
+___________________________________________________________________________
+
+0012 AES Student Papers I, Kafka/Lamartine, Thursday July 24, 2008
+
+Stock Assessment of the Shortfin Mako Shark in the Northwest Pacific - a
+Demographic Approach
+
+Jui-Han Chang, Kwang-Ming Liu
+
+University of Maine, Orono, ME, United States
+
+The shortfin mako shark (Isurus oxyrinchus) owns the life history characteristics of
+large sharks such as slows slowly, matures late, and produces few offsprings. It is
+vulnerable to overexploitation and has been put on the “Near threatened” category
+of IUCN Red List. The abundance of shortfin mako reduced 40% during 1986-2000
+in the Atlantic. However, the stock status in the Pacific is still unknown.The
+objective of this study is to assess the stock status of the shortfin mako shark in the
+Northwest Pacific from 1990 to 2004 based on stochastic stage-based model. The
+virtual population analysis (VPA) results showed that the age-specific fishing
+mortality of 3+~6+ for females and 2+~7+ for males appear to be increased since 1996.
+The 20-year projection from stochastic stage-based model indicated that the
+abundance will decrease seriously under current fishing effort. The above results
+indicate the population will be collapse under current fishing pressure. The
+population will maintain equilibrium for the next 20 years if the total allowable catch
+(TAC) is set at 265 mt, which is equivalent to 57% reduction of current fishing
+pressure. However, close monitoring and modification of the TAC year by year is a
+necessary measure to ensure the long-term sustainability of the stock.
+
+___________________________________________________________________________
+
+
+
+
+                                          89
+0583 AES Systematics & Biogeography I, Jarry/Joyce, Saturday July 26, 2008
+
+Conservation Genetics of the Endangered Smalltooth Sawfish (Pristis
+pectinata)
+
+Demian Chapman1, Kevin Feldheim2, Colin Simpfendorfer3, Tonya Wiley4,
+Gregg Poulakis5, Beau Yeiser4, Mike Tringali6, John Carlson7, Ellen Pikitch1
+1Pew  Institute for Ocean Science, Rosenstiel School of Marine and Atmospheric
+Science, University of Miami, Miami, FL, United States, 2Pritzker Laboratory of
+Molecular Systematics and Evolution, The Field Museum, Chicago, IL, United
+States, 3James Cook University, Townsville, Qld, Australia, 4Mote Marine
+Laboratory, Sarasota, FL, United States, 5Florida Fish and Wildlife Conservation
+Commission, St Petersburg, FL, United States, 6Florida Marine Research Institute,
+St Petersburg, FL, United States, 7National Marine Fisheries Service, Panama City,
+FL, United States
+
+Smalltooth sawfish (Pristis pectinata) were once common in the southern U.S. Atlantic
+and Gulf of Mexico but declined by an estimated 95% last century, primarily due to
+incidental mortality in fisheries. Today, the U.S. range of the species is severely
+contracted and remnant breeding areas are now primarily located in a handful of
+sites in Southwest Florida. Now listed under the U.S. Endangered Species Act, it is
+critical that we develop a comprehensive understanding of the biology and status of
+smalltooth sawfish so that we will be fully prepared to meet the challenge of
+facilitating their long-term recovery. Given the magnitude of decline that has taken
+place and the well established link between genetic diversity and population
+viability, there is some concern about the genetic health of smalltooth sawfish in
+Florida. It is also important to understand the level of connectivity between different
+sawfish breeding grounds in Florida to effectively scale management actions. We
+have developed a suite of eleven microsatellite DNA markers (10-46 alleles per locus,
+average heterozygosity 0.84) that have proven useful for addressing these issues. By
+genotyping 117 sawfish sampled from Panama City to the Lower Florida Keys, we
+discovered that robust genetic variation persists in the Florida smalltooth sawfish
+population and there is only a modest signature of a genetic bottleneck arising from
+the recent large decline in their numbers. We also show a high degree of genetic
+connectivity between different Southwest Florida breeding grounds, indicating that
+they should be managed as a single interbreeding unit. As an interesting side
+observation on the natural history of smalltooth sawfish we also present evidence
+that pairs or groups of juvenile sawfish captured together are often composed of
+siblings, to our knowledge the first evidence of an extended postnatal association of
+littermates in a batoid elasmobranch.
+
+___________________________________________________________________________
+
+
+
+
+                                          90
+0562 AES Habitat & Movement I, Jarry/Joyce, Saturday July 26, 2008
+
+“Homebodies”: Extended Natal Philopatry in Immature Lemon Sharks
+
+Demian Chapman1, Samuel Gruber2, Joseph DiBatista3, Elizabeth Babcock1,
+Ellen Pikitch1, Kevin Feldheim4
+1Pew  Institute for Ocean Science, Rosenstiel School of Marine and Atmospheric
+Science, University of Miami, Miami, FL, United States, 2Bimini Biological Field
+Station, Miami, FL, United States, 3Redpath Museum and Department of Biology,
+McGill University, Montreal, Quebec, Canada, 4Pritzker Laboratory of Molecular
+Systematics and Evolution, The Field Museum, Chicago, IL, United States
+
+Understanding the balance between philopatric (“home-loving”) behavior and
+dispersal from the natal area is a central issue in marine ecology, yet it has never
+been robustly examined for any cartilaginous fish. Near-exhaustive sampling and
+DNA profiling of 0-3 year old lemon sharks (Negaprion brevirostris; nearly 1000
+individuals) within a tropical nursery (Bimini, Bahamas) over eight years (1995-2002)
+was followed by another five years (2003-2007) of sampling in adjacent, deeper
+habitats for immature sharks that originated from the 1995-2002 year classes (90-230
+cm total length, N=150). This level of physical and genetic tagging allowed us to
+confidently identify locally-born individuals among all immature sharks captured
+adjacent to the nursery and to make an unprecedented estimation of the proportion
+of philopatric individuals relative to migrants in the juvenile population. We
+estimate that over 50% of juvenile sharks up to lengths of 150 cm (around six years
+old) sampled off Bimini were born locally, illustrating the importance of natal
+philopatry and local recruitment by immature individuals. The proportion of
+philopatric individuals was significantly higher in females than in males, indicative
+of possible male-biased dispersal. The proportion of local recruits significantly
+diminished after age six as sharks began to approach adult sizes, indicating that
+dispersal predominates during this “subadult” phase. Extended philopatric behavior
+by immature sharks-especially females-may be a precursor to natal homing later in
+life for purposes of reproduction, which is suspected to occur in sharks but has never
+been directly demonstrated. Given their antiquity, growing evidence for natal
+philopatry in sharks suggests an early origin of this behavior in vertebrates. The
+strong association of immature lemon sharks with their natal area also indicates that
+spatial management strategies focused around coastal nursery areas and adjacent
+juvenile habitat could significantly contribute to much-needed conservation for this
+and perhaps many other tropical shark species.
+
+___________________________________________________________________________
+
+
+
+
+                                         91
+0662 Fish Morphology & Histology I, Salons 6&7, Thursday July 24, 2008
+
+Cross-domain Functional Ecological Tradeoffs: Developmental Response
+of the African Cichlid Astatoreochromis alluaudi to Trophic and Oxygen
+Gradients
+
+Lauren Chapman, Thomas DeWitt, Frietson Galis
+1McGill University, Montreal, Quebec, Canada, 2Texas A&M University, College
+
+Station, Texas, United States, 3Leiden University, Leiden, Netherlands
+
+Divergent selection between alternative environments drives adaptive phenotypic
+diversification. As one might expect, fishes from alternative oxygen environments
+show strong diversification in gill morphology. But such fish also diverge in other
+traits such as the size and shape of muscles in the head, suggesting tradeoffs between
+gill proliferation and non-respiratory traits.       In this study, we explore the
+developmental response of fish to the dual effects of hypoxia and durophagy. The
+molluscivorous cichlid Astatoreochromis alluaudi exhibits plasticity in trophic
+morphology, developing massive pharyngeal jaws with hypertrophied muscles on a
+mollusk diet and reduced pharyngeal jaw size and associated musculature on a soft
+food diet. Molluscivores like A. alluaudi in hypoxic waters thus face a dual challenge
+of developing enlarged respiratory apparatuses to maximize oxygen uptake and
+producing the trophic architecture to handle hard-bodied prey. We ran a laboratory
+rearing experiment to test for interactions between oxygen and food in their
+combined effects on trophic and respiratory morphology. Offspring of 3 sets of
+parents from each of two field populations (high-oxygen, mixed diet and low-
+oxygen, insectivorous diet) were split into four groups and reared in a 2x2 factorial
+design of variation in oxygen (hypoxia versus normoxia) and diet (snails versus flake
+food). We then measured respiratory (gill filament length, gill surface area), trophic
+(pharyngeal jaws, muscles), and whole-body morphological traits (geometric
+morphometrics). We found strong developmental plasticity in all three trait groups
+in response to rearing environment. We also found interactions between diet and
+oxygen for some traits, suggesting that nonrespiratory factors may influence the
+extent of divergence in respiratory characters, and vice versa. Such tradeoffs across
+ecological domains are not often studied but may be very important factors
+determining the architecture of adaptation.
+
+
+
+
+                                         92
+0640 Poster Session I, Friday July 25, 2008
+
+A Validation for the Use of Fin Photographs for Individual Identification of
+White Sharks (Carcharodon carcharias) off California and a Comparison
+between Two Analysis Methods
+
+Taylor Chapple1, Scot Anderson3, Salvador Jorgensen2, A.Peter Klimley1,
+Barbara Block2
+1University of California-Davis, Davis CA, United States, 2Hopkins Marine Station,
+
+Stanford University, Pacific Grove CA, United States, 3Inverness CA, Inverness CA,
+United States
+
+One of the most widely used techniques to determine population and demographic
+information is the mark-recapture method. Non-invasive techniques to identify and
+mark individuals of rare species provide an easier method to collect these data with
+minimal impact to the animals. The behavior of the white shark, Carcharodon
+carcharias, and identifying markings on the trailing edge of the dorsal fin permit
+individual identification via high-resolution photographs. These photographs can be
+obtained either above or below water allowing greater probability of identification
+than other body markings. Here we used fin photographs from a 20 year study
+period in central California to validate the use of these markings as an individual
+identifier while comparing the accuracy of manual and computer-assisted
+identification methods. Manual identification required a reader to visually compare
+and match all known fins within the database, whereas computer-assisted techniques
+utilized DARWIN, a program developed to identify dolphin fins, to match the
+photographs. Results from the two methods were tested against the true matches
+determined from known secondary traits.
+
+___________________________________________________________________________
+
+0310 Poster Session I, Friday July 25, 2008
+
+Diet of the Freshwater Stingray Potamotrygon motoro (Potamotrygonidae)
+in the Brazilian Amazon River Channel
+
+Patricia Charvet-Almeida1, Ana Julia Silva2, Mauricio Almeida1, Anderson
+Viana3, Ana Luisa Albernaz1
+1Museu Paraense Emilio Goeldi, Belem, Para, Brazil, 2EMATER, Vigia de Nazare,
+
+Para, Brazil, 3Universidade Federal do Para, Belem, Para, Brazil
+
+Potamotrygon motoro is a widely distributed species in the Brazilian Amazon Basin. It
+is polychromatic and valued in the international ornamental trade. This study is a
+contribution to the feeding biology of this species in the Solimoes / Amazonas River
+channel. The samples (n = 50) were obtained throughout the Brazilian portion of the
+Solimoes / Amazonas River, in 2003. Specimens were subject to anesthesia and
+sacrificed. Stomachs were removed, fixed in formaldehyde solution (10%), preserved
+in ethanol (70%) and then had its content analyzed in the laboratory. Percentage of
+Frequency of Occurrence (% FO), Weight (% W), Number (% N) and Index of
+Relative Importance (IRI and %IRI) were calculated for each food item. Digestion
+and repletion levels were observed too. Results indicated that these stingrays in the
+                                         93
+study area feed mainly on bony fish (Siluriformes and Peciformes), crustaceans
+(Decapoda, Palaemonidae), gastropods (Gastropoda) and insects (Isopoda).
+Fragments of plant tissue were observed among stomach contents. Repletion level
+showed that most (59%) stomachs had little content. Digestion level observation
+indicated that most items (62%) were highly digested (fragments only). Conclusively,
+P. motoro can be considered a piscivorous species that also includes other food items
+on its diet but on lower proportions.
+
+___________________________________________________________________________
+
+0106 AES Devil Ray Symposium, Jarry/Joyce, Friday July 25, 2008
+
+Diversity and Conservation of Manta and Mobulid Rays from Brazilian
+Waters, Southwestern Atlantic
+
+Patricia Charvet-Almeida1, Otto Gadig2
+1Museu    Paraense Emilio Goeldi, Belem, Para, Brazil, 2Universidade Estadual
+Paulista Julio de Mesquita Filho, Sao Vicente, Sao Paulo, Brazil
+
+Mobulidae comprises medium to large size rays that feed on plankton and are found
+worldwide in tropical and subtropical regions. There are 10 known species and these
+are among the most vulnerable elasmobranchs to fisheries. Most of these species
+have a very low fecundity producing a single offspring. Lately there were only three
+species known to occur in Brazilian waters (Manta birostris, Mobula hypostoma and M.
+rochebrunei). As sampling carried out with the fishing fleets increased and with
+examining of scientific collection specimens, three additional species were confirmed
+in this region (Mobula japanica, M. tarapacana and M. thurstoni), totalizing six species.
+The Mobulidae world distribution pattern reveals regional faunas characterized by
+the presence of large widely distributed oceanic-coastal species (Manta birostris,
+Mobula japanica, M. tarapacana and M. thurstoni) plus an accessory small coastal
+restricted range species, such as M. munkiana (eastern Central Pacific), M. kuhlii
+(western Indian Ocean), M. eregoodootenkee (Central Indo-Pacific), M. rochebrunei
+(eastern Central and western South Atlantic) and M. hypostoma (western Atlantic).
+The Brazilian coast is the only region in the world presenting two of these accessory
+species, which makes it the richest coast in terms of mobulid diversity (60% of all
+mobulids). In Brazil these elasmobranchs are captured mainly by drift nets and
+surface longlines. Mobulids are not a target species but most of the specimens caught
+are landed in fish markets. Occasionally very large individual are released from nets
+due to their size. The giant mantas (Manta birostris) are a highlight for contemplative
+diving around the world and may contribute to the eco-touristic industry as an
+important resource in some regions, such as in the Laje de Santos Marine State Park
+(São Paulo). Public and governmental awareness are needed to provide adequate
+management and protection for mantas and mobulids in Brazil.
+
+
+
+
+                                           94
+0355 Herp Genetics, Salons A&B, Sunday July 27, 2008; STOYE
+GENETICS, DEVELOPMENT & MORPHOLOGY
+
+Hybrid Zone Dynamics among Salamanders in the Genus Plethodon
+
+Matthew Chatfield
+
+University of Michigan, Ann Arbor, MI, United States
+
+Hybrid zones are active areas of research into the causes of speciation and
+maintenance of species boundaries. One goal of hybrid zone studies is to identify
+differential introgression of morphological and molecular markers, which is
+identified by discordance in marker frequency change across a hybrid zone. This
+study examines patterns of marker frequency change across hybrid zones among
+three species of plethodontid salamanders – Plethodon jordani, P. metcalfi and P.
+teyahalee – in the Southern Appalachian Mountains of North Carolina and Tennessee.
+Five markers are used to assess hybrid zone shape and width: (1) extent of red cheek
+pigmentation (diagnostic of P. jordani), (2) presence of dorsal and lateral white flecks
+(diagnostic of P. teyahalee), (3) a single nucleotide polymorphism (SNP) located in the
+mtDNA gene ND2, (4) a SNP in the nuclear DNA gene ILF3, and (5) a SNP in the
+nuclear DNA gene GAPD. Concordance in frequency change is assessed for all five
+markers, and reasons for discordance are discussed.
+
+___________________________________________________________________________
+
+0266 Poster Session I, Friday July 25, 2008
+
+Revision of the Photoplagios leuciscus Günther,1860 Species Complex
+
+Jeannette Chu, Luthfun Nahar, John Sparks, Prosanta Chakrabarty
+
+American Museum of Natural History, New York, United States
+
+Photoplagios leuciscus traditionally has been considered to be a widespread species,
+with a range extending from Japan southward to Australia, and eastward to
+Madagascar. (The species was originally described from Moluccas, Indonesia.)
+Males are characterized by an expansive transparent triangular flank patch, which is
+used for luminescence signaling (i.e., photic communication). Several morphological
+variations have been identified in this taxon, which exhibit geographically localized
+distributions, and that may correspond to novel species. Based on data collected
+using traditional morphometric measurements and landmark based geometric
+morphometrics, we identify morphologically distinct and geographically disjunct
+lineages from within the putative range of Photoplagios leuciscus.
+
+
+
+
+                                          95
+0460 AES Food & Feeding, Kafka/Lamartine, Saturday July 26, 2008
+
+Older and Wiser: The Effects of Maturation and Experience on the
+Predatory Efficiency of Whitespotted Bamboosharks
+
+Jennifer Ciaccio
+
+University of Miami, Coral Gables, FL, United States
+
+Foraging presents a significant challenge for neonatal predators.            Adequate
+predatory skills must initially be present or must quickly develop. Additionally,
+predatory abilities may change over time. Physical maturation may increase
+predatory abilities due to improved neuromuscular coordination, increased sensory
+abilities, or morphological changes. Experience may allow predators to hone
+existing skills and develop new ones. To tease apart which improvements in
+predatory abilities were due to increased maturation and which were due to
+increased experience, three sets of comparisons were made on the predatory
+efficiencies of hatchling whitespotted bamboosharks: comparisons of sharks before
+and after 20 days of foraging experience to determine whether predatory efficiency
+does improve, comparisons of naïve sharks of different ages to determine whether
+predatory efficiency improves with increases in maturation, and comparisons of
+naïve and experienced sharks of the same age to determine whether predatory
+efficiency improves with increases in experience. Sharks of different ages (2 days old
+or 21 days old) were given 20 days of foraging trials with live prey (either worms
+only or shrimp only). Predatory efficiency, defined as duration of predatory event,
+was measured for sharks’ initial foraging trials and final foraging trials. Individual
+sharks improve predatory efficiency after 20 days of foraging experience. Predatory
+efficiency improves with maturation alone for sharks foraging on shrimp, a highly
+elusive prey. Predatory efficiency improves with experience alone for sharks
+foraging on worms, a non-elusive prey. Maturation likely improves sharks’ ability to
+create suction while feeding, a necessary ability when foraging on elusive prey.
+Experience likely improves predatory abilities through associative learning and
+search image formation. Both experience and maturation are necessary for sharks to
+exploit all possible prey.
+
+___________________________________________________________________________
+
+0142 Fish Systematics II, Salons A&B, Friday July 25, 2008
+
+Descriptions of Five New Species in the Genus Metriaclima (Teleostei:
+Cichlidae) from Lake Malawi, Africa
+
+Patrick Ciccotto1, Adrianus Konings2, Jay Stauffer, Jr.1
+1Pennsylvania State University, University Park, PA, United States, 2Cichlid Press,
+
+El Paso, TX, United States
+Lake Malawi supports an enormous diversity of cichlid species, many of which lack
+formal descriptions. Five new species of rock-dwelling cichlids from the lake are
+described. The moderately-sloped vomer, isognathous jaws, and presence of
+bicuspid teeth in the outer rows of the jaws, among a suite of other morphological
+characters, place these species in the genus Metriaclima. All five species are part of
+                                         96
+the M. aurora- species complex, based on the absence of a black band in the dorsal fin
+which is congruent with the ecologically similar species M. aurora (Burgess).
+Differences in morphology, in conjunction with assortative mating, distinguish these
+new species from each other and previously described species of the M. aurora-
+complex.
+
+___________________________________________________________________________
+
+0343 AES Age & Growth/Reproduction, Kafka/Lamartine, Saturday July 26,
+2008
+
+Age, Growth, and Maturity of the Little Skate, Leucoraja erinacea, from the
+Western Gulf of Maine, USA
+
+Angela Cicia1, William Driggers2, Walter Ingram2, Jeff Kneebone3, Paul
+Tsang3, James Sulikowski1, David Koester1
+1University  of New England, Biddeford, ME, United States, 2National Marine
+Fisheries Service, Pascagoula, MS, United States, 3University of New Hampshire,
+Durham, NH, United States
+
+The little skate, Leucoraja erinacea, is the most common skate found in near-shore
+waters of the Gulf of Maine. Despite their high relative abundance, there is limited
+data describing their biology within this region. Moreover, recent stock assessment
+in the northeast United States indicated that the little skate’s population is declining.
+In order to gain insight into the life history of little skates, growth rates and sexual
+maturity were evaluated from 435 specimens, collected within the coastal waters of
+New Hampshire and Massachusetts. Ages were estimated using vertebral band
+counts from skates ranging in size from 9.3 to 57 cm total length (TL). The index of
+average percent error (IAPE) and age-bias plots indicated our aging methods were
+precise and nonbiased. Growth rates did not differ between male and females and
+the combined age-at-length data resulted in Von Bertalanffy growth parameters of
+L∞= 59.5 cm (TL) and k= 0.16. In order to validate the annual periodicity of band
+formation, oxytetracycline was injected into 20 individuals (10 male and 10 female)
+that were held in captivity for 12 months. Maturity ogives, based on data from shell
+gland mass, follicle size and circulating estradiol concentrations, suggest that 50%
+maturity in females occurs at age 9.5 years and 48 cm TL. Maturity ogives for males,
+based on clasper length, testes mass, circulating testosterone concentrations, and the
+proportion of mature spermatocysts in the testes, suggest 50% maturity occurs at 7.7
+years and 46 cm TL.
+
+___________________________________________________________________________
+
+
+
+
+                                           97
+0239  Fish Physiology, Salons 6&7, Sunday July 27, 2008; STOYE
+PHYSIOLOGY & PHYSIOLOGICAL ECOLOGY
+
+Sausages with Sharp Teeth and Strong Muscles: Jawless Morphology and
+Force Production in Hagfishes
+
+Andrew Clark
+
+University of California, Irvine, Irvine, CA, United States
+
+Hagfish can dismember and ingest large chunks of flesh from marine carcasses
+without jaws. The hagfish feeding apparatus (HFA) includes a cartilaginous
+endoskeleton, keratinous teeth, and muscles. I examined the feeding morphology in
+two species, Eptatretus stoutii and Myxine glutinosa, representing the two major
+hagfish lineages. I measured the major skeletal and dental components of the HFA,
+and calculated physiological cross-sectional area (PCSA) and force production in the
+deep protractor muscle (DPM, the major dental plate protractor) and the clavatus
+muscle (CM, the major retractor). E. stoutii had larger dental plates, basal plates, and
+CM PCSA. The DPM in both species can generate 3 N, while the CM, which can
+generate up to 16 N, averaged 7 N and 10 N in M. glutinosa and E. stoutii,
+respectively. For comparative purposes, mean CM force from both hagfish species
+were plotted with the bite forces of various gnathostomes and scaled to body mass.
+The fixed pulley system configuration of the HFA minimizes reduction in force
+transmitted from the muscles to the dental plates and makes CM force a reasonable
+approximation of dental plate retractile force. Despite similar diets and kinematic
+profiles, feeding morphology varies between hagfish species. Lacking jaws does not
+preclude hagfish feeding muscles from generating high forces: the CM in both
+species generated comparable forces to bite forces of similarly sized gnathostomes.
+Collectively, morphological and kinematic data on hagfish feeding indicate that
+neither large gape nor bite force were necessarily an advantage that drove the
+evolution of jaws. I propose that an important selective advantage of jaws is that
+geometric variation in levers and linkage systems allow dietary niche diversity and
+rapid jaw movements for procuring elusive prey.
+
+___________________________________________________________________________
+
+
+
+
+                                          98
+0025 AES Systematics & Biogeography II, Jarry/Joyce, Sunday July 27, 2008
+
+A New Species of Swell Shark (Carcharhiniformes: Scyliorhinidae) from
+Papua New Guinea with Coments on Clasper Grove/tube Function in
+Sharks
+
+Eugenie Clark1, John Randall2
+1Mote Marine Laboratory, Sarasota, FL, United States, 2Bishop Museum, Honolulu,
+
+HI, United States
+
+A new species of Cephaloscyllium is described from five adult specimens (445-660 mm
+TL) taken in a “nautilus trap” in 240-274 m off the east coast of mainland Papua New
+Guinea. These are compared to two immature specimens from Rowley Shoals off
+NW Australia collected in 390-700 m, referred to as Cephaloscyllium sp. E by Last and
+Stevens (1994), that may be the same as, or closely related to, our PNG specimens.
+Our new species is distinguishable from other congeners by a unique pattern of
+small white spots, larger in males than females, that shows up especially in the dark
+large patches on the dorsum. These dark patches form nine irregular saddle-like
+marks across the head, body, and fins and extend paler onto the ventral surface. A
+mature female (660 mm TL) had 16 large yellow eggs (8-21 mm diameter). Claspers
+of the two adult male paratypes have their grooves fused into a closed tube for half
+their length. The adaptive function of this fusion into a closed tube on the proximal
+part of the claspers is discussed. In this and other sharks.
+
+___________________________________________________________________________
+
+0165 AES Devil Ray Symposium, Jarry/Joyce, Thursday July 24, 2008;
+STOYE GENERAL ICHTHYOLOGY
+
+Movement Patterns and Foraging Ecology of the Manta Ray (Manta
+birostris)
+
+Tim Clark
+
+University of Hawaii, Honolulu, Hawaii, United States
+
+Manta rays (Manta birostris) were acoustically tracked in order to determine their
+daily movement patterns and foraging ecology in Hawaii. A combination of active
+and passive tracking was used to provide information on both the fine scale, short
+term and the course scale, long term movement patterns of the manta rays. Manta
+rays are shown to have site fidelity to specific foraging areas and cleaning stations.
+Manta rays optimize their foraging through the use of area restricted search patterns,
+allowing them to remain in dense plankton patches. Preliminary studies in the Gulf
+of Mexico and the Maldives suggest that foraging strategies may differ between
+oceanic and coastal areas.
+
+
+
+
+                                         99
+0166 Poster Session I, Friday July 25, 2008
+
+Sixteen Years of Photo-Identification of Hawaiian Manta Rays (Manta
+birostris)
+
+Tim Clark1, Keller Laros2
+1University of Hawaii, Honolulu, Hawaii, United States, 2Manta Pacific Research
+
+Foundation, Kailua-Kona, Hawaii, United States
+
+Manta rays (Manta birostris) have been a tourist attraction in Kona, Hawaii for over
+25 years, where over 11,000 divers per year observe manta rays feeding at night.
+However, little is known about their basic biology. Data has been collected from
+dive instructors on the presence of individual manta rays at two dive sites along the
+Kona coast in order to investigate their life history, population structure, and site
+fidelity. One hundred and thirty five individuals have been identified in Kona since
+1992. Manta rays in Kona appear to have a high site fidelity to certain feeding areas,
+long life, and low reproduction.
+
+___________________________________________________________________________
+
+0596 Poster Session II, Saturday July 26, 2008
+
+The Influence Of Larval Growth History And Exogenous Thyroid Hormone
+On Life History Allocation Patterns In The Axolotl (Ambystoma
+Mexicanum)
+
+Pam Clarkson, Christopher Beachy
+
+Minot State University, Minot, ND, United States
+
+We tested the hypothesis that variation in growth history and exogenous T4 affects
+the vector of allocation variables (i.e., growth, metamorphosis, maturation, and
+storage) by using a full-factorial 4 X 2 randomized complete block design with four
+growth treatments (constant rapid growth, constant slow growth, rapid-then-slow
+growth, slow-then-rapid growth) and two T4 treatments (no T4, 5 nM T4). Adult
+axolotls were paired and resulting embryos were hatched and larvae were raised
+individually in plastic container in reverse-osmosis water. Hatchling larvae were fed
+freshly hatch brine shrimp. As larvae grew, they were fed tubificid worms. We
+examined growth by periodic weighings (to the nearest mg) using a top-loading
+balance. Metamorphosis was scored when tail fin and gill resorption were complete.
+Salamanders were then killed by prolonged immersion in MS-222, fixed in 10%
+formalin, and stored in 70% ethanol. Gonads and fat bodies were then dissected and
+weighed to the nearest milligram. Dissection also allowed us to determine sex in
+order to test the hypothesis that allocation was sex-dependent. Feeding treatments
+had desired growth effects. Treatment with T4 resulted in complete metamorphosis
+of all treated salamanders. In the T4 treated salamanders, metamorphosis was
+independent of larval growth rate. Allocation differed among treatments and was
+dependent on sex. Females stored significantly less than males, while having
+significantly larger gonads than males. Furthermore, female gonad mass was
+significantly influenced by feeding treatment whereas male gonad mass was not; this
+indicates the expensive allocation cost of reproduction in females.
+                                         100
+___________________________________________________________________________
+
+0518 Fish Systematics II, Salons A&B, Friday July 25, 2008
+
+Cypriniformes Tree of Life: Postcranial Characters in Cobitoid Fishes
+
+Miles Coburn1, Gloria Arratia2, Paula Mabee1
+1John Carroll university, University Hts., OH, United States, 2University of Kansas,
+
+Lawrence, KN, United States, 3University of South Dakota, Vermillion, SD, United
+States
+As part of the Cypriniformes Tree of Life project, we assessed postcranial characters
+used by previous investigators for consistency across all cypriniform lineages as well
+as developing new characters. Among cobitoids, postcranial characters of the
+vertebral column, intermusculars and pelvic fins support an arrangement of
+cobitoids as (Catostomidae (Gyrinocheilidae (Botiidae (Cobitidae (Nemacheilidae,
+Balitoridae))))). Cobitoids, excluding catostomids, share a reduction of the
+intercalarium and loss of the intercostal ligaments that pass obliquely between the
+anterior ribs. Within this group, gyrinocheilids lack the platelike expansion of the
+predorsal neural spines, reduction of supraneurals to 1 or 0, and at least a partially
+encapsulated swimbladder that are characteristic of the loaches. Cobitids (sensu
+stricto) possess a series of enlarged epicentral bones associated with vertebrae 4-7.
+Nemacheilids and balitorids share synapomorphies of the tripus and subdivided
+swimbladder capsule. In the enigmatic Ellopostoma transitional vertebrae extend far
+anteriorly, to V9, and the horizontal component of the transverse process of V2 is
+expanded but visibly distinct from the encapsulated swimbladder. We assess these
+character states relative to balitorids and also examine the recent placement of
+Vaillantella as sister to the clade of cobitids, nemacheilids and balitorids.
+
+___________________________________________________________________________
+
+0275 Reptile Ecology, Salons 6&7, Friday July 25, 2008
+
+Temporal Use of Rock Ledge Habitat by Six-lined Racerunners
+(Aspidoscelis sexlineata) on Southeast Minnesota Bluffs
+
+Phil Cochran, Stephen Schmitt
+
+Saint Mary's University of Minnesota, Winona, MN, United States
+
+Six-lined racerunners are associated with sandy, open habitats, including “goat
+prairies” on south- or southwest-facing slopes of bluffs in southeast Minnesota. A
+remote camera was placed beneath overhanging rock ledges on a bluff in Houston
+County, Minnesota, to monitor timber rattlesnakes, but it also obtained thirty-three
+photographs of racerunners. The camera was set to take one photograph per hour
+but was also sensitive to motion. In addition, recording thermometers were
+positioned to record substrate temperature beneath an overhanging ledge and on the
+exposed substrate on the slope outside the ledge. Racerunners apparently used the
+ledges throughout the entire season that the camera was set (from late May through
+early September). However, they were photographed beneath ledges only from late
+morning to mid-afternoon. Frequencies of racerunner photographs during two-hour
+
+                                         101
+blocks from 06:00 to 20:00 were significantly different from those expected under the
+hypothesis that they should be equally likely to be observed during any two-hour
+block. The hypothesis that racerunners use ledges for overnight refuge can also be
+rejected because there was no visual evidence of them leaving in the morning or
+entering in the evening. It would appear instead that racerunners used the shade
+beneath ledges as a temporary refuge from high temperatures during sunny
+afternoons, when ground surface temperatures in the sun may exceed 50° C.
+
+___________________________________________________________________________
+
+0026 AES Age & Growth/Reproduction, Kafka/Lamartine, Saturday July 26,
+2008
+
+Comparing Biological Parameters of the NE Atlantic and Mediterranean
+Populations of the Deep Water Lantern Shark, Etmopterus spinax
+
+Rui Coelho1, Javier Rey2, Luís Gil-de-Sola2, Karim Erzini1
+1University of the Algarve - Centre of Marine Sciences, Faro, Portugal, 2Spanish
+
+Oceanographic Institute, Malaga, Spain
+
+Etmopterus spinax is a small sized deep water lantern shark that occurs in the Eastern
+Atlantic and the Mediterranean. Differences in depth distribution, catch per unit
+effort (CPUE), size at maturity and fecundity were compared between a population
+that has suffered high levels of fishing mortality during the last decades (southern
+Portugal in the NE Atlantic) and a population where low fishing pressure below 500
+m occurs at present or has occurred in the last decades (Alboran Sea in the W
+Mediterranean). The research survey CPUE in the NE Atlantic is substantially lower
+than in the Mediterranean throughout the entire depth range. The NE Atlantic
+population is maturing at smaller sizes than the Mediterranean population and has a
+lower mean fecundity. Specifically, sizes at maturity for the NE Atlantic and the
+Mediterranean were respectively 25.39 and 28.31cm TL for males and 30.86 and
+34.18cm TL for females, while mean fecundities for the NE Atlantic and the
+Mediterranean were respectively 9.94 and 11.06 oocytes per mature female. This
+work evidenced the possible presence of density dependant mechanisms in the NE
+Atlantic population of E. spinax that has lowered the size at maturity as a result of
+excessive fishing mortality. However, given that this is an aplacentary viviparous
+shark, where fecundity is dependant on female size, this compensatory mechanism
+seems to be less efficient than what would be expected.
+
+
+
+
+                                         102
+0124 SSAR Seibert Competition, Salons 4&5, Friday July 25, 2008; SEIBERT
+ECOLOGY
+
+The Impact of Plant Traits on Larval Amphibian Development
+
+Jillian Cohen1, John Maerz2, Bernd Blossey1
+1Cornell University, Ithaca, NY, United States, 2University of Georgia, Athens, GA,
+
+United States
+
+During spring and summer 2007 we conducted a field assessment of the performance
+of three larval amphibian species (Bufo americanus, Rana sylvatica, and Rana palustris)
+in wetlands dominated by nine different native and nonnative plant species in
+upstate New York (n=4-9 cages per plant species, 61 cages total). We collected egg
+masses (n=4-5 per species) as they became available and added week-old tadpoles to
+cages (64 per cage for Bufo, 32 for Rana). We monitored tadpole survival and
+environmental conditions (e.g. temperature, %DO) weekly, and weighed all
+individuals at metamorphosis. In the fall of 2007 we harvested 3 quadrats of plant
+material from each cage location to assess biomass, leaf C:N and leaf phenolics. We
+conducted multiple regressions and used Akaike’s Information Criterion to select
+models. Our results indicate that plant biomass tends to improve larval amphibian
+performance, while certain other qualities, specifically increased C:N and phenolics,
+are associated with declines in performance. Overall, we find that traits, rather than
+origin (native vs. nonnative) determine the quality of habitat plants provide for
+larval amphibians.
+
+___________________________________________________________________________
+
+0680 Poster Session III, Sunday July 27, 2008
+
+Transient Ontogenetic Expression of Hermaphroditic Gonad Morphology
+in the Gobiosoma Group of the Neotropical Seven Spined Gobies
+(Gobiosomatini, Gobiidae)
+
+Kathleen Cole
+
+University of Hawaii at Manoa, Honolulu, HI, United States
+The Neotropical seven-spined gobies (tribe Gobiosomatini) constitute a speciose,
+monophyletic gobiid clade exhibiting significant microhabitat specialization which
+may have played a major role in their rapid evolution. Functional hermaphroditism,
+which is common among gobiids, can promote exploitation of patchily distributed
+micro-niches by countering potential reductions in reproductive opportunities.
+However, the extent of hermaphroditism in the Gobiosomatini is unknown. Many of
+the speciose Gobiosomatini clades are found within the ‘Gobiosoma’ group (sensu
+Ruber et al. 2003). One species within this group, Elacatinus (Tigrigobius) multifasciatus
+is a known hermaphrodite and two others are functionally gonochoric, but exhibit
+transient hermaphroditic ovarian structure among immatures. In this study, ovarian
+morphology among immature and adult Gobiosoma group species was examined to
+see if hermaphroditic gonadal features are present. No evidence of new cases of
+functional hermaphroditism was found among eight species within the Gobiosoma
+group, but six species exhibited transient expression of hermaphroditic gonadal
+                                           103
+features associated with the immature ovary. Among 12 species from nine non-
+Gobiosomatini genera which have no record of hermaphroditism, none exhibited
+similar transient hermaphroditic ovarian features that might otherwise be the norm
+among gobiid taxa. These finding suggest that hermaphroditism may have been a
+shared feature early in the evolution of the Gobiosoma group within the
+Gobiosomatini and therefore may have played a contributory role in rapid speciation
+events.
+
+___________________________________________________________________________
+
+0143 Herp Physiology/Bar Codes, Salons 4&5, Thursday July 24, 2008
+
+Barcoding Fishes of the Gulf of Maine
+
+Bruce Collette
+
+National Marine Fisheries Service, Washington, DC, United States
+
+As part of the Fish Barcode of Life program (FISHBOL), tissue samples of up to 5
+individuals per species were collected, mostly from fishes caught during fishery
+surveys by the Northeast Fisheries Science Center (NEFSC). Most of the voucher
+specimens have been deposited at the National Museum of Natural History (USNM).
+This project will be of direct benefit to NEFSC and NMFS once we have built a COI
+database of most of the fish species occurring in the region. 1) Barcoding works for
+all stages in the life cycle so barcoding will assist in identification of larval fishes.
+This is particularly important because most of the NMFS leaders in "larval fish
+taxonomy" have retired leaving us with identification problems. 2) Barcoding usually
+differentiates between closely related species that are difficult to distinguish such as
+the hakes (Urophycis) or silver hakes (Merluccius). This is particularly useful for large
+specimens that are difficult to bring back for identification. 3) Barcoding can
+positively identify fishery products such as fish fillets. 4) Barcoding can legally verify
+identifications of fishes caught as by-catch and species under regulation. 5)
+Barcoding is useful in identifying stomach contents. So far, tissues have been
+collected and analyzed from 508 specimens representing 162 species, 144 genera, and
+90 families. This includes 101 species from the Gulf of Maine out of a fauna of 252
+species plus many species from nearby in the western North Atlantic.
+
+
+
+
+                                           104
+0724 Poster Session III, Sunday July 27, 2008
+
+The structure of lizard assemblages in cerrado sensu stricto, central Brazil,
+under different burn regimes
+
+Guarino Colli, Davi Pantoja, Elisa Lima
+
+Universidade de Brasília, Brasília, DF, Brazil
+
+Fire is a natural disturbance agent in tropical savannas, modifying the structure of
+animal and plant communities and transforming the landscape. We investigated the
+effects of fire on the structure of lizard assemblages in the Cerrado of central Brazil,
+using pit-fall traps. We determined the effects of burn regime upon lizard richness,
+abundance and evenness and the association between lizard abundance and habitat
+characteristics induced by fire. We sampled five plots of cerrado sensu stricto under
+different burn regimes: quadrennial fires, biennial fires at early, modal, and late dry-
+season, and control, without fire. Lizards were surveyed during five days by month,
+from December 2005 to November 2006, totaling 600 trap*days by plot. Lizard
+abundance and evenness were lower under extreme fire regimes, in agreement with
+the intermediate disturbance hypothesis, but richness was smaller under
+intermediate regimes. Fourteen lizard species were recorded, six of which occurred
+under a single fire regime (Enyalius aff. bilineatus, Tropidurus torquatus, Polychrus
+acutirostris, Mabuya guaporicola, Bachia bresslaui, and Tupinambis duseni). Two
+generalist species (Tr. itambere and Ameiva ameiva) did not occur under extreme
+regimes. Tropidurus itambere and Micrablepharus atticolus dominated under more
+severe regimes and Ma. frenata and Ma. nigropunctata prevailed in the absence of the
+fire. Total lizard abundance did not vary throughout the year, but evenness was
+higher in the wet season. The effects of fire were significantly related to changes in
+habitat structure, but had little relation with climate variability throughout the year.
+Habitat characteristics in plots under different fire regimes and the presence of
+exclusive lizard species suggest that, if natural burns lead to a heterogeneous
+landscape, they can drive lizard richness in a regional context. Anthropogenic burns
+or the complete absence of fire have the opposite effect. This pattern may be shared
+with other animal taxa and anthropogenic fires, with high-frequency and low
+periodicity, as well as the complete suppression of burns, must be avoided. The
+maintenance of these artificial regimes can result in great losses of local and regional
+diversity.
+
+
+
+
+                                          105
+0159 Fish Ecology II, Salons A&B, Monday July 28, 2008
+
+Unmasking Florida’s Hogfish: Habitat, Behavior and Life History of the
+Hogfish (Lachnolaimus maximus)
+
+Angela Collins1, Richard McBride2
+1FWC/FWRI, St. Petersburg, FL, United States, 2NMFS/NEFSC, Woods Hole, MA,
+
+United States
+
+Visual transect surveys were performed and hogfish (Lachnolaimus maximus) were
+harvested over a range of depths and habitat types within the central eastern Gulf of
+Mexico. Hogfish were recorded as present during 73% of all performed dives, and
+were most common over rugose natural hard bottom habitat. As depth and distance
+from shore increased, hogfish density decreased; however, mean hogfish size and
+age showed a positive relationship with depth. A dramatic difference emerged
+between shallow (<30 m) and deep (>30 m) water collections, with fish transitioning
+into males at a much smaller size and younger age within shallow water.
+Furthermore, fish older than 8 years and larger than 559 mm FL were not recorded
+from shallow water sites, while deep water collections yielded fish as old as 19 and
+as large as 765 mm FL. Observed sex ratio had a mean value of 1:10 M: F, and
+showed no change with season or site depth, suggesting that hogfish maintain harem
+structure throughout the year. Gonad histology and visual observations of courtship
+behavior support previous accounts that hogfish spawn in the winter and spring,
+with highest reproductive activity recorded during March and April. Evidence is
+presented for a more protracted spawning period at greater depths. Growth
+parameters as well as survival and mortality estimates are similar to those estimated
+previously for hogfish within the eastern Gulf of Mexico.
+
+___________________________________________________________________________
+
+0202 AES Reproduction, Kafka/Lamartine, Saturday July 26, 2008
+
+Reproductive Biology and Gonadal Cycle of the Lesser Guitarfish, Zapteryx
+brevirostris, from the Coastal Southwest Atlantic
+
+Jorge Horacio Colonello1, Mirta Lidia García2, Carlos Angel Lasta3, Roberto
+Carlos Menni2
+1Instituto Nacional de Investigación y Desarrollo Pesquero (INIDEP); Consejo
+Nacional de Investigaciones Cinetíficas y Técnicas (CONICET), Mar del Plata,
+Buenos Aires, Argentina, 2Consejo Nacional de Investigaciones Científicas y Técnicas
+(CONICET); Departamento de Zoología de Vertebrados, FCNyM., La Plata, Buenos
+Aires, Argentina, 3Consejo de Investigaciones Científicas (CIC), La Plata, Buenos
+Aires, Argentina
+The Lesser guitarfish Zapteryx brevirostris (Chondrichtyes: Rhinobatoidea) is a
+common lecithotrophic viviparous batoid from coastal Southwest Atlantic waters. In
+order to study the reproductive ecology a total of 656 (334 males and 656 females)
+individuals of Z. brevirostris were captured by bottom trawl in the Southwest Atlantic
+coastal ecosystem between 34° and 42°S. The size of the smallest mature male was
+462 mm and the largest immature female was 572 mm. Male size at maturity was
+                                         106
+estimated in 502 mm total length (77% of the maximum TL). The range between
+smallest mature and largest immature female was 460-600 mm and size at maturity
+was estimated in 505 mm (65% of the maximum TL). An opposite trend was
+observed between spermatogenesis and gonadosomatic index (GSI) in males. The
+smallest GSI (Jul-Aug) was related to mature spermatocysts and deferent ducts filled
+with sperm, while the highest GSI (Feb) was associated with immature
+spermatocysts and empty deferent ducts. Female reproductive cycle is most likely to
+be triennial. This conclusion was based on the monthly variation of the GSI and
+largest ovarian follicles diameter. Ovulation occurs in Oct-Nov and embryos born
+with 150 mm TL after a gestation period of approximately 10 months. This
+reproductive information is important for fisheries assessments in order to determine
+the resilience of each species to fishing pressure.
+
+___________________________________________________________________________
+
+0685 AES Devil Ray Symposium, Jarry/Joyce, Friday July 25, 2008
+
+Manta Systematics and Nomenclature
+
+Leonard J. V. Compagno1, Andrea D. Marshall2, Tom Kashiwagi2, Michael B.
+Bennett2
+1Shark Research Center, Iziko - Museums of Cape Town, Cape Town, Western Cape,
+
+South Africa, 2The University of Queensland, St. Lucia, Brisbane, Queensland,
+Australia
+
+The devilrays (Family Mobulidae, Suborder Myliobatoidei, Order Rajiformes), are
+currently divided into two distinctive confamilial genera, Mobula Rafinesque, 1810
+and Manta Bancroft, 1828 which rarely have been split into two families. Manta, the
+giant devil rays or mantas (blanket in Spanish) includes one of the largest living
+cartilaginous fishes reaching a width of 6-7 m. Authors of the late 20th Century and
+early 21th Century generally consider Manta to be monotypic and to include a single
+species, M. birostris (Walbaum, 1792). Manta has one of the more extensive generic and
+species synonymies of any living genus of cartilaginous fish. The genus Manta has 10
+generic and 25 species synonyms, mostly without type specimens. Recent research on
+Manta off Mozambique, Mexico and Indonesia, conducted by A. Marshall and
+involving photographing individuals and groups of animals, has revealed two
+obvious species of Manta that are separable by morphology, size and behaviour.
+Genetic analyses by T. Kashiwagi provide support for the presence of more than one
+species of Manta. We discuss the systematics and nomenclature of Manta including
+problems with the identity of the original M. birostris from ‘Carolina’, United States of
+America, and its possible synonyms, the status of regional species of Manta with notes
+on Whitley’s 1936 attempt to split Manta into three poorly characterized genera and 10
+poorly defined geographic species (including three new species), and the applicability
+of nominal species of Manta to the two species from Mozambique. We suggest that a
+neotype should be designated for M. birostris based on an extant specimen cited by
+Bigelow & Schroeder’s 1953 monograph on Western North Atlantic batoids.
+
+
+
+
+                                          107
+0749 Sustainable Harvest Symposium, Drummond, Monday July 28, 2008
+
+How Harvesting Turtles Impacts the Currency of Life-history Evolution
+
+Justin Congdon
+
+Savannah Rive Ecology Lab, Aiken, SC, United States
+
+For 42 of the past 53 years, the life histories of three species of turtles (Chrysemys
+picta, Emydoidea blandingii, and Chelydra serpentina) were studied on the University of
+Michigan s E. S. George Reserve in southeastern Michigan. Maximum longevities
+recorded to date are 75 yr, 60 yr, and 50 yr for Blanding s, Painted, and Snapping
+turtles, respectively. We examined: 1) the relationship of juvenile growth rates with
+size and age at maturity, 2) early adult growth on clutch size and frequency in
+Painted turtles, and 3) indeterminate growth as a mechanism for increasing the
+proportion of late in life to early births of individuals. In addition, we compared age
+or age group specific body sizes, reproductive traits and survival for all three species
+to test the contrasting predictions of the Relative Reproductive Rate Hypothesis (that
+predicts traits that will increase the reproductive output or survival of older
+compared to younger individuals) and the Senescence Hypothesis (that predicts a
+reduction in reproductive output or survival in older versus younger individuals).
+Indeterminate growth occurred in all three species, but juvenile growth rates and
+ages at maturity are a more important determinant of variation in adult body size in
+the populations. Older females increased parental investment and reproductive
+frequency, rather than clutch size. Because the value of adult turtles of all three
+species (in terms of population dynamics) increased with age, sustained increases in
+adult mortality due to commercial harvests of adults will have inevitable and serious
+impact on populations.
+
+___________________________________________________________________________
+
+0085 Fish Morphology & Histology I, Salons 6&7, Thursday July 24, 2008;
+STOYE GENETICS, DEVELOPMENT & MORPHOLOGY
+
+The Interopercular-preopercular Articulation: A Novel Feature Suggesting
+a Close Relationship between Psilorhynchus and Labeonin Cyprinids
+(Ostariophysi: Cypriniformes)
+
+Kevin Conway
+
+Saint Louis University, St. Louis, MO, United States
+The bones of the opercular series (interopercle, preopercle, opercle and subopercle)
+vary little in terms of their general appearance and position among members of the
+order Cypriniformes. Except for a few characters relating to the shape of particular
+bones (e.g. the ventral edge of the opercle in cobitid fishes), the opercular series of
+cypriniform fishes appears to have contributed little to our understanding of their
+phylogenetic relationships. During recent investigation of the osteology of
+cypriniform fishes in general, and Psilorhynchus in particular, a novel and previously
+undocumented feature of the opercular series was discovered: an articulation
+between the anteriormost tip of the interopercle and preopercle. This articulation is
+achieved through a single, short, nodule-like process on the medial face of the
+                                          108
+preopercle and the lateral face of the interopercle. The surface of each nodule is
+covered in a thin meniscus-like coating, which may serve to cushion the articulatory
+surfaces. Further investigation revealed that an identical articulation is also present
+between the interopercle and preopercle in all members of the Labeonini (a subgroup
+of the cyprinid subfamily Cyprininae). This derived character may suggest a close
+relationship between Psilorhynchus and labeonin cyprinids.
+
+___________________________________________________________________________
+
+0028 AES Physiology/Conservation, Kafka/Lamartine, Sunday July 27, 2008
+
+Supplemental Feeding for Tourism Radically Alters Movement Patterns
+and Spatial Distribution of the Southern Stingray, Dasyatis americana
+
+Mark Corcoran2, Brad Wetherbee1, Mahmood Shivji2, Matt Potenski2, Demian
+Chapman2, Guy Harvey2
+1University of Rhode Island, Kingston, RI, United States, 2Guy Harvey Research
+
+Institute, Oceanographic Center, Nova Southeastern University, Dania Beach, FL,
+United States
+
+Supplemental feeding of southern stingrays, Dasyatis americana, has occurred at
+Stingray City Sandbar (SCS) at Grand Cayman as a tourist attraction since 1986. We
+investigated the influence of supplemental feeding on the movement patterns of
+stingrays by actively tracking both fed and non-fed stingrays using acoustic
+telemetry. Seven wild and seven provisioned stingrays were tracked manually for
+between 5-72 h, and site fidelity of five mature females at SCS was investigated over
+the course of one year using automated acoustic receivers anchored to the seafloor.
+Female stingrays at SCS utilized significantly smaller 24 h activity spaces (0.13 ± 0.08
+km2) than wild female stingrays (0.88 ± 0.17 km2). Fed stingrays were highly active
+over a small area during daytime at the feeding site, but had limited nocturnal
+activity, whereas wild stingrays were more active during the night with limited
+activity during the day. Core areas of activity overlapped little among wild stingrays
+(3%), whereas core activity areas of provisioned stingrays at SCS overlapped much
+more (72%). Provisioned female stingrays consistently frequented SCS during
+periods of supplemental feeding and exhibited long term (up to six years) site
+fidelity to this site. Supplemental feeding has altered diel activity patterns and
+spatial distribution of stingrays at SCS and has enabled the local density of D.
+americana to increase to atypical levels. Our study suggests that food availability
+directly influences size and location of core areas of activity as well as population
+density of southern stingrays. The dramatic shifts in behavior and the altered
+population structure of stingrays also suggest that the aggregation of stingrays at
+SCS may alter predator-prey relationships and nutrient cycling, and possibly mating
+systems within the entire community at this location over long time periods.
+Supplemental feeding of wild marine animals may potentially alter movement
+patterns of individuals being fed, modify population structure and may ultimately
+affect the entire marine ecosystem. Managers charged with regulating existing sites
+where marine animals are fed by humans and policy makers responsible for
+management of similar sites established in the future should recognize potential far-
+reaching impacts of such activities on the local marine environment and take
+appropriate measures to monitor and if necessary enact mitigation measures.
+                                          109
+0758 Fish Conservation, Drummond, Sunday July 27, 2008; STOYE
+CONSERVATION
+
+Galaxoid Fishes, Remnants of Pristine Patagonian Lakes, and the Ecological
+Impacts of Invasive Trout
+
+Cristian Correa
+
+McGill University & Redpath Museum, Montreal, QC, Canada
+
+Galaxoid fishes are the most specious fish taxon in the sparse freshwater fish fauna
+of the cold-temperate southern hemisphere and are amongst the most threatened
+fishes known. Trout, native to the northern hemisphere, have become naturalized in
+all temperate countries of the south, where they tend to replace galaxoid fishes.
+These invaders are thought to be responsible for galaxoid declines based on evidence
+from stream habitats, where trout abundance is often negatively correlated with
+galaxoid distributions. The impacts of trout in lake habitats, however, are virtually
+unexplored, and yet lakes have been postulated to act as possible refugia for native
+galaxoid fishes. We therefore investigate whether lakes provide effective refugia for
+galaxoids, how trout influence galaxoids in these ecosystems, and whether
+uninvaded lakes still exist in Chilean Patagonia. Pilot surveys in the Aysén region
+revealed several uninvaded isolated lakes and ponds, and a strong decrease in
+galaxoid abundance as the abundance of trout increased in invaded lakes. The most
+prevalent galaxoid species (Galaxias platei) show morphological variation which
+correlates with the trout-invasion gradient, suggesting strong natural selection and
+local adaptation. We also examine hypotheses about behaviour and trophic position
+of G. platei, and explore cascading effects in lower trophic levels of lake ecosystems
+(i.e., zooplankton composition and size). This research will inform how native species
+adapt to invasive species (if at all), and the ecosystem-level consequences of such
+interactions. Furthermore, by identifying causal mechanisms driving galaxoid
+species decline, we hope to initiate conservation efforts for the protection of
+Patagonian aquatic diversity.
+
+___________________________________________________________________________
+
+0149 Poster Session II, Saturday July 26, 2008
+
+Feeding Ecology of an Introduced Generalist Frugivorous Fish: The Fate of
+Pacu in the Sepik River, Papua New Guinea
+
+Sandra Bibiana Correa1, Félix Daza2, Jonathan Ambruster3, Ricardo Betancurt3
+1Texas A&M University, College Station, Texas, United States, 2Wildlife
+Conservation Society, Maripa, Bolivar, Venezuela, 3Auburn University, Auburn,
+Alabama, United States
+
+Feeding ecology of the Pacu (Piaractus brachypomus), a generalist frugivorous
+Neotropical fish introduced into the Sepik River, Papua New Guinea is analyzed
+based on specimens collected over a decade after the introduction. We describe the
+diet of juvenile and sub-adult Pacu from a populated floodplain lake of the East
+Sepik River and compare it to that of a natural population from the Orinoco River
+Basin (South America). As in natural populations, introduced Pacu presented
+                                         110
+ontogenetic variability in its diet. Individuals between 100 and 200 mm SL
+preferentially feed on fruits and seeds, fish remains, and vegetable material (other
+than fruits and seeds). Individuals between 200 and 300 mm SL feed on similar
+amounts of aquatic plants and fish remains. Pacu over 300 mm SL feed mostly on
+fish remains, and, to a lesser extent, on aquatic plants. Interestingly, the fish remains
+found in the stomachs were scales of variable shape and size, teeth, bone, and fin-ray
+fragments. Remains of other fish guts were found in the stomachs of two large
+individuals. The nature of these fish remains suggests that the larger specimens of
+Pacu are relying heavily on carrion. Pacu from the Sepik showed a different diet
+than that of individuals from the natural population. Although preliminary, this
+study shows how a species that has large preference for fruits and seeds, and that
+possesses morphological adaptations to feed on fruits and seeds, can drastically
+switch its diet under conditions of limited food availability. The results of this study
+could be used to make predictions on the future of natural Pacu populations after
+deforestation. Further studies should focus on the feeding ecology of adult Pacu in
+the Sepik, on populations upstream in the Sepik where there is still riparian forest,
+and on the potential impact of introduced Pacu to native species.
+
+___________________________________________________________________________
+
+0094 AES Student Papers I, Kafka/Lamartine, Thursday July 24, 2008;
+GRUBER
+
+Elasmobranch Commercial Landings in Portugal from 1986 to 2006, with
+Virtual Population Analysis and a Method for Evaluating “Supply and
+Demand”
+
+Joao Correia
+
+Flying Sharks, Lisboa, Portugal
+Portuguese commercial elasmobranch landings were analyzed for the period 1986 -
+2006 and totaled 108.671 ton. An average of 5.175 ton were landed yearly,
+representing 8 orders, 14 families and 44 species. Annual landings for the fishery
+generally decreased over time, with a corresponding increase in price per kilogram.
+The most landed group, Skates (Raja sp.), accounted for 33% of the landings, or
+35.614 ton. They were followed by Catsharks (Scyliorhinus sp.), Portuguese dogfish
+(Centroscymnus coelolepis), Leafscale gulper shark (Centrophorus squamosus) and
+Gulper shark (Centrophorus granulosus) (accounting for 12%, 12%, 10%, and 9% of
+the landings, respectively). In the absence of CPUE data, the comparative trends of
+landings and price were employed as an indicator of the “status” of specific
+elasmobranch species. Raja sp., Centrophorus granulosus, Smoothounds (Mustelus
+sp.), Torpedo rays (Torpedo sp.), Kitefin shark (Dalatias licha) and Angel sharks
+(Squatina sp.) displayed indications of possible overexploitation, and merit the focus
+of future research. The pattern shown by fishing effort over time (i.e. number of
+fishing vessels over time) displayed a marked decrease, although this was
+substantially lesser than the decrease shown by landings of the species mentioned
+earlier. It is unlikely, therefore, that such decrease in landings is justified solely by a
+decrease in number of fishing vessels. Similarly, the increase in price shown by all
+species was largely superior to the increase in inflation, which would suggest that
+the increase in inflation alone would not account for the increase in price. All the
+
+                                           111
+results and data seem to corroborate the notion that some species are, in fact, under
+over-exploitation and in need of immediate management. These findings were all
+substantiated by virtual population analysis, which yielded higher fishing mortalities
+to those species where previous methods suggested overfishing.
+
+___________________________________________________________________________
+
+0665 AES Systematics & Biogeography I, Jarry/Joyce, Saturday July 26, 2008
+
+Molecular Phylogenetics and Biogeography of Wobbegong Sharks
+(Orectolobiformes: Orectolobidae)
+
+Shannon Corrigan, Luciano Beheregaray
+
+Molecular Ecology Lab, Macquarie University, Sydney, NSW, Australia
+Wobbegong sharks (Orectolobiformes: Orectolobidae) are dorso-ventrally flattened,
+demersal sharks that are endemic to the western Indian and eastern Pacific Oceans.
+They are medium to large in size and are harvested as a food source at several
+locations throughout their distribution including Australia, China, Japan and
+Malaysia. In Australia, where they are the most speciose, they are commercially
+targeted in New South Wales and Western Australia and there is evidence to suggest
+that populations are declining. This, together with considerable taxonomic
+uncertainty, has stimulated conservation concern for these sharks. Irrespective of
+this, there are very few management strategies in place for wobbegongs and
+available biological information is limited. Morphometric and meristic investigations
+aimed at answering questions of taxonomy constitute a large proportion of
+wobbegong research effort. Despite such investment, there has been little focus on
+the study of species interrelationships or Orectolobid evolution. Furthermore, no
+prior investigations have adopted a molecular approach to studying these sharks.
+One component of our work, a molecular phylogenetic analysis of the family
+Orectolobidae functions to fill this void. Samples of all Orectolobid species (and
+some undescribed taxa) were collected from Australia and the Indo-Pacific. We
+obtained genetic information from both mitochondrial and nuclear DNA markers
+and used the data to reconstruct the evolutionary relationships among wobbegong
+species. Here, we will demonstrate how our molecular data is inconsistent with the
+current taxonomic arrangement of the family and go on to describe how these results
+can contribute to resolving taxonomic uncertainties. We will also propose a
+biogeographic scenario for the wobbegong sharks that begins with a tropical origin,
+subsequent colonisation of Australian waters followed by re-colonisation of the
+tropics.
+
+
+
+
+                                         112
+0116 AES Management, Jarry/Joyce, Sunday July 27, 2008
+
+Productivity and Susceptibility Analysis of Coastal Sharks in U.S. Atlantic
+and Gulf of Mexico Waters
+
+Enric Cortes1, Michelle Heupel2, Colin Simpfendorfer2, Marta Ribera1
+1NOAA   Fisheries, Panama City, Florida, United States, 2James Cook University,
+Townsville, Queenland, Australia
+
+Productivity and Susceptibility Analysis, or PSA, is a risk assessment approach
+useful for evaluating the vulnerability of stocks of different species to fisheries.
+Depending on data availability, PSA can range from simple qualitative assessments
+to more detailed quantitative evaluations. We applied a quantitative approach to
+evaluate the biological productivity and susceptibility to different gears of large and
+small coastal sharks off the U.S. East Coast and Gulf of Mexico. For the productivity
+component, we used published biological information to develop Leslie matrices,
+and incorporated uncertainty in age at maturity, lifespan, and annual age-specific
+fecundity and survival rates though Monte Carlo simulation. The susceptibility of
+each species or population to different gear types was evaluated as the product of
+four sub-components or probabilities: availability, encounterability, selectivity, and
+post-capture mortality. Availability of the population to the fishery of interest was
+calculated as the percentage overlap of the range area of the fishery with the range
+area of the population; encounterability of the population by the gear in question
+was calculated as the degree of overlap between the population and gear depth
+ranges; selectivity of the gear was estimated using the mean size at capture and
+known selectivity curve or the selectivity of a similar species in a similar gear; and
+post-capture mortality was derived from multiple scientific observer programs that
+collect information on the status and/or disposition of the shark catch. We plotted
+productivity and susceptibility paired values to facilitate interpretation, and
+calculated a risk index based on the Euclidean distance to rank each population or
+species and help identify those that should receive preferential research and
+management efforts.
+
+___________________________________________________________________________
+
+0303 Poster Session I, Friday July 25, 2008
+
+Oceanic Conditions, Chlorophyll-a and Zooplankton; Exploring the
+Reasons for Seasonal Migrations of Manta birostris in Southern
+Queensland Waters.
+
+Lydie Couturier, Kathy Townsend, Scarla Weeks, Michael Bennett
+
+The University of Queensland, Brisbane, Queensland, Australia
+
+Manta rays occur in coastal waters around North Stradbroke Island in southern
+Queensland in the Austral spring/summer, arriving in October and leaving in
+March. It is hypothesised that the appearance of Manta birostris at this site coincides
+with rising water temperatures and increases in primary production in the coastal
+waters, leading to zooplankton blooms that provide a rich source of food for these
+rays. The departure of manta rays is hypothesised to be due to a significant decline
+                                         113
+in either the quality or quantity of available zooplankton, and is likely to be
+correlated with measurable oceanic conditions. We used satellite imaging to map sea
+surface temperatures and concentrations of chlorophyll-a along the Queensland coast
+and, in particular, around the study sites at North Stradbroke Island throughout the
+year. Plankton tows were conducted at specific sites where manta rays are known to
+aggregate seasonally. These tows occurred at the same locations in the months prior
+to the arrival of manta rays, during their presence and after they had left. Plankton
+species were identified, counted and the total sample was analysed for lipid content,
+ash fraction and energetic content on a monthly basis. Information on the presence
+or absence of manta rays at the study sites was collected to explore possible links
+with measurable biotic and abiotic environmental factors.
+
+___________________________________________________________________________
+
+0502 Fish Phylogeography, Kafka/Lamartine, Monday July 28, 2008
+
+How Many Species of Goliath Grouper are There?
+
+Matthew Craig
+
+Hawaii Institute of Marine Biology, Kaneohe, Hawaii, United States
+
+The goliath grouper, Epinephelus itajara (Epinephelidae), is an exceptionally large
+marine fish that inhabits sub-tropical and tropical waters of the Americas and
+western Africa. Due to a lack of readily observable morphological variation in
+specimens across its range, goliath grouper have been regarded as a single species,
+thus challenging paradigms of allopatric speciation. We tested the hypothesis that
+Pacific and West Atlantic populations constitute a single species by analyzing
+nuclear and mitochondrial DNA sequence data. We found numerous fixed genetic
+differences for mitochondrial loci between Pacific and West Atlantic goliath grouper
+(d ≈ 3.5% at 16S and d ≈ 6% at cytochrome b; φst = 0.98 [p < 0.001] for 16S and φst =
+0.975 [p < 0.001] for cyt b.), and the nuclear S7 intron had three fixed nucleotide
+differences between Pacific and West Atlantic populations. Within the West Atlantic,
+we found virtually no genetic differences (d < 0.01 at 16S and d < 0.02 at cytochrome
+b), but statistically significant population structure (φst = 0.03 [p = 0.07ns] at 16S; φst =
+0.139 [p < 0.001] at cytochrome b). These data indicate that: (i) goliath grouper in the
+West Atlantic are likely subdivided into discrete Caribbean and Brazilian
+populations, (ii) goliath grouper populations in the Pacific and western Atlantic
+represent at least two distinct species (we resurrect the species Epinephelus
+quinquefasciatus Bocourt 1868 for Pacific goliath grouper), and (iii) morphological and
+molecular evolutionary rates may not run in parallel and thus may obscure
+conventional interpretations of these data.
+
+
+
+
+                                            114
+0063 Fish Phylogeography, Kafka/Lamartine, Monday July 28, 2008
+
+No Evidence for Ecological Isolation in Relation to Dissolved Oxygen
+Regime in an African Cichlid Fish: A Possible Role of Phenotypic
+Plasticity?
+
+Erika Crispo, Lauren Chapman
+
+McGill University, Montreal, Quebec, Canada
+
+Gene flow among environments may be reduced via natural selection if well-adapted
+residents are favoured over mal-adapted dispersers and dispersing alleles, a process
+termed ecological isolation. However, phenotypic plasticity in ecologically important
+traits may permit increased gene flow. Here we test for ecological isolation in a
+species for which high levels of phenotypic plasticity have been observed in
+ecologically important traits. Pseudocrenilabrus multicolor is an African cichlid fish that
+is found in a wide range of environments, including high-oxygen lakes and rivers,
+and low-oxygen swamps. Divergent gill morphology is observed between dissolved
+oxygen regimes, and previous studies have shown that plasticity in gill morphology
+is high. We use microsatellite data to test for the effects of dissolved oxygen on
+population structure while controlling for the effects of geographical variation.
+Specifically, we compare genetic variation within versus among geographical
+locations and within versus among dissolved oxygen regimes, and test for isolation-
+by-distance along the waterway. We document that populations are highly
+structured according to geographical location and isolation-by-distance, but find no
+evidence that they are structured according to dissolved oxygen regime. We
+speculate that high gene flow may be permitted between selective regimes due to
+phenotypic plasticity.
+
+___________________________________________________________________________
+
+0602 Poster Session III, Sunday July 27, 2008
+
+An Assessment of Presence of Chytrid Fungal Infection in Tiger
+Salamanders in North Dakota
+
+Leah Crites1, Charles Crites1, Kenneth Cabarle2, Heidi Super1, Christopher
+Beachy1
+1Minot State University, Minot, ND, United States, 2University of North Dakota,
+
+Grand Forks, ND, United States
+
+No formal analysis has focused on the presence of chytrid fungus in salamanders in
+North Dakota. In ongoing attempts to determine amphibian population abundances
+and xenobiotic influence on amphibians, we analyzed tail tissue and skin swabs (n =
+80) for B. dendrobatidis from eight tiger salamander (Ambystoma mavortium)
+populations from North Dakota. Tail clips were preserved in 70% ethanol and stored
+in a -80oC freezer. Populations represent areas in northwest, north-central,
+southwest and the turtle mountain regions of North Dakota where the Amphibian
+Growth Project has ongoing life history analyses. At present, at least one individual
+from each sampling location has been analyzed. Ten individuals from each location
+
+                                           115
+will be assessed. Initial results have shown no indication of chytrid presence in
+analyzed populations.
+
+___________________________________________________________________________
+
+0095 AES Devil Ray Symposium, Jarry/Joyce, Thursday July 24, 2008
+
+Movement Patterns and Habitat Preferences of Ten Mobula japanica
+Tagged in the Gulf of California, Baja California Sur, Mexico
+
+Donald Croll1, Kelly Newton1, Kevin Weng2, Felipe Galvan3, John O'Sullivan4,
+Heidi Dewar5
+1University of California, Santa Cruz, CA, United States, 2University of Hawaii at
+
+Manoa, Honolulu, HI, United States, 3Centro Interdisciplinario de Ciencias Marinas,
+La Paz, BCS, Mexico, 4Monterey Bay Aquarium, Monterey, CA, United States,
+5NOAA Fisheries, La Jolla, CA, United States
+
+
+Mobulid rays are the subject of an intensive and expanding artesanal fishery in the
+Gulf of California. Anecdotal reports suggest that populations in the Gulf of
+California have declined dramatically over the last 20 years. Mobula japanica is a pan-
+tropical species that appears in the Gulf of California seasonally and is listed as near
+threatened in the 2007 IUCN Red List of Threatened Species. Our research is focused
+in this region and on this species because they are relatively abundant, can be
+reliably sampled, and are the subject of directed and bycatch fisheries mortality in
+artisanal and purse-seine fisheries in the region. M. japanica occurrence seems to
+coincide with the large influx of warm water apparent each spring. However, it is
+unlikely that this summer increase is caused by migration, as their increase in
+abundance is simultaneous both in tropical and warm temperate waters. It is more
+likely that mobulid rays disperse offshore or move to deep waters during the winter
+in tropical and warm temperate areas but seasonally aggregate in certain locations of
+high prey density, such as the waters offshore of the Baja California Peninsula,
+making them highly vulnerable to intensive fisheries in the area. Ten M. japanica
+were tagged with Pop-Up Archival tags near La Paz in the Gulf of California during
+2004 – 2006. Preliminary results indicate that M. japanica move out of the Gulf and
+into the Pacific during late summer/early fall. Resolving these seasonal movement
+patterns and aggregating areas are key to the conservation of this species.
+
+___________________________________________________________________________
+
+
+
+
+                                          116
+0065 Herp Systematics, Drummond, Friday July 25, 2008
+
+On The SSAR Names List
+
+Brian Crother
+
+Southeastern Louisiana University, Hammond, LA, United States
+
+There have been three scientific and standard English names lists published by the
+SSAR that were additionally endorsed by the HL and ASIH. Criticism and
+disagreement have been expected with publication of these lists and I have not been
+disappointed. The purpose of this talk is to try clarify several things about the list,
+such the charge of the committee, how the list is put together, and how the list is
+reviewed. Concepts of consensus and authority will also be examined.
+
+___________________________________________________________________________
+
+0137 Poster Session I, Friday July 25, 2008
+
+Preliminary Study on the Age and Growth of the Spinetail Mobula, Mobula
+japanica, (Müller and Henle, 1941), with Comments on its Vertebral
+Column Structure
+
+Elizabeth Cuevas-Zimbrón1, Oscar Sosa-Nishizaki1, John O’Sullivan2
+1CICESE,   Ensenada, B.C., Mexico, 2Monterey Bay Aquarium, California, United
+States
+
+This study provides the first information on the age and growth of any species of the
+Mobula genus, and contributes to the knowledge of the life history of Mobula japanica.
+We analyzed 55 longitudinal vertebral sections from organism caught in southern
+Gulf of California. Disc width (organism’s size, DW) ranged between 1095 mm to
+2400 mm. Using dissection and radiographic analysis of the vertebral column, we
+found that vertebrae only appeared at the posterior region, being the most adequate
+for age determinations the vertebras below the dorsal fin. We found a significant
+linear relationship between disc width and vertebral size (radium), suggesting a
+proportional growth. In order to enhance the growth bands in the vertebrae, a
+modification of the Violet Crystal staining technique was used. The average percent
+error (APE) and the percent of agreement (PA) between readers were high. The
+oldest observed age was 14 bands (female with 2300 mm DW), while the youngest
+was 1 band (female with 1210 mm and a male of 1390 DW size). The preliminary von
+Bertalanffy growth equation estimated was DWt = 2338.07 (1 – e –0.2771 (t – 1.676)).
+
+___________________________________________________________________________
+
+
+
+
+                                         117
+0681 Poster Session II, Saturday July 26, 2008
+
+Field Evidence of           Unpalatability         of   Northern     Red     Salamanders,
+Pseudotriton ruber
+
+Paul Cupp
+
+Eastern Kentcky University, Richmond/KY, United States
+
+Two separate incidental observations provide evidence that northern red
+salamanders, Pseudotriton ruber, are unpalatable to some predators. In similar
+instances the salamanders were found lying on a rock beside a creek in Rockcastle
+Co., KY and had been severely injured. They apparently had been placed on the rock
+by predators that were unable to eat them. The first P. ruber, found on April 29, 1990,
+had bite marks over much of the body and part of the right leg had been ripped off
+with the humerus remaining. Obvious severe injuries were present on the upper left
+side of the trunk. There were no apparent injuries to the head or tail. The second P
+ruber was found on September 22, 1994 within the same vicinity in the same creek as
+the previous animal. Only one bite mark was obvious on the right side of the head,
+and the cloacal vent and hindlimbs had a deeper red color, Both P. ruber ceased all
+movements and died within five hours of the initial observations.                These
+observations support previous proposals that these salamanders are distasteful to
+some predators. Predators may learn to avoid such encounters and other red
+salamanders would benefit.
+
+___________________________________________________________________________
+
+0363 Poster Session I, Friday July 25, 2008
+
+Management of Skate Fisheries off the Northeastern United States
+
+Tobey Curtis
+
+National Marine Fisheries Service, Gloucester, MA, United States
+A number of skate species (Family Rajidae) are widely distributed across the
+continental shelf off the northeastern United States, and are subject to fishing
+mortality in the region’s extensive commercial fisheries. Historically, skates were
+commonly caught as bycatch in trawl and dredge fisheries targeting other, more
+valuable species, such as cod, flounder, monkfish, and sea scallops. Catches were
+largely discarded. In recent years, however, the value of skate products has
+increased in domestic and foreign markets, resulting in increases in landings and the
+emergence of localized targeted fisheries. In response, the New England Fishery
+Management Council (Council) drafted the Northeast Skate Complex Fishery
+Management Plan (FMP) that was implemented by the National Marine Fisheries
+Service (NMFS) in 2003. The FMP included management measures for seven skate
+species: winter (Leucoraja ocellata), barndoor (Dipturus laevis), thorny (Amblyraja
+radiata), smooth (Malacoraja senta), little (Leucoraja erinacea), clearnose (Raja eglanteria),
+and rosette (Leucoraja garmani).           Among its measures, the FMP included
+establishment of an open access Federal permit to possess skates, biological reference
+points for determining stock status, prohibitions on possession of overfished skates
+(barndoor, thorny, and smooth skates), possession limits for the skate wing fishery,
+
+                                             118
+and an exemption program for vessels targeting small skates for bait markets. In
+2007, NMFS declared that winter skate had become overfished, triggering the need to
+initiate Amendment 3 to the FMP, which would establish a stock rebuilding program
+for winter skate, and contribute to the rebuilding of other overfished skate stocks.
+The amendment is currently under development by the Council, but progress has
+been hampered by a lack of data on skate biology, population dynamics, and species-
+specific trends in fishing mortality.
+
+___________________________________________________________________________
+
+0247 General Ichthyology III, Drummond, Sunday July 27, 2008; STOYE
+GENERAL ICHTHYOLOGY
+
+Genetic Diversity Reveals a Cryptic Evolutionary Lineage in Sphyraena
+barracuda
+
+Toby Daly-Engel
+
+Hawaii Institute of Marine Biology, Kaneohe, Hawaii, United States
+
+The management of the world’s highly vagile reef predators requires an
+understanding of population connectivity and the identification of cryptic
+evolutionary lineages. Current taxonomy indicates a single species of the great
+barracuda, Sphyraena barracuda, but differences in coloration and behavior are
+apparent between Pacific and Caribbean forms. To evaluate the evolutionary depth
+of these differences, we conducted a global phylogeographic survey using a 629 base
+pair fragment of the mitochondrial cytochrome b gene. These data indicate two
+colonization events from the Indo-Pacific to the Atlantic via southern Africa. The
+samples of East Atlantic barracuda all contain a single unique haplotype nested
+within a network of Indo-Pacific haplotypes, indicating a recent invasion from the
+Indian Ocean, possibly after the most recent glacial period. The Caribbean
+population is distinguished by 1.1-1.9% sequence divergence, indicating an older
+colonization to the western Atlantic on the order of 500,000 – 900,000 years ago. Both
+colonization events may have been facilitated by cessation of the cold water
+upwelling on the Atlantic coast of southern Africa and intrusion of tropical Indian
+Ocean water into the Atlantic at the end of each Pleistocene glaciation. The highly
+divergent Western Atlantic population represents a previously unrecognized
+evolutionary lineage within S. barracuda.
+
+___________________________________________________________________________
+
+
+
+
+                                         119
+0633 Herp Physiology/Bar Codes, Salons 4&5, Thursday July 24, 2008;
+STOYE PHYSIOLOGY & PHYSIOLOGICAL ECOLOGY
+
+Long-term Thermal Biology of the Gila Monster in the Sonoran Desert:
+What A 500,000-Hour Thermal History Tells Us about Thermal Preference
+and Organism Performance
+
+Jon Davis
+
+Arizona State University, Tempe, AZ, United States
+
+Availability of thermal energy is a physical property of the environment that
+influences evolution of organisms since nearly all biological processes (from enzyme
+kinetics to digestion to reproduction) are temperature sensitive. In ectothermic
+animals, environmental temperatures directly influence body temperatures and thus
+organism performance. I used radiotelemetry and surgically implanted temperature
+dataloggers to examine the long-term thermal ecology of the Gila monster (Heloderma
+suspectum), a large desert lizard, in nature. I recorded hourly body temperature of 16
+to 40 lizards semi-continuously from 2003-2007 resulting in a thermal profile for this
+species composed of nearly 500,000 body temperatures. I assessed thermal preference
+seasonally and during surface activity and inactivity (i.e., when in a refuge) and also
+conducted a series of laboratory experiments to assess the thermal sensitivity of key
+processes that affect foraging ability and immune function. I found that walking
+endurance, olfactory ability, and wound healing rate are temperature sensitive with
+better performance occurring at 25 and 30 °C, near the species’ 29 °C preferred body
+temperature, and poorer performance occurring well below (20 °C) and above (35 °C)
+preferred body temperature. Gila monsters live at relatively cool temperatures (<30
+°C) 75 % of their lives and strongly avoid body temperatures above 34 °C. Overall,
+the species spends 50 % of its life near (±3 °C) preferred body temperature, and thus,
+performance of many physiological functions is likely optimized.
+
+___________________________________________________________________________
+
+0639 Poster Session II, Saturday July 26, 2008; STORER HERPETOLOGY
+
+Urbanization and Immunology: Injury Incidence, Wound Healing, and
+Hematology of Urban And Natural Gila Monsters in The Sonoran Desert
+
+Jon Davis
+
+Arizona State University, Tempe, AZ, United States
+
+Understanding the effects that urbanization has on wildlife populations is a central
+concern facing contemporary biologists. Most studies have assessed the effects of
+habitat alteration or introduced competitors and predators on birds and mammals,
+yet other important issues and taxa have received less attention. I examined the
+effects that urbanization has on injuries, hemoparasites, and immunocompetence of
+free-ranging Gila monsters (Heloderma suspectum) at natural and urbanized field sites
+in the Sonoran Desert. I quantified the types of injuries and frequencies of occurrence
+and measured wound healing rate in the field to determine if differences exist
+between the populations. I also examined blood smears to determine hemoparasite
+prevalence and strength of innate immune response of lizards at both sites. Results
+                                         120
+indicate higher incidence of both injuries and hemoparasite infections in urban
+animals compared to natural animals despite urban animals being in better overall
+body condition. The results of this study reveal effects of urbanization on a long-
+lived lizard that have not previously been reported.
+
+___________________________________________________________________________
+
+0346 Fish Systematics IV, Salons A&B, Monday July 28, 2008
+
+Placement of the Goatfishes (Perciformes: Mullidae) Within an
+Acanthomorph Context Using RAG1 and a Total Evidence Analysis of
+Mullid Interrelationships
+
+Matthew Davis1, Nancy Holcroft2
+1Universityof Kansas, Lawrence, Kansas, United States,           2Johnson   County
+Community College, Overland Park, Kansas, United States
+
+The goatfishes (Family Mullidae) comprise a group of tropical and temperate marine
+perciform fishes characterized by a pair of moveable sensory hyoid barbels used to
+locate food. Previous investigations of acanthomorph relationships have not been
+structured to explicitly place Mullidae. We selected the single-copy nuclear gene
+RAG1 to elucidate the position of Mullidae within Acanthomorpha under
+parsimony, Bayesian, and maximum likelihood frameworks. In addition, to date, no
+comprehensive molecular investigation of genera within the family has been
+performed. Phylogenetic interrelationships among all six genera of goatfishes were
+reconstructed using a total evidence approach with molecular data from the nuclear
+genes RAG1, zic1, myh6, and ENC1 and the mitochondrial COI gene in combination
+with previously-published morphological characters. The results of these analyses,
+performed using both parsimony and Bayesian criteria, were compared with the
+results of a molecular data-only hypothesis.
+
+___________________________________________________________________________
+
+0401 Poster Session I, Friday July 25, 2008
+
+A Morphological Investigation into a Potential New Species of Moxostoma
+(Cypriniformes: Catostomidae) from the Kansas River Basin
+
+Matthew Davis, Gloria Arratia
+
+University of Kansas Natural History Museum and Biodiversity Research Center,
+Lawrence, KS, United States
+Taxonomy of the North American redhorses, particularly the genus Moxostoma
+(Cypriniformes: Catostomidae), has been widely studied and revised numerous
+times. The observed presence of few morphological differences among several
+species in the genus Moxostoma have previously made the diagnosis of individual
+species problematic. Specimens of Moxostoma macrolepidotum from the Kansas River
+basin have previously been regarded as hybrids or intergrades between M.
+macrolepidotum and M. pisolabrum based on the size of the upper lip, which is
+described as being developmentally larger than those of M. macrolepidotum at the
+same relative age, but thinner than M. pisolabrum and lacking any presence of a pea
+                                       121
+shaped bulb that characterizes the lips M. pisolabrum. Recent work using geometric
+morphometrics has identified that the putative hybrid specimens represent a distinct
+morphotype for the lip width character and are potentially a new species (M. cf.
+macrolepidotum). We further examine the morphology of M. macrolepidotum, M.
+pisolabrum, and M. cf. macrolepidotum in order to evaluate the potential elevation of M.
+cf. macrolepidotum to species level status. Specimens examined included whole
+alcohol preserved and specimens cleared and stained for bone and cartilage.
+
+___________________________________________________________________________
+
+0388 General Ichthyology I, Drummond, Saturday July 26, 2008
+
+A Geometric Morphometric Study of Photophore Patterns in Lanternfishes:
+Species Recognition, Mate Recognition, Neither, or Both? (Scopelomorpha:
+Myctophidae)
+
+Matthew Davis1, Nancy Holcroft2
+1University of Kansas Natural History Museum and Biodiversity Research Center,
+
+Lawrence, KS, United States, 2Johnson County Community College Science
+Department, Overland Park, KS, United States
+
+Lanternfishes (family Myctophidae) comprise approximately 238 species of small
+mesopelagic and bathypelagic fishes that posses a highly diverse array of light
+organs. They are among the most abundant and speciose groups of deep sea fishes
+and play a critical role in the oceanic food web. The complex patterns of photophore
+and other light organs arranged on the head, ventrolateral body, and caudal region
+have previously been hypothesized to play a number of evolutionary roles, including
+species recognition, sexual selection, and camouflage.            We use geometric
+morphometric procedures to quantitatively test three hypotheses as follows: (1) That
+the position of ventrolateral photophores plays a role in species recognition. (2)
+Intraspecific variation in ventrolateral photophore pattern is correlated with sex. (3)
+If variation in ventrolateral photophore pattern is sex-dependent, it is correlated with
+other sexually dimorphic characteristics. (e.g., caudal luminous organs).
+
+___________________________________________________________________________
+
+
+
+
+                                          122
+0340 Poster Session I, Friday July 25, 2008
+
+Management of Manta Ray (M.birostris) Interactive Tours in the Shallow
+Lagoonal Waters of Ningaloo Reef, Western Australia – A Global
+Benchmark for Tourism Interactions
+
+Brad Daw1, Frazer McGregor2
+1Department   of Environment and Conservation, Exmouth, Western Australia,
+Australia, 2Murdoch University, Perth, Western Australia, Australia
+
+A comprehensive ‘Code of Conduct’ for manta ray interactions is being implemented
+at Ningaloo Reef Western Australia to reduce unnecessary pressures upon manta
+rays and ensure the long term, year-round sustainability of eco-tourism. In the
+shallow lagoonal waters of Bateman Bay, interactive snorkelling tours to swim with
+manta rays have become so popular that they take more people per annum than
+those targeting the iconic whale shark. Commercial operators use light planes to
+locate manta rays within the <50km2 bay, where they can be observed year-round
+targeting specific food items, mating and giving birth. Current pressure is significant
+and potential for further increases in pressure is high. The tourism industry is
+concerned with current pressures and there have been several incidents where
+mantas have physically rammed or breached upon swimmers. In response to this,
+the WA Department of Environment and Conservation with community consultation
+has formulated a ‘Code of Conduct’ for manta ray interactions. This follows on from
+the highly successful Western Australian Closed Season Notice for Whale Sharks
+(CSNWS), (a legal mechanism to control interaction activities) which has become a
+global benchmark. The ‘code of conduct’ for manta ray interactions includes
+conditions similar to the CSNWS such as minimum distances, time limits, and
+controls of total passenger and in water numbers. It also has specific clauses to
+protect ‘cleaning stations’ and mating aggregations. It is hoped that implementation
+of this code for manta rays will ensure a sustainable in-water viewing industry and
+allow manta rays to continue visiting important habitats (such as Bateman Bay in the
+Ningaloo Reef Marine Park) with minimal interference.
+
+___________________________________________________________________________
+
+0302 Poster Session I, Friday July 25, 2008
+
+Observation and Sighting Description of the Manta Birostris, in BoraBora
+Island (French Polynesia – South Pacific)
+
+Moeava de Rosemont
+
+NOAA, California, United States
+
+Manta Birostris are permanent resident inside BoraBora's lagoon. In order to know
+more about its population, an ID program and a sighting survey have been
+monitored since August 2002 till June 2005. The method: each dive has been done
+with a digital video equipment to record mantas behaviour. Then the footages are
+played to identify (when it is possible) the black belly pattern of each individual.
+Each new manta sighted has its own file and every interesting behaviour is archived
+on tape. In June 2005, we did formally identified 43 females and 42 males. With this
+                                         123
+empiric method and recurrent sightings, we discovered that there was a resident
+colony inside the lagoon, and some mantas cruising the lagoon occasionally, mostly
+during the mating season. In the same time, as we could regularly sight the same
+individuals, we could deduce that the pregnancy time does not exceed 12 months.
+Other basic biology have been monitored as the growth of a new born manta ray, the
+healing process (when wounded) and the question of the albinos individuals. Some
+interrogations have occurred as the presence and use of pheromone mostly during
+the mating process. Since June 2005, the Mantas have disappeared from the place
+they used to clean, and the survey has been interrupted. Hotels constructions nearby
+and tourism activities are probably one explanation. Fortunately, they came back
+since July 2007 and we hope that we will be able to assist again to the manta's mating
+dances for the next season.
+
+___________________________________________________________________________
+
+0129 AES Devil Ray Symposium, Jarry/Joyce, Friday July 25, 2008
+
+Demographics of an Island-Associated Manta Ray (Manta birostris)
+Population in Maui, Hawaii, and Implications for Management
+
+Mark Deakos, Jason Baker, Allan Ligon, Jonathan Whitney, Tim Clark
+1The Hawaii Association for Marine Education and Research, Inc., Lahaina, Hawaii,
+
+United States, 2University of Hawaii, Manoa, Hawaii, United States, 3Pacific Islands
+Fisheries Science Center, National Marine Fisheries Service, NOAA, Honolulu,
+Hawaii, United States, 4Manta Pacific Research Foundation, Kona, Hawaii, United
+States
+During 2005 - 2007, 187 individual manta rays were photo-identified from a single
+cleaning station site in Maui, Hawaii. A discovery curve showed no asymptotic
+trend, indicating the number of individuals using the site is considerably larger than
+the total identified. Of these individuals, 58% were observed on more than one
+occasion within and across years, suggesting philopatry to this area. Males accounted
+for 47% of the individuals in the population, of which 69% were considered sexually
+mature based on the claspers extending beyond the pelvic fins. The average
+encounter rate per dive was 5.50 manta rays per hour. They were habitually absent
+at first light, with encounter rates increasing throughout the day. No matches were
+found when compared against 133 individuals photo-identified from a well-studied
+population off the Big Island (www.mantapacific.org), a distance of only 60 miles.
+Evidence of shark predation was seen in 12% of the population, and 6% had a
+missing or non-functional cephalic fin, likely caused by entanglement in
+monofilament fishing line. During an intensive survey period from September to
+December 2007, a mean of 140 individuals (95% CI = 119-175) was estimated to be
+using the area at this time. Estimated annual apparent survival (survival minus
+emigration) was 0.77 (95% CI = 0.65 – 0.86). These findings are consistent with a
+population of manta rays moving into and out of the cleaning station vicinity, with a
+varying portion of the total population temporarily resident at the study site at any
+given time. These findings add further support to the existence of demographically
+independent, island-associated populations in Hawaii. The lack of protection for
+these populations makes them vulnerable to impacts from target and non-target
+
+
+                                         124
+fisheries, and from exploitation of manta ray aggregation sites by commercial scuba
+diving operations. Management on an island-area basis is recommended.
