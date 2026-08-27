@@ -1,5 +1,20 @@
 [
   {
+    "key": "EEA2002",
+    "meeting": "EEA",
+    "year": 2002,
+    "city": "Cardiff",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2002/2002_EEA_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2002.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2002.json",
+    "n_chars": 74227,
+    "book_key": "EEA2002",
+    "chunk": 0,
+    "index": 0
+  },
+  {
     "key": "EEA2004",
     "meeting": "EEA",
     "year": 2004,
@@ -12,7 +27,7 @@
     "n_chars": 142216,
     "book_key": "EEA2004",
     "chunk": 0,
-    "index": 0
+    "index": 1
   },
   {
     "key": "JMIH2005__c0",
@@ -27,7 +42,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c0.json",
     "n_chars": 130040,
-    "index": 1
+    "index": 2
   },
   {
     "key": "JMIH2005__c1",
@@ -42,7 +57,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c1.json",
     "n_chars": 130066,
-    "index": 2
+    "index": 3
   },
   {
     "key": "JMIH2005__c10",
@@ -57,7 +72,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c10.json",
     "n_chars": 130000,
-    "index": 3
+    "index": 4
   },
   {
     "key": "JMIH2005__c11",
@@ -72,7 +87,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c11.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c11.json",
     "n_chars": 130021,
-    "index": 4
+    "index": 5
   },
   {
     "key": "JMIH2005__c12",
@@ -87,7 +102,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c12.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c12.json",
     "n_chars": 130006,
-    "index": 5
+    "index": 6
   },
   {
     "key": "JMIH2005__c13",
@@ -102,7 +117,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c13.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c13.json",
     "n_chars": 130061,
-    "index": 6
+    "index": 7
   },
   {
     "key": "JMIH2005__c14",
@@ -117,7 +132,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c14.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c14.json",
     "n_chars": 130001,
-    "index": 7
+    "index": 8
   },
   {
     "key": "JMIH2005__c15",
@@ -132,7 +147,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c15.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c15.json",
     "n_chars": 130012,
-    "index": 8
+    "index": 9
   },
   {
     "key": "JMIH2005__c16",
@@ -147,7 +162,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c16.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c16.json",
     "n_chars": 130000,
-    "index": 9
+    "index": 10
   },
   {
     "key": "JMIH2005__c17",
@@ -162,7 +177,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c17.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c17.json",
     "n_chars": 130014,
-    "index": 10
+    "index": 11
   },
   {
     "key": "JMIH2005__c18",
@@ -177,7 +192,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c18.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c18.json",
     "n_chars": 57736,
-    "index": 11
+    "index": 12
   },
   {
     "key": "JMIH2005__c2",
@@ -192,7 +207,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c2.json",
     "n_chars": 130059,
-    "index": 12
+    "index": 13
   },
   {
     "key": "JMIH2005__c3",
@@ -207,7 +222,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c3.json",
     "n_chars": 130054,
-    "index": 13
+    "index": 14
   },
   {
     "key": "JMIH2005__c4",
@@ -222,7 +237,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c4.json",
     "n_chars": 130025,
-    "index": 14
+    "index": 15
   },
   {
     "key": "JMIH2005__c5",
@@ -237,7 +252,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c5.json",
     "n_chars": 130004,
-    "index": 15
+    "index": 16
   },
   {
     "key": "JMIH2005__c6",
@@ -252,7 +267,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c6.json",
     "n_chars": 130014,
-    "index": 16
+    "index": 17
   },
   {
     "key": "JMIH2005__c7",
@@ -267,7 +282,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c7.json",
     "n_chars": 130031,
-    "index": 17
+    "index": 18
   },
   {
     "key": "JMIH2005__c8",
@@ -282,7 +297,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c8.json",
     "n_chars": 130072,
-    "index": 18
+    "index": 19
   },
   {
     "key": "JMIH2005__c9",
@@ -297,7 +312,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2005__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2005__c9.json",
     "n_chars": 130002,
-    "index": 19
+    "index": 20
   },
   {
     "key": "JMIH2007__c0",
@@ -312,7 +327,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c0.json",
     "n_chars": 130078,
-    "index": 20
+    "index": 21
   },
   {
     "key": "JMIH2007__c1",
@@ -327,7 +342,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c1.json",
     "n_chars": 130014,
-    "index": 21
+    "index": 22
   },
   {
     "key": "JMIH2007__c10",
@@ -342,7 +357,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c10.json",
     "n_chars": 130045,
-    "index": 22
+    "index": 23
   },
   {
     "key": "JMIH2007__c11",
@@ -357,7 +372,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c11.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c11.json",
     "n_chars": 130027,
-    "index": 23
+    "index": 24
   },
   {
     "key": "JMIH2007__c12",
@@ -372,7 +387,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c12.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c12.json",
     "n_chars": 130078,
-    "index": 24
+    "index": 25
   },
   {
     "key": "JMIH2007__c13",
@@ -387,7 +402,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c13.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c13.json",
     "n_chars": 130049,
-    "index": 25
+    "index": 26
   },
   {
     "key": "JMIH2007__c14",
@@ -402,7 +417,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c14.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c14.json",
     "n_chars": 130036,
-    "index": 26
+    "index": 27
   },
   {
     "key": "JMIH2007__c15",
@@ -417,7 +432,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c15.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c15.json",
     "n_chars": 37898,
-    "index": 27
+    "index": 28
   },
   {
     "key": "JMIH2007__c2",
@@ -432,7 +447,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c2.json",
     "n_chars": 130009,
-    "index": 28
+    "index": 29
   },
   {
     "key": "JMIH2007__c3",
@@ -447,7 +462,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c3.json",
     "n_chars": 130019,
-    "index": 29
+    "index": 30
   },
   {
     "key": "JMIH2007__c4",
@@ -462,7 +477,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c4.json",
     "n_chars": 130020,
-    "index": 30
+    "index": 31
   },
   {
     "key": "JMIH2007__c5",
@@ -477,7 +492,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c5.json",
     "n_chars": 130016,
-    "index": 31
+    "index": 32
   },
   {
     "key": "JMIH2007__c6",
@@ -492,7 +507,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c6.json",
     "n_chars": 130058,
-    "index": 32
+    "index": 33
   },
   {
     "key": "JMIH2007__c7",
@@ -507,7 +522,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c7.json",
     "n_chars": 130022,
-    "index": 33
+    "index": 34
   },
   {
     "key": "JMIH2007__c8",
@@ -522,7 +537,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c8.json",
     "n_chars": 130015,
-    "index": 34
+    "index": 35
   },
   {
     "key": "JMIH2007__c9",
@@ -537,7 +552,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2007__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2007__c9.json",
     "n_chars": 130001,
-    "index": 35
+    "index": 36
   },
   {
     "key": "JMIH2008__c0",
@@ -552,7 +567,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c0.json",
     "n_chars": 130079,
-    "index": 36
+    "index": 37
   },
   {
     "key": "JMIH2008__c1",
@@ -567,7 +582,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c1.json",
     "n_chars": 130021,
-    "index": 37
+    "index": 38
   },
   {
     "key": "JMIH2008__c10",
@@ -582,7 +597,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c10.json",
     "n_chars": 130006,
-    "index": 38
+    "index": 39
   },
   {
     "key": "JMIH2008__c11",
@@ -597,7 +612,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c11.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c11.json",
     "n_chars": 130063,
-    "index": 39
+    "index": 40
   },
   {
     "key": "JMIH2008__c12",
@@ -612,7 +627,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c12.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c12.json",
     "n_chars": 130077,
-    "index": 40
+    "index": 41
   },
   {
     "key": "JMIH2008__c13",
@@ -627,7 +642,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c13.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c13.json",
     "n_chars": 70071,
-    "index": 41
+    "index": 42
   },
   {
     "key": "JMIH2008__c2",
@@ -642,7 +657,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c2.json",
     "n_chars": 130014,
-    "index": 42
+    "index": 43
   },
   {
     "key": "JMIH2008__c3",
@@ -657,7 +672,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c3.json",
     "n_chars": 130071,
-    "index": 43
+    "index": 44
   },
   {
     "key": "JMIH2008__c4",
@@ -672,7 +687,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c4.json",
     "n_chars": 130005,
-    "index": 44
+    "index": 45
   },
   {
     "key": "JMIH2008__c5",
@@ -687,7 +702,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c5.json",
     "n_chars": 130056,
-    "index": 45
+    "index": 46
   },
   {
     "key": "JMIH2008__c6",
@@ -702,7 +717,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c6.json",
     "n_chars": 130053,
-    "index": 46
+    "index": 47
   },
   {
     "key": "JMIH2008__c7",
@@ -717,7 +732,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c7.json",
     "n_chars": 130057,
-    "index": 47
+    "index": 48
   },
   {
     "key": "JMIH2008__c8",
@@ -732,7 +747,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c8.json",
     "n_chars": 130074,
-    "index": 48
+    "index": 49
   },
   {
     "key": "JMIH2008__c9",
@@ -747,7 +762,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2008__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2008__c9.json",
     "n_chars": 130062,
-    "index": 49
+    "index": 50
   },
   {
     "key": "JMIH2009__c0",
@@ -762,7 +777,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c0.json",
     "n_chars": 130055,
-    "index": 50
+    "index": 51
   },
   {
     "key": "JMIH2009__c1",
@@ -777,7 +792,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c1.json",
     "n_chars": 130017,
-    "index": 51
+    "index": 52
   },
   {
     "key": "JMIH2009__c10",
@@ -792,7 +807,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c10.json",
     "n_chars": 130062,
-    "index": 52
+    "index": 53
   },
   {
     "key": "JMIH2009__c11",
@@ -807,7 +822,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c11.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c11.json",
     "n_chars": 130002,
-    "index": 53
+    "index": 54
   },
   {
     "key": "JMIH2009__c12",
@@ -822,7 +837,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c12.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c12.json",
     "n_chars": 130048,
-    "index": 54
+    "index": 55
   },
   {
     "key": "JMIH2009__c13",
@@ -837,7 +852,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c13.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c13.json",
     "n_chars": 130067,
-    "index": 55
+    "index": 56
   },
   {
     "key": "JMIH2009__c14",
@@ -852,7 +867,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c14.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c14.json",
     "n_chars": 130001,
-    "index": 56
+    "index": 57
   },
   {
     "key": "JMIH2009__c15",
@@ -867,7 +882,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c15.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c15.json",
     "n_chars": 130003,
-    "index": 57
+    "index": 58
   },
   {
     "key": "JMIH2009__c16",
@@ -882,7 +897,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c16.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c16.json",
     "n_chars": 130068,
-    "index": 58
+    "index": 59
   },
   {
     "key": "JMIH2009__c17",
@@ -897,7 +912,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c17.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c17.json",
     "n_chars": 117116,
-    "index": 59
+    "index": 60
   },
   {
     "key": "JMIH2009__c2",
@@ -912,7 +927,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c2.json",
     "n_chars": 130015,
-    "index": 60
+    "index": 61
   },
   {
     "key": "JMIH2009__c3",
@@ -927,7 +942,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c3.json",
     "n_chars": 130009,
-    "index": 61
+    "index": 62
   },
   {
     "key": "JMIH2009__c4",
@@ -942,7 +957,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c4.json",
     "n_chars": 130034,
-    "index": 62
+    "index": 63
   },
   {
     "key": "JMIH2009__c5",
@@ -957,7 +972,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c5.json",
     "n_chars": 130011,
-    "index": 63
+    "index": 64
   },
   {
     "key": "JMIH2009__c6",
@@ -972,7 +987,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c6.json",
     "n_chars": 130016,
-    "index": 64
+    "index": 65
   },
   {
     "key": "JMIH2009__c7",
@@ -987,7 +1002,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c7.json",
     "n_chars": 130064,
-    "index": 65
+    "index": 66
   },
   {
     "key": "JMIH2009__c8",
@@ -1002,7 +1017,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c8.json",
     "n_chars": 130028,
-    "index": 66
+    "index": 67
   },
   {
     "key": "JMIH2009__c9",
@@ -1017,7 +1032,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2009__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2009__c9.json",
     "n_chars": 130002,
-    "index": 67
+    "index": 68
   },
   {
     "key": "EEA2011",
@@ -1032,7 +1047,7 @@
     "n_chars": 135193,
     "book_key": "EEA2011",
     "chunk": 0,
-    "index": 68
+    "index": 69
   },
   {
     "key": "JMIH2012__c0",
@@ -1047,7 +1062,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c0.json",
     "n_chars": 130097,
-    "index": 69
+    "index": 70
   },
   {
     "key": "JMIH2012__c1",
@@ -1062,7 +1077,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c1.json",
     "n_chars": 130092,
-    "index": 70
+    "index": 71
   },
   {
     "key": "JMIH2012__c10",
@@ -1077,7 +1092,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c10.json",
     "n_chars": 130061,
-    "index": 71
+    "index": 72
   },
   {
     "key": "JMIH2012__c11",
@@ -1092,7 +1107,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c11.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c11.json",
     "n_chars": 130038,
-    "index": 72
+    "index": 73
   },
   {
     "key": "JMIH2012__c12",
@@ -1107,7 +1122,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c12.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c12.json",
     "n_chars": 130070,
-    "index": 73
+    "index": 74
   },
   {
     "key": "JMIH2012__c13",
@@ -1122,7 +1137,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c13.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c13.json",
     "n_chars": 130056,
-    "index": 74
+    "index": 75
   },
   {
     "key": "JMIH2012__c14",
@@ -1137,7 +1152,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c14.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c14.json",
     "n_chars": 130069,
-    "index": 75
+    "index": 76
   },
   {
     "key": "JMIH2012__c15",
@@ -1152,7 +1167,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c15.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c15.json",
     "n_chars": 130049,
-    "index": 76
+    "index": 77
   },
   {
     "key": "JMIH2012__c16",
@@ -1167,7 +1182,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c16.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c16.json",
     "n_chars": 130012,
-    "index": 77
+    "index": 78
   },
   {
     "key": "JMIH2012__c17",
@@ -1182,7 +1197,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c17.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c17.json",
     "n_chars": 130056,
-    "index": 78
+    "index": 79
   },
   {
     "key": "JMIH2012__c18",
@@ -1197,7 +1212,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c18.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c18.json",
     "n_chars": 130095,
-    "index": 79
+    "index": 80
   },
   {
     "key": "JMIH2012__c19",
@@ -1212,7 +1227,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c19.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c19.json",
     "n_chars": 130048,
-    "index": 80
+    "index": 81
   },
   {
     "key": "JMIH2012__c2",
@@ -1227,7 +1242,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c2.json",
     "n_chars": 130000,
-    "index": 81
+    "index": 82
   },
   {
     "key": "JMIH2012__c20",
@@ -1242,7 +1257,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c20.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c20.json",
     "n_chars": 130057,
-    "index": 82
+    "index": 83
   },
   {
     "key": "JMIH2012__c21",
@@ -1257,7 +1272,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c21.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c21.json",
     "n_chars": 130038,
-    "index": 83
+    "index": 84
   },
   {
     "key": "JMIH2012__c22",
@@ -1272,7 +1287,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c22.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c22.json",
     "n_chars": 130098,
-    "index": 84
+    "index": 85
   },
   {
     "key": "JMIH2012__c23",
@@ -1287,7 +1302,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c23.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c23.json",
     "n_chars": 130041,
-    "index": 85
+    "index": 86
   },
   {
     "key": "JMIH2012__c24",
@@ -1302,7 +1317,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c24.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c24.json",
     "n_chars": 130073,
-    "index": 86
+    "index": 87
   },
   {
     "key": "JMIH2012__c25",
@@ -1317,7 +1332,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c25.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c25.json",
     "n_chars": 130033,
-    "index": 87
+    "index": 88
   },
   {
     "key": "JMIH2012__c26",
@@ -1332,7 +1347,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c26.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c26.json",
     "n_chars": 130065,
-    "index": 88
+    "index": 89
   },
   {
     "key": "JMIH2012__c27",
@@ -1347,7 +1362,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c27.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c27.json",
     "n_chars": 111229,
-    "index": 89
+    "index": 90
   },
   {
     "key": "JMIH2012__c3",
@@ -1362,7 +1377,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c3.json",
     "n_chars": 130111,
-    "index": 90
+    "index": 91
   },
   {
     "key": "JMIH2012__c4",
@@ -1377,7 +1392,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c4.json",
     "n_chars": 130070,
-    "index": 91
+    "index": 92
   },
   {
     "key": "JMIH2012__c5",
@@ -1392,7 +1407,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c5.json",
     "n_chars": 130086,
-    "index": 92
+    "index": 93
   },
   {
     "key": "JMIH2012__c6",
@@ -1407,7 +1422,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c6.json",
     "n_chars": 130054,
-    "index": 93
+    "index": 94
   },
   {
     "key": "JMIH2012__c7",
@@ -1422,7 +1437,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c7.json",
     "n_chars": 130050,
-    "index": 94
+    "index": 95
   },
   {
     "key": "JMIH2012__c8",
@@ -1437,7 +1452,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c8.json",
     "n_chars": 130092,
-    "index": 95
+    "index": 96
   },
   {
     "key": "JMIH2012__c9",
@@ -1452,7 +1467,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2012__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2012__c9.json",
     "n_chars": 130023,
-    "index": 96
+    "index": 97
   },
   {
     "key": "EEA2013__c0",
@@ -1467,7 +1482,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2013__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2013__c0.json",
     "n_chars": 130002,
-    "index": 97
+    "index": 98
   },
   {
     "key": "EEA2013__c1",
@@ -1482,7 +1497,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2013__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2013__c1.json",
     "n_chars": 121834,
-    "index": 98
+    "index": 99
   },
   {
     "key": "EEA2014",
@@ -1497,7 +1512,7 @@
     "n_chars": 151690,
     "book_key": "EEA2014",
     "chunk": 0,
-    "index": 99
+    "index": 100
   },
   {
     "key": "EEA2015",
@@ -1512,7 +1527,7 @@
     "n_chars": 3402,
     "book_key": "EEA2015",
     "chunk": 0,
-    "index": 100
+    "index": 101
   },
   {
     "key": "JMIH2015__c0",
@@ -1527,7 +1542,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c0.json",
     "n_chars": 130038,
-    "index": 101
+    "index": 102
   },
   {
     "key": "JMIH2015__c1",
@@ -1542,7 +1557,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c1.json",
     "n_chars": 130016,
-    "index": 102
+    "index": 103
   },
   {
     "key": "JMIH2015__c10",
@@ -1557,7 +1572,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c10.json",
     "n_chars": 49385,
-    "index": 103
+    "index": 104
   },
   {
     "key": "JMIH2015__c2",
@@ -1572,7 +1587,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c2.json",
     "n_chars": 130079,
-    "index": 104
+    "index": 105
   },
   {
     "key": "JMIH2015__c3",
@@ -1587,7 +1602,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c3.json",
     "n_chars": 130036,
-    "index": 105
+    "index": 106
   },
   {
     "key": "JMIH2015__c4",
@@ -1602,7 +1617,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c4.json",
     "n_chars": 130084,
-    "index": 106
+    "index": 107
   },
   {
     "key": "JMIH2015__c5",
@@ -1617,7 +1632,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c5.json",
     "n_chars": 130055,
-    "index": 107
+    "index": 108
   },
   {
     "key": "JMIH2015__c6",
@@ -1632,7 +1647,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c6.json",
     "n_chars": 130077,
-    "index": 108
+    "index": 109
   },
   {
     "key": "JMIH2015__c7",
@@ -1647,7 +1662,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c7.json",
     "n_chars": 130034,
-    "index": 109
+    "index": 110
   },
   {
     "key": "JMIH2015__c8",
@@ -1662,7 +1677,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c8.json",
     "n_chars": 130025,
-    "index": 110
+    "index": 111
   },
   {
     "key": "JMIH2015__c9",
@@ -1677,7 +1692,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2015__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2015__c9.json",
     "n_chars": 130126,
-    "index": 111
+    "index": 112
   },
   {
     "key": "EEA2016__c0",
@@ -1692,7 +1707,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2016__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2016__c0.json",
     "n_chars": 130051,
-    "index": 112
+    "index": 113
   },
   {
     "key": "EEA2016__c1",
@@ -1707,7 +1722,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2016__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2016__c1.json",
     "n_chars": 114732,
-    "index": 113
+    "index": 114
   },
   {
     "key": "JMIH2016__c0",
@@ -1722,7 +1737,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c0.json",
     "n_chars": 130037,
-    "index": 114
+    "index": 115
   },
   {
     "key": "JMIH2016__c1",
@@ -1737,7 +1752,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c1.json",
     "n_chars": 130002,
-    "index": 115
+    "index": 116
   },
   {
     "key": "JMIH2016__c10",
@@ -1752,7 +1767,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c10.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c10.json",
     "n_chars": 130044,
-    "index": 116
+    "index": 117
   },
   {
     "key": "JMIH2016__c11",
@@ -1767,7 +1782,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c11.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c11.json",
     "n_chars": 130019,
-    "index": 117
+    "index": 118
   },
   {
     "key": "JMIH2016__c12",
@@ -1782,7 +1797,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c12.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c12.json",
     "n_chars": 130049,
-    "index": 118
+    "index": 119
   },
   {
     "key": "JMIH2016__c13",
@@ -1797,7 +1812,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c13.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c13.json",
     "n_chars": 130075,
-    "index": 119
+    "index": 120
   },
   {
     "key": "JMIH2016__c14",
@@ -1812,7 +1827,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c14.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c14.json",
     "n_chars": 130036,
-    "index": 120
+    "index": 121
   },
   {
     "key": "JMIH2016__c15",
@@ -1827,7 +1842,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c15.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c15.json",
     "n_chars": 130028,
-    "index": 121
+    "index": 122
   },
   {
     "key": "JMIH2016__c16",
@@ -1842,7 +1857,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c16.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c16.json",
     "n_chars": 130049,
-    "index": 122
+    "index": 123
   },
   {
     "key": "JMIH2016__c17",
@@ -1857,7 +1872,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c17.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c17.json",
     "n_chars": 130123,
-    "index": 123
+    "index": 124
   },
   {
     "key": "JMIH2016__c18",
@@ -1872,7 +1887,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c18.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c18.json",
     "n_chars": 130126,
-    "index": 124
+    "index": 125
   },
   {
     "key": "JMIH2016__c19",
@@ -1887,7 +1902,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c19.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c19.json",
     "n_chars": 58854,
-    "index": 125
+    "index": 126
   },
   {
     "key": "JMIH2016__c2",
@@ -1902,7 +1917,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c2.json",
     "n_chars": 130052,
-    "index": 126
+    "index": 127
   },
   {
     "key": "JMIH2016__c3",
@@ -1917,7 +1932,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c3.json",
     "n_chars": 130068,
-    "index": 127
+    "index": 128
   },
   {
     "key": "JMIH2016__c4",
@@ -1932,7 +1947,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c4.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c4.json",
     "n_chars": 130069,
-    "index": 128
+    "index": 129
   },
   {
     "key": "JMIH2016__c5",
@@ -1947,7 +1962,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c5.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c5.json",
     "n_chars": 130037,
-    "index": 129
+    "index": 130
   },
   {
     "key": "JMIH2016__c6",
@@ -1962,7 +1977,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c6.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c6.json",
     "n_chars": 130000,
-    "index": 130
+    "index": 131
   },
   {
     "key": "JMIH2016__c7",
@@ -1977,7 +1992,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c7.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c7.json",
     "n_chars": 130067,
-    "index": 131
+    "index": 132
   },
   {
     "key": "JMIH2016__c8",
@@ -1992,7 +2007,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c8.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c8.json",
     "n_chars": 130085,
-    "index": 132
+    "index": 133
   },
   {
     "key": "JMIH2016__c9",
@@ -2007,7 +2022,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/JMIH2016__c9.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/JMIH2016__c9.json",
     "n_chars": 130032,
-    "index": 133
+    "index": 134
   },
   {
     "key": "EEA2017",
@@ -2022,7 +2037,7 @@
     "n_chars": 17701,
     "book_key": "EEA2017",
     "chunk": 0,
-    "index": 134
+    "index": 135
   },
   {
     "key": "EEA2018__c0",
@@ -2037,7 +2052,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2018__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2018__c0.json",
     "n_chars": 130010,
-    "index": 135
+    "index": 136
   },
   {
     "key": "EEA2018__c1",
@@ -2052,7 +2067,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2018__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2018__c1.json",
     "n_chars": 75936,
-    "index": 136
+    "index": 137
   },
   {
     "key": "EEA2019__c0",
@@ -2067,7 +2082,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2019__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2019__c0.json",
     "n_chars": 130075,
-    "index": 137
+    "index": 138
   },
   {
     "key": "EEA2019__c1",
@@ -2082,7 +2097,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2019__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2019__c1.json",
     "n_chars": 130041,
-    "index": 138
+    "index": 139
   },
   {
     "key": "EEA2019__c2",
@@ -2097,7 +2112,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2019__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2019__c2.json",
     "n_chars": 130102,
-    "index": 139
+    "index": 140
   },
   {
     "key": "EEA2019__c3",
@@ -2112,7 +2127,67 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2019__c3.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2019__c3.json",
     "n_chars": 32449,
-    "index": 140
+    "index": 141
+  },
+  {
+    "key": "SI2022__c0",
+    "book_key": "SI2022",
+    "chunk": 0,
+    "meeting": "SI",
+    "year": 2022,
+    "city": "Valencia",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2022/2022_SI_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/SI2022__c0.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/SI2022__c0.json",
+    "n_chars": 130101,
+    "index": 142
+  },
+  {
+    "key": "SI2022__c1",
+    "book_key": "SI2022",
+    "chunk": 1,
+    "meeting": "SI",
+    "year": 2022,
+    "city": "Valencia",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2022/2022_SI_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/SI2022__c1.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/SI2022__c1.json",
+    "n_chars": 130065,
+    "index": 143
+  },
+  {
+    "key": "SI2022__c2",
+    "book_key": "SI2022",
+    "chunk": 2,
+    "meeting": "SI",
+    "year": 2022,
+    "city": "Valencia",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2022/2022_SI_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/SI2022__c2.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/SI2022__c2.json",
+    "n_chars": 130015,
+    "index": 144
+  },
+  {
+    "key": "SI2022__c3",
+    "book_key": "SI2022",
+    "chunk": 3,
+    "meeting": "SI",
+    "year": 2022,
+    "city": "Valencia",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2022/2022_SI_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/SI2022__c3.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/SI2022__c3.json",
+    "n_chars": 113296,
+    "index": 145
   },
   {
     "key": "EEA2023_oral",
@@ -2127,7 +2202,7 @@
     "n_chars": 168364,
     "book_key": "EEA2023_oral",
     "chunk": 0,
-    "index": 141
+    "index": 146
   },
   {
     "key": "EEA2023_poster",
@@ -2142,7 +2217,7 @@
     "n_chars": 87213,
     "book_key": "EEA2023_poster",
     "chunk": 0,
-    "index": 142
+    "index": 147
   },
   {
     "key": "EEA2024__c0",
@@ -2157,7 +2232,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2024__c0.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2024__c0.json",
     "n_chars": 130008,
-    "index": 143
+    "index": 148
   },
   {
     "key": "EEA2024__c1",
@@ -2172,7 +2247,7 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2024__c1.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2024__c1.json",
     "n_chars": 130028,
-    "index": 144
+    "index": 149
   },
   {
     "key": "EEA2024__c2",
@@ -2187,6 +2262,6 @@
     "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2024__c2.txt",
     "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2024__c2.json",
     "n_chars": 87239,
-    "index": 145
+    "index": 150
   }
 ]

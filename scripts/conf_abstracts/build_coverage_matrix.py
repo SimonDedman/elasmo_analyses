@@ -37,30 +37,40 @@ FILL = {
 # what's still NEEDED so the sheet is self-documenting.
 # EEA abstract books extracted via Fable (2026-08-14): 731 abstracts across 11
 # meetings into conference_abstracts_fable.db. "Ingested" notes carry the count.
+# Host group per year (Cat Gordon, 2026-07-28) — drives the per-group asks.
+EEA_HOST = {
+    2010: "IEG (Ireland)", 2011: "DEG (Germany)", 2012: "GRIS (Italy)",
+    2013: "Shark Trust (UK)", 2014: "NEV (Netherlands)", 2015: "APECE (Portugal)",
+    2016: "Shark Trust (UK)", 2017: "NEV (Netherlands)", 2018: "APECE (Portugal)",
+    2019: "GRIS (Italy)", 2021: "NEV (Netherlands)",
+    2022: "Shark Trust / Submon / Lamna", 2023: "Shark Trust (UK)",
+    2024: "iSea (Greece)", 2025: "NEV (Netherlands)", 2026: "Shark Trust (UK)",
+}
 EEA = {
+    2002: ("Cardiff", "Digital", "abstract booklet (Word) from Cat 2026-08-27 — queued for extraction"),
     2004: ("London", "Ingested", "55 abstracts (Fable)"),
-    2010: ("Galway", "Hardcopy", "Cat has hardcopy"),
+    2010: ("Galway", "Hardcopy", "Cat has hardcopy but no scanning capacity — digital needed from IEG (Ireland)"),
     2011: ("Berlin", "Ingested", "58 abstracts (Fable)"),
-    2012: ("Milan", "Hardcopy", "Cat has hardcopy"),
+    2012: ("Milan", "Hardcopy", "Cat has hardcopy but no scanning capacity — digital needed from GRIS (Italy)"),
     2013: ("Plymouth", "Ingested", "93 abstracts (Fable)"),
     2014: ("Leeuwarden", "Ingested", "61 abstracts (Fable)"),
-    2015: ("Peniche", "Programme", "2-page programme only (0 abstracts) — abstract book needed"),
+    2015: ("Peniche", "Programme", "2-page programme only; Cat has hardcopy but no scanning capacity — abstract book needed from APECE (Portugal)"),
     2016: ("Bristol", "Ingested", "93 abstracts (Fable)"),
-    2017: ("Amsterdam", "Ingested", "62 talks, programme/no bodies (Fable)"),
+    2017: ("Amsterdam", "Schedule", "62 talks ingested, NO abstract bodies; Cat has hardcopy but no scanning capacity — abstract book needed from NEV"),
     2018: ("Peniche", "Ingested", "75 abstracts (Fable)"),
     2019: ("Rende", "Ingested", "136 abstracts (Fable)"),
     2020: ("online (covid)", "Missing", "covid/online — find"),
-    2021: ("Leiden", "Programme", "only programme held — abstract book needed"),
-    2022: ("Valencia (=SI2022)", "Schedule", "covered via SI2022 (schedule)"),
+    2021: ("Leiden", "Programme", "programme only — abstract book needed from NEV"),
+    2022: ("Valencia (=SI2022)", "Digital", "full SI2022 abstract book from Cat 2026-08-27 — queued for extraction"),
     2023: ("Brighton", "Ingested", "oral 64 + poster 34 = 98 abstracts (Fable)"),
     2024: ("Thessaloniki", "Digital", "clean abstract book received from Cat 2026-08-27 — queued for extraction"),
-    2025: ("Rotterdam", "Programme", "programme held; abstract book still corrupt — working copy needed from Cat"),
+    2025: ("Rotterdam", "Programme", "programme held; the abstract-book file is corrupt — working copy needed from NEV / Cat"),
     2026: ("online", "Pending", "will be digital"),
 }
 SI = {2010: ("Cairns", "Missing", "find source"),
       2014: ("Durban", "Missing", "find source"),
       2018: ("Joao Pessoa", "Ingested", ""),
-      2022: ("Valencia", "Schedule", "programme ingested (no bodies)"),
+      2022: ("Valencia", "Digital", "full abstract book received 2026-08-27 — queued (schedule already ingested)"),
       2026: ("Colombo", "Ingested", "")}
 # JMIH/ASIH years where we hold a PDF that is NOT an ingestable abstract book:
 # a grid programme (2017/2019 — detail doesn't extract; get the abstract book)
@@ -195,7 +205,7 @@ def build():
         "- 'OCR' = degraded 1997-2004 JMIH phone-photo scans (all needs_review); Carylanne's flatbed re-scans would upgrade the non-AES content.",
         "- AES 1985-2005: full abstracts harvested from elasmo.org/meetings/abstracts/abst<YYYY>/ (1,305 abstracts, 2026-08-25); JMIH-book copies of the same AES talks were removed. No AES source found for 1983-84 or 2006+ online.",
         "- ASIH/JMIH pre-1992: Carylanne's archive starts 1992 → host city shown but 'Missing'.",
-        "- EEA 2010-2026 from Cat Gordon (Shark Trust); pre-2010 in Ali's archive. EEA 2004-2019 + 2023 ingested via Fable (731 abstracts, 2026-08-14) and merged into the main DB 2026-08-25; 2024 abstract book received clean 2026-08-27 (queued for extraction); 2025 abstract book still corrupt — working copy needed from Cat. SI2022 Valencia schedule ingested.",
+        "- EEA from Cat Gordon (Shark Trust). 2004-2019 + 2023 ingested via Fable and merged 2026-08-25. Received 2026-08-27: 2002 Cardiff booklet, a clean 2024 Thessaloniki book, and the full SI2022 Valencia abstract book (all queued for extraction). 2025 Rotterdam abstract book is still a corrupt file. Cat holds hardcopies of 2010/2012/2015/2017 but has no scanning capacity, so those are being sought digitally from the host groups; Ali Hood is searching her paperwork for 2003-2009. EEA began in 1997 (2002 Cardiff was the 6th).",
         "- OCS (Oceania Chondrichthyan Soc, ~2011+, biennial): Brit Finucci collating, pending council — years/locations TBC.",
         "- Blank/unshaded cell = no conference that year for that series.",
         "- Per-society counts & trends: see the Dashboard tab.",
@@ -244,8 +254,10 @@ def build():
         # EEA
         if year in EEA:
             l, s, n = EEA[year]; put(r, 4, txt(l, s, n), s)
-        elif 1997 <= year <= 2009:
-            put(r, 4, "?; Hardcopy — Ali's archive (back mid-Aug)", "Hardcopy")
+        elif 2003 <= year <= 2009:
+            put(r, 4, "?; Pending — Ali Hood searching her paperwork (2026-08-27)", "Pending")
+        elif 1997 <= year <= 2001:
+            put(r, 4, "?; Missing — EEA conferences 1-5, no known source", "Missing")
         else:
             put(r, 4, "", "NA")
         # OCS (biennial ~2012+)
