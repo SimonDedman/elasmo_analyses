@@ -84,6 +84,9 @@ SCOPE = [
     # 2005 and 2016 on 2026-08-25; the glob lists every book, extraction is
     # launched per index so the others stay unextracted until asked for.
     (str(C.CONFERENCES / "*" / "*_JMIH_AbstractBook.pdf"), "JMIH", "", False),
+    # SI 2022 Valencia only: the 2018 and 2026 books already have dedicated
+    # parsers (parse_si2018_pdf / xlsx + body merge), so don't re-queue them.
+    (str(C.CONFERENCES / "2022" / "2022_SI_AbstractBook.pdf"), "SI", "AES", True),
     (str(C.REPO / "database/others_libraries/Cat/EEA*.pdf"), "EEA", "AES", True),  # legacy inbox
 ]
 
@@ -127,10 +130,13 @@ def pdftotext_layout(pdf: Path) -> str:
 
 # EEA host cities by year — recovers meeting.location for a book whose source
 # PDF vanished from the NAS-synced folder (so we can't parse the city from it).
+_SI_CITIES = {2018: "Joao Pessoa", 2022: "Valencia", 2026: "Colombo"}
+
 _EEA_CITIES = {
     2004: "London", 2011: "Berlin", 2013: "Plymouth", 2014: "Leeuwarden",
     2015: "Peniche", 2016: "Bristol", 2017: "Amsterdam", 2018: "Peniche",
     2019: "Rende", 2023: "Brighton", 2024: "Thessaloniki", 2025: "Rotterdam",
+    2002: "Cardiff",
 }
 
 
@@ -211,6 +217,8 @@ def build(only=None):
                 pass
         elif w.get("meeting") == "EEA":
             w["city"] = w.get("city") or _EEA_CITIES.get(w.get("year"))
+        elif w.get("meeting") == "SI":
+            w["city"] = w.get("city") or _SI_CITIES.get(w.get("year"))
         worklist.append(w)
 
     # split oversized books that didn't extract healthily into overlapping chunks
