@@ -11,12 +11,14 @@ Sources: the conference_abstracts DB; Cat Gordon (EEA locations + status);
 Brit Finucci (OCS pending); Carylanne (1992-2024 hardcopy); AESconfLocations
 (ASIH/JMIH host cities 1916-2025); known SI years.
 """
+import argparse
 import csv
+import json
 import sqlite3
 from collections import defaultdict
 from pathlib import Path
 
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.chart import BarChart, LineChart, Reference
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
@@ -121,6 +123,62 @@ OCS = {
     2024: ("Geelong", "Brit Finucci confirming"),
 }
 SERIES = ["AES", "ASIH", "HL", "SSAR", "NIA", "EEA", "SI"]
+
+
+# Human-editable text lives here as well as in the sheet. The builder REGENERATES
+# the whole workbook, so any wording Simon edits in Legend & Notes would be lost
+# on the next run (it happened, 2026-08-27). On every build we first read the
+# existing sheet's legend meanings and notes, persist them to this JSON, and then
+# emit those rather than the code defaults. Code defaults therefore only supply
+# text for statuses/notes that have never existed in the sheet.
+# To deliberately adopt new code wording, run with --reset-legend.
+LEGEND_STORE = REPO / "data" / "matrix_legend.json"
+
+
+def harvest_legend_edits(default_meanings, default_notes):
+    """Return (meanings, notes) preferring what is already in the sheet/store."""
+    store = {"meanings": {}, "notes": []}
+    if LEGEND_STORE.exists():
+        try:
+            store = json.loads(LEGEND_STORE.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  legend store unreadable ({e}); falling back to code defaults")
+    # the live sheet wins over the store: it holds the most recent human edit
+    if OUT.exists():
+        try:
+            ws = load_workbook(OUT)["Legend & Notes"]
+            for row in ws.iter_rows(min_row=2, max_row=40, max_col=2, values_only=True):
+                st, mean = row[0], row[1]
+                if st and mean and st in default_meanings:
+                    store["meanings"][st] = mean
+            notes, seen_marker = [], False
+            for (val,) in ws.iter_rows(min_row=2, max_col=1, values_only=True):
+                if val == "NOTES:":
+                    seen_marker = True
+                    continue
+                if seen_marker and val:
+                    notes.append(val)
+            if notes:
+                store["notes"] = notes
+        except Exception as e:
+            print(f"  could not read existing legend ({e})")
+    meanings = dict(default_meanings)
+    changed = []
+    for st, mean in store.get("meanings", {}).items():
+        if st in meanings and mean != meanings[st]:
+            changed.append(st)
+        meanings[st] = mean
+    notes = store.get("notes") or default_notes
+    missing = [n for n in default_notes if n and n not in notes]
+    if changed:
+        print(f"  PRESERVED edited legend wording for: {', '.join(sorted(changed))}")
+    if missing:
+        print(f"  {len(missing)} code-generated note(s) NOT in the sheet (kept out, "
+              f"edited notes take precedence): {missing[0][:70]}...")
+    LEGEND_STORE.parent.mkdir(parents=True, exist_ok=True)
+    LEGEND_STORE.write_text(json.dumps({"meanings": meanings, "notes": notes},
+                                       indent=1, ensure_ascii=False), encoding="utf-8")
+    return meanings, notes
 
 
 def load_asih_locations():
@@ -236,13 +294,7 @@ def build():
         "Digital": "Abstract book in hand and ingestable. Only extraction remains.",
         "Ingested": "Full abstracts ingested into the database.",
     }
-    order = [(st, MEANING[st]) for st in STATUS_ORDER]
-    for i, (st, mean) in enumerate(order, 2):
-        leg.cell(row=i, column=1, value=st)
-        leg.cell(row=i, column=2, value=mean)
-        leg.cell(row=i, column=3).fill = PatternFill("solid", fgColor=FILL[st])
-    for note in [
-        "", "NOTES:",
+    NOTE_DEFAULTS = [
         "- 'ASIH/JMIH' = the American joint meeting (ASIH pre-1997, JMIH from 1997). ASIH/JMIH/HL/SSAR/NIA share one source book, collapsed to this column to remove duplicates.",
         "- 'AES' (American Elasmobranch Society, founded 1983) kept separate — cell shows elasmo-abstract count where ingested. Pre-1983 = no conference (blank).",
         "- Host cities 1916-2025 from github.com/SimonDedman/AESconfLocations; 2026 = New Orleans.",
@@ -253,7 +305,14 @@ def build():
         "- OCS (Oceania Chondrichthyan Soc, ~2011+, biennial): Brit Finucci collating, pending council — years/locations TBC.",
         "- Blank/unshaded cell = no conference that year for that series.",
         "- Per-society counts & trends: see the Dashboard tab.",
-    ]:
+    ]
+    MEANING, NOTE_LINES = harvest_legend_edits(MEANING, NOTE_DEFAULTS)
+    order = [(st, MEANING[st]) for st in STATUS_ORDER]
+    for i, (st, mean) in enumerate(order, 2):
+        leg.cell(row=i, column=1, value=st)
+        leg.cell(row=i, column=2, value=mean)
+        leg.cell(row=i, column=3).fill = PatternFill("solid", fgColor=FILL[st])
+    for note in NOTE_LINES:
         leg.append([note])
     leg.column_dimensions["A"].width = 12
     leg.column_dimensions["B"].width = 95
@@ -279,6 +338,15 @@ def build():
     def txt(loc, st, note):
         return f"{loc}; {st}" + (f" — {note}" if note else "")
 
+    cover = defaultdict(lambda: {"ingested": 0, "known": 0})
+
+    def track(series, status):
+        if status in ("NA", None) or not status:
+            return
+        cover[series]["known"] += 1
+        if status == "Ingested":
+            cover[series]["ingested"] += 1
+
     r = 2
     for year in range(1916, 2027):
         ws.cell(row=r, column=1, value=year).font = Font(bold=True)
@@ -290,36 +358,40 @@ def build():
             # AES abstracts harvested from elasmo.org supersede the JMIH-book status
             put(r, 3, txt(f"{loc} ({aes_web[year]})", "Ingested",
                           "AES abstracts from elasmo.org (full bodies)"), "Ingested")
+            track("AES", "Ingested")
         elif year >= 1983:
             aloc = f"{loc}" + (f" ({el})" if el else "")
             put(r, 3, txt(aloc, st, note), st)
+            track("AES", st)
         else:
             put(r, 3, "", "NA")
         # EEA
         if year in EEA:
-            l, s, n = EEA[year]; put(r, 4, txt(l, s, n), s)
+            l, s_, n = EEA[year]; put(r, 4, txt(l, s_, n), s_); track("EEA", s_)
         elif year in EEA_EARLY:
             loc_e, note_e = EEA_EARLY[year]
-            put(r, 4, txt(loc_e, "Pending", note_e), "Pending")
+            put(r, 4, txt(loc_e, "Pending", note_e), "Pending"); track("EEA", "Pending")
         elif 1997 <= year <= 2001:
             loc_e = EEA_EARLY_LOC.get(year, "?")
             nth = {1997: "1st", 1998: "2nd", 1999: "3rd", 2000: "4th", 2001: "5th"}[year]
             put(r, 4, txt(loc_e, "Missing",
                           f"{nth} EEA; no known abstract source"
                           + ("" if year in EEA_EARLY_LOC else "; host city also unknown")), "Missing")
+            track("EEA", "Missing")
         else:
             put(r, 4, "", "NA")
         # OCS (biennial ~2012+)
         if year in OCS:
             oloc, onote = OCS[year]
-            put(r, 5, txt(oloc, "Pending", onote), "Pending")
+            put(r, 5, txt(oloc, "Pending", onote), "Pending"); track("OCS", "Pending")
         elif year >= 2012 and year % 2 == 0:
             put(r, 5, "?; Pending — Brit Finucci collating; year/location to confirm", "Pending")
+            track("OCS", "Pending")
         else:
             put(r, 5, "", "NA")
         # SI (quadrennial)
         if year in SI:
-            l, s, n = SI[year]; put(r, 6, txt(l, s, n), s)
+            l, s_, n = SI[year]; put(r, 6, txt(l, s_, n), s_); track("SI", s_)
         else:
             put(r, 6, "", "NA")
         r += 1
@@ -363,6 +435,37 @@ def build():
     bar.height, bar.width = 8, 16
     dash.add_chart(bar, "I3")
 
+    # Coverage table: share of each society's MEETINGS whose abstracts are in.
+    # Denominator is meetings we know took place, not abstracts, so SI reads n/5.
+    cov_hdr = tot_row + 3
+    dash.cell(row=cov_hdr, column=1, value="Series").font = Font(bold=True)
+    dash.cell(row=cov_hdr, column=2, value="Meetings ingested").font = Font(bold=True)
+    dash.cell(row=cov_hdr, column=3, value="Meetings known").font = Font(bold=True)
+    dash.cell(row=cov_hdr, column=4, value="% ingested").font = Font(bold=True)
+    pct_series = ["AES", "EEA", "OCS", "SI"]
+    for i, sname in enumerate(pct_series, cov_hdr + 1):
+        c = cover.get(sname, {"ingested": 0, "known": 0})
+        pct = round(100.0 * c["ingested"] / c["known"], 1) if c["known"] else 0.0
+        dash.cell(row=i, column=1, value=sname)
+        dash.cell(row=i, column=2, value=c["ingested"])
+        dash.cell(row=i, column=3, value=c["known"])
+        dash.cell(row=i, column=4, value=pct)
+    cov_last = cov_hdr + len(pct_series)
+
+    pbar = BarChart()
+    pbar.title = "% of meetings with abstracts ingested, by society"
+    pbar.type = "col"
+    pbar.y_axis.title = "% of that society's meetings"
+    pbar.y_axis.scaling.min = 0
+    pbar.y_axis.scaling.max = 100
+    pdata = Reference(dash, min_col=4, max_col=4, min_row=cov_hdr + 1, max_row=cov_last)
+    pcats = Reference(dash, min_col=1, max_col=1, min_row=cov_hdr + 1, max_row=cov_last)
+    pbar.add_data(pdata, titles_from_data=False)
+    pbar.set_categories(pcats)
+    pbar.legend = None
+    pbar.height, pbar.width = 8, 16
+    dash.add_chart(pbar, "S3")
+
     # Line chart: over time, one line per society
     line = LineChart()
     line.title = "Abstracts over time, by society/series"
@@ -383,4 +486,11 @@ def build():
 
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--reset-legend", action="store_true",
+                    help="discard preserved legend wording and re-emit the code defaults")
+    a = ap.parse_args()
+    if a.reset_legend and LEGEND_STORE.exists():
+        LEGEND_STORE.unlink()
+        print("legend store cleared; code wording will be used")
     build()
