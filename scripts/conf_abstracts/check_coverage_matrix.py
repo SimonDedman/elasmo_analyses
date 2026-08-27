@@ -130,3 +130,34 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def legend_report(cur_path, ref_wb=None):
+    """Surface human edits to the Legend & Notes wording. The builder now
+    preserves these (data/matrix_legend.json), but they must still be visible so
+    nobody silently reverts them in code."""
+    from openpyxl import load_workbook
+    import json
+    store = REPO / "data" / "matrix_legend.json"
+    try:
+        ws = load_workbook(cur_path)["Legend & Notes"]
+    except Exception as e:
+        print(f"  legend unreadable: {e}")
+        return
+    sheet = {r[0]: r[1] for r in ws.iter_rows(min_row=2, max_row=9, max_col=2, values_only=True) if r[0]}
+    if not store.exists():
+        print("  no legend store yet; run the builder once to capture current wording")
+        return
+    saved = json.loads(store.read_text(encoding="utf-8")).get("meanings", {})
+    drift = [k for k, v in sheet.items() if saved.get(k) != v]
+    print("\n=== Legend & Notes ===")
+    if drift:
+        print("  edited in the sheet since the last build (will be preserved on next build):")
+        for k in drift:
+            print(f"    {k}: {sheet[k]}")
+    else:
+        print("  legend wording matches the preserved store.")
+
+
+if __name__ == "__main__" and "--legend" in __import__("sys").argv:
+    legend_report(REPO / "outputs" / "conference_coverage_matrix.xlsx")
