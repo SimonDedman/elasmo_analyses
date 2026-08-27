@@ -30,22 +30,23 @@ ASIH_CSV = REPO / "database" / "asih_meetings.csv"
 # parseable abstract-book PDF we hold and can ingest.
 # Colour = distance from a complete, searchable set of abstracts, worst first.
 # The ramp runs red -> orange -> amber -> yellow -> green in this order:
-#   Missing < Schedule < Hardcopy < Programme < Pending < OCR < Digital < Ingested
+#   Missing < Schedule < Hardcopy < OCR < Programme < Pending < Digital < Ingested
 # Rationale (Simon, 2026-08-27): "Digital" means the book is in hand and only
 # needs processing, so it is nearly done and reads light green; "OCR" means the
 # abstracts are in but from a degraded scan we still want re-sourced, so it sits
-# further back, in yellow; "Schedule" is titles without abstract text, useful but
+# back beside "Hardcopy" (Simon, 2026-08-27: functionally the same problem);
+# "Schedule" is titles without abstract text, useful but
 # not abstracts, so it sits just above Missing; "Hardcopy" and "Programme" are
 # the same practical problem (we need the abstract book) and sit adjacent.
-STATUS_ORDER = ["Missing", "Schedule", "Hardcopy", "Programme",
-                "Pending", "OCR", "Digital", "Ingested"]
+STATUS_ORDER = ["Missing", "Schedule", "Hardcopy", "OCR", "Programme",
+                "Pending", "Digital", "Ingested"]
 FILL = {
     "Missing": "E06666",    # red: nothing exists anywhere
-    "Schedule": "F0A868",   # red-orange: titles/authors only, no abstract text
+    "Schedule": "ED9C6B",   # red-orange: titles/authors only, no abstract text
     "Hardcopy": "F6B26B",   # dark orange: paper book known, nothing digital
-    "Programme": "F9CB9C",  # light orange: digital programme, book still needed
-    "Pending": "FFD966",    # amber: a named contact is getting it
-    "OCR": "FFE599",        # yellow: abstracts in, degraded scan, re-source wanted
+    "OCR": "F9CB9C",        # light orange: abstracts in but from a degraded scan
+    "Programme": "FFD966",  # amber: digital programme held, book still needed
+    "Pending": "FFE599",    # yellow: a named contact has it or is looking
     "Digital": "B6D7A8",    # light green: book in hand, extraction pending
     "Ingested": "6AA84F",   # green: done
     "NA": None,
@@ -86,12 +87,12 @@ EEA = {
     2012: ("Milan", "Hardcopy", "Cat holds a hardcopy but has no scanning capacity; digital copy needed from GRIS (Italy)"),
     2013: ("Plymouth", "Ingested", "93 abstracts (Fable)"),
     2014: ("Leeuwarden", "Ingested", "61 abstracts (Fable)"),
-    2015: ("Peniche", "Programme", "2-page programme only; Cat holds a hardcopy but has no scanning capacity; abstract book needed from APECE (Portugal)"),
+    2015: ("Peniche", "Digital", "19th EEA Book of Abstracts (99pp, born-digital) held by Simon all along; queued for extraction"),
     2016: ("Bristol", "Ingested", "93 abstracts (Fable)"),
     2017: ("Amsterdam", "Schedule", "62 talks ingested, NO abstract bodies; Cat holds a hardcopy but has no scanning capacity; abstract book needed from NEV"),
     2018: ("Peniche", "Ingested", "75 abstracts (Fable)"),
     2019: ("Rende", "Ingested", "136 abstracts (Fable)"),
-    2020: ("online (covid)", "Missing", "covid/online — find"),
+    2020: ("?", "Missing", "unknown whether a meeting was held: Cat thinks it was online for covid but was on maternity leave and is unsure; organiser unknown; abstracts unknown"),
     2021: ("Leiden", "Programme", "programme only; abstract book needed from NEV"),
     2022: ("Valencia (=SI2022)", "Digital", "full SI2022 abstract book received 2026-08-27; queued for extraction"),
     2023: ("Brighton", "Ingested", "oral 64 + poster 34 = 98 abstracts (Fable)"),
