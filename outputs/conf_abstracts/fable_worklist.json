@@ -2143,5 +2143,50 @@
     "book_key": "EEA2023_poster",
     "chunk": 0,
     "index": 142
+  },
+  {
+    "key": "EEA2024__c0",
+    "book_key": "EEA2024",
+    "chunk": 0,
+    "meeting": "EEA",
+    "year": 2024,
+    "city": "Thessaloniki",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2024/2024_EEA_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2024__c0.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2024__c0.json",
+    "n_chars": 130008,
+    "index": 143
+  },
+  {
+    "key": "EEA2024__c1",
+    "book_key": "EEA2024",
+    "chunk": 1,
+    "meeting": "EEA",
+    "year": 2024,
+    "city": "Thessaloniki",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2024/2024_EEA_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2024__c1.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2024__c1.json",
+    "n_chars": 130028,
+    "index": 144
+  },
+  {
+    "key": "EEA2024__c2",
+    "book_key": "EEA2024",
+    "chunk": 2,
+    "meeting": "EEA",
+    "year": 2024,
+    "city": "Thessaloniki",
+    "society_hint": "AES",
+    "is_elasmo_meeting": true,
+    "source_pdf": "/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences/2024/2024_EEA_AbstractBook.pdf",
+    "src_txt": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_src/EEA2024__c2.txt",
+    "cache_path": "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/conf_abstracts/.fable_cache/EEA2024__c2.json",
+    "n_chars": 87239,
+    "index": 145
   }
 ]
