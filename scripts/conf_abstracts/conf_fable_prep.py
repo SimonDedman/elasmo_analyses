@@ -128,6 +128,23 @@ def pdftotext_layout(pdf: Path) -> str:
         capture_output=True, timeout=300).stdout.decode("utf-8", "replace")
 
 
+def book_text(pdf: Path, key: str) -> str:
+    """Source text for one book. Multi-column scans (config.COLUMN_BOOKS) are
+    sliced into column strips so the text reads in true order; every other book
+    keeps plain `pdftotext -layout` so its existing Fable cache stays valid."""
+    spec = getattr(C, "COLUMN_BOOKS", {}).get(key)
+    if not spec:
+        return pdftotext_layout(pdf)
+    from conf_abstracts import pdf_columns
+    first, last = spec.get("pages", (1, None))
+    text = pdf_columns.extract(pdf, first=first, last=last,
+                               fixed_gutters=spec.get("gutters"))
+    print(f"  COLUMNS {key}: pages {first}-{last}, gutters={spec.get('gutters')} "
+          f"-> {len(text)} chars (plain -layout would give "
+          f"{len(pdftotext_layout(pdf))})")
+    return text
+
+
 # EEA host cities by year — recovers meeting.location for a book whose source
 # PDF vanished from the NAS-synced folder (so we can't parse the city from it).
 _SI_CITIES = {2018: "Joao Pessoa", 2022: "Valencia", 2026: "Colombo"}
@@ -160,7 +177,7 @@ def build(only=None):
             if only and only.lower() not in pdf.name.lower():
                 continue
             key = _key(pdf)
-            text = pdftotext_layout(pdf)
+            text = book_text(pdf, key)
             if len(text) < 1000:
                 # corrupt/image-only PDF (2024/2025 have broken catalogs; awaiting
                 # clean copies from Cat). Skip rather than burn a Fable agent — but

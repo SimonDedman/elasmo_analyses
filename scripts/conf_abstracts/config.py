@@ -87,3 +87,26 @@ SI2026_BODY_PDF = str(CONFERENCES / "2026" / "2026_SI_AbstractBook.pdf")
 
 # Marine Google calendar for milestone/failure markers.
 MARINE_CALENDAR_ID = "oa9mb0k12rkfsdsm9752bsahsc@group.calendar.google.com"
+
+
+# ---------------------------------------------------------------------------
+# Multi-column scanned books.
+#
+# `pdftotext -layout` on a two-column page puts BOTH columns on each output
+# line, interleaving two unrelated abstracts; `pdf_columns.extract` slices the
+# page into column strips instead, giving true reading order (column 1 top to
+# bottom, then column 2) and ~1/3 fewer characters (no gutter padding).
+#
+# Opt-in per book key: re-extracting an already Fable-cached book would change
+# its source text, invalidate the cache and re-chunk it.
+#   key -> dict(pages=(first, last), gutters=[x, ...] | None)
+#   gutters=None detects the columns per page (use for books with a variable
+#   page crop); a fixed list pins them (faster, and right for uniform books).
+COLUMN_BOOKS = {
+    # Carylanne's flatbed rescan of JMIH 1998 Guelph, received 2026-08-28,
+    # replacing the unusable phone-photo scan. Pages 1-19 are the schedule grid
+    # (3-4 columns, per-page crop) and 130-134 the author index; only pages
+    # 20-129 carry abstract bodies. Gutter MEASURED at x=384 — 31 of 178,318
+    # word boxes cross it (0.017%).
+    "JMIH1998": dict(pages=(20, 129), gutters=[384]),
+}
