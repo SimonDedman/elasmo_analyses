@@ -14,8 +14,10 @@ Brit Finucci (OCS pending); Carylanne (1992-2024 hardcopy); AESconfLocations
 import argparse
 import csv
 import json
+import re
 import sqlite3
 from collections import defaultdict
+from functools import lru_cache
 from pathlib import Path
 
 from openpyxl import Workbook, load_workbook
@@ -40,8 +42,14 @@ ASIH_CSV = REPO / "database" / "asih_meetings.csv"
 # "Schedule" is titles without abstract text, useful but
 # not abstracts, so it sits just above Missing; "Hardcopy" and "Programme" are
 # the same practical problem (we need the abstract book) and sit adjacent.
+# 'Extracted' (Simon, 2026-09-01) separates "abstracts are in the DB" from
+# "abstracts are in the DB at full quality". The regex parsers put real,
+# body-bearing records in for several JMIH years, but their titles and author
+# lists are weak and those books are queued for Fable re-extraction — calling
+# that "Ingested" overclaimed, and calling it "Digital" would have hidden the
+# ~2,800 abstracts we genuinely hold.
 STATUS_ORDER = ["Missing", "Schedule", "Hardcopy", "OCR", "Programme",
-                "Pending", "Digital", "Ingested"]
+                "Pending", "Digital", "Extracted", "Ingested"]
 FILL = {
     "Missing": "E06666",    # red: nothing exists anywhere
     "Schedule": "ED9C6B",   # red-orange: titles/authors only, no abstract text
@@ -49,8 +57,9 @@ FILL = {
     "OCR": "F9CB9C",        # light orange: abstracts in but from a degraded scan
     "Programme": "FFD966",  # amber: digital programme held, book still needed
     "Pending": "FFE599",    # yellow: a named contact has it or is looking
-    "Digital": "B6D7A8",    # light green: book in hand, extraction pending
-    "Ingested": "6AA84F",   # green: done
+    "Digital": "B6D7A8",    # light green: book in hand, nothing extracted yet
+    "Extracted": "93C47D",  # mid green: abstracts in the DB, re-extraction queued
+    "Ingested": "6AA84F",   # green: fully extracted and merged — done
     "NA": None,
 }
 # (location, status, action-note). status conveys what we HOLD; the note says
@@ -250,6 +259,87 @@ def db_year_society():
     return cnt
 
 
+_FABLE_WL = REPO / "outputs" / "conf_abstracts" / "fable_worklist.json"
+
+
+@lru_cache(maxsize=None)
+def _fable_books():
+    """{(meeting, year): (chunks_done, chunks_total, abstracts_cached)} from the
+    Fable worklist and the cache files it treats as resume truth."""
+    out = {}
+    if not _FABLE_WL.exists():
+        return out
+    try:
+        wl = json.loads(_FABLE_WL.read_text(encoding="utf-8"))
+    except Exception:
+        return out
+    # Count DISTINCT titles across a book's chunks, not the raw sum. Chunks
+    # overlap by 15k chars by design and conf_fable_merge dedups by title, so a
+    # raw sum overstates the extraction and made merged books (JMIH 2015/2016)
+    # look unmerged against their own DB row counts.
+    seen = defaultdict(set)
+    tally = defaultdict(lambda: [0, 0])
+    for w in wl:
+        key = (w.get("meeting"), w.get("year"))
+        tally[key][1] += 1
+        cp = Path(w["cache_path"])
+        if cp.exists() and cp.stat().st_size >= 2:
+            tally[key][0] += 1
+            try:
+                d = json.loads(cp.read_text(encoding="utf-8"))
+                for a in (d if isinstance(d, list) else d.get("abstracts", [])):
+                    t = re.sub(r"[^a-z0-9]", "", str(a.get("title") or "").lower())
+                    if t:
+                        seen[key].add(t)
+            except Exception:
+                pass
+    for key, (done, total) in tally.items():
+        out[key] = (done, total, len(seen.get(key, ())))
+    _fable_titles.cache_clear()
+    _FABLE_TITLE_CACHE.update(seen)
+    return out
+
+
+_FABLE_TITLE_CACHE = {}
+
+
+@lru_cache(maxsize=None)
+def _fable_titles():
+    _fable_books()
+    return _FABLE_TITLE_CACHE
+
+
+def fable_state(meeting, year):
+    """'none' | 'partial' | 'complete' | 'merged' for this book, plus the number
+    of distinct abstracts sitting in its Fable caches.
+
+    'merged' is decided by CONTENT, not by counts: what fraction of the DB's
+    titles for this meeting-year appear in the Fable cache. Two count-based
+    heuristics were tried first and both misread the data — a raw cache sum
+    double-counts the 15k-char chunk overlap, and a DB-vs-cache ratio breaks on
+    the elasmo.org --supersede step, which legitimately DELETES merged records
+    (JMIH 2005 keeps 877 of 1,033). Title overlap separates cleanly: merged
+    books score 100%, unmerged ones 0-1.5%."""
+    done, total, n = _fable_books().get((meeting, year), (0, 0, 0))
+    if total == 0 or done == 0:
+        return "none", 0
+    if done < total:
+        return "partial", n
+    titles = _fable_titles().get((meeting, year), set())
+    try:
+        con = sqlite3.connect(str(DB))
+        rows = [r[0] for r in con.execute(
+            """select a.title from abstracts a join meetings m using(meeting_id)
+               where m.year=? and m.meeting=?""", (year, meeting))]
+        con.close()
+    except Exception:
+        return "complete", n
+    if not rows or not titles:
+        return "complete", n
+    hit = sum(1 for t in rows if re.sub(r"[^a-z0-9]", "", str(t or "").lower()) in titles)
+    return ("merged" if hit / len(rows) >= 0.80 else "complete"), n
+
+
 def meeting_cell(year, db):
     """Return (location, status, note, elasmo_count)."""
     loc = JMIH_LOC.get(year, "?")
@@ -257,7 +347,14 @@ def meeting_cell(year, db):
     if d and d["abstract"]:
         if d["ocr"]:
             return loc, "OCR", "degraded scan (needs_review) — flatbed re-scan planned", d["elasmo"]
-        return loc, "Ingested", "", d["elasmo"]
+        state, n_fable = fable_state("JMIH", year)
+        if state == "merged":
+            return loc, "Ingested", "", d["elasmo"]
+        if state == "complete":
+            return loc, "Extracted", f"Fable extraction complete ({n_fable}) — merge pending", d["elasmo"]
+        note = ("regex-parsed; Fable re-extraction queued" if state == "none"
+                else f"regex-parsed; Fable re-extraction part-done ({n_fable} so far)")
+        return loc, "Extracted", note, d["elasmo"]
     if d and d["ocr_failed"]:
         return loc, "OCR", "degraded phone scan — 0 abstracts recovered — flatbed re-scan needed (Carylanne)", 0
     if d and d["schedule"]:
@@ -291,8 +388,11 @@ def build():
         "Programme": "A digital programme is held, but not the abstract book. Same practical need as Hardcopy: get the book.",
         "Pending": "A named contact has it or is looking for it, not yet received (EEA: Cat and Ali; OCS: Brit).",
         "OCR": "Abstracts ingested, but from a degraded scan and flagged needs_review. Still worth re-sourcing a clean copy.",
-        "Digital": "Abstract book in hand and ingestable. Only extraction remains.",
-        "Ingested": "Full abstracts ingested into the database.",
+        "Digital": "Abstract book in hand, nothing extracted into the database yet.",
+        "Extracted": ("Abstracts are in the database, but from the regex parsers "
+                      "(or extracted and not yet merged). Titles and author lists "
+                      "are weak; full re-extraction is queued."),
+        "Ingested": "Fully extracted and merged into the database. Done.",
     }
     NOTE_DEFAULTS = [
         "- 'ASIH/JMIH' = the American joint meeting (ASIH pre-1997, JMIH from 1997). ASIH/JMIH/HL/SSAR/NIA share one source book, collapsed to this column to remove duplicates.",
