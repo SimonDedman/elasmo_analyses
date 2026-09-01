@@ -83,7 +83,7 @@ SCOPE = [
     # session heading, elasmo flag from the lexicon). Simon approved Fable for
     # 2005 and 2016 on 2026-08-25; the glob lists every book, extraction is
     # launched per index so the others stay unextracted until asked for.
-    (str(C.CONFERENCES / "*" / "*_JMIH_AbstractBook.pdf"), "JMIH", "", False),
+    (str(C.CONFERENCES / "*" / "*_JMIH_AbstractBook*.pdf"), "JMIH", "", False),
     # SI 2022 Valencia only: the 2018 and 2026 books already have dedicated
     # parsers (parse_si2018_pdf / xlsx + body merge), so don't re-queue them.
     (str(C.CONFERENCES / "2022" / "2022_SI_AbstractBook.pdf"), "SI", "AES", True),
@@ -108,6 +108,13 @@ def _key(pdf: Path) -> str:
         base += "_oral"
     elif "poster" in low:
         base += "_poster"
+    else:
+        # A book split across numbered parts (JMIH 2019 ships as part 1 + part 2
+        # on asih.org) MUST get distinct keys, or the second silently overwrites
+        # the first in the worklist and half the book is never extracted.
+        m3 = re.search(r'part[\s_-]?(\d+)', low)
+        if m3:
+            base += f"_part{m3.group(1)}"
     return base
 
 
@@ -176,6 +183,8 @@ def build(only=None):
             pdf = Path(path)
             if only and only.lower() not in pdf.name.lower():
                 continue
+            if any(frag in pdf.name for frag in C.SKIP_NAME_FRAGMENTS):
+                continue   # _phonescan books are ingested from outputs/a4_text
             key = _key(pdf)
             text = book_text(pdf, key)
             if len(text) < 1000:
