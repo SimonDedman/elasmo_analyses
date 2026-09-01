@@ -28,6 +28,7 @@ REPO = Path(__file__).resolve().parents[2]
 DB = REPO / "database" / "conference_abstracts.db"
 OUT = REPO / "outputs" / "conference_coverage_matrix.xlsx"
 ASIH_CSV = REPO / "database" / "asih_meetings.csv"
+CONFERENCES = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences")
 
 # status order (red -> green). 'Programme' distinguishes a schedule/grid PDF we
 # hold (NO abstract bodies, abstract book still needed) from 'Digital' = a
@@ -355,12 +356,32 @@ def meeting_cell(year, db):
         note = ("regex-parsed; Fable re-extraction queued" if state == "none"
                 else f"regex-parsed; Fable re-extraction part-done ({n_fable} so far)")
         return loc, "Extracted", note, d["elasmo"]
+    # An abstract book sitting in Conferences/<year>/ that has produced no
+    # abstracts yet outranks 'Schedule'/'Programme'/'Hardcopy': the sourcing job
+    # is done and only extraction remains. Checked on disk so the sheet updates
+    # itself the moment a book is filed. (JMIH 2006/2010/2014/2017/2018/2019 and
+    # 2023/2024/2026 came from asih.org/meetings/recent-meetings, 2026-09-01.)
+    book = sorted((CONFERENCES / str(year)).glob(f"{year}_JMIH_AbstractBook*.pdf")) \
+        if (CONFERENCES / str(year)).is_dir() else []
+    if book:
+        state, n_fable = fable_state("JMIH", year)
+        if state in ("complete", "merged"):
+            pass                      # handled by the branches above
+        else:
+            src = "asih.org" if len(book) else ""
+            return loc, "Digital", (f"abstract book held ({len(book)} PDF"
+                                    f"{'s' if len(book) > 1 else ''}) — extraction pending"), 0
     if d and d["ocr_failed"]:
         return loc, "OCR", "degraded phone scan — 0 abstracts recovered — flatbed re-scan needed (Carylanne)", 0
     if d and d["schedule"]:
         return loc, "Schedule", "programme ingested (no abstract bodies) — abstract book needed", d["elasmo"]
     if year in JMIH_PROGRAMME:
         return loc, "Programme", JMIH_PROGRAMME[year], 0
+    # 2020: no meeting. JMIH was replaced by the virtual BAAM-ZOOM sessions and no
+    # abstract book exists (asih.org lists only a summary; Carol Spencer, ASIH
+    # secretary, 2026-09-01: "no meeting in 2020"). Not a gap to chase.
+    if year == 2020:
+        return loc, "NA", "no meeting — virtual BAAM-ZOOM sessions only, no abstract book", 0
     if 1992 <= year <= 2024:
         return loc, "Hardcopy", "Carylanne has hardcopy (1992-2024) — get abstract book", 0
     return loc, "Missing", "", 0
