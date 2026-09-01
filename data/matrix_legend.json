@@ -6,8 +6,9 @@
   "Programme": "Digital programme held, not the abstract book. Per Hardcopy: get the book, ideally digital.",
   "Pending": "A named contact has it or is looking for it, not yet received.",
   "OCR": "Abstracts ingested, but from a degraded scan and flagged needs_review. Worth re-sourcing a clean copy, ideally digital.",
-  "Digital": "Abstract book in hand and ingestable. Only extraction remains.",
-  "Ingested": "Full abstracts ingested into the database."
+  "Digital": "Abstract book in hand, nothing extracted into the database yet.",
+  "Extracted": "Abstracts are in the database, but from the regex parsers (or extracted and not yet merged). Titles and author lists are weak; full re-extraction is queued.",
+  "Ingested": "Fully extracted and merged into the database. Done."
  },
  "notes": [
   "- 'ASIH/JMIH' = the American joint meeting (ASIH pre-1997, JMIH from 1997). ASIH/JMIH/HL/SSAR/NIA share one source book, collapsed to this column to remove duplicates.",

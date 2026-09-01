@@ -98,12 +98,20 @@ def _num_of(a):
     return None
 
 
+# Fable returns authors as [{"full_name", "affiliation", "is_presenter"}, ...].
+# An earlier version of this function looked only for name/surname/family, found
+# nothing, and reported 0% author recall for a set of records that in fact had
+# complete author lists — the harness was wrong, not the extraction.
+_NAME_KEYS = ("full_name", "name", "surname", "family", "last_name")
+
+
 def _authors_of(a):
     v = a.get("authors")
     if isinstance(v, list):
-        v = " ; ".join(x if isinstance(x, str) else
-                       " ".join(str(x.get(k, "")) for k in ("name", "surname", "family"))
-                       for x in v)
+        v = " ; ".join(
+            x if isinstance(x, str)
+            else " ".join(str(x.get(k, "")) for k in _NAME_KEYS if x.get(k))
+            for x in v)
     return str(v or "")
 
 
@@ -165,10 +173,17 @@ def report(book_key: str):
         print(f"author surname recall vs schedule: mean {statistics.mean(recalls)*100:.1f}%  "
               f"(fully recovered on {sum(1 for r in recalls if r >= 0.999)/len(recalls)*100:.1f}% of records)")
 
-    missing = sorted(set(gt) - {n for n in (_num_of(a) for a in fab) if n})
-    if missing:
-        print(f"\nschedule numbers with no numbered Fable record: {len(missing)}"
-              f"{' e.g. ' + ', '.join(map(str, missing[:15])) if missing else ''}")
+    # Only meaningful when the extraction actually carries programme numbers.
+    # The current prompt does not ask for one, so every record matches by title
+    # instead; reporting "533 numbers missing" in that case measures nothing.
+    numbered = [n for n in (_num_of(a) for a in fab) if n]
+    if numbered:
+        missing = sorted(set(gt) - set(numbered))
+        if missing:
+            print(f"\nschedule numbers with no numbered Fable record: {len(missing)}"
+                  f" e.g. {', '.join(map(str, missing[:15]))}")
+    else:
+        print("\nnote: records carry no programme number — matched by title only.")
 
 
 if __name__ == "__main__":

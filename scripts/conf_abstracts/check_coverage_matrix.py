@@ -30,7 +30,7 @@ REL = "outputs/conference_coverage_matrix.xlsx"
 REL_DB = "database/conference_coverage_matrix.xlsx"
 CUR = REPO / REL
 
-STATUSES = {"Missing", "Hardcopy", "Programme", "Digital", "OCR",
+STATUSES = {"Missing", "Hardcopy", "Programme", "Digital", "Extracted", "OCR",
             "Schedule", "Ingested", "Pending", "NA"}
 
 
