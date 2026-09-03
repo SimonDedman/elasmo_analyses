@@ -29,6 +29,9 @@ DB = REPO / "database" / "conference_abstracts.db"
 OUT = REPO / "outputs" / "conference_coverage_matrix.xlsx"
 ASIH_CSV = REPO / "database" / "asih_meetings.csv"
 CONFERENCES = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences")
+# mirrors config.SKIP_NAME_FRAGMENTS; this module is standalone and does not
+# import the conf_abstracts package.
+SKIP_NAME_FRAGMENTS = ("_phonescan", "CopeiaMeetingSummary")
 
 # status order (red -> green). 'Programme' distinguishes a schedule/grid PDF we
 # hold (NO abstract bodies, abstract book still needed) from 'Digital' = a
@@ -361,16 +364,27 @@ def meeting_cell(year, db):
     # is done and only extraction remains. Checked on disk so the sheet updates
     # itself the moment a book is filed. (JMIH 2006/2010/2014/2017/2018/2019 and
     # 2023/2024/2026 came from asih.org/meetings/recent-meetings, 2026-09-01.)
-    book = sorted((CONFERENCES / str(year)).glob(f"{year}_JMIH_AbstractBook*.pdf")) \
+    # SKIP_NAME_FRAGMENTS matters: the 1997-2004 phone scans are named
+    # <year>_JMIH_AbstractBook_phonescan.pdf, so a bare glob counted them as a
+    # held, ingestable book and reported 2003/2004 as 'Digital' when they are in
+    # fact the degraded scans that recovered 0-1 abstracts.
+    book = [b for b in sorted((CONFERENCES / str(year)).glob(f"{year}_JMIH_AbstractBook*.pdf"))
+            if not any(frag in b.name for frag in SKIP_NAME_FRAGMENTS)] \
         if (CONFERENCES / str(year)).is_dir() else []
     if book:
         state, n_fable = fable_state("JMIH", year)
-        if state in ("complete", "merged"):
-            pass                      # handled by the branches above
-        else:
-            src = "asih.org" if len(book) else ""
-            return loc, "Digital", (f"abstract book held ({len(book)} PDF"
-                                    f"{'s' if len(book) > 1 else ''}) — extraction pending"), 0
+        if state == "merged":
+            return loc, "Ingested", "", (d or {}).get("elasmo", 0)
+        if state == "complete":
+            # Extracted but the merge has not run yet. Falling through here sent
+            # JMIH 2010 — downloaded AND fully extracted — all the way down to
+            # 'Hardcopy', the worst label on the ramp.
+            return loc, "Extracted", f"Fable extraction complete ({n_fable}) — merge pending", 0
+        if state == "partial":
+            return loc, "Digital", (f"abstract book held — Fable extraction "
+                                    f"part-done ({n_fable} so far)"), 0
+        return loc, "Digital", (f"abstract book held ({len(book)} PDF"
+                                f"{'s' if len(book) > 1 else ''}) — extraction pending"), 0
     if d and d["ocr_failed"]:
         return loc, "OCR", "degraded phone scan — 0 abstracts recovered — flatbed re-scan needed (Carylanne)", 0
     if d and d["schedule"]:
