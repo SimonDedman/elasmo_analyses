@@ -1,0 +1,1738 @@
+[
+ {
+  "title": "Maternal Provisioning Interacts with Incubation Temperature to Affect Mercury Exposure in Hatchling American Alligators (Alligator mississippiensis)",
+  "authors": [
+   {
+    "full_name": "Josiah Johnson",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Christopher Smaga",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Samantha Bock",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Benjamin Parrott",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The thermal environment experienced by developing embryos can influence the utilization of maternally-provisioned resources. Despite these processes being particularly consequential for oviparous ectotherms, many of which are threatened by human driven global change, these dynamics are largely unexplored within ecotoxicological frameworks. Here, we test if incubation temperature interacts with maternally-transferred mercury to affect [abstract continues beyond chunk]",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Tracking individual toads: Linking inter-individual variation to population-level partial movement",
+  "authors": [
+   {
+    "full_name": "Nathalie Jreidini",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "David M Green",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Animal movement ecology can be studied at various temporal scales, resulting in a wide range of data resolutions. High resolution movement data obtained from observations at a fine temporal scale can play a crucial role in teasing apart personality from stochastic individual patterns. These short-scale displacements accumulate to form large-scale movements, otherwise measured at relatively lower resolution, and can therefore shed light on the underlying mechanisms of various movement behaviours. Individuals within a population can either display different movement strategies, often leading to “partial movement”, or even switch between strategies during a movement phase. We radio tracked 13 individual nocturnal Fowler’s Toads (Anaxyrus fowleri) in Long Point, Ontario, Canada, on the northern shore of Lake Erie following their breeding season to understand their movement behaviour during the night. We obtained individual coordinates every 30 minutes from the moment they emerged until they burrowed, and used a hidden Markov model with measures of step lengths and turning angles to assess behavioural states and state-switching. We found that individuals switched between a ‘dispersive’ state and a ‘searching’ state as a function of both time and distance from the lake (i.e., microhabitat), whereby toads were more likely to perform long directional movements at the start of the night followed by shorter exploratory movements towards the end of the night. Our results also show that individual stochastic variation in movement patterns, which conform to a random walk, lead to population-level trends that appear to be deterministic and suggestive of partial movement. Population-level movement patterns, or data measured at low resolution, may therefore be misleading when assessing behavioural movement strategies.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Successful Development and Reproduction of Anaxyrus houstonensis F1 and F2 Offspring Produced from Cryopreserved Sperm",
+  "authors": [
+   {
+    "full_name": "Allison Julien",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Carrie Kouba",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrew Kouba",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Isabella Burger",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Diane Barber",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "In the last decade, cryopreservation of amphibian sperm has been successful in over 20 species worldwide; however, successful fertilization using frozen-thawed sperm and subsequent offspring development has been reported in far fewer species. While demonstrating successful reactivation of frozen sperm following cryopreservation is an important step for genetic management utilizing biobanked samples, ensuring healthy offspring production from cryopreserved sperm is crucial for conservation application. The aims of this study were to compare: 1) clutch sizes and fertility rates between cryo-produced (CP) females and non-cryo-produced (NCP) females; and 2) development and reproductive output of the F2 generation compared to unrelated cohorts. In 2021, we produced two female Anaxyrus houstonensis from frozen sperm at the Fort Worth Zoo (FWZ) and bred them in 2022. Average weights were 71 g and 46.7 g from CP and NCP females, respectively, with CP females laying an average of 5830 eggs and NCP females laying 4292. Fertility rates from CP females were 80%, and twenty individuals from both females were retained within the breeding program. Of these, 6 females and 12 males metamorphosed and survived to sexual maturity. Importantly, growth rates did not differ (p = 0.31; t = 0.5) between CP and NCP F2 offspring, and clutch sizes were comparable with CP F2s producing 4563 eggs on average, and NCP F2s producing 4143 eggs. These results demonstrate that reproductively healthy F1 and F2 offspring can be produced from cryopreserved sperm, and that individuals develop and reproduce comparably to offspring produced from natural breeding.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Female and Male Genital Shape of Invasive Burmese Pythons in the Florida Everglades",
+  "authors": [
+   {
+    "full_name": "Rachel Keeffe",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Ian Bartoszek",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ian Easterling",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Brandon Hedrick",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Patricia Brennan",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The extensive morphological diversity of snake genitalia has historically been explained by the “lock and key” hypothesis, wherein differing genital morphologies between species precludes interspecies mating events. However, this early hypothesis was generated primarily only through examinations of male anatomy. Recent work on watersnakes examined female and male genital morphology together and found evidence that sexual conflict between males and females may be a significant driver in the evolution of genital traits. In our study, we examine the genital morphology of a different family of snakes to compare evolutionary drivers of genital morphology more broadly. Our sample includes 20 males and 25 females of Python bivittatus, the Burmese python, from their invasive range in Florida. We use 3D geometric morphometrics to quantitatively compare the complex shapes of vaginal pouches and hemipenes in P. bivittatus, as well as comparing the degree of asymmetry between the right and left hemipenes of male P. bivittatus. Unlike watersnakes, python hemipenes do not bear any spines, yet are still bilobed, and have pointed ends that would appear to fit into the medial oviduct opening of females. Female genitalia are also bilobed, and shape coevolution seems likely. Genital shape correspondence and the lack of spines may suggest that the drivers of genital evolution in pythons are different than in watersnakes. This work will test if assumptions of the lock and key hypothesis or sexual conflict can explain genital diversity in this system.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "International fisheries - how science informs conservation and management measures",
+  "authors": [
+   {
+    "full_name": "Bryan Keller",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Regional fisheries management organizations, or RFMOs, are intergovernmental fora charged with the conservation and management of certain transboundary fish stocks. Each organization defines an area of competence, which is the geographic boundary of the area subject to management. These fora create binding and non-binding conservation and management measures (CMMs) that are implemented by member nations for target stocks or species. Other species caught in association with those fisheries, such as sharks or sea turtles, may also be covered by these measures. The subject fisheries are often diverse, not only in gear type, but also in the spatiotemporal distribution of fishing effort. Collectively, these factors demand a complex process for identifying the best available science to inform CMMs. Here we describe that process through which scientific findings are incorporated into international fisheries management actions. Some believe that RFMOs can rely on any available peer-reviewed science. In fact, the designated scientific bodies for each RFMO, with participation of national scientists, typically play a pivotal role in analyzing and discussing data and recommending action to be considered in RFMO decision making. Without specific recommendations from an RFMO’s designated scientific body, it can be challenging to gain the necessary support for the adoption of new CMMs. This unique process highlights the importance of scientists ensuring that relevant work is presented in this context, as it may otherwise not be considered by RFMOs. We hope this presentation will help non-government scientists to understand better the RFMO process, facilitating an increased participation in international fisheries management.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Population Survey of Necturus punctatus in a Perennial Stream within the Duke Forest",
+  "authors": [
+   {
+    "full_name": "Sarah Kelso",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The Dwarf Waterdog, Necturus punctatus, has unknown population trends with the potential to be declining in much of its range. To protect aquatic caudata, we need current data regarding threats and population changes. N. punctatus has not been studied in New Hope Creek since 1969. Urban land cover around New Hope Creek has increased since 1969 and has changed the chemical composition and physical structure of the creek. It is likely that this has contributed to changes in the N. punctatus population. This project aimed to establish a baseline population estimate for future studies to determine the population trend and to assess whether the New Hope Creek dam changed water characteristics such that it generated different density of animals, particularly N. punctatus above and below the dam. To study the population, we used Visual Implant Elastomers to mark and identify new/ recaptured individuals caught in baited minnow traps from November 2022-March 2023. We also collected data on stream turbidity, pH, dissolved oxygen, temperature, specific conductance, and bycatch. Five N. punctatus, 40 crayfish, and 22 fish were captured over five months. Due to the low salamander capture numbers, with zero recaptures, a mark-recapture analysis was not completed. Crayfish, fish, and N. punctatus capture numbers were combined to look at spatiotemporal changes in animal capture rates. Water characteristics were also analyzed for these changes. The data show differences in water characteristics above and below the dam, as well as seasonal patterns, with only the spatial patterns consistent with animal capture rates.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Association of Anti-Mullerian Hormone Concentrations in Female Sharks in Relation to Sexual Maturity and Reproduction",
+  "authors": [
+   {
+    "full_name": "Ashlynn Kemp",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jim Gelsleichter",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Anti-Mullerian Hormone (AMH) is a protein hormone that has been shown to play an important role in early development of ovarian follicles in female mammals. Because of this, AMH levels in circulation have been shown to be a valuable indicator of reproductive condition in human females, particularly for ovarian reserve (i.e., the number of viable eggs capable of fertilization). The presence of AMH has recently been confirmed in chondrichthyans using molecular analysis. However, no studies examining the role of AMH in the reproductive biology of sharks and rays have been published. Therefore, the purpose of this study was to determine if AMH is an indicator of reproductive biology in sharks and rays. Immunohistochemistry was used to examine the presence of AMH-like proteins in the ovary of female sharks. In addition, attempts were made to validate assays for measuring circulating AMH levels in female bonnethead sharks (Sphyrna tiburo) collected from multiple stages of sexual maturity and reproduction. AMH-like proteins were detected in vitellogenic ovarian follicles, suggesting that AMH may play a role in yolk production. Initial attempts to validate commercially available AMH assays for use with bonnethead plasma were unsuccessful; however, additional efforts are currently underway. Studies on AMH in chondrichthyans may improve our understanding of the evolution of this protein. Furthermore, if successful, efforts to develop assays for measuring AMH levels in shark plasma may provide us with new methods for characterizing shark reproduction using nonlethal approaches.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Modular organization of the Weberian apparatus in Cypriniform fishes",
+  "authors": [
+   {
+    "full_name": "Claudia Kern",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Adult phenotypes result from dynamic interactions among developmental stability mechanisms and developmental instability. Among the stability mechanisms, modularity has been targeted as a primary evolutionary developmental component facilitating the evolvability of complex systems. Among the various definitions of modularity (genetic, developmental, morphological, ecological), a module is a network of interacting elements behaving as quasi-independent units, or as semi-autonomous sets of highly correlated traits within larger units. Here we explore the modular organization of the Weberian apparatus among key cypriniform taxa with respect to their gonorynchiform relatives. This complex system consists of a series of anterior centra, neural arches, supraneurals, and pleural ribs that form a mechanical linkage transmitting motion of the swim bladder to the inner ear. We employ micro-CT technology and 3-D geometric morphometrics to test modularity of the anterior vertebrae with respect to more posterior vertebral regions. We also investigate covariation among elements within the Weberian apparatus. Preliminary results suggest that the Weberian apparatus evolved from a non-modified vertebral column such as that in the outgroup Chanos chanos. This occurred within a modular framework, under which heterochronic events occurred in various otophysans, contributing to the disparity seen among Cypriniformes.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Exhumation of carbonate rock facilitates dispersal-mediated allopatric speciation in freshwater fishes",
+  "authors": [
+   {
+    "full_name": "Daemin Kim",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Maya Stokes",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandy Ebersole",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Thomas Near",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "A fundamental goal of evolutionary biology is to understand the mechanisms that generate and maintain biodiversity. Discovery and delimitation of species represent essential prerequisites for such investigations. We investigate a freshwater fish species complex comprising Etheostoma bellator and the federally endangered E. chermocki which is endemic to the Black Warrior River system in Alabama, USA, a global hotspot of temperate freshwater biodiversity. Phylogenomic analyses delimit five geographically disjunct species masquerading as E. bellator. Three of these new species exhibit microendemic distributions comparable to that of E. chermocki raising the possibility that they also require protection. The six species in the complex are restricted to stretches of rivers flowing over carbonate rock and they are separated from each other by waterways flowing over siliciclastic rock, a geographic pattern dictated by the underlying structural geology. Over time, rivers have incised downward through layers of clastic rocks in the basin, gradually exposing underlying carbonate rock, the substrate of suitable habitat today. Our results suggest that episodic dispersal events to patches of suitable habitat set the stage for allopatric speciation in the species complex. Our study suggests that the presence of heterogeneous rock can facilitate dispersal-mediated allopatric speciation in freshwater organisms even in the absence of external tectonic or climatic perturbations.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The physiological and ecological drivers of diversity in tuna life histories",
+  "authors": [
+   {
+    "full_name": "Holly Kindsvater",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Maria José Juan-Jordá",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cat Horswill",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jason Matthiopoulos",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marc Mangel",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Understanding how fish growth and reproduction evolve in response changing environmental conditions is a fundamental question in evolutionary ecology. Prior studies focused on the physiological effects of climate change upon life histories and population demography often ignore size-dependent foraging and risk of predation. We embedded a state-dependent energetic model in an ecosystem size spectrum to model prey availability (foraging) and risk of predation (fear) experienced by individual fish as they grow. We examined how spectrum richness and temperature interact to shape growth, reproduction, and survival; we found that richer spectra led to larger body sizes, but effects of temperature on body size were relatively small. We applied our model to scenarios corresponding to species representing the three ecological lifestyles (ecotypes) of tunas, in some cases including seasonal variation in conditions. We predicted realistic patterns of growth of tunas and found that seasonality in resource accumulation and compression of reproduction into short time periods favors growth to larger body sizes. Our framework for predicting emergent life histories combines direct and indirect effects of productivity (foodscapes), individual risk (fearscapes), and metabolic processes and offers a promising approach to understand fish life history responses to changing ocean conditions.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Tasting the Rainbow: The Palatability of Poison Frogs Along an Aposematic to Cryptic Gradient and its Relation with Chemical Defenses",
+  "authors": [
+   {
+    "full_name": "Jeremy Klank",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Francesca Protti-Sánchez",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Hannah M. Rowland",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Federico Bolaños",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jennifer L. Stynoski",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Poison frogs (Dedrobatide) are a well-known model for understanding the relationship between aposematism, toxicity, and predation. In this study, we investigate the palatability and composition of dermal secretions along a cryptic-to-aposematic gradient of five species of poison frogs (Dendrobates auratus, Oophaga granulifera, Phyllobates vittatus, Silverstoneia flotator, and Allobates talamancae). We used non-lethal methods to obtain and prepare extracts of the frogs’ skin secretions with the objective to evaluate their palatability to ecologically relevant reptile and arthropod predators. We will also quantify the diversity and abundance of chemical compounds in their skin secretions, and analyze the relationship between palatability, chemical composition, and coloration. This cryptic-to-aposematic gradient is rarely studied in vertebrates. However, by studying it in poison frogs, it will allow for a better understanding of ecological interactions and ultimately the evolution of aposematism in these species. In addition, by testing the hypotheses that chemical compound diversity and abundance are related to palatability, this study will clarify the mechanisms of anti-predator defense in poison frogs and their impact on the evolution of alternative anti-predator strategies.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The Relationship Between Relatedness, Distance, and Local Density in Red-backed Salamanders (Plethodon cinereus)",
+  "authors": [
+   {
+    "full_name": "Marissa Knight",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Stephanie Coster",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kristine Grayson",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The red-backed salamander (Plethodon cinereus) is a terrestrial salamander that lives in forests throughout the Northeastern United States. Many studies of red-backed salamanders have found territorial behavior and competition for cover objects, but these behaviors may change in high density populations. Our study site in suburban Richmond, Virginia was established as part of the Salamander Population & Adaptation Research Collaboration Network (SPARCnet). The local density of our plots was estimated using spatial capture–recapture methods and ranged from 2.86 – 6.26 individuals per m2. Multiple individuals are often found under the same 1 m2 coverboard (as many as 10 – 12 during peak levels of activity). In high competition environments, related individuals may be more tolerant of each other as a form of altruism. This research explored whether proximate individuals are more likely to be related, which could suggest tolerance or altruism as an explanation for cover object sharing. We sampled salamanders from coverboard plots with higher and lower local densities. We genotyped 163 individuals at 14 microsatellite loci to determine pairwise relatedness and compared the average relatedness of individuals at 0 distance to a null distribution. Our results indicated that individuals found in proximity were not more related than expected, suggesting there is no relationship between relatedness and distance at higher or lower density sites for this population. Our study provides additional insights on the spatial population structure of terrestrial salamanders, where familiarity may play a larger role than relatedness in intraspecific interactions.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "I like to move it, move it: advances in the application of acceleration data loggers in fisheries research",
+  "authors": [
+   {
+    "full_name": "Ryan Knotek",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jeff Kneebone",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Connor White",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Tobey Curtis",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Caroline Collatos",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Nick Whitney",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Electronic tagging, such as satellite and acoustic telemetry, is a ubiquitous approach for monitoring fish movement and fate in post-release mortality (PRM) studies. However, acceleration data loggers (ADLs) also provide large amounts of fine-scale information on animal swimming behavior during and after the fishing event, yielding insights into animal fate and post-release recovery time. Here we present various ADL applications in shark PRM studies and discuss the benefits, limitations, and best practices of using this technology. Because ADL tag packages require physical recovery, they are best suited for nearshore environments where multiple animals can be tagged around the same time to increase the efficiency of tag package recovery. ADLs can also be a cost-effective strategy for gathering relatively large sample sizes because of their low cost and capacity to be re-used on multiple animals. In addition, tag package dimensions can be customized to expand ADL use to varying-sized sharks. Monitoring fine-scale body acceleration can also help identify more nuanced events that can be difficult to distinguish with other tagging technologies, including predation on tagged animals, scavenging dead (tagged) animals, and attempts to dislodge the tag by jumping or rubbing on the seafloor. Finally, ADLs can also be integrated with fishing gear in order to characterize the capture behaviors of hooked fish. The collective insight provided by ADLs may also help explain the variability reported in physiological stress and post-release outcomes between species and individuals.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Long Dead Lizard Shows Critically Endangered Species Engages in Cannibalism",
+  "authors": [
+   {
+    "full_name": "Krista Koeller",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Lerista allanae, a nearly limbless skink, was thought to be extinct for decades. Though rediscovered, its range is estimated to be under 1,000 km and it has been ranked the 7th most endangered squamate in Australia. Almost nothing is known about their natural history, but as every individual is precious, alternative methods to sacrificing specimens are preferred for such investigations. Here, I am reporting on the first known diet information for this species, obtained using computed tomography of a museum specimen collected in 1929. This specimen was found to have another lizard in its stomach. Anatomical comparisons demonstrate that the consumed lizard was also Lerista allanae, making this the first reported instance of cannibalism in this genus. The tendency towards intraspecific predation, when combined with the restricted range size, may be an additional factor threatening the survival of the species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Out of breath? Modularity & diversification in the air-breathing fishes and their allies",
+  "authors": [
+   {
+    "full_name": "Matthew Kolmann",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Matt Friedman",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Changes in the complexity of vertebrate body plans are linked to the degree to which modules within these bodies are covariable - how much does changing one structure influence adjacent structures? The adaptive significance of certain structures, key innovations or novelties, may exert considerable influence on the phenotypic evolution of body plans across entire clades. We explored whether a key innovation, air-breathing organs, influence body shape modularity and evolution in the labyrinth fishes (Anabantaria). The anabantarian fishes exhibit a suite of different air-breathing structures, from vascularized pharyngeal sacs to complex air-breathing organs called labyrinth organs. We radiographed 155 species and 402 individuals from all major clades and then used 2D geometric morphometrics to characterize changes in body shape across air-breathing and non air-breathing lineages. We tested whether air-breathing lineages exhibited greater degree of phenotypic integration than non air-breathers at both intraspecific and interspecific (macroevolutionary) scales. We also tested whether morphospace occupation was inherently different among air-breathing and non air-breathing lineages. Anabantarians show some indications of an early burst in body shape disparity and we found differences in morphospace occupation among air-breathing and non air-breathing lineages. However, we found near identical magnitudes of integration among air-breathers and non air-breathers, both phenotypically and evolutionarily. This suggests two seemingly disjunct conclusions: (1) that phenotypic patterns of modularity can be mirrored across biological scales and that (2) these modes of phenotypic change are not enough, in isolation, to explain macroevolutionary patterns.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "One Man’s Crime is Another’s Study: Using confiscated snakes to study extreme starvation",
+  "authors": [
+   {
+    "full_name": "Brandon Kong",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Robin Bedard",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Haley Moniz",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Savannah Weaver",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Amanda Avrit",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ryan Singer",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Taylor",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The ability of some snake species to withstand periods of a year or more without feeding have made them particularly interesting subjects in the study of fasting and starvation. However, due to ethical constraints on experimentation, the upper bounds of their capacity for starvation are not well explored. In this study, we utilized 53 Pacific Rattlesnakes (Crotalus oreganus) confiscated by the California Department of Fish and Wildlife to produce a novel dataset that allowed us to investigate the effects of extreme starvation. The snakes were confiscated from a collector who had hoarded them in poor conditions for up to a year or more. The specimens ranged from normal body condition to severely starved. We dissected the snakes to harvest organs (e.g., heart, liver, gallbladder, kidneys) and bones (ribs and vertebrae). We measured the wet mass and dry mass of the organs to assess starvation effects on organ size and tissue water content. A Rockwell testing machine was used to determine how starvation affects bone hardness and a tensile testing machine was used to discern effects on bone strength. We found that the wet mass of most organs decreases with starvation. Additionally, we show that the tissue water content of organs decreases with degree of starvation. Bone integrity also diminishes as starvation progresses. Although these results were expected, our findings shed light on specific effects of extreme starvation on the skeletal system and multiple organ systems of a highly fasting-adapted species. Our findings provide insight into snake starvation at their limits.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Arctos: Bridging the gap between museums and zoos with the multidimensional extended specimen",
+  "authors": [
+   {
+    "full_name": "Michelle S. Koo",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Mariel Campbell",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Braker",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elizabeth Wommack",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrew Doll",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lindsey Frederick",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Teresa Mayfield-Meyer",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carla Cicero",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Natural history museums and zoos share important missions in herpetological research, education, and conservation. However, much of the historic and current gulf between the two institution types can be characterized as either cultural and social or logistical and technical. We will focus here on how the online platform Arctos, by leveraging a multidimensional extended specimen concept, can address these challenges and thus bridge some of the gaps between these biodiversity institutions. For example, Arctos can manage living entities and track related samples with links to external databases over time and space. Its connections to global online public aggregators and use as a discovery platform ensures that researchers have access to the invaluable data and resources for biodiversity and conservation studies. With its fine-scale permissioning and thematic hubs of dynamic data, Arctos provides access to related, allowable information and a web of knowledge focused on entities or specimens to many different kinds of users, from students to agencies. The Arctos consortium is a community of professionals with a track record of incorporating new collection types and functional needs in a supportive, community-based decision-making process. In other words, we have experience in bridging gaps and making connections. While some aspects are still nascent, the Arctos infrastructure is built over two decades of robust development, and we anticipate connections between zoos and Arctos consortium museums will continue to grow with the increasing need to make these critical partnerships between institutions that have more in common than its current divisions.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "AmphibiaWeb: Connecting Amphibian Lovers to Data",
+  "authors": [
+   {
+    "full_name": "Michelle Koo",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Carol Spencer",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vance Vredenburg",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rebecca Tarvin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ann Chang",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Joyce Gross",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rayna Bell",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Molly Womack",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emma Steigerwald",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "David Blackburn",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "David Cannatella",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alessandro Catenazzi",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kyle Summers",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jodi Rowley",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jimmy McGuire",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Amphibians are the most threatened vertebrate group on the planet and have been seen as harbingers of the Sixth Mass Extinction. It is with this alarm call that AmphibiaWeb was founded in 2000 and has been operating uninterrupted since then. AmphibiaWeb (amphibiaweb.org) is an non-profit initiative whose mission is to connect people around the world by synthesizing and sharing information about amphibians to enable research, education, and conservation. We do this by providing up-to-date scientific information on amphibian natural history, conservation, taxonomy, and global declines. The website synthesizes information from scientists and experts with the latest in biodiversity informatics. Features include: up-to-date tracking of newly described amphibian species, expert-based species accounts for almost 35% of the world’s amphibians, some in multiple languages; dynamic species range and occurrence mapping; detailed pages on amphibian declines and its causes with ongoing literature updates; community-contributed multimedia files (sound, video and photos); and a community of scientists responsive to the latest taxonomic and research developments in amphibian biology and conservation. Here we will provide a guide to effectively use this amphibian resource. The current list of AmphibiaWeb photographers, species account and content writers is growing and we welcome new contributors. We will outline how herpetologists like you can contribute and share your knowledge and photos!",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Genomic and Morphometric Analyses of Diversification Dynamics in the Pristurus rupestris Species Complex",
+  "authors": [
+   {
+    "full_name": "Thore Koppetsch",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Bernat Burriel-Carranza",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Benjamin Wipfler",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elizabeth Glynne",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Xiao-Zhu Luo",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dean Adams",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Michael Matschiner",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Salvador Carranza",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Numerous species of the ecologically diverse gecko genus Pristurus can be found across Afro-Arabia, offering great opportunities to study diversification dynamics. Previous studies indicate that particularly the Pristurus rupestris complex includes high levels of undescribed diversity. Here, we performed state-of-the-art population genomic and phylogenomic analyses based on datasets including ddRADSeq data and whole-genome sequencing (including a reference genome for P. rupestris) to investigate if and how diversification dynamics are associated with the presence of cryptic phylogeographic lineages in this complex across Arabian mountain ranges. Zones of gene flow within the P. rupestris complex have been identified, and species delimitation analyses revealed the presence of five distinct taxa. Molecular species delimitation results have been corroborated with morphological data in order to clearly define the tempo and mode of cryptic diversification. To understand phenotypic adaptations and their underlying constraints, 86 individuals representing 16 genetically identified lineages have been studied with µ-computed tomography. Based on these scans, 3-dimensional models of skulls and limbs were created and subsequently used for geometric morphometrics. Newly identified species are described based on the analysis of phenotypic and molecular data. In addition, the retrieved morphological results of the landmark-based 3D shape analyses will be linked with a broad set of ecological parameters, and are aligned with the retrieved phylogenomic tree from the molecular analyses. This sophisticated methodological approach of studying associations or interactions of morphological traits with dynamics of diversification allows to trace the different adaptation patterns and evolutionary trends within a single species-rich and phenotypically diverse clade.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Impacts of Microplastics Exposure on Tadpole Digestive Tracts",
+  "authors": [
+   {
+    "full_name": "Scott Kornfeind",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Sara McClelland",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Microplastics (MPs) are defined as plastic fragments between 0.1 µm - 5 mm in dimension. MPs are a common pollutant found in multiple environments throughout the world. MPs are increasingly found in the aquatic habitats of toads, frogs, and tadpoles leading to direct MPs exposures. Previous work in marine fish has shown that MPs cause damage to the gills, buccal cavities, and guts. The research on this is limited in amphibians. To begin filling this knowledge gap we exposed Northern Leopard Frog tadpoles (Lithobates [Rana] pipiens) to an environmentally realistic concentration of MPs (0.5 ppb, 34-50 µm). We then analyzed the impacts that the MPs had on the gut tract. In an additional experiment, tadpoles were exposed to different concentrations of fluorescent MPs (38-45 µm) to visualize the location of MPs throughout the gut. Results from this study provide new insights into how MPs may be affecting amphibian development in contaminated habitats.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "An Integrative Data Approach to Modeling the Migratory Patterns of the Shortfin Mako in the Western North Atlantic",
+  "authors": [
+   {
+    "full_name": "Colby Kresge",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jeremy Vaudo",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cami McCandless",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Enric Cortes",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mahmood Shivji",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Bradley Wetherbee",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The shortfin mako shark (Isurus oxyrinchus) is a widely distributed oceanic species frequently caught as bycatch in commercial fisheries and heavily targeted by recreational fishers. Because of declines in mako populations, there is a great deal of interest in reducing fishing mortality to rebuild stocks. Migratory patterns of mako sharks are poorly understood, which detracts from informed management to assist recovery of their populations. Assessment of stock status and migratory pathways of marine fishes relies heavily on fishery-dependent data; however, such information is often biased towards locations where fishing is concentrated. We investigated the migratory patterns of mako sharks in the Western North Atlantic Ocean using data derived from both fishery-dependent and -independent sources, including the Pelagic Longline Observer Program, Cooperative Shark Tagging Program, and satellite transmitters. Each data source has shortcomings for modeling migratory pathways of mako sharks associated with methodology of data collection. An integrated approach to model migratory routes of mako sharks based on data combined from all sources provided a more robust model of migration patterns than any single source of data. Mako sharks exhibited seasonal shifts in distribution as well as discrete core areas of habitat occupied throughout the year. Examination of the major data sources that have been historically used to document the spatiotemporal distribution of mako sharks in the Western North Atlantic reveals a number of gaps that contribute to an incomplete understanding of their migratory patterns.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "On the Origin of Patterns of Temperature-Dependent Sex Determination",
+  "authors": [
+   {
+    "full_name": "Caleb Krueger",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Fredric Janzen",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Species with temperature-dependent sex determination (TSD) exhibit significant variation in the relationship between incubation temperatures and the sex ratios they produce, making this an ideal system for comparing processes producing variation above and below the species level. Furthermore, a deeper mechanistic understanding may help reveal the currently unknown adaptive significance of this variation or of TSD as a whole. Here we probe these topics by examining the macro- and microevolutionary dynamics of this sex-determining mechanism in turtles. Our ancestral state reconstructions of discrete patterns of TSD suggest that producing females at cool incubation temperatures is derived and adaptive. However, the ecological irrelevance of these cool temperatures and a strong genetic correlation across the sex-ratio reaction norm in Chelydra serpentina both contradict this interpretation. We further find the phenotypic consequence of this genetic correlation in C. serpentina reflected across all turtle species, suggesting that a single genetic architecture underlies both intra- and interspecific variation in TSD in this clade. This correlated architecture can explain the macroevolutionary origin of discrete TSD patterns without assigning cool-temperature female production an adaptive value. However, this architecture may also constrain adaptive microevolutionary responses to ongoing climate change.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "ROSIE, a Database of Reptilian Offspring Sex Ratios and Sex-Determining Mechanisms",
+  "authors": [
+   {
+    "full_name": "Caleb Krueger",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Fredric Janzen",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "In contrast to genotypic sex determination (GSD), temperature-dependent sex determination (TSD) in amniotic vertebrates eludes intuitive connections to Fisherian sex-ratio theory. Attempts to draw such connections have driven over 50 years of research on the evolution of sex-determining mechanisms (SDM), perhaps most prominently among species in the order Testudines. Despite regular advancements in our understanding of this topic, no efforts have been published compiling the entirety of data on the relationships between incubation temperature and offspring sex in any taxonomic group. Here, we present the Reptilian Offspring Sex and Incubation Environment (ROSIE) database, a comprehensive set of over 7,000 individual measurements of offspring sex ratios in the order Testudines as well as SDM classifications for 149 species. As the name suggests, we plan to expand the taxonomic coverage of ROSIE to include all non-avian reptiles and will regularly release updates to maintain its comprehensive nature. This resource will enable crucial future research probing the ecology and evolution of SDM, including the presumed sensitivity of TSD to rapid environmental change.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The Scientific and Conservation Value of Collaborating with Shark-based Ecotourism Operators in Florida, USA",
+  "authors": [
+   {
+    "full_name": "Gretchen Kruizenga",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Deborah Menna",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cassandra Scott",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Hannah Medd",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Shark-based ecotourism has the potential to expand our understanding of shark biology, ecology, and conservation. However, it may also negatively impact sharks at individual and population levels based on the physiological and behavioral responses of the specific species involved in the interactions at the activity site. There is a high concentration of shark-based ecotourism operators that use an area of approximately 135 km2 in Federal jurisdiction along the Atlantic coast of southeast Florida, USA. A subset of the current seven operators has contributed to a long-term data collection program recording environmental variables and observations of shark species diversity between 2016 – 2021. They recorded fourteen elasmobranch species, including the smalltooth sawfish (Pristis pectinate) which is listed on the Endangered Species Act. Of the species observed on more than 5 dives over multiple years, 93% are within the Threatened Categories of the IUCN Red List. A collaboration with this industry represents an opportunity for species-specific and interspecific research with high conservation value. We also conduct detailed surveys using non-invasive techniques including paired laser photogrammetry and in-water sample collections, including a citizen science project for underrepresented students. This collaboration led to the development of a Code of Conduct for the operators to minimize their impacts on the sharks, one of the first steps of self-regulation. We are also co-producing studies to determine the long-term effects of these activities in a limited geographic area. These are the crucial first steps to mitigating the consequences of the effects of ecotourism.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Which Species of Pseudolaguvia (Sisoridae: Siluriformes) are Present in Nepal?",
+  "authors": [
+   {
+    "full_name": "Kole Kubicek",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Heok Hee Ng",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kevin Conway",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Members of the genus Pseudolaguvia are small bodied crypto-benthic sisorid catfishes found in hill streams and large rivers of the Himalayan, Shan Hills and Western Ghats mountain ranges. The genus currently comprises 24 valid species, most of which have been described only within the past 10 years based on morphometric characters, coloration and external morphology (e.g., shape of the thoracic adhesive apparatus). Despite these diagnosable characters, the identification of species of Pseudolaguvia can be complicated by their small body size (~ 30 mm SL) and overall similarities in appearance as well as the relatively few records of occurrence available for each species. The recent examination of Pseudolaguvia material collected from the Ganges River drainage of Nepal has led to the discovery of specimens resembling P. shawi, a species which has not previously been reported to occur in Nepal and is found primarily in the Brahmaputra River drainage. To date, only 4 nominal species (P. assula, P. kapuri, P. nepalensis and P. ribeiroi) have been recorded from the Ganges river drainage in Nepal. Based on available data and original species descriptions we suspect that P. nepalensis is a junior synonym of P. assula. To clarify which species of Pseudolaguvia are present in Nepal, we provide a detailed osteological comparison of the members of this genus known to occur in Nepal. Our analysis of micro-CT data has revealed several distinct and previously undocumented osteological characters that can be employed in the identification and delimitation of Pseudolaguvia spp.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Phylogeographic variation in the Plethodon wehrlei complex",
+  "authors": [
+   {
+    "full_name": "Shawn Kuchta",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Species delimitation is critical for biodiversity studies, yet species complexes characterized by high levels of population structure and subtle phenotypic differentiation can be challenging to delimit. Here, I report on a preliminary molecular systematic investigation of woodland salamanders in the Plethodon wehrlei species complex. In an earlier study using mitochondrial DNA and five nuclear loci, I found substantial phylogeographic diversity in this complex, including multiple geographically cohesive clades. In this study, I revisit patterns of genetic variation in the P. wehrlei complex using 350 orthologous genes sequenced using anchored hybrid enrichment. Using species tree approaches, analyses of population clustering, and other methods, I evaluate patterns of phylogeographic variation in the P. wehrlei complex. Species formation via fragmentation will be briefly discussed.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Historical climate change structures contemporary patterns of diversity in widespread insular snakes",
+  "authors": [
+   {
+    "full_name": "Arianna Kuhn",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Sara Ruane",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Isaac Overcast",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Frank Burbrink",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Oceanic islands are considered natural laboratories for studying evolution. The entire biota of these islands is derived from a few initial colonization events followed by local diversification, which generates high levels of endemism and ecomorphological differentiation. Thus, the biota of oceanic islands can be interpreted as the result of successful independent evolutionary experiments starting with a single or multiple colonization events from the continent. Using sub-genomic data from population level sampling across the island’s snakes within a comparative statistical phylogeographic framework, we investigated patterns of population structure and pulses of simultaneous demographic shifts for Madagascar’s pseudoxyrhophiine snakes to determine if demographic histories been individualistic or synchronous relative to Pleistocene climate change. We identified 21 populations with a high probability of recent expansion and 12 with a history of population bottleneck. We conducted a hierarchical Random Forest analysis to estimate the proportion of lineages experiencing synchronous demographic dynamics and the timing of these events. For expanding populations, we recovered a strong signal of synchronous expansion in the Late Pleistocene after the Last Glacial Maximum. Contracting lineages showed evidence of temporally concordant bottlenecks before the onset of widespread anthropogenic Holocene fire disruption, indicating historical climate was more important in structuring contemporary patterns of diversity. Lack of geographic, ecological and taxonomic signal in sensitivity to climate change suggests that areas of past demographic stability and potential resilience to future climate change for broadly distributed taxa may be more influenced by localized habitat features and species interactions than the biogeographic histories and ecoregion generalizations.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The Population Level Response of a River Breeding Frog to Dam Removal",
+  "authors": [
+   {
+    "full_name": "Sarah Kupferberg",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Dam removal provides opportunities for river restoration, but also presents challenges to keep sensitive fauna out of harm’s way during deconstruction and monitor populations as instream physical habitat changes post-demolition. Such was the case for Benbow Dam (South Fork Eel River, Humboldt Co., CA). Constructed in 1931 to generate hydropower and acquired in 1958 by California State Parks, it was operated seasonally until 2008 to create a lake for recreation. Between 2008 and 2016 when dismantling began, Foothill Yellow-legged Frogs (Rana boylii) colonized the river flowing through the former lakebed. To avoid harming frogs during demolition (13,000 yd3 of concrete removed), egg masses were relocated in spring at weekly intervals via kayak to safe sites, and during summer construction season, temporary block nets were used while clearing areas of tadpoles and frogs. Before-After-Control-Impact comparisons of reproductive output (number of clutches laid per river km) indicate that these strategies were successful. The population in Benbow State Park has grown relative to an upstream control reach on the Angelo Coast Range Reserve. Breeding aggregations shifted spatially when sediment movement after dam removal made some areas too swift and shallow for egg deposition, but reproductive output over a 3.4 km reach remained robust despite a 30% decrease in the first year post-removal. At the State Park, pre-removal mean (±SE) output increased from 105±44 clutches per km (2012-2016), to 199±6 post-removal (2017-2022). Control site densities did not change significantly; 90±9 pre- and 105±10 per km post-removal.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Antimicrobial Host-defense Peptides in Appalachian salamanders",
+  "authors": [
+   {
+    "full_name": "Steve Kutos",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Randall Jiménez",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Owen Osborne",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Amy Ellison",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Brian Gratwicke",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Timothy Cleland",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carly Muletz-Wolz",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Animal immune systems interact and respond to many external factors including microorganisms. Immune related host-defense peptides can act as an innate barrier and are useful for animals to attack pathogenic microbes occurring on the epithelial surfaces, while allowing beneficial or commensal microbes to remain. Host-defense peptides from many amphibians are still unclassified, particularly in salamanders. Therefore, we explored host-defense peptide diversity of red-backed salamanders (Plethodon cinereus, n=31), two-lined salamanders (Eurycea bislineata, n=25), and eastern newts (Notophthalmus viridiscens, n=35) sampled in Maryland and Virginia, USA at 12 sites. We quantified overall peptide yields from skin soaks of acetylcholine-stimulated and control salamanders, and then used mass spectrometry, transcriptomics (n=13 salamanders) and antimicrobial peptide database querying to identify candidate host-defense peptides. We found that acetylcholine led to increased peptide yields and greater identification of peptides in mass spectrometry compared to our control group. In transcriptomic data, each salamander species had 10-20 transcriptionally active candidate host-defense genes (including ubiquicidin and cathelidicins). When we used mass spectrometry to detect host-defense peptides, most individuals did not have any identified (68/93 salamanders). Overall, the host-defense peptides were generally unique in each salamander species; red-backs produced Plasticin-like peptide, eastern newts Lividin- and Maximin- like peptides, and two-lined salamanders produced a wide variety of peptides. Data suggests that three Appalachian salamander species produce host-defensive peptides, especially two-lined salamanders, which can interact with the microbes colonizing the skin. Further understanding of host-defense peptide diversity released by amphibians could be critical to understanding skin disease outcomes.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Mosaic Evolution in Gymnotiform Brains due to Natural Selection and Phylogenetic Constraints",
+  "authors": [
+   {
+    "full_name": "Shannon Kuznar",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "James Albert",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The Amazon and adjacent river basins are hotspots of diversity and species richness, home to the most diverse fauna of continental freshwater fishes on Earth. Unique systems of survival are given the opportunity to develop and expand in these evolutionarily nurturing environments, exemplified by Gymnotiformes, an electric fish clade found throughout tropical Central and South America. These fishes evolved a novel behavior: active electroreception, in which they generate and detect weak electric fields for use in navigation, foraging, and communication. Brain morphology within this clade is likewise modified to accommodate these behaviors, such as presence of the electrosensory lateral line lobe and expanded cerebellum. Additionally, this group occupies wide habitat and trophic ranges, from floodplain lakes to deep river channels and piscivorous to planktivorous. Here we examine patterns of brain evolution using a 3D landmark-based topology alongside volumetric allocation. We use contrast-stained computer tomography (CT) scans representing 23 gymnotiform species and 17 genera to visualize brain regions defined by functional, structural, and developmental criteria. We use generalized Procrustes analysis and principal components analysis (GPA/PCA) to generate a phylomorphospace of the clade and multidimensional scaling to compare volumetric allocations of brain regions to habitat and trophic traits. We expect natural selection to be the greater influence of brain morphology if species occupying similar habitat types and trophic levels cluster in the morphospace, regardless of phylogeny. Clustering between closely related species is expected if a hypothesis of phylogenetic constraint, perhaps due to the specialized neurobiology of Gymnotiformes, is a better model.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Assessing populations of spotted seatrout in the Texas bay systems using genotyping-in thousands by sequencing",
+  "authors": [
+   {
+    "full_name": "Michaela Labare",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Alison Monroe",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Katherine Lanoue",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Christopher Hollenbeck",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "David Portnoy",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Spotted seatrout (Cynoscion nebulosus) is an important recreational estuarine fish that inhabits the U.S. South Atlantic and Gulf of Mexico. Overfishing concerns led Texas Parks and Wildlife Department (TPWD) to begin a seatrout stocking program in 1993 that releases captive-bred fingerlings into the major Texas bays. Aquaculture-based enhancement can be effective in maintaining populations. However, these efforts need accurate, cost-effective, and time-efficient means of monitoring their success. Genetic monitoring that involves genotyping of hatchery brood stock and wild-caught individuals can be used to identify familial relationships, assess genetic variation, and determine population demographics. We designed a Genotyping-in Thousands by sequencing (GT-seq) panel, which allows thousands of individuals to be genotyped at hundreds of SNP-containing loci for a modest cost. We performed parentage and kinship analyses to determine hatchery contribution to wild populations as well as brooder contribution to an array of fingerlings. We also assessed patterns of variation within and among Texas Bays and characterized standing genetic diversity. This work contributes to a larger project to assess fine and large-scale population structure of spotted seatrout across the Gulf of Mexico and identify localized adaptation, to inform management and stocking strategies.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Monitoring the Population Status of Crotalus adamanteus in North Carolina Using the AHDriFT Camera Trap System",
+  "authors": [
+   {
+    "full_name": "Emily Langer",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Matthew Gacheny",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jayme Waldron",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Shane Welch",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Gaydos",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Eastern diamondback rattlesnakes (EDB; Crotalus adamanteus) are endemic to southeastern pine savannas and woodlands, a fire-climax system that includes longleaf pine (Pinus palustris) wiregrass sandhills, clayhills, and flatwoods. The northern extent of the EDBs range is in Onslow County, NC at the Marine Corps Base Camp Lejeune, where individual-based monitoring efforts have used visual searches to locate and capture individuals for mark-recapture and radio telemetry surveys. The EDB is cryptic and difficult to detect, however, making visual searches impractical for surveying large study landscapes like the MCBCL. To complement current EDB monitoring efforts at the MCBCL, we built 20 Adapted-Hunt Drift Fence Technique (AHDriFT) arrays that spanned 17 training compartments. We affixed a Reconyx Hyperfire 2, PIR camera at each end of the 50-foot arrays to capture images of individuals moving through the trap. Images were stored and analyzed using the camtrapR package in RStudio. We will use camera trap data to estimate site occupancy relative to habitat suitability and prey abundance. The MCBCL EDB population is the northern-most limital EDB population, and occupancy models from this population will help identify covariates that limit the species’ distribution and help land managers to prioritize conservation efforts for EDBs.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Does arboreality influence the evolution of hydrothermal physiology in neotropical frogs?",
+  "authors": [
+   {
+    "full_name": "Julia Laterza Barbosa",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The relationship between organisms and their climate is a complex one, and it is influenced by hydrothermal physiology, behavior and evolutionary history. Microclimatic variation at a local scale provides a variety of conditions that animals can select, and in that way influence selective pressures that act on physiology, particularly for small ectotherms such as anurans. One of the major sources of microclimatic variation in forested environments is provided by trees, since temperature and humidity vary vastly along the ground-to-canopy microhabitats. Therefore, arboreal habits and microhabitat selection will influence the evolution of physiological traits. I have collected detailed microhabitat use of frogs from ground to canopy in two localities in the Atlantic forest of Brazil, in addition to characterizing the vertical temperature and humidity gradient using data loggers. Then I obtained critical thermal limits, dehydration and rehydration rates for 30 species of frogs and used phylogenetic comparative methods to test the hypothesis that frog perch height influences evolution of physiological traits.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Where Temperature and UV Collide: Photoregulation Trade-Offs in Divergent Microhabitats",
+  "authors": [
+   {
+    "full_name": "Matthew Lattanzio",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Over a century of studies on lizard physiological ecology have perpetuated the assumption that so-called behavioral ‘thermoregulation’ between sunlit and shaded microhabitats is driven by temperature needs alone. However, those basking and shuttling behaviors also modulate access to ultraviolet (UV) wavelengths of light, which are essential for proper bone development, organ function, survival, and reproductive success. Recently, my lab has shown that lizards can actively regulate their UV exposure and may also prioritize UV needs overall, even when facing thermal costs. However, the interaction between competing UV and thermal demands, particularly in extreme environments, remains unclear. My prior work on high-elevation (>2,000 m) mountain spiny lizards (Sceloporus jarrovii) during 2012-2017 revealed a clear microhabitat use preference for cooler, shadier edge areas over hotter, sun-exposed boulders. For example, lizards using edge areas tend to exhibit better performance capacity (bite force and stamina), lower body temperatures, and greater social network connectivity than lizards in the open areas. However, because UV exposure requires direct sunlight, exploitation of shadier edge areas should limit access to UV light. Here I expand on prior work to assess trade-offs in UV and temperature regulation efficiency by S. jarrovii across these divergent microhabitats. My findings should reveal whether lizards exploiting preferred edge microhabitats sacrifice UV over temperature regulation efficiency and/or whether boulder microhabitat lizards prioritize their UV regulation despite potential thermal costs. Ultimately, my findings should provide novel insight into how a species balances potentially competing UV and thermal demands across divergent microhabitats.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "DIY Herpetology: Using Hobby Electronics to Enhance Innovation and Accessibility in Scientific Research",
+  "authors": [
+   {
+    "full_name": "Matthew Lattanzio",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "One of the biggest constraints on field and lab research endeavors is the cost associated with purchasing expensive data loggers and/or sensor devices. In some cases, the ability to ask integrative, novel research questions is limited by that constraint, or not possible if, for instance, the needed equipment does not exist (yet). Appreciation for the utility of hobby electronics (e.g., Arduino, Raspberry Pi) for scientific research has grown in recent years due to their affordability, versatility, and comparable accuracy to often expensive commercial devices. These electronics can also be easily assembled and programmed to perform various functions by novices and experts alike. Here, I discuss my recent dive into hobby electronics for lab and field use, focusing mainly on two systems that have 1) consolidated data collection for a field study on salamander ecology and 2) enabled us to directly assess behavioral regulation of UV light exposure by lizards in the lab and field. I also provide insight into the process itself, including programming, assembly, and validation of homemade devices, highlighting the supportive user community as well as the challenges I encountered along the way. Overall, I argue that hobby electronics offer an exciting avenue for scientists to address novel and often underappreciated aspects of organismal biology and physiology, in a manner that maximizes information gain while minimizing costs to the researcher. More broadly, I argue that the normalization of using low-cost hobby electronics in scientific research will help make doing science more accessible to a broader audience.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Comparative Osteology of the Kukri Snake genus Oligodon Fitzinger, 1826 (Squamata: Colubridae)",
+  "authors": [
+   {
+    "full_name": "Justin Lee",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Aaron Bauer",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Kukri snakes (Oligodon Fitzinger, 1826) represent the most diverse radiation of snakes on the Asian continent, and the second largest snake genus in the world. Besides its remarkable species richness, members of Oligodon possess intriguing ecological attributes, including unique feeding strategies, seasonal territoriality, and Batesian mimicry with venomous snake species. In an attempt to understand the morphological underpinnings of these behaviors, we used high resolution computed tomography scanning to describe and digitally reconstruct the skulls of over 30 kukri snake species, encompassing all major clades recognized by past authors. Enlarged ‘blade-like’ maxillary teeth are found across most species. In contrast, the number of teeth on the pterygoid and palatine is considerably variable and in some species these bones are completely edentulous. Intrageneric variation was also noted in other elements of the skull, such as the shape of the premaxilla, relative size of the neurocranium, and robustness of the suspensorium and mandible. Taken together, we provide insights on how osteological features found in Oligodon might correlate with aspects of feeding and habitat ecology. We also summarize several characters that may be useful for kukri snake systematics.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Quantitatively Exploring Morphological Patterns of the Cephalic Lateral Line among Major Lineages of Osteichthyes: A Preliminary Finding",
+  "authors": [
+   {
+    "full_name": "Derrick Leong",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Zehua Zhou",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Juan Liu",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The cephalic lateral line system includes enclosed canals and superficial neuromasts allowing fish to detect local motion in water. While the diversification of cephalic sensory canals (SC) has been reported, their morphological complexity has largely been unexplored with a quantitative framework. To explore how skull roof bones covary with SC, we use the supraorbital sensory canals (SOSC) and associated bone as a model system. We scanned alcohol-preserved and skeletal specimens from 11 extant actinopterygian taxa and two fossil specimens using X-ray Computed Tomography (GE Phoenix Nanotom). The skull roof bones and SOSC were segmented using Avizo, and analyzed using 3-D geometric morphometrics methods with two landmark schemes: 12 landmarks to represent the SOSC shape and their distance to bone junctions along the midline, and 18 landmarks which additionally captured associated bone morphology. First, principal component analyses distributed taxa in a morphospace created by PC1 and PC2 (PC1 36.9%, PC2 22.1%; PC1 30.1%, PC2 22.7%, respectively), in which sarcopterygians and actinopterygians consistently occupied different regions. However, from subsequent morphological disparity analyses, only the dataset with landmarks including bone morphology showed significant differences when comparing sarcopterygians with neopterygians, teleosts and euteleosts (p-value 0.03, 0.034, 0.049, respectively). Our results suggest that the morphology of SOSC is relatively conserved, and their diversification may have co-evolved with the bones. Although this empirical study requires an expanded dataset to observe ecological or phylogenetic trends, it inspires further investigation of cephalic sensory canals variations and their implications of vertebrate evolution.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Estimating Whole-Body Metabolic Rate from a Point Measurement at the Gills in Sandbar Sharks",
+  "authors": [
+   {
+    "full_name": "Andrea Leontiou",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jonathan Cohen",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Aaron Carlisle",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "As water breathing animals, shark’s gills are the primary site of oxygen uptake for aerobic metabolism. Studies on shark oxygen consumption rates provide insight into many physiological processes; swimming efficiency, bioenergetics, and overall fitness. The ability to determine whole body metabolic rate from a single point measurement taken at the gill will make it possible to better capture accurate field based metabolic rates. These field-based rates will be more representative of an animal’s actual metabolic demands through time in a dynamic environment. Currently, metabolic rates determined from laboratory-based experiments in conventional respirometers are limited by size constraints, and biased by the stress of handling and the lab environment. In this study, we compare estimates of metabolic rate obtained from a point measurement of oxygen consumption at the gill to whole animal standard metabolic rates (SMR) estimated using standard static respirometry in Sandbar Sharks (Carcharhinus plumbeus). We use the point measurement of oxygen consumption, area of gill openings, estimates of the size of gill surface area, and flow rate to calculate a metabolic rate taken via oxygen consumption at a single gill. Multiple methods of calculation were then tried to determine if this rate could be comparable to the whole-body metabolic rate acquired from the tank itself. Our results suggest that it is possible to calculate an animal’s whole body metabolic rate from a single gill measurement. These data will set the ground work for better methods of collecting metabolic rates from gill breathing animals in the wild.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Understanding Species Composition of Fish Maw in China — for Future Trade Monitoring, Fishery Improvement & ETP Species Conservation",
+  "authors": [
+   {
+    "full_name": "Baian Lin",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Min Liu",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Fish maw is made of the swimming bladder and has long been consumed as a luxury and nourishing food for its supposed nutritional and medicinal benefits within Chinese communities. Historically, the maw has been exclusively made from the swimming bladder of a few croaker species (Acanthuriformes: Sciaenidae). However, increased demand for fish maw has led to large-scale global international trade with 100 countries currently exporting fish maw to China. In order to understand the species composition of fish maw for future trade monitoring, fishery sustainability, and effective management and conservation, we collected 907 maw samples in 2016-2022 from various trade sources in China and applied molecular techniques for species identification. A total of 73 species from 17 families and 8 orders were recognized, including 34 croaker species and 15 catfish species. More than 50% of the species were estuary-associated and more than 60% of species were large-sized (>0.8m SL). Among the 73 species, only three species have stable population status, according to IUCN red list, and 21 species show a decreasing population size. Currently, only one species has been sustainably managed in the fishery in its distribution range. Eleven endangered species (IUCN: CR, EN, VU) and four protected species (by international or national regulations) were found in the fish maw trade, suggesting the need for further management from fisheries to wildlife trade. Based on the natural distribution of traded species we identified here, Southeast Asia and Northeast South America are the hotspots for fish maw fisheries activity. Our study serves as a baseline to understand the species composition in fish maw trade and calls for attention to the fishery management of endangered, threaten and protected (ETP) species to ensure resource and biodiversity sustainability.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Endemic and Endangered: Conservation of Fishes of the Galápagos",
+  "authors": [
+   {
+    "full_name": "Christi Linardich",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Kent E. Carpenter",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Marine fish endemism in the eastern tropical Pacific is highest in the isolated environments of the Galápagos Archipelago (Ecuador), which is also a global-level biodiversity hotspot. Some additional species occur elsewhere only in the adjacent oceanic islands of Malpelo (Colombia) and Cocos (Costa Rica). To promote sustainable management in this area, a decree that expanded the Galápagos Marine Reserve and a multi-national agreement to preserve the marine corridor connecting these island groups were announced in 2022. To inform the planning process for these conservation efforts, the IUCN Marine Biodiversity Unit led an initiative to identify priorities by producing IUCN Red List extinction risk assessments of all endemic marine fishes. A Red List assessment workshop was held in the Galápagos in September 2022 with 20 marine fish scientists. The 84 marine endemics, which is represented by 36 families, primarily inhabit rocky reef and nearly half occur at deep depths >50 m. Preliminary results indicate 8%, or 7 species, are threatened, and 21%, or 18 species, are Data Deficient. Specific highlights include overfishing of the restricted range Sailfin Grouper (Mycteroperca olfax) and Camotillo Sand Bass (Paralabrax albomaculatus), the possibly extinct Galápagos Damselfish (Azurina eupalama), the status of recently discovered deep fishes and the need to survey diminutive inshore fishes, especially the Intermediary Blenny (Cottoclinus canops) of Isla Española. Actions that prevent biodiversity loss in the Galápagos should include improving fishery management, sustaining/ increasing marine monitoring work and supporting international policies that increase resilience in the face of climate change.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Seasonal Physiological Responses to Experimental Immune Challenge in a Snake Population Afflicted with Ophidiomycosis",
+  "authors": [
+   {
+    "full_name": "Craig Lind",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Joseph Agugliaro",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jason Oretega",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jenna Palmisano",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Terence Farrell",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "In wildlife, successfully coping with infection requires the coordination of a suite of physiological processes. Seasonal patterns in temperature, reproduction, and disease may constrain physiological coping responses and impact disease outcomes. We currently know little about physiological responses to infection in reptilian wildlife, and we know even less about how coping processes vary with respect to seasonal biotic and abiotic conditions. To examine how seasonal factors impact the immune response, we used a sterile antigen, bacterial lipopolysaccharide (LPS), to induce a physiological immune response in pygmy rattlesnakes, Sistrurus miliarius, housed in outdoor mesocosms in winter and summer. We measured components of the stress response (corticosterone and glucose) and acellular immune performance (bacterial killing assay) in plasma taken from 104 individuals exposed to either LPS or a saline control. In a subset of snakes, we implanted temperature dataloggers to monitor thermal responses to LPS. The sampled population included snakes afflicted with an emerging mycosis, ophidiomycosis, in both seasons and pregnant females in the summer. We hypothesized that the demands of ophidiomycosis and pregnancy would impair responses to LPS. Counter to our hypothesis, LPS induced an increase in corticosterone in snakes of all disease and reproductive statuses. Immune challenge did not result in a significant glycemic or acellular immune response in any group. Immune challenge elicited a significant febrile response in both summer and winter, but thermal responses were constrained by differences in seasonal operative environments. Our results highlight thermal and glucocorticoid responses as potentially important disease coping mechanisms across seasons.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Cycling Temperature Treatments Affect Estimates of Digestive Performance in Prairie Lizards (Sceloporus consobrinus)",
+  "authors": [
+   {
+    "full_name": "Allison Litmer",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Steven Beaupre",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "In nature, organisms experience a range of body temperatures over the course of a day or season. Ectotherms typically experience warmer daytime and colder nighttime temperatures, due to increased difficulty thermoregulating at night. Many physiological studies measure performance at stable temperature treatments and extrapolate to predict function in a cycling environment. Additional factors, including circadian rhythm and temperature pattern, may influence rates of physiological processes. The current study quantified food consumption, digestive passage time, and metabolizable energy intake (MEI) across three stable temperature treatments (30, 33, 36˚C) and two temperature cycles. Cycles rotated through 30, 33, 36˚C daily, with equal durations of time at each temperature. Cycle one consisted of warm days and cool nights and cycle two was the reverse of cycle one. For analyses, results at stable temperatures were compiled into a single dataset and compared to cycles. If stable temperatures accurately represent cycling regimes, then performance averages from stable treatments should compare favorably to performance under cycling treatments. Physiological parameters responded differently to temperature treatments. Passage rate was quickest in cycling regimes, while MEI and food consumption varied. Consumption and MEI were similar between stable trials and cycle one (warm days), but comparably lower in cycle two (cool days). Circadian rhythm did not appear to be influential. Metabolizable energy intake is driven primarily by consumption, and whereas lizards passed food quicker with warm days, they did not increase food intake. Physiological data collection requires careful consideration of potential effects of cycling versus stable temperature treatments.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "A Revision of Paleocene Catfish from Sanshui Basin, South China",
+  "authors": [
+   {
+    "full_name": "Juan Liu",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jiangyong Zhang",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Paleocene-Eocene catfish from East Asia were previously assigned to the extant family Bagridae (Siluriformes), leading to a long-standing ghost lineage. Furthermore, two nominal species, Mystus dalangshanensis and Mystus spinipectoralis (Wang et al 1981), from the Paleocene Buxin Formation in Sanshui Basin, south China represent a 30 Ma gap from the estimated mitogenomic divergence time for Mystus. These discrepancies suggest either problematic taxonomic assignment, and/or a ‘morphology vs. molecules’ conflict exacerbated by an incomplete fossil record. Based on our analyses of new materials from recent fieldwork, we propose a substantial revision of Paleocene Sanshui catfish by removing them from the suborder Siluroidei, and by extension, Bagridae, based on key new observations. First, the principal caudal fin rays of Sanshui specimens are 18 (i,8,8,i), which is a basal character absent in extant catfish (i,7,8,i) except Diplomystidae. The Paleogene †Hypsidoridae and †Astephidae also have 17. Second, the coronoid process of the dentary is elevated and prominent. This condition is seen only in †Hypsidoridae. The moderately developed coronoid process is present in diplomystids and some bagrids, but not in the rest of the siluriforms. Third, interdigitation is absent at the suture of ceratohyal and epihyal, a known synapomorphy of Siluroidei. All these characteristics indicate Sanshui catfish belong to a basal lineage of catfish and suggest early morphological diversification hidden by previous taxonomic assignments. These new findings offer clarification critical to untangling puzzling aspects of the evolutionary history of catfish and highlight the importance of systematic review and revision as evidence of divergence times.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Bonnethead shark (Sphyrna tiburo) morphology and trophic ecology: A comparison across geographies, sex, and maturity",
+  "authors": [
+   {
+    "full_name": "Kathy Liu",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jasmin Graham",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jayne Gardiner",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sora Kim",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Hyejoo Ro",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Tonya Wiley",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Catherine Macdonald",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Bonnethead sharks (Sphyrna tiburo), a small hammerhead species recognizable by their rounded spade-shaped head, are the first documented shark species to exhibit both sexual dimorphism in cephalofoil morphology and omnivorous feeding preferences. Males have been found to have a more discernably pointed snout than females. Studies have shown seagrass to be a large component of their diet though this varies across life stage, region, and sex. Bonnetheads are present in shallow tropical and subtropical waters along both coasts of the Americas with sizes being well defined for only a few populations. The bonnetheads in Biscayne Bay, Florida have not been studied in detail and this project is the first in-depth assessment of their characteristics utilizing bonnetheads from Tampa Bay, Florida as a direct comparison to identify differences in cephalofoil shape, gape size, and trophic position. Body measurements and biological samples were collected in the field and both sides of the cephalofoil were photographed to plot specific landmarks in ImageJ. Stable isotope analysis was conducted on muscle biopsies. Preliminary analyses suggest that cephalofoil curvature is significantly different between sexes at both locations. Multiple factors including sex, maturity, eye-to-eye width, girth, and gape size correlate with total length and cephalofoil curvature slope of individuals. This project provides more comprehensive information about bonnethead shark traits and diet across populations and is an initial step in longer-term research on bonnetheads in Biscayne Bay.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Swimming beneath the Sahara: the thermal biology of Scincus scincus, the sand-swimming skink",
+  "authors": [
+   {
+    "full_name": "Ethan Livingston",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Anya Shevchik",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alyssa Head",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Brooke Bodensteiner",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Eric Gangloff",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Little is known about the natural history of the sandfish skink (Scincus scincus), despite its range spanning two continents and being common in the pet trade. In arid and hot environments across North Africa and the Arabian Peninsula, these lizards spend up to 90% of their day beneath sand and are uniquely adapted to this environment. However, much about the basic biology of this species remains unknown, especially in regard to its adaptations to its thermal environment. With this study, we compiled a robust suite of thermal biology parameters to assess within-individual patterns in sandfish skinks (N = 8). We first quantified thermal preferences and the use of sand horizons to thermoregulate. We monitored individual lizard body temperatures day and night for one week in an environment where they had the ability to select their ideal temperature during both active and inactive periods. Additionally, we quantified the thermal dependence of performance by recording sprinting speed and diving speed, important for prey capture and predator avoidance, across a range of temperatures. Finally we measured the critical thermal minimum (CTmin) and maximum (CTmax), allowing us to build a complete thermal performance curve. This then allowed us to test the hypothesis that thermal preferences and the optimal temperature for diving and sprinting performance are correlated, suggesting co-adaptation of behavior and physiology. Overall, these data provide understanding of how this unique ectotherm survives in the extreme thermal conditions of a scorching hot desert.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Stress Responses of Sternotherus odoratus to Urbanization in Southeastern Louisiana",
+  "authors": [
+   {
+    "full_name": "Oliver Ljustina",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Florence Wen",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Brandon Hedrick",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Like most vertebrate species, herpetofauna typically respond poorly to habitat modification associated with urbanization. Species that persist in urbanized environments are subjected to a variety of potential stressors, including environmental pollutants, exotic predators, road mortality, inadequate nutrition, among others. However, these negative impacts may be offset by factors such as resource subsidies and a potential decrease in native predators. While many turtle species occur in urbanized areas throughout the southeastern United States, negative impacts on individuals and populations may be obscured by their relatively long lifespans. We hypothesized that individuals from an urban population of Eastern Musk Turtle (Sternotherus odoratus) in Kenner, Louisiana would exhibit greater signs of stress and decreased body condition compared to those from a population found in a natural, non-urbanized area. To assess stress levels, we examined two body condition metrics and heterophil: lymphocyte ratios. Contrary to our hypothesis, we found that individuals from the urban population were significantly larger and had greater body condition relative to individuals from the natural population. Though body condition was better, turtles from our urban population had significantly higher heterophil: lymphocyte ratios, suggesting they were more chronically stressed. These results suggest that environmental factors other than lack of foraging opportunity act as stressors of turtles found in urban areas, and that even populations that appear to thrive in urban areas may be at risk of decline.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "(Re)Imagining Snakes: Lessons from a meme",
+  "authors": [
+   {
+    "full_name": "Stephen Lochetto",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Snakes are at the top of American phobias. Where does this attitude originate? To what extent is it biological or cultural? Can snakes be painted in a more appealing light? In this presentation, I explicate the myriad of reasons that serve to promulgate and reinforce what I call a “phylogenetic hegemony,” a dominant discourse that advances negative perceptions of reptiles in general and snakes in particular. Fortunately, such attitudes can be culturally manipulated. I present evidence culled from digital ethnography that disrupts this hegemony. Changing attitudes towards snakes and other reptiles can have conservation implications. This presentation highlights the importance of new kinds of evidence in herpetological studies and the potential for a biological humanities approach.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The California Shark Beach Safety Program – Using Research, Education and Outreach to Assess Shark-Human Injury Risk and Reduce Economic Impacts",
+  "authors": [
+   {
+    "full_name": "Christopher G. Lowe",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "James Anderson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Patrick Rex",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Spurgeon",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Yamilla Samara-Chacon",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Zachary Merson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elizabeth Jahn",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Corina Silva",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gabriella Hancock",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Katie Dudley",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dede Long",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Increase numbers of white sharks along California beaches over the last 10 years, driven by successful conservation, has raised public safety concerns for ocean recreationists. Juvenile white sharks form aggregations of up to 40 individuals ranging in size from 1.25-3 m TL, often at public beaches, and may remain resident in these aggregations for months. In 2018, the State of California funded the Shark Beach Safety Program which include a research, education, and outreach arm. Research focuses on understanding and predicting when and where aggregations form, what sharks are doing there, and how often they interact with water users. Using satellite and acoustic telemetry monitoring, with some novel real-time acoustic detection tools, shark behavior data are provided directly to water safety officials to inform beach safety management. Shark and human water user encounter rates are monitored across beaches using UAV surveys, aided by community partnerships. Socio-economic studies are underway to quantify public perceptions of sharks and beach risks, as well as quantify economic impacts associated with shark bites and beach closures. Education programs designed for lifeguards, provide current research to help reduce shark-human interactions and minimize beach closures. Biological and socio-economic research is used is in public outreach program including mobile beach pop-ups, comic book series, and K-12 STEM curriculum to inform perceptions about marine wildlife. Despite annual white shark bites on humans and occasional fatalities, additional protections have been added for white sharks in California to better protect the species from fishery interactions and human harassment.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Deterrent Effects of the Electromagnetic SMART™ Hooks and the Newer “SMARTER” Hooks on Sharks in Recreational Hook-and-Line and Longline Trials",
+  "authors": [
+   {
+    "full_name": "Ryan Lowndes",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Kristina Flanigan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Craig O’Connell",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Abigail Caviris",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Shae Schreckengost",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Derek Crane",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Samuel Gary",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniel Abel",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "As bycatch continues to impact global shark populations, there is a continuing need for effective bycatch reduction devices. Prior research has shown promise in exploiting sharks’ electrosensory ability to this end. We tested the deterrent efficacy of the Select Magnetic and Repellant Treated (SMART™) and the newly developed “SMARTER” hooks in experimental longline and hook-and-line trials. Both are magnetized and contain an electropositive metal component made of magnesium (SMART) and a magnesium alloy designed to extend longevity (SMARTER). We deployed 127 longlines with SMART hooks, SMARTER hooks, controls, and procedural controls from 2021-2022 in Winyah Bay, South Carolina, and caught 134 sharks composed of 7 species (Carcharhinus isodon, Carcharhinus leucas, Carcharhinus limbatus, Carcharhinus plumbeus, Negaprion brevirostris, Rhizoprionodon terraenovae, Sphyrna tiburo). Additionally, hook-and-line trials testing the SMART hook alongside controls were conducted over 73 days from 2021-2022 at Myrtle Beach (South Carolina) State Park and caught 117 sharks composed of 5 species (Carcharhinus acronotus, C. plumbeus, Mustelus canis, R. terraenovae, Sphyrna lewini). Catch-per-unit-effort did not significantly differ among SMART, SMARTER, and control hooks in longline or hook-and-line trials. Further testing of SMART and SMARTER hooks with other species and increased strength of the hooks’ electromagnetic fields is needed to determine if electropositive hooks are a viable option for reducing shark bycatch.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Resolving the Evolutionary Relationships of the Order Centrarchiformes using Genomic Data and Dense Taxonomic Sampling",
+  "authors": [
+   {
+    "full_name": "William Ludt",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Peter Unmack",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Michael Sandel",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jean-Paul Hobbs",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Giacomo Bernardi",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Thomas Near",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Prosanta Chakrabarty",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The order Centrarchiformes contains approximately 300 species classified into 19 families that are distributed worldwide in both freshwater and marine systems. These families contain many commercially important species, as well as species popular in the aquarium trade. While a variety of centrarchiform fishes are economically important, many also provide essential ecosystem functions. Despite their economic and ecological importance, little is known about the evolutionary history of these fishes, as this order wasn’t recognized until the inclusion of molecular data in large-scale fish phylogenetic studies. However, there are considerable differences in the hypothesized phylogenetic relationships of this group among the molecular studies that have included multiple families from this order. Insufficient genomic and taxonomic sampling likely cause these disparities, as most previous studies fail to include representatives from all centrarchiform families, have limited taxonomic sampling within these families, or only sample a handful of loci. Here we take a phylogenomic approach to examine the evolutionary history of this order using approximately 500 ultraconserved elements with dense taxonomic sampling that includes 85% of the accepted centrarchiform genera and 66% of the recognized species diversity. We discuss how our findings differ from previous studies and the implications that these findings have for the biogeography of this order. Lastly, we highlight future directions that will further our understanding of this large order of fishes.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Preliminary Characterization of Crude Venom from Spines of the Atlantic Stingray, Hypanus sabinus",
+  "authors": [
+   {
+    "full_name": "Carl Luer",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Cathy Walsh",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Craig Doupnik",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Stingray venom compounds and cellular mechanisms responsible for their excruciating pain and tissue necrosis are poorly understood. Crude stingray venom (SRV) was obtained by scraping tissue from grooves on the ventral surface of Atlantic stingray (Hypanus sabinus) spines. Harvested tissue was gently homogenized to release venom compounds, which were separated from cellular and tissue debris by centrifugation. Aliquots of the resulting supernatants were lyophilized and either analyzed by electrophoresis or stored at -80 C for bioactivity assays. SRV compounds demonstrated reproducible protein banding patterns on SDS-PAGE and venom preparations yielded comparable total protein. SDS-PAGE patterns appear unchanged following crude venom collection from spines wrapped in foil and frozen in liquid nitrogen for two or four weeks. Cytotoxic effects of SRV on normal human dermal fibroblasts (NHDF) and human neuroblastoma cells (SH-SY5Y) were monitored in real-time by an impedance-based biosensor system (xCELLigence Real-Time Cell Analyzer) and found to be both time- and concentration-dependent. At 100 µg/mL, SRV caused a rapid (<15 min) decrease in cell impedance of cultured NHDF, consistent with acute cytotoxicity with an EC50 of ~10 µg/mL. At lower concentrations (3 µg/mL), SRV slowed the 24-48 hour cell growth curve, consistent with an inhibitory action on cell proliferation. These responses were absent in heat-treated SRV (95-100 deg C for 10 min). Unlike box jellyfish venom, whose cytotoxic effects can be inhibited by cell membrane depletion of cholesterol, pretreatment of SH-SY5Y cells with a cholesterol-depleting reagent had no effect on either acute or chronic effects of SRV.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Costs of Parthenogenesis in the Zebra Shark",
+  "authors": [
+   {
+    "full_name": "Kady Lyons",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Lance Adams",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jennifer Wyffels",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The zebra shark (Stegostoma tigrinum) is known to readily reproduce both sexually and through facultative parthenogenesis while in human care. Artificial insemination trials that took place between 2011 and 2013 resulted in the hatching of two sexually-produced (herein “heterozygotes”) and ten parthenogenic sharks that allowed for a retrospective comparison of growth, feeding and longevity between offspring. Parthenogenetic offspring were generally smaller at hatch than their heterozygous counterparts and after the first several months post-hatch failed to increase in mass and length at the same rate as heterozygotes. Parthenogenic offspring exhibited non-normal swimming behaviors and a reduced ability to properly suction feed. Median lifespan for parthenotes was 1.05 years while one heterozygote lived to 2.37 years of age and the other is alive at present. By contrast, the two longest surviving parthenotes perished at ~5.5 and ~6.5 years of age, respectively. This study demonstrates substantial negative costs to fitness in parthenogenetic offspring compared with their heterozygous siblings.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Values, Attitudes, and Media Exposure: US Public Perception of Sharks and Shark Conservation",
+  "authors": [
+   {
+    "full_name": "Catherine Macdonald",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Kela McEntee",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Julia Wester",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Public values and attitudes are increasingly relevant to wildlife conservation and management. For species historically perceived negatively, including sharks and other predators, conservation action may be shaped by public perceptions. We present the results of the first large-scale, in-depth survey of public attitudes toward sharks and their conservation in the United States (n = 640). The survey covered a wide range of attitudes, beliefs, and practices, including where participants encounter information about sharks, their perceptions of current conservation threats to sharks and “attack” risk, and their interest in and self-reported knowledge about sharks. It also explores what value they perceive sharks to have, what management policy approaches they most support, and their beliefs regarding their personal responsibility for shark conservation. Results deepen our understanding of cultural trends around wildlife conservation by demonstrating the influence of large-scale value shifts on other, more specific attitudes. Findings also highlight a need for a stronger conservation focus in media and messaging, as public perceptions, including potential biases or misperceptions, track closely with aggregate media coverage.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Combining Long-Term Datasets to Answer Landscape Level Questions: Opportunities with the North American Amphibian Monitoring Program Data-Set",
+  "authors": [
+   {
+    "full_name": "Zira MacFarlane",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Shannon McCauley",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The North American Amphibian Monitoring Program (NAAMP) produced one of the richest amphibian biodiversity datasets globally, with 15 years (2001-2016) of standardized surveys across 26 states in the USA. This presents an excellent opportunity to study the ways in which trends of amphibian community and diversity are shaped by landscape level drivers including pollution, agricultural development, and urbanization. This poster firstly presents a review of the present suite of research that has been carried out using the data from the NAAMP with a focus on that which integrates other long term landscape level datasets such as the National Landcover Database; and, secondly, identifies new areas to delve into with a focus on aquatic water quality and pollution levels in conjunction with development.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Plasticity of Ambystoma texanum life history traits in response to environmental conditions",
+  "authors": [
+   {
+    "full_name": "Mariah Mack",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The length of time a water body remains inundated is an important environmental factor for developmental stages of aquatic-breeding amphibians. In addition, predation risk has direct and indirect effects on amphibians at various stages of their life cycle. Some amphibians exhibit plasticity during development to mitigate these environmental stressors and may incur costs and tradeoffs in life history traits. I conducted a mesocosm experiment with three hydroperiod treatments (short, medium, constant) and two predator treatments (presence or absence of Lepomis macrochirus cues) and measured life history traits at metamorphosis to determine the degree of developmental plasticity exhibited by Ambystoma texanum (smallmouth salamander). Overall survival to metamorphosis averaged 56.7% and was consistent across all treatments. Larval period, mass, and body size increased with longer hydroperiods but were not significantly affected by predator cue or the interaction of hydroperiod and predator cue, suggesting a lack of synergistic effects between these stressors for the levels we used. Larval periods ranged from 50 to 100 days, with an overall average of 65.35 days. Compared to the control, salamanders in the short hydroperiod metamorphosed 14.5% earlier (mean = 60.55 days), 49% lighter (mass; mean = 0.82 g), and 14.8% shorter (SVL; mean = 32.25 mm) on average. Salamanders from the medium hydroperiod generally metamorphosed at an intermediate time and size between the short and constant hydroperiod treatments. We hypothesize that A. texanum has a plastic development rate that is sensitive to some degree to their larval environment and specifically to water levels. Although they were able to metamorphose earlier to escape drying conditions in the short hydroperiod, the observed cost of this accelerated development was a significant reduction in mass and size at metamorphosis. Smaller mass at metamorphosis is associated with lower adult fitness in other Ambystoma species, suggesting that the cost of plasticity may eventually have population level effects for A. texanum. Understanding the effects of environmental stressors on A. texanum life history traits is important for predicting their adaptability to climate change-induced shifts in water availability and introduced predators.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "DEI: Building Safe and Inclusive Spaces in Field Settings: You have a Right to Know!",
+  "authors": [
+   {
+    "full_name": "Maisie G. MacKnight",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Allyson B. Muth",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Open communication, setting culture of the work environment and expectations from the beginning, has been shown to empower individuals by providing information to help them identify and reduce risk and fosters discussion between field members. Appropriately assessing risk requires supervisors to acknowledge differences in individual identity and experience level. However, many people, especially from minority groups or those with less institutional power (e.g., students, untenured faculty etc.) have reported feeling unsafe while doing fieldwork at some point in their careers. Additionally, there is still uncertainty in how to apply outlined best-practices to specific settings. Therefore, we present a collection of field safety resources that follow the best practice of increasing communication between field members. The goals of these resources are two-fold. The first is to inform technicians of expectations regarding field work risks and codes of conduct so that technicians can provide informed consent prior to starting work. The second goal of this document is to provide guidance as supervisors discuss issues beyond physical safety with their technicians while also considering the impact of race, gender, and background on experiences. Implementation of these resources in individual lab groups has been shown to improve individual sense of belonging and empowerment of students in the field.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Tag, you’re it: Chasing down considerations for using tag and survey methodologies in wildlife systems",
+  "authors": [
+   {
+    "full_name": "Maisie MacKnight",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Samantha Bryn",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "David Miller",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Ecologists are developing novel ways to track individuals across time and space. Technologies such as external marks or implanted tags and their associated survey methodologies can inform survival and growth rates and directly track movement of individuals. However, there lacks a consistent standard for considerations when quantifying the cost and benefits of novel methodologies and their applications. We argue that the costs and benefits of any marking method should be defined by the research objectives and can be evaluated based on four main criteria: information quantity, information quality, biases, and costs. We discuss the processes in which we hope will motivate a greater standardization of assessment strategies. We then present a case study from our own work assessing the use of PIT tags in our study species, the eastern red-backed salamander (Plethodon cinereus). We tested for differences in annual survival, detection probabilities, and body condition between a tagged population of 164 individuals across 5 plots and compared this population to our untagged populations at those same sites. We found that the use of PIT tags did not affect detection probability using pre-existing surveys, and we failed to detect any negative effects to long- or short-term survival or body condition between populations. We also found improvements in detection between the two survey methodologies, meaning that PIT tags are a viable option to on their own or in conjunction with long-term research systems.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Descriptive Myology of Stargazers, Genus Uranoscopus (Percomorphacea; Uranoscopidae)",
+  "authors": [
+   {
+    "full_name": "Leo MacLeod",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Murilo Pastana",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "The family Uranoscopidae, commonly known as stargazers, includes > 50 species in seven valid genera and are found worldwide in shallow waters of the tropical to temperate oceans. More than half of the species in the family belong to the genus Uranoscopus, found from the Mediterranean to the Indo-Pacific. In this study we investigated the myology of several species of Uranoscopus, describing and illustrating its main muscular complexes. We provide special attention to the cranial myology, addressing homology hypotheses for each of its muscle components. Our analysis identifies major evolutionary changes related to the mandibular, opercular, branchial, and paired-fin myology, which are translated into several phylogenetic characters. This represents the second study to investigate the myology of the genus Uranoscopus, and provides a detailed look at characteristics that have been under-explored. This increased understanding of the anatomy may help to understand the evolutionary relationships of the genus and provide new characters with which to compare to the rest of the family.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Visual Opsin Evolution and Diversity in South American Electric Fishes (Gymnotiformes) is Associated with Photic Environment",
+  "authors": [
+   {
+    "full_name": "Esme Macpherson",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Frances Hauser",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ahmed Elbassiouny",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "William Crampton",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Belinda Chang",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Nathan Lovejoy",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Vision allows for the extremely rapid relay of information between organisms and their environment. Core molecular components of the visual system are visual opsins: light-sensitive proteins that initiate the phototransduction cascade. The structure, sequence, and evolution of opsins are often tightly correlated with aspects of visual ecology such as foraging, mating, and habitat. In addition to vision, South American electric fishes (Gymnotiformes) have evolved a novel, sophisticated electrosensory system that has allowed them to navigate and communicate. Since Gymnotiformes are thought to have poor vision given their evolution in frequently dim-light habitats, we investigated whether the known complement of gymnotiform visual opsins (RH1, the dim-light sensitive opsin, and LWS, the long wavelength-sensitive opsin) exhibit evidence of relaxed selection. We used targeted sequence capture to sequence the visual opsins from 90 gymnotiform species, and used codon-based likelihood models to explore molecular evolution in LWS and RH1. We also investigated whether RH2 was present in the genome of these species, and if this could be inferred via the sequence capture method. Contrary to our expectations, we did not find evidence for relaxed selection in gymnotiform opsins. Rather, we found evidence for positive selection in both LWS and RH1, and that the evolution of both these genes was strongly associated with light environment. Finally, we also investigated whether eye size was associated with shifts in selection in the opsins. Together, our results highlight that despite their reduced opsin repertoire, opsin genes are under strong selection in Gymnotiformes to adapt to diverse photic environments.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Site fidelity of Pacific nurse sharks (Ginglymostoma unami) to a Marine Management Area in the Costa Rican North Pacific",
+  "authors": [
+   {
+    "full_name": "Sergio Madrigal-Mora",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Christopher Lowe",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mario Espinoza",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "Endangered Pacific nurse sharks (Ginglymostoma unami) are often observed in Santa Elena Bay, a newly established Marine Management Area (MMA) in the north Pacific coast of Costa Rica. Although sightings of this species seem to be relatively common within the Bay, little is known about their spatial ecology. In this study, we used passive acoustic telemetry to quantify the site fidelity and movement patterns of G. unami in the Santa Elena Bay MMA and adjacent unprotected waters in the Gulf of Santa Elena. Thirteen sharks ranging from 85-256 cm total length (TL) were acoustically tagged and monitored between September 2018 and December 2022. Pacific nurse sharks had low residency index (days detected/days monitored; mean±SD: 0.22±0.19) in Santa Elena Bay, and were detected at adjacent Matapalito Bay and Gulf of Santa Elena with similar frequency, suggesting home ranges that exceed the MMA. Additionally, a male shark was detected by a receiver array located ~200 km south of Santa Elena Bay, which represents the longest movement so far reported for this species. Using Generalized Additive Mixed Models, residency in Santa Elena Bay was found to have fluctuating seasonal patterns. Pacific nurse sharks show peaks in residency index inside the Santa Elena Bay during dry season, correlated with changing water temperature due to seasonal upwelling events that occur during this time of the year. Understanding Pacific nurse shark seasonal patterns and movement ecology is essential to inform management and protection of the species throughout its distribution.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Climate may drive salamander variation in size at maturity",
+  "authors": [],
+  "presentation_type": null,
+  "abstract_text": "[abstract start missing from chunk] a generalized linear model of minimum sizes of mature large Plethodon spp. from more 24,000 individuals observed among 56 sites across north Georgia, western NC, and eastern Tennessee including 26 sites within the Coweeta Basin. Minimum mature male and female size were strongly, negatively correlated with mean daily vapor pressure deficit (VPD) during the active season (2010-2021). This pattern was stronger when constrained to sites within the Coweeta Basin. Minimum size at maturation differences between wetter and drier sites likely represents 2-4 years difference in age at maturity among sites. Abundance ranged from 0 to 4.5 Plethodon per m2 squared, and was strongly, negatively correlated with mean daily VPD. We propose that delaying maturity to achieve a larger body size is an important way that Plethodon have evolved to persist at sites with drier climates, but this life history change is constrained demographically by reduced survival to adulthood. As a result, Plethodon are already excluded from some drier climates, and if future climates are drier at occupied sites, Plethodon abundance is expected to decline with constraints on the potential for adaptation to offset those effects.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Estimating the Effects of Hemlock Imidacloprid Treatment on Terrestrial Salamander Abundance",
+  "authors": [
+   {
+    "full_name": "John Maerz",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "Jade Samples",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Danielle Bradke",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Shelby Bauer",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "James Martin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vanessa Terrell",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cassandra Waldrop",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elizabeth McCarty",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "When considering the use of pesticides, managers need to know whether pesticides will negatively affect non-target organisms to judge the trade-off between management goals and non-target consequences. Hemlock woolly adelgid (HWA) has decimated hemlock populations in the southern Appalachians. Imidacloprid, a neonicotinoid insecticide, is currently used to suppress HWA populations and conserve hemlock trees and the habitats they create. Recent concerns have emerged about possible non-target impacts of hemlock imidacloprid treatments on amphibians including salamander populations. Robust estimates are needed on the magnitude of any potential impacts of imidacloprid application on salamander populations to inform decisions on hemlock conservation in sensitive areas. We conducted repeated depletion samples among 15 replicate plots at each of 14 treated and 11 reference sites across north Georgia, western NC, and eastern Tennessee, and then used a Bayesian, hierarchical, N-mixture model to account for differential salamander availability and detection as well as climatic effects on abundance to estimate the effects of imidacloprid application on terrestrial salamander (Plethodon spp.) abundance. We found no measurable correlation and a weak positive correlation between Plethodon abundance and imidacloprid dose at a 15 m and 3 m buffer scale, respectively. Variation in Plethodon abundance among treated and untreated hemlock sites was related to climate (mean daily vapor pressure deficit). Our results suggest that imidacloprid application to conserve Eastern hemlock does not negatively impact Plethodon spp. abundance.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Diversification and convergence following the transition from saltwater to freshwater in stingrays",
+  "authors": [
+   {
+    "full_name": "Autumn Magnuson",
+    "affiliation": null,
+    "is_presenter": true
+   },
+   {
+    "full_name": "João Pedro Fontenelle",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matthew Kolmann",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": null,
+  "abstract_text": "One of the most fundamental questions in biology is why some groups of organisms are more diverse than others. Classic hypotheses for explaining differences in diversity consider distinctions in time, place, resources, and competitors as the staging grounds for differential diversification. Freshwater and saltwater environments have similar levels of diversity despite significant differences in size, so studying transitions between the two systems can provide insights into evolutionary processes. Despite the challenges associated with this transition, stingrays have invaded freshwater habitats multiple times across different continents, making them useful for better understanding",
+  "keywords": [],
+  "session_name": null
+ }
+]

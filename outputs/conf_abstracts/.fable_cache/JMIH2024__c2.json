@@ -1,0 +1,1842 @@
+[
+ {
+  "title": "A Century of Change: The Fishes of Catatonk Creek",
+  "authors": [
+   {
+    "full_name": "Casey Dillman",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The Cornell University Museum of Vertebrates (CUMV) has several longterm sampling sites. Of these, Catatonk Creek is the most regularly and longest sampled locality. The first collection efforts concerned with the community of fishes occurred in 1930 and sampling has continued every other year up to and including 2022. This talk will explore several aspects of near century of ichthyological sampling including changes in the faunal assemblage, and a look at preliminary results from stable isotopes (C, N, and S) in this community over time.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Sticky Thumbs Out: Using Population Genomics to Reveal the Invasion Pathways of a Hitch-hiking Invasive Gecko",
+  "authors": [
+   {
+    "full_name": "Jack Dirck",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jeanne Robertson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Robert Espinoza",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Mediterranean House Geckos (Hemidactylus turcicus) are one of the most widespread introduced reptiles. Since their introduction from the Mediterranean Basin into the USA in 1910, these geckos have colonized26 states across four distinct climates despite having poor innate dispersal proclivities (<20 m/generation). They achieved this remarkable range expansionby relying on humans for long-distance movements. Despite being familiar and successful introduced reptiles, no study has attempted to reconstruct their invasion history on a continental scale. Using a populationgenomics approach(RADseq) based on ~450 geckos from 23 counties across seven US states, our study will(1) estimate whether one or multiple independent introductions occurred, (2) identify pathways of spread and major hubs of dispersal, and (3) characterize patterns of genetic variation across the US. Given extensive maritime traffic into Gulf Coast ports, we hypothesize that multiple introductions occurred. We further predict that the earliest established populations in these ports and proximate inland cities have served as major hubs of dispersal. Characterizing the genetic variation of geckos across North Carolina’s coastline. Applying a variety of research approaches, we are investigating occupancy and residency patterns, site fidelity, habitat use and ecology in context of life history stages. Our field research includes Spot A Shark USA (SAS), a community-science driven program that identifies sand tiger sharks via unique photoidentification software, and telemetry technology that uses acoustic tags and receivers to track individual movement patterns over several years. SAS has catalogued over 2500 individual sand tiger shark encounters, with more than 100 sharks reencountered across multiple dates. Additionally, the telemetry of 27 sharks has yielded over 2 million data points that span 5 years and detail migrations between New York and Florida. When combined, these data indicate “hot spots” at several shipwrecks off Cape Lookout, NC, especially for mature and pregnant females, indicating the importance of these habitats to the sharks’ reproductive ecology. NC Aquariums also participated in a long-term, interinstitutional study to define space use, swim patterns and behavior in human care. Collectively, our research provides detailed information about sand tiger sharks, allowing us to better understand both their wild populations in NC coastal habitats, as well as their optimal health and wellbeing in human care.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Ecomorphology of Longnose Gar Lepisosteus osseus: on the influence of size, sex, and river location",
+  "authors": [
+   {
+    "full_name": "Jason Doll",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ian Fischer",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Aaron Selby",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Stephen Jacquemin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Solomon David",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Daniel Sinopoli",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Ecomorphology is key to understanding the influences of habitat on the evolution and biogeography of species. Morphological studies on the underappreciated and relatively understudied gars (Lepisosteidae), outside of the phylogenetic context, are rare. To investigate the effects of sex, allometry and river section on morphology, 230 Longnose Gars (Lepisosteus osseus) were collected from three different sites corresponding to the upper, middle and lower Great Pee Dee River in South Carolina. Dorsal and lateral photographs were taken from each specimen and landmarked for 2D geometric morphometric analyses. Potential sexual dimorphic traits were also measured in the field on individual specimens. Discriminant function analysis (DFA) was conducted to compare the accuracy of those characters to a previous study on Spotted Gars (Lepisosteus oculatus). While location was a statistically significant predictor of shape, the differences were not biologically meaningful. Sex was a strong predictor of shape, with the greatest differences seen in the largest individuals. Discriminant function analysis found that the Snout Lengthto-Total Length ratio was able to accurately predict individual sex 71% of the time, with females having longer snouts than males. Significant differences in this ratio between sexes can allow biologists to approximate sex without lethal gonadal inspection. This study presents the first standardized 2D geometric morphometrics protocol for Lepisosteidae.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Infering parameters for Bioregion delimitation in Trichomycteridae",
+  "authors": [
+   {
+    "full_name": "Laura Donin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mário Pinna",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Victor Tagliacollo",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Trichomycteridae is the second most diverse family within the neotropical superfamily Loricarioidea, comprising more than 419 valid species. The greatest diversity of Trichomycteridae is located in the Amazon basin, where most subfamilies are richly represented, albeit notably lacking representatives of Microcambevinae and scant representatives of the otherwise highly diverse Trichomycterinae. In light of the diversity of lineages, phenotypes, and habitats, Trichomycteridae species have been used as models for taxonomic, evolutionary, and biogeographic studies. Despite considerable recent progress in elucidating the biogeographic history of Neotropical freshwater fishes, certain lineages, including Trichomycteridae, remain underexplored.Biogeographical regions serve as vital units for understanding species spatial distribution, bearing significance in conservation, historical biogeography, ecology, and evolution.Although the concept of bioregions is widely utilized in biogeographicalstudies, the specific parameters used as input data often lack clarity. This study aims to define bioregions tailored to Trichomycteridae, employing the most suitable set of parameters for our dataset. A spatial dataset was compiled and analyzed using the program Infomap Bioregions, employing a combination of alternative values for cell size and individual capacity per cell. The results demonstrate an optimal combination of parameters that better delineates bioregions in Trichomycteridae and which will provide a basis for a broad-scale biogeographic analysis of the family.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Multi-stage Integrated Species Distribution Modeling to Improve Estimates of Population and Community Change",
+  "authors": [
+   {
+    "full_name": "Jeffrey Doser",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sarah Saunders",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Shannon Reault",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Brooke Bateman",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Joanna Grand",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elise Zipkin",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The 21st century has seen a proliferation of data from large-scale monitoring programs, citizen science programs, and autonomous monitoring approaches (e.g., acoustic recording units) to understand population trends, distribution shifts, biodiversity patterns, and their associated drivers. As such data sources are often piecemeal and have different limitations (e.g., preferential or biased sampling), model-based data integration is an attractive solution to make the most of all available data. However, integrating disparate data sets is complicated by differences in spatial resolution, spatio-temporal extent, and observational biases under different sampling protocols. Here we present a multi-stage hierarchical Bayesian modeling approach for integrating multiple data sets with a focus on estimating spatial variation in population trends across a species’ range. Our multi-stage approach fits a distinct model to each data source in individual stages and uses model estimates from previous stages as predictor variables in subsequent stages to improve estimates of the ecological process of interest. We apply our modeling framework to quantify the relative contributions of climate and land use change in driving heterogeneous bird population trends across the continental USA from 2000- 2019. By fitting models in stages, our proposed framework can integrate a variety of data types (e.g., count, biomass, presence-absence), integrate single species and/or multi-species data sources, and can be implemented using user-friendly, formula-based R packages (e.g., spOccupancy, spAbundance). We conclude by discussing applications of the framework to understand the drivers of amphibian population trends across both local and broad scales.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Depredation: an old conflict with the sea",
+  "authors": [
+   {
+    "full_name": "Marcus Drymon",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Amanda Jargowsky",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Evan Prasky",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ed Camp",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ashley Oliphant",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sean Powers",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Steven Scyphers",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Depredation (the partial or complete removal of hooked species by nontarget species) is a human-wildlife conflict as old as fishing itself. In some ways, depredation is no different today than it was a century ago. But in many ways, this conflict has become more complicated. Following three decades of successful management, some US shark populations have begun to rebuild. However, many anglers attribute perceived increases in shark depredation to management measures, claiming they have led to an “overpopulation” of sharks and/or learned behavior by sharks. We investigated whether these factors could explain the reported increases in depredation. Based on fishery-independent surveys, neither shark population increases nor learned behavior by sharks is evident. However, increases in angler effort provide an alternative explanation that is not often considered. While far from a smoking gun, at least four themes emerge from this thought exercise. First, it is important to understand historical predator baselines. Second, it is important to acknowledge lifting baselines, i.e., instances where previously depleted populations are recovering. Third, it is important to remember that there are many instances when stakeholder observations were initially misaligned with traditional scientific observations but were ultimately recognized as pivotal for filling data gaps. Finally, and perhaps most important, is the acknowledgement that perceived conflict is as potent as real conflict. Arguably, it may not matter if depredation has increased or decreased; the overwhelming perception from stakeholders is an increase in depredation, and this is the perceived (or real) conflict that must be addressed.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Look to the Future: Potential Revision of Atlantic Shark Management in the United States",
+  "authors": [
+   {
+    "full_name": "Guy DuBeck",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Karyl Brewster-Geisz",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ann Williamson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Becky Curtis",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The Highly Migratory Species Management Division of the National Marine Fisheries Service (NOAA Fisheries) is responsible for the management of the U.S. federal shark fisheries in the Atlantic Ocean, including the Gulf of Mexico and Caribbean Sea. Federal management of Atlantic sharks began in 1993, and the management measures established at that time are the basis for those in place today, including permitting and reporting requirements, management complexes, commercial quotas, and recreational bag limits. Recently, new science and information available for shark species supports revision of domestic shark management. Consistent with efforts to rebuild overfished stocks and prevent overfishing, NOAA Fisheries plans to optimize the ability for commercial and recreational shark fishers to fully harvest the available, science-based shark quotas. Any potential management revisions will continue to need strong scientific research and support.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Diversity and Evolution of Gymnotiformes: Results of Seven Years Studying Neotropical Electric Fishes",
+  "authors": [
+   {
+    "full_name": "Guilherme Dutra",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlos de Santana",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Luiz Peixoto",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Murilo Pastana",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Naercio Menezes",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Diversity and Evolution of Gymnotiformes (DEGY) is an international cooperative project including the Museu de Zoologia da Universidade de São Paulo, Brazil (MZUSP) and the National Museum of Natural History, Smithsonian Institution (United States) engaged on taxonomy, phylogeny, anatomy, biogeography and conservation studies on the Gymnotiformes, an order that includes the neotropical electric fishes. Forty participants from 16 national and/or international institutions were associated to the project. Ten expeditions to different areas in South America were undertaken intending to get additional specimens of poorly known species, to record their electric organ discharge, tissue samples for molecular studies, and water samples for eDNA studies. The results indicate that up to now the project has cataloged more than 1000 fish lots and more than 2000 tissue samples in MZUSP fish collection. Members of the project also undertook technical visits to several fish collections in South America, United States and Europe in order to check specimens’ identification for molecular studies and map the distribution of each gymnotiform species. During the project 22 articles, 16 book chapters and 38 publications about Gymnotiformes and other Neotropical fishes were published, including the description of 14 new species and one new genus for Gymnotiformes. Outreach actions include the maintenance of exhibitions on electric fishes both in MZUSP and the Smithsonian Zoo.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Description of a New Species of the Glass Knifefish GenusEigenmannia (Gymnotiformes: Sternopygidae) from the Rio Branco Basin, Brazil",
+  "authors": [
+   {
+    "full_name": "Guilherme Dutra",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Luiz Peixoto",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Laura Donin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carlos de Santana",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Naercio Menezes",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The species of Eigenmannia are small to medium-sized electric fishes that inhabit a myriad of aquatic environments including floodplains, rapids, river channels and subterranean drainages in the Neotropics. This study describes a new species from the Rio Branco basin, Brazil. The proposal is based on morphological and molecular datasets. The new species is distinguished from all congeners by the following combination of characters: lateral line stripe extending from first perforated lateral line scale to distal portion of caudal filament, presence of superior midlateral stripe with origin posterior to end of body cavity anal fin hyaline, caudal filament corresponding to 15.2– 43.1% LEA, subterminal mouth, ii,14–16 pectoral-fin rays, 166–219 anal-fin rays, 10–13 scales rows above lateral line at vertical through posterior tip of pectoral fin, 100–128 scales on lateral line, 22–28 premaxillary teeth, 19–23 dentary teeth, 7–10 endopterygoid teeth, depth of posterodorsal expansion on infraorbitals 1+2 half as long as infraorbitals 1+2 length, basibranchial 1 unossified, 13 precaudal vertebrae, and length of coronomeckelian bone corresponding to 20% of Meckel’s cartilage length. Furthermore, molecular species delimitation analyses (ASAP and bPTP) also recovered the new species as an independent lineage. The critical importance of including voucher examination as one of the steps in the pipeline for using DNA sequences present in public repositories in taxonomic and phylogenetic studies is discussed.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Assessment of genomic diversity within and between two cryptic shiners, Notropis megalops and N. amabilis",
+  "authors": [
+   {
+    "full_name": "Kayla Dye",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kevin Conway",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrew Fields",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Megan Bean",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Amanda Pinion",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sarah Robertson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Christopher Hollenbeck",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "David Portnoy",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Notropis megalopsand N. amabilisare considered Species of Greatest Conservation Need by the Texas Parks and Wildlife Department and co-occur on a very small scale throughout the spring-fed tributaries of the lower Rio Grande within Texas. Morphological differences have been observed between these species, however, proper identification in situremains problematic. Given their status and range of overlap with potential for hybridization, a robust genetic assessment of N. megalops and N. amabilisis warranted. Therefore, we used genome-wide markers (ddRAD-seq) to determine the genetic distance, assess for hybridization, and identify diagnostic SNPs between N. megalopsand N. amabilisindividuals throughout their range of overlap. Genomic analyses recovered two distinct genetic groups (i.e., species) with no evidence of interaction or hybridization (F’CT = 0.96). Additionally, 6,315 diagnostic SNPs were identified between N. megalops and N. amabilis and ultimately filtered to 463 SNPs at 183 loci for future development of a quick and effective assay capable of distinguishing these species. Overall, these results facilitate the implementation of accurate conservation policies and management practices.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Trends in chondrichthyan diet & feeding research from 2003-2023",
+  "authors": [
+   {
+    "full_name": "Samantha Dzierba",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alyssa Klim",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ashley Liao",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Angelique Rea",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jonathon Kuntz",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Meghan Balk",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sora Kim",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lisa Whitenack",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Understanding what and how chondrichthyans eat, why they eat it, and how this impacts their lives is necessary to understand basic biological processes and inform conservation and management decisions. As the field continues to grow, it is important to understand the state of the field as we move forward - which groups are studied (or understudied), which methods are used, and the limitations of the field as it stands now. The goal of this study is to identify trends in chondrichthyan diet and feeding research over the past 20 years via a systematic literature review in support of a larger review of the field. After two training sets to ensure our four coders were in agreement and our search parameters were working, we searched for articles using the Web of Science database for five-year intervals across 2003-2023. We focused on five general research methods: stable isotope analysis, fatty acid analysis, observational studies, stomach contents, and morphology. For each of the 266 papers, our coders recorded the taxa studied, the methods used, whether studies used more than one method, and whether the study focused on extant or extinct taxa. There was a clear trend in the number of studies increasing from 2003 (n=14) to 2023 (n=89). Preliminary results indicate that much of this growth is due to the increasing prevalence of stable isotope analysis, although other broad research areas show growth as well. Studies cover a wide range of species across families, but elasmobranchs are studied more often than holocephalans.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Correlates of Rattlesnake Detection on Camera Traps",
+  "authors": [
+   {
+    "full_name": "Sarah Ebert",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "John Holloway",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Gray",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Carissa Adams",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Casey Hitchens",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "McKenzie Merritt",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Shane Welch",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jayme Waldron",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Camera traps allow researchers to maximize sampling effort with minimal disturbance to wildlife and have become increasingly popular in wildlife research. Camera traps are primarily used to study large mammals and have not been extensively tested for snake species, many of which are understudied and imperiled. The Adapted-Hunt Drift Fence Technique (AHDriFT) arrays were designed to improve detection of herpetofauna by incorporating camera traps with drift fences. We installedAHDriFTcamera arrays (n=20) at a study site in coastal South Carolina where mark-recapture and radio telemetry surveys were used tomonitor the easterndiamondback rattlesnake (Crotalus adamanteus; EDB), a species in decline across its range. Our goal was to examine the effectiveness of camera traps for detecting EDBs. We used EDB telemetry relocations within150 mof an activeAHDriFTarray and logistic regression and occupancy modeling to examine detection probabilities at multiple temporal scales. Although our camera traps captured 67 EDB detections over 16 months our analysesindicatedpoor detection even when snakes were in proximity to the camera arrays. Our findings likelyreflectthe species foraging strategy andsuggestthat low vagility characteristic of ambush predatorslikely limitcamera trapping as a suitable method formonitoringthe species’ occupancy.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Species Boundaries and Evolutionary History of the Genus Thorichthys (Herichthynes: Heroini)",
+  "authors": [
+   {
+    "full_name": "Diego Elías",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alfonso Gonzáles-Díaz",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Caleb McMahan",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "A robust understanding of species diversity and their geographic distributions is key for the conservation of freshwater biota. Heroini cichlids are one of the most diverse groups of freshwater fishes in the northern Neotropics, and many species are threatened by pervasive threats such as damming, land use change, and introduction of non-native fishes. Despite this, our understanding of species boundaries and phylogenetic relationships among Heroini cichlids is still lacking, particularly at the intrageneric level. One of the most species-rich genera of Heroini is Thorichthys with nine valid species distributed from northern Honduras to Mexico. Its widespread distribution, hypothesized cryptic diversity, and sympatric distribution among different species makes Thorichthysa unique system to study patterns and processes of diversification of northern Neotropical cichlids. Here, we used genomic-scale DNA sequence data to infer the first taxonomically-complete phylogeny of the genus Thorichthys. We additionally used population genetic and species delimitation analyses of this molecular data to evaluate evidence of potential cryptic diversity across the ranges of Thorichthys species. The resulting species delimitation and phylogenetic hypotheses were then used in downstream analyses to investigate how the complex geologic history of the riverscapes of the northern Neotropics shaped the evolutionary history of Thorichthys.Our findings provide essential information on the diversity and geographic distributions of an overlooked yet diverse and threatened group of cichlids in the northern Neotropics.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Response of juvenile white sharks (Carcharodon carcharias) to a rare tropical storm event in Southern California",
+  "authors": [
+   {
+    "full_name": "Jack Elstner",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Spurgeon",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Patrick Rex",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Elizabeth Jahn",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Zach Merson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Whitney Jones",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lauren Faulkner",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ryan Logan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Christopher Lowe",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Brice Semmens",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Hurricanes and tropical storms are extreme weather phenomena that pose profound risk to the ecological communities that lie in their path. Although coastal ecosystems are particularly vulnerable to storm disturbance, research describing the response of marine taxa to extreme weather remains limited, especially for highly mobile marine predators. In this study, we use high-resolution acoustic telemetry to examine the response of juvenile white sharks(Carcharodon carcharias) to a rare tropical storm event in Southern California. Using data collected at a prominent white shark nursery aggregation site in San Diego, we quantify patterns of movement and habitat selection before, during, and after the storm and relate these responses to proximal environmental cues. We document partial evacuation from the aggregation site during the storm, as well as other behavioral strategies that individuals appear to adopt in response to the risks posed by storm conditions. In doing so, we quantify the sensitivity and resilience of juvenile white sharks to storm perturbation and evaluate their behavioral plasticity in a dynamic ocean. In addition, we present an accessible modeling approach to statistically estimate and account for reduced performance of acoustic receivers during noisy storm conditions.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Big Fish, Little Plastics: Investigating Microplastic Accumulation and Trophic Transfer in Salmon Sharks",
+  "authors": [
+   {
+    "full_name": "Madeline English",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alexandra McInturf",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Bonnie Hamilton",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Olivia Boisen",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Reilly Boyt",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matthew Savoca",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Susanne Brander",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Taylor Chapple",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Microplastic ingestion in marine organisms, especially fish, is a growing concern, yet its prevalence in sharks of the Northeast Pacific remains largely unexplored. One species ideally suited to address this knowledge gap is the salmon shark (Lamna ditropis). Salmon sharks are regionally endothermic and have a high metabolic rate, and their food consumption rates and energetic requirements are higher than those of most shark species. In addition to contributing to their ecological impact as consumers, these traits may also influence how frequently they encounter plastics. In this study, we use a combination of methods including stomach content analysis, high-resolution microscopy, and Fourier-transform infrared spectroscopy to investigate anthropogenic microparticle (natural or synthetic particles < 5 mm) quantities and types in salmon sharks and their prey off the Oregon Coast. We aim to quantify the amount of microparticles consumed by these predators along the Oregon Coast and determine whether there is sufficient evidence to suggest that trophic transfer occurs. Our preliminary findings indicate a high presence of ingested microparticles of diverse morphologies, highlighting the need for further investigation into the impact of microparticles on salmon sharks as well as other elasmobranch species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The western South Atlantic chimaeras (Chondrichthyes: Holocephali: Chimaeriformes), with descriptions of two new species of Chimaera Linnaeus, 1758",
+  "authors": [
+   {
+    "full_name": "Vinícius C. Espíndola",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marcelo R. S. de Melo",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Chimaeras, also known as elephant fish, rabbitfish, or ghost shark, are relatively rare, primarily deep-sea fishes, with worldwide distribution on the deeper portions of the continental shelves and slopes, to about 3,000 meters deep. Up to date, six species had been previously reported from the western South Atlantic: the callorhinchid Callorhinchus callorhynchus, the chimaerids Hydrolagus alberti, H. affinis, and H. matallanasi, and the rhinochimaerids Harriotta chaetirhamphus and Rhinochimaera atlantica. In this taxonomic review, we unveil the first report of the genus Chimaera in the area presents descriptions of two new species, in addition to updated maps of distribution, diagnoses, and a regional key for the species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Where Should ASIH be Headed? An Open Discussion and Listening Space",
+  "authors": [
+   {
+    "full_name": "Robert Espinoza",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Henry Bart",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The purpose of this poster is to provide an open forum for discussions with the leadership of the American Society of Ichthyologists and Herpetologists (ASIH). What can we do better to (1) grow and support our diverse membership, especially students; (2) foster greater membership involvement and organizational fiscal stability; (3) improve JMIH and Ichthyology & Herpetology; (4) prioritize resources to meet future obligations and goals; and (5) reinforce what we already do well? We can also deliberate the future of ichthyology and herpetology or anything else members wish to discuss with the President, President-Elect, and other members of ASIH leadership. We are here to listen to compliments, critiques, and ideas to improve our Society. [We will also share drink tickets with members who stop by to chat!]",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Deploy the proboscis!: Functional morphology & kinematics of a novel form of extreme jaw protrusion in the hingemouth, Phractolaemus ansorgii (Gonorynchiformes)",
+  "authors": [
+   {
+    "full_name": "Allyson Evans",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Naylor",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Nathan Lujan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandy Kawano",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "L. Patricia Hernandez",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Variation in the mechanisms of premaxillary protrusion and the performance advantages they confer have been implicated in the success of diverse teleost fish lineages such as minnows and spiny-rayed fishes. Highly kinetic systems that actuate jaw protrusion have long been fascinating to functional morphologists as they represent multiple solutions to the same ecological challenge — that of feeding in a viscous, fluid medium. However, scarce are the studies that investigate jaw protrusion beyond Cypriniformes and Acanthomorpha and beyond the relatively conserved musculoskeletal architecture enabling it. Here we investigate an isolated and independent origin of jaw protrusion in the hingemouth, Phractolaemus ansorgii, which employs a novel arrangement of bones, musculature, and connective tissue to feed on detritus via a deployable proboscis. We quantify 3D feeding kinematics and find P. ansorgii are capable of modulating the angle and distance of jaw protrusion, with maximum anterior protrusion exceeding 30% of head length. This represents a previously undescribed example of extreme jaw protrusion on par with many cichlid species. Furthermore, we describe what is in essence a second functional mouth at the end of the proboscis composed of flexible connective tissues and intricate skin folds that function to probe and grasp along the substrate. Though this highly specialized mechanism may have limited versatility over evolutionary timescales, it represents a unique functional solution for life evolved in fluid.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Comparative Anatomy of Otomorphan Epibranchial Organs",
+  "authors": [
+   {
+    "full_name": "Allyson Evans",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "L. Patricia Hernandez",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Joshua Egan",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The ability to extract small prey items from large volumes of water is widespread among microphagous fishes, all of which face the same metabolic hurdle of consuming enough food particles to meet their nutritional needs. Certain planktivorous and detritivorous fishes possess an epibranchial organ (EBO) in their posterior pharynx that facilitates the aggregation of small prey. Morphologically complex and phylogenetically diverse, EBOs are novel trophic structures that have evolved independently in at least six families across teleosts with the majority of both morphological and taxonomic diversity occurring within otomorphan fishes. Otomorphan EBOs range from the small slits in the roof of the pharynx to medioventrally expanded, papillae-lined pouches. Despite their phenotypic diversity, they share several anatomical components including an internal tube with an epithelium rich in mucus-producing cells, a surrounding layer of skeletal muscle, and support from the posterior branchial arches. Here, we present a comparative study of EBOs from thirteen otomorphan species. Using gross dissection, histology, and scanning electron microscopy, we describe the degree to which architectural components of the EBO exhibit patterns of convergence in shape, size, muscularity, adiposity, and the morphology of the papillae that line their internal surface. Grounded within both a functional and phylogenetic framework, we discuss whether differences in this intricate anatomy can best be explained by specializations to a similar feeding ecology or by phylogenetic relatedness.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Age and Growth Estimates for the Nurse Shark (Ginglymostoma cirratum) Over 17 Years in Bimini, The Bahamas",
+  "authors": [
+   {
+    "full_name": "Baylie Fadool",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kylie Bostick",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lauran Brewster",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alexander Hansell",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "John Carlson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matthew Smukall",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The nurse shark (Ginglymostoma cirratum) is abundant in coastal waters of the Atlantic Ocean, yet many aspects of their life history remain relatively understudied, aside from their reproductive behavior. This study focused on their age and growth to address significant data gaps and provide crucial information that can be used in fisheries assessment models.We used mark-recapture data of 91 individual G. cirratum from Bimini, The Bahamas, from 2003 to 2020, to calculate von Bertalanffy (vB) growth parameters, empirical growth rate, and age derived from the resulting length-at-age estimates. The Fabens method for estimating growth from mark-recapture methods was applied through a Bayesian framework using Markov chain Monte Carlo (MCMC) methods. This provided growth parameters with an asymptotic total length (L∞) of 303.28 cm and a growth coefficient (k) of 0.04 yr-1. The average growth rate for G. cirratumwas approximately 8.68 ± 6.00 cm yr-1. This study also suggests that the previous maximum age for G. cirratumis likely underestimated, with the oldest individual predicted to be 43 years old. Our study presents the first vB growth parameters and growth curve for G. cirratum. These results indicate that this species is slow-growing and long-lived, which improves our understanding of their life history. We hope that this study encourages future research to obtain more species-specific life history information for G. cirratum throughout their range to improve their conservation and management, especially since they were recently listed as a vulnerable species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Supply and Demand: Leveraging Expertise and Knowledge to Supply Tools to Meet the Demands of Conservation",
+  "authors": [
+   {
+    "full_name": "Hap Fatzinger",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alexa Delaune",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Hans Walters",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Beth Firchau",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Steve Kessel",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jill Arnold",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "For nearly four decades the field research and zoological communities have convened to drive the science and understanding of elasmobranchs in situ and ex situ. Collaborations such as the American Elasmobranch Society Elasmobranch Census by Warren Pryor of the Fort Wayne Children’s Zoo in the mid-1980s and the Elasmobranch Husbandry Manual symposiums and publications in 2001 and 2013, are examples of how, through collaboration, the two communities supply the tools and resources needed, and successful conservation efforts demand, to build a future for global elasmobranch populations. The Association of Zoos and Aquariums (AZA) envisions a world where all people respect, value and conserve wildlife and wild places. Through AZA’s premiere conservation initiative SAFE: Saving Animals From Extinction, members and partners leverage combined efforts in a One Plan Approach to make its vision a reality. AZA SAFE Sharks and Rays began its support of elasmobranch conservation efforts over 10 years ago. Today, building upon member expertise and knowledge, the program is embarking on its next 5-year plan. The plan’s success will be in its mandate for collaboration and breadth of application, ex situ and in situ. Conservation funding is scarce. People to do the work too few and time too short. Conservation efforts demand collaboration and a supply of effective tools that help us work more efficiently. AZA SAFE Sharks and Rays is bringing the elasmobranch field research and zoological communities together to create those tools and resources that will help to ensure the future of elasmobranch populations around the world.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Parthenogenesis in elasmobranchs under human care",
+  "authors": [
+   {
+    "full_name": "Kevin Feldheim",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Worldwide, aquariums are an important resource for raising public awareness on issues of marine conservation and biodiversity in general. Recently, these institutions have become vital in understanding several aspects of the life history and reproductive traits of elasmobranchs (sharks, skates and rays). In particular, aquariums have been vital in the relatively newly described phenomenon of parthenogenesis in these taxa. Since its discovery in 2007, parthenogenesis has been observed for many ex situ shark and ray species. Here, I review the brief history of parthenogenesis in elasmobranchs and discuss how aquariums can aid in this field moving forward.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "No Evidence of Color-Based Honest Signaling in the Green and Black Poison Frog Dendrobates auratusin Costa Rica",
+  "authors": [
+   {
+    "full_name": "Aaron Fernando",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Katherine Porras-Brenes",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ralph Saporito",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Aposematism is an anti-predator strategy that involves the use of conspicuous colors to warn predators about the presence of chemical defenses. Studies have found that organisms exhibiting more conspicuous colors often have higher quantities of defensive chemicals. In these cases, the degree of conspicuousness is a quantitative honest signal of toxicity that predators can learn. Neotropical poison frogs utilize bright coloration and bold patterning as a warning of their alkaloid-based defenses. However, it is unclear if conspicuousness is a quantitative honest signal of defense levels in poison frogs. To address this question, we examined the relationship between coloration and alkaloid defenses in the green and black poison frog,Dendrobates auratus, from Costa Rica. We measured, quantified, and compared green coloration and alkaloid quantity in 60 frogs from three Caribbean and three Pacific populations. Contrary to quantitative honest signaling, we found that more conspicuously colored frogs (those with higher proportion of green) had lower quantities of alkaloid defenses. Interestingly, we found that frogs from Pacific populations were less conspicuous and contained more alkaloids, whereas frogs from Caribbean populations were more conspicuous and had less alkaloids, which may be explained by differences in predator communities between these two geographic regions of Costa Rica.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Geographic Patterns of Body Shape in Cryptobenthic Fish Communities of the Tropical Eastern Pacific",
+  "authors": [
+   {
+    "full_name": "Roman Ferraro",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cindy Fajardo",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Michael Burns",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "William Ludt",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Body shape reflects how species interact with their environment and how they function within a community. Many times, body shape is influenced by the ecology and life history of a species and can vary considerably across lineages and ecological gradients. Among coral and rocky reef habitats, one abundant, and varied, group of fishes are cryptobenthic reef fishes (CRFs). Species comprising this group are generally <50mm in length and can comprise nearly 50% of biomass consumed on a reef, making them an essential component of reef ecosystems. Furthermore, these fishes perform a variety of functional ecosystem services. However, functional morphological variation across CRFs has not been studied in a biogeographical framework. The Tropical Eastern Pacific (TEP) is a biogeographic region separated from the Western Pacific by a semipermeable open ocean barrier, and from the Caribbean by the impermeable Isthmus of Panama, making it an ideal isolated marine region to examine community functional turnover in CRFs. Within this region there are more than 300 CRF species distributed amongst 12 families. In this study we examine how body shape varies in a CRF community context across the TEP using geometric morphometrics of vouchered museum specimens. Comparisons between biogeographic provinces and amongst families largely show CRF families across different biogeographic regions occupy similar regions of morphospace. However, we find significant differences in body shape disparity in certain families from different regions. We discuss these findings in relationship to shared geological and evolutionary history of these species, as well as their ecology.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Genome-wide data reinforces the evolutionary relationships of previously problematic earless lizards (Phyrnosomatidae: Holbrookia)",
+  "authors": [
+   {
+    "full_name": "Thomas Firneno",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Corey Roelke",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Adam Leache",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Nathan Rains",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Toby Hibbitts",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Wade Ryberg",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Travis Laduc",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sonal Singhal",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matthew Fujita",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "In the face of anthropogenic change and the potential loss of species, documenting biodiversity – including accurately delimiting species complexes – is of tantamount importance. Genome-wide data are powerful for investigating lineage divergence, though deciding if this divergence reflects species-level differentiation remains challenging. Here, we use genome-wide data to investigate species limits in four currently recognized species of Earless Lizards (Phrynosomatidae: Holbrookia), with a focus on H. lacerataand H. subcaudalis, the latter having potentially imperiled populations. This group’s taxonomy has been repeatedly revised; most recently, H. lacerata and H. subcaudalis were elevated to species status using conserved morphological data and a few molecular markers. In this study, we used double-digest restriction-site associated DNA sequencing to delineate species limits for our focal taxa. We recovered five populations that corresponded to five well-supported lineages with very little gene flow among them. Our results support the recognition of H. lacerataand H. subcaudalis as two separate species, based on strong phylogenetic support for these lineages and genetic divergence measures that exceed those of currently recognized species within Holbrookia. Genomic methods for species delimitation offer a promising approach to assess biodiversity in taxonomically confounded taxa or organisms of conservation priority.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Calling phenology of an anuran assemblage in a periurban Illinois landscape",
+  "authors": [
+   {
+    "full_name": "Mackenzie Fisher",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Thomas Anderson",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The timing of life history events (i.e., phenology) can affect population demographics, as well as species interactions. Determining phenological patterns and their drivers has become increasingly critical as many organisms are experiencing shifts in phenology with climate change. The goal of this study was to assess the calling phenology patterns and its drivers for eight anurans. We deployed Audiomoth recording devices at 7 ponds on the Southern Illinois University Edwardsville campus from February to September 2022. Each device recorded 7 2-min recordings from 2000-0200 each night over the survey period. We assessed drivers of each species’ phenology using nearby weather station data (air temperature and rainfall). As expected, we found distinct groupings of species based on season, with spring peepers and boreal chorus frogs calling early in the spring, followed by American toads in late spring. Cricket frogs, gray tree frogs and American bullfrogs called across the summer months. Southern leopard frogs called from early spring through early summer but also had a separate calling period in late summer. Temperature and precipitation were both identified as drivers of calling phenology, but species differed in their respective responses. Ongoing phenology monitoring will elucidate interannual variation in phenological patterns across species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Desert slender salamander (Batrachoseps aridus) and salamanders in the desert (Batrachoseps sp.) of southern California",
+  "authors": [
+   {
+    "full_name": "Robert Fisher",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The desert slender salamander (Batrachoseps aridus) (DSS) was one of the first species listed as endangered under the Endangered Species Act by the U.S. Fish and Wildlife Service and one of the first species listed under California’s Endangered Species Act. It has now been over 25 years since a verified sighting of the species has been documented. The two known historic locations for this species were surveyed over the last 6 years, several times each, and during prime activity periods, to determine the status of the habitat at the sites, and to attempt to detect any salamanders. Sampling was done with surrogate species for amphibian fungal disease detection, and remotely triggered cameras were deployed at one site to determine the source of illegal human sign. At neither site were salamanders detected during any surveys. We did find a possible third population discovered in the 1980’s but failed to detect salamanders there in 2021. Our broad sampling for any salamanders in the desert starting in 2020 did detect multiple populations of salamanders in San Diego, and Imperial Counties, none of which appear to be the endangered DSS. We did detect one new population of apparent DSS in Riverside County in 2023 and we report it here for the first time as well as the potential rediscovery of the species. We will also discuss the novel desert animals from San Diego and Imperial Counties and a population in Riverside County detected in 2024.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Are Elasmobranch Traits a Predictor of Extinction Risk",
+  "authors": [
+   {
+    "full_name": "Sam Fisher",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Isaac Trindade-Santos",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Diala Edde",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lauren Sallan",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Sharks and rays (Elasmobranchs) have a predominantly marine cosmopolitan distribution, but are widely assumed to face the highest risks of extinction due to their relatively slow growth, low reproductive rate, and relatively low species counts. In addition, sharks with greater ecological (functional) specialization are usually assumed to be at greater extinction risk than less specialized species in the same ecosystem. To investigate whether threatened elasmobranch species exhibit greater specialization compared to non-threatened counterparts, we measured 11 ecological traits across 806 IUCN-assessed species across 60 Large Marine Ecosystems (LMEs), and compared trait value distributions, ecologically-relevant and widely used summary metrics (functional uniqueness, distinctiveness, specialization), and diversity across risk categories. Our findings reveal that globally threatened species did not significantly differ from non-threatened species in most ecologically functional metrics derived from such traits. Few LMEs housed threatened sharks with high levels of functional specialization, while non-threatened species in northern latitude LMEs exhibited higher functional specialization. Functional uniqueness varied significantly between threatened, non-threatened, and data deficit taxa in both sharks and rays. However, significant differences in functional distinctiveness were only evident within shark groups. Length at first maturity, mean temperature preference, and maximum depth emerged as statistically significant predictors of risk across IUCN classes for elasmobranchs overall. These findings suggest that while threatened sharks and rays may possess specific ecological trait combinations, these traits vary geographically and do not necessarily denote greater specialization, uniqueness, or distinctiveness compared to non-threatened counterparts. This highlights the need for reevaluation of current conservation strategies and prevention measures.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Negative frequency-dependent selection on dorsal color and a model for polymorphism and divergence in small terrestrial salamanders",
+  "authors": [
+   {
+    "full_name": "Benjamin Fitzpatrick",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Color polymorphism within populations of small terrestrial salamanders has fascinated herpetologists for decades. Theory predicts eventual loss of polymorphism without some form of balancing selection. Polymorphism for presence or absence of a dorsal stripe is common in several species of small plethodontids, and research inPlethodon cinereus has revealed a plethora of potentially important associations between individual color pattern and ecological or behavioral variables. Color pattern variation in other systems, such as theDesmognathus fuscusandD. ochrophaeus complexes, has vexed taxonomists with its apparent lack of order. Here, I use data from field sampling and experiments together with a simple mathematical model to argue that visual predators can drive rare-form advantage, stabilizing polymorphism within species and reinforcing chance associations between color pattern and other traits affecting competition and coexistence. Rapid formation of predator search images can favor alternative cryptic color patterns and, under the right circumstances, predation might promote both extreme individual variation and stable coexistence between species with different forms of crypsis. This should be considered as an alternative to the hypothesis that diversity in salamander communities is regulated primarily by resource competition.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Evolutionary March: Spatial Variability in Immunity along the Cane Toad Invasive Range in Australia",
+  "authors": [
+   {
+    "full_name": "Felipe Floreste",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Tsering Chan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Gregory Brown",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fernando Gomes",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vania Assis",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lee Rollins",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Cane toads are native to South America but were introduced to the east coast of Australia in 1935 as an attempt to control crop pests. Since then, toads have expanded westward, and the dispersing populations have rapidly modified aspects of their physiology, behavior, and immune traits. For instance, invasion-front individuals show lower metabolic investment in immune function than range-edge counterparts. In addition, toads have been carrying the co-introduced South American lungworm Rhabdias pseudosphaerocephala, but toads on opposite ends of the invasion range also show different interactions with the parasite. Invasion-front toads host higher numbers of Rhabdias larvae in their lungs than those from range-core populations and range-core toads are more resistant to infection by local strains of Rhabdias than are toads from the invasion-front. Given the heterogeneity in immune function along the invasive range, we aim to test whether these spatial differences in immune response are rooted in the production of inflammatory biomarkers. More specifically, we predict a less intense and briefer gene expression of Th2-type cytokines and immune function (neutrophil to lymphocyte ratio — NLR; and plasma bacterial killing ability — BKA) in naive offspring from invasion-front populations when compared to range-core offspring following experimental infection with R. pseudosphaerocephala. Our preliminary results indicate locality-dependent effects on baseline immune function. Toads from the invasion-front show higher NLR than range-core counterparts, which might indicate an investment towards cheaper immune traits to reallocate energy for dispersion. Nevertheless, we believe gene expression data under analysis will further elucidate this hypothesis.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Exploring Immunomodulation in Toads: Differential Gene Expression Following Stimulation with Bacteria",
+  "authors": [
+   {
+    "full_name": "Felipe Floreste",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Patrício Garcia-Neto",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Sandra Muxel",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Stefanny C. M. Titon",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Patrick da Silva",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Fernando Gomes",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vania Assis",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Amphibian populations are endangered due to emerging infectious diseases worldwide. In addition, opportunistic pathogens take advantage of the host’s compromised immune system to proliferate. Aeromonas hydrophilais an opportunistic bacterium that causes the red-leg syndrome in immunosuppressed individuals and is one of the agents responsible for the decline of amphibian populations in the wild and in captivity. Although this bacterium is widely spread and commonly found in freshwater ponds, little is known about its effects and interactions with the amphibian immune system. We aim to investigate differential gene expression in two primary immune organs (spleen and liver) of toads (Rhinella diptycha) injected with heat-killed A. hydrophila. For that, wild-caught toads were injected intraperitoneally with 300µL of a bacterial solution containing 3 x 108 bacteria cells, while the control group was not manipulated. Spleens and livers were collected six hours post-injection and submitted to transcriptomic analyses. We expect differential gene expression between the treated and control groups. More specifically, immune-related genes will be upregulated in the bacteria-injected toads. We hope to identify which genes and signaling pathways are activated in response to bacterial components, enhancing our understanding of pathogen recognition by the immune system in anurans.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Bridging the gaps that hinder shark conservation: An analysis of international elasmobranch policy implementation by Atlantic fishing nations",
+  "authors": [
+   {
+    "full_name": "Sonja Fordham",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Elasmobranchs are threatened mainly by overfishing, with international trade as a key driver. Over the last few decades, significant strides toward shark and ray conservation have been made through the Convention on International Trade in Endangered Species (CITES, a global wildlife treaty) and the International Commission for Conservation of Atlantic Tunas (ICCAT, a regional fishery management organization). Because sharks and rays are considered both commodities and wildlife, governments’ approaches toward elasmobranch obligations under fisheries and environment agreements are, however, often misaligned. The success of international conservation measures relies on proper implementation at the national level. An associated lack of scrutiny is a core yet surmountable challenge to effective policies and population rebuilding. This presentation will review an analysis that documents the performance of ICCAT’s 52 Parties and 5 Cooperators (CPCs) with respect to conservation obligations for Atlantic elasmobranch species listed under CITES between 2002 and 2020, highlights key policy and implementation gaps, and recommends priority improvements at national and international levels.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Satellite and Acoustic Telemetry Reveals Deep Dives and Long Range Movements of the Bat Ray (Myliobatis californica)",
+  "authors": [
+   {
+    "full_name": "Ryan Freedman",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Ryan Logan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Varenka Lorenzi",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Chris Caldow",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Vanessa Van Deusen",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Chris Lowe",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kady Lyons",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Bat Rays (Myliobatis californica) are a temperate species of stingray that uses a number of different habitats off the US and Mexican Pacific Coast. The species is commonly caught by pier fishermen and consumed by low income and vulnerable communities. The species is assumed to be highly mobile which means they may represent a vector of exposure to a number of contaminants to these human communities. To date, most studies have been conducted on the species movements in estuarine habitats but we tagged 5 Bat Rays with pop-off satellite tags and acoustic telemetry tags and additional 15 individuals with just acoustic tags in open coastal habitats off Southern California. Data revealed that Bat Rays would make deep dives over 300 meters deep and easily move from coastal habitats to offshore waters. Bat Rays made movements from the mainland to different offshore islands as well indicating a high level of habitat connectivity for the species. We are looking to pair this movement data with measures of contaminant loads from each individual to model consumption risk locally.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Fish Sound Production : the Swim Bladder is not a Resonant Structure",
+  "authors": [
+   {
+    "full_name": "Romane Frey",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Philippe Compère",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Eric Parmentier",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "In teleost fishes, the swim bladder is an organ filled with gaz that, in addition to providing buoyancy, plays a role in hearing and, in some species, in acoustic communication. Although several studies in different species have demonstrated that the swim bladder has a prominent role in sound production, its function in this process remains largely unknown in the absence of extensive studies on the subject. A first approach, borned in the 60’s, considered the swim bladder as a « resonant bubble » which describes it as an omnidirectional resonant gaz bubble, i.e. an acoustic monopol. This theory has been rarely discussed even though litterature discribed, since then, an unusual high damping rate for a free bubble. Wrongly justified by the properties of the surroundings tissues, we show that this damping property is in fact an intrinsec property of the swim bladder, the organ fails to resonate. For the species with sonic muscles, sounds are more likely to be the result of a forced response to muscular contraction and should not be amplified at the eigenfrequencies of the swim bladder.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Ecological implications of evolutionary divergence in the genus Parachromis",
+  "authors": [
+   {
+    "full_name": "César Fuentes-Montejo",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Wilfredo Matamoros",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Miquel Gonzalez-Meler",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Caleb McMahan",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The ecological niche is a recurring and core concept in ecology which has been described as a multidimensional space that is used by every species. Recent studies have associated niche measurements with morphological and phylogenetic properties, suggesting they can help predict aspects of the trophic niche.Parachromisis a small clade of five species of predatory Neotropical cichlids whose ecology has been poorly studied. We used an integrative and comparative approach in order to understand the implications that evolutionary divergence has on species niche. We compared morphological functional traits, body shape variation, and isotopic signatures across the genusParachromis. We used museum specimens from the native range of all species in the genus to obtain linear measurements, geometric morphometrics, and stable isotopes as descriptors of habitat use, locomotion, food acquisition, and trophic positioning. We then contrasted them with a phylogeny, in order to test for phylogenetic signal. Despite their close relatedness, there was a low phylogenetic signal for morphological measurements and isotopic space. However, some morphological traits explain the variation on isotopic space, relating locomotion and habitat use to their trophic positioning. Additionally, snout length, eye size, and fineness ratio have the greatest contribution to variation among species, allowing for easy identification and association to their predatory behavior. We conclude that morphological measurements match isotopic space in the genusParachromis, but that phylogenetic relatedness does not explain observed variation.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Environmental DNA analysis for detection of Poeciliopsis in northern Sonora, Mexico",
+  "authors": [
+   {
+    "full_name": "Alanna Fulkerson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alejandro Varela-Romero",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alexsandre Gutierrez-Barragán",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Doug Duncan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mariana Mateos",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Several species of Poeciliopsis occur in the Mexican state of Sonora; Poeciliopsis jackschultzi (Rio Concepcion Topminnow), is listed as endangered by the IUCN Red List, and whether it is still extant is unknown. The major threats appear to be habitat loss/degradation and invasive species. Survey efforts are hampered by the inability to use external morphology to distinguish P. jackschultzi from its co-occurring congeners: the Gila topminnow, Poeciliopsis occidentalis; and asexual hybrids whose maternal progenitor is the Headwater topminnow, Poeciliopsis monacha. Here, we present the results of a metabarcoding eDNA based method aimed at detection of teleosts. We collected and filtered in situ water samples in 2022 and in 2023, based on known localities and historical occurrence of Poeciliopsis of interest. After DNA extraction, samples were subjected to PCR with the MiFish primer set, which targets a 163-185 bp region of the mitochondrial 12S rRNA gene of teleosts and is diagnostic for our target taxa. After filtering, we obtained ~500 million reads associated with 2925 unique sequences. Unfortunately, we did not detect a single feature assigned to P. jackschultzi, suggesting that it was absent or at an abundance below our detection ability. The most frequent features were assigned to the native cyprinids Longfin dace (Agosia chrysogaster) and Sonoran Chub (Gila ditaenia), followed by those assigned to P. occidentalis and P. monacha. Non-native fish were also detected; among these, Green sunfish (Lepomis cyanellus) had the highest frequency, followed by Bullhead (Ameiurus melas), Western mosquitofish (Gambusia affinis), Bluegill (Lepomis macrochirus), and Swordtail (Xiphophorous).",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Development of AI Tool Suite for Electronic Monitoring of Pacific Sleeper Sharks in Alaska",
+  "authors": [
+   {
+    "full_name": "Keith Fuller",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Cindy Tribuzio",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The use of electronic monitoring (EM) technologies in fishery sciences (e.g., cameras combined with video review in lieu of at-sea observers) has continued to expand over the last several years. Our project has developed a machine learning/ AI pipeline for detection, species identification, and measurement of individual sharks from EM videos to better track trends in catch and inform stock assessments for a data-limited elasmobranch species in Alaska, the Pacific sleeper shark (Somniosus pacificus). As S. pacificus stock assessment in Alaska is done based entirely on catch data, this species stands to benefit greatly from any improvements in data sources. Thanks to strong detection and classification results we have begun to implement this technology within the EM data pathway. Our results suggest that this algorithm suite could increase review efficiency, provide previously unavailable size data, as well as provide assessors with the tools to evaluate accuracy of existing catch estimation methods for relatively rare species. Both the timely delivery of fisheries data and this novel data type will aid stock assessment processes. As the algorithm process created by this project is publicly available, this project also offers new tools for other management entities and researchers interested in expanding use of EM tools.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Thermal and Habitat Effects on Rattlesnake Reproductive Ecology in the Southeastern U.S",
+  "authors": [
+   {
+    "full_name": "Matthew Gacheny",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Shane Welch",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "John Holloway",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jayme Waldron",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Ectotherms (e.g., reptiles) cannot metabolically regulate their body temperature and rely on behavioral strategies incorporating microhabitat use to thermoregulate across a range of environmental conditions. Thermoregulation affects all aspects of reptile life-history, rendering reptiles vulnerable to climate change. Therefore, microhabitat selection is an essential behavior allowing reptiles to ameliorate temperature fluctuations concerning life-history processes (e.g., reproduction). Fitness costs are incurred if suitable body temperatures are not maintained through appropriate microhabitat use by females during reproduction. Thus, we examined the influence of ground-level thermal properties on microhabitat use by reproductively active female Eastern Diamondback Rattlesnakes (Crotalus adamanteus; EDB) in the southeastern U.S. We employed a use-availability-based framework to examine thermal and structural characteristics of microhabitats selected by free-ranging, reproductively active female EDBs in South Carolina and at their northern range limit in North Carolina. We hypothesized that to optimize gestation, gravid females will select cooler microhabitats to avoid negative metabolic consequences of overheating. Concomitantly, we hypothesized that vitellogenic females will select overwinter microhabitats that minimize potentially metabolically demanding temperature fluctuations, thus stabilizing their energetic expenditures during yolk provisioning. This study will help improve our understanding of range-wide tradeoffs in reproductive female EDB microhabitat use while revealing key information about constraints on the species’ distribution and its sensitivity to climate change.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Damming consequences: morphological impacts of artificial barriers in riverine steelhead trout (Oncorhynchus mykiss)",
+  "authors": [
+   {
+    "full_name": "Jacquelyn Galvez",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Christian Lizaso",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jack Tseng",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Artificial damming of freshwater rivers influences many aspects of stream ecology. Human made dams can create barriers to upstream breeding and rearing habitats of anadromous fishes and can limit gene flow between such populations. Studying fish populations impacted by damming provides a unique opportunity to study the downstream effects of these dispersal limitations, with potential to reveal how damming influences the evolutionary trajectory of populations and how endangered fishes cope with anthropogenic environmental change. In this study, we conducted a morphological comparison of anadromous steelhead trout, Oncorhynchus mykiss, along the South Fork Eel River. We used 2D geometric morphometrics to analyze differences in lateral body shape temporally (before versus during) and spatially (above versus below) across a human-made barrier, Benbow Dam. Results indicate differences in morphological dispersion both temporally and spatially. Furthermore, Procrustes ANOVA and pairwise comparisons also indicate differences in lateral body shape for all comparisons. These results lead us to propose functional hypotheses for how muscle mass and movement may differ in trout populations separated by a dam barrier, with particular emphasis on differing trends among resident and migratory fish.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "This is Why I’m Hot: How the Social Construction of Space Influences Conservation Behaviors",
+  "authors": [
+   {
+    "full_name": "Taylor Gamble",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Environmental conservation is a critical global issue, with extreme climate-related events affecting biological ecosystems and human communities. Individual perceptions of climate and geological events are linked to perceived climate risk, health behaviors, and attitudes related to conservation. Moreover, research on temporal perception related to environmental attitudes is theorized to affect an individual’s level of concern. I build on this body of work by exploring the relationship between individual perception and environmental conservation behavior to understand how individuals come to support pro-environmental initiatives behaviorally. Aquatic spaces have not traditionally been seen as sociological, however recently there has been an increased focus on the social aspect of these spaces. Using data from the 2018 nationally representative survey, “Weather, Society, and Government,” I investigate the effect of individual perceptions of climate and geological events on water conservation behavior. Additionally, I explore how an individual’s social capital and belief about the environment surrounding them might be affecting the relationships between perception and an individual’s conservation-based behavior. The importance of these relationships can play a large role in science communication, community building, and the focus of future environmental conservation behavioral research in marine spaces.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "From Snakes to Wolves: Integrated Spatial Capture-recapture Models",
+  "authors": [
+   {
+    "full_name": "Beth Gardner",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Built on the foundation of traditional capture-recapture models, spatial capture-recapture (SCR) models have advanced rapidly since their inception. Initially, SCR models provided a way for researchers to incorporate spatially referenced capture information from trap arrays, allowing for model-based estimates of density. The timing of SCR model developments has paired well with the advancements of non-invasive data collection methods including camera trapping, genetic sampling, and acoustic recordings. With explicit incorporation of spatial capture information, SCR models can be used to explore not only demographics but how animals use space and select resources. SCR models provide a flexible framework for integrating multiple sources of data, for example, GPS/telemetry relocations or occupancy data. In this talk, I’ll describe how we have analyzed data from snakes and wolves with integrated SCR models to better estimate demographic rates and movement patterns. These two examples offer a contrasting perspective of an invasive species and a recolonizing species providing a means to explore very different population dynamics.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Biovisualizations of the cranial pit in the Rockhead Poacher, Bothragonus swanii",
+  "authors": [
+   {
+    "full_name": "Daniel Geldof",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Armored fishes suffer trade-offs for their protection from physical dangers. Their encasement comes with penalties to agility and situational awareness. Many armored fishes have evolved specialized morophology and behaviors counteracting their shortcomings. The Rockhead Poacher is a small, heavilyarmored fish noteworthy for a large dorsal cavity in its head. This cavity, known as the cranial pit, has an undetermined function. I will explore the morphology of the cranial pit and speculate on its function in the context of life as an armored fish.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Anatomy of the Bioluminescent Organ in Ponyfishes (Leiognathidae)",
+  "authors": [
+   {
+    "full_name": "Michael Ghedotti",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jordon Valdez",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Rene Martin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "John Sparks",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Ponyfishes are a group of approximately 51 shallow marine and brackishwater species that produce light using a circumesophageal bioluminescent organ that houses bacteria in the genus Photobacterium. All species use bioluminescence transmitted through a guanine rich swimbladder with ventral transparency for ventral counter illumination, but others also emit light dorsally or laterally through transparent “windows.” The external structure and sexual size dimorphism of this organ within the Leiognathidae has been well discussed. However, the fine-scale anatomy and histology of the light organ in this group is poorly understood. We particularly focus on describing the light organ in the genus Photopectoralis which emits light ventrally and laterally. All organs contain small, elongate chambers that house Photobacterium. These chambers are variously screened by melanocytes and/or guanine to emit light ventrally and to the swimbladder. Evolutionarily modified esophageal musculature associated with these organs may allow selective emission and rapid lateral blinking in males.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Gecko Wars: Assessing Competition and Displacement Behaviors among Invasive House Geckos (Hemidactylus spp.)",
+  "authors": [
+   {
+    "full_name": "Ricardo Gibert",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Robert Espinoza",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The behavioral ecological character-displacement hypothesis posits that competition and behavioral interactions drive niche divergence, making this mechanism a likely determinant of invasive species distributions. House Geckos (Hemidactylus spp.) are nearly globally distributed and often humancommensal invasive lizards. Over the past century, Mediterranean House Geckos (H. turcicus) have established populations in the southern USA; followed by Tropical House Geckos (H. mabouia) decades later in southern Florida, and Sri Lankan House Geckos (H. parvimaculatus) within the last decade in southern Louisiana and Texas. These species are similar in size and occupy nearly identical niches, leading to speculation of competitive displacement of H. turcicus,which no longer occurs in southern Florida and is increasingly rare in southern Louisiana. Yet, no study has documented competition among these species. Our study will determine if the gradual disappearance of H. turcicus from previously occupied regions can be attributed to competition with congeners by ascertaining the competitive dominance hierarchy among these three species. We hypothesize competition will occur, as evidenced by dominance behaviors in staged encounters, with H. turcicus ranked as the weakest competitor. Geckos (n ~ 20/species) are size-matched and paired in staged encounters across all combinations of species and sexes and introduced to an arena where behavioral interactions are video recorded. Predefined behaviors are quantified and categorized to assign dominance ranks and are compared via ANOVA to determine the dominance order among species. Our findings will broaden our understanding of the role of behavior as a mechanism of competitive displacement among co-occurring invasive species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Asymmetrical hybridization and environmental factors influence the spatial genetic structure of a killifish hybrid zone",
+  "authors": [
+   {
+    "full_name": "Andrew Hardy",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Michelle Gaither",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Katie Lotterhos",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Samuel Greaves",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kyra Cipolla",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Emily Kerns",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andres Prieto",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matthew Gilg",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Hybridization offers insight into speciation and the forces that maintain barriers to reproduction, and hybrid zones provide excellent opportunities to test how environmental parameters shapes barriers to reproduction and hybrid fitness. A hybrid zone between the killifish, Fundulus heteroclitus and F. grandis, had been identified in northeastern Florida, although the spatial structure and parameters that affect the distribution of the two species remain unknown. The present study aimed to determine the fine-scale spatial genetic patterns of the hybrid zone to test the hypothesis that species ranges are influenced by changes in dominant vegetation, and to determine how differences in reproductive barriers between the two species influence the observed patterns. The area of overlap between the two species spanned ~37 km and showed a mosaic pattern of hybridization, suggesting the spatial structure of the hybrid zone is largely influenced by the environment. Environmental association analysis, however, suggested a combination of environmental factors were driving the observed patterns as opposed to just the dominant vegetation. Hybridization tended to be rare at sites where F. heteroclitus was the more abundant species, suggesting that differences in preference for conspecifics can lead to differences in rates of introgression into parental taxa even at nuclear loci.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Approaching to Endangered Fish Species of the Pampa Using FAIR Data",
+  "authors": [
+   {
+    "full_name": "Julia Giora",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Juliana Wingert",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "One of the main challenges in the construction of biodiversity knowledge is finding ways to transform what is provided in research publications into reusable formats, following the FAIR data principles. The openly accessible data known as FAIR data stands for Findable, Accessible, Interoperable and Reusable, and may be applied to many kinds of data as figures, tables, and bibliographic references.Most often, biodiversity data is restricted in the so-called “PDF prison”, andthese data are the basis for building new scientific knowledge, as they should be used in decision-making in conservation actions.Plazi’s infrastructure and workflow transform such data into reusable formats that can then be exported and linked across different platforms, such as the GBIF, BLR, Zenodo, Synospecies, ChecklistBank, and OpenBiodiv among others.Pampa is one of the five Brazilian biomes, covering the majority of the Rio Grande do Sul state area, and is currently considered as threatened. We are herein presenting an effort to make literature data about endangered fishes from the Pampa biome a reusable database with essential information about the species descriptions. Plazi uses its own visual editor to extract data and annotate documents in XML, a compatible format suitable for reading by computers. A total of 44 original descriptions of species of fishes were liberated. All information provided in the publications was connected to referenced figures and tables, and made available on the corresponding platforms. A dashboard was created as an interactive graphical tool summarizing how the extracted information interacts at different levels.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Hole-y moly: Morphology and evolution of the genus Monomitopus (Ophidiidae)",
+  "authors": [
+   {
+    "full_name": "Matthew Girard",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "G. Johnson",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The genus Monomitopus(Ophidiidae) is a group of demersal cuskeels found between 150 and 1600 meters in tropical and subtropical seas. Members of the genus can be differentiated from other ophidiids by their large eye, strong opercular spine, two or three spines at the lower angle of the preopercle, and basibranchial 3 tooth plate that extends anteriorly above basibranchials 1 and 2. During the discovery and description of a new species from Hawai’i, we found several distinct morphological features in the neurocranium and pectoral girdle in M. agassizii and M. ainonaka, including a pair of large foramina associated with the braincase that have not previously been described in ophidiiforms. In this study, we describe the variation in and examine the distribution of these morphological characters across all 15 species of Monomitopus using a combination of µCT-scanned and stained specimens. Based on these and other characters, we discuss the evolution of this genus and its placement within the Ophidiidae.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "How Background Color and Circadian Rhythm Impacts Dorsal Coloration in Clearnose Skates",
+  "authors": [
+   {
+    "full_name": "Scott Goldberg",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jonathan Cohen",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Aaron Carlisle",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "The ability for a fish’s skin to lighten or darken in response to changes in background has been demonstrated in many taxa, including several, though not all, of the elasmobranch species tested. Despite the fact that this adaptation was first described in the 1920’s, this process remains poorly described in elasmobranchs. This adaptation may aid elasmobranchs in hiding from predators and prey, though given the slow rate of change (on the scale of hours to days), elasmobranchs cannot use this to quickly mimic the benthos. One of the aims of this study was to determine if a previously untested species, the Clearnose Skate (Rostroraja eglanteria), is capable of changing its dorsal coloration in response to substrate color, and if the rate of this color change varies between individual skates and sexes. We assessed how background matching rates and maximum/minimum dorsal brightness varied across conspecifics and sexes when they were placed on extremely light or extremely dark surfaces. The second goal of this study was to better understand if circadian rhythm may control color change in Clearnose Skates. While it has been demonstrated that circadian rhythm impacts color change in some amphibians and crustaceans, to our knowledge this phenomenon has never to been tested in elasmobranchs. This study will help uncover if a factor other than visual stimuli can impact color change in elasmobranchs.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Condition of Young-of-Year Scalloped Hammerheads during Nursery Use in the Tolomato River, FL",
+  "authors": [
+   {
+    "full_name": "Dylan Gore",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Matthew Bernanke",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "James Gelsleichter",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Studies have determined that theTolomato River, FL is a nursery for young-of-year (YOY) scalloped hammerhead sharks (Sphyrnale wini). It is hypothesized that YOYS.lewini use nurseries for predation release and/or enhanced foraging opportunities. However, there are no studies that have examined the condition of scalloped hammerheads during nursery use in theTolomato River to see if this nursery is selected for either of these purposes. Thus, this study focused on assessing the condition of YOYS.lewini as they use this nursery habitat. To achieve our goal, we caught scalloped hammerheads in the Tolomato River, using longline and hook-and-line fishing and recorded their length, weight, and girth measurements. We then used these data to assess the condition of the scalloped hammerheads. Our data suggests that scalloped hammerheads residing in this site exhibitedgood condition. This suggests that the Tolomato River nursery provides enough food for the juvenile scalloped hammerheads during its use. Therefore, this site likely provides multiple benefits to these individuals.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Variation of cranial morphology within the Anaxyrus americanus complex",
+  "authors": [
+   {
+    "full_name": "Claudia Goss",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Neil Balchan",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Owen Edwards",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kaleb Banks",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Guinevere Wogan",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Broadly distributed across North and Central America, true toads within the genus Anaxyrus occupy a variety of diverse ecosystems and display variation in key morphological traits including body size, external coloration, and size and shape of cranial crests and paratoid glands. Within this genus, eight closely related taxa comprise the Anaxyrus americanus complex. Although dorsal coloration and configuration of paratoid glands and cranial crests are known external distinguishing features within this complex, we aim to characterize the interspecific and intraspecific variation of internal cranial morphological features. Utilizing micro-CT scans of museum specimen within of all eight species within in A. americanus complex in conjunction with 3D geometric morphometric approaches, we have mapped homologous landmark points on the skull across all eight species to characterize within- and between-species cranial trait variation. We used discriminant function analysis and principal component analysis to determine patterns of morphological variation to determine if variation is discrete among species in this complex. Future directions of this study will integrate temperature and precipitation patterns to assess the relationship between cranial morphology and environmental gradients. The results of this investigation may provide an additional line of evidence for examining the taxonomic relationships of this radiation of North American bufonids.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Population genomics of Flat-tailed Horned Lizards (Phrynosoma mcallii) across a fragmented Colorado Desert landscape",
+  "authors": [
+   {
+    "full_name": "Andrew Gottscho",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Dan Mulcahy",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Adam Leaché",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Kevin de Queiroz",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Robert Lovich",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Phrynosoma mcallii(Flat-tailed Horned Lizards) is a species of conservation concern in the Colorado Desert of the United States and Mexico. Our study used ddRADseq data from 45 lizards to investigate population structure, phylogeny, migration barriers, genetic diversity hotspots, and demographic history. Our analyses revealed the Colorado River as a significant geographical feature shaping population structure, with populations west of this river further divided by the Salton Sea. Phylogenetic analysis affirmed the nesting of northwestern populations within southeastern populations. The best-fit demographic model indicates Pleistocene divergence across the Colorado River, accompanied by detectable bidirectional gene flow and a severe Holocene population bottleneck. These findings emphasize the importance of management strategies aimed at preserving genetic diversity on both sides of the Colorado River and Salton Sea. We propose expanding management efforts to additional areas in the U.S. and Mexico for similar goals as those in the Rangewide Management Strategy (RMS). Additionally, we suggest regular periodic genomic sampling to monitor ongoing trends such as diversity loss, hybridization, and alterations in population structure due to habitat fragmentation, climate change, and other long-term impacts.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "The Effects of Preservation Method on the Stomach Contents of Round Goby (Neogobius melanostomus)for Nanopore Diet Metabarcoding",
+  "authors": [
+   {
+    "full_name": "Christian Graca",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Understanding the diet of organisms is an important aspect of conservation biology and ecological research. However, the traditional taxonomic analysis of stomach contents has limitations because partially digested samples or species lacking conspicuous diagnostic morphological traits can make species identification difficult. DNA diet metabarcoding, which is the identification of species from stomach contents based on gene sequences, has been developed to alleviate this problem, but some issues remain. One such issue is that the effect of the preservation method used on the results of diet metabarcoding studies is unclear. My thesis investigates the effects preservation method has on the DNA metabarcoding of stomach contents in a particularly problematic invasive species in the Great Lakes region, the round goby (Neogobius melanostomus).Round gobies were captured during the summer of 2023 in Montrose and Diversey harbors and lakefronts in Lake Michigan, Chicago. The stomach contents were removed, homogenized, and divided into five groups: preservation in 95% ethanol at room temperature, preservation in DESS at room temperature, preservation in 95% ethanol at -20ºC, preservation in DESS at -20ºC, and a control group in which the DNA was extracted from fresh specimens. After four months the DNA from the treatment groups was extracted. Primers amplifying the COI and 16S genes are being tested, as are blocking primers to prevent PCR amplification of round goby DNA. Once such primers have been tested, the DNA library will be prepared and sequenced using the Oxford Nanopore MinION sequencer.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Creating Cultural Change in Small to Medium-Sized Professional Societies: A Training Network Approach",
+  "authors": [
+   {
+    "full_name": "Jasmin Graham",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lisa Whitenack",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Lara Ferry",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Wendy Barnard",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mikki McComb-Kobza",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The culture of shark research faces challenges of exclusion, expense, and media bias. The NSF BIO-LEAPS Design Project entitled “Creating Cultural Change in Small to Medium-Sized Professional Societies: A Training Network Approach” aims to foster diversity and inclusivity in the American Elasmobranch Society (AES) through the implementation of a diverse Advisory Board and training workshops as well as train-the-trainer programs. Future steps involve extending these initiatives to similar societies and seeking NSF funding for broader implementation. The first phase of the project was to recruit an Advisory Board and host a workshop to review the American Elasmobranch Society’s current policies and procedures and provide feedback and suggestions on how to improve equity and accessibility within the society. The Advisory Board offered suggestions in regards to awards and special recognitions including increasing transparency by tracking demographics of recipients, involving Equity and Diversity Committee representatives in application review, and offering bias training as well as reducing barriers by adjusting requirements and sharing judging criteria. They also offered suggestions on accessibility including ensuring event accessibility with wheelchair access, interpreters, and materials, improving communication, and addressing socioeconomic barriers with fee waivers. With regards to the bylaws, the Advisory Board made suggestions on how to integrate diversity, equity and inclusion (DEI) commitments throughout the bylaws, clarify leadership roles, and update bylaws regularly. They also offered suggestions on DEI trainings for AES members and Leadership and the Code of Conduct. We will discuss next steps of how we hope to integrate this feedback moving forward.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Differential Expression of Potential Cardiac Glycoside Genes in the American Toad (Anaxyrus americanus)",
+  "authors": [
+   {
+    "full_name": "Michael Grapin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Thomas Firneno",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Defensive toxins are found in a plethora of vertebrates and invertebrates, and have played a large role in the diversification and co-evolution of many taxa. Within the amphibian world, toads of the family Bufonidae endogenously synthesize defensive toxins. Several of these toxins (bufadienolides) belong to the broad class of cardiac glycosides. While some bufadienolides in toads have been structurally characterized due to their interest in pharmacological development, the underlying genetic and biochemical mechanisms of bufadienolide biosynthesis remains relatively understudied. Our study aimed at identifying and characterizing potential genes responsible for the synthesis of cardiac glycosides in the American Toad (Anaxyrus americanus). We used RNA sequencing to characterize and evaluate the bufonid parotoid gland transcriptome at 0-, 3-, 6-, 9-, and 12-hours time intervals after extracting t secretion of the parotoid gland. We then identified genes that were differentially expressed across these time points and functionally annotated them to identify potential gene candidates involved in bufadienolide biosynthesis.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Pesticide Impacts on Anuran Communities at Florida Gulf Coast University",
+  "authors": [
+   {
+    "full_name": "Zeanna Graves",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Andrew Durso",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Urbandevelopment insouthwest Florida have increased rapidly since the 1950s, while frog populations have decreased.Pesticides are sprayed on managed lands and eventually runoff into nearby waterbodies where they canimpactmany species.This researchaimsto look at the extent to which frogcommunitiesareimpactedby pesticide runoff in wetlands atFloridaGulf- CoastUniversity in Ft. Myers, Florida.We tested whetherwetlands thathave a higherproportion ofturf grassin adjacent uplandshave a lower population and diversity of frogs.Every 4-8 weeks, we setgroups of 30traps for five days at a timeandcheckedthemdaily. Each trap session rotatedbetween different testing sites featuring cypress domes,manmadesites, anddepressions.Captured frogs were collectedtorecordmeasurements, take tissuesamples,andcapturepictu res of tadpole mouthparts toscoreanyabnormalitiesand then released back into the wetland.Water qualitymeasurements were recordedat each site with aSonde.AGISbuffer zonewasaddedaround each trap locationtocalculatetheproportion of land use.Anurans were most abundant at ephemeral wetlands further fromturf grass.The results of this research should help the University adjust their Integrated Pest Management (IPM) approach to minimize harm to susceptible frogs in campus wetlands.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Saving the Toads (and How We Did It)",
+  "authors": [
+   {
+    "full_name": "David Green",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Notwithstanding widespread concern over the past 30+ years about declining amphibian populations and the many possible threats to their continuing existence, how can threatened amphibian populations actually be saved? Since 2010, Fowler’s Toads (Anaxyrus fowleri) in Canada have been listed federally as an endangered species based on the small number of remaining Canadian populations and evidence of an ongoing decline in their abundance, particularly at Long Point, Ontario. By 2013, loss of quality breeding habitat, attributed the spread of invasive Phragmites reeds, was identified as a likely primary contributor to the decline in the toads’ abundance at Long Point. Ponds were dug in the marshes and tadpoles were reared in mesocosms, but neither effort had much tangible effect. In recent years, however, there have been significant changes to the landscape related to high water levels in Lake Erie. Shoreline dunes have washed out, creating open sand flats and shallow, sandy pools where the toads now breed with great success. Their abundance has risen dramatically for the first time in a decade. How to save the toads? Give them what they need.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Movement Ecology of Fowler’s Toads at Long Point, Ontario",
+  "authors": [
+   {
+    "full_name": "David Green",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Movements occur due to the spatial distribution of necessary resources: food, water, shelter, heat, mates, and breeding sites.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Investigating the Thermobiology of Sympatric Snake Species",
+  "authors": [
+   {
+    "full_name": "Hailey Griffin",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Christopher Howey",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "poster",
+  "abstract_text": "Sympatric species may differ in habitat use; although overlapping in range, they may be more adapted to different habitat within the landscape. Environmental temperatures influence physiological processes, behaviors, and ecological interactions of ectothermic animals. Given the difference in habitat use by different ectotherms, differences may also lie in available thermal opportunities for those animals; and thus, selective pressures over time may have led to differences in thermal adaptations. For this project, we measured the preferred body temperature (Tset) and metabolic thermal performance curves for three snake species: Northern Ring-necked Snakes (Diadophis punctatus), Eastern Milksnake (Lampropeltis triangulum) and Eastern Gartersnake (Thamnophis sirtalis). Northern Ring-necked Snakes tend to inhabit subterranean habitat or are found under cover objects within woodland areas. Eastern Milksnakes tend to be found under cover objects, but may also be found in more open habitat. Eastern Gartersnakes are largely generalists and may be found in a large variety of habitats. Snakes were captured and brought into the lab where we measured preferred body temperatures in a thermal gradient and measured metabolic rates at varying temperatures. The data obtained from this experiment will help determine whether varying thermal environments can affect the thermal physiology of different sympatric species inhabiting varying thermal niches.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Structure and function of the backbone: morphology and modeling of neural and haemal spines in burrowing and non-burrowing labrid fishes",
+  "authors": [
+   {
+    "full_name": "Olivia Guerra",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Linnea Lungstrom",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Mark Westneat",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Sand diving is a burrowing behavior in which an individual conceals itself completely under substrate as a startle response, to avoid predation, or to sleep. This burrowing behavior is widespread in wrasses (family Labridae), and previous studies show that sand diving species differ from non-sand diving species in morphological traits such as body shape and depth, head shape, vertebral prezygapophyses, and neural spine overlap. Here we test ideas of vertebral force transmission by examining the diversity in the vertical septum of both sand diving and non-sand diving taxa through the analysis of the geometry and morphometrics in the neural and haemal spines of the caudal region. We develop models of the vertical septum through the exploration of the surrounding collagen fiber membrane to visualize tension undergone by spines through backbone bending. Using the R packages StereoMorph and geomorph, we performed 2D geometric morphometrics using vertebral images of multiple species of sand diving and non-sand diving wrasses. The system of collagen fibers in the vertical septum was visualized using polarized light and inspired preliminary biomechanical models. Results show that sand divers and non-sand divers occupy different regions of vertebral morphospace, and that neural and haemal spines undergo tension within the collagenous fiber system upon backbone bending.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Movement Ecology of the Texas Diamondback Terrapin (Malaclemys terrapin littoralis)",
+  "authors": [
+   {
+    "full_name": "Garrett Guzoski",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Loretta Battaglia",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Movement ecology focuses on organism movement and behavior within and between their preferred habitats. Animals move for a variety of reasons, such as anthropogenic pressure and changes in salinity and temperature. The Diamondback Terrapin, a species that inhabits coastal brackish habitats in a narrow band spanning the Atlantic and Gulf coasts, is the only brackish dwelling turtle in North America. Most research pertaining to terrapins has focused on Northern and Carolina subspecies and little information exists on the Texas subspecies,. To fill knowledge gaps at the southwestern end of the terrapin’s distribution, this project is focused on home range and core use area, salinity preferences, and effects of salinity shifts on terrapin movement. The study area, located north of Corpus Christi, Texas, includes Nueces River and its tidal segment in Nueces Bay, a known terrapin hotspot. Salinity fluctuations in this system are common and dependent on inflows, salinity levels may range from fresh to hypersaline. Salinity is being monitored at permanent data stations in the upstream and downstream reaches of the site, and at points in between using HOBO loggers. Terrapins are being trapped using modified chimney-fitted crab traps and marked for identification purposes to track movements along the salinity gradient. The trapping campaign began in Summer 2023 and has yielded 23 captures ranging between salinities of 15-37 ppt. Trapping and salinity measurements will continue through summer of 2024. The findings of this project will provide a framework to protect the Texas Diamondback Terrapin and their habitat in south Texas.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Unexpected Cryptic Diversity in Pareiorhaphis nudula (Siluriformes: Loricariidae), in South Brazil",
+  "authors": [
+   {
+    "full_name": "Mateus Haas",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Pablo Lehmann-A",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Edson Pereira",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Roberto Reis",
+    "affiliation": null,
+    "is_presenter": true
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The sucker-mouth catfish Pareiorhaphis comprises 28 small-sized species inhabiting headwater streams of south and southeastern Brazil. Pareiorhaphis nudula from South Brazil differs from its congeners by exhibiting six main characteristics, with the most notable being the extreme reduction of dermal plates on the dorsal surface of the body. In the original description, its distri bution was recorded as restricted to the Araranguá River basin. Subsequent fieldwork has revealed that this species occurs in five other neighbor drainages that share an orogenic history: Maquiné, Três Forquilhas, Mampituba, Araranguá, and Tubarão Rivers. These rivers originate in the highlands of the Serra Geral mountain range and flow to the east towards the Atlantic Ocean through ancient valleys that act as geographical barriers today. These rivers, however, have been temporarily connected during the eustatic sea level fluctuations of the Pleistocene, allowing dispersal and subsequent species differentiation. Therefore, the objectives of this study are to conduct a review of all populations to delimit the actual range of P. nudula and to identify undetected cryptic biodiversity. Morphological and molecular species delimitation methods are being performed based on material deposited in the fish collection of the Museum of Science and Technology at PUCRS (MCP), both historical and freshly collected. Preliminary analyses of morphological and molecular data indicate the existence of five cryptic species within the P. nudula species complex geographically isolated in separate coastal basins. This study will contribute to the knowledge of the ichthyofauna of southern Brazil and the conservation of these species.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Delineation of Species within Poeciliopsis occidentalis sensu lato",
+  "authors": [
+   {
+    "full_name": "Angela Haggard",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Alanna Fulkerson",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jack Curry",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Madison Nguyen",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Marianna Mateos",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Two nominal species,Poeciliopsis occidentalis(Baird and Girard) andP. sonoriensis(Girard), and some lineages known to be genetically distinct are currently combined under the umbrella,Poeciliopsis occidentalis sensu lato. Poeciliopsis occidentalisandP. sonoriensiswere briefly described in 1853 and 1859, respectively, but have not since been reassessed.Poeciliopsis occidentalisis a species of conservation concern throughout its range and is the subject of extensive reestablishment efforts in its historic U.S. distribution. Efforts to identify and monitorPoeciliopsis occidentalis sensu latoare hampered by the co-occurence of its sexual “parasite,” the all-female asexual hybrid biotypeP. monacha-occidentalis.Without a clear definition of the species withinPoeciliopsis occidentalis sensu lato, conservation efforts are hindered and morphological distinction of hybrids is impossible. To facilitate further study of these fishes, thePoeciliopsis occidentalis sensu latocomplex was investigated and broken up. Species were morphologically delineated using standard morphometrics and meristics and osteological examinations via CT scans and clearing and double staining. Lineages were distinguished following existing molecular data and confirmed via sequencing of diagnostic genes.Poeciliopsis sonoriensis andP. occidentalis were redescribed, and distinct lineages assessed as candidates for description.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Highly convergent Anolis lizards exhibit divergence in fundamental life-history traits",
+  "authors": [
+   {
+    "full_name": "Joshua Hall",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Christopher Thawley",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "James Stroud",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Evolutionary convergence is considered powerful evidence for adaptation to similar natural selection pressures. However, for many ecologically and morphologically convergent species, it remains unclear if convergence extends to more cryptic aspects of biology, especially those with major fitness consequences such as reproductive strategies. Here, by measuring key life-history traits (e.g., reproductive status, egg size, oviposition frequency, reproductive effort) across a full annual cycle comprising both reproductive and non-reproductive seasons, we discover divergence in reproductive strategies in two otherwise strikingly convergent Anolislizards. The Cuban brown anole (A. sagrei) rapidly produces many small eggs during a concentrated summer reproductive season, while the Puerto Rican crested anole (A. cristatellus) produces comparatively fewer, larger eggs over a longer period. Thus, despite evolving highly convergent ecomorphological phenotypes and both being constrained to a single-egg clutch, these species exhibit marked divergence in life-history trade-off strategies. Our results indicate that ecomorphological convergence can evolve uncoupled from life-history pathways.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Welcome and Introduction: What is Data Integration and Why Should I Care?",
+  "authors": [
+   {
+    "full_name": "Brian Halstead",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Jonathan Rose",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "Data integration encompasses is a diverse and growing field that improves statistical inference by leveraging diverse sources of information on quantities of interest. Types of data often collected by herpetologists, including presence-only, detection-nondetection, count, capture-mark-recapture, and radio telemetry data, can often be combined analytically to improve precision of estimated quantities or allow estimation of quantities that otherwise could not be estimated. In this symposium, we will introduce attendees to many different forms of data integration useful to herpetologists (and our ichthyological colleagues as well) by providing examples of recent and ongoing research that incorporates multiple sources of data to improve inference about amphibian and reptile populations and communities. This welcome talk will introduce the topic and provide brief examples to whet attendees’ appetites for the more detailed presentations to come.",
+  "keywords": [],
+  "session_name": null
+ },
+ {
+  "title": "Using Spatial Modeling to Manage Atlantic Highly Migratory Species (HMS)",
+  "authors": [
+   {
+    "full_name": "Erianna Hammond",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Steve Durkee",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Larry Redd Jr.",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Karyl Brewster-Geisz",
+    "affiliation": null,
+    "is_presenter": false
+   },
+   {
+    "full_name": "Tobey Curtis",
+    "affiliation": null,
+    "is_presenter": false
+   }
+  ],
+  "presentation_type": "talk",
+  "abstract_text": "The Highly Migratory Species Management Division of the National Marine Fisheries Service (NOAA Fisheries) is responsible for the management of the U.S. federal swordfish, tunas, billfish, and shark fisheries in the Atlantic Ocean, including the Gulf of Mexico and Caribbean Sea. In 2023, we published a proposed rule and fishery management plan amendment that considered changes to the timing and boundaries of four commercial longline closed areas that have been in place for approximately 20 years. Closed areas, while effective in reducing bycatch and fishing effort, pose challenges by limiting the ability to gather fishery-dependent data critical for management needs. Additionally, the static nature of these closures contrasts with the dynamic HMS fisheries and ocean environment, necessitating an assessment of the effectiveness of time/area closures and other gear-restricted management measures. Recognizing this limitation, NOAA Fisheries developed HMS PRedictive Spatial Model (PRiSM), a tool that combines observer-collected catch data with environmental variables to predict gear-specific fishery interactions, including in areas with limited or no data. We used this tool to assist in the evaluation of closed areas’ efficiency and effectiveness in meeting management and conservation goals. In this discussion, we will describe the preferred area modifications. Academic researchers may be interested in this action as it provides opportunities to conduct research in areas that were previously closed to allow further data collection and determine the effectiveness of the current closed areas.",
+  "keywords": [],
+  "session_name": null
+ }
+]
