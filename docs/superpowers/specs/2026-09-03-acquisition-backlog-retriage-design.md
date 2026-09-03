@@ -154,6 +154,85 @@ a journal string is flagged as a surname only when it matches that row's own
 first-author surname, and as a title only when it duplicates the row's own
 title.
 
+## Section 1b: findspot backfill (do this FIRST)
+
+Investigating the stub journal strings ("Conference Abstract", "In Programme
+Booklet of The", "Proceedings of the", "Book of Abstracts") found that they are
+**our own damage, not Shark-References'**, and that the lost text is still
+live and re-fetchable.
+
+For literature_id 14171:
+
+```
+stored by us : "In Programme Booklet of The"
+live on SR   : "In Programme Booklet of The 15th Annual Scientific Conference
+                of the European Elasmobranch Association, Berlin,
+                29.10.-30.10.2011"
+```
+
+The current parser is correct: `sync_shark_references.py` line ~302 takes
+`<span class="lit-findspot">` verbatim and returns the whole string. The
+truncation was baked in by an earlier scrape or cleaning step and has never been
+back-filled, because Phase 2 diffs and only enriches genuinely NEW papers.
+Existing rows keep whatever they were first stored with.
+
+### Measured on the live letter B and C pages
+
+| Measure | Result |
+|---|---|
+| Our rows matched to live entries | 918 (B), plus C |
+| Ours is a truncated prefix of live | 75.2% |
+| Non-conference rows where the discarded tail is only volume/pages | 835 (benign, correct behaviour) |
+| **Conference-shaped rows that gain a real conference name** | **161 of 186, 87%** |
+
+The 75% headline is misleading and must not be quoted on its own: stripping
+`"Zootaxa, 5357(3), 301-341"` to `"Zootaxa"` is exactly what
+`clean_journal_name()` should do. The damage is confined to the case where the
+discarded remainder carried the venue's identity rather than its volume and
+pages, which is precisely the conference rows.
+
+Recovered strings also carry the page number within the abstract book
+(`"...23rd annual conference, 16-18 October 2019, Rende, Italy: 53"`), which the
+conference-abstracts project needs to link an abstract to its book and page.
+
+### Design
+
+Add a **`findspot_raw`** field, populated verbatim from the list pages, and
+never cleaned. `journal` and `journal_clean` keep their current meanings and
+current values, so nothing downstream breaks.
+
+`findspot_raw` then serves three consumers:
+
+1. **Track B series identification.** The conference name, year, city, and page
+   come free, which is most of what the coverage matrix needs.
+2. **C1 DOI lookup.** A Crossref bibliographic query with a real venue string
+   beats one with "Proceedings of the".
+3. **Damaged-field repair.** Some of the 202 `Damaged_journals` rows are simply
+   truncations that the raw findspot resolves outright.
+
+Implement as a new phase in `sync_shark_references.py` that writes
+`findspot_raw` for every row seen on the list pages, not only new ones, so the
+backfill runs once and then self-maintains on every monthly sync. The crawl is
+already happening; only the write is new.
+
+**Sequencing:** this runs BEFORE the Track B review sheet is finalised and
+before the C1 DOI pass, since both get materially better inputs from it. The
+current `acquisition_triage_2026-09-03.xlsx` should be regenerated afterwards.
+
+### Why not an LLM, and specifically not Fable 5.1
+
+Fable is the strongest model available here and it would still be the wrong
+instrument for this job. The conference names are not missing, ambiguous, or in
+need of inference: they are sitting on a public web page we already crawl every
+month. Asking a model to reconstruct "In Programme Booklet of The" into a
+conference identity is asking it to guess at a fact we can simply fetch, and a
+plausible wrong guess is indistinguishable from a right one at review time.
+
+Re-scrape first. Fable earns its place only on the genuine residue, where SR's
+own findspot is uninformative and the answer has to come from the PDF or from
+judgement. Measure that residue after the backfill rather than assuming its
+size.
+
 ## Section 2: DOI recovery pass
 
 `scripts/recover_missing_dois.py`, run over all no-DOI rows regardless of year.
