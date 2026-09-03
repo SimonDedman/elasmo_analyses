@@ -24,6 +24,24 @@ def merge():
     fab_srcs = [r[0] for r in fab.execute("SELECT source_pdf FROM meetings")]
     old = main.execute("SELECT meeting_id FROM meetings WHERE meeting='EEA' OR source_pdf IN (%s)"
                        % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
+
+    # A flatbed rescan SUPERSEDES the phone scan of the same meeting, but the two
+    # have different filenames (..._phonescan.pdf), so matching on source_pdf
+    # alone left both in the DB: JMIH 1998 carried 94 junk phone-scan records
+    # (every one needs_review, titles like "American Socicty of Ichthyologist and
+    # Elerpatc!szsts") alongside the 601 clean flatbed ones. Drop the superseded
+    # meeting, but ONLY where a clean book for that same meeting-year is actually
+    # being merged — for 1997/1999/2000/2001 the phone scan is still the only
+    # source we have and must be kept.
+    fab_years = {(r[0], r[1]) for r in fab.execute("SELECT meeting, year FROM meetings")}
+    for mid, meeting, year, src in main.execute(
+            "SELECT meeting_id, meeting, year, source_pdf FROM meetings").fetchall():
+        if not src or not any(frag in src for frag in C.SKIP_NAME_FRAGMENTS):
+            continue
+        if (meeting, year) in fab_years:
+            print(f"  SUPERSEDED {meeting} {year}: dropping {Path(src).name} "
+                  f"(replaced by the clean book)")
+            old.append((mid,))
     for (mid,) in old:
         main.execute("DELETE FROM authors WHERE abstract_id IN (SELECT abstract_id FROM abstracts WHERE meeting_id=?)", (mid,))
         main.execute("DELETE FROM abstracts WHERE meeting_id=?", (mid,))
