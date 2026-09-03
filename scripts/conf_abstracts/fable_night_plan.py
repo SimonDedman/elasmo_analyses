@@ -7,11 +7,13 @@ Prints one JSON line: {"indices":[...], "per_book":{...}, "n":N}
 """
 import json, os, sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from conf_abstracts.fable_cache import is_done
 WL = Path(__file__).resolve().parents[2] / "outputs" / "conf_abstracts" / "fable_worklist.json"
 w = json.loads(WL.read_text())
 books = sys.argv[1:]
 idx, per = [], {}
 for x in w:
-    if x.get("book_key") in books and not (os.path.exists(x["cache_path"]) and os.path.getsize(x["cache_path"]) >= 2):
+    if x.get("book_key") in books and not is_done(x["cache_path"]):
         idx.append(x["index"]); per[x["book_key"]] = per.get(x["book_key"], 0) + 1
 print(json.dumps({"indices": idx, "per_book": per, "n": len(idx)}))

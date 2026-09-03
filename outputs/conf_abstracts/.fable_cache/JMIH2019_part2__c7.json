@@ -1,0 +1,140 @@
+[
+  {
+    "title": "Do Freshwater Hatchetfishes (Characiformes; Gasteropelecidae) \"hear\" with the top of their heads?",
+    "authors": [
+      {"full_name": "K. W. Conway", "affiliation": "Texas A&M University, College Station, Texas, USA", "is_presenter": false}
+    ],
+    "presentation_type": null,
+    "abstract_text": "Gasteropelecidae (Carnegiella, Gasteropelecus, and Thorachocharax) are among the most unusual fishes within the order Characiformes. Although these fishes are well known for their ability to detect and locate potential prey items on the water surface, the morphological modifications that facilitate this behavior remain unknown. Here, we describe several unique modifications of the surface of the head and laterosensory canals of freshwater hatchetfishes that may be involved in prey detection at the water surface. The top of the head is covered by multiple rows of superficial neuromasts running from just posterior to the upper lip to the supraoccipital. The frontal and parietal have two longitudinal, parallel crests of bone that create two pairs of elongate troughs (one lateral, one medial) on the dorsal surface of the head. Each trough is roofed by a thin layer of skin. The medial trough extends along the entire frontal and a portion of the parietal, connecting to the exterior only through the nasal canal. The shorter lateral trough is located dorsal to the orbit, and connected to the medial by a foramen. Inside each of the bony troughs are large banana-shaped neuromasts that are arranged perpendicular to each other. This includes two in the median and one in the lateral chamber, as well as one in the foramen between the two. Together these modifications may serve as a “tympanum”, enabling hatchetfishes to better sense prey items at the surface.",
+    "keywords": [],
+    "session_name": null
+  },
+  {
+    "title": "Distribution and community structure of First Coast shark assemblages",
+    "authors": [
+      {"full_name": "Clark Morgan", "affiliation": "University of North Florida, Jacksonville, Florida, USA", "is_presenter": true},
+      {"full_name": "Jim Gelsleichter", "affiliation": "University of North Florida, Jacksonville, Florida, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Nearshore marine environments are known to be highly productive systems with relatively high faunal diversity and abundances, but these systems are particularly vulnerable to negative impacts from anthropogenic disturbances such as pollution and overexploitation. Despite these challenges, many shark species of various life stages utilize coastal shelf habitats, inshore estuaries, and bays. The inshore habitats of Cumberland and Nassau Sounds in northeast Florida have been proposed as potential nursery grounds by earlier work, but this suggestion did not satisfy all of the standard criteria of shark nursery designation. It has recently been stated that the combination of surveys inside and outside suspected nursery habitats, especially those incorporating mark-recapture studies, would provide a very comprehensive test of the nursery criteria. A primary objective of the present study was to initially describe the composition and abundance of shark populations utilizing the nearshore habitats of northeast Florida, while also comparing them to inshore communities, with emphasis on spatial and temporal variations in assemblages. Fishery-independent longline sampling was conducted across the region, and while considerable overlap of species were observed, significant differences in community structure between inshore and nearshore locations were detected providing support of distinct nursery grounds. The identification of factors that influence coastal shark habitat utilization can contribute to the understanding and predicting of how they may respond to environmental changes. This study may serve as an example to inspire future studies assessing nursery habitat use and may be useful for comparisons against other locations.",
+    "keywords": [],
+    "session_name": "AES Genetics/Ecology"
+  },
+  {
+    "title": "Feeding Kinematics and Behavior of the Sand Tiger Shark, Carcharias taurus",
+    "authors": [
+      {"full_name": "Joshua Moyer", "affiliation": "Graduate Program in Organismic & Evolutionary Biology, University of Massachusetts Amherst, Amherst, MA, USA", "is_presenter": true},
+      {"full_name": "Stephanie Shannon", "affiliation": "Mystic Aquarium, Mystic, CT, USA", "is_presenter": false},
+      {"full_name": "Duncan Irschick", "affiliation": "Department of Biology, University of Massachusetts Amherst, Amherst, MA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Logistical challenges have historically limited analyses of feeding performances in large predatory vertebrates. Enabled by recent technological advances in “action cam” video technology, this study examines the feeding behavior and kinematics of three sub-adult Sand Tiger Sharks, Carcharias taurus, on display at Mystic Aquarium (Mystic, Connecticut, USA). We used high-speed video data from 52 bites to identify kinematic variables associated with the expansive and compressive phases of biting in C. taurus. Mean bite duration was 0.14 ± 0.01 s, and across the ten fastest bites of each individual, the maximum performance average was 0.13 ± 0.01 s. These values did not vary among individuals. When compared to kinematic bite data from previously studied species, these results indicate that body size is not the only determinant factor of bite duration. We also provide detailed descriptions of feeding behaviors in C. taurus, including documentation of tooth loss. Finally, we discuss behavioral and ecological aspects of prey capture in the Sand Tiger Shark and suggest points of consideration to facilitate interspecific comparisons of prey capture performance large, macrophagous elasmobranchs.",
+    "keywords": [],
+    "session_name": "AES Carrier Award, Poster Session I"
+  },
+  {
+    "title": "North-facing Slopes and Elevation Shape Asymmetric Genetic Structure in the Range-restricted Salamander Plethodon shenandoah",
+    "authors": [
+      {"full_name": "Kevin P. Mulder", "affiliation": "Center for Conservation Genomics, Smithsonian Conservation Biology Institute, National Zoological Park, Washington, DC, USA; CIBIO/InBIO, Research Center in Biodiversity and Genetic Resources, Vairão, Porto, Portugal; Department of Vertebrate Zoology, National Museum of Natural History, Smithsonian Institution, Washington, DC, USA", "is_presenter": true},
+      {"full_name": "Nandadevi Cortes-Rodriguez", "affiliation": "Department of Biology, Ithaca College, Ithaca, NY, USA", "is_presenter": false},
+      {"full_name": "Evan H. Campbell Grant", "affiliation": "United States Geological Survey, Patuxent Wildlife Research Center, SO Conte Anadromous Fish Research Lab, Turners Falls, MA, USA", "is_presenter": false},
+      {"full_name": "Adrianne Brand", "affiliation": "United States Geological Survey, Patuxent Wildlife Research Center, SO Conte Anadromous Fish Research Lab, Turners Falls, MA, USA", "is_presenter": false},
+      {"full_name": "Robert C. Fleischer", "affiliation": "Center for Conservation Genomics, Smithsonian Conservation Biology Institute, National Zoological Park, Washington, DC, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Species with narrow environmental tolerances are often distributed within fragmented patches of suitable habitat, and dispersal among these subpopulations can be difficult to directly observe. Genetic data can help quantify gene flow between localities, which is especially important for vulnerable species with a disjunct range. The Shenandoah salamander (Plethodon shenandoah) is a federally endangered species known only from three mountaintops in Virginia, USA. To reconstruct the evolutionary history and population connectivity of this species, we generated both mitochondrial and nuclear data using sequence capture from individuals collected across all three mountaintops. Applying population and landscape genetic methods, we found strong population structure that was independent of geographic distance. Both the nuclear markers and mitochondrial genomes indicated a deep split between the most southern population and the genetically similar central and northern populations. Although there was some mitochondrial haplotype-splitting between the central and northern populations, there was admixture in nuclear markers. This is indicative of either a recent split or current male-biased dispersal among mountain isolates. Models of landscape resistance found that dispersal across north-facing slopes at mid-elevation levels best explain the observed genetic structure among populations. These unexpected results highlight the importance of incorporating landscape features in understanding and predicting the movement and fragmentation of this range-restricted salamander species across space.",
+    "keywords": [],
+    "session_name": "ASIH Stoye Genetics, Development & Morphology Award II"
+  },
+  {
+    "title": "SharkTraits: a curated, open-access database of shark, ray, and chimaera life history traits",
+    "authors": [
+      {"full_name": "Christopher Mull", "affiliation": "Simon Fraser University, Burnaby, BC, Canada", "is_presenter": true},
+      {"full_name": "Sebastián Pardo", "affiliation": "Dalhousie University, Halifax, Canada", "is_presenter": false},
+      {"full_name": "Alastair Harry", "affiliation": "DPIRD, Perth, Australia", "is_presenter": false},
+      {"full_name": "Luz Saldaña Ruiz", "affiliation": "Centro de Investigacion Cientifica y de Educacion Superior de Ensenada (CICESE), Ensenada, Mexico", "is_presenter": false},
+      {"full_name": "Emiliano Garcia Rodriguez", "affiliation": "Centro de Investigacion Cientifica y de Educacion Superior de Ensenada (CICESE), Ensenada, Mexico", "is_presenter": false},
+      {"full_name": "Brit Finucci", "affiliation": "Victoria University, Wellington, New Zealand", "is_presenter": false},
+      {"full_name": "Christopher Bird", "affiliation": "CEFAS, Norwich, United Kingdom", "is_presenter": false},
+      {"full_name": "Cassandra Rigby", "affiliation": "James Cook University, Townsville, Australia", "is_presenter": false},
+      {"full_name": "Manueal Dureuil", "affiliation": "Dalhousie University, Halifax, Canada", "is_presenter": false},
+      {"full_name": "Nicholas Dulvy", "affiliation": "Simon Fraser University, Burnaby, BC, Canada", "is_presenter": false},
+      {"full_name": "Holly Kindsvater", "affiliation": "Rutgers University, New Brunswick, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Accurate and complete information on life history traits is critical for reliably estimating biological reference points and for developing successful management and conservation strategies. Shark and ray scientists have long collected data on fundamental biological information including size, age and growth, and reproduction. However, this information is spread throughout a range of primary and grey literature and can be further obscured by taxonomic revisions, making data difficult to access and subsequently underutilized in addressing broad-scale questions. To address these challenges, we present SharkTraits, an open-access and expertly curated database of shark, ray, and chimaera life history traits. Our database, modeled after the Coral Trait Database initiative, provides species-, population-, and individual-level data from published field studies and technical reports for six trait classes comprising 56 traits across the 1,192 species of sharks, rays, and chimaeras. Additionally, we provide observation-level methodological information to account for potential biases in data collection or model methods that may have changed over time. Through synthesizing this information, we hope to provide a tool for understanding variation in life history strategies between species, interspecific variation both spatially and temporally, and to identify crucial taxonomic or geographical gaps in our understanding. Our goal is for the SharkTraits database to provide an open-access, and community-driven central data repository and clearinghouse that enhances and accelerates shark, ray, and chimaera research, management, and conservation.",
+    "keywords": [],
+    "session_name": "AES Reproduction & Life History"
+  },
+  {
+    "title": "Stories from the field: On the role of behavior in evolution and being a woman in herpetology",
+    "authors": [
+      {"full_name": "Martha Munoz", "affiliation": "Virginia Tech, Blacksburg, VA, USA", "is_presenter": true}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "One of the most ubiquitous patterns in evolution is that biological diversity is distributed unequally. Whereas some traits and lineages diversify rapidly others remain inert for millions of years. But, why is this true? Why are some features in evolutionary overdrive while others appear stuck in the slow lane? I primarily address this question by focusing on one of evolution's most powerful architects: behavior. I discover how behavior generates phenotypic diversity in natural populations and reveal these signatures at both micro- and macroevolutionary scales. My research focuses on two key study systems: Anolis lizards and plethodontid salamanders. Although different in many ways, I have discovered that behavior imparts distinct, repeatable signatures on physiological evolution in both groups of organisms. Although I have been conducting herpetological research for more than a decade, my career trajectory has been far from linear. I was always fascinated with nature as a child, but I had no idea that I could ever be a scientist or a herpetologist. And, even when I knew that I wanted to study herpetology, I did not always feel welcome in the community. My journey has involved several challenges, but I have found support from excellent mentorship and my colleagues. Rather than force myself to change for herpetology, I have decided to change herpetology by being a part of it exactly as I am. Because of all the diverse people who identify as herpetologists and who make the community inclusive and welcoming, the future of herpetology is bright.",
+    "keywords": [],
+    "session_name": "ASIH/HL/SSAR Symposium: Professional Women in Herpetology: Lessons and Insights"
+  },
+  {
+    "title": "Comparative Phylogeography of Hemidactylus geckos and insights into biogeographical dispersal barriers in Myanmar",
+    "authors": [
+      {"full_name": "Matthew Murdoch", "affiliation": "Villanova University, Villanova, PA, USA", "is_presenter": true},
+      {"full_name": "Lee Grismer", "affiliation": "La Sierra University, Riverside, CA, USA", "is_presenter": false},
+      {"full_name": "Todd Jackman", "affiliation": "Villanova University, Villanova, PA, USA", "is_presenter": false},
+      {"full_name": "Aaron Bauer", "affiliation": "Villanova University, Villanova, PA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Myanmar sits at a biogeographic crossroads where the faunas of China, Indochina, India, the Himalayas, and the Malay Peninsula converge. Due to its unique geologic past, the region boasts a large number of potential biogeographic barriers to the dispersal of herpetofauna. One of particular importance is the steep elevational gradient between the semi-arid central Myanmar Basin and the hill ranges of the Shan Plateau and Tenasserim mountains. Previous work has shown that this barrier forms the distributional limit of many taxa, including several gekkonid genera such as Hemiphyllodactylus, Gehyra, Cnemaspis, and several major clades of Cyrtodactylus. However, the genus Hemidactylus has received little attention in the region while in adjacent areas of South Asia significant diversity has recently been uncovered. We present a phylogeographic hypothesis for the Hemidactylus bowringii clade from either side of the Shan/Tenasserim elevation shift. Our study supports previous hypotheses that this geologic feature acts as a biogeographic barrier, limiting gene flow in gekkonids, and reveals greater diversity within Southeast Asian Hemidactylus than previously recognized. This work has implications for understanding the evolutionary history of the genus as well as the broader influences of biogeographic barriers within Myanmar on the shaping of present-day herpetofaunal diversity in Asia.",
+    "keywords": [],
+    "session_name": "SSAR Hutchison Evolution, Genetics, & Systematics Award, Poster Session I"
+  },
+  {
+    "title": "Over the Field or Through the Woods? An Assessment of Movement and Orientation Behavior in Two Anuran Species",
+    "authors": [
+      {"full_name": "Mason Murphy", "affiliation": "Miami University, Oxford, OH, USA", "is_presenter": true},
+      {"full_name": "Michelle Boone", "affiliation": "Miami University, Oxford, OH, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Dispersal links spatially isolated populations, and is vital for the maintenance of healthy populations by reducing regional extinction and inbreeding effects. An organisms’ ability or willingness to disperse may be influenced by both intrinsic factors, such as body condition, and extrinsic factors, such as land cover. Specifically, the habitat matrix can promote either isolation or connectivity based on an individual’s behavioral response or their likelihood to successfully traverse the landscape. In this study, we examined the effects of both intrinsic and extrinsic factors on movement and orientation in two anuran species (Lithobates pipiens and Anaxyrus americanus) by tracking movement of two size classes of metamorphic anurans released at habitat edges between three distinct habitat types: pasture, forest, and corn agriculture. We predicted A. americanus, a closed canopy species, would avoid open canopy habitat and northern L. pipiens, an open canopy species, would avoid closed canopy habitat. Within species, we predicted size specific differences in movement, with smaller individuals displaying shorter path movements within the chosen habitat. We found Lithobates pipiens avoided closed canopy forests in favor of open canopy agriculture and old field habitat, and A. americanus preferred closed canopy forest habitat. While body size influenced movement in both species, with larger individuals travelled longer distances, we found no effect of body size influenced orientation behavior. By understanding individual behavioral response to habitat edges, this study highlights the differential influence of environment and behavior on movement, and furthers our understanding of factors affecting dispersal.",
+    "keywords": [],
+    "session_name": "Herpetology Ecology & Behavior"
+  },
+  {
+    "title": "Does arboreality heighten sensitivity to habitat modification in anurans?",
+    "authors": [
+      {"full_name": "Alexander Murray", "affiliation": "University of Texas at Arlington, Arlington, Texas, USA", "is_presenter": true},
+      {"full_name": "Luke Frishkoff", "affiliation": "University of Texas at Arlington, Arlington, Texas, USA", "is_presenter": false}
+    ],
+    "presentation_type": "talk",
+    "abstract_text": "Habitat modification is a leading driver of species loss. However, following habitat modification not all species decline and the ecological mechanism underlying these differences remains uncertain. One intuitive means to explain which species are lost is species’ niche to environment matching. If species niche requirements are unavailable or reduced in a modified habitat, this should lead to reduced abundance or local extinction. Species affiliation with vegetative strata may be a critical axis limiting species in modified habitats, due to the extensive simplification of vegetative structure following habitat conversion. Using 34 studies of anuran community composition, we evaluate the role of vertical niche position in defining abundance within primary forest, plantation, and pastures. We test the hypothesis that species that use higher vegetative strata will be most severely reduced following conversion of tropical forest, and that this reduction will be most severe in structurally simple pastures. Our results confirm that vertical niche position is an important predictor of abundance in modified habitats. Yet surprisingly we show that abundance in modified habitats increases with vertical niche position, such that arboreal species are more dominant in modified habitats than terrestrial species. This counterintuitive result could come about because physiological tolerance to desiccation and high temperatures experienced in forest canopies pre-adapt these species to the harsher abiotic conditions in pasture. What limits a species’ ability to persist is not always clear. Structural components of a species’ vertical niche may be less important than other traits correlated with vertical niche position.",
+    "keywords": [],
+    "session_name": "ASIH Stoye Ecology & Ethology Award II"
+  },
+  {
+    "title": "Chytrid Growth Inhibition in Two Fully Aquatic Salamanders",
+    "authors": [
+      {"full_name": "Lindy Muse", "affiliation": "Southeastern Louisiana University, Hammond, LA, USA", "is_presenter": true},
+      {"full_name": "Kenzie Pereira", "affiliation": "Duquesne University, Pittsburgh, PA, USA", "is_presenter": false},
+      {"full_name": "Sarah Woodley", "affiliation": "Duquesne University, Pittsburgh, PA, USA", "is_presenter": false},
+      {"full_name": "Clifford Fontenot", "affiliation": "Southeastern Louisiana University, Hammond, LA, USA", "is_presenter": false},
+      {"full_name": "Brian Crother", "affiliation": "Southeastern Louisiana University, Hammond, LA, USA", "is_presenter": false},
+      {"full_name": "Demetra Kandalepas", "affiliation": "Southeastern Louisiana University, Hammond, LA, USA", "is_presenter": false}
+    ],
+    "presentation_type": "poster",
+    "abstract_text": "Chytrid fungal pathogens, Batrachochytrium dendrobatidis (Bd) and B. salamandrivorans (Bsal) are causing amphibian die-offs worldwide. While Bd is already found in North America, Bsal has not yet been detected among native populations. Although it is known that not all amphibian species are susceptible to chytrid pathogens, the factors underlying differences in susceptibility are poorly understood. Because amphibian skin secretions have been shown to have anti-fungal properties mediated through the action of antimicrobial peptides (AMPs) and have been hypothesized to aid in clearing of chytrid infections, it is possible that skin secretions are important for protecting some amphibian species from disease caused by chytrid pathogens. The objective of this study was to determine whether the skin secretions of the fully aquatic salamander, Siren intermedia (Lesser Siren) inhibit the growth of Bd or Bsal using in-vitro growth inhibition assays. Skin secretions were collected from 10 wild caught S. intermedia, skin peptides were extracted, pooled, serially diluted, combined with either Bd or Bsal zoospores and plated. Optical density was read daily for 14 days. We found that when combined with even low concentrations of S. intermedia skin peptides, Bd and Bsal growth was less than that of Bd and Bsal groups without skin peptides. These results suggest that the skin secretions of S. intermedia contain AMPs which may be protective against chytridiomycosis. In the future, we would like to repeat this experiment using the skin secretions of Necturus beyeri (Gulf Coast Waterdog). We predict that results will be similar to those observed with S. intermedia.",
+    "keywords": [],
+    "session_name": "SSAR Hutchison Ecology, Natural History, Distribution, & Behavior Award, Poster Session I"
+  },
+  {
+    "title": "The Importance of Biogeographic Barriers, Refugia, and Climatic Gradients in Driving Speciation in Corn Snakes (Pantherophis guttatus complex)",
+    "authors": [
+      {"full_name": "Edward Myers", "affiliation": "National Museum of Natural History, Smithsonian Institute, Washington, DC, USA", "is_presenter": true},
+      {"full_name": "Frank Burbrink", "affiliation": "American Museum of Natural History, New York, NY, USA", "is_presenter": false}
+    ],
+    "presentation_type": "lightning",
+    "abstract_text": "The corn snakes (Pantherophis guttatus complex) are a widespread and phenotypically diverse snake species complex. Previous research has suggested that speciation within this group has been driven by both physical biogeographic barriers and adaptation to contrasting habitats. Here we further evaluate these hypotheses by generating population genomic data and implementing phylogeographic model selection coupled with ecological niche models. These analyses suggest that the rivers of southeastern North America, Quaternary refugia, and environmental gradients have contributed to divergence within the P. guttatus species complex. Furthermore, process-oriented species delimitation analyses demonstrate that species level diversity may be under-represented in this group.",
+    "keywords": [],
+    "session_name": "Herpetology Lightning Talks"
+  }
+]

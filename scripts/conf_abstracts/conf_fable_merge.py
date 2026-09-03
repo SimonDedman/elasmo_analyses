@@ -14,7 +14,9 @@ import argparse
 import json
 from pathlib import Path
 
-from conf_abstracts import config as C, schema, load, tag, lexicon, export
+from conf_abstracts import config as C
+from conf_abstracts import schema, load, tag, lexicon, export
+from conf_abstracts.fable_cache import is_done
 
 WORKLIST = C.OUT / "conf_abstracts" / "fable_worklist.json"
 
@@ -93,8 +95,11 @@ def merge(db_path):
         chunks_by_book.setdefault(w.get("book_key", w["key"]), []).append(w)
     incomplete = set()
     for bk, chunks in chunks_by_book.items():
-        done = sum(1 for c in chunks
-                   if Path(c["cache_path"]).exists() and Path(c["cache_path"]).stat().st_size >= 2)
+        # must be the SAME test the rest of the pipeline uses. Using a size
+        # check here while the missing-list below used a parse check made the
+        # guard pass books (JMIH 2009, 2018) whose truncated chunks were then
+        # dropped, merging a confident under-count.
+        done = sum(1 for c in chunks if is_done(c["cache_path"]))
         if done < len(chunks):
             incomplete.add(bk)
             print(f"  SKIP {bk}: only {done}/{len(chunks)} chunks extracted — "

@@ -24,7 +24,8 @@ def main(index: int):
     cache = Path(entry["cache_path"])
     # ">= 2" treats a legitimate empty result ("[]", 2 bytes — a programme with
     # no extractable abstracts) as done, so resume runs don't re-do it.
-    if cache.exists() and cache.stat().st_size >= 2:
+    from conf_abstracts.fable_cache import is_done
+    if is_done(cache):          # parses; a truncated file does NOT and re-runs
         print("ALREADY_DONE")
         return 0
     text = Path(entry["src_txt"]).read_text(encoding="utf-8")
