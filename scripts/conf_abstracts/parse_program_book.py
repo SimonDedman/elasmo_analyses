@@ -22,6 +22,15 @@ _SESSION = re.compile(r"^\s*Session\s+[\w]+\s*:\s*(.+)$", re.I)
 _POSTER = re.compile(r"poster", re.I)
 _DAY = re.compile(
     r"^\s*(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b.*\d{4}", re.I)
+
+# Typos in the printed books themselves, corrected on the way in. The JMIH 2021
+# programme runs "In-person: 21-23 July - Virtual: 26-27 July" on its cover but
+# heads every virtual-day page "26/27 January 2021"; the weekdays match July,
+# not January, so the month is the error.
+_DATE_CORRECTIONS = {
+    "Monday 26 January 2021": "Monday 26 July 2021",
+    "Tuesday 27 January 2021": "Tuesday 27 July 2021",
+}
 _MOD = re.compile(r"^\s*Moderator", re.I)
 _SOC_PREFIX = re.compile(r"\b(" + _SOC + r")\b")
 
@@ -54,7 +63,7 @@ def _parse_time_delimited(text: str):
             i += 1
             continue
         if _DAY.match(s):
-            cur_day = s
+            cur_day = _DATE_CORRECTIONS.get(s.strip(), s.strip())
             i += 1
             continue
         sm = _SESSION.match(s)
@@ -113,7 +122,7 @@ def _parse_2026_format(text: str):
             i += 1
             continue
         if _DAY.match(s):
-            cur_day = s
+            cur_day = _DATE_CORRECTIONS.get(s.strip(), s.strip())
             i += 1
             continue
         sm = _SESSION.match(s)
@@ -184,7 +193,7 @@ def parse_program_book_blocks(text: str):
             i += 1
             continue
         if _DAY.match(s):
-            cur_day = s
+            cur_day = _DATE_CORRECTIONS.get(s.strip(), s.strip())
             pending = []
             i += 1
             continue

@@ -82,6 +82,21 @@ PROGRAM_BOOK_FILES = {
     "2026_JMIH_ProgrammeBook": ("JMIH", 2026),  # Whova export: "N.N: Title" + "Speaker:"
 }
 
+# JMIH Oxford Abstracts submission exports (xlsx). JMIH pays Oxford Abstracts
+# for the submission site, so the programme officer can export every submitted
+# abstract with title/authors/body/keywords/type/membership/career stage. These
+# supersede the programme book for the same year (see ingest_oa_xlsx.py).
+# Source: David M. Green (JMIH programme officer), first file 2026-09-04.
+OA_XLSX_SOURCES = {
+    ("JMIH", 2021): str(CONFERENCES / "2021" / "2021_JMIH_AbstractExport.xlsx"),
+}
+OA_MEETING_NAMES = {
+    ("JMIH", 2021): "Joint Meeting of Ichthyologists and Herpetologists 2021",
+}
+OA_MEETING_CITIES = {
+    ("JMIH", 2021): "Phoenix, AZ",
+}
+
 # SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).
 SI2026_BODY_PDF = str(CONFERENCES / "2026" / "2026_SI_AbstractBook.pdf")
 

@@ -22,7 +22,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from conf_abstracts import (config, schema, classify, qa_ocr, segment,
-                            extract, tag, load, export, ingest_si_xlsx)
+                            extract, tag, load, export, ingest_si_xlsx,
+                            ingest_oa_xlsx)
 
 
 def log(msg):
@@ -180,6 +181,26 @@ def main():
             failures.append(dict(pdf=path.name, error=str(e)))
             log(f"FAIL {path.name}: {e}")
             traceback.print_exc()
+
+    # Oxford Abstracts exports are xlsx, so the PDF sweep never sees them. Run
+    # them after the sweep: each one supersedes its year's programme book, and
+    # the programme book has just been re-parsed above, so this has to come last.
+    for (mtg, yr), xlsx in config.OA_XLSX_SOURCES.items():
+        if not Path(xlsx).exists():
+            log(f"SKIP {mtg} {yr} Oxford Abstracts export: {xlsx} not found")
+            continue
+        meta = dict(meeting=mtg, year=yr,
+                    name=config.OA_MEETING_NAMES.get((mtg, yr), f"{mtg} {yr}"),
+                    location=config.OA_MEETING_CITIES.get((mtg, yr)), dates=None,
+                    source_pdf=str(xlsx), doc_type="abstract_book",
+                    page_count=None, is_ocr=0, parse_status="ok")
+        mid, recs = ingest_oa_xlsx.ingest(con, xlsx, meta)
+        merged, kept = ingest_oa_xlsx.merge_program_schedule(con, yr, mid)
+        results.append(dict(pdf=Path(xlsx).name, meeting=mtg, year=yr,
+                            doc_type="xlsx", blocks=len(recs), inserted=len(recs),
+                            status="ok"))
+        log(f"OK {Path(xlsx).name}: {len(recs)} abstracts; "
+            f"{merged} programme-book duplicates superseded, {kept} kept")
 
     total = sum(r["inserted"] for r in results)
     n_elasmo = con.execute("SELECT count(*) FROM abstracts WHERE is_elasmo=1").fetchone()[0]
