@@ -348,6 +348,20 @@ def fable_state(meeting, year):
     return ("merged" if hit / len(rows) >= 0.80 else "complete"), n
 
 
+# JMIH abstract books that demonstrably EXCLUDE the AES half of the meeting, so
+# the AES column must not inherit the JMIH column's status. VERIFIED 2026-09-04:
+# the 2018 Rochester book's title page reads "THE JOINT MEETING OF ASIH SSAR HL"
+# with no AES, and the text carries 35 shark/skate/ray tokens over 370 pages
+# against 462-786 in 2019/2023/2024. Its elasmo share is 1.7% where every
+# comparable year runs 18-34%; the 10 records we do hold are elasmobranch talks
+# given in ASIH sessions. elasmo.org stops at 2005, so nothing else covers it.
+JMIH_AES_MISSING = {
+    2018: "AES half absent — the held book covers ASIH/SSAR/HL only "
+          "(10 elasmo strays in ASIH sessions); ask David Green for the "
+          "Oxford Abstracts export",
+}
+
+
 def meeting_cell(year, db):
     """Return (location, status, note, elasmo_count)."""
     loc = JMIH_LOC.get(year, "?")
@@ -500,6 +514,9 @@ def build():
             put(r, 3, txt(f"{loc} ({aes_web[year]})", "Ingested",
                           "AES abstracts from elasmo.org (full bodies)"), "Ingested")
             track("AES", "Ingested")
+        elif year in JMIH_AES_MISSING:
+            put(r, 3, txt(loc, "Missing", JMIH_AES_MISSING[year]), "Missing")
+            track("AES", "Missing")
         elif year >= 1983:
             aloc = f"{loc}" + (f" ({el})" if el else "")
             put(r, 3, txt(aloc, st, note), st)
