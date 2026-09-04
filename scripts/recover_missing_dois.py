@@ -46,7 +46,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from sync_shark_references import _title_similarity  # noqa: E402
+from sync_shark_references import _title_similarity, _title_tokens  # noqa: E402
 
 PAPERS = ROOT / "docs/papers_data.json"
 CACHE = ROOT / "outputs/.doi_recovery_cache.json"
@@ -59,6 +59,36 @@ DELAY = 0.6
 TITLE_STRICT = 0.90
 TITLE_LOOSE = 0.75
 YEAR_TOL = 1
+
+MIN_TOKENS = 4          # a title with fewer content words cannot be judged
+TWO_SIDED_MIN = 0.60    # overlap over the LONGER title
+
+
+def title_ok(ours: str, cand: str, sim: float, author_ok: bool) -> tuple[bool, str]:
+    """Two-sided title test.
+
+    `_title_similarity` divides the token overlap by the SHORTER title, so a
+    two-token Crossref record scores a perfect 1.00 against any longer title
+    containing those words. On the first full pass that produced 170 confident
+    but wrong matches: "CHIMAERAS" for a European field guide, "OSPREY" for a
+    paper on osprey predation, "São Tomé and Príncipe" for a coastal fish
+    checklist. All index or encyclopaedia entries, none the actual paper.
+
+    So require BOTH titles to carry enough content words, and require the
+    overlap to hold up over the LONGER title too, not just the shorter one.
+    """
+    ta, tb = _title_tokens(ours), _title_tokens(cand)
+    if not ta or not tb:
+        return False, "unusable title"
+    if min(len(ta), len(tb)) < MIN_TOKENS:
+        return False, f"title too short to judge ({min(len(ta), len(tb))} tokens)"
+    two_sided = len(ta & tb) / max(len(ta), len(tb))
+    if two_sided < TWO_SIDED_MIN:
+        return False, f"two-sided overlap {two_sided:.2f} < {TWO_SIDED_MIN}"
+    if sim >= TITLE_STRICT or (sim >= TITLE_LOOSE and author_ok):
+        return True, f"sim={sim:.2f} two_sided={two_sided:.2f}"
+    return False, f"sim {sim:.2f} below gate"
+
 
 NON_ARTICLE = re.compile(
     r"abstract|programm|program\b|proceedings|resúmenes|resumenes|congress|"
@@ -131,7 +161,9 @@ def lookup(session, p: dict):
                "author_ok": author_ok,
                "title": cand_title[:140],
                "journal": (it.get("container-title") or [""])[0][:80]}
-        if year_ok and (sim >= TITLE_STRICT or (sim >= TITLE_LOOSE and author_ok)):
+        accepted, why = title_ok(title, cand_title, sim, author_ok)
+        rec["why"] = why
+        if year_ok and accepted:
             return "hit", rec
         # Would have passed the probe's looser gate: hold for review.
         if year_ok and sim >= TITLE_LOOSE and best is None:
