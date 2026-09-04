@@ -888,6 +888,42 @@ def generate_feedback_report(sr_papers, known_ids, needs_pdf_ids, log):
 
 
 # ---------------------------------------------------------------------------
+# Phase 5c: Hardlink sweep
+# ---------------------------------------------------------------------------
+
+def run_dedupe_sweep(log) -> tuple[int, int]:
+    """Collapse byte-identical library PDFs onto shared inodes.
+
+    Returns (bytes reclaimed, files relinked).  Delegates to
+    dedupe_hardlink so the sweep, the audit workbook, and the one-off run
+    all share a single definition of what counts as a duplicate.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import dedupe_hardlink as dh
+
+    groups = dh.scan(dh.DEFAULT_ROOT, log=lambda m: log.info(f"  {m.strip()}"))
+    actionable = [g for g in groups if g["n_inodes"] > 1]
+    if not actionable:
+        log.info("  no new duplicates")
+        return 0, 0
+
+    actions = []
+    for g in actionable:
+        actions.extend(dh.relink_group(g, dry_run=False,
+                                       log=lambda m: log.warning(m)))
+    linked = [a for a in actions if a["status"] == "linked"]
+    reclaimed = sum(a["size"] for a in linked)
+
+    ok, bad = dh.verify(actions, log=lambda m: log.error(m))
+    if bad:
+        # Never report a saving that failed its own check.
+        log.error(f"  {bad} relinked files failed verification")
+    log.info(f"  linked {len(linked)} files, reclaimed "
+             f"{reclaimed / 2 ** 20:.1f} MB, verified {ok}")
+    return reclaimed, len(linked)
+
+
+# ---------------------------------------------------------------------------
 # Phase 6: Notifications
 # ---------------------------------------------------------------------------
 def notify_ntfy(topic: str, message: str, title: str = "SR Sync", priority: str = "default"):
@@ -1112,6 +1148,9 @@ def build_summary(stats: dict) -> tuple[str, str]:
         short += f", {stats['orphans_staged']} orphans staged"
     if stats.get("extracted"):
         short += f", {stats['extracted']} extracted"
+    if stats.get("dedupe_linked"):
+        short += (f", {stats['dedupe_linked']} dupes linked "
+                  f"({stats['dedupe_reclaimed_mb']:.0f} MB)")
     if stats.get("doi_rejected"):
         short += f" | WARNING {stats['doi_rejected']} bad DOI(s) quarantined"
 
@@ -1152,6 +1191,10 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"--- Parquet propagation (Phase 5b) ---",
         f"Base parquet added:   {stats.get('base_parquet_added', 0)}",
         f"Incremental extract:  {stats.get('extracted', 0)} (with PDF text)",
+        f"",
+        f"--- Duplicate sweep (Phase 5c) ---",
+        f"PDFs hardlinked:      {stats.get('dedupe_linked', 0)}",
+        f"Disk reclaimed:       {stats.get('dedupe_reclaimed_mb', 0)} MB (local only)",
         f"",
         f"Crawl errors:         {stats['crawl_errors']}",
         f"Runtime:              {stats['runtime']}",
@@ -1202,6 +1245,8 @@ def main():
                         help="Skip Phase 3b Crossref DOI verification")
     parser.add_argument("--no-extract", action="store_true",
                         help="Skip Phase 5b parquet propagation + incremental extraction")
+    parser.add_argument("--no-dedupe", action="store_true",
+                        help="Skip Phase 5c hardlink sweep of duplicate PDFs")
     args = parser.parse_args()
 
     log = setup_logging(args.verbose)
@@ -1487,6 +1532,24 @@ def main():
                 stats["extracted"] = extracted
             else:
                 log.info("  No new IDs to extract this run")
+
+        # --- Phase 5c: Collapse byte-identical PDFs onto shared inodes ---
+        # A scanned volume backs many articles, so the library accumulates
+        # exact copies from every acquisition route, not just BHL: journal
+        # issues, coauthor libraries, and re-downloads all produce them.
+        # Sweeping here catches all of them regardless of origin, and it is
+        # cheap enough to run every sync (a size-prefiltered scan of 20,000
+        # PDFs takes about 20 seconds).  Idempotent: files already sharing an
+        # inode are skipped.
+        if not args.dry_run and not args.no_dedupe:
+            log.info("")
+            log.info("Phase 5c: Collapsing duplicate PDFs onto shared inodes...")
+            try:
+                reclaimed, linked = run_dedupe_sweep(log)
+                stats["dedupe_linked"] = linked
+                stats["dedupe_reclaimed_mb"] = round(reclaimed / 2 ** 20, 1)
+            except Exception as e:
+                log.warning(f"  dedupe sweep failed (non-fatal): {e}")
 
         # --- Phase 6: Notify ---
         elapsed = datetime.now() - start_time

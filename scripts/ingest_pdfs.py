@@ -1571,6 +1571,9 @@ def main():
     if "--no-dedup-check" in args:
         DEDUP_CHECK_ENABLED = False
         args = [a for a in args if a != "--no-dedup-check"]
+    hardlink_sweep = "--no-hardlink-sweep" not in args
+    if not hardlink_sweep:
+        args = [a for a in args if a != "--no-hardlink-sweep"]
 
     if DEDUP_CHECK_ENABLED and not _DEDUP_OK:
         print(f"  NOTE: dedup check disabled (import failed: {_DEDUP_IMPORT_ERR})")
@@ -1581,6 +1584,7 @@ def main():
         print("  --check            Dry run: check matches without copying or updating")
         print("  --no-ocr           Disable OCR fallback on image-only PDFs")
         print("  --no-dedup-check   Skip flagging possible duplicates of existing library files")
+        print("  --no-hardlink-sweep  Skip collapsing byte-identical library PDFs afterwards")
         print("  --recursive        Walk subdirectories for PDFs (default: top level only)")
         print("  Provide one or more directories or PDF file paths to ingest.")
         sys.exit(0)
@@ -1649,6 +1653,28 @@ def main():
         f.write(log_content)
         for line in all_log:
             f.write(line + "\n")
+
+    # A bulk import often lands the same scanned volume under several article
+    # names, so collapse byte-identical files onto shared inodes before the
+    # copies have a chance to accumulate.  Idempotent and non-fatal.
+    if hardlink_sweep and all_ids and not check_mode:
+        print("\nCollapsing byte-identical PDFs onto shared inodes...")
+        try:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            import dedupe_hardlink as dh
+
+            groups = [g for g in dh.scan(dh.DEFAULT_ROOT, log=lambda m: None)
+                      if g["n_inodes"] > 1]
+            actions = []
+            for g in groups:
+                actions.extend(dh.relink_group(g, dry_run=False, log=print))
+            linked = [a for a in actions if a["status"] == "linked"]
+            ok, bad = dh.verify(actions, log=print)
+            print(f"  linked {len(linked)} files, reclaimed "
+                  f"{sum(a['size'] for a in linked) / 2 ** 20:.1f} MB, "
+                  f"verified {ok}" + (f", {bad} FAILED" if bad else ""))
+        except Exception as e:
+            print(f"  hardlink sweep failed (non-fatal): {e}")
 
     print(f"\n{'=' * 70}")
     print("INGEST COMPLETE")
