@@ -47,7 +47,7 @@ def test_oa_xlsx_author_split():
 def test_oa_xlsx_shared_run():
     """Programme-book titles arrive truncated, author-fused, or as a bare tail;
     a 40-char verbatim run still identifies the abstract (16 of 242, JMIH 2021)."""
-    from conf_abstracts.ingest_oa_xlsx import _shared_run
+    from conf_abstracts.merge_schedule import _shared_run
     full = "High resolution acoustic telemetry reveals swim speeds and inferred field metabolic rates in juvenile white sharks"
     assert _shared_run("and inferred field metabolic rates in juvenile white sharks", full)
     assert _shared_run("Delineation of Blacktip Shark Genetic Stock Structure in the Frazier, Jayne Gardiner",
@@ -64,6 +64,44 @@ def test_oa_xlsx_presentation_type():
     assert _presentation_type("Invited Symposium (all are virtual)") == "symposium"
     assert _award("Student Oral Competition IN-PERSON") == "Student Oral Competition"
     assert _award("Contributed 15-minute Oral Paper VIRTUAL") is None
+
+
+def test_program_book_poster_sections():
+    """The 2023 book splits each day into Oral / Poster / Symposia / Lightning /
+    Plenary banners and lists posters under a 'P<session>-<n>' id where an oral
+    entry carries a start time. Missing that made JMIH 2023 come back as 389
+    talks and no posters, and left 597 of 604 abstracts with no type."""
+    from conf_abstracts import parse_program_book as P
+    text = "\n".join([
+        "Thursday 13 July 2023", "", "9:30 am", "", "Alice Smith, Bob Jones", "",
+        "Movement of tiger sharks in the Gulf", "",
+        "Friday 14 July \u2022 Poster Presentations", "", "P1-1", "",
+        "Carol White, Dan Black", "",
+        "Fine-scale space use by white sharks offshore", "",
+        "Friday 14 July \u2022 Symposia", "", "10:00 am", "", "Erin Green", "",
+        "Introduction to the elasmobranch symposium session", "",
+    ])
+    blocks = P.parse_program_book_blocks(text)
+    got = {b["title"][:20]: (b["presentation_type"], b["program_number"],
+                             b["session_datetime"]) for b in blocks}
+    assert got["Movement of tiger sh"][0] == "talk"
+    assert got["Fine-scale space use"][:2] == ("poster", "P1-1")
+    # the banner carries no year; it is taken from the last full day header
+    assert got["Fine-scale space use"][2] == "Friday 14 July 2023"
+    # a poster id must not make the following symposium talk a poster
+    assert got["Introduction to the "][0] == "symposium"
+
+
+def test_program_book_drops_footers_and_fragments():
+    from conf_abstracts import parse_program_book as P
+    text = "\n".join([
+        "Thursday 13 July 2023", "", "9:30 am", "", "Alice Smith", "",
+        "Mercury in sharks from southeast estuaries JMIH 2023 Conference Program 41", "",
+        "9:45 am", "", "Bob Jones", "", "and Population Projections", "",
+    ])
+    blocks = P.parse_program_book_blocks(text)
+    titles = [b["title"] for b in blocks]
+    assert titles == ["Mercury in sharks from southeast estuaries"], titles
 
 
 def test_qa_classify():

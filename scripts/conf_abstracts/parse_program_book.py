@@ -22,6 +22,35 @@ _SESSION = re.compile(r"^\s*Session\s+[\w]+\s*:\s*(.+)$", re.I)
 _POSTER = re.compile(r"poster", re.I)
 _DAY = re.compile(
     r"^\s*(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b.*\d{4}", re.I)
+# The 2023 book splits each day into "<Weekday> <D> <Month> - Oral Presentations"
+# and "... - Poster Presentations" banners (no year), then lists posters under a
+# "P<session>-<n>" id where an oral entry would carry a start time. Without
+# these two patterns the poster half of the book is invisible: JMIH 2023 came
+# back as 389 talks and no posters at all, and 597 of the 604 abstract-book
+# records had no presentation type as a result.
+_SECTION = re.compile(
+    r"^\s*(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(\d{1,2}\s+\w+)"
+    r"\s*[\u2022\u00b7*]\s*(Oral Presentations|Poster Presentations|Symposia|"
+    r"Symposium|Lightning Talks|Plenary Sessions?|Workshops?)\b", re.I)
+# The five banner kinds the 2023 book uses. Anything unlisted would leave the
+# previous section's type in force, which is how 44 symposium talks ended up
+# tagged as posters on the first pass.
+_SECTION_TYPE = {
+    "oral presentations": "talk", "poster presentations": "poster",
+    "symposia": "symposium", "symposium": "symposium",
+    "lightning talks": "lightning", "plenary sessions": "plenary",
+    "plenary session": "plenary", "workshop": "talk", "workshops": "talk",
+}
+_POSTER_ID = re.compile(r"^\s*(P\d+-\d+[A-Za-z]?)\s*$")
+# A running page footer sits inside 34 of the 2023 titles ("... JMIH 2023
+# Conference Program 35"), which corrupts both the stored title and any attempt
+# to match it against an abstract book.
+_FOOTER = re.compile(r"\s*JMIH\s+\d{4}\s+Conference\s+Program\s+\d+\s*$", re.I)
+# A title that opens with a bare conjunction or preposition is the tail of one
+# split across a page break; its head is a separate block. Longer tails get
+# reunited with their abstract by merge_schedule's verbatim-run match, but the
+# short ones cannot be matched safely and would sit in the DB as duplicates.
+_FRAGMENT = re.compile(r"^(and|or|of|to|in|for|with|from|by|at)\s", re.I)
 
 # Typos in the printed books themselves, corrected on the way in. The JMIH 2021
 # programme runs "In-person: 21-23 July - Virtual: 26-27 July" on its cover but
@@ -51,11 +80,13 @@ def _is_namelist(s: str) -> bool:
 
 
 def _parse_time_delimited(text: str):
-    """2021-2023 format: time -> authors -> title (no 'N.N |' number)."""
+    """2021-2023 format: time -> authors -> title (no 'N.N |' number). Posters
+    are the same shape with a 'P<session>-<n>' id in place of the time."""
     lines = text.splitlines()
     blocks = []
     cur_session = cur_society = cur_day = None
     cur_type = "talk"
+    cur_year = None
     i, n = 0, len(lines)
     while i < n:
         s = lines[i].strip()
@@ -64,6 +95,18 @@ def _parse_time_delimited(text: str):
             continue
         if _DAY.match(s):
             cur_day = _DATE_CORRECTIONS.get(s.strip(), s.strip())
+            ym = re.search(r"\b(19|20)\d{2}\b", cur_day)
+            cur_year = ym.group(0) if ym else cur_year
+            i += 1
+            continue
+        secm = _SECTION.match(s)
+        if secm:
+            # The banner carries the day but not the year; take the year from
+            # the last full day header so poster and oral dates stay comparable.
+            day = f"{secm.group(1)} {secm.group(2)}"
+            cur_day = f"{day} {cur_year}" if cur_year else day
+            cur_type = _SECTION_TYPE.get(secm.group(3).lower(), "talk")
+            cur_session = None
             i += 1
             continue
         sm = _SESSION.match(s)
@@ -73,13 +116,20 @@ def _parse_time_delimited(text: str):
             cur_type = "poster" if _POSTER.search(cur_session) else "talk"
             i += 1
             continue
-        if _TIME.match(s):
+        # The marker decides the type for THIS entry only: a poster id means a
+        # poster, a start time means whatever the section/session says. Making
+        # it sticky put 44 talks from the Musick memorial symposium, which
+        # follows the poster sessions, into the poster set.
+        pm = _POSTER_ID.match(s)
+        poster_id = pm.group(1) if pm else None
+        if _TIME.match(s) or pm:
             # collect content lines until the next time / session / day
             content = []
             j = i + 1
             while j < n:
                 t = lines[j].strip()
-                if _TIME.match(t) or _SESSION.match(t) or _DAY.match(t):
+                if _TIME.match(t) or _SESSION.match(t) or _DAY.match(t) \
+                        or _POSTER_ID.match(t) or _SECTION.match(t):
                     break
                 if t and not _MOD.match(t):
                     content.append(t)
@@ -90,10 +140,12 @@ def _parse_time_delimited(text: str):
                 ai += 1
             author_raw = " ".join(content[:ai]).strip()
             title = " ".join(content[ai:]).strip()
-            if title and len(title) >= 6:
+            title = _FOOTER.sub("", title).strip()
+            if title and len(title) >= 6 and not _FRAGMENT.match(title):
                 blocks.append(dict(
-                    program_number=None, title=title, author_raw=author_raw,
-                    presentation_type=cur_type, session_name=cur_session,
+                    program_number=poster_id, title=title, author_raw=author_raw,
+                    presentation_type="poster" if pm else cur_type,
+                    session_name=cur_session,
                     societies_explicit=[cur_society] if cur_society else [],
                     session_datetime=cur_day))
             i = j
@@ -226,6 +278,11 @@ def parse_program_book_blocks(text: str):
                 j += 1
             # authors = the most recent pending non-empty line(s)
             author_raw = " ".join(pending).strip()
+            title = _FOOTER.sub("", title).strip()
+            if not title or _FRAGMENT.match(title):
+                pending = []
+                i = j
+                continue
             blocks.append(dict(
                 program_number=tm.group(1),
                 title=title.strip(),
