@@ -19,6 +19,24 @@ mis <- read.csv(file.path(out_dir, "misfiled_records.csv"),
                 stringsAsFactors = FALSE, check.names = FALSE)
 stopifnot(nrow(mis) > 0)
 
+# Carry forward decisions already made, keyed on the file itself so a
+# renumbered group or a reordered sheet cannot lose them.
+prior_path <- Sys.getenv("PRIOR_REVIEW", "")
+n_carried <- 0
+if (nzchar(prior_path) && file.exists(prior_path)) {
+  prior <- openxlsx::read.xlsx(prior_path, sheet = "misfiled")
+  keep <- prior[nzchar(trimws(ifelse(is.na(prior$decision), "", prior$decision))) |
+                  nzchar(trimws(ifelse(is.na(prior$notes), "", prior$notes))), ]
+  m <- match(mis$absent_path, keep$absent_path)
+  mis$decision <- ifelse(is.na(m), "", keep$decision[m])
+  mis$notes <- ifelse(is.na(m), "", keep$notes[m])
+  mis$decision[is.na(mis$decision)] <- ""
+  mis$notes[is.na(mis$notes)] <- ""
+  n_carried <- sum(nzchar(mis$decision))
+  cat(sprintf("  carried %d decisions forward from %s\n",
+              n_carried, basename(prior_path)))
+}
+
 # Totals for the Info tab come from the checker's own verdicts, never
 # transcribed, so they cannot go stale against the sheet beside them.
 verdicts <- fromJSON(file.path(out_dir, "misfiled_verdicts.json"),
@@ -41,12 +59,39 @@ mis$title_words_found <- sprintf("%d of %d", mis$words_found, mis$words_sought)
 mis <- mis[order(mis$how_sure != "strong", -mis$n_records, mis$record_year), ]
 links <- file_links(mis$absent_path)
 mis$open_pdf <- ""
+n_correct <- sum(nzchar(mis$correct_copy_elsewhere))
+
+# English glosses for the non-English titles and document openings. Hand
+# translated into data/lookup_title_translations.csv rather than guessed at runtime,
+# so they are reviewable and versioned.
+gloss_file <- file.path(proj, "data", "lookup_title_translations.csv")
+mis$english_gloss <- ""
+if (file.exists(gloss_file)) {
+  gl <- read.csv(gloss_file, stringsAsFactors = FALSE)
+  for (k in seq_len(nrow(gl))) {
+    hit <- grepl(gl$original[k], mis$absent_title, fixed = TRUE) |
+           grepl(gl$original[k], mis$pdf_holds_instead, fixed = TRUE) |
+           grepl(gl$original[k], mis$pdf_starts, fixed = TRUE)
+    mis$english_gloss[hit] <- ifelse(
+      nzchar(mis$english_gloss[hit]),
+      paste(mis$english_gloss[hit], gl$english[k], sep = " | "),
+      sprintf("[%s] %s", gl$language[k], gl$english[k]))
+  }
+  cat(sprintf("  glossed %d rows from %d translations\n",
+              sum(nzchar(mis$english_gloss)), nrow(gl)))
+}
+
+mis$open_correct <- ""
+correct_links <- ifelse(nzchar(mis$correct_copy_path),
+                        file_links(mis$correct_copy_path, "open"), "")
 
 mis <- mis[, c("group_id", "how_sure", "record_year", "absent_title",
-               "pdf_year", "pdf_holds_instead", "pdf_starts",
-               "title_words_found", "open_pdf", "decision", "notes", "why",
-               "n_records", "size_mb", "words_found", "words_sought",
-               "latin_fraction", "n_words", "absent_path", "sha256")]
+               "pdf_year", "pdf_holds_instead", "correct_copy_elsewhere",
+               "open_correct", "pdf_starts", "english_gloss",
+               "title_words_found", "open_pdf",
+               "decision", "notes", "why", "n_records", "size_mb",
+               "words_found", "words_sought", "latin_fraction", "n_words",
+               "absent_path", "correct_copy_path", "sha256")]
 
 info_lines <- c(
   sprintf("Generated %s by scripts/check_misfiled_pdfs.py.", today),
@@ -77,8 +122,16 @@ info_lines <- c(
   "3. Read 'pdf_holds_instead' — the paper that IS in the file, named by another",
   "   record. Where it says '(none of the naming papers)', no record naming this PDF",
   "   was found in it, which is the strongest case of all.",
-  "4. If still unsure, click 'open_pdf'. It opens THAT ROW'S file directly.",
-  "5. Put a value in 'decision':",
+  sprintf("4. Read 'correct_copy_elsewhere'. On %d rows the paper the filename claims is", n_correct),
+  "   ALREADY filed correctly under another name, verified to be in that file, and",
+  "   'open_correct' opens it. Those rows are the easy ones: the misfiled name is a",
+  "   spurious extra, and deleting it loses no paper. A blank means only that this",
+  "   method did not find a home, not that none exists.",
+  "5. Where a title or document opening is not in English, 'english_gloss' carries a",
+  "   translation. These are hand-translated in data/lookup_title_translations.csv, not",
+  "   machine output, so check them if a decision turns on one.",
+  "6. If still unsure, click 'open_pdf'. It opens THAT ROW'S file directly.",
+  "7. Put a value in 'decision':",
   "      MISFILED   confirmed, the file is not the paper the filename claims",
   "      CONTAINER  the checker is wrong, the paper IS in there",
   "      UNSURE     needs a closer look than this sheet supports",
@@ -162,13 +215,18 @@ addWorksheet(wb, "misfiled")
 writeData(wb, "misfiled", mis, keepNA = FALSE)
 writeFormula(wb, "misfiled", x = links,
              startCol = which(names(mis) == "open_pdf"), startRow = 2)
+has_correct <- which(nzchar(correct_links))
+for (i in has_correct) {
+  writeFormula(wb, "misfiled", x = correct_links[i],
+               startCol = which(names(mis) == "open_correct"), startRow = i + 1)
+}
 
 style_review_sheet(
   wb, "misfiled", mis,
-  widths = c(8, 15, 8, 56, 8, 52, 78, 14, 8, 12, 28, 62,
-             9, 8, 8, 8, 8, 8, 10, 10),
+  widths = c(8, 15, 8, 54, 8, 48, 48, 8, 70, 60, 14, 8, 12, 28, 60,
+             9, 8, 8, 8, 8, 8, 10, 10, 10),
   hide = c("words_found", "words_sought", "latin_fraction", "n_words",
-           "absent_path", "sha256"))
+           "absent_path", "correct_copy_path", "sha256"))
 
 dataValidation(wb, "misfiled", col = which(names(mis) == "decision"),
                rows = 2:(nrow(mis) + 1), type = "list",

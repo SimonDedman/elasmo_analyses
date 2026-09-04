@@ -162,6 +162,46 @@ def same_paper(a: str, b: str) -> bool:
     return len(wa & wb) / min(len(wa), len(wb)) >= 0.6
 
 
+def is_dotted(title: str) -> bool:
+    """A BibTeX-derived filename, with spaces replaced by dots.
+
+    These are 0.9% of the library but 29% of the misfiles found by the
+    shared-PDF method, and only 5 of 614 correctly-filed records use the
+    style, so the batch that produced them is worth testing whole.
+    """
+    words = re.findall(r"[A-Za-z]{3,}", title)
+    return title.count(".") >= max(3, len(words) * 0.5)
+
+
+def judge_single(path: str, digest: str, cache_dir: Path) -> dict:
+    """Does this one PDF contain the paper its own filename claims?
+
+    Sharing a PDF is only a cheap way to FIND suspects; the question itself
+    needs no second record, so any file can be tested this way.
+    """
+    _authors, year, title = parse_filename(path)
+    text = extract_text(path, digest, cache_dir)
+    words = norm(text).split()
+    tokens = sorted(set(words))
+    entry = {"sha256": digest, "year": year, "n_words": len(words),
+             "n_records": 1, "latin_fraction": round(latin_fraction(text), 2),
+             "pdf_starts": " ".join(text.split())[:160],
+             "size_mb": round(os.path.getsize(path) / 2 ** 20, 1),
+             "pdf_year": None}
+    if len(words) < MIN_TEXT_WORDS:
+        entry["verdict"] = "untestable_no_text"
+        present, hits, sought = None, 0, 0
+    else:
+        present, hits, sought = title_present(title, tokens)
+        entry["verdict"] = ("untestable_short_titles" if present is None
+                            else "container" if present
+                            else "misfiled_none_found")
+    entry["records"] = [{"title": title, "year": year, "path": path,
+                         "present": present, "words_found": hits,
+                         "words_sought": sought}]
+    return entry
+
+
 def distinct_records(group: dict) -> list[dict]:
     """One entry per paper naming this PDF, collapsing name variants."""
     seen, records = set(), []
@@ -268,6 +308,43 @@ def confidence(entry: dict, record: dict | None = None) -> tuple[str, str]:
             "other paper naming this PDF was found in it")
 
 
+def find_correct_copies(entries: list[dict]) -> dict[str, dict]:
+    """Where does each misfiled paper's real PDF live?
+
+    A record whose paper is not in its file is not necessarily a lost paper.
+    The same paper is often already filed correctly elsewhere under a
+    slightly different name, in which case the misfiled name is a spurious
+    extra and deleting it loses nothing.
+
+    Matching is filename-to-filename against records VERIFIED to be in their
+    own PDF, never a text search across the corpus.  Searching 93 titles
+    against 312 documents with the bag-of-words matcher returned 85 hits,
+    which is a chance-collision rate: generic title words ("shore", "fishes",
+    "islands") co-occur in almost any paper.
+    """
+    homes = [(r["title"], e["sha256"], r["path"])
+             for e in entries for r in e["records"] if r["present"] is True]
+    keyed = [(set(title_words(t)), t, sha, path) for t, sha, path in homes]
+
+    found = {}
+    for e in entries:
+        if not e["verdict"].startswith("misfiled"):
+            continue
+        for r in e["records"]:
+            if r["present"] is not False:
+                continue
+            k = set(title_words(r["title"]))
+            if len(k) < 3:
+                continue
+            for k2, title, sha, path in keyed:
+                if sha == e["sha256"] or len(k2) < 3:
+                    continue
+                if len(k & k2) / min(len(k), len(k2)) >= 0.8:
+                    found[r["path"]] = {"title": title, "path": path}
+                    break
+    return found
+
+
 def write_csv(entries: list[dict], path: Path) -> int:
     """The review table: one row per record whose paper is not in its PDF.
 
@@ -277,11 +354,13 @@ def write_csv(entries: list[dict], path: Path) -> int:
     filenames, and records that could not be tested, are excluded.
     """
     path.parent.mkdir(parents=True, exist_ok=True)
+    correct = find_correct_copies(entries)
     rows = 0
     with open(path, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["group_id", "how_sure", "why", "record_year",
                     "absent_title", "pdf_year", "pdf_holds_instead",
+                    "correct_copy_elsewhere", "correct_copy_path",
                     "pdf_starts", "words_found", "words_sought",
                     "n_records", "size_mb", "latin_fraction", "n_words",
                     "absent_path", "sha256", "decision", "notes"])
@@ -293,17 +372,64 @@ def write_csv(entries: list[dict], path: Path) -> int:
                 if r["present"] is not False:
                     continue
                 how_sure, why = confidence(e, r)
+                copy = correct.get(r["path"])
                 w.writerow([
                     gid, how_sure, why,
                     r["year"], r["title"],
                     e["pdf_year"] or "",
                     present[0] if present else "(none of the naming papers)",
+                    copy["title"] if copy else "",
+                    copy["path"] if copy else "",
                     e["pdf_starts"], r["words_found"], r["words_sought"],
                     e["n_records"], e["size_mb"], e["latin_fraction"],
                     e["n_words"], r["path"], e["sha256"][:12], "", "",
                 ])
                 rows += 1
     return rows
+
+
+def judge_dotted_files(args, skip: set[str] = frozenset()) -> list[dict]:
+    """Test every BibTeX-style filename not already covered."""
+    import hashlib
+
+    entries = []
+    for dirpath, _d, filenames in os.walk(args.root):
+        for name in filenames:
+            if not name.lower().endswith(".pdf"):
+                continue
+            path = os.path.join(dirpath, name)
+            if path in skip:
+                continue
+            _a, _y, title = parse_filename(name)
+            if not is_dotted(title):
+                continue
+            h = hashlib.sha256()
+            with open(path, "rb") as fh:
+                for chunk in iter(lambda: fh.read(1 << 20), b""):
+                    h.update(chunk)
+            entries.append(judge_single(path, h.hexdigest(), args.cache))
+    return entries
+
+
+def sweep_dotted(args) -> int:
+    """Test every BibTeX-style filename, sharing or not.
+
+    The shared-PDF method has a blind spot it cannot close on its own: a
+    record pointing at the wrong paper's file, where nothing else shares that
+    file, is invisible.  Testing a whole suspect batch reaches those.
+    """
+    print(f"Testing every dotted-style filename under {args.root}...")
+    entries = judge_dotted_files(args)
+    print(f"  {len(entries)} tested")
+
+    for k, v in Counter(e["verdict"] for e in entries).most_common():
+        print(f"  {v:4d}  {k}")
+    rows = write_csv(entries, args.csv)
+    print(f"  wrote {args.csv} ({rows} rows for review)")
+    if args.json:
+        args.json.write_text(json.dumps(entries, indent=1))
+        print(f"  wrote {args.json}")
+    return 0
 
 
 def main() -> int:
@@ -313,7 +439,14 @@ def main() -> int:
     ap.add_argument("--cache", type=Path, default=CACHE_DIR)
     ap.add_argument("--csv", type=Path, default=Path("outputs/misfiled_records.csv"))
     ap.add_argument("--json", type=Path, help="also write full per-group verdicts")
+    ap.add_argument("--sweep-dotted", action="store_true",
+                    help="test ONLY the dotted-style filenames, sharing or not")
+    ap.add_argument("--no-dotted", action="store_true",
+                    help="skip folding the dotted-batch sweep into the run")
     args = ap.parse_args()
+
+    if args.sweep_dotted:
+        return sweep_dotted(args)
 
     print(f"Scanning {args.root} for shared PDFs...")
     groups = scan(args.root)
@@ -328,6 +461,17 @@ def main() -> int:
             entries.append(entry)
         if i % 100 == 0:
             print(f"  {i}/{len(shared)}", flush=True)
+
+    # Fold in the suspect batch.  The shared-PDF method cannot see a record
+    # pointing at the wrong file when nothing else shares that file, and the
+    # dotted batch is where those concentrate: 0.9% of the library, 29% of
+    # the misfiles found so far.
+    if not args.no_dotted:
+        covered = {r["path"] for e in entries for r in e["records"]}
+        extra = judge_dotted_files(args, skip=covered)
+        if extra:
+            print(f"  plus {len(extra)} dotted-batch files no shared PDF reaches")
+            entries.extend(extra)
 
     counts = Counter(e["verdict"] for e in entries)
     for k, v in counts.most_common():
@@ -345,6 +489,8 @@ def main() -> int:
 
     rows = write_csv(entries, args.csv)
     print(f"  wrote {args.csv} ({rows} rows for review)")
+    n_copy = len(find_correct_copies(entries))
+    print(f"    {n_copy} of those papers are already filed correctly elsewhere")
     by_conf = Counter(confidence(e, r)[0] for e in entries
                       if e["verdict"].startswith("misfiled")
                       for r in e["records"] if r["present"] is False)
