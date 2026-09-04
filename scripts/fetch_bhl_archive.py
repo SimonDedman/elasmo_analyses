@@ -197,13 +197,18 @@ def load_target_papers(papers_json: Path = PAPERS_JSON) -> list[dict]:
     data = json.loads(papers_json.read_text(encoding="utf-8"))
     targets = []
     for p in data:
-        if p.get("doi"):
+        doi = (p.get("doi") or "").strip()
+        # A 10.5962 DOI IS a BHL item, and acquisition_route=bhl is set by the
+        # DOI-recovery pass for exactly that case. Skipping every DOI-bearing
+        # row would drop the papers this harvester is best placed to fetch.
+        bhl_doi = doi.startswith("10.5962") or p.get("acquisition_route") == "bhl"
+        if doi and not bhl_doi:
             continue
         year = p.get("year")
         pre_1970 = isinstance(year, int) and year < 1970
         journal = (p.get("journal_clean") or p.get("journal") or "").lower()
         kw_match = any(kw in journal for kw in TAXONOMY_PALEO_KEYWORDS)
-        if pre_1970 or kw_match:
+        if pre_1970 or kw_match or bhl_doi:
             targets.append(p)
     return targets
 

@@ -58,9 +58,18 @@ def clean_journal_name(p):
     j = j.rstrip(" ,;:.")
     return j.strip() or "(no journal)"
 
+# Stored publisher values that carry no information and must not shadow the
+# DOI prefix. "Unknown publisher" is the literal string written into
+# papers_data.json, and treating it as authoritative kept 608 DOI-bearing rows
+# filed under "Unknown publisher" when their prefix names the publisher
+# outright.
+_EMPTY_PUBLISHERS = {"blank", "other", "unknown", "unknown publisher",
+                     "none", "n/a", "na", "-"}
+
+
 def resolve_publisher(p):
     pub = (p.get("publisher") or "").strip()
-    if pub and pub.lower() not in ("blank", "other", "unknown"):
+    if pub and pub.lower() not in _EMPTY_PUBLISHERS:
         return pub
     doi = str(p.get("doi", "")).strip().lower()
     if not doi:
