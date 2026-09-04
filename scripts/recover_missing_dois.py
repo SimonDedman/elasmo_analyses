@@ -258,6 +258,14 @@ def main() -> None:
                             (p.get("title") or "")[:140], m["doi"], m["title"],
                             m["year"], m["sim"], m["author_ok"], ""])
         print(f"near-misses held for review: {len(nears):,} -> {REVIEW.name}")
+        # The CSV is an intermediate. A review artefact is always a formatted
+        # workbook, so build it here rather than leaving it as a manual step.
+        import subprocess
+        try:
+            subprocess.run(["Rscript", "scripts/build_doi_review_xlsx.R",
+                            str(REVIEW)], cwd=str(ROOT), check=True)
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            print(f"WARNING: could not build the xlsx ({e}); the CSV is valid")
 
     if not args.apply:
         print("\n(no --apply: nothing written to papers_data.json)")
@@ -265,19 +273,40 @@ def main() -> None:
 
     backup = PAPERS.with_suffix(f".backup-{datetime.now():%Y%m%d-%H%M%S}.json")
     shutil.copy2(PAPERS, backup)
-    n = 0
+    # A recovered 10.5962 DOI resolves to a free Biodiversity Heritage Library
+    # scan, so the paper is not a subscription problem and must not be assigned
+    # to a team member. Mark the route explicitly: fetch_bhl_archive.py skips
+    # every DOI-bearing row, so without this the recovered DOI would silently
+    # remove these papers from the one harvester that can actually get them.
+    FREE_FULLTEXT_PREFIXES = {"10.5962": "bhl"}
+
+    n = routed = 0
     for p in papers:
         key = str(p.get("literature_id", "")).replace(".0", "") \
             or (p.get("title") or "")[:80]
         if key in hits and not (p.get("doi") or "").strip():
-            p["doi"] = hits[key]["doi"]
+            doi = hits[key]["doi"]
+            p["doi"] = doi
             p["doi_source"] = "crossref_recovery_2026-09"
             n += 1
+
+    # Route by DOI prefix across the WHOLE list, not only rows this pass
+    # recovered: 65 papers already carried a 10.5962 DOI from earlier work and
+    # were sitting in the assignable pool, where no subscription is needed and
+    # no team member can help.
+    for p in papers:
+        doi = (p.get("doi") or "").strip().lower()
+        route = FREE_FULLTEXT_PREFIXES.get(doi.split("/")[0]) if doi else None
+        if route and p.get("acquisition_route") != route:
+            p["acquisition_route"] = route
+            routed += 1
     tmp = PAPERS.with_suffix(".tmp")
     tmp.write_text(json.dumps(papers, ensure_ascii=False, indent=1),
                    encoding="utf-8")
     tmp.replace(PAPERS)
     print(f"\napplied {n:,} recovered DOIs (backup: {backup.name})")
+    print(f"  {routed:,} papers routed to BHL (free full text, "
+          f"acquisition_route=bhl) rather than the assignable pool")
     print("NOTE: run the sync's Phase 3b DOI verification over these before "
           "the download helper links to any of them.")
 
