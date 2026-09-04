@@ -348,17 +348,19 @@ def fable_state(meeting, year):
     return ("merged" if hit / len(rows) >= 0.80 else "complete"), n
 
 
-# JMIH abstract books that demonstrably EXCLUDE the AES half of the meeting, so
-# the AES column must not inherit the JMIH column's status. VERIFIED 2026-09-04:
-# the 2018 Rochester book's title page reads "THE JOINT MEETING OF ASIH SSAR HL"
-# with no AES, and the text carries 35 shark/skate/ray tokens over 370 pages
-# against 462-786 in 2019/2023/2024. Its elasmo share is 1.7% where every
-# comparable year runs 18-34%; the 10 records we do hold are elasmobranch talks
-# given in ASIH sessions. elasmo.org stops at 2005, so nothing else covers it.
-JMIH_AES_MISSING = {
-    2018: "AES half absent — the held book covers ASIH/SSAR/HL only "
-          "(10 elasmo strays in ASIH sessions); ask David Green for the "
-          "Oxford Abstracts export",
+# Years where AES did not meet with ASIH/JMIH, so the AES column must not
+# inherit the JMIH column's status and there is no gap to chase.
+#
+# 2018: AES skipped JMIH and met at Sharks International (Joao Pessoa) instead
+# (Simon, 2026-09-04). The evidence on disk agrees: the Rochester 2018 book's
+# title page reads "THE JOINT MEETING OF ASIH SSAR HL" with no AES, and its
+# text carries 35 shark/skate/ray tokens over 370 pages against 462-786 in
+# 2019/2023/2024 — an elasmo share of 1.7% where every comparable year runs
+# 18-34%. The 10 elasmo records we hold are talks given in ASIH sessions. The
+# AES abstracts for that year are in the SI 2018 book, which is ingested.
+AES_NOT_AT_JMIH = {
+    2018: "no AES meeting at JMIH — AES met at Sharks International "
+          "(Joao Pessoa) instead; those abstracts are under SI 2018",
 }
 
 
@@ -491,7 +493,8 @@ def build():
         cell.font = Font(size=9)
 
     def txt(loc, st, note):
-        return f"{loc}; {st}" + (f" — {note}" if note else "")
+        head = f"{loc}; {st}" if loc else st
+        return head + (f" — {note}" if note else "")
 
     cover = defaultdict(lambda: {"ingested": 0, "known": 0})
 
@@ -514,9 +517,9 @@ def build():
             put(r, 3, txt(f"{loc} ({aes_web[year]})", "Ingested",
                           "AES abstracts from elasmo.org (full bodies)"), "Ingested")
             track("AES", "Ingested")
-        elif year in JMIH_AES_MISSING:
-            put(r, 3, txt(loc, "Missing", JMIH_AES_MISSING[year]), "Missing")
-            track("AES", "Missing")
+        elif year in AES_NOT_AT_JMIH:
+            put(r, 3, txt("", "NA", AES_NOT_AT_JMIH[year]), "NA")
+            track("AES", "NA")
         elif year >= 1983:
             aloc = f"{loc}" + (f" ({el})" if el else "")
             put(r, 3, txt(aloc, st, note), st)
