@@ -30,7 +30,8 @@ Two questions are answered separately, because they need different fixes:
     on one id? Same-paper means deduplicate; different-paper means one of them
     needs a new id.
 
-Outputs outputs/duplicate_literature_ids_<date>.csv and prints a summary.
+Outputs outputs/duplicate_literature_ids_<date>.csv and, via
+build_duplicate_ids_xlsx.R, the formatted review workbook beside it.
 Applies nothing: adjudication is a review artefact, not an edit.
 
 Usage:  python3 scripts/resolve_duplicate_literature_ids.py
@@ -256,6 +257,15 @@ def main() -> None:
     for k, v in sorted(acts.items(), key=lambda x: -len(x[1])):
         print(f"  {len(v):4}  {k}")
     print(f"\nwrote {OUT}")
+
+    # The CSV is an intermediate. Simon reviews xlsx, so always emit the
+    # formatted workbook too rather than leaving it as a manual second step.
+    import subprocess
+    try:
+        subprocess.run(["Rscript", "scripts/build_duplicate_ids_xlsx.R",
+                        str(OUT)], cwd=str(ROOT), check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print(f"WARNING: could not build the xlsx ({e}); the CSV is still valid")
 
 
 if __name__ == "__main__":
