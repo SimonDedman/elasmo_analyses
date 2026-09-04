@@ -742,7 +742,12 @@ def download_pdf(session, paper, log) -> bool:
         # Check HTTP content type as early warning
         ct = resp.headers.get("Content-Type", "")
         if "html" in ct.lower():
-            log.warning(f"  PDF URL returned HTML (likely paywall): {pdf_url[:80]}")
+            # Log the literature_id too: this branch is ~27% of all Phase 4
+            # failure events, and without an id none of them can be joined back
+            # to corpus metadata for the failure analysis, so the single
+            # largest paywall signal we have was undiagnosable by publisher.
+            log.warning(f"  PDF URL returned HTML (likely paywall) for "
+                        f"{paper.get('literature_id', '?')}: {pdf_url[:80]}")
             return False
 
         target.parent.mkdir(parents=True, exist_ok=True)

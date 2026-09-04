@@ -40,6 +40,9 @@ finished <- any(grepl("Sync complete|Phase 6", lines, fixed = FALSE))
 # fixes. Collapsing them would hide that "returned HTML" is a paywall while
 # "blocked domain" is our own deliberate skip.
 pat_http <- "Download failed for ([0-9]+): (.*)$"
+# Two formats: pre-2026-09-03 logs carry no literature_id on this line, later
+# ones do. Both are parsed so historical logs stay analysable.
+pat_html_id <- "PDF URL returned HTML \\(likely paywall\\) for ([0-9?]+): (.*)$"
 pat_html <- "PDF URL returned HTML \\(likely paywall\\): (.*)$"
 pat_block <- "Skipping blocked domain \\(([^)]+)\\): ([0-9]+)"
 
@@ -55,7 +58,18 @@ if (length(hit)) {
     stringsAsFactors = FALSE)
 }
 
+hit <- grep(pat_html_id, lines, value = TRUE)
+if (length(hit)) {
+  m <- regmatches(hit, regexec(pat_html_id, hit))
+  ev[[length(ev) + 1]] <- data.frame(
+    literature_id = sapply(m, `[`, 2),
+    failure_class = "returned_html_paywall",
+    detail        = sapply(m, `[`, 3),
+    stringsAsFactors = FALSE)
+}
+
 hit <- grep(pat_html, lines, value = TRUE)
+hit <- hit[!grepl(pat_html_id, hit)]
 if (length(hit)) {
   m <- regmatches(hit, regexec(pat_html, hit))
   ev[[length(ev) + 1]] <- data.frame(
@@ -108,6 +122,20 @@ keep <- c("literature_id", "year", "authors", "title", "journal_clean",
 keep <- keep[keep %in% names(papers)]
 fail <- merge(fail, papers[, keep], by = "literature_id", all.x = TRUE)
 
+# Record join coverage rather than letting failed joins pass as blank cells.
+# Two separate causes, and they need different responses:
+#   no id in the log      -> a worker logging gap (fixed 2026-09-03 forward)
+#   id present, no match  -> new papers not yet written to papers_data.json,
+#                            which Phase 5 does AFTER Phase 4, so a mid-run
+#                            snapshot cannot resolve them. Resolves on re-run.
+n_no_id <- sum(is.na(fail$literature_id))
+n_unjoined <- sum(!is.na(fail$literature_id) & is.na(fail$title))
+message(sprintf("join coverage: %s of %s events carry metadata (%s no id, %s id but no corpus row)",
+                format(sum(!is.na(fail$title)), big.mark = ","),
+                format(nrow(fail), big.mark = ","),
+                format(n_no_id, big.mark = ","),
+                format(n_unjoined, big.mark = ",")))
+
 # --- The lever: does a free copy already exist? ------------------------------
 # A failure whose DOI has a known OA location is not a lost paper, it is a
 # wrong URL. Counting these separates "cannot get" from "asked the wrong place".
@@ -134,7 +162,7 @@ by_class <- by_class[order(-by_class$n), ]
 
 dom <- as.data.frame(table(domain = fail$domain), responseName = "n")
 dom <- dom[order(-dom$n), ]
-dom$pct <- round(100 * dom$n / nrow(fail), 1)
+dom$pct_of_all <- round(100 * dom$n / nrow(fail), 1)
 # Split our own deliberate skips out of the failure count. Without this,
 # biodiversitylibrary.org tops the table at 37% of all "failures" when not one
 # of them was ever attempted: it is in SKIP_DOMAINS and has its own harvester
@@ -148,31 +176,54 @@ dom$with_known_oa <- sapply(as.character(dom$domain), function(d)
   sum(fail$domain == d & !is.na(fail$known_oa_url)))
 dom$decision <- ""
 dom$proposed_route <- ""
+dom$pct_real_of_all <- round(100 * dom$real_failures / nrow(fail), 1)
 dom <- dom[order(-dom$real_failures, -dom$n),
-           c("domain", "n", "deliberate_skips", "real_failures", "pct",
-             "with_known_oa", "decision", "proposed_route")]
+           c("domain", "n", "pct_of_all", "deliberate_skips", "real_failures",
+             "pct_real_of_all", "with_known_oa", "decision", "proposed_route")]
 names(dom)[1] <- "domain"
 
 st <- as.data.frame(table(http_status = fail$http_status), responseName = "n")
 st <- st[order(-st$n), ]
+st$pct_of_all <- round(100 * st$n / nrow(fail), 1)
 
-# Stratified sample for manual inspection: up to 6 per domain across the top
-# domains, so the review covers patterns rather than whatever sorted first.
+by_class$pct_of_all <- round(100 * by_class$n / nrow(fail), 1)
+
+# --- Stratified samples, one tab per dimension -------------------------------
+# Sampling grouped by domain only, as the single Sample_for_review tab did,
+# hides whichever patterns cut ACROSS domains: every 404 looks like a different
+# publisher's problem when it may be one rotted-link problem. So each dimension
+# gets its own tab, each stratified on its own categories, and each carries the
+# category column first so the grouping is visible rather than implied.
 set.seed(20260903)
-top_domains <- head(as.character(dom$domain), 25)
-samp <- do.call(rbind, lapply(top_domains, function(d) {
-  rows <- fail[fail$domain == d, ]
-  rows[sample(seq_len(nrow(rows)), min(6, nrow(rows))), ]
-}))
+
 samp_cols <- c("literature_id", "year", "title", "journal_clean", "publisher",
                "doi", "failure_class", "http_status", "domain", "known_oa_url",
                "actionable", "url")
-samp_cols <- samp_cols[samp_cols %in% names(samp)]
-samp <- samp[, samp_cols]
-samp$title <- substr(samp$title, 1, 150)
-samp$url <- substr(samp$url, 1, 180)
-samp$pattern_noted <- ""
-samp$proposed_fix <- ""
+
+stratified <- function(df, key, categories, per_cat) {
+  out <- do.call(rbind, lapply(categories, function(k) {
+    rows <- df[!is.na(df[[key]]) & df[[key]] == k, ]
+    if (!nrow(rows)) return(NULL)
+    rows[sample(seq_len(nrow(rows)), min(per_cat, nrow(rows))), ]
+  }))
+  if (is.null(out)) return(NULL)
+  cols <- c(key, setdiff(samp_cols[samp_cols %in% names(out)], key))
+  out <- out[, cols]
+  out$title <- substr(out$title, 1, 150)
+  out$url <- substr(out$url, 1, 180)
+  out$pattern_noted <- ""
+  out$proposed_fix <- ""
+  out
+}
+
+# Domains: top 25 by REAL failures, 6 each.
+samp_domain <- stratified(fail, "domain",
+                          head(as.character(dom$domain), 25), 6)
+# Statuses and classes are few, so sample more deeply from each.
+samp_status <- stratified(fail, "http_status",
+                          as.character(st$http_status), 12)
+samp_class <- stratified(fail, "failure_class",
+                         as.character(by_class$failure_class), 15)
 
 n_oa <- sum(!is.na(fail$known_oa_url))
 
@@ -233,18 +284,35 @@ info <- data.frame(c(
   "Supporting cuts. A wall of 403s means authentication; a wall of 404s means",
   "SR's links have rotted and need re-resolving from the DOI.",
   "",
-  "TAB 4: Sample_for_review",
-  sprintf("%d rows, stratified across domains, with the real URL so a pattern",
-          nrow(samp)),
-  "can be confirmed by opening a few.",
+  "TABS 4-6: Domain_sample, Status_sample, Class_sample",
+  "One sample tab per dimension, each stratified on its OWN categories, with",
+  "that category as the first column so the grouping is visible rather than",
+  "implied. Sampling only by domain would hide patterns that cut ACROSS",
+  "domains: every 404 looks like a different publisher's problem when it may",
+  "be one rotted-link problem.",
+  sprintf("  Domain_sample: %s rows, 6 per domain, top 25 domains by real failures.",
+          if (is.null(samp_domain)) "0" else format(nrow(samp_domain), big.mark = ",")),
+  sprintf("  Status_sample: %s rows, up to 12 per HTTP status.",
+          if (is.null(samp_status)) "0" else format(nrow(samp_status), big.mark = ",")),
+  sprintf("  Class_sample:  %s rows, up to 15 per failure class.",
+          if (is.null(samp_class)) "0" else format(nrow(samp_class), big.mark = ",")),
   "  3. Fill 'pattern_noted' and 'proposed_fix' where you spot something.",
   "",
   "PROVENANCE AND KNOWN GAPS",
   "- Failure events come from the sync log, so a failure the worker did not",
   "  log does not appear here. The counts are of EVENTS, and a paper retried",
   "  twice contributes more than one event.",
-  "- 'returned_html_paywall' events carry no literature_id in the log, so they",
-  "  cannot be joined to corpus metadata and show blank title/journal.",
+  sprintf("- Metadata join coverage: %s of %s events (%.0f%%).",
+          format(sum(!is.na(fail$title)), big.mark = ","),
+          format(nrow(fail), big.mark = ","),
+          100 * sum(!is.na(fail$title)) / nrow(fail)),
+  sprintf("  %s events carry NO literature_id: logs before 2026-09-03 omitted",
+          format(n_no_id, big.mark = ",")),
+  "  it on the paywall line, which is ~27% of failures. Fixed going forward.",
+  sprintf("  %s have an id but no corpus row: these are new papers, and Phase 5",
+          format(n_unjoined, big.mark = ",")),
+  "  writes papers_data.json AFTER Phase 4, so a mid-run snapshot cannot",
+  "  resolve them. They resolve when this is re-run after the sync completes.",
   "- The Unpaywall cache is a snapshot; a paper may have gone OA since."
 ), stringsAsFactors = FALSE)
 names(info) <- "Phase 4 download failures"
@@ -266,11 +334,14 @@ setColWidths(wb, "Info", 1, 92)
 addStyle(wb, "Info", createStyle(textDecoration = "bold", fontSize = 12),
          rows = 1, cols = 1)
 
-add_tab("By_domain", dom, c(38, 8, 15, 14, 7, 15, 16, 46))
-add_tab("By_status", st, c(16, 10))
-add_tab("By_class", by_class, c(26, 10))
-add_tab("Sample_for_review", samp,
-        c(12, 6, 52, 26, 20, 24, 20, 11, 26, 40, 16, 50, 30, 34)[seq_len(ncol(samp))])
+add_tab("By_domain", dom, c(38, 8, 11, 15, 13, 15, 14, 16, 46))
+add_tab("By_status", st, c(16, 8, 11))
+add_tab("By_class", by_class, c(26, 8, 11))
+swid <- function(df) c(26, 12, 6, 52, 26, 20, 24, 20, 11, 26, 40, 16, 50,
+                       30, 34)[seq_len(ncol(df))]
+if (!is.null(samp_domain)) add_tab("Domain_sample", samp_domain, swid(samp_domain))
+if (!is.null(samp_status)) add_tab("Status_sample", samp_status, swid(samp_status))
+if (!is.null(samp_class))  add_tab("Class_sample",  samp_class,  swid(samp_class))
 
 worksheetOrder(wb) <- seq_len(length(wb$sheet_names))
 out <- sprintf("outputs/download_failures_%s.xlsx", format(Sys.Date(), "%Y-%m-%d"))
