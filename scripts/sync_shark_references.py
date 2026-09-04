@@ -747,7 +747,7 @@ def download_pdf(session, paper, log) -> bool:
             # to corpus metadata for the failure analysis, so the single
             # largest paywall signal we have was undiagnosable by publisher.
             log.warning(f"  PDF URL returned HTML (likely paywall) for "
-                        f"{paper.get('literature_id', '?')}: {pdf_url[:80]}")
+                        f"{paper.get('literature_id', '?')}: {pdf_url}")
             return False
 
         target.parent.mkdir(parents=True, exist_ok=True)
