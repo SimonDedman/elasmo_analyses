@@ -7,38 +7,11 @@
 # sheet and the deletion that follows cannot disagree about which file is the
 # redundant one.
 
-suppressPackageStartupMessages({
-  library(openxlsx)
-})
+here <- dirname(sub("--file=", "", grep("--file=", commandArgs(trailingOnly = FALSE),
+                                        value = TRUE)[1]))
+source(file.path(here, "xlsx_review_helpers.R"))
 
-# openxlsx declares a drawing and a vmlDrawing relationship on every sheet but
-# only writes those parts when the sheet actually has one.  Excel and
-# LibreOffice tolerate the dangling reference; openpyxl raises KeyError on it,
-# and the deletion step has to read this workbook back to collect decisions.
-# So strip the references that point at nothing.
-strip_dangling_rels <- function(xlsx) {
-  tmp <- file.path(tempdir(), paste0("xlsxfix_", basename(xlsx)))
-  unlink(tmp, recursive = TRUE)
-  dir.create(tmp, recursive = TRUE)
-  utils::unzip(xlsx, exdir = tmp)
-  present <- basename(list.files(file.path(tmp, "xl", "drawings")))
-  for (rels in list.files(file.path(tmp, "xl", "worksheets", "_rels"),
-                          full.names = TRUE)) {
-    xml <- readLines(rels, warn = FALSE)
-    parts <- regmatches(xml, gregexpr("<Relationship [^>]*/>", xml))[[1]]
-    drop <- parts[grepl("drawings/", parts, fixed = TRUE) &
-                    !basename(sub('.*Target="([^"]*)".*', "\\1", parts)) %in% present]
-    for (d in drop) xml <- sub(d, "", xml, fixed = TRUE)
-    writeLines(xml, rels)
-  }
-  files <- list.files(tmp, recursive = TRUE, all.files = TRUE, no.. = TRUE)
-  owd <- setwd(tmp); on.exit(setwd(owd), add = TRUE)
-  unlink(xlsx)
-  utils::zip(xlsx, files, flags = "-qX")
-}
-
-proj <- normalizePath(file.path(dirname(sub("--file=", "",
-  grep("--file=", commandArgs(trailingOnly = FALSE), value = TRUE)[1])), ".."))
+proj <- normalizePath(file.path(here, ".."))
 out_dir <- file.path(proj, "outputs")
 
 twins <- read.csv(file.path(out_dir, "duplicate_twins.csv"),

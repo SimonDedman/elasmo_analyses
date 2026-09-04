@@ -195,3 +195,6 @@ database/coauthor_cleanup_plan.json
 # reference letters, and draft proposals — none of which belong on GitHub.
 # The durable record is the local/NAS copy, not version control.
 elasmo_analyses/
+
+# Cached pdftotext output for the misfile checker; regenerable, ~300 MB
+outputs/.pdf_text_cache/
