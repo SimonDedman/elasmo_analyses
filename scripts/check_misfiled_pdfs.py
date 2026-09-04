@@ -63,6 +63,9 @@ MIN_TITLE_WORDS = 3
 MIN_TEXT_WORDS = 100
 MATCH_THRESHOLD = 0.7
 LATIN_THRESHOLD = 0.5
+MIN_CONFIDENT_WORDS = 400
+# Below this many testable title words, a miss proves little either way.
+MIN_SOLID_WORDS = 4
 
 
 def norm(text: str) -> str:
@@ -108,21 +111,55 @@ def latin_fraction(text: str) -> float:
     return sum(c.isascii() for c in letters) / len(letters)
 
 
-def title_present(title: str, sorted_tokens: list[str]) -> bool | None:
-    """Is this title in the document?  ``None`` when it cannot be judged.
+def _in_text(word: str, sorted_tokens: list[str]) -> bool:
+    i = bisect.bisect_left(sorted_tokens, word)
+    return i < len(sorted_tokens) and sorted_tokens[i].startswith(word)
 
-    Matches by prefix so an abbreviated filename word finds its full form.
+
+def title_words(title: str) -> list[str]:
+    return [w for w in norm(title).split() if len(w) > 3 and w not in STOP]
+
+
+def title_present(title: str, sorted_tokens: list[str]
+                  ) -> tuple[bool | None, int, int]:
+    """Is this title in the document?
+
+    Returns (verdict, words found, words looked for), so the review sheet can
+    show the evidence rather than an unexplained flag.  ``None`` means the
+    title is too short to judge, which is not the same as absent.
+
+    Words match by prefix, because filenames abbreviate them
+    ("Bioturb" for "Bioturbation").  A word is also retried without a leading
+    or trailing "i": titles carrying BibTeX italic markup lose their angle
+    brackets somewhere upstream, leaving the tag glued to the species name
+    ("<i>Tursiops aduncus</i>" becomes "iTursiops aduncusi").
     """
-    words = [w for w in norm(title).split()
-             if len(w) > 3 and w not in STOP]
+    words = title_words(title)
     if len(words) < MIN_TITLE_WORDS:
-        return None
+        return None, 0, len(words)
     hits = 0
     for word in words:
-        i = bisect.bisect_left(sorted_tokens, word)
-        if i < len(sorted_tokens) and sorted_tokens[i].startswith(word):
+        if _in_text(word, sorted_tokens):
             hits += 1
-    return hits / len(words) >= MATCH_THRESHOLD
+        elif word.startswith("i") and len(word) > 4 \
+                and _in_text(word[1:], sorted_tokens):
+            hits += 1
+        elif word.endswith("i") and len(word) > 4 \
+                and _in_text(word[:-1], sorted_tokens):
+            hits += 1
+    return hits / len(words) >= MATCH_THRESHOLD, hits, len(words)
+
+
+def same_paper(a: str, b: str) -> bool:
+    """Are these two filenames naming the same paper?
+
+    A record whose title nearly matches one that IS in the document is a
+    duplicate filename, not a misfile, and belongs in the twins workflow.
+    """
+    wa, wb = set(title_words(a)), set(title_words(b))
+    if len(wa) < 3 or len(wb) < 3:
+        return False
+    return len(wa & wb) / min(len(wa), len(wb)) >= 0.6
 
 
 def distinct_records(group: dict) -> list[dict]:
@@ -166,9 +203,22 @@ def judge_group(group: dict, cache_dir: Path) -> dict | None:
         entry["records"] = [dict(r, present=None) for r in records]
         return entry
 
-    judged = [dict(r, present=title_present(r["title"], tokens))
-              for r in records]
-    testable = [r for r in judged if r["present"] is not None]
+    judged = []
+    for r in records:
+        verdict, hits, total = title_present(r["title"], tokens)
+        judged.append(dict(r, present=verdict, words_found=hits,
+                           words_sought=total))
+
+    # A record whose title nearly matches one that IS in the document is a
+    # duplicate filename, not a misfile.  BibTeX italic markup loses its
+    # angle brackets upstream and mangles a title enough to look absent.
+    here = [r for r in judged if r["present"]]
+    for r in judged:
+        if r["present"] is False and any(same_paper(r["title"], h["title"])
+                                         for h in here):
+            r["present"] = "name_variant"
+
+    testable = [r for r in judged if r["present"] not in (None, "name_variant")]
     if not testable:
         entry["verdict"] = "untestable_short_titles"
     elif all(r["present"] for r in testable):
@@ -178,43 +228,79 @@ def judge_group(group: dict, cache_dir: Path) -> dict | None:
     else:
         entry["verdict"] = "misfiled_none_found"
     entry["records"] = judged
+    # The year of the paper the document actually holds, which is often not
+    # the year of the record being questioned.
+    entry["pdf_year"] = next((r["year"] for r in judged if r["present"] is True),
+                             None)
     return entry
 
 
-def confidence(entry: dict) -> str:
-    """Whether the flag can be trusted, or needs a human because the tool has
-    a known blind spot here."""
+def confidence(entry: dict, record: dict | None = None) -> tuple[str, str]:
+    """How far this row can be trusted, and why, in words for the sheet.
+
+    Confidence turns on the quality of the EVIDENCE, never on how alarming
+    the verdict is.  An earlier version doubted every "none of the papers
+    matched" group, which demoted the clearest finding in the whole set:
+    nineteen records on one PDF, judged from 4,000 words of clean text that
+    is plainly a different article.
+
+    Three things genuinely weaken a row: a scan whose script the OCR cannot
+    read, too little text to search, and a filename abbreviated so hard that
+    only two or three words remain to test ("3D mov hab select jGWS NY
+    Bight", which is the same paper as "Three-Dimensional Movements and
+    Habitat Selection of Young White Sharks").
+    """
     if entry["latin_fraction"] < LATIN_THRESHOLD:
-        return "check_ocr"
-    if entry["n_words"] < 400:
-        return "check_thin_text"
+        return ("check the scan", "PDF is mostly non-Latin script, so Latin "
+                "titles cannot be OCRed; 'absent' here is probably the "
+                "checker failing, not a misfile")
+    if entry["n_words"] < MIN_CONFIDENT_WORDS:
+        return ("check the scan", f"only {entry['n_words']} words of text "
+                "extracted, so a title not being found is weak evidence")
+    if record is not None and record.get("words_sought", 99) <= MIN_SOLID_WORDS:
+        return ("short title", f"the filename leaves only "
+                f"{record['words_sought']} testable words, too few to be sure "
+                "either way; a heavily abbreviated title can miss its own paper")
     if entry["verdict"] == "misfiled_none_found":
-        return "check_none_matched"
-    return "auto"
+        return ("strong", f"clean text ({entry['n_words']:,} words) and NONE "
+                f"of the {entry['n_records']} papers naming this PDF are in it")
+    return ("strong", f"clean text ({entry['n_words']:,} words), and the "
+            "other paper naming this PDF was found in it")
 
 
 def write_csv(entries: list[dict], path: Path) -> int:
+    """The review table: one row per record whose paper is not in its PDF.
+
+    Every column exists to let the row be judged without opening anything:
+    what the filename claims, what the document actually is, and the count of
+    title words looked for against found.  Records reclassified as duplicate
+    filenames, and records that could not be tested, are excluded.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     rows = 0
     with open(path, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
-        w.writerow(["group_id", "year", "size_mb", "n_records", "confidence",
-                    "absent_title", "pdf_holds_instead", "pdf_starts",
-                    "latin_fraction", "n_words", "absent_path", "sha256",
-                    "decision", "notes"])
+        w.writerow(["group_id", "how_sure", "why", "record_year",
+                    "absent_title", "pdf_year", "pdf_holds_instead",
+                    "pdf_starts", "words_found", "words_sought",
+                    "n_records", "size_mb", "latin_fraction", "n_words",
+                    "absent_path", "sha256", "decision", "notes"])
         for gid, e in enumerate(entries, 1):
             if not e["verdict"].startswith("misfiled"):
                 continue
-            present = [r["title"] for r in e["records"] if r["present"]]
+            present = [r["title"] for r in e["records"] if r["present"] is True]
             for r in e["records"]:
                 if r["present"] is not False:
                     continue
+                how_sure, why = confidence(e, r)
                 w.writerow([
-                    gid, e["year"], e["size_mb"], e["n_records"],
-                    confidence(e), r["title"],
-                    present[0] if present else "(no naming paper found in it)",
-                    e["pdf_starts"], e["latin_fraction"], e["n_words"],
-                    r["path"], e["sha256"][:12], "", "",
+                    gid, how_sure, why,
+                    r["year"], r["title"],
+                    e["pdf_year"] or "",
+                    present[0] if present else "(none of the naming papers)",
+                    e["pdf_starts"], r["words_found"], r["words_sought"],
+                    e["n_records"], e["size_mb"], e["latin_fraction"],
+                    e["n_words"], r["path"], e["sha256"][:12], "", "",
                 ])
                 rows += 1
     return rows
@@ -251,13 +337,17 @@ def main() -> int:
                  if r["present"] is False)
     untested = sum(1 for e in entries for r in e["records"]
                    if r["present"] is None)
+    variant = sum(1 for e in entries for r in e["records"]
+                  if r["present"] == "name_variant")
     print(f"\n  {absent} records absent from the PDF they name")
     print(f"  {untested} records could not be tested (not the same thing)")
+    print(f"  {variant} were duplicate filenames, not misfiles (twins workflow)")
 
     rows = write_csv(entries, args.csv)
     print(f"  wrote {args.csv} ({rows} rows for review)")
-    by_conf = Counter(confidence(e) for e in entries
-                      if e["verdict"].startswith("misfiled"))
+    by_conf = Counter(confidence(e, r)[0] for e in entries
+                      if e["verdict"].startswith("misfiled")
+                      for r in e["records"] if r["present"] is False)
     for k, v in by_conf.most_common():
         print(f"    {v:4d} groups: {k}")
 

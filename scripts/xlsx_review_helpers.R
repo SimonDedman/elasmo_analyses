@@ -54,6 +54,14 @@ folder_links <- function(paths) {
   sprintf('HYPERLINK("file://%s","open")', utils::URLencode(dirname(paths)))
 }
 
+# Link straight at the file. A folder link makes the reader hunt for the row's
+# PDF among everything filed that year, and the year folder is often not the
+# one they expect, because a misfiled paper sits under ITS year, not the
+# document's.
+file_links <- function(paths, label = "open") {
+  sprintf('HYPERLINK("file://%s","%s")', utils::URLencode(paths), label)
+}
+
 add_info_sheet <- function(wb, title, lines) {
   # The column name becomes the header row, so it carries the title; the body
   # must not repeat it.
