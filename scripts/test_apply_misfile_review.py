@@ -73,8 +73,11 @@ def test_deletes_the_misfiled_name_and_keeps_the_document(tmp_path, linked_pair)
     assert emptied == []
 
 
-@pytest.mark.parametrize("decision", ["CONTAINER", "UNSURE", ""])
+@pytest.mark.parametrize("decision",
+                         ["CORRECTLY FILED", "CONTAINER", "UNSURE", ""])
 def test_unconfirmed_rows_are_left_alone(tmp_path, linked_pair, decision):
+    """CONTAINER is the old wording, still honoured so a sheet reviewed
+    before the rename still applies correctly."""
     _good, bad = linked_pair
     actions, freed, _ = run(workbook(tmp_path, [(bad, decision, "")]))
     assert actions == [] and freed == 0

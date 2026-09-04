@@ -143,9 +143,12 @@ info_lines <- c(
   "   machine output, so check them if a decision turns on one.",
   "6. If still unsure, click 'open_pdf'. It opens THAT ROW'S file directly.",
   "7. Put a value in 'decision':",
-  "      MISFILED   confirmed, the file is not the paper the filename claims",
-  "      CONTAINER  the checker is wrong, the paper IS in there",
-  "      UNSURE     needs a closer look than this sheet supports",
+  "      MISFILED         confirmed, the file is not the paper the filename claims",
+  "      CORRECTLY FILED  the checker is wrong, the paper IS in this file. It covers",
+  "                       both cases: a multi-article volume that contains it, and a",
+  "                       PDF that simply IS that paper under an abbreviated or",
+  "                       OCR-mangled name.",
+  "      UNSURE           needs a closer look than this sheet supports",
   "",
   "A WORKED ROW",
   "  absent_title      Birth of guitarfish, Zapteryx brevirostris ...",
@@ -241,7 +244,7 @@ style_review_sheet(
 
 dataValidation(wb, "misfiled", col = which(names(mis) == "decision"),
                rows = 2:(nrow(mis) + 1), type = "list",
-               value = '"MISFILED,CONTAINER,UNSURE"')
+               value = '"MISFILED,CORRECTLY FILED,UNSURE"')
 
 flagged <- which(mis$how_sure != "strong") + 1
 if (length(flagged)) {
