@@ -260,42 +260,72 @@ CONFERENCE_META = [
          website="https://www.oceaniasharks.org.au/", contact="Brit Finucci"),
     dict(series="Sharks International (SI)", lead_key="Sharks International (SI)",
          year_from=2010, year_to=None, frequency=4,
-         organisers="Rotating local host. 2010 Cairns, 2014 Durban, 2018 Joao Pessoa, "
-                    "2022 Valencia, 2026 Colombo (Blue Resources Trust).",
+         organisers="Rotating local host. 2010 Cairns (6-11 June, Rydges Esplanade "
+                    "Resort; host body NOT FOUND). 2014 Durban (2-6 June), hosted by the "
+                    "KwaZulu-Natal Sharks Board; 169 orals + 52 posters, which matches the "
+                    "170 records we want almost exactly. 2018 Joao Pessoa, UFPB, joint with "
+                    "AES, SBEEL and Fundacion SQUALUS. 2022 Valencia. 2026 Colombo, hosted "
+                    "by Blue Resources Trust.",
          website="https://www.sharksinternational.org.br/noticia/23-abstract-book/"
-                 "menu_abstract_book.html (2018 book)",
-         contact=""),
+                 "menu_abstract_book.html (2018 book, which we hold)",
+         contact="sharksinternational2014@gmail.com (2014 organising committee, from the "
+                 "KZN Sharks Board announcement; may be dormant)"),
     dict(series="Encuentro Colombiano sobre Condrictios (ECC)",
          lead_key="Encuentro Colombiano sobre Condrictios",
          year_from=2008, year_to=2018, frequency=2,
          organisers="Fundacion SQUALUS. I 2008 Bogota, II 2010 Cali, III 2012 Santa Marta, "
-                    "IV 2014 Medellin, V 2016 Bogota, VI 2018 Joao Pessoa (co-located with "
-                    "Sharks International 2018, so check the SI 2018 book first).",
+                    "IV 2014 Medellin, V 2016 Bogota, VI 2018 Joao Pessoa. CONFIRMED "
+                    "2026-09-04: the VI IS ALREADY HELD — the SI 2018 book is the joint "
+                    "book for four meetings at once (Sharks International, the 34th AES "
+                    "annual meeting, the X SBEEL Reuniao and the VI ECC), and we have its "
+                    "427 abstracts. So the ask is editions I-V, and the corpus cites only "
+                    "the IV.",
          website="http://squalus.org/index.php/encuentro-condrictios/ ; "
                  "https://encuentro.squalus.org",
          contact="squalus@germanm1.sg-host.com (from the site; verify before using)"),
+    dict(series="Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)",
+         lead_key="Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)",
+         year_from=1997, year_to=None, frequency=2,
+         organisers="SBEEL. The X Reuniao was held in 2018 inside the Sharks International "
+                    "book, so at least nine earlier meetings exist. The corpus cites only "
+                    "the II, which is why n_needed is 1 — that number is a floor and badly "
+                    "understates this series.",
+         website="", contact=""),
     dict(series="Simposio Nacional de Tiburones y Rayas (SOMEPEC, Mexico)",
          lead_key="Simposio Nacional de Tiburones y Rayas (Mexico)",
          year_from=2004, year_to=None, frequency=2,
-         organisers="Sociedad Mexicana de Peces Cartilaginosos (SOMEPEC). Editions seen: "
-                    "III 2008, IV 2010 (UNAM), V, VI 2014 Mazatlan, VIII 2019 Playa del "
-                    "Carmen (joint with the I Congreso Latinoamericano de Tiburones, Rayas "
-                    "y Quimeras), XI recent.",
-         website="Memorias/resumenes posted on ResearchGate and via facebook.com/Somepec2",
-         contact=""),
+         organisers="Sociedad Mexicana de Peces Cartilaginosos (SOMEPEC). HARVESTED "
+                    "2026-09-04 from somepec.org, no request to anyone needed: I 2004 "
+                    "(with the III Semana del Tiburon, UNAM), III 2008, IV 2010 (UNAM), "
+                    "VII 2016, XI 2025 as abstract books, plus the IX 2021 programme. All "
+                    "five books carry a clean text layer. STILL MISSING: II, V, VI 2014 "
+                    "Mazatlan (the edition our corpus cites), VIII 2019 Playa del Carmen "
+                    "(joint with the I Congreso Latinoamericano de Tiburones, Rayas y "
+                    "Quimeras), and X. Ask info@somepec.org for exactly those five.",
+         website="https://somepec.org/memorias/ ; back volumes under "
+                 "https://somepec.org/wp-content/uploads/ ; scraper "
+                 "scripts/conf_abstracts/scrape_somepec.py",
+         contact="info@somepec.org ; +52 55 5034 1708"),
     dict(series="Colloque international requins en Afrique de l'Ouest",
          lead_key="Colloque international requins en Afrique", year_from=2011,
          year_to=2011, frequency=0,
-         organisers="Commission Sous-Regionale des Peches (CSRP / SRFC). Dakar, Senegal, "
-                    "25-27 July 2011. One-off as far as we can tell.",
+         organisers="Commission Sous-Regionale des Peches (CSRP / SRFC), an "
+                    "intergovernmental body for seven West African states. Dakar, Senegal, "
+                    "25-27 July 2011, on the conservation and sustainable management of "
+                    "shark populations in West Africa. A single meeting, not a series — "
+                    "kept on the list anyway: 48 abstracts is one email and one book, and "
+                    "it is the only West African material in the corpus.",
          website="https://spcsrp.org/", contact=""),
     dict(series="Gulf and Caribbean Fisheries Institute (GCFI)",
          lead_key="Gulf and Caribbean Fisheries Institute (GCFI)",
          year_from=1948, year_to=None, frequency=1,
-         organisers="GCFI secretariat. Every meeting since 1948 is published in the annual "
-                    "Proceedings, so this is a library request, not an ask of a person.",
-         website="https://www.gcfi.org/ ; back proceedings in the NOAA Institutional "
-                 "Repository, https://repository.library.noaa.gov/",
+         organisers="GCFI secretariat. Every meeting since 1948 is in the annual "
+                    "Proceedings and every PAPER is a free PDF at proceedings.gcfi.org "
+                    "(verified 2026-09-04), so nobody needs asking and nobody should be "
+                    "assigned these. The 31 corpus records were sitting on the "
+                    "needs-library queue and are now acquisition_route=gcfi_proceedings.",
+         website="https://proceedings.gcfi.org/ (per-paper PDFs) ; https://www.gcfi.org/ ; "
+                 "back volumes also in the NOAA Institutional Repository",
          contact=""),
     dict(series="Pacific Shark Workshop", lead_key="Pacific Shark Workshop",
          year_from=2011, year_to=2012, frequency=0,
