@@ -20,6 +20,7 @@ Usage:
   ingest_oa_xlsx.py --year 2021 --dry-run      # parse and report, write nothing
 """
 import argparse
+import difflib
 import re
 import sqlite3
 import sys
@@ -70,6 +71,24 @@ def _toks(t):
 
 def _jaccard(a, b):
     return len(a & b) / len(a | b) if (a and b) else 0.0
+
+
+def _norm(t):
+    return re.sub(r"[^a-z0-9 ]", "", (t or "").lower())
+
+
+def _shared_run(a, b, need=40):
+    """Programme-book titles get mangled at either end - cut to the column
+    width, run into the author list, or split so only the tail survives - but a
+    long verbatim run through the middle still matches. This catches what token
+    overlap misses: 16 of 242 in JMIH 2021, every one verified as a fragment of
+    an abstract already in the export. 40 characters is long enough that a
+    chance match between two unrelated titles is not a realistic concern."""
+    a, b = _norm(a), _norm(b)
+    if len(a) < need or len(b) < need:
+        return False
+    return difflib.SequenceMatcher(None, a, b, autojunk=False) \
+        .find_longest_match(0, len(a), 0, len(b)).size >= need
 
 
 def _s(v):
@@ -272,7 +291,9 @@ def merge_program_schedule(con, year, mid, threshold=0.6):
             if j > best:
                 best_aid, best = aid, j
         if best < threshold:
-            continue
+            best_aid = next((aid for aid, t in export if _shared_run(ptitle, t)), None)
+            if best_aid is None:
+                continue
         con.execute(
             """UPDATE abstracts
                   SET program_number   = COALESCE(program_number, ?),

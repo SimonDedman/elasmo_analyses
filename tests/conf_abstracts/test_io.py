@@ -44,6 +44,18 @@ def test_oa_xlsx_author_split():
     assert auth[0]["is_presenter"] == 1 and auth[0]["presenter_inferred"] == 1
 
 
+def test_oa_xlsx_shared_run():
+    """Programme-book titles arrive truncated, author-fused, or as a bare tail;
+    a 40-char verbatim run still identifies the abstract (16 of 242, JMIH 2021)."""
+    from conf_abstracts.ingest_oa_xlsx import _shared_run
+    full = "High resolution acoustic telemetry reveals swim speeds and inferred field metabolic rates in juvenile white sharks"
+    assert _shared_run("and inferred field metabolic rates in juvenile white sharks", full)
+    assert _shared_run("Delineation of Blacktip Shark Genetic Stock Structure in the Frazier, Jayne Gardiner",
+                       "Delineation of Blacktip Shark Genetic Stock Structure in the Gulf of Mexico")
+    assert not _shared_run("Calling phenology of the Rio Grande chirping frog", full)
+    assert not _shared_run("short title", full)
+
+
 def test_oa_xlsx_presentation_type():
     from conf_abstracts.ingest_oa_xlsx import _presentation_type, _award
     assert _presentation_type("Contributed 15-minute Oral Paper VIRTUAL") == "talk"
