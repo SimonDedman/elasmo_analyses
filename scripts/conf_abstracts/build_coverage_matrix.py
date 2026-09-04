@@ -215,17 +215,21 @@ def db_meeting_status():
     # LEFT JOIN so a held-but-unparsed book (e.g. a degraded scan that yielded
     # 0 records) still surfaces; body count makes the status content-aware
     # (a 520-page "programme" whose records carry bodies IS an abstract book).
-    for yr, meeting, doc, isocr, n, el, bodies in con.execute(
-        """select m.year,m.meeting,m.doc_type,m.is_ocr,count(a.abstract_id) n,
-                  sum(a.is_elasmo) el,
+    for yr, meeting, doc, isocr, src, n, el, bodies in con.execute(
+        """select m.year,m.meeting,m.doc_type,m.is_ocr,m.source_pdf,
+                  count(a.abstract_id) n, sum(a.is_elasmo) el,
                   sum(case when length(a.abstract_text) > 50 then 1 else 0 end) bodies
            from meetings m left join abstracts a on a.meeting_id=m.meeting_id
            where m.meeting in ('JMIH','ASIH') group by m.meeting_id"""):
         d = out.setdefault(yr, dict(abstract=False, schedule=False, ocr=False,
-                                    ocr_failed=False, elasmo=0))
+                                    ocr_failed=False, structured=False, elasmo=0))
         has_bodies = (bodies or 0) >= max(2, 0.5 * n)
         if n > 1 and (doc == "abstract_book" or has_bodies):
             d.update(abstract=True, ocr=bool(isocr))
+            # An Oxford Abstracts export is born-digital and already structured:
+            # there is nothing for Fable to extract, so it is done on arrival.
+            if str(src or "").lower().endswith(".xlsx"):
+                d["structured"] = True
             d["elasmo"] += el or 0
         elif doc == "abstract_book" and isocr:
             d["ocr_failed"] = True  # scan held; OCR recovered nothing usable
@@ -351,6 +355,8 @@ def meeting_cell(year, db):
     if d and d["abstract"]:
         if d["ocr"]:
             return loc, "OCR", "degraded scan (needs_review) — flatbed re-scan planned", d["elasmo"]
+        if d.get("structured"):
+            return loc, "Ingested", "Oxford Abstracts export (born-digital)", d["elasmo"]
         state, n_fable = fable_state("JMIH", year)
         if state == "merged":
             return loc, "Ingested", "", d["elasmo"]

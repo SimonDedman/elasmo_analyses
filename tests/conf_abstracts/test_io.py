@@ -16,6 +16,44 @@ def test_elasmo_lexicon():
     assert not is_elasmo_text("Osteology of Nurseryfish", "Kurtus gulliveri")
 
 
+def test_elasmo_lexicon_ray_noise():
+    """\\bray\\b matched ray-finned fishes, fin-ray counts and X-rays: 143 of
+    1,226 content-flagged elasmo records were false positives (2026-09-04)."""
+    from conf_abstracts.lexicon import is_elasmo_text
+    assert not is_elasmo_text("Evolution of the gular muscles in ray-finned fishes", "")
+    assert not is_elasmo_text("Systematic revision", "a lower count of 1st dorsal fin rays")
+    assert not is_elasmo_text("Clutch frequency", "mark-recapture and X-ray analysis")
+    assert not is_elasmo_text("Bembrops", "with fewer dorsal and pectoral rays")
+    # the scrub must not cost us real batoids
+    assert is_elasmo_text("Movement of manta rays in Indonesia", "")
+    assert is_elasmo_text("Age and growth", "we sampled rays and sharks from the trawl")
+    assert is_elasmo_text("Habitat use of the bat ray", "Myliobatis californica")
+
+
+def test_oa_xlsx_author_split():
+    from conf_abstracts.ingest_oa_xlsx import _split_authors
+    # Oxford Abstracts comma-separates 'First Last', but submitters slip in
+    # 'Surname, Initials', which a naive split tears in half.
+    got = [a["full_name"] for a in
+           _split_authors("Purushottama, G. B., Muktha, M., Swatipriyanka Sen Dash", "")]
+    assert got == ["G. B. Purushottama", "M. Muktha", "Swatipriyanka Sen Dash"], got
+    auth = _split_authors("Brooke Anderson, Neil Hammerschlag", "Brooke Anderson")
+    assert [a["is_presenter"] for a in auth] == [1, 0]
+    # presenter not found in the list -> first author, flagged as inferred
+    auth = _split_authors("B. Anderson, Neil Hammerschlag", "Brooke Anderson")
+    assert auth[0]["is_presenter"] == 1 and auth[0]["presenter_inferred"] == 1
+
+
+def test_oa_xlsx_presentation_type():
+    from conf_abstracts.ingest_oa_xlsx import _presentation_type, _award
+    assert _presentation_type("Contributed 15-minute Oral Paper VIRTUAL") == "talk"
+    assert _presentation_type("Student Poster Competition (all are virtual)") == "poster"
+    assert _presentation_type("Contributed 5-minute Lightning Paper") == "lightning"
+    assert _presentation_type("Invited Symposium (all are virtual)") == "symposium"
+    assert _award("Student Oral Competition IN-PERSON") == "Student Oral Competition"
+    assert _award("Contributed 15-minute Oral Paper VIRTUAL") is None
+
+
 def test_qa_classify():
     assert qa_ocr._classify(0, 0.0) == "no_text"
     assert qa_ocr._classify(5000, 0.30) == "low_quality"

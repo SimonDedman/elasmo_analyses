@@ -41,8 +41,27 @@ _GENERA = [
 _COMMON_RE = re.compile("|".join(_COMMON), re.I)
 _GENERA_RE = re.compile(r"\b(" + "|".join(_GENERA) + r")\b")
 
+# "ray" is the one term in _COMMON that is not diagnostic on its own: the
+# ichthyology and herpetology literature is full of ray-finned fishes, fin ray
+# counts, and X-ray imaging, and \bray\b matches every one of them. MEASURED
+# 2026-09-04: 143 of 1,226 content-flagged elasmo records (11.7%) had NO elasmo
+# evidence beyond a "ray" of this kind. Scrub those phrases before matching;
+# scrubbing can only remove hits, so nothing that was non-elasmo becomes elasmo.
+_RAY_NOISE = re.compile(
+    r"""(?xi)
+    \b (?:x|gamma|uv|cosmic|beta|alpha) [\s-]* rays? \b        # X-ray, gamma ray
+  | \b rays? [\s-]* fin(?:ned|s)? \b                          # ray-finned fish
+  | \b (?:fin|fins|dorsal|anal|caudal|pectoral|pelvic|soft|hard|
+         branched|unbranched|segmented|procurrent|principal|median|
+         gill|branchiostegal|spinous|lepidotrich(?:ia|ial)?)
+    [\s-]* rays? \b                                            # fin-ray counts
+  | \b rays? \s+ (?:and|or) \s+ spines? \b
+  | \b spines? \s+ (?:and|or) \s+ rays? \b
+  | \b synchrotron \b | \b radiograph \w* \b
+    """)
+
 
 def is_elasmo_text(title: str, abstract: str = "") -> bool:
     """True if title/abstract mentions an elasmobranch/chondrichthyan."""
-    text = f"{title or ''} {abstract or ''}"
+    text = _RAY_NOISE.sub(" ", f"{title or ''} {abstract or ''}")
     return bool(_COMMON_RE.search(text) or _GENERA_RE.search(text))
