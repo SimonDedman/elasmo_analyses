@@ -239,3 +239,60 @@ def test_text_cache_avoids_a_second_extraction(tmp_path, monkeypatch):
     for _ in range(3):
         assert cm.extract_text(str(pdf), "abc123", tmp_path / "cache") == ARTICLE
     assert len(calls) == 1
+
+
+def _entry(sha, records, verdict):
+    return {"sha256": sha, "verdict": verdict, "records": records,
+            "year": 2018, "size_mb": 1, "n_records": len(records),
+            "latin_fraction": 1.0, "n_words": 9000, "pdf_starts": "",
+            "pdf_year": 2018}
+
+
+def test_cross_check_finds_a_papers_real_home():
+    """A misfiled name is not a lost paper: the same paper is often already
+    filed correctly elsewhere, so deleting the wrong name loses nothing."""
+    entries = [
+        _entry("aaa", [
+            {"title": "Delayed.healthcare.and.secondary.infections.following",
+             "present": False, "path": "/lib/2018/X.2018.Delayed.healthcare.pdf",
+             "year": 2018, "words_found": 5, "words_sought": 8},
+            {"title": "Injuries caused by fish in a community",
+             "present": True, "path": "/lib/2018/H.2018.Injuries.pdf",
+             "year": 2018, "words_found": 6, "words_sought": 6}],
+              "misfiled_some_absent"),
+        _entry("bbb", [
+            {"title": "Delayed healthcare and secondary infections following",
+             "present": True, "path": "/lib/2018/S.2018.Delayed healthcare.pdf",
+             "year": 2018, "words_found": 6, "words_sought": 6}], "container"),
+    ]
+    found = cm.find_correct_copies(entries)
+    assert found["/lib/2018/X.2018.Delayed.healthcare.pdf"]["path"] \
+        == "/lib/2018/S.2018.Delayed healthcare.pdf"
+
+
+def test_cross_check_does_not_match_on_generic_words():
+    """Searching titles against whole documents returned 85 hits of 93, a
+    chance-collision rate. Matching must be title-to-title and strict."""
+    entries = [
+        _entry("aaa", [
+            {"title": "Shore fishes of the Marquesas Islands an updated",
+             "present": False, "path": "/lib/A.pdf", "year": 2015,
+             "words_found": 2, "words_sought": 5},
+            {"title": "Cape fur seals adjust their foraging",
+             "present": True, "path": "/lib/B.pdf", "year": 2015,
+             "words_found": 5, "words_sought": 5}], "misfiled_some_absent"),
+        _entry("bbb", [
+            {"title": "Telemetry reveals spatial separation of cooccurring fishes",
+             "present": True, "path": "/lib/C.pdf", "year": 2015,
+             "words_found": 6, "words_sought": 6}], "container"),
+    ]
+    assert cm.find_correct_copies(entries) == {}
+
+
+def test_dotted_filenames_are_normalised_before_matching():
+    """Dots are not what breaks matching: 136 of 180 dotted files match their
+    own paper. They are a misfiled import batch, not a formatting problem."""
+    dotted = "Delayed.healthcare.and.secondary.infections.following.freshwater"
+    spaced = "Delayed healthcare and secondary infections following freshwater"
+    assert cm.title_words(dotted) == cm.title_words(spaced)
+    assert cm.is_dotted(dotted) and not cm.is_dotted(spaced)
