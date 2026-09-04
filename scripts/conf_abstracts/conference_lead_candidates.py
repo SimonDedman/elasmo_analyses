@@ -81,6 +81,10 @@ _SERIES = [
     (re.compile(r"Colloque international.*Requins en Afrique|Requins en Afrique", re.I),
      "Colloque international requins en Afrique", "West African organisers / IUCN SSG West Africa",
      "West Africa", False),
+    (re.compile(r"SBEEL|Sociedade Brasileira para .*Elasmobr|"
+                r"Reuni[ãa]o.*Elasmobr", re.I),
+     "Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)",
+     "SBEEL", "Brazil", False),
     (re.compile(r"Reuni[oó]n.*Tiburones|Tiburones y Rayas", re.I),
      "Latin American shark meetings (other)", "regional organisers", "Latin America", False),
     (re.compile(r"Gulf and Caribbean Fisheries Institute|\bGCFI\b", re.I),
