@@ -44,39 +44,83 @@ def test_parse_filename_splits_on_the_year():
 def test_abbreviated_filename_still_matches_its_paper():
     """The filename says "Bioturb stingray Ningaloo"; the paper is right
     there. Literal matching called this absent and accused a good file."""
-    assert cm.title_present("Bioturb stingray Ningaloo", tokens(ARTICLE)) is True
+    assert cm.title_present("Bioturb stingray Ningaloo",
+                            tokens(ARTICLE))[0] is True
     assert cm.title_present("Biologging horiz vert mov Tiger Sharks",
                             tokens("Biologging Tags Reveal Links Between Fine "
                                    "Scale Horizontal and Vertical Movements "
-                                   "of Tiger Sharks")) is True
+                                   "of Tiger Sharks"))[0] is True
+
+
+def test_bibtex_italic_residue_still_matches_its_paper():
+    """"<i>Tursiops aduncus</i>" loses its angle brackets upstream and reaches
+    the filename as "iTursiops aduncusi". The species is plainly in the
+    document; the tags are not."""
+    text = tokens("Bite wounds on Tursiops aduncus provide the first evidence "
+                  "of shark predation in this population")
+    assert cm.title_present("Bite wounds on iTursiops aduncusi provide the "
+                            "first", text)[0] is True
 
 
 def test_a_different_paper_is_reported_absent():
-    assert cm.title_present(
-        "The whale shark genome reveals patterns of vertebrate",
-        tokens(ARTICLE)) is False
+    verdict, found, sought = cm.title_present(
+        "The whale shark genome reveals patterns of vertebrate", tokens(ARTICLE))
+    assert verdict is False
+    assert sought > 0 and found < sought   # the evidence shown on the sheet
 
 
 def test_a_title_too_short_to_judge_is_untestable_not_absent():
-    assert cm.title_present("Raja clavata", tokens(ARTICLE)) is None
-    assert cm.title_present("", tokens(ARTICLE)) is None
+    assert cm.title_present("Raja clavata", tokens(ARTICLE))[0] is None
+    assert cm.title_present("", tokens(ARTICLE))[0] is None
+
+
+def test_same_paper_recognises_a_mangled_name_variant():
+    assert cm.same_paper("Bite wounds on iTursiops aduncusi provide the first",
+                         "Bite-wounds-on-Tursiops-aduncus-provide") is True
+    assert cm.same_paper("The whale shark genome reveals patterns",
+                         "Bioturbation by stingrays at Ningaloo Reef") is False
 
 
 def test_non_latin_text_is_flagged_for_review_not_trusted():
     """A Japanese society bulletin is a real container whose Latin titles
     cannot be OCRed. It must not be reported as a confident misfile."""
     japanese = {"verdict": "misfiled_some_absent", "latin_fraction": 0.12,
-                "n_words": 4000}
-    assert cm.confidence(japanese) == "check_ocr"
+                "n_words": 4000, "n_records": 5}
+    assert cm.confidence(japanese, {"words_sought": 7})[0] == "check the scan"
+    assert "non-Latin" in cm.confidence(japanese, {"words_sought": 7})[1]
     english = {"verdict": "misfiled_some_absent", "latin_fraction": 0.99,
-               "n_words": 8000}
-    assert cm.confidence(english) == "auto"
+               "n_words": 8000, "n_records": 2}
+    assert cm.confidence(english, {"words_sought": 7})[0] == "strong"
 
 
 def test_thin_text_is_flagged_even_when_latin():
-    assert cm.confidence({"verdict": "misfiled_some_absent",
-                          "latin_fraction": 1.0, "n_words": 120}) \
-        == "check_thin_text"
+    thin = {"verdict": "misfiled_some_absent", "latin_fraction": 1.0,
+            "n_words": 120, "n_records": 2}
+    assert cm.confidence(thin, {"words_sought": 7})[0] == "check the scan"
+
+
+def test_a_heavily_abbreviated_title_is_not_a_confident_finding():
+    """"3D mov hab select jGWS NY Bight" is the same paper as
+    "Three-Dimensional Movements and Habitat Selection of Young White
+    Sharks". Two or three testable words cannot settle that either way."""
+    entry = {"verdict": "misfiled_some_absent", "latin_fraction": 1.0,
+             "n_words": 9000, "n_records": 2}
+    how_sure, why = cm.confidence(entry, {"words_sought": 3})
+    assert how_sure == "short title"
+    assert "abbreviated" in why
+    # A full title in the same document stays a confident finding.
+    assert cm.confidence(entry, {"words_sought": 7})[0] == "strong"
+
+
+def test_none_matched_in_clean_text_is_strong_not_doubtful():
+    """The clearest finding in the set is nineteen records on one PDF where
+    none matched, judged from 4,000 words of clean text. An earlier rule
+    demoted exactly that case for being 'none matched'."""
+    clean = {"verdict": "misfiled_none_found", "latin_fraction": 0.96,
+             "n_words": 3982, "n_records": 19}
+    how_sure, why = cm.confidence(clean, {"words_sought": 7})
+    assert how_sure == "strong"
+    assert "NONE" in why and "19" in why
 
 
 def test_latin_fraction_separates_scripts():
@@ -129,6 +173,10 @@ def test_a_misfile_is_flagged(tmp_path, fake_pdftotext):
     absent = [r for r in entry["records"] if r["present"] is False]
     assert len(absent) == 1
     assert absent[0]["title"].startswith("The whale shark genome")
+    assert absent[0]["words_sought"] > 0
+    # The year of the paper actually in the file, which is not the year of
+    # the record being questioned.
+    assert entry["pdf_year"] == 2011
 
 
 def test_an_unreadable_pdf_is_untestable_not_a_misfile(tmp_path, fake_pdftotext):
@@ -141,6 +189,22 @@ def test_an_unreadable_pdf_is_untestable_not_a_misfile(tmp_path, fake_pdftotext)
     assert all(r["present"] is None for r in entry["records"])
 
 
+def test_a_name_variant_is_not_reported_as_a_misfile(tmp_path, fake_pdftotext):
+    """Two filenames for one paper belong in the twins workflow, not here."""
+    fake_pdftotext(
+        "Bite wounds on Tursiops aduncus provide the first evidence of shark "
+        "predation " + ("Observations were made during boat-based surveys of "
+                        "the resident population across the study area over "
+                        "successive seasons and years. ") * 8)
+    g = make_group(tmp_path, [
+        "Smith.2019.Bite-wounds-on-Tursiops-aduncus-provide.pdf",
+        "Smith.2019.Bite wounds on iTursiops aduncusi provide the first.pdf",
+    ], b"%PDF" + b"x" * 500)
+    entry = cm.judge_group(g, tmp_path)
+    assert not any(r["present"] is False for r in entry["records"])
+    assert entry["verdict"] == "container"
+
+
 def test_csv_carries_only_misfiles_and_never_the_untestable(tmp_path, fake_pdftotext):
     fake_pdftotext(ARTICLE)
     g = make_group(tmp_path, [
@@ -150,7 +214,8 @@ def test_csv_carries_only_misfiles_and_never_the_untestable(tmp_path, fake_pdfto
     entries = [cm.judge_group(g, tmp_path),
                {"verdict": "untestable_no_text", "records": [], "year": 1900,
                 "size_mb": 1, "n_records": 2, "latin_fraction": 0,
-                "n_words": 0, "pdf_starts": "", "sha256": "x" * 12}]
+                "n_words": 0, "pdf_starts": "", "sha256": "x" * 12,
+                "pdf_year": None}]
     out = tmp_path / "review.csv"
     assert cm.write_csv(entries, out) == 1
     body = out.read_text()
