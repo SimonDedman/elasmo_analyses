@@ -26,6 +26,7 @@ Usage:
 import argparse
 import json
 import re
+import os
 import subprocess
 import sys
 import time
@@ -46,18 +47,62 @@ STATE = C.OUT / "gcfi_fetch_state.json"
 MAX_PAPER = 120          # no GCFI volume comes close
 MISS_RUN = 8             # consecutive 404s that end a volume
 FIRST_YEAR = 1947        # volume N == year FIRST_YEAR + N
+OCR_LANGS = "eng+spa"    # GCFI publishes in English and Spanish
+
+
+# GCFI numbers its meetings, and the records SAY which one they are in
+# ("Proceedings of the Fifty Nine Annual ..."). That ordinal is the volume, and
+# it is the only reliable key: the `year` field is often the publication year,
+# which for these proceedings runs one to eleven years after the meeting. Keying
+# on year-1947 sent the first run to volumes 5, 8, 39 and 45 when the records
+# name 4, 7, 37 and 41, and it matched nothing at all.
+_ORD = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6,
+        "seventh": 7, "eighth": 8, "ninth": 9, "tenth": 10, "eleventh": 11,
+        "twelfth": 12, "thirteenth": 13, "fourteenth": 14, "fifteenth": 15,
+        "sixteenth": 16, "seventeenth": 17, "eighteenth": 18, "nineteenth": 19,
+        "twentieth": 20, "thirtieth": 30, "fortieth": 40, "fiftieth": 50,
+        "sixtieth": 60, "seventieth": 70, "eightieth": 80}
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60,
+         "seventy": 70, "eighty": 80}
+# "Fifty Nine" appears in the records for the 59th; a cardinal in the units slot.
+_UNITS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+          "seven": 7, "eight": 8, "nine": 9}
+
+
+def volume_of(venue):
+    """Volume number from a GCFI citation string, or None."""
+    m = re.search(r"Proceedings,?\s+(\d{1,2})\b", venue)
+    if m:
+        return int(m.group(1))
+    m = re.search(r"of the\s+([A-Za-z\u2013\-\s]{3,30}?)\s+Annual", venue, re.I)
+    if not m:
+        return None
+    words = [w for w in re.split(r"[\s\u2013\-]+", m.group(1).lower()) if w]
+    total = 0
+    for w in words:
+        if w in _TENS:
+            total += _TENS[w]
+        elif w in _ORD:
+            total += _ORD[w]
+        elif w in _UNITS:
+            total += _UNITS[w]
+        else:
+            return None
+    return total or None
 
 
 def wanted():
-    """The GCFI records we lack, from papers_data.json."""
+    """The GCFI records we lack, each with the volume its own citation names."""
     papers = json.loads((C.REPO / "docs" / "papers_data.json").read_text())
-    pat = re.compile(r"Gulf and Caribbean Fisheries Institute", re.I)
+    pat = re.compile(r"Gulf and Caribbean Fisheries", re.I)
     out = []
     for p in papers:
         blob = " ".join(str(p.get(k) or "") for k in ("journal", "journal_clean", "findspot_raw"))
-        if pat.search(blob):
-            out.append(dict(literature_id=str(p.get("literature_id") or "").replace(".0", ""),
-                            title=str(p.get("title") or ""), year=p.get("year")))
+        if not pat.search(blob):
+            continue
+        vol = volume_of(str(p.get("findspot_raw") or "")) or volume_of(str(p.get("journal") or ""))
+        out.append(dict(literature_id=str(p.get("literature_id") or "").replace(".0", ""),
+                        title=str(p.get("title") or ""), year=p.get("year"), volume=vol))
     return out
 
 
@@ -100,15 +145,47 @@ def discover_path(vol):
     return None, "no path found (all 404)"
 
 
-def _pdf_title(data, tmp):
-    tmp.write_bytes(data)
+def _first_page_text(tmp):
     try:
-        txt = subprocess.run(["pdftotext", "-f", "1", "-l", "1", str(tmp), "-"],
-                             capture_output=True, text=True, timeout=60).stdout
+        return subprocess.run(["pdftotext", "-f", "1", "-l", "1", str(tmp), "-"],
+                              capture_output=True, text=True, timeout=60).stdout
     except Exception:                                          # noqa: BLE001
         return ""
+
+
+def _ocr_first_page(tmp):
+    """OCR page 1. The pre-1990s volumes are scanned images with no text layer
+    (measured: 0 alpha characters on page 1, against ~4,000 for 2006), so their
+    titles can only be read this way. pdftoppm + tesseract directly, NOT
+    ocrmypdf, which writes a broken vertical text layer on scans like these.
+    One page is enough to identify a paper; full-document OCR is a separate job.
+    """
+    png = tmp.with_suffix("")
+    try:
+        subprocess.run(["pdftoppm", "-f", "1", "-l", "1", "-r", "300", "-png",
+                        str(tmp), str(png)], capture_output=True, timeout=180)
+        page = next(iter(sorted(png.parent.glob(png.name + "-*.png"))), None)
+        if not page:
+            return ""
+        out = subprocess.run(["tesseract", str(page), "stdout", "-l", OCR_LANGS],
+                             capture_output=True, text=True, timeout=240,
+                             env={**os.environ, "OMP_THREAD_LIMIT": "2"}).stdout
+        page.unlink(missing_ok=True)
+        return out
+    except Exception:                                          # noqa: BLE001
+        return ""
+
+
+def _pdf_title(data, tmp):
+    """The opening lines of page 1, from the text layer if there is one and from
+    OCR if there is not. Returns (text, source) so a caller can tell a paper
+    whose title was READ from one that was GUESSED at by OCR."""
+    tmp.write_bytes(data)
+    txt, src = _first_page_text(tmp), "text"
+    if len("".join(ch for ch in txt if ch.isalpha())) < 40:
+        txt, src = _ocr_first_page(tmp), "ocr"
     lines = [l.strip() for l in txt.splitlines() if len(l.strip()) > 12]
-    return " ".join(lines[:4])
+    return " ".join(lines[:4]), src
 
 
 def _norm(t):
@@ -135,10 +212,17 @@ def _match(pdf_head, targets):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--probe", action="store_true")
+    ap.add_argument("--volumes", help="comma-separated volume numbers to run")
     a = ap.parse_args()
     want = wanted()
-    years = sorted({int(w["year"]) for w in want if w["year"]})
-    vols = [(y - FIRST_YEAR, y) for y in years]
+    novol = [w for w in want if not w["volume"]]
+    vols = sorted({(w["volume"], FIRST_YEAR + w["volume"]) for w in want if w["volume"]})
+    if novol:
+        print(f"  {len(novol)} record(s) name no volume — not fetchable this way: "
+              + "; ".join(w["title"][:50] for w in novol), flush=True)
+    if a.volumes:
+        keep = {int(v) for v in a.volumes.split(",")}
+        vols = [(v, y) for v, y in vols if v in keep]
     print(f"{len(want)} GCFI records wanted across {len(vols)} volumes: "
           + ", ".join(f"v{v}({y})" for v, y in vols), flush=True)
 
@@ -159,6 +243,16 @@ def main():
         if rec.get("done"):
             continue
         found, failures, misses = rec.get("papers", {}), [], 0
+        # Pre-1990s volumes are scanned images with NO text layer (measured:
+        # gcfi_5-3 and gcfi_39-22 give 0 alpha characters on page 1, while
+        # gcfi_59-4 and gcfi_60-10 give ~4,000). Titles cannot be read from
+        # them, so matching is impossible and the run must SAY so rather than
+        # grinding through the volume and reporting nothing found.
+        if rec.get("no_text_layer"):
+            print(f"  v{vol} ({year}): SKIPPED — scanned images, no text layer to match on",
+                  flush=True)
+            continue
+        blank_heads = 0
         for n in range(1, MAX_PAPER + 1):
             if str(n) in found:
                 continue
@@ -175,9 +269,18 @@ def main():
                 misses = 0
                 continue
             misses = 0
-            head = _pdf_title(body, tmp)
+            head, head_src = _pdf_title(body, tmp)
+            if not head.strip():
+                blank_heads += 1
+                if blank_heads >= 10 and not any(v["head"].strip() for v in found.values()):
+                    rec["no_text_layer"] = True
+                    rec["done"] = True
+                    STATE.write_text(json.dumps(state, indent=1))
+                    print(f"  v{vol} ({year}): ABANDONED — {blank_heads} PDFs yielded "
+                          f"nothing from either the text layer OR OCR", flush=True)
+                    break
             hit = _match(head, want)
-            found[str(n)] = dict(bytes=len(body), head=head[:160],
+            found[str(n)] = dict(bytes=len(body), head=head[:160], head_src=head_src,
                                  matched=hit["literature_id"] if hit else None)
             if hit:
                 dest = STAGING / f"gcfi_{vol}-{n}__{hit['literature_id']}.pdf"
