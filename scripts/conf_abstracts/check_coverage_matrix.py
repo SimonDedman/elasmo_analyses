@@ -59,8 +59,19 @@ def cells(path):
     return out
 
 
-def parse_status(text):
-    """Return the status token from a 'Location; Status — note' cell, or None."""
+# Columns B-F (the five original series) carry "Location; Status — note". The
+# series added 2026-09-04 in columns G onward carry "Status — note" with no
+# location: we know which years those meetings are cited from, but not where
+# they were held, and inventing a city to satisfy a format would be worse than
+# omitting it.
+FIRST_EXTRA_COL = "G"
+
+
+def parse_status(text, col=None):
+    """Return the status token from a Coverage cell, or None if it fits neither
+    shape."""
+    if col and len(col) == 1 and col >= FIRST_EXTRA_COL:
+        return text.split("—")[0].strip().split()[0] if text.strip() else None
     if ";" not in text:
         return None
     tail = text.split(";", 1)[1].strip()
@@ -112,9 +123,9 @@ def main():
         rownum = int("".join(ch for ch in coord if ch.isdigit()))
         if rownum == 1 or col == "A" or text in ("—",):
             continue
-        st = parse_status(text)
+        st = parse_status(text, col)
         if st is None:
-            print(f"  {coord}: no ';Status' -> {text!r}")
+            print(f"  {coord}: no parsable status -> {text!r}")
             bad += 1
         elif st not in STATUSES:
             print(f"  {coord}: unknown status {st!r} -> {text!r}")

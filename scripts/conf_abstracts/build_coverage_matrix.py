@@ -1,7 +1,7 @@
 """Build the conference-abstract coverage matrix (xlsx).
 
 Sheets (order): Legend & Notes | Conferences | Coverage | Dashboard.
-- Coverage: year x series, colour-coded red->green by status. ASIH/JMIH/Other
+- Coverage: year x series (all 24 series), colour-coded red->green by status. ASIH/JMIH/Other
   collapsed to one 'ASIH/JMIH' column (they share one source book); AES kept
   separate (carries the elasmo count). Cells = "Location; Status". 'No
   conference' cells are left blank/unshaded.
@@ -260,16 +260,29 @@ CONFERENCE_META = [
          website="https://www.oceaniasharks.org.au/", contact="Brit Finucci"),
     dict(series="Sharks International (SI)", lead_key="Sharks International (SI)",
          year_from=2010, year_to=None, frequency=4,
-         organisers="Rotating local host. 2010 Cairns (6-11 June, Rydges Esplanade "
-                    "Resort; host body NOT FOUND). 2014 Durban (2-6 June), hosted by the "
-                    "KwaZulu-Natal Sharks Board; 169 orals + 52 posters, which matches the "
-                    "170 records we want almost exactly. 2018 Joao Pessoa, UFPB, joint with "
+         organisers="Rotating local host, and the SI 2018 book's executive and "
+                    "scientific committees carry the previous hosts forward, which is the "
+                    "best evidence available for who ran the early ones. "
+                    "2010 CAIRNS (6-11 June, Rydges Esplanade Resort): no source names the "
+                    "host body. Michelle Heupel (AIMS / James Cook University) is the sole "
+                    "Australian on the 2018 committee, consistent with Simon's "
+                    "recollection of Heupel and Colin Simpfendorfer (also JCU) running it. "
+                    "TREAT AS LIKELY, NOT CONFIRMED. "
+                    "2014 DURBAN (2-6 June): hosted by the KwaZulu-Natal Sharks Board, 169 "
+                    "orals + 52 posters, which matches the 170 records we want almost "
+                    "exactly. Geremy Cliff (Head of Research at the KZN Sharks Board for "
+                    "~30 years) sits on the 2018 committee and is the obvious approach; "
+                    "Sabine Wintner (KZNSB / UKZN) is the other senior elasmobranch "
+                    "scientist there. No source names the committee chair. "
+                    "2018 Joao Pessoa: UFPB, president Ricardo de Souza Rosa, joint with "
                     "AES, SBEEL and Fundacion SQUALUS. 2022 Valencia. 2026 Colombo, hosted "
                     "by Blue Resources Trust.",
          website="https://www.sharksinternational.org.br/noticia/23-abstract-book/"
                  "menu_abstract_book.html (2018 book, which we hold)",
          contact="sharksinternational2014@gmail.com (2014 organising committee, from the "
-                 "KZN Sharks Board announcement; may be dormant)"),
+                 "KZN Sharks Board announcement; likely dormant — go via Geremy Cliff or "
+                 "Sabine Wintner at the KZN Sharks Board for 2014, and Michelle Heupel "
+                 "or Colin Simpfendorfer for 2010)"),
     dict(series="Encuentro Colombiano sobre Condrictios (ECC)",
          lead_key="Encuentro Colombiano sobre Condrictios",
          year_from=2008, year_to=2018, frequency=2,
@@ -447,6 +460,82 @@ def _conferences_sheet(wb):
     for r in range(ws.max_row - 2, ws.max_row + 1):
         ws.cell(row=r, column=1).font = Font(italic=True)
     return ws
+
+
+# Series that get a Coverage column of their own beyond the original five, as
+# (CONFERENCE_META series name, column heading, filename code for
+# Conferences/<year>/<year>_<code>_*.pdf or None).
+#
+# The count lookup goes through each row's CONFERENCE_META lead_key, NOT through
+# the name written here: typing the series name twice silently mismatched four
+# of them (ECC, SOMEPEC, W Africa) and left their columns empty.
+_EXTRA = [
+    ("Encuentro Colombiano sobre Condrictios (ECC)", "ECC", "ECC"),
+    ("Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)", "SBEEL", "SBEEL"),
+    ("Simposio Nacional de Tiburones y Rayas (SOMEPEC, Mexico)", "SOMEPEC", "SOMEPEC"),
+    ("Colloque international requins en Afrique de l'Ouest", "W Africa", None),
+    ("Gulf and Caribbean Fisheries Institute (GCFI)", "GCFI", None),
+    ("Pacific Shark Workshop", "Pac Shark Wksp", None),
+    ("ISC Shark Working Group", "ISC Shark WG", None),
+    ("World Congress of Herpetology", "WCH", None),
+    ("Indo-Pacific Fish Conference (IPFC)", "IPFC", None),
+    ("International Coral Reef Symposium (ICRS)", "ICRS", None),
+    ("World Fisheries Congress", "WFC", None),
+    ("American Fisheries Society symposia", "AFS", None),
+    ("International Congress on the Biology of Fish", "ICBF", None),
+    ("International Meeting on Mesozoic Fishes", "Mesozoic Fishes", None),
+    ("International Congress of Vertebrate Morphology (ICVM)", "ICVM", None),
+    ("CIESM Congress (Mediterranean Science Commission)", "CIESM", None),
+    ("Albert L. Tester Memorial Symposium", "Tester Symp", None),
+    ("Workshop on Age Determination of Oceanic Pelagic Fishes", "Age Det Wksp", None),
+    ("Palaeontology / geology meetings (assorted)", "Palaeo/geol", None),
+]
+_META_BY_NAME = {m["series"]: m for m in CONFERENCE_META}
+# (meta name, heading, file code, lead_key) — lead_key resolved once, here, and
+# an unknown series name is a hard error rather than a quietly empty column.
+EXTRA_COLUMNS = []
+for _name, _short, _code in _EXTRA:
+    if _name not in _META_BY_NAME:
+        raise KeyError(f"Coverage column {_short!r}: {_name!r} is not in CONFERENCE_META")
+    EXTRA_COLUMNS.append((_name, _short, _code, _META_BY_NAME[_name]["lead_key"]))
+
+
+def _lead_year_counts():
+    """{series: {year: records wanted}} from the corpus citations. A cell is
+    only written where there is EVIDENCE — a citation, or a book on disk — so
+    the sheet never invents a meeting year the series may not have held."""
+    try:
+        import sys as _s
+        from pathlib import Path as _P
+        _s.path.insert(0, str(_P(__file__).resolve().parents[1]))
+        from conf_abstracts import conference_lead_candidates as L
+        out = defaultdict(lambda: defaultdict(int))
+        for row in L.collect():
+            if not row["series"] or not row["outstanding"]:
+                continue
+            y = row["venue_year"] or row["year"]
+            if y:
+                out[row["series"]][int(y)] += 1
+        return out
+    except Exception as e:                                    # noqa: BLE001
+        print(f"  extra-series year counts unavailable ({type(e).__name__}: {e})")
+        return None
+
+
+def _extra_cell(lead_key, code, year, counts, db_years):
+    """(text, status) for one extra-series cell, or (None, None) to leave blank."""
+    held = db_years.get(code or "", {}).get(year) if code else None
+    if held:
+        return f"Ingested — {held} abstracts", "Ingested"
+    book = sorted((CONFERENCES / str(year)).glob(f"{year}_{code}_*.pdf")) \
+        if code and (CONFERENCES / str(year)).is_dir() else []
+    if book:
+        return (f"Digital — {len(book)} PDF held — extraction pending", "Digital")
+    n = (counts or {}).get(lead_key, {}).get(year)
+    if n:
+        return (f"Missing — {n} abstract{'s' if n != 1 else ''} cited by the corpus",
+                "Missing")
+    return None, None
 
 
 def db_meeting_status():
@@ -720,7 +809,8 @@ def build():
 
     # ---- Coverage ----
     ws = wb.create_sheet("Coverage")
-    cols = ["Year", "ASIH/JMIH", "AES", "EEA", "OCS", "SI"]
+    cols = (["Year", "ASIH/JMIH", "AES", "EEA", "OCS", "SI"]
+            + [short for _, short, _, _ in EXTRA_COLUMNS])
     ws.append(cols)
     for c in ws[1]:
         c.font = Font(bold=True, color="FFFFFF")
@@ -739,6 +829,16 @@ def build():
     def txt(loc, st, note):
         head = f"{loc}; {st}" if loc else st
         return head + (f" — {note}" if note else "")
+
+    extra_counts = _lead_year_counts()
+    extra_db = defaultdict(dict)
+    _con = sqlite3.connect(str(DB))
+    for _m, _y, _n in _con.execute(
+            "SELECT m.meeting, m.year, COUNT(a.abstract_id) FROM meetings m "
+            "LEFT JOIN abstracts a ON a.meeting_id=m.meeting_id GROUP BY m.meeting_id"):
+        if _n:
+            extra_db[_m][_y] = extra_db[_m].get(_y, 0) + _n
+    _con.close()
 
     cover = defaultdict(lambda: {"ingested": 0, "known": 0})
 
@@ -800,10 +900,20 @@ def build():
             l, s_, n = SI[year]; put(r, 6, txt(l, s_, n), s_); track("SI", s_)
         else:
             put(r, 6, "", "NA")
+        # ---- the other series, one column each ----
+        for i, (series, _short, code, lead_key) in enumerate(EXTRA_COLUMNS):
+            text, status = _extra_cell(lead_key, code, year, extra_counts, extra_db)
+            if text:
+                put(r, 7 + i, text, status)
+                track(series, status)
+            else:
+                put(r, 7 + i, "", "NA")
         r += 1
     ws.column_dimensions["A"].width = 6
     for col in "BCDEF":
         ws.column_dimensions[col].width = 44
+    for i in range(len(EXTRA_COLUMNS)):
+        ws.column_dimensions[get_column_letter(7 + i)].width = 30
     ws.freeze_panes = "B2"
 
     # ---- Dashboard ----
