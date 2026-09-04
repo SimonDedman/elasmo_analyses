@@ -1,6 +1,6 @@
 """Build the conference-abstract coverage matrix (xlsx).
 
-Sheets (order): Legend & Notes | Coverage | Dashboard.
+Sheets (order): Legend & Notes | Conferences | Coverage | Dashboard.
 - Coverage: year x series, colour-coded red->green by status. ASIH/JMIH/Other
   collapsed to one 'ASIH/JMIH' column (they share one source book); AES kept
   separate (carries the elasmo count). Cells = "Location; Status". 'No
@@ -23,6 +23,7 @@ from pathlib import Path
 from openpyxl import Workbook, load_workbook
 from openpyxl.chart import BarChart, LineChart, Reference
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+from openpyxl.utils import get_column_letter
 
 REPO = Path(__file__).resolve().parents[2]
 DB = REPO / "database" / "conference_abstracts.db"
@@ -207,6 +208,215 @@ def load_asih_locations():
 
 JMIH_LOC = load_asih_locations()
 JMIH_LOC.setdefault(2026, "New Orleans, LA")
+
+
+# ---------------------------------------------------------------------------
+# Conference series metadata (the "Conferences" tab).
+#
+# One row per series: the four we chase directly, plus every other series the
+# corpus cites (conference_lead_candidates.py). Years, frequency, organisers and
+# websites were checked against the societies' own pages on 2026-09-04; a blank
+# means NOT FOUND, never a guess, because a wrong contact address costs a real
+# email to a real person.
+#
+# n_needed is filled in at build time, not typed here: it is the number of
+# corpus records citing that series whose PDF we do not hold, straight from
+# conference_lead_candidates. So it moves as the corpus does.
+#
+# Fields: (series, year_from, year_to, frequency, organisers, website, contact)
+# frequency: 1 = annual, 2 = biennial, 4 = every four years, 0 = one-off.
+CONFERENCE_META = [
+    dict(series="ASIH / JMIH", lead_key=None, year_from=1913, year_to=None, frequency=1,
+         organisers="Programme officers: Maureen 'Mo' Donnelly (to ~2014), Marty Crump "
+                    "(2015-2019), David M. Green (2020- ). Meeting planned by the MMPC "
+                    "(chairs Ed Heist, then Henry Mushinsky); logistics by Kansas State "
+                    "Conference Management Services. Submissions run on Oxford Abstracts.",
+         website="https://www.asih.org/meetings/recent-meetings (abstract books, 2005 on)",
+         contact="david.m.green@mcgill.ca"),
+    dict(series="American Elasmobranch Society (AES)",
+         lead_key="American Elasmobranch Society (AES)",
+         year_from=1983, year_to=None, frequency=1,
+         organisers="AES officers; meets inside JMIH, so the JMIH programme officer holds "
+                    "the abstracts. EXCEPTION 2018: AES met at Sharks International instead.",
+         website="https://elasmo.org/meetings/abstracts/abst<YYYY>/ — full abstracts with "
+                 "bodies for EVERY year 1985-2005 (404 for 1983-84 and 2006+); harvested",
+         contact="via JMIH programme officer, david.m.green@mcgill.ca"),
+    dict(series="European Elasmobranch Association (EEA)",
+         lead_key="European Elasmobranch Association (EEA)",
+         year_from=1997, year_to=None, frequency=1,
+         organisers="EEA board. Ali Hood (Secretariat, Shark Trust); Cat Gordon (Shark "
+                    "Trust) holds/sources the abstract books. Host national society varies "
+                    "by year (IEG, GRIS, APECE, NEV ...).",
+         website="http://eulasmo.org/ ; host cities per year at "
+                 "http://eulasmo.org/scientific-meetings",
+         contact="Cat Gordon / Ali Hood, Shark Trust"),
+    dict(series="Oceania Chondrichthyan Society (OCS)",
+         lead_key="Oceania Chondrichthyan Society (OCS)",
+         year_from=2005, year_to=None, frequency=2,
+         organisers="OCS council. Brit Finucci (past president, and IUCN SSG Red List "
+                    "Authority Coordinator) is collating the series for us, with council "
+                    "approval. Meetings seen: 2008, 2011, 2012 (Adelaide, joint with ASFB), "
+                    "2018, 2022 (virtual), 2024 Geelong, 2025 Mooloolaba (20th anniversary).",
+         website="https://www.oceaniasharks.org.au/", contact="Brit Finucci"),
+    dict(series="Sharks International (SI)", lead_key="Sharks International (SI)",
+         year_from=2010, year_to=None, frequency=4,
+         organisers="Rotating local host. 2010 Cairns, 2014 Durban, 2018 Joao Pessoa, "
+                    "2022 Valencia, 2026 Colombo (Blue Resources Trust).",
+         website="https://www.sharksinternational.org.br/noticia/23-abstract-book/"
+                 "menu_abstract_book.html (2018 book)",
+         contact=""),
+    dict(series="Encuentro Colombiano sobre Condrictios (ECC)",
+         lead_key="Encuentro Colombiano sobre Condrictios",
+         year_from=2008, year_to=2018, frequency=2,
+         organisers="Fundacion SQUALUS. I 2008 Bogota, II 2010 Cali, III 2012 Santa Marta, "
+                    "IV 2014 Medellin, V 2016 Bogota, VI 2018 Joao Pessoa (co-located with "
+                    "Sharks International 2018, so check the SI 2018 book first).",
+         website="http://squalus.org/index.php/encuentro-condrictios/ ; "
+                 "https://encuentro.squalus.org",
+         contact="squalus@germanm1.sg-host.com (from the site; verify before using)"),
+    dict(series="Simposio Nacional de Tiburones y Rayas (SOMEPEC, Mexico)",
+         lead_key="Simposio Nacional de Tiburones y Rayas (Mexico)",
+         year_from=2004, year_to=None, frequency=2,
+         organisers="Sociedad Mexicana de Peces Cartilaginosos (SOMEPEC). Editions seen: "
+                    "III 2008, IV 2010 (UNAM), V, VI 2014 Mazatlan, VIII 2019 Playa del "
+                    "Carmen (joint with the I Congreso Latinoamericano de Tiburones, Rayas "
+                    "y Quimeras), XI recent.",
+         website="Memorias/resumenes posted on ResearchGate and via facebook.com/Somepec2",
+         contact=""),
+    dict(series="Colloque international requins en Afrique de l'Ouest",
+         lead_key="Colloque international requins en Afrique", year_from=2011,
+         year_to=2011, frequency=0,
+         organisers="Commission Sous-Regionale des Peches (CSRP / SRFC). Dakar, Senegal, "
+                    "25-27 July 2011. One-off as far as we can tell.",
+         website="https://spcsrp.org/", contact=""),
+    dict(series="Gulf and Caribbean Fisheries Institute (GCFI)",
+         lead_key="Gulf and Caribbean Fisheries Institute (GCFI)",
+         year_from=1948, year_to=None, frequency=1,
+         organisers="GCFI secretariat. Every meeting since 1948 is published in the annual "
+                    "Proceedings, so this is a library request, not an ask of a person.",
+         website="https://www.gcfi.org/ ; back proceedings in the NOAA Institutional "
+                 "Repository, https://repository.library.noaa.gov/",
+         contact=""),
+    dict(series="Pacific Shark Workshop", lead_key="Pacific Shark Workshop",
+         year_from=2011, year_to=2012, frequency=0,
+         organisers="", website="", contact=""),
+    dict(series="ISC Shark Working Group", lead_key="ISC Shark Working Group",
+         year_from=2013, year_to=None, frequency=1,
+         organisers="International Scientific Committee for Tuna and Tuna-like Species in "
+                    "the North Pacific Ocean; the Shark Working Group meets within it.",
+         website="https://isc.fra.go.jp/", contact=""),
+    # --- lower priority / not elasmobranch meetings -------------------------
+    dict(series="World Congress of Herpetology", lead_key="World Congress of Herpetology",
+         year_from=1989, year_to=None, frequency=4,
+         organisers="World Congress of Herpetology committee. Every 3-5 years.",
+         website="https://www.worldcongressofherpetology.org/", contact=""),
+    dict(series="Indo-Pacific Fish Conference (IPFC)", lead_key="Indo-Pacific Fish Conference",
+         year_from=1981, year_to=None, frequency=4,
+         organisers="Rotating host. IPFC-11 2023 Auckland (joint with ASFB); "
+                    "IPFC-12 2025 Taiwan.",
+         website="https://sfi-cybium.fr/en/indo-pacific-fish-conference", contact=""),
+    dict(series="International Coral Reef Symposium (ICRS)",
+         lead_key="International Coral Reef Symposium (ICRS)",
+         year_from=1969, year_to=None, frequency=4,
+         organisers="International Coral Reef Society. ICRS-16 2026 Auckland.",
+         website="https://coralreefs.org/", contact=""),
+    dict(series="World Fisheries Congress", lead_key="World Fisheries Congress",
+         year_from=1992, year_to=None, frequency=4, organisers="", website="", contact=""),
+    dict(series="American Fisheries Society symposia",
+         lead_key="American Fisheries Society symposia",
+         year_from=1870, year_to=None, frequency=1,
+         organisers="American Fisheries Society.", website="https://fisheries.org/",
+         contact=""),
+    dict(series="International Congress on the Biology of Fish",
+         lead_key="International Congress on the Biology of Fish",
+         year_from=1994, year_to=None, frequency=2, organisers="", website="", contact=""),
+    dict(series="International Meeting on Mesozoic Fishes",
+         lead_key="International Meeting on Mesozoic Fishes",
+         year_from=1993, year_to=None, frequency=4,
+         organisers="Meeting conveners vary; 6th meeting edited by Schwarz & Kriwet.",
+         website="", contact=""),
+    dict(series="International Congress of Vertebrate Morphology (ICVM)",
+         lead_key="International Congress of Vertebrate Morphology",
+         year_from=1986, year_to=None, frequency=3, organisers="", website="", contact=""),
+    dict(series="CIESM Congress (Mediterranean Science Commission)",
+         lead_key="CIESM (Mediterranean Science Commission)",
+         year_from=1919, year_to=None, frequency=3,
+         organisers="Commission Internationale pour l'Exploration Scientifique de la Mer "
+                    "Mediterranee.",
+         website="https://ciesm.org/", contact=""),
+    dict(series="Albert L. Tester Memorial Symposium",
+         lead_key="Albert L. Tester Memorial Symposium",
+         year_from=1976, year_to=None, frequency=1,
+         organisers="University of Hawaii at Manoa.", website="", contact=""),
+    dict(series="Workshop on Age Determination of Oceanic Pelagic Fishes",
+         lead_key="Workshop on Age Determination of Oceanic Pelagic Fishes",
+         year_from=1983, year_to=1983, frequency=0, organisers="", website="", contact=""),
+    dict(series="Palaeontology / geology meetings (assorted)",
+         lead_key="Palaeontology / geology meetings (assorted)",
+         year_from=1973, year_to=None, frequency=0,
+         organisers="NOT ONE SERIES — a bucket of many national and international palaeo "
+                    "and geology meetings. Split it before chasing anyone.",
+         website="", contact=""),
+]
+
+
+def _needed_by_series():
+    """series -> corpus records citing it whose PDF we do not hold. Live from
+    conference_lead_candidates, so it moves with the corpus. Returns {} if the
+    parquet is unavailable, and the column then reads "n/a" rather than 0 —
+    "we need none" and "we could not count" must not look the same."""
+    try:
+        import sys
+        from pathlib import Path as _P
+        sys.path.insert(0, str(_P(__file__).resolve().parents[1]))
+        from conf_abstracts import conference_lead_candidates as L
+        return {d["series"]: d["outstanding"] for d in L.summarise(L.collect())}
+    except Exception as e:                                    # noqa: BLE001
+        print(f"  n_needed unavailable ({type(e).__name__}: {e})")
+        return {}
+
+
+def _conferences_sheet(wb):
+    """Metadata for every conference series we know of, chased or not."""
+    ws = wb.create_sheet("Conferences")
+    needed = _needed_by_series()
+    cols = ["series", "year_from", "year_to", "frequency", "n_needed",
+            "organisers", "website", "contact"]
+    ws.append(cols)
+    for c in ws[1]:
+        c.font = Font(bold=True)
+        c.alignment = Alignment(vertical="top")
+    for m in CONFERENCE_META:
+        if not needed:
+            n = "n/a — count unavailable"
+        elif not m["lead_key"]:
+            # JMIH's elasmobranch abstracts are cited as AES; counting them here
+            # too would double them.
+            n = "n/a — counted under AES"
+        else:
+            n = needed.get(m["lead_key"], 0)
+        ws.append([m["series"], m["year_from"], m["year_to"] or "ongoing",
+                   m["frequency"], n, m["organisers"], m["website"], m["contact"]])
+    ws.freeze_panes = "B2"
+    ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
+    for letter, width in zip("ABCDEFGH", (46, 10, 10, 11, 10, 62, 58, 40)):
+        ws.column_dimensions[letter].width = width
+    for row in ws.iter_rows(min_row=2):
+        for c in row:
+            c.alignment = Alignment(vertical="top",
+                                    wrap_text=c.column_letter in ("F", "G", "H"))
+    # a note row under the table rather than a second sheet
+    ws.append([])
+    ws.append(["frequency: 1 = annual, 2 = biennial, 3 = every three years, "
+               "4 = every four years, 0 = one-off / irregular"])
+    ws.append(["n_needed: corpus records citing that series whose PDF we do NOT hold "
+               "(scripts/conf_abstracts/conference_lead_candidates.py). It counts "
+               "abstracts we can already name, so it is a floor, not the size of the series."])
+    ws.append(["A BLANK organisers/website/contact means not found on 2026-09-04, "
+               "never a guess — a wrong address costs a real email to a real person."])
+    for r in range(ws.max_row - 2, ws.max_row + 1):
+        ws.cell(row=r, column=1).font = Font(italic=True)
+    return ws
 
 
 def db_meeting_status():
@@ -640,6 +850,11 @@ def build():
     line.height, line.width = 10, 20
     dash.add_chart(line, "I20")
     dash.column_dimensions["A"].width = 7
+
+    # Conferences metadata, second tab (after Legend & Notes)
+    conf = _conferences_sheet(wb)
+    wb._sheets.remove(conf)
+    wb._sheets.insert(1, conf)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     wb.save(OUT)
