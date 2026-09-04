@@ -17,7 +17,10 @@
 suppressPackageStartupMessages({
   library(jsonlite)
   library(openxlsx)
+  library(arrow)
 })
+
+PARQUET <- "outputs/literature_review_enriched.parquet"
 
 args <- commandArgs(trailingOnly = TRUE)
 root <- normalizePath(file.path(dirname(sub("^--file=", "", grep("^--file=",
@@ -120,7 +123,53 @@ papers$literature_id <- sub("\\.0$", "", as.character(papers$literature_id))
 keep <- c("literature_id", "year", "authors", "title", "journal_clean",
           "doi", "publisher", "oa_status", "oa_url")
 keep <- keep[keep %in% names(papers)]
-fail <- merge(fail, papers[, keep], by = "literature_id", all.x = TRUE)
+stopifnot(all(c("title", "journal_clean") %in% keep))
+
+# papers_data.json holds 34 duplicated literature_ids (11,877 rows, 11,839
+# distinct) with CONFLICTING metadata: id 32101 appears twice with two
+# different DOIs for the same title. Merging on a duplicated key silently
+# fans out rows, so the failure count inflates and every percentage in this
+# workbook is computed against a wrong denominator. Deduplicate first, and
+# say how many were dropped rather than doing it quietly.
+pmeta <- papers[, keep]
+dupes <- sum(duplicated(pmeta$literature_id))
+if (dupes) {
+  message(sprintf("WARNING: papers_data.json has %d duplicate literature_ids; keeping first of each", dupes))
+  pmeta <- pmeta[!duplicated(pmeta$literature_id), ]
+}
+before <- nrow(fail)
+fail <- merge(fail, pmeta, by = "literature_id", all.x = TRUE)
+stopifnot(nrow(fail) == before)   # the merge must never change the row count
+
+# --- Recover the events that were logged without a literature_id -------------
+# Pre-fix logs recorded the paywall line as URL-only, so ~27% of failure events
+# had no id and therefore no title, journal, or publisher. They are not
+# unidentifiable: the corpus parquet carries pdf_url per paper, so the logged
+# URL identifies the paper directly. The log truncates the URL at 80 characters,
+# so match on that prefix rather than the whole string.
+if (any(is.na(fail$literature_id)) && file.exists(PARQUET)) {
+  options(arrow.skip_nul = TRUE)   # embedded NULs in this parquet
+  pqd <- as.data.frame(arrow::read_parquet(
+    PARQUET, col_select = c("literature_id", "title", "authors", "year",
+                            "journal", "doi", "pdf_url")))
+  pqd$literature_id <- sub("\\.0$", "", as.character(pqd$literature_id))
+  pqd <- pqd[!is.na(pqd$pdf_url) & nzchar(pqd$pdf_url), ]
+  pqd$key <- substr(pqd$pdf_url, 1, 80)
+  pqd <- pqd[!duplicated(pqd$key), ]
+
+  need <- is.na(fail$literature_id)
+  idx <- match(substr(fail$detail[need], 1, 80), pqd$key)
+  rec <- !is.na(idx)
+  fail$literature_id[need][rec]  <- pqd$literature_id[idx[rec]]
+  fail$title[need][rec]          <- pqd$title[idx[rec]]
+  fail$authors[need][rec]        <- pqd$authors[idx[rec]]
+  fail$year[need][rec]           <- pqd$year[idx[rec]]
+  fail$journal_clean[need][rec]  <- pqd$journal[idx[rec]]
+  fail$doi[need][rec]            <- pqd$doi[idx[rec]]
+  message(sprintf("recovered %s of %s id-less events by matching the logged URL against parquet pdf_url",
+                  format(sum(rec), big.mark = ","),
+                  format(sum(need), big.mark = ",")))
+}
 
 # Record join coverage rather than letting failed joins pass as blank cells.
 # Two separate causes, and they need different responses:
@@ -162,7 +211,7 @@ by_class <- by_class[order(-by_class$n), ]
 
 dom <- as.data.frame(table(domain = fail$domain), responseName = "n")
 dom <- dom[order(-dom$n), ]
-dom$pct_of_all <- round(100 * dom$n / nrow(fail), 1)
+dom$pct_of_all <- round(100 * dom$n / nrow(fail), 2)
 # Split our own deliberate skips out of the failure count. Without this,
 # biodiversitylibrary.org tops the table at 37% of all "failures" when not one
 # of them was ever attempted: it is in SKIP_DOMAINS and has its own harvester
@@ -176,7 +225,7 @@ dom$with_known_oa <- sapply(as.character(dom$domain), function(d)
   sum(fail$domain == d & !is.na(fail$known_oa_url)))
 dom$decision <- ""
 dom$proposed_route <- ""
-dom$pct_real_of_all <- round(100 * dom$real_failures / nrow(fail), 1)
+dom$pct_real_of_all <- round(100 * dom$real_failures / nrow(fail), 2)
 dom <- dom[order(-dom$real_failures, -dom$n),
            c("domain", "n", "pct_of_all", "deliberate_skips", "real_failures",
              "pct_real_of_all", "with_known_oa", "decision", "proposed_route")]
