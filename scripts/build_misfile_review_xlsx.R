@@ -19,12 +19,23 @@ mis <- read.csv(file.path(out_dir, "misfiled_records.csv"),
                 stringsAsFactors = FALSE, check.names = FALSE)
 stopifnot(nrow(mis) > 0)
 
+# read.csv types an entirely-empty column as logical, so a run with no
+# cross-check hits would hand file_links() a vector of NA and stop the build.
+for (col in c("correct_copy_path", "correct_copy_elsewhere", "decision",
+              "notes", "pdf_holds_instead", "pdf_starts", "absent_title",
+              "why", "how_sure")) {
+  if (!is.null(mis[[col]])) {
+    mis[[col]] <- as.character(mis[[col]])
+    mis[[col]][is.na(mis[[col]])] <- ""
+  }
+}
+
 # Carry forward decisions already made, keyed on the file itself so a
 # renumbered group or a reordered sheet cannot lose them.
 prior_path <- Sys.getenv("PRIOR_REVIEW", "")
 n_carried <- 0
 if (nzchar(prior_path) && file.exists(prior_path)) {
-  prior <- openxlsx::read.xlsx(prior_path, sheet = "misfiled")
+  prior <- read_review_sheet(prior_path, "misfiled")
   keep <- prior[nzchar(trimws(ifelse(is.na(prior$decision), "", prior$decision))) |
                   nzchar(trimws(ifelse(is.na(prior$notes), "", prior$notes))), ]
   m <- match(mis$absent_path, keep$absent_path)

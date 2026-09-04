@@ -296,3 +296,58 @@ def test_dotted_filenames_are_normalised_before_matching():
     spaced = "Delayed healthcare and secondary infections following freshwater"
     assert cm.title_words(dotted) == cm.title_words(spaced)
     assert cm.is_dotted(dotted) and not cm.is_dotted(spaced)
+
+
+def test_ligatures_expand_instead_of_vanishing():
+    """NFKD leaves ae/oe ligatures intact and the ASCII fold then deletes
+    them, so "Myliobatidae" became "myliobatid" and stopped matching the
+    filename's "myliobatidae". Nineteenth century scans are full of these."""
+    assert cm.norm("Myliobatidæ") == "myliobatidae"
+    assert cm.norm("Chimæra monstrosa") == "chimaera monstrosa"
+    assert cm.norm("Squalidæ") == "squalidae"
+    assert cm.norm("Straße") == "strasse"
+    assert cm._in_text("myliobatidae", sorted(cm.norm("Myliobatidæ").split()))
+
+
+def test_a_ligature_title_is_found_in_a_ligature_document():
+    doc = tokens("On the nomenclature of the Myliobatidæ or Ætobatidæ, "
+                 "with remarks on the Chimæra of the deeper waters")
+    assert cm.title_present("The nomenclature of the Myliobatidae or "
+                            "Aetobatidae", doc)[0] is True
+
+
+JUNK = "aes ns ee er -eOw- Pe Phat dM ene Papal epaid Alpat sae gh Ys iatead tad " * 3
+
+
+def test_excerpt_skips_scanned_front_matter():
+    """A scanned volume opens with plate noise, and showing that as the
+    document's identity makes the row unjudgeable."""
+    body = ("On the nomenclature of the Myliobatidae by Theodore Gill from "
+            "the Proceedings of the United States National Museum")
+    out = cm.readable_excerpt(JUNK + body)
+    assert "nomenclature of the Myliobatidae" in out
+    assert out.count("eOw") == 0
+
+
+def test_excerpt_handles_non_english_prose():
+    """An English-only function-word list would call every German and
+    Portuguese paper noise and skip past its title."""
+    de = ("Einige Bemerkungen über die Histologie der Pristis-Zähne von Franz "
+          "Hilgendorf aus dem Sitzungsbericht der Gesellschaft")
+    assert "Histologie" in cm.readable_excerpt(
+        "^^UÄ^ '2fÄ* A, AÄ'W' C?iMMMMn AA / m,i " * 4 + de)
+    pt = ("Conteúdo estomacal dos tubarões azul e anequim capturados no sul do "
+          "Brasil com notas sobre a dieta")
+    assert "estomacal" in cm.readable_excerpt(pt)
+
+
+def test_excerpt_leaves_a_clean_document_at_its_opening():
+    clean = ("Journal of Fish Biology (2012) 80, 1595-1607 available online at "
+             "wileyonlinelibrary.com Fisheries management and conservation of "
+             "the whale shark")
+    assert cm.readable_excerpt(clean).startswith("Journal of Fish Biology")
+
+
+def test_excerpt_of_pure_noise_returns_the_opening_not_an_error():
+    out = cm.readable_excerpt(JUNK)
+    assert out and out.startswith("aes ns ee")

@@ -62,6 +62,26 @@ file_links <- function(paths, label = "open") {
   sprintf('HYPERLINK("file://%s","%s")', utils::URLencode(paths), label)
 }
 
+# openxlsx::read.xlsx returns cell text still XML-escaped, so a path through
+# "Papers & Books" comes back as "Papers &amp; Books" and matches nothing.
+# The written file is correct; only the reader is at fault. A workbook that
+# has been through Excel or LibreOffice comes back unescaped, which is why
+# this only bites on openxlsx-written files.
+unescape_xml <- function(x) {
+  if (!is.character(x)) return(x)
+  x <- gsub("&lt;", "<", x, fixed = TRUE)
+  x <- gsub("&gt;", ">", x, fixed = TRUE)
+  x <- gsub("&quot;", '"', x, fixed = TRUE)
+  x <- gsub("&apos;", "'", x, fixed = TRUE)
+  gsub("&amp;", "&", x, fixed = TRUE)     # last, or the others double-unescape
+}
+
+read_review_sheet <- function(path, sheet) {
+  df <- openxlsx::read.xlsx(path, sheet = sheet)
+  df[] <- lapply(df, unescape_xml)
+  df
+}
+
 add_info_sheet <- function(wb, title, lines) {
   # The column name becomes the header row, so it carries the title; the body
   # must not repeat it.
