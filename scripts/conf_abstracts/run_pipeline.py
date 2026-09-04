@@ -202,6 +202,28 @@ def main():
         log(f"OK {Path(xlsx).name}: {len(recs)} abstracts; "
             f"{merged} programme-book duplicates superseded, {kept} kept")
 
+    # Wherever a year has BOTH a programme book and an abstract source, the two
+    # describe the same talks and the year is counted twice. Fold the schedule
+    # into the abstract rows and drop the duplicates. This has to run on every
+    # pass, not once by hand: the sweep above re-parses the programme books, so
+    # a year cleaned today would be double-counted again tomorrow.
+    for yr, mid in con.execute(
+            """SELECT m.year, m.meeting_id FROM meetings m
+                 JOIN abstracts a ON a.meeting_id=m.meeting_id
+                WHERE m.meeting IN ('JMIH','ASIH') AND m.doc_type='abstract_book'
+                GROUP BY m.meeting_id HAVING COUNT(a.abstract_id) > 20
+                ORDER BY m.year""").fetchall():
+        n_prog = con.execute(
+            """SELECT COUNT(*) FROM abstracts a JOIN meetings m USING(meeting_id)
+                WHERE m.meeting IN ('JMIH','ASIH') AND m.year=?
+                  AND m.doc_type='program_book'""", (yr,)).fetchone()[0]
+        if not n_prog:
+            continue
+        merged, kept = ingest_oa_xlsx.merge_program_schedule(con, yr, mid)
+        if merged:
+            log(f"OK {yr}: {merged} programme-book duplicates folded into meeting "
+                f"{mid}, {kept} schedule-only rows kept")
+
     total = sum(r["inserted"] for r in results)
     n_elasmo = con.execute("SELECT count(*) FROM abstracts WHERE is_elasmo=1").fetchone()[0]
 
