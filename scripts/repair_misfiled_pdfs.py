@@ -129,14 +129,13 @@ def claimed_id(path: str, corpus_by_title, log=print) -> str | None:
     return best if best_score >= 0.8 else None
 
 
-def update_papers_data(readd: dict[str, dict], remove: set[str],
-                       apply: bool, log=print) -> tuple[int, int]:
-    """Put papers that lost their PDF back on the wanted list.
+def _apply_to_papers(data: list, readd: dict[str, dict],
+                     remove: set[str]) -> tuple[int, int, list]:
+    """Add papers that lost their PDF back; drop those that gained one.
 
     docs/papers_data.json holds what is still MISSING, so acquisition is
     recorded by ABSENCE. De-acquiring means adding the entry back.
     """
-    data = json.loads(PAPERS_DATA_JSON.read_text())
     present = set()
     for entry in data:
         lid = str(entry.get("literature_id", "")).strip()
