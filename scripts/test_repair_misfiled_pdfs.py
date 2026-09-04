@@ -21,13 +21,30 @@ import repair_misfiled_pdfs as rp
 
 @pytest.fixture
 def wanted_list(tmp_path, monkeypatch):
+    """Isolate BOTH paths. The writer goes through lib.papers_data_io, which
+    holds its own module-level path, so patching only the caller's constant
+    sends the test at the real 12,000-row file."""
     path = tmp_path / "papers_data.json"
     path.write_text(json.dumps([
         {"id": 1, "literature_id": "999", "title": "Some paper still missing",
          "authors": "A", "year": 2001, "doi": "", "journal": ""},
     ], indent=1))
     monkeypatch.setattr(rp, "PAPERS_DATA_JSON", path)
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from lib import papers_data_io
+    monkeypatch.setattr(papers_data_io, "PAPERS_DATA", path)
+    monkeypatch.setattr(papers_data_io, "LOCK_FILE", tmp_path / "lock")
     return path
+
+
+def test_the_writer_is_isolated_from_the_real_file(wanted_list):
+    """Guard the guard: if this fixture ever stops isolating the library's
+    own path, the other tests silently start writing the real corpus."""
+    from lib import papers_data_io
+    assert papers_data_io.PAPERS_DATA == wanted_list
+    assert "papers_data.json" not in str(rp.PROJECT / "docs" / "x") or True
+    real = rp.PROJECT / "docs" / "papers_data.json"
+    assert papers_data_io.PAPERS_DATA != real
 
 
 @pytest.fixture
