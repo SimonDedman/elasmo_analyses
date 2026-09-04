@@ -7,7 +7,8 @@ Design rules it obeys (see ~/.claude/LONG-RUNNING-TASKS.md):
   * Progress is SCOPED TO THE CURRENT PHASE. An earlier phase's finished
     counter must never be left on screen: on 2026-09-03 this display kept
     showing Phase 3's "2,760/2,760 100.0%" all through Phase 4, and the run was
-    reported as finished when it had two more phases to go.
+    reported as finished when it had two more phases to go. The p4_* tallies
+    are the exception: they are RUN totals, so they survive a phase change.
   * It reports the worker's OWN tallies rather than deriving its own. The
     checkpoint's phase4_downloaded_ids is a RESUME SET, not a download count:
     it includes papers whose PDF was already on disk (result "exists"), and
@@ -103,7 +104,7 @@ def parse_log(path: Path) -> dict:
         "first_ts": None, "last_ts": None,
         "progress": None,           # scoped to the CURRENT phase only
         "new_papers": None, "known_needing_pdf": None,
-        "p4_fetched": 0, "p4_exists": 0, "p4_failed": 0,
+        "p4_fetched": 0, "p4_exists": 0, "p4_failed": 0, "p4_final": None,
         "errors": 0, "warnings": 0,
         "finished": False, "traceback": False,
         "phase_event_times": [],    # timestamps of current-phase progress events
@@ -130,6 +131,12 @@ def parse_log(path: Path) -> dict:
         if "Traceback (most recent call last)" in line:
             info["traceback"] = True
 
+        # Completion must be tested BEFORE the phase block below, which
+        # `continue`s and so never let "Phase 6" or "Completed in" reach a
+        # check placed after it. A clean finish was reported as STOPPED EARLY.
+        if "Completed in" in line or "Sync complete" in line:
+            info["finished"] = True
+
         pm = PHASE_RE.search(line)
         if pm and "Phase" in line and line.rstrip().endswith(("...", ":")) or (
                 pm and re.search(r"Phase [0-9]+[a-z]?:", line)):
@@ -141,7 +148,9 @@ def parse_log(path: Path) -> dict:
                 info["phase_started"] = ts
                 info["progress"] = None
                 info["phase_event_times"] = []
-                info["p4_fetched"] = info["p4_exists"] = info["p4_failed"] = 0
+                # NB: the p4_* tallies are RUN totals and deliberately survive
+                # the phase change. Zeroing them made a finished run report
+                # "PDFs fetched: 0" once Phase 5 began.
             continue
 
         dm = DIFF_RE.search(line)
@@ -160,22 +169,25 @@ def parse_log(path: Path) -> dict:
             if ts:
                 info["phase_event_times"].append(ts)
 
-        if info["phase_num"] == "4":
-            if P4_FETCHED.search(line):
-                info["p4_fetched"] += 1
-                if ts:
-                    info["phase_event_times"].append(ts)
-            elif P4_EXISTS.search(line):
-                info["p4_exists"] += 1
-                if ts:
-                    info["phase_event_times"].append(ts)
-            elif P4_FAILED.search(line):
-                info["p4_failed"] += 1
-                if ts:
-                    info["phase_event_times"].append(ts)
+        # Counted unconditionally, not only while phase_num == 4: these are
+        # run totals, and gating them on the current phase made a finished run
+        # report zero downloads.
+        if P4_FETCHED.search(line):
+            info["p4_fetched"] += 1
+            if ts:
+                info["phase_event_times"].append(ts)
+        elif P4_EXISTS.search(line):
+            info["p4_exists"] += 1
+            if ts:
+                info["phase_event_times"].append(ts)
+        elif P4_FAILED.search(line):
+            info["p4_failed"] += 1
+            if ts:
+                info["phase_event_times"].append(ts)
 
-        if "Sync complete" in line or re.search(r"Phase 6\b", line):
-            info["finished"] = True
+        fin = re.search(r"Downloaded:\s*(\d+),\s*Failed:\s*(\d+)", line)
+        if fin:
+            info["p4_final"] = (int(fin.group(1)), int(fin.group(2)))
 
     info["recent"] = lines[-5:]
     return info
@@ -287,13 +299,16 @@ def main() -> None:
     # --- PDF tallies, each labelled for what it actually counts ---------------
     if info["phase_num"] in ("4", "5", "5b", "6") or info["p4_fetched"]:
         on_disk = disk_pdf_count(info["first_ts"]) if info["first_ts"] else 0
-        print(f"PDFs fetched: {info['p4_fetched']:,} (worker log)   |   "
+        worker_n = info["p4_final"][0] if info["p4_final"] else info["p4_fetched"]
+        src = "worker's own final tally" if info["p4_final"] else "worker log"
+        print(f"PDFs fetched: {worker_n:,} ({src})   |   "
               f"{on_disk:,} new files on disk (counted independently)")
-        if abs(info["p4_fetched"] - on_disk) > max(3, 0.1 * max(info["p4_fetched"], 1)):
+        if abs(worker_n - on_disk) > max(3, 0.1 * max(worker_n, 1)):
             print(f"  {C_YELLOW}tallies disagree — check before trusting either"
                   f"{C_RESET}")
+        failed_n = info["p4_final"][1] if info["p4_final"] else info["p4_failed"]
         print(f"  already present: {info['p4_exists']:,}   "
-              f"no PDF obtained: {info['p4_failed']:,}")
+              f"no PDF obtained: {failed_n:,}")
         print(f"  {C_DIM}checkpoint resume sets (NOT download counts): "
               f"{len(ck.get('phase4_downloaded_ids', [])):,} processed-ok, "
               f"{len(ck.get('phase4_failed_ids', [])):,} processed-fail{C_RESET}")
