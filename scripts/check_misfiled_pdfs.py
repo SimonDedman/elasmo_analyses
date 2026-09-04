@@ -68,9 +68,61 @@ MIN_CONFIDENT_WORDS = 400
 MIN_SOLID_WORDS = 4
 
 
+# Ligatures have no compatibility decomposition, so NFKD leaves them intact
+# and the ASCII fold then DELETES them: "Myliobatidae" became "myliobatid",
+# which no longer prefix-matches the filename's "myliobatidae".  Nineteenth
+# century scans are full of these, and 32 of 460 cached documents carry one.
+# Deliberately multilingual: the library holds German, French, Portuguese,
+# Spanish, and Italian papers, and an English-only list would judge them all
+# to be noise.
+FUNCTION_WORDS = {
+    "the", "of", "and", "in", "to", "for", "with", "from", "that", "this",
+    "on", "by", "is", "are", "was", "were", "which", "these", "has", "have",
+    "der", "die", "das", "und", "von", "mit", "des", "den", "dem", "ist",
+    "le", "la", "les", "de", "du", "des", "et", "dans", "sur", "une", "est",
+    "el", "los", "las", "en", "por", "para", "con", "que", "como",
+    "do", "da", "dos", "das", "no", "na", "para", "com", "uma",
+    "nel", "della", "degli", "sono",
+}
+
+LIGATURES = {"æ": "ae", "Æ": "AE", "œ": "oe", "Œ": "OE", "ß": "ss",
+             "ﬀ": "ff", "ﬁ": "fi", "ﬂ": "fl", "ﬃ": "ffi", "ﬄ": "ffl"}
+
+
 def norm(text: str) -> str:
+    for lig, expansion in LIGATURES.items():
+        if lig in text:
+            text = text.replace(lig, expansion)
     text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def readable_excerpt(text: str, words: int = 26) -> str:
+    """The first stretch of the document a human can actually read.
+
+    A scanned volume opens with plates and cover noise, so pdftotext returns
+    things like "aes ns ee ee er -eOw- Pe Phat dM ene".  Showing that as the
+    document's identity makes a row unjudgeable, which is what Simon hit on
+    four rows.  Skip forward to the first window that looks like prose.
+    """
+    tokens = text.split()
+    if not tokens:
+        return ""
+    best = " ".join(tokens[:words])
+    # Function words are what separate prose from OCR noise.  Noise is happily
+    # vowel-bearing and the right length, so a "looks like a word" test passes
+    # it; almost none of it is "the", "of", "der", "de".
+    for start in range(0, max(1, min(len(tokens), 6000) - words), 4):
+        window = tokens[start:start + words]
+        lowered = [re.sub(r"[^a-z]", "", t.lower()) for t in window]
+        hits = [n for n, t in enumerate(lowered) if t in FUNCTION_WORDS]
+        if len(hits) >= 4:
+            # Start a few tokens before the first function word rather than at
+            # the window edge, so the excerpt opens on the title or journal
+            # line instead of the tail of the noise it was skipping.
+            begin = start + max(0, hits[0] - 4)
+            return " ".join(tokens[begin:begin + words])
+    return best
 
 
 def parse_filename(path: str) -> tuple[set[str], int, str]:
@@ -185,7 +237,7 @@ def judge_single(path: str, digest: str, cache_dir: Path) -> dict:
     tokens = sorted(set(words))
     entry = {"sha256": digest, "year": year, "n_words": len(words),
              "n_records": 1, "latin_fraction": round(latin_fraction(text), 2),
-             "pdf_starts": " ".join(text.split())[:160],
+             "pdf_starts": readable_excerpt(text),
              "size_mb": round(os.path.getsize(path) / 2 ** 20, 1),
              "pdf_year": None}
     if len(words) < MIN_TEXT_WORDS:
@@ -226,7 +278,7 @@ def judge_group(group: dict, cache_dir: Path) -> dict | None:
     words = norm(text).split()
     tokens = sorted(set(words))
     latin = latin_fraction(text)
-    first_line = " ".join(text.split())[:160]
+    first_line = readable_excerpt(text)
 
     entry = {
         "sha256": group["sha256"],
