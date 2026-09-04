@@ -191,14 +191,33 @@ def update_papers_data(readd: dict[str, dict], remove: set[str],
         removed = before - len(kept)
         data = kept
 
-    if apply and (added or removed):
-        # Match the file's existing serialisation exactly: indent=2 with
-        # escaped non-ASCII. Writing it any other way reformats all 12,000
-        # entries and buries four real changes in a 490,000-line diff.
-        tmp = PAPERS_DATA_JSON.with_suffix(".json.tmp")
-        tmp.write_text(json.dumps(data, indent=2))
-        os.replace(tmp, PAPERS_DATA_JSON)
-    return added, removed
+    return added, removed, data
+
+
+def update_papers_data(readd: dict[str, dict], remove: set[str],
+                       apply: bool, log=print) -> tuple[int, int]:
+    """Write through lib.papers_data_io.mutate.
+
+    That holds an exclusive lock across the whole read-modify-write, so a
+    concurrent sync or DOI-recovery pass cannot silently erase these rows,
+    and it owns the file's serialisation. Writing the file directly from
+    here reformatted all 12,000 entries and buried four real changes in a
+    490,000-line diff; it also fought another process over indent width.
+    """
+    if not apply:
+        data = json.loads(PAPERS_DATA_JSON.read_text(encoding="utf-8"))
+        added, removed, _ = _apply_to_papers(data, readd, remove)
+        return added, removed
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from lib.papers_data_io import mutate
+
+    counts = {}
+    with mutate(allow_deletions=bool(remove)) as papers:
+        added, removed, new = _apply_to_papers(papers, readd, remove)
+        papers[:] = new
+        counts["added"], counts["removed"] = added, removed
+    return counts["added"], counts["removed"]
 
 
 def update_tracker(lost: set[str], gained: set[str], apply: bool,

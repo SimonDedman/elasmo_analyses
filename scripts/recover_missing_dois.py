@@ -46,6 +46,7 @@ import requests
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
+sys.path.insert(0, str(ROOT))
 from sync_shark_references import _title_similarity, _title_tokens  # noqa: E402
 
 PAPERS = ROOT / "docs/papers_data.json"
@@ -271,8 +272,6 @@ def main() -> None:
         print("\n(no --apply: nothing written to papers_data.json)")
         return
 
-    backup = PAPERS.with_suffix(f".backup-{datetime.now():%Y%m%d-%H%M%S}.json")
-    shutil.copy2(PAPERS, backup)
     # A recovered 10.5962 DOI resolves to a free Biodiversity Heritage Library
     # scan, so the paper is not a subscription problem and must not be assigned
     # to a team member. Mark the route explicitly: fetch_bhl_archive.py skips
@@ -281,30 +280,32 @@ def main() -> None:
     FREE_FULLTEXT_PREFIXES = {"10.5962": "bhl"}
 
     n = routed = 0
-    for p in papers:
-        key = str(p.get("literature_id", "")).replace(".0", "") \
-            or (p.get("title") or "")[:80]
-        if key in hits and not (p.get("doi") or "").strip():
-            doi = hits[key]["doi"]
-            p["doi"] = doi
-            p["doi_source"] = "crossref_recovery_2026-09"
-            n += 1
+    # Everything below happens under an exclusive lock on a FRESHLY read copy,
+    # not the one loaded at start-up. A separate process added 4 rows during
+    # this pass on 2026-09-04; a naive read-modify-write would have erased them
+    # with no error and no trace.
+    from lib.papers_data_io import mutate
+    with mutate() as papers:
+        for p in papers:
+            key = str(p.get("literature_id", "")).replace(".0", "") \
+                or (p.get("title") or "")[:80]
+            if key in hits and not (p.get("doi") or "").strip():
+                p["doi"] = hits[key]["doi"]
+                p["doi_source"] = "crossref_recovery_2026-09"
+                n += 1
 
-    # Route by DOI prefix across the WHOLE list, not only rows this pass
-    # recovered: 65 papers already carried a 10.5962 DOI from earlier work and
-    # were sitting in the assignable pool, where no subscription is needed and
-    # no team member can help.
-    for p in papers:
-        doi = (p.get("doi") or "").strip().lower()
-        route = FREE_FULLTEXT_PREFIXES.get(doi.split("/")[0]) if doi else None
-        if route and p.get("acquisition_route") != route:
-            p["acquisition_route"] = route
-            routed += 1
-    tmp = PAPERS.with_suffix(".tmp")
-    tmp.write_text(json.dumps(papers, ensure_ascii=False, indent=1),
-                   encoding="utf-8")
-    tmp.replace(PAPERS)
-    print(f"\napplied {n:,} recovered DOIs (backup: {backup.name})")
+        # Route by DOI prefix across the WHOLE list, not only the rows this
+        # pass recovered: 65 papers already carried a BHL DOI from earlier work
+        # and were sitting in the assignable pool, where no subscription is
+        # needed and no team member could have helped.
+        for p in papers:
+            doi = (p.get("doi") or "").strip().lower()
+            route = FREE_FULLTEXT_PREFIXES.get(doi.split("/")[0]) if doi else None
+            if route and p.get("acquisition_route") != route:
+                p["acquisition_route"] = route
+                routed += 1
+
+    print(f"\napplied {n:,} recovered DOIs")
     print(f"  {routed:,} papers routed to BHL (free full text, "
           f"acquisition_route=bhl) rather than the assignable pool")
     print("NOTE: run the sync's Phase 3b DOI verification over these before "
