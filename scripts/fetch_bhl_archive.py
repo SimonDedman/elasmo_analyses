@@ -48,7 +48,8 @@ Usage
 
 Outputs
 -------
-    outputs/bhl_downloads/<literature_id>.pdf   -- downloaded PDFs
+    outputs/bhl_downloads/<literature_id>.pdf   -- downloaded PDFs (hardlinks)
+    outputs/bhl_downloads/_volumes/<sha1>.pdf   -- one copy per source URL
     outputs/bhl_matches.csv                     -- log (see MATCH_LOG_FIELDS)
     outputs/.bhl_cache/                         -- cached API responses (resumable, polite)
 
@@ -59,11 +60,13 @@ from __future__ import annotations
 
 import argparse
 import csv
+import errno
 import gzip
 import hashlib
 import json
 import os
 import re
+import shutil
 import sys
 import time
 import unicodedata
@@ -79,6 +82,12 @@ import requests
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PAPERS_JSON = PROJECT_ROOT / "docs/papers_data.json"
 DOWNLOAD_DIR = PROJECT_ROOT / "outputs/bhl_downloads"
+# Content store, keyed on source URL.  A scanned volume backs many articles:
+# one 1880 volume is the match for sixteen separate Jordan and Garman papers.
+# Downloading it per paper cost 16 fetches and 16 copies of 40.7 MB, so the
+# volume is fetched once here and every <literature_id>.pdf is a hardlink to
+# it.  Same bytes, same inode, and every consumer sees an ordinary file.
+VOLUME_STORE = DOWNLOAD_DIR / "_volumes"
 CACHE_DIR = PROJECT_ROOT / "outputs/.bhl_cache"
 CACHE_SEARCH_DIR = CACHE_DIR / "ia_search"
 CACHE_META_DIR = CACHE_DIR / "ia_metadata"
@@ -434,7 +443,41 @@ def search_bhl(title: str) -> dict | None:
 # Download
 # ---------------------------------------------------------------------------
 
+def store_path_for(url: str) -> Path:
+    return VOLUME_STORE / f"{hashlib.sha1(url.encode()).hexdigest()}.pdf"
+
+
+def link_or_copy(src: Path, dest: Path) -> None:
+    """Point dest at src's bytes, sharing the inode where the filesystem
+    allows it.  Falls back to a copy across devices or at the link limit."""
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dest.with_name(f".{dest.name}.link{os.getpid()}")
+    try:
+        if tmp.exists():
+            tmp.unlink()
+        os.link(src, tmp)
+    except OSError as exc:
+        if exc.errno not in (errno.EXDEV, errno.EMLINK, errno.EPERM):
+            raise
+        shutil.copy2(src, tmp)
+    os.replace(tmp, dest)
+
+
 def download_pdf(url: str, dest: Path) -> tuple[bool, str]:
+    """Fetch url into the content store, then hardlink dest to it.
+
+    Returns ``linked`` rather than ``downloaded`` when the volume was already
+    in the store, which is the common case for a heavily-cited volume and
+    saves both the bandwidth and the disk.
+    """
+    store = store_path_for(url)
+    if store.exists() and store.stat().st_size > 0:
+        try:
+            link_or_copy(store, dest)
+            return True, "linked"
+        except OSError as e:
+            return False, f"link_failed_{e.__class__.__name__}"
+
     try:
         r = requests.get(url, headers=DEFAULT_HEADERS, timeout=120, stream=True)
         polite_sleep()
@@ -447,11 +490,38 @@ def download_pdf(url: str, dest: Path) -> tuple[bool, str]:
             return False, "not_a_pdf"
         if len(data) < 50_000:
             return False, "too_small"
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_bytes(data)
+        # Land in the store atomically, so an interrupted run cannot leave a
+        # truncated volume that later papers would happily link to.
+        store.parent.mkdir(parents=True, exist_ok=True)
+        tmp = store.with_suffix(f".part{os.getpid()}")
+        tmp.write_bytes(data)
+        os.replace(tmp, store)
+        link_or_copy(store, dest)
         return True, "downloaded"
     except requests.RequestException as e:
         return False, f"error_{e.__class__.__name__}"
+
+
+def prune_volume_store(log=print) -> tuple[int, int]:
+    """Drop store entries nothing links to any more.
+
+    The store holds one extra link per volume, which costs no space while a
+    <literature_id>.pdf still points at the same inode.  Once those are all
+    ingested and removed, the store link is the last one and is keeping the
+    bytes alive for nothing.
+    """
+    removed = freed = 0
+    if not VOLUME_STORE.exists():
+        return 0, 0
+    for entry in VOLUME_STORE.glob("*.pdf"):
+        st = entry.stat()
+        if st.st_nlink > 1:
+            continue
+        entry.unlink()
+        removed += 1
+        freed += st.st_size
+    log(f"  pruned {removed} unreferenced volumes, freed {freed / 2 ** 20:.1f} MB")
+    return removed, freed
 
 
 # ---------------------------------------------------------------------------
@@ -548,7 +618,15 @@ def main() -> int:
                         help="Re-attempt papers previously logged as no_match "
                         "or download_failed_*")
     parser.add_argument("--papers-json", type=Path, default=PAPERS_JSON)
+    parser.add_argument("--prune-store", action="store_true",
+                        help="Drop volume-store entries nothing links to any "
+                             "more, then exit")
     args = parser.parse_args()
+
+    if args.prune_store:
+        print(f"Pruning {VOLUME_STORE}...")
+        prune_volume_store()
+        return 0
 
     for d in (DOWNLOAD_DIR, CACHE_SEARCH_DIR, CACHE_META_DIR, CACHE_TEXT_DIR):
         d.mkdir(parents=True, exist_ok=True)
