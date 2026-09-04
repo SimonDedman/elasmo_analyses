@@ -568,9 +568,13 @@ def fable_state(meeting, year):
 # 2019/2023/2024 — an elasmo share of 1.7% where every comparable year runs
 # 18-34%. The 10 elasmo records we hold are talks given in ASIH sessions. The
 # AES abstracts for that year are in the SI 2018 book, which is ingested.
+# (location, note). The location is where AES actually met, and the cell schema
+# is "Location; Status — note", so a note must contain no semicolon of its own:
+# check_coverage_matrix.py reads whatever follows one as a status.
 AES_NOT_AT_JMIH = {
-    2018: "no AES meeting at JMIH — AES met at Sharks International "
-          "(Joao Pessoa) instead; those abstracts are under SI 2018",
+    2018: ("Joao Pessoa (at SI)",
+           "no AES meeting at JMIH — AES met at Sharks International instead, "
+           "so those abstracts are under SI 2018"),
 }
 
 
@@ -728,7 +732,8 @@ def build():
                           "AES abstracts from elasmo.org (full bodies)"), "Ingested")
             track("AES", "Ingested")
         elif year in AES_NOT_AT_JMIH:
-            put(r, 3, txt("", "NA", AES_NOT_AT_JMIH[year]), "NA")
+            where, note = AES_NOT_AT_JMIH[year]
+            put(r, 3, txt(where, "NA", note), "NA")
             track("AES", "NA")
         elif year >= 1983:
             aloc = f"{loc}" + (f" ({el})" if el else "")
