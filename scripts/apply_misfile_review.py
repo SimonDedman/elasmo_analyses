@@ -4,10 +4,11 @@
 Reads the ``misfiled`` tab of ``outputs/misfiled_pdf_review_*.xlsx`` and
 removes each filename confirmed to hold a different paper:
 
-    MISFILED   delete the file: this name claims a paper the file does not hold
-    CONTAINER  the checker was wrong, leave it
-    UNSURE     leave it
-    (blank)    not reviewed, leave it
+    MISFILED         delete the file: this name claims a paper the file
+                     does not hold
+    CORRECTLY FILED  the checker was wrong, the paper IS in this file
+    UNSURE           leave it
+    (blank)          not reviewed, leave it
 
 Deleting a misfiled NAME is not the same as deleting CONTENT.  These files are
 hardlinked, so removing a wrong name normally just drops one link and the
@@ -43,7 +44,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from dedupe_hardlink import sha256  # noqa: E402
 
 DELETE = "MISFILED"
-LEAVE = {"CONTAINER", "UNSURE", ""}
+# "CONTAINER" was the original wording and reads wrong when the PDF is simply
+# the paper rather than a multi-article volume, which is the common case.
+# Both are accepted so an already-reviewed sheet still applies.
+LEAVE = {"CORRECTLY FILED", "CONTAINER", "UNSURE", ""}
 
 
 def read_rows(workbook: Path) -> list[dict]:
