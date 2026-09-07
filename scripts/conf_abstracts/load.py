@@ -42,10 +42,13 @@ def _is_dup(con, meeting_id, record) -> bool:
             return True
     nt = _norm_title(record.get("title"))
     if nt:
-        r = con.execute(
-            "SELECT 1 FROM abstracts WHERE meeting_id=? AND lower(trim(title))=?",
-            (meeting_id, nt)).fetchone()
-        if r:
+        # Compare on the SAME normalisation both sides. SQL's trim() only
+        # strips the ends, so a title with an internal double space (JMIH 2021
+        # has five, each where an "&" dropped out) never matched its own stored
+        # copy and was re-inserted on every re-run.
+        r = con.execute("SELECT title FROM abstracts WHERE meeting_id=?",
+                        (meeting_id,))
+        if any(_norm_title(t) == nt for (t,) in r):
             return True
     return False
 

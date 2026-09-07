@@ -92,12 +92,15 @@ PROGRAM_BOOK_FILES = {
 # Source: David M. Green (JMIH programme officer), first file 2026-09-04.
 OA_XLSX_SOURCES = {
     ("JMIH", 2021): str(CONFERENCES / "2021" / "2021_JMIH_AbstractExport.xlsx"),
+    ("JMIH", 2022): str(CONFERENCES / "2022" / "2022_JMIH_AbstractExport.xlsx"),
 }
 OA_MEETING_NAMES = {
     ("JMIH", 2021): "Joint Meeting of Ichthyologists and Herpetologists 2021",
+    ("JMIH", 2022): "Joint Meeting of Ichthyologists and Herpetologists 2022",
 }
 OA_MEETING_CITIES = {
     ("JMIH", 2021): "Phoenix, AZ",
+    ("JMIH", 2022): "Spokane, WA",   # from the 2022 programme book cover
 }
 
 # Host city per (meeting, year) for series whose books do not carry the venue in
