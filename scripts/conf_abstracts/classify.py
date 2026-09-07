@@ -17,7 +17,20 @@ def _meeting(name: str) -> str:
         return "SI"
     if "EEA" in up:
         return "EEA"
-    return "JMIH"  # Carylanne set is JMIH-dominant; fall back to JMIH
+    # Oceania Chondrichthyan Society, and the meetings it co-hosts with ASFB /
+    # NZMSS. Whole-meeting elasmo, like SI and EEA.
+    if "OCS" in up:
+        return "OCS"
+    if "IPFC" in up or "INDO-PACIFIC FISH" in up:
+        return "IPFC"
+    if "SQERF" in up:
+        return "SQERF"
+    # The fallback below is a REAL hazard, not a tidy default: an unrecognised
+    # conference is silently filed as JMIH. It exists because the Carylanne
+    # inbox is JMIH-dominant and its filenames are inconsistent. Anything
+    # arriving from another society must be added above FIRST — 18 OCS/IPFC
+    # books from Brit would otherwise have been ingested as JMIH abstracts.
+    return "JMIH"
 
 
 def _doc_type(name: str) -> str:

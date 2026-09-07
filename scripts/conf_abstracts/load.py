@@ -17,6 +17,13 @@ def upsert_meeting(con, meta: dict) -> int:
         return row[0]
     cols = ["meeting", "year", "name", "location", "dates", "source_pdf",
             "doc_type", "page_count", "is_ocr", "parse_status"]
+    # Abstract books rarely state their own host city anywhere a parser can
+    # reach it, so a known city is filled in here rather than left NULL — the
+    # coverage matrix reads meetings.location for the headline series.
+    meta = dict(meta)
+    if not meta.get("location"):
+        from conf_abstracts import config as _C
+        meta["location"] = _C.MEETING_CITIES.get((meta.get("meeting"), meta.get("year")))
     vals = [meta.get(c) for c in cols]
     cur = con.execute(
         f"INSERT INTO meetings ({','.join(cols)}) VALUES ({','.join('?'*len(cols))})",
