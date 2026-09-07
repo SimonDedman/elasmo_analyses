@@ -61,7 +61,7 @@ def main():
     fails = sum(len(v.get("failures", [])) for _, v in vols)
     nopath = [k for k, v in vols if v and not v.get("path")]
     notext = [k for k, v in vols if v.get("no_text_layer")]
-    staged = len(list(STAGING.glob("*.pdf"))) if STAGING.is_dir() else 0
+    staged = len(list(STAGING.glob("gcfi_*.pdf"))) if STAGING.is_dir() else 0
 
     alive = running()
     age = time.time() - STATE.stat().st_mtime

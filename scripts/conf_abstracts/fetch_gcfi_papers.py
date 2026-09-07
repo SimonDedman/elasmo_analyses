@@ -133,16 +133,24 @@ _PATHS = [f"{y}/{m:02d}" for y in (2015, 2016, 2017, 2018, 2019, 2020, 2021, 202
           for m in range(1, 13)]
 
 
+# Paper numbers to try when locating a volume. Asking only for paper 1 declared
+# volumes 57 and 62 unreachable and cost 7 records: v57's numbering starts at 8
+# and v62's at 3, and v58 is missing 3 and 4 in the middle. A volume is not
+# absent because its first paper is.
+_PROBE_NS = (1, 2, 3, 5, 8, 11)
+
+
 def discover_path(vol):
     """Which /uploads/<yyyy>/<mm>/ holds this volume. Returns (path, status)."""
     for path in _PATHS:
-        st = _head(f"{BASE}/{path}/gcfi_{vol}-1.pdf")
-        time.sleep(0.4)
-        if st == 200:
-            return path, "ok"
-        if st != 404:
-            return None, f"probe failed: {st}"
-    return None, "no path found (all 404)"
+        for n in _PROBE_NS:
+            st = _head(f"{BASE}/{path}/gcfi_{vol}-{n}.pdf")
+            time.sleep(0.4)
+            if st == 200:
+                return path, "ok" if n == 1 else f"ok (found at paper {n}, 1 is absent)"
+            if st != 404:
+                return None, f"probe failed: {st}"
+    return None, f"no path found (all 404 for papers {_PROBE_NS})"
 
 
 def _first_page_text(tmp):
@@ -192,21 +200,60 @@ def _norm(t):
     return re.sub(r"[^a-z0-9]", "", (t or "").lower())
 
 
+# Matching thresholds. A wanted title is claimed only when most of it appears as
+# ONE contiguous run in the PDF's opening lines, expressed as a FRACTION of that
+# title rather than a character count. The absolute count this replaces (45
+# characters) claimed gcfi_59-80 for id 500662 when the PDF is plainly id
+# 500663: both are the same group at the same site, so they share the 47-
+# character tail "en el Parque Nacional Archipielago Los Roques Venezuela",
+# which cleared 45 on its own. Measured on this corpus, true matches score
+# 0.81-1.00 and the worst false candidate scores 0.47, so 0.75 separates them.
+MATCH_MIN = 0.75
+NEAR_MIN = 0.45          # reported, never claimed: a threshold failure must be
+AMBIG_GAP = 0.10         # visible, because silence looks identical to absence
+
+
+def _score(n, h):
+    """Fraction of the wanted title matched as one contiguous run in the head."""
+    if not n or not h:
+        return 0.0
+    lim_n, lim_h = min(160, len(n)), min(400, len(h))
+    m = SequenceMatcher(None, n[:160], h[:400], autojunk=False) \
+        .find_longest_match(0, lim_n, 0, lim_h)
+    return m.size / lim_n
+
+
 def _match(pdf_head, targets):
-    """A wanted title whose normalised form appears in the PDF's opening lines."""
+    """Best wanted title for this PDF, as (target|None, note).
+
+    Scores EVERY target and takes the best. Returning the first target that
+    cleared a threshold is what produced the 59-80 misfiling: ordering decided
+    the answer, and the exact match further down the list was never reached.
+    A near-miss or an ambiguous pair is returned as a note so it is reported
+    rather than silently dropped.
+    """
     h = _norm(pdf_head)
     if len(h) < 30:
-        return None
-    for t in targets:
-        n = _norm(t["title"])
-        if len(n) < 25:
-            continue
-        if n[:60] in h:
-            return t
-        if SequenceMatcher(None, n[:120], h[:400], autojunk=False) \
-                .find_longest_match(0, min(120, len(n)), 0, min(400, len(h))).size >= 45:
-            return t
-    return None
+        return None, ""
+    scored = sorted(((_score(_norm(t["title"]), h), t) for t in targets
+                     if len(_norm(t["title"])) >= 25),
+                    key=lambda s: -s[0])
+    if not scored:
+        return None, ""
+    best, t = scored[0]
+    # The runner-up only matters if it is a DIFFERENT record: the wanted list
+    # holds duplicate rows for one literature_id (12640 appears twice), and
+    # those must not make a paper look ambiguous against itself.
+    rival = next(((s, r) for s, r in scored[1:]
+                  if r["literature_id"] != t["literature_id"]), (0.0, None))
+    if best < NEAR_MIN:
+        return None, ""
+    if best < MATCH_MIN:
+        return None, f"NEAR MISS {best:.2f} id {t['literature_id']}  {t['title'][:58]}"
+    if best - rival[0] < AMBIG_GAP:
+        return None, (f"AMBIGUOUS {best:.2f} id {t['literature_id']} vs "
+                      f"{rival[0]:.2f} id {rival[1]['literature_id']} — left for a human")
+    return t, f"{best:.2f}"
 
 
 def main():
@@ -253,16 +300,32 @@ def main():
                   flush=True)
             continue
         blank_heads = 0
-        for n in range(1, MAX_PAPER + 1):
+        # Prefer a MEASURED extent (gcfi_rescue.py --extent HEAD-probes the whole
+        # range) over the consecutive-miss heuristic. The heuristic ends a volume
+        # at any gap of MISS_RUN numbers, and GCFI's numbering has such gaps: v55
+        # holds 98 papers and the miss run stopped it at 23, v57 holds 81 and it
+        # stopped at 13. That is 143 papers reported as "seen, 0 FAILED" which
+        # were never requested at all.
+        order = rec.get("extent") or list(range(1, MAX_PAPER + 1))
+        for n in order:
             if str(n) in found:
                 continue
             url = f"{BASE}/{rec['path']}/gcfi_{vol}-{n}.pdf"
             status, body = _get(url)
             time.sleep(DELAY)
             if status == 404:
-                misses += 1
-                if misses >= MISS_RUN:
-                    break
+                # With a measured extent every number is known to exist, so a
+                # 404 is an anomaly to record, not a signal to stop.
+                if rec.get("extent"):
+                    failures.append([n, "404 despite extent probe", 0])
+                    continue
+                # Misses only end a volume once it has actually started. v57
+                # opens with seven 404s before paper 8; counting those toward
+                # the stop run would end the volume before it began.
+                if found:
+                    misses += 1
+                    if misses >= MISS_RUN:
+                        break
                 continue
             if status != 200 or body[:4] != b"%PDF":
                 failures.append([n, str(status), len(body)])
@@ -279,14 +342,22 @@ def main():
                     print(f"  v{vol} ({year}): ABANDONED — {blank_heads} PDFs yielded "
                           f"nothing from either the text layer OR OCR", flush=True)
                     break
-            hit = _match(head, want)
-            found[str(n)] = dict(bytes=len(body), head=head[:160], head_src=head_src,
-                                 matched=hit["literature_id"] if hit else None)
+            hit, note = _match(head, want)
+            # Keep the head the matcher actually saw. Storing 160 characters
+            # while matching on the whole thing makes the state file unable to
+            # reproduce its own verdicts: gcfi_59-76 is correctly id 14774, but
+            # its first 160 characters are a running header, so a re-score from
+            # the state alone scores it 0.29 and would withdraw a good claim.
+            found[str(n)] = dict(bytes=len(body), head=head[:400], head_src=head_src,
+                                 matched=hit["literature_id"] if hit else None,
+                                 note=note or None)
+            if note and not hit:
+                print(f"    {note}  (v{vol}-{n})", flush=True)
             if hit:
                 dest = STAGING / f"gcfi_{vol}-{n}__{hit['literature_id']}.pdf"
                 dest.write_bytes(body)
-                print(f"    MATCH v{vol}-{n} -> id {hit['literature_id']}  "
-                      f"{hit['title'][:60]}", flush=True)
+                print(f"    MATCH v{vol}-{n} -> id {hit['literature_id']} "
+                      f"[{note}]  {hit['title'][:60]}", flush=True)
             rec["papers"], rec["failures"] = found, failures
             STATE.write_text(json.dumps(state, indent=1))
         rec["done"] = True
