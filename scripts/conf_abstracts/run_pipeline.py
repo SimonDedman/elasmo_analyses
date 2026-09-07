@@ -114,7 +114,8 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             smeta["meeting"], smeta["year"] = mtg, yr
             smeta["source_pdf"] = str(path)
             smeta["doc_type"] = "program_book"
-            n = parse_program_book.ingest_program_book(con, qa_ocr.extract_text(path), smeta)
+            n = parse_program_book.ingest_program_book(
+                con, qa_ocr.extract_text(path), smeta, pdf_path=path)
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="program_book",
                         blocks=n, inserted=n, status="ok")
 

@@ -301,9 +301,15 @@ def parse_program_book_blocks(text: str):
     return blocks
 
 
-def ingest_program_book(con, text, meeting_meta):
+def ingest_program_book(con, text, meeting_meta, pdf_path=None):
     """Parse a modern program book and insert schedule talks (no bodies).
-    Returns count."""
+
+    `pdf_path` routes the two-column numbered books (2024, 2025) through the
+    coordinate parser in parse_program_layout: their text layer interleaves the
+    author and title columns whenever an author list is wide, which drops the
+    entry entirely, and their poster numbers carry a "P" that _TALK cannot
+    match. Returns count.
+    """
     from conf_abstracts import load, extract, tag
     meta = dict(meeting_meta)
     meta.setdefault("doc_type", "program_book")
@@ -314,7 +320,17 @@ def ingest_program_book(con, text, meeting_meta):
     _NOISE_TITLE = re.compile(
         r"^(Schedule-at-a-Glance|Symposium:|LOCATION|Welcome|Break|Lunch|"
         r"Poster Session|Business Meeting|Social|Reception|Registration|Awards?)\b", re.I)
-    for b in parse_program_book_blocks(text):
+    blocks = None
+    if pdf_path:
+        from conf_abstracts.parse_program_layout import parse_program_layout
+        laid = parse_program_layout(pdf_path)
+        # Only prefer the layout parse when it actually beats the text parse;
+        # a book whose columns it cannot find would otherwise come back empty.
+        if len(laid) >= len(parse_program_book_blocks(text)):
+            blocks = laid
+    if blocks is None:
+        blocks = parse_program_book_blocks(text)
+    for b in blocks:
         if not b["title"] or len(b["title"]) < 6:
             continue
         # drop grid-schedule pollution and non-talk logistics
