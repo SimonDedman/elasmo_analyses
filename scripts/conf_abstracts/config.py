@@ -23,7 +23,10 @@ OUT = REPO / "outputs"
 SOCIETIES = {"AES", "ASIH", "HL", "SSAR", "NIA", "SI", "EEA"}
 ELASMO_SOCIETIES = {"AES"}
 # meetings that are wholly elasmo regardless of session
-ELASMO_MEETINGS = {"SI", "EEA"}
+# OCS is the Oceania Chondrichthyan Society: every talk is elasmo, so the
+# meeting is tagged wholesale rather than per-session (added 2026-09-06 with
+# Brit's 18-book donation).
+ELASMO_MEETINGS = {"SI", "EEA", "OCS"}
 
 # Normalise society tokens seen in session lines.
 SOCIETY_ALIASES = {
@@ -95,6 +98,29 @@ OA_MEETING_NAMES = {
 }
 OA_MEETING_CITIES = {
     ("JMIH", 2021): "Phoenix, AZ",
+}
+
+# Host city per (meeting, year) for series whose books do not carry the venue in
+# a parseable place. These come from the FILENAMES Brit supplied with the books
+# themselves ("2009_IPFC Fremantle Abstract Book.pdf"), which is the donor's own
+# record of where the meeting was, so they are cited rather than inferred.
+MEETING_CITIES = {
+    ("OCS", 2007): "Queenscliff, VIC, Australia",
+    ("OCS", 2008): "Sydney, NSW, Australia",
+    ("OCS", 2011): "Gold Coast, QLD, Australia",
+    ("OCS", 2012): "Adelaide, SA, Australia",          # joint with ASFB
+    ("OCS", 2013): "Brisbane, QLD, Australia",
+    ("OCS", 2015): "Auckland, New Zealand",            # joint with NZMSS
+    ("OCS", 2016): "Wrest Point, Tasmania, Australia",  # joint with ASFB
+    ("OCS", 2018): "Moreton Bay, QLD, Australia",
+    ("OCS", 2019): "Dunedin, New Zealand",             # joint with NZMSS
+    ("OCS", 2020): "Virtual",
+    ("OCS", 2022): "Virtual",
+    ("OCS", 2024): "Geelong, VIC, Australia",
+    ("OCS", 2025): "Sunshine Coast, QLD, Australia",
+    ("IPFC", 2009): "Fremantle, WA, Australia",
+    ("IPFC", 2023): "Auckland, New Zealand",
+    ("SQERF", 2005): "Moreton Bay, QLD, Australia",
 }
 
 # SI2026 PDF supplies the abstract bodies the xlsx lacks (merged by A-#### id).

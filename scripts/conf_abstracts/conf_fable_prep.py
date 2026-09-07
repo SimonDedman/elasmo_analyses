@@ -88,6 +88,19 @@ SCOPE = [
     # parsers (parse_si2018_pdf / xlsx + body merge), so don't re-queue them.
     (str(C.CONFERENCES / "2022" / "2022_SI_AbstractBook.pdf"), "SI", "AES", True),
     (str(C.REPO / "database/others_libraries/Cat/EEA*.pdf"), "EEA", "AES", True),  # legacy inbox
+    # Brit's donation, 2026-09-06. OCS is the Oceania Chondrichthyan Society and
+    # is wholly elasmo. ABSTRACT books only: 2012 also has a 12pp programme that
+    # would collide on key OCS2012 and carries no bodies. 2019 ships oral and
+    # poster separately and _key() suffixes them apart. The pipeline's regex
+    # segmenter swallowed each of these books whole (one 5k-49k-word
+    # "abstract"), because the layout changes every year — which is exactly the
+    # case Fable handles and a per-year parser does not.
+    (str(C.CONFERENCES / "*" / "*_OCS_AbstractBook*.pdf"), "OCS", "AES", True),
+    # IPFC is a general fish conference: society/elasmo resolved per abstract
+    # from the lexicon, as for JMIH, not assumed for the whole meeting.
+    (str(C.CONFERENCES / "*" / "*_IPFC_AbstractBook*.pdf"), "IPFC", "", False),
+    # SQERF 2005 has no abstract book; its proceedings PDF is the only source.
+    (str(C.CONFERENCES / "*" / "*_SQERF_ProgrammeBook*.pdf"), "SQERF", "AES", True),
 ]
 
 
@@ -126,7 +139,15 @@ def _year(pdf: Path) -> int | None:
 def _city(pdf: Path) -> str | None:
     # EEA{year}_{City}_... -> City (underscores -> spaces, strip trailing descriptor)
     m = re.match(r"[A-Za-z]+\d{4}[_ ]+([A-Za-zÀ-ſ]+)", pdf.stem)
-    return m.group(1) if m else None
+    if m:
+        return m.group(1)
+    # {year}_{MEETING}_{Type} names carry no city, so fall back to the registry.
+    # Fable is told the city as context, and a wrong or missing one shows up in
+    # the extracted metadata.
+    m2 = re.match(r"(\d{4})_([A-Za-z]+)_", pdf.stem)
+    if m2:
+        return C.MEETING_CITIES.get((m2.group(2), int(m2.group(1))))
+    return None
 
 
 def pdftotext_layout(pdf: Path) -> str:
