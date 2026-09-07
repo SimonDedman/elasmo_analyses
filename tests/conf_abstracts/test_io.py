@@ -167,3 +167,82 @@ def test_export_roundtrip():
         import json
         data = json.loads(js.read_text())
         assert len(data) == 2
+
+
+# ---------------------------------------------------------------------------
+# parse_program_layout: the two-column programme books (2024, 2025)
+# ---------------------------------------------------------------------------
+_PROGRAM_BOOK_2025 = ("/media/simon/data/Documents/Si Work/Papers & Books/"
+                      "SharkPapers/Conferences/2025/2025_JMIH_ProgrammeBook.pdf")
+
+
+def _layout_2025():
+    from pathlib import Path
+    from conf_abstracts.parse_program_layout import parse_program_layout
+    if not Path(_PROGRAM_BOOK_2025).exists():
+        return None
+    return parse_program_layout(_PROGRAM_BOOK_2025)
+
+
+def test_layout_finds_the_entries_the_text_parser_drops():
+    """A wide author list pushes the entry number off the start of the line, so
+    the text parser's ^N.N anchor misses it. Seven JMIH 2025 talks were lost
+    that way, four of them elasmo, in a year with no abstract book to fall back
+    on. Each must come back with its full author list."""
+    blocks = _layout_2025()
+    if blocks is None:
+        return
+    by_num = {b["program_number"]: b for b in blocks}
+    for num in ("8.4", "12.4", "25.3", "30.2", "36.6", "38.3", "49.1"):
+        assert num in by_num, f"{num} still missing"
+    b = by_num["30.2"]
+    assert b["title"].startswith("Sharks and Rays of the Gulf of Carpentaria")
+    # "Edwin Ling" is split across the column break; both halves must survive
+    assert "Edwin Ling" in b["author_raw"], b["author_raw"]
+    assert by_num["30.1"]["author_raw"].count(",") == 10   # eleven authors
+
+
+def test_layout_reads_the_poster_half_of_the_book():
+    """Poster numbers carry a P prefix that the text parser's \\d+\\.\\d+ cannot
+    match, so JMIH 2025 held 343 talks and none of its 190 posters."""
+    blocks = _layout_2025()
+    if blocks is None:
+        return
+    posters = [b for b in blocks if b["presentation_type"] == "poster"]
+    assert len(posters) > 150, len(posters)
+    # posters are headed by a bold category line, not a "Session N:" line
+    aes = [b for b in posters if b["session_name"] == "AES Posters"]
+    assert aes and all(b["societies_explicit"] == ["AES"] for b in aes)
+
+
+def test_layout_keeps_hyphens_broken_across_a_line():
+    """These books never hyphenate to justify, so a hyphen at a line end is part
+    of the word. pdftotext drops it, which is where "HatcheryRaised" and
+    "longterm" came from."""
+    blocks = _layout_2025()
+    if blocks is None:
+        return
+    by_num = {b["program_number"]: b for b in blocks}
+    assert "Luci Herrera-Lopez" in by_num["25.3"]["author_raw"]
+    assert "Hatchery-Raised" in by_num["12.1"]["title"]
+    # a suspended hyphen inside one line is left exactly as printed
+    assert "Micro- and Nano-plastics" in by_num["P1.1"]["title"]
+
+
+def test_layout_keeps_page_furniture_out_of_titles():
+    """Room banners, the running footer and the asterisk note sit outside the
+    entry; appending them to whichever entry was open put "Ballroom F" and
+    "JMIH 2025 Conference Program 15" inside real titles."""
+    blocks = _layout_2025()
+    if blocks is None:
+        return
+    for b in blocks:
+        t = b["title"]
+        assert "Conference Program" not in t, t
+        assert "Ballroom" not in t, t
+        assert "asterisk" not in t, t
+        # An entry with no authors is either a parse failure or a slot that has
+        # none - JMIH 2025 32.3 is a bare "Discussion". Only the short ones are
+        # allowed to be authorless; ingest drops them anyway.
+        assert b["author_raw"] or len(t) < 30, \
+            f"{b['program_number']} lost its authors: {t!r}"
