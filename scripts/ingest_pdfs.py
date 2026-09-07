@@ -23,6 +23,7 @@ import json
 import re
 import shutil
 import subprocess
+import time
 import unicodedata
 from datetime import datetime
 from pathlib import Path
@@ -235,6 +236,117 @@ def ensure_text_extractable(pdf_path: Path) -> Path:
     except (subprocess.TimeoutExpired, FileNotFoundError) as e:
         print(f"  OCR unavailable/timeout: {e}")
     return pdf_path
+
+
+# OCR cache retention. The cache is keyed by source SHA1 and only ever pays off
+# if the SAME source file is ingested a second time, which is rare. Meanwhile,
+# when ingest files an image-only PDF it copies the OCR'd cache file INTO the
+# library, so that entry becomes a byte-identical second copy the moment it has
+# done its job. Nothing pruned it: measured 2026-09-06 at 220 files / 1.3 GB
+# accumulated since 2026-05-04, roughly 325 MB a month and unbounded, with the
+# largest single entry 84 MB. Book-chapter mining ingests exactly the big
+# scanned volumes that drive this.
+OCR_CACHE_MAX_AGE_DAYS = 60
+OCR_CACHE_MAX_GB = 0.5
+
+
+def prune_ocr_cache(max_age_days: int = OCR_CACHE_MAX_AGE_DAYS,
+                    max_gb: float = OCR_CACHE_MAX_GB,
+                    keep: set | None = None,
+                    dry_run: bool = False) -> tuple[int, int]:
+    """Drop OCR cache entries that can no longer earn their keep.
+
+    Two passes, cheapest and safest first:
+
+    1. Entries byte-identical to a file already in the library. Those have been
+       consumed: the library copy IS the OCR'd file, so the cache holds a second
+       copy of something already stored, and re-OCR would never be needed.
+    2. If still over budget, oldest-first by mtime until under `max_gb`, and
+       anything older than `max_age_days` regardless.
+
+    Everything here is regenerable — worst case is re-OCR'ing one file — so this
+    errs towards reclaiming. `keep` protects entries written by the current run.
+    Returns (files_removed, bytes_removed).
+    """
+    if not OCR_CACHE.is_dir():
+        return 0, 0
+    keep = keep or set()
+    entries = [p for p in OCR_CACHE.glob("*.pdf") if p.name not in keep]
+    if not entries:
+        return 0, 0
+
+    # Size-prefiltered hash comparison: a stat pass over the library is seconds,
+    # and only same-size candidates are ever hashed.
+    lib_by_size: dict[int, list[Path]] = {}
+    for p in PDF_BASE.rglob("*.pdf"):
+        try:
+            lib_by_size.setdefault(p.stat().st_size, []).append(p)
+        except OSError:
+            continue
+
+    def _sha(path: Path) -> str:
+        h = hashlib.sha1()
+        with open(path, "rb") as fh:
+            for block in iter(lambda: fh.read(1 << 20), b""):
+                h.update(block)
+        return h.hexdigest()
+
+    removed, freed, superseded = 0, 0, []
+    for p in entries:
+        try:
+            sz = p.stat().st_size
+        except OSError:
+            continue
+        cands = lib_by_size.get(sz, [])
+        if not cands:
+            continue
+        try:
+            ph = _sha(p)
+        except OSError:
+            continue
+        if any(_sha(q) == ph for q in cands[:8]):
+            superseded.append((p, sz))
+
+    for p, sz in superseded:
+        print(f"  prune: {p.name} superseded by a library copy ({sz / 2**20:.1f} MB)")
+        if not dry_run:
+            p.unlink(missing_ok=True)
+        removed += 1
+        freed += sz
+
+    # Second pass: age, then size budget, oldest first.
+    left = []
+    for p in entries:
+        if any(p == q for q, _ in superseded):
+            continue
+        try:
+            st = p.stat()
+        except OSError:
+            continue
+        left.append((st.st_mtime, st.st_size, p))
+    left.sort()
+    cutoff = time.time() - max_age_days * 86400
+    total = sum(sz for _, sz, _ in left)
+    budget = int(max_gb * 2**30)
+    for mtime, sz, p in left:
+        too_old = mtime < cutoff
+        over = total > budget
+        if not (too_old or over):
+            break
+        why = "older than %d days" % max_age_days if too_old else "over the %.1f GB budget" % max_gb
+        print(f"  prune: {p.name} {why} ({sz / 2**20:.1f} MB)")
+        if not dry_run:
+            p.unlink(missing_ok=True)
+        removed += 1
+        freed += sz
+        total -= sz
+
+    if removed:
+        print(f"  OCR cache: removed {removed} file(s), reclaimed "
+              f"{freed / 2**30:.2f} GB{' (DRY RUN)' if dry_run else ''}")
+    else:
+        print("  OCR cache: nothing to prune")
+    return removed, freed
 
 
 def _search_text_for_doi(text: str, allow_bare: bool = False) -> str:
@@ -1559,6 +1671,11 @@ def main():
     # Parse arguments: --check / --no-ocr / --no-dedup-check flags + paths
     global OCR_ENABLED, DEDUP_CHECK_ENABLED
     args = sys.argv[1:]
+    if "--prune-ocr-cache" in args:
+        dry = "--dry-run" in args
+        print(f"Pruning {OCR_CACHE}{' (dry run)' if dry else ''}...")
+        prune_ocr_cache(dry_run=dry)
+        sys.exit(0)
     check_mode = "--check" in args
     if check_mode:
         args = [a for a in args if a != "--check"]
@@ -1582,6 +1699,7 @@ def main():
     if not args:
         print("Usage: python scripts/ingest_pdfs.py [--check] [--no-ocr] [--no-dedup-check] /path/to/pdfs/ [file1.pdf ...]")
         print("  --check            Dry run: check matches without copying or updating")
+        print("  --prune-ocr-cache  Reclaim outputs/.ocr_cache (add --dry-run to preview)")
         print("  --no-ocr           Disable OCR fallback on image-only PDFs")
         print("  --no-dedup-check   Skip flagging possible duplicates of existing library files")
         print("  --no-hardlink-sweep  Skip collapsing byte-identical library PDFs afterwards")
@@ -1675,6 +1793,13 @@ def main():
                   f"verified {ok}" + (f", {bad} FAILED" if bad else ""))
         except Exception as e:
             print(f"  hardlink sweep failed (non-fatal): {e}")
+
+    if not check_mode:
+        print("\nPruning the OCR cache...")
+        try:
+            prune_ocr_cache()
+        except Exception as e:
+            print(f"  OCR cache prune failed (non-fatal): {e}")
 
     print(f"\n{'=' * 70}")
     print("INGEST COMPLETE")
