@@ -178,6 +178,21 @@ def collect():
         m = re.search(r"\b(19|20)\d{2}\b", venue)
         if m:
             yr = int(m.group(0))
+        elif "Gulf and Caribbean Fisheries" in venue:
+            # GCFI citations name an ORDINAL, never a year ("Proceedings of the
+            # Fifty Fifth Annual ..."), so the regex above finds nothing and the
+            # caller falls back to the record's publication year. GCFI publishes
+            # one to eleven years after the meeting, so that puts the coverage
+            # cell on the wrong row entirely: v47's 1994 meeting was landing on
+            # 2005, and 1994 was absent from the tab. Volume N is the meeting
+            # year 1947 + N (see fetch_gcfi_papers.FIRST_YEAR).
+            try:
+                from conf_abstracts.fetch_gcfi_papers import volume_of, FIRST_YEAR
+                vol = volume_of(venue)
+                if vol:
+                    yr = FIRST_YEAR + vol
+            except Exception:                                  # noqa: BLE001
+                pass
         rows.append(dict(literature_id=lid, year=r["year"], venue_year=yr, venue=venue,
                          title=r["title"], series=series, contact=contact, region=region,
                          already_chasing=chasing, outstanding=lid in papers))
