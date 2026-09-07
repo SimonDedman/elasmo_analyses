@@ -5,7 +5,10 @@ officer can export every submitted abstract as a spreadsheet. David M. Green
 (JMIH programme officer, McGill) supplied the JMIH 2021 export on 2026-09-04.
 This is the cleanest source we have for any JMIH year: born-digital title,
 author list, presenter flag, full body, four keywords, presentation type,
-society membership, career stage. What it does NOT carry is affiliations, the
+society membership, career stage, and (2022 on) a subject category. The columns
+vary by year - 2022 drops "Job Status" and adds "Categories" - so every field
+beyond title/authors/abstract is optional and resolved from the header row.
+What it does NOT carry is affiliations, the
 session name, or the day/time - and it reflects SUBMISSIONS, so cancellations
 are still in and last-minute changes are not.
 
@@ -45,6 +48,7 @@ _HEADERS = {
     "membership": "membership",
     "herpetology or ichthyology": "discipline",
     "presentation": "presentation",
+    "categories": "subject_category",
 }
 _KEYWORD_RE = re.compile(r"^keyword\s*\d+$", re.I)
 
@@ -61,8 +65,18 @@ _TYPE_RULES = [
     ("paper", "talk"),
 ]
 
+# Oxford Abstracts writes a literal "N/A" where a submitter left an optional
+# dropdown unset (177 of the 662 Categories cells in 2022). That is an absent
+# value, not a category, so it must not reach the DB as a string.
+_BLANK = {"", "n/a", "na", "none", "-", "not applicable"}
+
+
 def _s(v):
-    return "" if v is None else str(v).strip()
+    """Cell text, with the export's placeholders for 'unset' read as empty."""
+    if v is None:
+        return ""
+    t = str(v).strip()
+    return "" if t.lower() in _BLANK else t
 
 
 def _presentation_type(text):
@@ -130,9 +144,9 @@ def _split_authors(raw, presenter):
 
 
 def ensure_columns(con):
-    """Two fields the Oxford Abstracts export carries that no PDF book does."""
+    """Fields the Oxford Abstracts export carries that no PDF book does."""
     have = {r[1] for r in con.execute("PRAGMA table_info(abstracts)")}
-    for col in ("discipline", "presenter_career_stage"):
+    for col in ("discipline", "presenter_career_stage", "subject_category"):
         if col not in have:
             con.execute(f"ALTER TABLE abstracts ADD COLUMN {col} TEXT")
     con.commit()
@@ -180,6 +194,8 @@ def read_export(xlsx_path):
             discipline=_s(r[idx["discipline"]]) or None if "discipline" in idx else None,
             presenter_career_stage=(_s(r[idx["career_stage"]]) or None
                                     if "career_stage" in idx else None),
+            subject_category=(_s(r[idx["subject_category"]]) or None
+                              if "subject_category" in idx else None),
             authors=_split_authors(_s(r[idx["authors"]]),
                                    _s(r[idx["presenter"]]) if "presenter" in idx else ""),
             is_elasmo=int(lexicon.is_elasmo_text(title, body)),
@@ -188,7 +204,30 @@ def read_export(xlsx_path):
             needs_review=0,
             source_page=None,
         ))
-    return out
+    return _dedupe(out)
+
+
+def _dedupe(records):
+    """Collapse the same talk submitted twice, keeping the fuller submission.
+
+    Submitters resubmit - in 2022 one abstract appears twice, once with two
+    authors and once with all fourteen. The DB's own dedupe keeps whichever
+    arrives first, which would have thrown away twelve names, so choose here on
+    author count then body length instead of leaving it to insertion order.
+    """
+    best = {}
+    order = []
+    for rec in records:
+        key = re.sub(r"\s+", " ", rec["title"]).strip().lower()
+        prev = best.get(key)
+        if prev is None:
+            best[key] = rec
+            order.append(key)
+            continue
+        rank = lambda x: (len(x["authors"]), len(x["abstract_text"] or ""))
+        if rank(rec) > rank(prev):
+            best[key] = rec
+    return [best[k] for k in order]
 
 
 def _society_from_membership(membership):
@@ -209,12 +248,13 @@ def ingest(con, xlsx_path, meta, dry_run=False):
     for rec in records:
         society, basis = _society_from_membership(rec["societies_explicit"])
         rec = dict(rec, society=society, society_basis=basis, society_inferred=None)
-        extras = (rec.pop("discipline"), rec.pop("presenter_career_stage"))
+        extras = (rec.pop("discipline"), rec.pop("presenter_career_stage"),
+                  rec.pop("subject_category"))
         aid = load.insert_abstract(con, mid, rec)
         if aid is None:
             continue
-        con.execute("UPDATE abstracts SET discipline=?, presenter_career_stage=? "
-                    "WHERE abstract_id=?", (*extras, aid))
+        con.execute("UPDATE abstracts SET discipline=?, presenter_career_stage=?, "
+                    "subject_category=? WHERE abstract_id=?", (*extras, aid))
         n += 1
     con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
     con.commit()
