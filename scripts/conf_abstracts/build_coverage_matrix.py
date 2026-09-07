@@ -235,7 +235,15 @@ CONFERENCE_META = [
          contact="david.m.green@mcgill.ca"),
     dict(series="American Elasmobranch Society (AES)",
          lead_key="American Elasmobranch Society (AES)",
-         year_from=1983, year_to=None, frequency=1,
+         # 1985, not 1983 (corrected 2026-09-06). The ordinal->year anchor check
+         # flagged this: three independent citations in our own corpus give the
+         # 13th meeting as 1997, the 16th as 2000 and the 26th as 2010, and all
+         # three imply a first meeting in 1985. The abstracts DB agrees — its
+         # earliest located AES meeting is 1985, Knoxville TN — as does
+         # elasmo.org, whose abstract bodies start at 1985 and 404 for 1983-84.
+         # AES was FOUNDED in 1983; the numbered annual meetings start in 1985,
+         # and it is the meeting series this column counts.
+         year_from=1985, year_to=None, frequency=1,
          organisers="AES officers; meets inside JMIH, so the JMIH programme officer holds "
                     "the abstracts. EXCEPTION 2018: AES met at Sharks International instead.",
          website="https://elasmo.org/meetings/abstracts/abst<YYYY>/ — full abstracts with "
@@ -367,7 +375,12 @@ CONFERENCE_META = [
          year_from=1992, year_to=None, frequency=4, organisers="", website="", contact=""),
     dict(series="American Fisheries Society symposia",
          lead_key="American Fisheries Society symposia",
-         year_from=1870, year_to=None, frequency=1,
+         # 1871, not 1870 (corrected 2026-09-06). Our own citation gives the
+         # 141st Annual Meeting as 2011, which implies a first meeting in 1871.
+         # AFS was FOUNDED in 1870; its first annual meeting fell the next year,
+         # so meeting-number arithmetic needs 1871. Single anchor, so weaker
+         # evidence than the AES correction above.
+         year_from=1871, year_to=None, frequency=1,
          organisers="American Fisheries Society.", website="https://fisheries.org/",
          contact=""),
     dict(series="International Congress on the Biology of Fish",
@@ -500,6 +513,128 @@ for _name, _short, _code in _EXTRA:
     EXTRA_COLUMNS.append((_name, _short, _code, _META_BY_NAME[_name]["lead_key"]))
 
 
+# Ordinal -> meeting year, deduced across a whole series.
+#
+# Many series cite an ORDINAL and no year ("Proceedings of the Fifty Fifth
+# Annual ..."), so `venue_year` stays empty and the coverage cell falls back to
+# the PUBLICATION year. For GCFI that is 1-11 years out. But a series has a
+# first year and a frequency on the Conferences tab, so the Nth meeting is
+# deducible: year = year_from + (N - 1) * frequency.
+#
+# A formula is only trusted where it can be CHECKED. Rows that carry BOTH an
+# ordinal and an explicit year are anchors; the formula is tested against them
+# first and only used for that series if every anchor agrees. Irregular series
+# fail that test and keep their citation year — WCH, for instance, met in 1989,
+# 1993, 1997, 2001, 2005, 2008, 2012, so no fixed frequency reproduces it.
+_ORD_WORDS = {
+    "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6,
+    "seventh": 7, "eighth": 8, "ninth": 9, "tenth": 10, "eleventh": 11,
+    "twelfth": 12, "thirteenth": 13, "fourteenth": 14, "fifteenth": 15,
+    "sixteenth": 16, "seventeenth": 17, "eighteenth": 18, "nineteenth": 19,
+    "twentieth": 20, "thirtieth": 30, "fortieth": 40, "fiftieth": 50,
+    "sixtieth": 60, "seventieth": 70, "eightieth": 80, "ninetieth": 90,
+}
+_TENS_WORDS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50,
+               "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90}
+_UNIT_WORDS = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+               "six": 6, "seven": 7, "eight": 8, "nine": 9}
+
+
+def _ordinal_of(venue):
+    """The meeting ordinal a citation names, as an int, or None."""
+    # A bare "12th" is not necessarily the meeting number: "August 8th-14th,
+    # 2005" reads as the 8th meeting unless the ordinal is required to sit in
+    # front of a meeting noun. That misparse is what the anchor check caught.
+    _NOUN = (r"(?:Annual|International|Meeting|Congress|Symposium|Simposium|"
+             r"Conference|Workshop|Reuni\w+|Jornadas|Congreso)")
+    m = re.search(rf"\b(\d{{1,3}})\s*(?:st|nd|rd|th)[\s,\-–]+"
+                  rf"(?:[\w\-–]+[\s,\-–]+){{0,3}}?{_NOUN}", venue, re.I)
+    if m and not re.search(r"(?:January|February|March|April|May|June|July|August|"
+                           r"September|October|November|December)\s*$",
+                           venue[:m.start()], re.I):
+        return int(m.group(1))
+    # Ordinal WORDS. Two traps, both hit by real citations:
+    #  - the noun list must include "Conference": IPFC's 37 rows read
+    #    "Proceedings of the second Indo-Pacific Fish Conference".
+    #  - the ordinal is NOT adjacent to that noun there, so capture the ordinal
+    #    words right after "the" and merely REQUIRE a meeting noun to follow
+    #    within a short window, rather than immediately.
+    m = re.search(r"\b(?:of\s+)?(?:the\s+)?((?:" + "|".join(
+        list(_ORD_WORDS) + list(_TENS_WORDS) + list(_UNIT_WORDS)) +
+        r")(?:[\s–\-]+(?:" + "|".join(
+        list(_ORD_WORDS) + list(_TENS_WORDS) + list(_UNIT_WORDS)) + r"))*)\b",
+        venue, re.I)
+    if not m:
+        return None
+    if not re.search(r"(?:Annual|Meeting|Congress|Symposium|Simposium|Conference|"
+                     r"Workshop|Reuni\w+|Jornadas|Congreso|Institute)",
+                     venue[m.end():m.end() + 60], re.I):
+        return None
+    total, seen = 0, False
+    for w in [w for w in re.split(r"[\s–\-]+", m.group(1).lower()) if w]:
+        if w in _TENS_WORDS:
+            total += _TENS_WORDS[w]; seen = True
+        elif w in _ORD_WORDS:
+            total += _ORD_WORDS[w]; seen = True
+        elif w in _UNIT_WORDS:
+            total += _UNIT_WORDS[w]; seen = True
+        elif w in ("and", "annual"):
+            continue
+        else:
+            return None
+    return total if seen and total else None
+
+
+def _deducible_series(rows, meta_by_series):
+    """{series: (year_from, frequency)} for series whose ordinal->year formula
+    reproduces EVERY anchor the corpus provides. Anchors are rows citing both an
+    ordinal and an explicit year."""
+    anchors = defaultdict(list)
+    for r in rows:
+        if not r.get("series") or not r.get("venue_year"):
+            continue
+        n = _ordinal_of(r["venue"] or "")
+        if n:
+            anchors[r["series"]].append((n, int(r["venue_year"])))
+    ok = {}
+    for series, pairs in anchors.items():
+        meta = meta_by_series.get(series) or {}
+        y0, freq = meta.get("year_from"), meta.get("frequency")
+        if not y0 or not freq:
+            continue
+        if all(y0 + (n - 1) * freq == y for n, y in pairs):
+            ok[series] = (y0, freq)
+        else:
+            bad = [(n, y, y0 + (n - 1) * freq) for n, y in pairs
+                   if y0 + (n - 1) * freq != y][:3]
+            print(f"  ordinal->year NOT used for {series}: formula disagrees with "
+                  f"the corpus's own anchors {bad} (irregular schedule)")
+    return ok
+
+
+def _meeting_key(venue):
+    """A venue string reduced to the MEETING it names.
+
+    Counting distinct raw strings counts page numbers: ECC 2014 has 79 records
+    that are one meeting cited 79 times, and reporting "79 distinct meetings"
+    both reads as nonsense and suppresses the column's location, because a
+    multi-meeting cell is not given one. So trailing page and volume references
+    are stripped before the set is built.
+    """
+    # An ORDINAL identifies the meeting outright, so prefer it: the same
+    # conference cited as "(Eds) Proceedings of the second ..." and
+    # "(Eds.). Proceedings of the second ..." is ONE meeting, and string
+    # normalisation alone reported IPFC 1985 and 1997 as two — which then
+    # suppressed their host cities, because a multi-meeting cell is given none.
+    n = _ordinal_of(venue or "")
+    if n:
+        return f"#{n}"
+    v = re.sub(r"[\s,:;]+\d{1,4}\s*(?:[–-]\s*\d{1,4})?\s*(?:pp?\.?)?\s*$", "", venue or "")
+    v = re.sub(r"[\s,:;]+(?:pp?\.|page[s]?)\s*\d.*$", "", v, flags=re.I)
+    v = re.sub(r"\s+", " ", v).strip(" ,.:;–-").lower()
+    return v[:90]
+
+
 def _lead_year_counts():
     """{series: {year: records wanted}} from the corpus citations. A cell is
     only written where there is EVIDENCE — a citation, or a book on disk — so
@@ -509,33 +644,199 @@ def _lead_year_counts():
         from pathlib import Path as _P
         _s.path.insert(0, str(_P(__file__).resolve().parents[1]))
         from conf_abstracts import conference_lead_candidates as L
+        rows = [r for r in L.collect() if r["series"] and r["outstanding"]]
+        # Key the metadata by BOTH the series NAME and its lead_key. The rows
+        # coming back from collect() carry the LEAD KEY, which is often not the
+        # meta name — "Indo-Pacific Fish Conference" vs "Indo-Pacific Fish
+        # Conference (IPFC)". Keying on the name alone silently found no anchors
+        # for IPFC and left its rows on the publication year, and GCFI only
+        # worked because its two strings happen to be identical. This is the
+        # same mismatch the EXTRA_COLUMNS comment above already warns about.
+        meta_by_series = {}
+        for m in CONFERENCE_META:
+            meta_by_series[m["series"]] = m
+            if m.get("lead_key"):
+                meta_by_series[m["lead_key"]] = m
+        deducible = _deducible_series(rows, meta_by_series)
         out = defaultdict(lambda: defaultdict(int))
-        for row in L.collect():
-            if not row["series"] or not row["outstanding"]:
+        pub = defaultdict(lambda: defaultdict(set))   # published-year(s) per cell
+        venues = defaultdict(lambda: defaultdict(set))
+        for row in rows:
+            y = row["venue_year"]
+            if not y and row["series"] in deducible:
+                n = _ordinal_of(row["venue"] or "")
+                if n:
+                    y0, freq = deducible[row["series"]]
+                    y = y0 + (n - 1) * freq
+            y = y or row["year"]
+            if not y:
                 continue
-            y = row["venue_year"] or row["year"]
-            if y:
-                out[row["series"]][int(y)] += 1
-        return out
+            y = int(y)
+            out[row["series"]][y] += 1
+            if row["year"] and int(row["year"]) != y:
+                pub[row["series"]][y].add(int(row["year"]))
+            venues[row["series"]][y].add(_meeting_key(row["venue"] or ""))
+        return out, pub, venues
     except Exception as e:                                    # noqa: BLE001
         print(f"  extra-series year counts unavailable ({type(e).__name__}: {e})")
-        return None
+        return None, None, None
 
 
-def _extra_cell(lead_key, code, year, counts, db_years):
-    """(text, status) for one extra-series cell, or (None, None) to leave blank."""
+# Host city per (column code, year) for the series in columns G:X, which had no
+# locations at all while B:F did. Keyed by MEETING year, matching those columns.
+#
+# Provenance matters more than coverage here, so each entry says where it came
+# from and an unverified year stays "?" rather than being guessed:
+#   [cite]  the corpus's own findspot string names the venue — the strongest
+#           source available, since it is what the record itself asserts
+#   [book]  read off the title/front matter of an abstract book we hold
+#   [web]   an external source, named in the comment
+#   "?"     looked for and not established (the same convention column B uses)
+_EXTRA_LOCATIONS = {
+    # [cite] "Proceedings of the First Pacific Shark Workshop, December 13-15,
+    # 2011 Vancouver, Canada"
+    ("Pac Shark Wksp", 2011): "Vancouver, Canada",
+    # [cite] "World Congress of Herpetology, Vancouver, Canada, August 8-14, 2012"
+    ("WCH", 2012): "Vancouver, Canada",
+    # [web] worldcongressofherpetology.org past congresses: WCH3, Prague,
+    # 2-10 August 1997. Our own citation ("Third World Congress of
+    # Herpetology: 1-6") names no venue.
+    ("WCH", 1997): "Prague, Czech Republic",
+    # [cite] "12th International Coral Reef Symposium, 9-13 July 2012, Cairns,
+    # Queensland, Australia"
+    ("ICRS", 2012): "Cairns, Queensland, Australia",
+    # [cite] "6th World Fisheries Congress ... 7th-11th May 2012, Edinburgh,
+    # Scotland"
+    ("WFC", 2012): "Edinburgh, Scotland",
+    # [cite] "American Fisheries Society, 141st Meeting, 4-9 September 2011,
+    # Seattle, WA."
+    ("AFS", 2011): "Seattle, WA",
+    # [cite] "International Congress on the Biology of Fish, Manaus, Brazil"
+    ("ICBF", 2004): "Manaus, Brazil",
+    # [cite] "Fourth International Meeting On Mesozoic Fishes ... Miraflores De
+    # La Sierra, Madrid, Spain August 8th-14th, 2005"
+    ("Mesozoic Fishes", 2005): "Miraflores de la Sierra, Madrid, Spain",
+    # [cite] "6th International Meeting on Mesozoic Fishes ... Vienna, Austria
+    # August 4th-10th, 2013"
+    ("Mesozoic Fishes", 2013): "Vienna, Austria",
+    # [cite] "8. Meeting on Mesozoic Fishes and Aquatic Tetrapods 10.-14. July
+    # 2023, Stuttgart"
+    ("Mesozoic Fishes", 2023): "Stuttgart, Germany",
+    # [cite] "37th Annual Albert L. Tester Memorial Symposium, March 14-16,
+    # 2012, University of Hawaii at Manoa"
+    ("Tester Symp", 2012): "Honolulu, HI (U. Hawai'i at Manoa)",
+    # [book] title page: "23 al 27 de agosto de 2004, Ciudad Universitaria,
+    # Mexico" (2004_SOMEPEC_AbstractBook.pdf)
+    ("SOMEPEC", 2004): "Ciudad Universitaria, Mexico City",
+    # [book] front matter names Facultad de Ciencias, UNAM
+    ("SOMEPEC", 2008): "Ciudad Universitaria, Mexico City",
+    # [book] front matter names Ciudad Universitaria
+    ("SOMEPEC", 2010): "Ciudad Universitaria, Mexico City",
+    # [book] "18 al 22 de abril de 2016, Puerto Vallarta, Jal." — host
+    # institution Centro Universitario de la Costa, U. de Guadalajara
+    ("SOMEPEC", 2016): "Puerto Vallarta, Jalisco, Mexico",
+    # [book] "06 al 10 de septiembre de 2021 ... Acuario Michin Puebla, BUAP"
+    ("SOMEPEC", 2021): "Puebla, Mexico",
+    # [book] running footer "Ensenada, Baja California, Mexico, Octubre 2025"
+    ("SOMEPEC", 2025): "Ensenada, Baja California, Mexico",
+    # [web] CONAPESCA: VI Simposium, Mazatlan, Sinaloa, 7-12 April 2014,
+    # alongside the AFS international meeting. We hold no 2014 book.
+    ("SOMEPEC", 2014): "Mazatlan, Sinaloa, Mexico",
+    # [web] the 2011 Dakar colloquium, per the series notes already held on the
+    # Conferences tab (CSRP, Dakar).
+    ("W Africa", 2011): "Dakar, Senegal",
+    # [web] GCFI 55, 11-15 November 2002, Xel Ha, Mexico.
+    ("GCFI", 2002): "Xel Ha, Mexico",
+    # [cite] the running footer of the volume's own papers: "Proceedings of the
+    # 60th Gulf and Caribbean Fisheries Institute November 5 - 9, 2007 Punta
+    # Cana, Dominican Republic"
+    ("GCFI", 2007): "Punta Cana, Dominican Republic",
+    # [cite] running footer, 78 occurrences: "November 2 - 6, 2009 Cumana,
+    # Venezuela"
+    ("GCFI", 2009): "Cumana, Venezuela",
+    # v55/v57/v59 print a footer WITHOUT the city, and the external pages that
+    # would have it (NOAA repository, IISD) return 403 to an automated fetch.
+    ("GCFI", 1951): "?",
+    ("GCFI", 2004): "?",
+    ("GCFI", 2006): "?",
+    # --- looked for, NOT established. Left explicit so the gap is visible. ---
+    # Our citation says "Abstracts. University of Milan, Italy", which is the
+    # publisher; secondary sources place the meeting at Serpiano, Switzerland.
+    # Two sources disagree, so neither is asserted.
+    ("Mesozoic Fishes", 2001): "?",
+    # Citation names Universidad Autonoma del Estado de Hidalgo (Pachuca);
+    # secondary sources say Saltillo, Coahuila. Unresolved.
+    ("Mesozoic Fishes", 2010): "?",
+    # "American Fisheries Society Symposium, 50" / "76" are BOOK volumes in a
+    # series, not meetings, so a host city may not exist for these rows.
+    ("AFS", 2007): "?",
+    ("AFS", 2012): "?",
+    ("AFS", 2014): "?",
+    ("SBEEL", 2002): "?",
+    ("ISC Shark WG", 2013): "?",
+    ("Age Det Wksp", 1983): "?",
+    ("ECC", 2014): "?",
+    # [web] IPFC2, Tokyo 1985 — our 37 rows cite "the second Indo-Pacific Fish
+    # Conference" and carry its 1986 proceedings year, not the meeting year.
+    ("IPFC", 1985): "Tokyo, Japan",
+    # [cite] "Proceedings of the 4th Indo-Pacific Fish Conference, Bankok"
+    ("IPFC", 1993): "Bangkok, Thailand",
+    # [cite] "Proceedings of the 5th Indo-Pacific Fish conference, Noumea -
+    # New Caledonia, 3-8 November 1997"
+    ("IPFC", 1997): "Noumea, New Caledonia",
+    # [cite] the 2009 book's own running header: "8th Indo Pacific Fish
+    # Conference & 2009 ASFB Workshop, 31 May - 5 June 2009, Fremantle,
+    # Western Australia" — which also anchors the ordinal formula (1981+7*4).
+    ("IPFC", 2009): "Fremantle, WA, Australia",
+    ("IPFC", 2023): "Auckland, New Zealand",
+    ("ICVM", 2019): "?",
+    ("CIESM", 2010): "?",
+}
+
+
+def _extra_cell(lead_key, code, year, counts, db_years, short=None,
+                pub=None, venues=None):
+    """(text, status) for one extra-series cell, or (None, None) to leave blank.
+
+    The text is prefixed with the host city, in the same "City; Status" shape
+    columns B:F use, so the whole tab reads one way.
+    """
+    # Default to "?" rather than "": an empty prefix reads as "no location
+    # applies", when what it means is "nobody has established one".
+    multi = len(((venues or {}).get(lead_key, {}).get(year)) or ()) > 1
+    loc = "" if multi else _EXTRA_LOCATIONS.get((short, year), "?")
+    pre = f"{loc}; " if loc else ""
     held = db_years.get(code or "", {}).get(year) if code else None
     if held:
-        return f"Ingested — {held} abstracts", "Ingested"
+        return f"{pre}Ingested — {held} abstracts", "Ingested"
     book = sorted((CONFERENCES / str(year)).glob(f"{year}_{code}_*.pdf")) \
         if code and (CONFERENCES / str(year)).is_dir() else []
     if book:
-        return (f"Digital — {len(book)} PDF held — extraction pending", "Digital")
+        return (f"{pre}Digital — {len(book)} PDF held — extraction pending", "Digital")
     n = (counts or {}).get(lead_key, {}).get(year)
     if n:
-        return (f"Missing — {n} abstract{'s' if n != 1 else ''} cited by the corpus",
-                "Missing")
+        return (f"{pre}Missing — {n} abstract{'s' if n != 1 else ''} cited by the corpus"
+                + _year_note(lead_key, year, pub, venues), "Missing")
     return None, None
+
+
+def _year_note(lead_key, year, pub, venues):
+    """' [Published YYYY]' where the proceedings appeared in a different year,
+    and a meeting count where the column is an assorted bucket.
+
+    The row is keyed on the MEETING, because the meeting is the thing being
+    chased; the publication year is the detail hung off it. Columns that lump
+    unrelated meetings together (Palaeo/geol) get a count instead of a place,
+    since one location cannot describe seven different conferences.
+    """
+    bits = []
+    vs = (venues or {}).get(lead_key, {}).get(year) or set()
+    if len(vs) > 1:
+        bits.append(f"{len(vs)} distinct meetings")
+    ys = sorted((pub or {}).get(lead_key, {}).get(year) or set())
+    if ys:
+        bits.append("Published " + ", ".join(str(y) for y in ys))
+    return f" [{'; '.join(bits)}]" if bits else ""
 
 
 def db_meeting_status():
@@ -830,7 +1131,7 @@ def build():
         head = f"{loc}; {st}" if loc else st
         return head + (f" — {note}" if note else "")
 
-    extra_counts = _lead_year_counts()
+    extra_counts, extra_pub, extra_venues = _lead_year_counts()
     extra_db = defaultdict(dict)
     _con = sqlite3.connect(str(DB))
     for _m, _y, _n in _con.execute(
@@ -902,7 +1203,9 @@ def build():
             put(r, 6, "", "NA")
         # ---- the other series, one column each ----
         for i, (series, _short, code, lead_key) in enumerate(EXTRA_COLUMNS):
-            text, status = _extra_cell(lead_key, code, year, extra_counts, extra_db)
+            text, status = _extra_cell(lead_key, code, year, extra_counts,
+                                       extra_db, short=_short,
+                                       pub=extra_pub, venues=extra_venues)
             if text:
                 put(r, 7 + i, text, status)
                 track(series, status)
