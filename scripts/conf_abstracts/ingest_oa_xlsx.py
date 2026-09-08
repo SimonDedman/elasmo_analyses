@@ -6,9 +6,10 @@ officer can export every submitted abstract as a spreadsheet. David M. Green
 This is the cleanest source we have for any JMIH year: born-digital title,
 author list, presenter flag, full body, four keywords, presentation type,
 society membership, career stage, and (2022 on) a subject category. The columns
-vary by year - 2022 drops "Job Status" and adds "Categories" - so every field
-beyond title/authors/abstract is optional and resolved from the header row.
-What it does NOT carry is affiliations, the
+vary by year - 2022 drops "Job Status" and adds "Categories", and 2025 renames
+most of them again, drops the keywords, and adds a taxonomic group and a common
+name - so every field beyond title/authors/abstract is optional and resolved
+from the header row. What it does NOT carry is affiliations, the
 session name, or the day/time - and it reflects SUBMISSIONS, so cancellations
 are still in and last-minute changes are not.
 
@@ -48,7 +49,12 @@ _HEADERS = {
     "membership": "membership",
     "herpetology or ichthyology": "discipline",
     "presentation": "presentation",
+    "type of presentation": "presentation",
     "categories": "subject_category",
+    "presentation subject": "subject_category",
+    "membership:": "membership",
+    "taxonomic information": "taxon_group",
+    "common name": "common_name",
 }
 _KEYWORD_RE = re.compile(r"^keyword\s*\d+$", re.I)
 
@@ -75,24 +81,59 @@ def _s(v):
     """Cell text, with the export's placeholders for 'unset' read as empty."""
     if v is None:
         return ""
-    t = str(v).strip()
+    # 2025 submitters pasted from Word, so 26 titles and 250 bodies carry
+    # non-breaking spaces. Left in, they defeat any plain-space comparison
+    # against a programme book; other whitespace is untouched so bodies keep
+    # their paragraphs.
+    t = str(v).replace("\xa0", " ").strip()
     return "" if t.lower() in _BLANK else t
 
 
+def _type_of(text):
+    low = (text or "").lower()
+    return next((t for n, t in _TYPE_RULES if n in low), None)
+
+
 def _presentation_type(text):
-    low = text.lower()
-    for needle, ptype in _TYPE_RULES:
-        if needle in low:
-            return ptype
-    return "talk"
+    """From 2025 the field is 'Category: choice', and the category can be a MENU.
+
+    'Contributed Oral, Lightning or Poster Presentation: Regular Oral
+    Presentation (15 min)' names three formats before it names the one that was
+    chosen, so reading the whole string in rule order calls all 379 contributed
+    presentations lightning talks. When the part before the colon offers more
+    than one format it is a menu and the answer is after the colon; when it
+    offers one ('Student Competition Poster') that IS the answer, and the tail
+    is the award. Pre-2025 exports have no colon and are read as before.
+    """
+    head, _, tail = (text or "").partition(":")
+    if tail.strip() and len({t for n, t in _TYPE_RULES if n in head.lower()}) > 1:
+        return _type_of(tail) or _type_of(head) or "talk"
+    return _type_of(head) or _type_of(tail) or "talk"
+
+
+def _tail(text):
+    """The specific choice after the 2025 'Category: choice' prefix, if any."""
+    head, sep, tail = (text or "").partition(":")
+    return tail.strip() if sep and tail.strip() else ""
 
 
 def _award(text):
-    """The competition name, if this is a student competition entry."""
-    if "competition" in text.lower():
-        return re.sub(r"\s*\((?:all are )?virtual\)|\s+(?:IN-PERSON|VIRTUAL)\s*$",
-                      "", text).strip()
-    return None
+    """The competition name, if this is a student competition entry.
+
+    2021/2022 name only the competition class ('Student Oral Competition');
+    2025 names the actual award after the colon ('Student Competition Poster:
+    AES Carrier Award'), which is the more useful half."""
+    if "competition" not in (text or "").lower():
+        return None
+    return _tail(text) or re.sub(
+        r"\s*\((?:all are )?virtual\)|\s+(?:IN-PERSON|VIRTUAL)\s*$", "", text).strip()
+
+
+def _session(text):
+    """2025 names the symposium or plenary after the colon; that is a session,
+    and the programme book is the only other place it is recorded."""
+    low = (text or "").lower()
+    return _tail(text) or None if ("symposium" in low or "plenary" in low) else None
 
 
 # A fragment that is nothing but initials ("G. B.", "T. M.", "V.") is the tail
@@ -143,13 +184,47 @@ def _split_authors(raw, presenter):
     return out
 
 
+# Fields the export carries that the abstracts table has no column for. Held
+# apart from the record dict because they are written in a second statement.
+_EXTRA_COLS = ("discipline", "presenter_career_stage", "subject_category",
+               "taxon_group", "common_name")
+
+
 def ensure_columns(con):
     """Fields the Oxford Abstracts export carries that no PDF book does."""
     have = {r[1] for r in con.execute("PRAGMA table_info(abstracts)")}
-    for col in ("discipline", "presenter_career_stage", "subject_category"):
+    for col in _EXTRA_COLS:
         if col not in have:
             con.execute(f"ALTER TABLE abstracts ADD COLUMN {col} TEXT")
     con.commit()
+
+
+def _elasmo(title, body, taxon, common):
+    """2025 asks the submitter which taxon they work on, and one of the choices
+    is 'Ichthyofauna: Chondrichthyan fishes (AES)'. That is the author's own
+    answer, so it beats reading the prose - but it does not replace the
+    lexicon, because a talk filed under 'Ichthyofauna in general' can still be
+    about sharks. Either one is enough; the basis records which said so."""
+    if "chondrichthyan" in (taxon or "").lower():
+        return True, "taxon_group"
+    if lexicon.is_elasmo_text(title, body) or lexicon.is_elasmo_text(common, ""):
+        return True, "content"
+    return False, "content"
+
+
+_SOC_RE = re.compile(r"\b(" + "|".join(sorted(C.SOCIETIES)) + r")\b")
+
+
+def _society(rec):
+    """Whose part of the meeting this was, from the most specific field that
+    names exactly one society: the award competed for, then the symposium, then
+    the taxon group ('... (AES)'), and only then the submitter's membership."""
+    for field, basis in (("award", "award"), ("session_name", "symposium"),
+                         ("taxon_group", "taxon_group")):
+        found = set(_SOC_RE.findall(rec.get(field) or ""))
+        if len(found) == 1:
+            return found.pop(), basis
+    return _society_from_membership(rec.get("societies_explicit"))
 
 
 def read_export(xlsx_path):
@@ -180,13 +255,16 @@ def read_export(xlsx_path):
         presentation = _s(r[idx["presentation"]]) if "presentation" in idx else ""
         membership = _s(r[idx["membership"]]) if "membership" in idx else ""
         kws = [_s(r[i]) for i in kw_cols if _s(r[i])]
+        taxon = _s(r[idx["taxon_group"]]) if "taxon_group" in idx else ""
+        common = _s(r[idx["common_name"]]) if "common_name" in idx else ""
+        elasmo, basis = _elasmo(title, body, taxon, common)
         out.append(dict(
             title=title,
             abstract_text=body or None,
             keywords="; ".join(kws) or None,
             presentation_type=_presentation_type(presentation),
             award=_award(presentation),
-            session_name=None,
+            session_name=_session(presentation),
             session_datetime=None,
             program_number=None,
             location=None,
@@ -196,10 +274,12 @@ def read_export(xlsx_path):
                                     if "career_stage" in idx else None),
             subject_category=(_s(r[idx["subject_category"]]) or None
                               if "subject_category" in idx else None),
+            taxon_group=taxon or None,
+            common_name=common or None,
             authors=_split_authors(_s(r[idx["authors"]]),
                                    _s(r[idx["presenter"]]) if "presenter" in idx else ""),
-            is_elasmo=int(lexicon.is_elasmo_text(title, body)),
-            elasmo_basis="content",
+            is_elasmo=int(elasmo),
+            elasmo_basis=basis,
             confidence=1.0,
             needs_review=0,
             source_page=None,
@@ -246,15 +326,15 @@ def ingest(con, xlsx_path, meta, dry_run=False):
     mid = load.upsert_meeting(con, meta)
     n = 0
     for rec in records:
-        society, basis = _society_from_membership(rec["societies_explicit"])
+        society, basis = _society(rec)
         rec = dict(rec, society=society, society_basis=basis, society_inferred=None)
-        extras = (rec.pop("discipline"), rec.pop("presenter_career_stage"),
-                  rec.pop("subject_category"))
+        extras = [rec.pop(c, None) for c in _EXTRA_COLS]
         aid = load.insert_abstract(con, mid, rec)
         if aid is None:
             continue
-        con.execute("UPDATE abstracts SET discipline=?, presenter_career_stage=?, "
-                    "subject_category=? WHERE abstract_id=?", (*extras, aid))
+        con.execute("UPDATE abstracts SET "
+                    + ", ".join(f"{c}=?" for c in _EXTRA_COLS)
+                    + " WHERE abstract_id=?", (*extras, aid))
         n += 1
     con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
     con.commit()
