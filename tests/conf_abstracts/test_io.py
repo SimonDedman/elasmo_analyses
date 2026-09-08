@@ -286,3 +286,32 @@ def test_layout_reads_2023_posters_by_their_id():
                for b in posters)
     aes = [b for b in posters if b["session_name"] == "AES Carrier Award"]
     assert aes, sorted({b["session_name"] for b in posters})[:10]
+
+
+_PROGRAM_BOOK_2022 = _PROGRAM_BOOK_2025.replace("2025", "2022")
+
+
+def test_layout_opens_markerless_posters_on_leading_only():
+    """The 2022 poster listing prints no marker at all - no time, no id, just
+    the authors beside the title - so the only separator is the extra leading
+    between entries. That signal is weak, so it applies inside a poster section
+    and nowhere else; the guard is that the marked books are unaffected."""
+    blocks = _layout(_PROGRAM_BOOK_2022)
+    if blocks is None:
+        return
+    posters = [b for b in blocks if b["presentation_type"] == "poster"]
+    assert len(posters) > 150, len(posters)
+    assert all(b["author_raw"] and b["session_datetime"] for b in posters)
+    # the author index sets page numbers with dot leaders, and inside the poster
+    # section those lines straddle both columns exactly like a poster does
+    assert not [b for b in blocks
+                if ". . ." in b["title"] or ". . ." in b["author_raw"]]
+
+
+def test_leading_rule_leaves_the_marked_books_alone():
+    """Applied to any two-column page the leading rule over-generates badly:
+    JMIH 2025 went from 544 blocks to 668 before it was confined."""
+    for path, expected in ((_PROGRAM_BOOK_2025, 544), (_PROGRAM_BOOK_2023, 620)):
+        blocks = _layout(path)
+        if blocks is not None:
+            assert len(blocks) == expected, f"{path}: {len(blocks)} != {expected}"

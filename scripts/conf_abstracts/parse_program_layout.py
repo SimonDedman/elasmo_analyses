@@ -50,6 +50,24 @@ _BANNER = re.compile(
 _ROOMLINE = re.compile(r"^\d{1,2}:\d{2}\s*(AM|PM)?\s*[–—-]", re.I)
 _MOD = re.compile(r"^Moderators?\s*:", re.I)
 _GLANCE = re.compile(r"^Schedule[- ]at[- ]a[- ]Glance", re.I)
+# The 2022 poster listing prints no marker at all - no time, no poster id, just
+# the author list beside the title - so the only thing separating one poster
+# from the next is the leading it gets: ~15pt between entries against ~10.5pt
+# inside one. That is a weak signal, so it is used ONLY inside a poster section
+# (a "<day> - Poster Presentations" banner is in force). Applied to any
+# two-column page it over-generates badly: JMIH 2025 went 544 blocks to 668.
+_ENTRY_LEAD = 1.25
+_MIN_LEAD_GAPS = 6
+# A leading-opened entry has no marker vouching for it, so it has to look like a
+# talk before it is kept. The 2021 poster section has a floor-plan page inside
+# it whose scattered room labels ("105 A T E E T", "O E S T R E ET") otherwise
+# come through as abstracts.
+_WORDY = re.compile(r"[a-z]{4}")
+_WORD = re.compile(r"[A-Za-z]{2,}")
+# The author index sets its page numbers with dot leaders, and inside the poster
+# section those lines straddle both columns exactly like a poster does. Counting
+# the dots as words let "Baldwin, Carole . . . . . ." through as a title.
+_LEADERS = re.compile(r"\.\s*\.\s*\.\s*\.")
 # Poster blocks are headed by a bold category line ("AES Posters", "ASIH Storer
 # Herpetology") instead of a numbered "Session N:" line. Without it every poster
 # lands with a null session and no society, which for the AES poster block is
@@ -102,10 +120,33 @@ def _lines(words):
     return [sorted(v, key=lambda w: w["x0"]) for _, v in out]
 
 
-def _has_entries(lines, boundary):
-    """Does this page hold entries at all, numbered or timed?"""
-    return any(_entry_tokens(ln) or (ln[0]["x0"] < boundary and _opens_entry(ln[0]))
-               for ln in lines)
+def _has_entries(lines, boundary, marker_less=False):
+    """Does this page hold entries at all, numbered or timed?
+
+    `marker_less` is set only inside a poster section, where an entry can open
+    with nothing but a line that straddles the two columns.
+    """
+    if any(_entry_tokens(ln) or (ln[0]["x0"] < boundary and _opens_entry(ln[0]))
+           for ln in lines):
+        return True
+    return marker_less and _straddles(lines, boundary) >= 4
+
+
+def _straddles(lines, boundary):
+    return sum(1 for ln in lines if ln[0]["x0"] < boundary
+               and any(w["x0"] >= boundary for w in ln))
+
+
+def _lead_threshold(lines):
+    """The leading that separates two entries on a marker-less poster page, or
+    None when the page's lines are too uniform to tell entries apart."""
+    gaps = sorted(round(b[0]["top"] - a[0]["top"], 1)
+                  for a, b in zip(lines, lines[1:])
+                  if 4 < b[0]["top"] - a[0]["top"] < 40)
+    if len(gaps) < _MIN_LEAD_GAPS:
+        return None
+    inner = gaps[len(gaps) // 4]          # the common within-entry step
+    return inner * _ENTRY_LEAD if gaps[-1] > inner * _ENTRY_LEAD else None
 
 
 def _entry_tokens(line):
@@ -181,6 +222,10 @@ def parse_program_layout(pdf_path):
                 or any(_MOD.match(_text_of(ln)) for ln in lines) \
                 or any(_POSTER_ID.match(ln[0]["text"]) for ln in lines)
             seen_listing = seen_listing or has_banner
+            # Only a poster section may open entries on leading alone.
+            in_posters = ptype == "poster" or any(
+                _BANNER.match(_text_of(ln)) and "poster" in _text_of(ln).lower()
+                for ln in lines[:6])
             xs = [w["x0"] for ln in lines for _, w in _entry_tokens(ln)]
             numbered = bool(xs)
             if xs:
@@ -194,7 +239,7 @@ def parse_program_layout(pdf_path):
                 edge = starts.most_common(1)[0] if starts else None
                 boundary = ((edge[0] if edge[1] >= 3 else (doc_edge or edge[0])) - 4
                             if edge else (doc_edge - 4 if doc_edge else None))
-            if boundary is None or not _has_entries(lines, boundary):
+            if boundary is None or not _has_entries(lines, boundary, in_posters):
                 for ln in lines:
                     day, session, society, ptype = _headers(
                         _text_of(ln), day, session, society, ptype)
@@ -202,10 +247,17 @@ def parse_program_layout(pdf_path):
 
             # Walk the page once, opening a new entry at each number and
             # appending everything that follows to whichever entry is open.
+            # A marker-less poster page: entries are separated by extra leading.
+            gap_open = None
+            if in_posters and not numbered and listing and not any(
+                    ln[0]["x0"] < boundary and _opens_entry(ln[0])
+                    and not _ROOMLINE.match(_text_of(ln)) for ln in lines):
+                gap_open = _lead_threshold(lines)
             cur = None
             last_top = None
             for ln in lines:
-                if last_top is not None and ln[0]["top"] - last_top > _MAX_GAP:
+                last_gap = None if last_top is None else ln[0]["top"] - last_top
+                if last_gap is not None and last_gap > _MAX_GAP:
                     cur = None
                 last_top = ln[0]["top"]
                 if not (_BODY_TOP <= ln[0]["top"] <= _BODY_BOTTOM):
@@ -242,6 +294,16 @@ def parse_program_layout(pdf_path):
                     # in the same column and the title sits in the other.
                     opens = (not numbered and listing
                              and ln[0]["x0"] < boundary and _opens_entry(ln[0]))
+                    # Leading alone opens an entry, so every line that is not
+                    # one has to be excluded by name: the section banner spans
+                    # both columns and follows a big gap, and would otherwise be
+                    # read as the section's first poster.
+                    if not opens and gap_open is not None and last_gap is not None \
+                            and last_gap > gap_open and ln[0]["x0"] < boundary \
+                            and any(w["x0"] >= boundary for w in ln) \
+                            and not _BANNER.match(text) and not _DAY.match(text) \
+                            and not _MOD.match(text) and not _GLANCE.match(text):
+                        opens = True
                     if not opens:
                         pass
                     else:
@@ -250,6 +312,7 @@ def parse_program_layout(pdf_path):
                         pid = ln[0]["text"] if _POSTER_ID.match(ln[0]["text"]) else None
                         cur = dict(program_number=pid, _title=list(right),
                                    _authors=list(left),
+                                   _by_lead=not _opens_entry(ln[0]),
                                    presentation_type="poster" if pid else ptype,
                                    session_name=session,
                                    societies_explicit=[society] if society else [],
@@ -288,10 +351,23 @@ def parse_program_layout(pdf_path):
                                societies_explicit=[society] if society else [],
                                session_datetime=day)
                     blocks.append(cur)
+    out = []
     for b in blocks:
         b["title"] = _text_of(b.pop("_title"), join_wraps=True)
         b["author_raw"] = _text_of(b.pop("_authors"), join_wraps=True)
-    return blocks
+        if b.pop("_by_lead", False) and not _plausible(b):
+            continue
+        out.append(b)
+    return out
+
+
+def _plausible(block):
+    """Does a leading-opened entry read like a talk rather than page furniture?"""
+    title, authors = block["title"], block["author_raw"]
+    if _LEADERS.search(title) or _LEADERS.search(authors):
+        return False
+    return (len(_WORD.findall(title)) >= 4 and len(_WORDY.findall(title)) >= 2
+            and bool(_WORDY.search(authors)) and not _ROOMLINE.match(title))
 
 
 def _headers(text, day, session, society, ptype):
