@@ -1,17 +1,20 @@
 """Resolve society and elasmo flag for an abstract record."""
-from conf_abstracts.config import ELASMO_SOCIETIES, ELASMO_MEETINGS
+from conf_abstracts.config import ELASMO_SOCIETIES, ELASMO_MEETINGS, JOINT_MEETINGS
 
 
 def _first(seq):
     return seq[0] if seq else None
 
 
-def resolve(record: dict, meeting: str) -> dict:
+def resolve(record: dict, meeting: str, year=None) -> dict:
     """Populate society, society_basis, is_elasmo, elasmo_basis.
 
     Priority for society: explicit session prefix/award (societies_explicit)
     then LLM content inference (society_inferred).
-    is_elasmo: AES in societies OR meeting in {SI, EEA}.
+    is_elasmo: AES in societies OR meeting in {SI, EEA, OCS} - EXCEPT for the
+    years listed in JOINT_MEETINGS, where OCS met jointly with a general fish or
+    marine-science society and most of the book is teleost work. There the flag
+    has to come from the content, like any other mixed meeting.
     """
     explicit = record.get("societies_explicit") or []
     award = record.get("award")
@@ -30,7 +33,7 @@ def resolve(record: dict, meeting: str) -> dict:
     # elasmo determination + provenance
     is_elasmo = 0
     elasmo_basis = None
-    if meeting in ELASMO_MEETINGS:
+    if meeting in ELASMO_MEETINGS and (meeting, year) not in JOINT_MEETINGS:
         is_elasmo = 1
         elasmo_basis = "meeting"
     elif any(s in ELASMO_SOCIETIES for s in explicit):
