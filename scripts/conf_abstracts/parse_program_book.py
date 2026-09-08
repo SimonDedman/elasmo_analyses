@@ -362,3 +362,77 @@ def ingest_program_book(con, text, meeting_meta, pdf_path=None):
     con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
     con.commit()
     return n
+
+
+# ---------------------------------------------------------------------------
+# Schedule-only extraction, keyed on the programme number
+# ---------------------------------------------------------------------------
+# The 2026 programme book is a SCAN. Its OCR text layer mangles words ("‘Speaker:",
+# "rand Ballroom", "CaleZb. Mullins"), so its titles and author names are not worth
+# having - but the entry numbers, clock times and "Session N:" lines survive OCR
+# intact, and the abstract book carries the same numbers. So take the schedule by
+# number and read nothing else from the scan.
+_WHOVA_ENTRY = re.compile(r"^\s*(P?\d{1,3}[A-Za-z]?\.\d{1,3}[A-Za-z]?)\s*:")
+_WHOVA_DAY = re.compile(
+    r"^\s*(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+"
+    r"(\w+)\s+(\d{1,2}),?\s+(\d{4})\s*$", re.I)
+_WHOVA_SLOT = re.compile(
+    r"^\s*(\d{1,2}:\d{2}\s*[AP]M)\s*[-–—]\s*(\d{1,2}:\d{2}\s*[AP]M)\s*$", re.I)
+_WHOVA_LOC = re.compile(r"^\s*L?ocation\s*:?\s*(.+)$", re.I)
+# Session headers carry the SAME number as their entries ("Session 10:" heads
+# 10.1, 10.2 ...), so bind the two by number rather than by running order. The
+# OCR splits parallel sessions as "Session 59 A:", and prints the poster
+# sessions' "1" as "|". Order-based tracking put Simon's own 59A.13 talk in
+# "AES Sawfish Symposium 3".
+_WHOVA_SESSION = re.compile(r"^\s*Session\s+([0-9]{1,3}\s*[A-Za-z]?)\s*:\s*(.+)$", re.I)
+_WHOVA_POSTER_SESSION = re.compile(r"^\s*Poster\s+Session\s*([0-9|Il])", re.I)
+
+
+def schedule_by_number(text):
+    """{programme number: {session_datetime, location, session_name}}.
+
+    Reads only the fields OCR cannot damage. Everything else in the scan -
+    titles, speakers, room names spelled out - is ignored.
+    """
+    lines = text.splitlines()
+    sessions = {}
+    for raw in lines:
+        s = raw.strip()
+        sm = _WHOVA_SESSION.match(s)
+        if sm:
+            sessions.setdefault(sm.group(1).replace(" ", "").upper(),
+                                sm.group(2).strip().rstrip("|").strip())
+            continue
+        pm = _WHOVA_POSTER_SESSION.match(s)
+        if pm:
+            n = "1" if pm.group(1) in "|Il" else pm.group(1)
+            sessions.setdefault("P" + n, f"Poster Session {n}")
+    out, day = {}, None
+    for i, raw in enumerate(lines):
+        s = raw.strip()
+        dm = _WHOVA_DAY.match(s)
+        if dm:
+            day = f"{dm.group(1).title()} {int(dm.group(3))} {dm.group(2).title()} {dm.group(4)}"
+            continue
+        em = _WHOVA_ENTRY.match(s)
+        if not em:
+            continue
+        num = em.group(1)
+        slot = loc = None
+        for nxt in lines[i + 1:i + 8]:
+            t = nxt.strip()
+            if _WHOVA_ENTRY.match(t) or _SESSION.match(t) or _WHOVA_DAY.match(t):
+                break
+            if slot is None and _WHOVA_SLOT.match(t):
+                slot = _WHOVA_SLOT.match(t).group(1).upper().replace(" ", "")
+                continue
+            lm = _WHOVA_LOC.match(t)
+            if lm and loc is None and len(lm.group(1)) < 60:
+                loc = lm.group(1).strip(" .:")
+        if num in out:
+            continue                       # first listing wins
+        out[num] = dict(
+            session_datetime=" ".join(x for x in (day, slot) if x) or None,
+            location=loc,
+            session_name=sessions.get(num.split(".")[0].replace(" ", "").upper()))
+    return out
