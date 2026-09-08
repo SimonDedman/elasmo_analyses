@@ -73,6 +73,13 @@ A3_FILES = {
     "2005_JMIH_AbstractBook": ("JMIH", 2005),
 }
 
+# Born-digital JMIH abstract books exported straight from the submission system
+# ("presenting author / authors / <type> ** <keywords> / N.N: Title / [id] body").
+# The richest JMIH source there is, and no LLM needed. See parse_jmih_a5.py.
+A5_FILES = {
+    "2026_JMIH_AbstractBook": ("JMIH", 2026),
+}
+
 # Modern program/schedule books ("N.N | Title" format, no abstract bodies).
 # Only 2024/2025 use this cleanly; 2021-2023 and the older grid-matrix books
 # (2006-2019) use other layouts and are not yet handled.

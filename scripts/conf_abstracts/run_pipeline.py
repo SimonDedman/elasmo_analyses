@@ -106,6 +106,17 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a3_parser",
                         blocks=n, inserted=n, status="ok")
 
+    # A5-format born-digital abstract books (submission-system export).
+    for frag, (mtg, yr) in config.A5_FILES.items():
+        if frag in path.name:
+            from conf_abstracts import parse_jmih_a5
+            smeta = dict(meta)
+            smeta["meeting"], smeta["year"] = mtg, yr
+            smeta["source_pdf"] = str(path)
+            n = parse_jmih_a5.ingest_jmih_a5(con, qa_ocr.extract_text(path), smeta)
+            return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a5_parser",
+                        blocks=n, inserted=n, status="ok")
+
     # Modern program/schedule books (talks only, no abstract bodies).
     for frag, (mtg, yr) in config.PROGRAM_BOOK_FILES.items():
         if frag in path.name:
