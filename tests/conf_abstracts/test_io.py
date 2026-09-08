@@ -246,3 +246,43 @@ def test_layout_keeps_page_furniture_out_of_titles():
         # allowed to be authorless; ingest drops them anyway.
         assert b["author_raw"] or len(t) < 30, \
             f"{b['program_number']} lost its authors: {t!r}"
+
+
+_PROGRAM_BOOK_2021 = _PROGRAM_BOOK_2025.replace("2025", "2021")
+_PROGRAM_BOOK_2023 = _PROGRAM_BOOK_2025.replace("2025", "2023")
+
+
+def _layout(path):
+    from pathlib import Path
+    from conf_abstracts.parse_program_layout import parse_program_layout
+    return parse_program_layout(path) if Path(path).exists() else None
+
+
+def test_layout_reads_the_time_delimited_books_too():
+    """2021-2023 are the same two columns as 2024/2025 but print no entry
+    number, so the start time in the left column opens the entry. The 2021 book
+    also heads its sessions with a bare bold line ("Reptile Conservation and
+    Management I") rather than "Session N:", which is why the text parser found
+    no sessions at all and merge_schedule refused to carry any."""
+    blocks = _layout(_PROGRAM_BOOK_2021)
+    if blocks is None:
+        return
+    assert len(blocks) > 200, len(blocks)
+    sessions = {b["session_name"] for b in blocks if b["session_name"]}
+    assert len(sessions) > 20, sessions
+    assert all(b["session_datetime"] for b in blocks)
+    assert all(b["author_raw"] for b in blocks)
+
+
+def test_layout_reads_2023_posters_by_their_id():
+    """The 2023 poster half opens each entry with "P<session>-<n>" where an oral
+    entry carries a time."""
+    blocks = _layout(_PROGRAM_BOOK_2023)
+    if blocks is None:
+        return
+    posters = [b for b in blocks if b["presentation_type"] == "poster"]
+    assert len(posters) > 150, len(posters)
+    assert all(b["program_number"] and b["program_number"].startswith("P")
+               for b in posters)
+    aes = [b for b in posters if b["session_name"] == "AES Carrier Award"]
+    assert aes, sorted({b["session_name"] for b in posters})[:10]

@@ -35,14 +35,21 @@ _SOC_PREFIX = re.compile(r"\b(" + _SOC + r")\b")
 # before matching. A trailing letter marks a late addition ("P8.12a").
 _NUM = re.compile(r"^(P?\d{1,3}\.\d{1,3}[A-Za-z]?)$")
 _TIME = re.compile(r"^\d{1,2}:\d{2}$")
+# The 2021-2023 books are the same two columns as 2024/2025 but print no entry
+# number, so the start time in the left column is what opens an entry.
+_TIMED_ENTRY = re.compile(r"^\d{1,2}:\d{2}$")
+# The 2023 poster half opens each entry with a "P<session>-<n>" id where an oral
+# entry carries a start time.
+_POSTER_ID = re.compile(r"^P\d+-\d+[A-Za-z]?$")
 _MERIDIEM = re.compile(r"^(am|pm|AM|PM)$")
 _SESSION = re.compile(r"^\s*Session\s+\w+\s*:\s*(.+)$", re.I)
 _DAY = re.compile(r"^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b.*\d{4}$", re.I)
 _BANNER = re.compile(
-    r"^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(\d{1,2}\s+\w+)"
+    r"^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+(\d{1,2}\s+\w+)"
     r"\s*[•·*]\s*(.+)$", re.I)
 _ROOMLINE = re.compile(r"^\d{1,2}:\d{2}\s*(AM|PM)?\s*[–—-]", re.I)
 _MOD = re.compile(r"^Moderators?\s*:", re.I)
+_GLANCE = re.compile(r"^Schedule[- ]at[- ]a[- ]Glance", re.I)
 # Poster blocks are headed by a bold category line ("AES Posters", "ASIH Storer
 # Herpetology") instead of a numbered "Session N:" line. Without it every poster
 # lands with a null session and no society, which for the AES poster block is
@@ -95,6 +102,12 @@ def _lines(words):
     return [sorted(v, key=lambda w: w["x0"]) for _, v in out]
 
 
+def _has_entries(lines, boundary):
+    """Does this page hold entries at all, numbered or timed?"""
+    return any(_entry_tokens(ln) or (ln[0]["x0"] < boundary and _opens_entry(ln[0]))
+               for ln in lines)
+
+
 def _entry_tokens(line):
     """The 'N.N' words on this line that are actually entry numbers, i.e. the
     next word is the '|' separator. A bare 'P1.4' inside a title is not one."""
@@ -117,11 +130,17 @@ _BREAK = {"text": _LINEBREAK, "x0": -1.0, "top": -1.0}
 
 
 def _strip_time(words):
-    """Drop the leading start-time tokens ('9:00', 'am') from an author run."""
+    """Drop the leading entry marker - a start time ('9:00', 'am') or a poster
+    id - from an author run."""
     out = list(words)
-    while out and (_TIME.match(out[0]["text"]) or _MERIDIEM.match(out[0]["text"])):
+    while out and (_TIME.match(out[0]["text"]) or _MERIDIEM.match(out[0]["text"])
+                   or _POSTER_ID.match(out[0]["text"])):
         out.pop(0)
     return out
+
+
+def _opens_entry(word):
+    return bool(_TIMED_ENTRY.match(word["text"]) or _POSTER_ID.match(word["text"]))
 
 
 def parse_program_layout(pdf_path):
@@ -129,21 +148,57 @@ def parse_program_layout(pdf_path):
     day = session = society = None
     ptype = "talk"
     with pdfplumber.open(str(pdf_path)) as pdf:
-        for page in pdf.pages:
-            words = page.extract_words(extra_attrs=["fontname", "size"])
-            if not words:
+        pages = [(pg, _lines(pg.extract_words(extra_attrs=["fontname", "size"])))
+                 for pg in pdf.pages]
+        # A page whose entries all run both columns onto one line shows the
+        # title column's edge only once or twice, so fall back to the edge the
+        # document as a whole uses.
+        doc_starts = collections.Counter(
+            round(ln[0]["x0"]) for _, lns in pages for ln in lns if ln[0]["x0"] >= 200)
+        doc_edge = doc_starts.most_common(1)[0][0] if doc_starts else None
+        seen_listing = False
+        for page, lines in pages:
+            if not lines:
                 continue
-            lines = _lines(words)
             # The entry numbers sit at the left edge of the title column, so
             # their own x0 defines the column boundary for this page. Pages
             # with no entries carry only headers.
+            # The Schedule-at-a-Glance pages are a different table entirely -
+            # event name, time, room - and their times would open bogus entries.
+            if any(_GLANCE.match(_text_of(ln)) for ln in lines[:6]):
+                continue
+            # Social events and meetings are listed with times in the same left
+            # column as talks, so a time alone does not mean an entry. Every
+            # talk-listing page carries a moderator or a presentations banner;
+            # the events pages carry neither.
+            # A moderator, a "<day> - Poster Presentations" banner or a poster
+            # id marks a listing page. Continuation pages carry none of those,
+            # so once the daily listings have begun the rest of the book is
+            # listings: the special-events and at-a-glance tables, which also
+            # put times in the left column, are all front matter.
+            has_banner = any(_BANNER.match(_text_of(ln)) for ln in lines[:6])
+            listing = has_banner or seen_listing \
+                or any(_MOD.match(_text_of(ln)) for ln in lines) \
+                or any(_POSTER_ID.match(ln[0]["text"]) for ln in lines)
+            seen_listing = seen_listing or has_banner
             xs = [w["x0"] for ln in lines for _, w in _entry_tokens(ln)]
-            if not xs:
+            numbered = bool(xs)
+            if xs:
+                boundary = min(xs) - 4
+            else:
+                # No entry numbers (2021-2023): the title column is the left
+                # edge that continuation lines start at, well right of the time
+                # (x~49) and author (x~94) columns.
+                starts = collections.Counter(
+                    round(ln[0]["x0"]) for ln in lines if ln[0]["x0"] >= 200)
+                edge = starts.most_common(1)[0] if starts else None
+                boundary = ((edge[0] if edge[1] >= 3 else (doc_edge or edge[0])) - 4
+                            if edge else (doc_edge - 4 if doc_edge else None))
+            if boundary is None or not _has_entries(lines, boundary):
                 for ln in lines:
                     day, session, society, ptype = _headers(
                         _text_of(ln), day, session, society, ptype)
                 continue
-            boundary = min(xs) - 4
 
             # Walk the page once, opening a new entry at each number and
             # appending everything that follows to whichever entry is open.
@@ -158,22 +213,49 @@ def parse_program_layout(pdf_path):
                 text = _text_of(ln)
                 toks = _entry_tokens(ln)
                 if not toks and _HEADING_FONT.search(ln[0]["fontname"]):
-                    # furniture: a session, a room banner, or a poster heading
-                    if ptype == "poster" and ln[0]["x0"] < boundary \
-                            and not _ROOMLINE.match(text) and not _DAY.match(text) \
-                            and not _SESSION.match(text) and not _BANNER.match(text) \
-                            and 2 <= len(text) <= 70:
-                        session = text
-                        m = _SOC_PREFIX.search(text)
+                    # Furniture: a room-and-time banner, a day, or a heading. Any
+                    # other bold line in the left column names the block that
+                    # follows - "Session 1: SSAR Seibert Ecology" in 2022/2023,
+                    # a bare "Reptile Conservation and Management I" in 2021
+                    # (which is why the text parser's heading detection found
+                    # nothing there), and "AES Posters" on a poster page.
+                    if ln[0]["x0"] < boundary and not _ROOMLINE.match(text) \
+                            and not _DAY.match(text) and not _BANNER.match(text) \
+                            and 2 <= len(text) <= 90:
+                        sm = _SESSION.match(text)
+                        session = sm.group(1).strip() if sm else text
+                        m = _SOC_PREFIX.search(session)
                         society = m.group(1) if m else None
                     else:
                         day, session, society, ptype = _headers(
                             text, day, session, society, ptype)
                     cur = None
                     continue
-                if not toks and _NOTE.match(text):
+                # A room-and-time banner opens with a time, so it would look
+                # like an entry; the day banner must still reach _headers, which
+                # is what sets the section's presentation type.
+                if not toks and (_NOTE.match(text) or _ROOMLINE.match(text)):
                     cur = None
                     continue
+                if not toks:
+                    # A timed entry: the start time opens it, the authors follow
+                    # in the same column and the title sits in the other.
+                    opens = (not numbered and listing
+                             and ln[0]["x0"] < boundary and _opens_entry(ln[0]))
+                    if not opens:
+                        pass
+                    else:
+                        left = _strip_time([w for w in ln if w["x0"] < boundary])
+                        right = [w for w in ln if w["x0"] >= boundary]
+                        pid = ln[0]["text"] if _POSTER_ID.match(ln[0]["text"]) else None
+                        cur = dict(program_number=pid, _title=list(right),
+                                   _authors=list(left),
+                                   presentation_type="poster" if pid else ptype,
+                                   session_name=session,
+                                   societies_explicit=[society] if society else [],
+                                   session_datetime=day)
+                        blocks.append(cur)
+                        continue
                 if not toks:
                     d2, s2, so2, pt2 = _headers(text, day, session, society, ptype)
                     if (d2, s2, pt2) != (day, session, ptype):
