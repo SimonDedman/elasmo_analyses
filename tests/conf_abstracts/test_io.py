@@ -362,3 +362,70 @@ def test_leading_rule_leaves_the_marked_books_alone():
         blocks = _layout(path)
         if blocks is not None:
             assert len(blocks) == expected, f"{path}: {len(blocks)} != {expected}"
+
+
+def test_ocs_numbered_blocks():
+    """The affiliation line fixes both boundaries, wrapped author lists are
+    walked back over in full, and the back-of-book author index does not become
+    the last abstract's body."""
+    from conf_abstracts import parse_ocs_numbered as P
+    text = "\n".join([
+        "                    1",
+        "Fish as proxies of ecological and environmental change",
+        "Bronwyn Gillanders1",
+        "1. University of Adelaide, Adelaide, SA, Australia",
+        "Aquatic ecosystems have shifted from prehistoric baseline states due to change.",
+        "                    2",
+        "Connecting the dots: The movements of reef manta rays and what they imply",
+        "Edy Setyawan1, Calvin Beale2, Mark Erdmann3, Andrew Fischer1, James Haddy1,",
+        "Sianipar6",
+        "1. University of Tasmania, Newnham, TAS, Australia",
+        "2. Misool Eco Resort, Sorong, Indonesia",
+        "Reef manta rays were tracked for three years around the Raja Ampat islands.",
+        "Gillanders, B     1",
+        "Setyawan, E       2",
+    ])
+    b = P.parse_ocs_numbered_blocks(text)
+    assert [x["program_number"] for x in b] == ["1", "2"]
+    assert b[0]["title"] == "Fish as proxies of ecological and environmental change"
+    assert b[0]["author_raw"] == "Bronwyn Gillanders1"
+    # the whole wrapped author list, not just the line above the affiliations
+    assert b[1]["author_raw"].startswith("Edy Setyawan1")
+    assert b[1]["author_raw"].endswith("Sianipar6")
+    assert "Sianipar" not in b[1]["title"]
+    assert "2. Misool" in b[1]["affiliation"]
+    assert "Gillanders, B" not in (b[1]["abstract_text"] or "")
+    assert P.qa_numbers(b, text)["n_missing"] == 0
+
+
+def test_ocs_numbered_no_affiliation():
+    """An author who gave no affiliation must not let a numbered list inside the
+    body act as the anchor and pull the whole header into the title."""
+    from conf_abstracts import parse_ocs_numbered as P
+    text = "\n".join([
+        "                    1",
+        "Prey density threshold and tidal influence on reef manta ray foraging",
+        "Asia O Armstrong",
+        "Large tropical and sub-tropical marine animals must meet their energetic "
+        "requirements in a largely oligotrophic environment, and they do so seasonally.",
+        "3. The critical prey density threshold that triggered feeding was 11.2 mg per m3.",
+    ])
+    b = P.parse_ocs_numbered_blocks(text)
+    assert len(b) == 1
+    assert b[0]["title"] == "Prey density threshold and tidal influence on reef manta ray foraging"
+    assert b[0]["author_raw"] == "Asia O Armstrong"
+    assert b[0]["abstract_text"].startswith("Large tropical")
+    assert b[0]["needs_review"] == 1
+
+
+def test_joint_meeting_elasmo_flag():
+    """OCS met jointly with ASFB/NZMSS in 2012, 2015, 2016 and 2019, so those
+    books are mostly teleost and the blanket meeting-level elasmo rule is wrong;
+    every other OCS year keeps it."""
+    from conf_abstracts import tag
+    teleost = dict(title="Size-at-settlement in the Southern Rock Lobster",
+                   abstract_text="Settlement is a key factor in the fishery.",
+                   societies_explicit=[], award=None, society_inferred=None)
+    assert tag.resolve(dict(teleost), "OCS", year=2016)["is_elasmo"] == 0
+    assert tag.resolve(dict(teleost), "OCS", year=2025)["is_elasmo"] == 1
+    assert tag.resolve(dict(teleost), "OCS")["is_elasmo"] == 1     # year unknown

@@ -207,6 +207,10 @@ def build(only=None):
             if any(frag in pdf.name for frag in C.SKIP_NAME_FRAGMENTS):
                 continue   # _phonescan books are ingested from outputs/a4_text
             key = _key(pdf)
+            if key in getattr(C, "FABLE_SKIP_KEYS", {}):
+                by_key.pop(key, None)
+                print(f"  SKIP {key}: {C.FABLE_SKIP_KEYS[key]}")
+                continue
             text = book_text(pdf, key)
             if len(text) < 1000:
                 # corrupt/image-only PDF (2024/2025 have broken catalogs; awaiting

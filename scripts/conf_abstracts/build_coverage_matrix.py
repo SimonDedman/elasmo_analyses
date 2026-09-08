@@ -131,6 +131,11 @@ JMIH_PROGRAMME = {
 }
 # OCS meetings we can evidence from public sources (read 2026-08-27); Brit
 # Finucci is confirming the full series and locations.
+# Mirrors config.JOINT_MEETINGS (this module is standalone by design): OCS years
+# that were joint meetings with ASFB or NZMSS, where most of the book is teleost
+# work and is_elasmo is decided per abstract rather than by the meeting.
+OCS_JOINT = {2012, 2015, 2016, 2019}
+
 OCS = {
     2012: ("Adelaide", "joint with ASFB; Brit Finucci confirming"),
     2018: ("North Stradbroke Is.", "Moreton Bay Research Station; Brit Finucci confirming"),
@@ -870,6 +875,25 @@ def db_meeting_status():
     return out
 
 
+def db_ocs_status():
+    """OCS is no longer all-Pending: 16 abstract books are held (Brit Finucci's
+    archive plus the two IPFC volumes) and they are at different stages, so the
+    column has to read the DB rather than assert a contact is still looking."""
+    con = sqlite3.connect(str(DB))
+    out = {}
+    for yr, loc, n, bodies in con.execute(
+        """select m.year, m.location, count(a.abstract_id) n,
+                  sum(case when length(a.abstract_text) > 50 then 1 else 0 end) bodies
+           from meetings m left join abstracts a on a.meeting_id=m.meeting_id
+           where m.meeting='OCS' group by m.meeting_id"""):
+        d = out.setdefault(yr, dict(n=0, bodies=0, loc=None))
+        d["n"] += n or 0
+        d["bodies"] += bodies or 0
+        d["loc"] = d["loc"] or loc
+    con.close()
+    return out
+
+
 def db_aes_web():
     """AES abstracts harvested from elasmo.org (meeting='AES'): year -> count."""
     con = sqlite3.connect(str(DB))
@@ -1131,6 +1155,7 @@ def build():
         head = f"{loc}; {st}" if loc else st
         return head + (f" — {note}" if note else "")
 
+    ocs_db = db_ocs_status()
     extra_counts, extra_pub, extra_venues = _lead_year_counts()
     extra_db = defaultdict(dict)
     _con = sqlite3.connect(str(DB))
@@ -1188,7 +1213,19 @@ def build():
         else:
             put(r, 4, "", "NA")
         # OCS (biennial ~2012+)
-        if year in OCS:
+        ocs_held = ocs_db.get(year)
+        if ocs_held and ocs_held["n"] > 1:
+            oloc = (OCS.get(year, (None, None))[0] or ocs_held["loc"] or "?")
+            note = f"{ocs_held['n']} abstracts, {ocs_held['bodies']} with bodies"
+            if year in OCS_JOINT:
+                note += "; joint meeting, elasmo flagged per abstract"
+            put(r, 5, txt(oloc, "Ingested", note), "Ingested"); track("OCS", "Ingested")
+        elif ocs_held:
+            oloc = (OCS.get(year, (None, None))[0] or ocs_held["loc"] or "?")
+            put(r, 5, txt(oloc, "Digital", "abstract book held, queued for extraction"),
+                "Digital")
+            track("OCS", "Digital")
+        elif year in OCS:
             oloc, onote = OCS[year]
             put(r, 5, txt(oloc, "Pending", onote), "Pending"); track("OCS", "Pending")
         elif year >= 2012 and year % 2 == 0:

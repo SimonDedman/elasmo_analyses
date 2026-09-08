@@ -15,6 +15,14 @@ UNDIGITISED = CARYLANNE / "Undigitised Programs"  # legacy inbox
 # Files the segmenter must not touch: phone-scan books are ingested from
 # outputs/a4_text/ by parse_jmih_a4; Copeia meeting summaries hold no abstracts.
 SKIP_NAME_FRAGMENTS = ("_phonescan", "CopeiaMeetingSummary")
+
+# Books a deterministic parser already covers, so conf_fable_prep must not queue
+# a Fable agent for them. Keyed by worklist key -> why. Unlike
+# SKIP_NAME_FRAGMENTS this does NOT stop run_pipeline parsing the PDF; it is
+# only about not paying for an LLM pass over a book that is already solved.
+FABLE_SKIP_KEYS = {
+    "OCS2016": "parse_ocs_numbered.py: 222/222 against the book's own numbering",
+}
 OCR_SCRATCH = Path("/media/simon/data/ocr_scratch")
 LOG = REPO / "logs" / "conf_abstracts.log"
 OUT = REPO / "outputs"
@@ -27,6 +35,14 @@ ELASMO_SOCIETIES = {"AES"}
 # meeting is tagged wholesale rather than per-session (added 2026-09-06 with
 # Brit's 18-book donation).
 ELASMO_MEETINGS = {"SI", "EEA", "OCS"}
+
+# OCS years that were JOINT meetings with a general fish or marine-science
+# society, where the book is mostly teleost work and the blanket
+# meeting-level elasmo rule would be wrong. Measured from the books
+# themselves: 2012 names ASFB 86 times, 2015 NZMSS 229, 2019 NZMSS 94, and
+# 2016 (Hobart, Sept 2016) never names OCS at all and opens on a fish-otolith
+# plenary. In these, is_elasmo comes from the lexicon, per abstract.
+JOINT_MEETINGS = {("OCS", 2012), ("OCS", 2015), ("OCS", 2016), ("OCS", 2019)}
 
 # Normalise society tokens seen in session lines.
 SOCIETY_ALIASES = {
@@ -78,6 +94,13 @@ A3_FILES = {
 # The richest JMIH source there is, and no LLM needed. See parse_jmih_a5.py.
 A5_FILES = {
     "2026_JMIH_AbstractBook": ("JMIH", 2026),
+}
+
+# Numbered born-digital OCS abstract books: a centred sequential number opens
+# each abstract, then title / authors / numbered affiliations / body. The
+# numbering is its own QA instrument. See parse_ocs_numbered.py.
+OCS_NUMBERED_FILES = {
+    "2016_OCS_AbstractBook": ("OCS", 2016),
 }
 
 # Modern program/schedule books ("N.N | Title" format, no abstract bodies).
