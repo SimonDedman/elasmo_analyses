@@ -66,6 +66,53 @@ def test_oa_xlsx_presentation_type():
     assert _award("Contributed 15-minute Oral Paper VIRTUAL") is None
 
 
+def test_oa_xlsx_2025_menu_prefix():
+    """2025 writes 'Category: choice', and one category is a MENU of three
+    formats. Read whole, 'Contributed Oral, Lightning or Poster Presentation:
+    Regular Oral Presentation' matches 'lightning' first and calls all 379
+    contributed presentations lightning talks."""
+    from conf_abstracts.ingest_oa_xlsx import _presentation_type, _award, _session
+    menu = "Contributed Oral, Lightning or Poster Presentation: "
+    assert _presentation_type(menu + "Regular Oral Presentation (15 min)") == "talk"
+    assert _presentation_type(menu + "Poster") == "poster"
+    assert _presentation_type(menu + "Lightning Talk (5 min)") == "lightning"
+    assert _presentation_type("Student Competition Poster: AES Carrier Award") == "poster"
+    assert _presentation_type(
+        "Student Competition Oral Presentation: AES Gruber Award") == "talk"
+    assert _presentation_type(
+        "Symposium Presentation (invited): Science in 3D (ASIH)") == "symposium"
+    assert _presentation_type(
+        "Plenary Presentation (invited): AES Plenary Address") == "plenary"
+    # The award is the name after the colon, not the class before it.
+    assert _award("Student Competition Poster: AES Carrier Award") == "AES Carrier Award"
+    assert _award(menu + "Poster") is None
+    assert _session("Symposium Presentation (invited): Science in 3D (ASIH)") \
+        == "Science in 3D (ASIH)"
+    assert _session(menu + "Poster") is None
+
+
+def test_oa_xlsx_2025_elasmo_and_society():
+    """The submitter's own taxon answer settles is_elasmo, and the award or
+    symposium says whose meeting section it was before membership does."""
+    from conf_abstracts.ingest_oa_xlsx import _elasmo, _society
+    assert _elasmo("Eggshells in Gekkota", "lizard eggs",
+                   "Ichthyofauna: Chondrichthyan fishes (AES)", "") == (True, "taxon_group")
+    assert _elasmo("Movement of tiger sharks", "shark telemetry",
+                   "Ichthyofauna: Ichthyofauna in general", "") == (True, "content")
+    assert _elasmo("Catfish phylogeny", "Mystus RADSeq",
+                   "Ichthyofauna: All other fishes (ASIH)", "Mystus catfish")[0] is False
+    assert _society(dict(award="AES Gruber Award", session_name=None,
+                         taxon_group="Ichthyofauna: All other fishes (ASIH)",
+                         societies_explicit="ASIH")) == ("AES", "award")
+    assert _society(dict(award=None, session_name=None,
+                         taxon_group="Ichthyofauna: Chondrichthyan fishes (AES)",
+                         societies_explicit="ASIH, SSAR")) == ("AES", "taxon_group")
+    assert _society(dict(award=None, session_name=None, taxon_group=None,
+                         societies_explicit="ASIH")) == ("ASIH", "membership")
+    assert _society(dict(award=None, session_name=None, taxon_group=None,
+                         societies_explicit="ASIH, SSAR")) == (None, None)
+
+
 def test_program_book_poster_sections():
     """The 2023 book splits each day into Oral / Poster / Symposia / Lightning /
     Plenary banners and lists posters under a 'P<session>-<n>' id where an oral
