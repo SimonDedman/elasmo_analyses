@@ -23,6 +23,22 @@ SKIP_NAME_FRAGMENTS = ("_phonescan", "CopeiaMeetingSummary")
 FABLE_SKIP_KEYS = {
     "OCS2016": "parse_ocs_numbered.py: 222/222 against the book's own numbering",
 }
+
+# General-ichthyology volumes where Fable reads only the elasmobranch pages.
+# The two IPFC books were 20 of the 47 queued OCS/IPFC chunks and are mostly
+# teleost (32% and 17.5% of their pages so much as name an elasmobranch), so
+# they are screened page-by-page first (prescan_elasmo_pages.py) and the pages
+# with no mention are never sent. before=0/after=1 keeps the page AFTER a hit,
+# which protects a body running over the page break; the page BEFORE is not
+# needed, because in both controls (OCS2016 n=66, JMIH2016 n=226) the mention
+# was always on the same page as the title. MEASURED recall at this setting:
+# 100% on both. The cost is real and must be stated wherever these are
+# reported: the teleost abstracts in these two volumes are NOT captured, so
+# they are "elasmo-targeted", never "Ingested".
+ELASMO_TARGETED_BOOKS = {
+    "IPFC2009": dict(before=0, after=1),
+    "IPFC2023": dict(before=0, after=1),
+}
 OCR_SCRATCH = Path("/media/simon/data/ocr_scratch")
 LOG = REPO / "logs" / "conf_abstracts.log"
 OUT = REPO / "outputs"

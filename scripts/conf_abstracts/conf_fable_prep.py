@@ -160,6 +160,20 @@ def book_text(pdf: Path, key: str) -> str:
     """Source text for one book. Multi-column scans (config.COLUMN_BOOKS) are
     sliced into column strips so the text reads in true order; every other book
     keeps plain `pdftotext -layout` so its existing Fable cache stays valid."""
+    targeted = getattr(C, "ELASMO_TARGETED_BOOKS", {}).get(key)
+    if targeted:
+        from conf_abstracts import prescan_elasmo_pages as pre
+        pages = pre.pages_of(pdf)
+        hits, keep = pre.screen(pages, **targeted)
+        text = pre.reduce_text(pages, keep)
+        print(f"  ELASMO-TARGETED {key}: {len(hits)} of {len(pages)} pages name an "
+              f"elasmobranch, {len(keep)} kept ({len(keep)/max(len(pages),1):.1%}), "
+              f"{sum(len(x) for x in pages)} -> {len(text)} chars")
+        return (f"[This is an ELASMO-TARGETED extract of {pdf.name}: only pages "
+                f"mentioning an elasmobranch (and the page after each) are "
+                f"included, {len(keep)} of {len(pages)}. Extract every abstract "
+                f"you can see in full; do not infer anything about the pages that "
+                f"are not here.]\n\n") + text
     spec = getattr(C, "COLUMN_BOOKS", {}).get(key)
     if not spec:
         return pdftotext_layout(pdf)
@@ -235,15 +249,25 @@ def build(only=None):
         key = txt.stem
         if key in by_key or txt.stat().st_size < 1000 or "__c" in key:
             continue  # "__c" = a chunk slice, not a standalone book
+        if key in getattr(C, "FABLE_SKIP_KEYS", {}):
+            continue     # a rules parser owns this book; do not resurrect it
         yr = _year(txt)
-        print(f"  RECOVER {key}: orphaned text, no worklist entry (rebuilt)")
+        # The series comes from the KEY, never assumed. Recovering every orphan
+        # as EEA rebuilt OCS2016 as "EEA 2016 Bristol" pointing at the EEA
+        # abstract book, which would have merged an Australian fish conference
+        # into the EEA meeting (caught 2026-09-08, before any run).
+        mtg = re.match(r"^([A-Za-z]+)", key).group(1).upper()
+        if mtg not in ("EEA", "JMIH", "ASIH", "SI", "OCS", "IPFC", "AES", "SQERF"):
+            mtg = "EEA"
+        cands = sorted((C.CONFERENCES / str(yr)).glob(f"{yr}_{mtg}_*.pdf"))
+        print(f"  RECOVER {key}: orphaned text, no worklist entry (rebuilt as {mtg})")
         by_key[key] = dict(
-            key=key, meeting="EEA", year=yr, city=_EEA_CITIES.get(yr),
-            society_hint="AES", is_elasmo_meeting=True,
-            source_pdf=next((str(f) for f in sorted((C.CONFERENCES / str(yr)).glob(f"{yr}_EEA_*.pdf"))
-                             if "AbstractBook" in f.name), None)
-            or next((str(f) for f in sorted((C.CONFERENCES / str(yr)).glob(f"{yr}_EEA_*.pdf"))),
-                    str(C.CONFERENCES / str(yr) / f"{yr}_EEA_AbstractBook.pdf")),
+            key=key, meeting=mtg, year=yr,
+            city=_EEA_CITIES.get(yr) if mtg == "EEA" else None,
+            society_hint="AES", is_elasmo_meeting=mtg in ("EEA", "SI", "OCS", "AES"),
+            source_pdf=next((str(f) for f in cands if "AbstractBook" in f.name), None)
+            or (str(cands[0]) if cands else
+                str(C.CONFERENCES / str(yr) / f"{yr}_{mtg}_AbstractBook.pdf")),
             src_txt=str(txt), cache_path=str(CACHE_DIR / f"{key}.json"),
             n_chars=txt.stat().st_size)
 

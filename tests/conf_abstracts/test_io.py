@@ -429,3 +429,23 @@ def test_joint_meeting_elasmo_flag():
     assert tag.resolve(dict(teleost), "OCS", year=2016)["is_elasmo"] == 0
     assert tag.resolve(dict(teleost), "OCS", year=2025)["is_elasmo"] == 1
     assert tag.resolve(dict(teleost), "OCS")["is_elasmo"] == 1     # year unknown
+
+
+def test_prescan_elasmo_pages():
+    """The screen keeps elasmo pages and the page after (a body running over the
+    break), drops the rest, and says where it cut."""
+    from conf_abstracts import prescan_elasmo_pages as P
+    pages = ["Gobies of the Coral Sea, a review of the genus",          # 0 no
+             "Movement of tiger sharks tracked by acoustic telemetry",   # 1 hit
+             "continued from the previous page: residency was seasonal", # 2 after
+             "Otolith microchemistry in juvenile snapper stocks",        # 3 no
+             "Reproductive biology of the epaulette shark"]              # 4 hit
+    hits, keep = P.screen(pages, before=0, after=1)
+    assert hits == {1, 4}
+    assert keep == [1, 2, 4]
+    text = P.reduce_text(pages, keep)
+    assert "tiger sharks" in text and "epaulette shark" in text
+    assert "Gobies" not in text and "snapper" not in text
+    assert "1 page(s) with no elasmobranch mention omitted" in text
+    # symmetric context keeps the page before as well
+    assert P.screen(pages, context=1)[1] == [0, 1, 2, 3, 4]
