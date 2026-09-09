@@ -22,6 +22,9 @@ SKIP_NAME_FRAGMENTS = ("_phonescan", "CopeiaMeetingSummary")
 # only about not paying for an LLM pass over a book that is already solved.
 FABLE_SKIP_KEYS = {
     "OCS2016": "parse_ocs_numbered.py: 222/222 against the book's own numbering",
+    "OCS2020": "parse_ocs_labelled.py: 44/44 blocks, 42 complete",
+    "OCS2022": "parse_ocs_labelled.py: 30/30 blocks, 25 complete",
+    "OCS2025": "parse_ocs_labelled.py: 94/94 blocks, 94 complete",
 }
 
 # General-ichthyology volumes where Fable reads only the elasmobranch pages.
@@ -117,6 +120,18 @@ A5_FILES = {
 # numbering is its own QA instrument. See parse_ocs_numbered.py.
 OCS_NUMBERED_FILES = {
     "2016_OCS_AbstractBook": ("OCS", 2016),
+}
+
+# OCS books that print an "Abstract" label above each body: the label count is
+# the book's own answer for how many abstracts it holds, and it is exact (44 in
+# 2020, 30 in 2022, 94 in 2025, the last matched by 94 "Presented by:" lines).
+# See parse_ocs_labelled.py. NOT here: 2024, whose pages have no label and no
+# number — the rules reach 53 of its 74 abstracts and leak wrapped affiliations
+# into bodies, so it stays with Fable.
+OCS_LABELLED_FILES = {
+    "2020_OCS_AbstractBook": ("OCS", 2020),
+    "2022_OCS_AbstractBook": ("OCS", 2022),
+    "2025_OCS_AbstractBook": ("OCS", 2025),
 }
 
 # Modern program/schedule books ("N.N | Title" format, no abstract bodies).

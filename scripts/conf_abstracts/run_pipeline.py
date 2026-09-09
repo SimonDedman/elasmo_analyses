@@ -129,6 +129,18 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="ocs_numbered",
                         blocks=n, inserted=n, status="ok")
 
+    # OCS abstract books that label each body with "Abstract".
+    for frag, (mtg, yr) in config.OCS_LABELLED_FILES.items():
+        if frag in path.name:
+            from conf_abstracts import parse_ocs_labelled
+            smeta = dict(meta)
+            smeta["meeting"], smeta["year"] = mtg, yr
+            smeta["source_pdf"] = str(path)
+            n = parse_ocs_labelled.ingest_ocs_labelled(
+                con, qa_ocr.extract_text(path), smeta)
+            return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="ocs_labelled",
+                        blocks=n, inserted=n, status="ok")
+
     # Modern program/schedule books (talks only, no abstract bodies).
     for frag, (mtg, yr) in config.PROGRAM_BOOK_FILES.items():
         if frag in path.name:
