@@ -449,3 +449,61 @@ def test_prescan_elasmo_pages():
     assert "1 page(s) with no elasmobranch mention omitted" in text
     # symmetric context keeps the page before as well
     assert P.screen(pages, context=1)[1] == [0, 1, 2, 3, 4]
+
+
+def test_ocs_labelled_starred_header():
+    """2020/2022: number, wrapped title, wrapped author list ending in a bare
+    surname, '*'-keyed affiliation, email, then the "Abstract" label. The
+    one-word tail of an author list ("Huveneers") must be taken as authors, and
+    the one-word tail of a title ("Philippines") must not."""
+    from conf_abstracts import parse_ocs_labelled as P
+    text = "\n".join([
+        "", "", "14",
+        "Energetic impacts of hand-feeding on whale sharks during tourism activities in Oslob,",
+        "Philippines",
+        "Christine Barry *, Christine Legaspi, Tom Clarke, Gonzalo Araujo and Charlie",
+        "Huveneers",
+        "* College of Science and Engineering, Flinders University, Adelaide, SA, Australia",
+        "barr0424@flinders.edu.au", "",
+        "Abstract",
+        "Whale shark tourism at Oslob provisions animals daily, and we quantify the "
+        "energetic consequences of that provisioning for individual sharks over four years.",
+        "This presentation will be recorded.", "", "20",
+    ])
+    b = P.parse_ocs_labelled_blocks(text)
+    assert len(b) == 1
+    assert b[0]["program_number"] == "14"
+    assert b[0]["title"].endswith("Oslob, Philippines")
+    assert b[0]["author_raw"].startswith("Christine Barry")
+    assert b[0]["author_raw"].endswith("Huveneers")
+    assert b[0]["affiliation"].startswith("* College")
+    assert b[0]["abstract_text"].startswith("Whale shark tourism")
+    assert "recorded" not in b[0]["abstract_text"]   # trailer, not body
+
+
+def test_ocs_labelled_2025_header():
+    """2025 labels everything: ALLCAPS title, 'Presented by:', 'Authors and
+    Affiliations', then numbered affiliations."""
+    from conf_abstracts import parse_ocs_labelled as P
+    text = "\n".join([
+        "", "",
+        "MOSAIC DISTRIBUTIONS OF THE PAPUAN WALKING",
+        "SHARK IN MILNE BAY, PAPUA NEW GUINEA",
+        "Presented by: Jessica Blakeway",
+        "Authors and Affiliations",
+        "Jessica Blakeway (1), Kathy A. Townsend (1), Mark V. Erdmann (2)",
+        "1. University of the Sunshine Coast, Hervey Bay, QLD, Australia",
+        "2. Conservation International, Auckland, New Zealand", "",
+        "Abstract",
+        "Walking sharks are small benthic sharks endemic to northern Australia and New "
+        "Guinea, and we report two co-occurring species from Milne Bay.",
+    ])
+    b = P.parse_ocs_labelled_blocks(text)
+    assert len(b) == 1
+    assert b[0]["title"].startswith("MOSAIC DISTRIBUTIONS")
+    assert b[0]["title"].endswith("PAPUA NEW GUINEA")
+    assert b[0]["presenting_author"] == "Jessica Blakeway"
+    assert b[0]["author_raw"].startswith("Jessica Blakeway (1)")
+    assert "Presented by" not in b[0]["author_raw"]
+    assert b[0]["affiliation"].startswith("1. University")
+    assert b[0]["abstract_text"].startswith("Walking sharks")

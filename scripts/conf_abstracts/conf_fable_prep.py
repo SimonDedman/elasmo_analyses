@@ -307,6 +307,12 @@ def build(only=None):
             expanded.append(w)
             continue
         parts = _chunk_text(text)
+        # An elasmo-targeted book's banner is prepended once, so only the first
+        # chunk would carry it; every agent needs to know its text is a partial,
+        # discontinuous extract, not a whole book.
+        banner = text.split("\n", 1)[0] if text.startswith("[This is an ELASMO-TARGETED") else None
+        if banner:
+            parts = [parts[0]] + [f"{banner}\n\n{x}" for x in parts[1:]]
         print(f"  CHUNK {w['key']}: {len(text)} chars -> {len(parts)} chunks "
               f"(single-book cache had {_cache_count(w['cache_path'])} abstracts)")
         for ci, part in enumerate(parts):

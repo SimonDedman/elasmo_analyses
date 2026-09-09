@@ -34,6 +34,8 @@ _AFFIL = re.compile(r"^\s*\d{1,2}\.\s+\S")
 # containing "CO2" or "Bin 1" out.
 _SUPER = re.compile(r"[A-Za-z]\d")
 # The back-of-book author index: "Yopak, K        2" / "Walker, T.I  112,218,62".
+# Section banners printed above the first abstract of a run ("ABSTRACTS").
+_HEADING = re.compile(r"^[A-Z][A-Z ]{4,30}$")
 _INDEX = re.compile(r"^[A-Z][A-Za-z’'\-]+,\s*[A-Z]([.\s]|[A-Z])*\s+\d[\d,\s]*$")
 
 
@@ -76,9 +78,7 @@ def parse_ocs_numbered_blocks(text):
         # author gave no affiliation anchors on a numbered sentence inside its
         # own body ("3. The critical prey density threshold was 11.2 mg m-3 ...")
         # and the title swallows the author line and everything above it.
-        first_affil = next((j for j, l in enumerate(blk[:8])
-                            if _AFFIL.match(l) and j >= 2 and not _is_prose(blk[j - 1])),
-                           None)
+        first_affil = _first_affil(blk)
         if first_affil is None or first_affil < 2:
             # No affiliations: the body is the first prose line, the authors are
             # the line above it, and the title is what is left.
@@ -92,20 +92,45 @@ def parse_ocs_numbered_blocks(text):
                                abstract_text=re.sub(r"\s+", " ", " ".join(blk[p:])) or None,
                                needs_review=1))
             continue
-        j = first_affil
-        while j < len(blk) and _AFFIL.match(blk[j]):
-            j += 1
-        # Walk back over every wrapped author line, not just the last one.
-        a = first_affil - 1
-        while a > 1 and _is_author_line(blk[a - 1]):
-            a -= 1
-        blocks.append(dict(
-            program_number=str(num),
-            title=re.sub(r"\s+", " ", " ".join(blk[:a])).strip(),
-            author_raw=" ".join(blk[a:first_affil]),
-            affiliation=" ".join(blk[first_affil:j]),
-            abstract_text=re.sub(r"\s+", " ", " ".join(blk[j:])).strip() or None,
-            needs_review=0))
+        blocks.append(dict(program_number=str(num), **_fields(blk, first_affil)))
+    return blocks
+
+
+def _fields(blk, first_affil):
+    """Title / authors / affiliations / body, given where the affiliations start."""
+    j = first_affil
+    while j < len(blk) and _AFFIL.match(blk[j]):
+        j += 1
+    # Walk back over every wrapped author line, not just the last one.
+    a = first_affil - 1
+    while a > 1 and _is_author_line(blk[a - 1]):
+        a -= 1
+    return dict(title=re.sub(r"\s+", " ", " ".join(blk[:a])).strip(),
+                author_raw=" ".join(blk[a:first_affil]),
+                affiliation=" ".join(blk[first_affil:j]),
+                abstract_text=re.sub(r"\s+", " ", " ".join(blk[j:])).strip() or None,
+                needs_review=0)
+
+
+def _first_affil(blk):
+    return next((j for j, l in enumerate(blk[:8])
+                 if _AFFIL.match(l) and j >= 2 and not _is_prose(blk[j - 1])), None)
+
+
+def parse_ocs_paged_blocks(text):
+    """The same block shape as the numbered books, but with no number to split
+    on: 2024 prints one abstract per page, so the page break is the delimiter
+    and the page-number footer is the only furniture to drop."""
+    blocks = []
+    for page in text.split("\f"):
+        blk = [ln.strip() for ln in page.splitlines() if ln.strip()]
+        blk = [l for l in blk if not _NUM.match(l) and not _HEADING.match(l)]
+        if len(blk) < 4:
+            continue
+        fa = _first_affil(blk)
+        if fa is None:
+            continue
+        blocks.append(dict(program_number=None, **_fields(blk, fa)))
     return blocks
 
 
