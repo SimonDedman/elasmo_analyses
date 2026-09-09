@@ -25,6 +25,8 @@ FABLE_SKIP_KEYS = {
     "OCS2020": "parse_ocs_labelled.py: 44/44 blocks, 42 complete",
     "OCS2022": "parse_ocs_labelled.py: 30/30 blocks, 25 complete",
     "OCS2025": "parse_ocs_labelled.py: 94/94 blocks, 94 complete",
+    "JMIH2026": "parse_jmih_a5.py: 1,051 records, 1,048 with bodies — the "
+                "born-digital book needs no LLM",
 }
 
 # General-ichthyology volumes where Fable reads only the elasmobranch pages.
