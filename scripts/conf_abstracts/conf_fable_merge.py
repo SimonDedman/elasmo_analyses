@@ -21,7 +21,8 @@ from conf_abstracts.fable_cache import is_done
 WORKLIST = C.OUT / "conf_abstracts" / "fable_worklist.json"
 
 
-def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str):
+def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str,
+               year=None):
     """Turn one Fable abstract object into a load.insert_abstract record."""
     title = (a.get("title") or "").strip()
     body = (a.get("abstract_text") or "").strip() or None
@@ -60,7 +61,9 @@ def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str):
         authors=authors,
         society=None, societies_explicit=[soc] if soc else None, society_inferred=None,
     )
-    rec = tag.resolve(rec, meeting)          # EEA/SI meeting -> is_elasmo=1
+    # The year matters: OCS met jointly with ASFB/NZMSS in 2012, 2015, 2016 and
+    # 2019, and those books are mostly teleost (config.JOINT_MEETINGS).
+    rec = tag.resolve(rec, meeting, year=year)   # EEA/SI meeting -> is_elasmo=1
     # non-elasmo-meeting books: fall back to the lexicon on title+body
     if not rec["is_elasmo"] and not is_elasmo_meeting:
         if lexicon.is_elasmo_text(title, body or ""):
@@ -130,7 +133,7 @@ def merge(db_path):
             if not isinstance(a, dict):
                 continue
             rec = _mk_record(a, w["meeting"], w["is_elasmo_meeting"],
-                             w["society_hint"])
+                             w["society_hint"], year=w.get("year"))
             if not rec["title"]:
                 continue
             load.insert_abstract(con, mid, rec)   # dedups within the meeting

@@ -260,14 +260,26 @@ def build(only=None):
         if mtg not in ("EEA", "JMIH", "ASIH", "SI", "OCS", "IPFC", "AES", "SQERF"):
             mtg = "EEA"
         cands = sorted((C.CONFERENCES / str(yr)).glob(f"{yr}_{mtg}_*.pdf"))
+        # The city and the society hint come from the same registries the main
+        # loop uses, not from an EEA-shaped guess: a `--only` run reaches this
+        # branch for every OTHER book, and hardcoding dropped IPFC's host city
+        # and gave a general fish conference an AES society hint.
+        src = next((f for f in cands if "AbstractBook" in f.name), None) or \
+            (cands[0] if cands else None)
+        city = (_city(src) if src else None) or C.MEETING_CITIES.get((mtg, yr))
+        if mtg == "EEA":
+            city = city or _EEA_CITIES.get(yr)
+        elif mtg == "SI":
+            city = city or _SI_CITIES.get(yr)
+        soc_hint = "AES" if mtg in ("EEA", "SI", "OCS", "AES") else ""
         print(f"  RECOVER {key}: orphaned text, no worklist entry (rebuilt as {mtg})")
         by_key[key] = dict(
-            key=key, meeting=mtg, year=yr,
-            city=_EEA_CITIES.get(yr) if mtg == "EEA" else None,
-            society_hint="AES", is_elasmo_meeting=mtg in ("EEA", "SI", "OCS", "AES"),
-            source_pdf=next((str(f) for f in cands if "AbstractBook" in f.name), None)
-            or (str(cands[0]) if cands else
-                str(C.CONFERENCES / str(yr) / f"{yr}_{mtg}_AbstractBook.pdf")),
+            key=key, meeting=mtg, year=yr, city=city,
+            society_hint=soc_hint,
+            is_elasmo_meeting=(mtg in ("EEA", "SI", "OCS", "AES")
+                               and (mtg, yr) not in getattr(C, "JOINT_MEETINGS", set())),
+            source_pdf=str(src) if src else
+            str(C.CONFERENCES / str(yr) / f"{yr}_{mtg}_AbstractBook.pdf"),
             src_txt=str(txt), cache_path=str(CACHE_DIR / f"{key}.json"),
             n_chars=txt.stat().st_size)
 
@@ -280,6 +292,11 @@ def build(only=None):
             print(f"  DROP {key}: no surviving text ({w['src_txt']})")
             continue
         w["n_chars"] = txt.stat().st_size
+        # A joint OCS/ASFB or OCS/NZMSS book is not an elasmo meeting: leaving
+        # this True makes the merge flag every teleost abstract in it as
+        # elasmobranch AND skip the per-abstract lexicon fallback.
+        if (w.get("meeting"), w.get("year")) in getattr(C, "JOINT_MEETINGS", set()):
+            w["is_elasmo_meeting"] = False
         # host city is per-SERIES: never let the EEA table touch a JMIH/ASIH
         # book (it silently labelled JMIH 2015 "Peniche" and 2016 "Bristol"
         # via a stale setdefault — fixed 2026-08-27). Authoritative, not

@@ -11,6 +11,11 @@ import json
 import sys
 from pathlib import Path
 
+# Each Fable agent runs this as `python3 <abs path> <index>` with no PYTHONPATH
+# and from whatever directory it happens to be in, so the package directory has
+# to be put on the path here or every agent fails at its first step.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 WORKLIST = (Path(__file__).resolve().parents[2]
             / "outputs" / "conf_abstracts" / "fable_worklist.json")
 
