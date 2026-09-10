@@ -85,12 +85,16 @@ def parse_ocs_numbered_blocks(text):
             p = next((j for j, l in enumerate(blk) if j >= 2 and _is_prose(l)), None)
             if p is None:
                 p = 2
-            blocks.append(dict(program_number=str(num),
-                               title=re.sub(r"\s+", " ", " ".join(blk[:p - 1])).strip(),
-                               author_raw=blk[p - 1],
-                               affiliation=None,
+            title = re.sub(r"\s+", " ", " ".join(blk[:p - 1])).strip()
+            authors = blk[p - 1]
+            # An absent affiliation is not a defect: several presenters simply
+            # gave none, and their title and author list parse perfectly. Flag
+            # only what is actually doubtful, or the flag stops meaning "check
+            # this" (it was raised on 7 sound OCS 2016 records).
+            blocks.append(dict(program_number=str(num), title=title,
+                               author_raw=authors, affiliation=None,
                                abstract_text=re.sub(r"\s+", " ", " ".join(blk[p:])) or None,
-                               needs_review=1))
+                               needs_review=int(not (title and authors))))
             continue
         blocks.append(dict(program_number=str(num), **_fields(blk, first_affil)))
     return blocks
