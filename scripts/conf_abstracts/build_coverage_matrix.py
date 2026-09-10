@@ -54,7 +54,7 @@ SKIP_NAME_FRAGMENTS = ("_phonescan", "CopeiaMeetingSummary")
 # that "Ingested" overclaimed, and calling it "Digital" would have hidden the
 # ~2,800 abstracts we genuinely hold.
 STATUS_ORDER = ["Missing", "Schedule", "Hardcopy", "OCR", "Programme",
-                "Pending", "Digital", "Extracted", "Ingested"]
+                "Pending", "Digital", "Extracted", "Partial", "Ingested"]
 FILL = {
     "Missing": "E06666",    # red: nothing exists anywhere
     "Schedule": "ED9C6B",   # red-orange: titles/authors only, no abstract text
@@ -64,6 +64,9 @@ FILL = {
     "Pending": "FFE599",    # yellow: a named contact has it or is looking
     "Digital": "B6D7A8",    # light green: book in hand, nothing extracted yet
     "Extracted": "93C47D",  # mid green: abstracts in the DB, re-extraction queued
+    "Partial": "A2C4C9",    # blue-grey: deliberately incomplete — only the
+                            # elasmo pages of a general-ichthyology volume were
+                            # read, so it is NOT comparable to a full ingest
     "Ingested": "6AA84F",   # green: fully extracted and merged — done
     "NA": None,
 }
@@ -131,6 +134,11 @@ JMIH_PROGRAMME = {
 }
 # OCS meetings we can evidence from public sources (read 2026-08-27); Brit
 # Finucci is confirming the full series and locations.
+# Mirrors config.ELASMO_TARGETED_BOOKS: general-ichthyology volumes where only
+# the elasmobranch pages were sent for extraction, so their coverage is partial
+# BY DESIGN and must never be reported as a whole-book ingest.
+ELASMO_TARGETED = {("IPFC", 2009), ("IPFC", 2023)}
+
 # Mirrors config.JOINT_MEETINGS (this module is standalone by design): OCS years
 # that were joint meetings with ASFB or NZMSS, where most of the book is teleost
 # work and is_elasmo is decided per abstract rather than by the meeting.
@@ -496,7 +504,7 @@ _EXTRA = [
     ("Pacific Shark Workshop", "Pac Shark Wksp", None),
     ("ISC Shark Working Group", "ISC Shark WG", None),
     ("World Congress of Herpetology", "WCH", None),
-    ("Indo-Pacific Fish Conference (IPFC)", "IPFC", None),
+    ("Indo-Pacific Fish Conference (IPFC)", "IPFC", "IPFC"),
     ("International Coral Reef Symposium (ICRS)", "ICRS", None),
     ("World Fisheries Congress", "WFC", None),
     ("American Fisheries Society symposia", "AFS", None),
@@ -698,6 +706,11 @@ def _lead_year_counts():
 #   [web]   an external source, named in the comment
 #   "?"     looked for and not established (the same convention column B uses)
 _EXTRA_LOCATIONS = {
+    # [cite] the books themselves: "8th Indo Pacific Fish Conference & 2009 ASFB
+    # Workshop and Conference, 31 May - 5 June 2009, Fremantle, Western
+    # Australia" and IPFC-11, Auckland 2023 (joint with ASFB).
+    ("IPFC", 2009): "Fremantle, WA, Australia",
+    ("IPFC", 2023): "Auckland, New Zealand",
     # [cite] "Proceedings of the First Pacific Shark Workshop, December 13-15,
     # 2011 Vancouver, Canada"
     ("Pac Shark Wksp", 2011): "Vancouver, Canada",
@@ -813,6 +826,12 @@ def _extra_cell(lead_key, code, year, counts, db_years, short=None,
     pre = f"{loc}; " if loc else ""
     held = db_years.get(code or "", {}).get(year) if code else None
     if held:
+        if (short, year) in ELASMO_TARGETED:
+            # Only the pages naming an elasmobranch were read (and the page
+            # after each), so the teleost half of these general-ichthyology
+            # volumes is NOT captured. Saying "Ingested" would overstate it.
+            return (f"{pre}Partial — {held} abstracts, elasmo-targeted pages only "
+                    f"(teleost content not captured)", "Partial")
         return f"{pre}Ingested — {held} abstracts", "Ingested"
     book = sorted((CONFERENCES / str(year)).glob(f"{year}_{code}_*.pdf")) \
         if code and (CONFERENCES / str(year)).is_dir() else []
@@ -1107,6 +1126,11 @@ def build():
         "Extracted": ("Abstracts are in the database, but from the regex parsers "
                       "(or extracted and not yet merged). Titles and author lists "
                       "are weak; full re-extraction is queued."),
+        "Partial": ("DELIBERATELY incomplete. A general-ichthyology volume where "
+                    "only the pages naming an elasmobranch (and the page after "
+                    "each) were sent for extraction, so its teleost abstracts are "
+                    "NOT in the database. The count is real; the coverage is not "
+                    "comparable to a full ingest. Applies to IPFC 2009 and 2023."),
         "Ingested": "Fully extracted and merged into the database. Done.",
     }
     NOTE_DEFAULTS = [

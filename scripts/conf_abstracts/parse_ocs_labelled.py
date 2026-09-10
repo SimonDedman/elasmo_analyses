@@ -115,6 +115,78 @@ def _header_labelled(lines):
                 affil=" ".join(rest[first_affil:]), presenter=presenter, num=None)
 
 
+# Tokens that can sit inside an author list without being names.
+_NAME_GLUE = {"and", "et", "al.", "al", "*", "&", "Jr.", "Jr", "II", "III"}
+
+
+def _looks_like_name_start(toks):
+    """The first tokens of a real author list carry a personal-name shape: an
+    initial ("R."), or a comma or asterisk within the first few tokens. A run of
+    capitalised words alone does not qualify — that is what a place name in a
+    title looks like ("at Lord Howe Island ...")."""
+    if len(toks) < 2 or not toks[0].strip(",;*")[:1].isupper():
+        return False
+    init = lambda w: bool(re.fullmatch(r"[A-Z]\.?", w.strip(",;*")))
+    sep = lambda w: w.endswith(",") or "*" in w
+    # "First I. Last", "First Last," or "First Last *" — the initial or the
+    # separator must fall in the SECOND or THIRD position. Allowing it anywhere
+    # in the first four lets "Howe Island Jonathan D." qualify, which puts a
+    # place name into the author list.
+    if init(toks[1]) or sep(toks[1]):
+        return True
+    # Third position may carry a SEPARATOR ("Samantha Andrzejaczek *"), but not
+    # an initial: "Island Jonathan D." has one there and is a place name
+    # followed by the real first author.
+    return len(toks) > 2 and sep(toks[2])
+
+
+def _split_runon(line):
+    """Some entries print the title and the author list on ONE line:
+
+        Diel rhythms and thermal independence of metabolic rate in a benthic
+        shark Carolyn R. Wheeler, Dennis Heinrich, Jeff Kneebone
+
+    Walk back from the end over name-shaped tokens to find a candidate split,
+    then walk FORWARD to the first position that actually looks like the start
+    of a name. Without that second step the walk chews through a capitalised
+    place name into the title: "... shark-fisher conflict at Lord Howe Island |
+    Jonathan D. Mitchell" would hand "Lord Howe Island" to the authors.
+    """
+    toks = line.split()
+    i = len(toks)
+    while i > 0:
+        w = toks[i - 1]
+        bare = w.strip(",;*&")
+        # "*," and "*" strip to nothing: they are the presenter marker, which
+        # sits INSIDE the author list, so they must not end the walk.
+        if not bare or w in _NAME_GLUE or bare in _NAME_GLUE:
+            i -= 1
+            continue
+        # A middle initial must be tested BEFORE the title-word list, or the
+        # "A" in "Nathan A Hart" matches the article "a" and the walk stops
+        # inside the author list.
+        if len(bare.rstrip(".")) == 1 and bare[:1].isupper():
+            i -= 1
+            continue
+        if bare[:1].isupper() and not any(c.isdigit() for c in bare) \
+                and bare.lower() not in _TITLE_WORDS:
+            i -= 1
+            continue
+        break
+    if i == 0 or i >= len(toks):
+        return None
+    # forward: the earliest position from i that opens like a name
+    j = next((k for k in range(i, len(toks) - 1) if _looks_like_name_start(toks[k:])), None)
+    if j is None:
+        return None
+    title, tail = " ".join(toks[:j]), " ".join(toks[j:])
+    if not re.search(r"[,*]| and ", tail) or len(tail.split()) < 2:
+        return None
+    if len(title.split()) < 3:
+        return None
+    return title.strip(" .,:"), tail
+
+
 def _header_starred(lines):
     """2020/2022: programme number, title, author list, '*'-keyed affiliation,
     email. Nothing is labelled, so the affiliation's '*' at line start is the
@@ -140,7 +212,12 @@ def _header_starred(lines):
             a -= 1
             continue
         break
-    return dict(title=" ".join(ls[:a]), authors=" ".join(ls[a:end]),
+    title, authors = " ".join(ls[:a]), " ".join(ls[a:end])
+    if not authors and title:
+        split = _split_runon(title)
+        if split:
+            title, authors = split
+    return dict(title=title, authors=authors,
                 affil=" ".join(ls[end:]), presenter=None, num=num)
 
 

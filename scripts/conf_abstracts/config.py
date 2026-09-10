@@ -41,7 +41,11 @@ FABLE_SKIP_KEYS = {
 # reported: the teleost abstracts in these two volumes are NOT captured, so
 # they are "elasmo-targeted", never "Ingested".
 ELASMO_TARGETED_BOOKS = {
-    "IPFC2009": dict(before=0, after=1),
+    # skip_pages drops front matter that names elasmobranchs without being about
+    # them. IPFC 2009 pages 1-6 are a contents listing of every talk in the
+    # book; keeping them cost 356 of its 416 records, which came back as
+    # title+authors with no body because the agents read the LISTING.
+    "IPFC2009": dict(before=0, after=1, skip_pages=tuple(range(1, 7))),
     "IPFC2023": dict(before=0, after=1),
 }
 OCR_SCRATCH = Path("/media/simon/data/ocr_scratch")

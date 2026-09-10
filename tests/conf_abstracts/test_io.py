@@ -415,7 +415,10 @@ def test_ocs_numbered_no_affiliation():
     assert b[0]["title"] == "Prey density threshold and tidal influence on reef manta ray foraging"
     assert b[0]["author_raw"] == "Asia O Armstrong"
     assert b[0]["abstract_text"].startswith("Large tropical")
-    assert b[0]["needs_review"] == 1
+    # An absent affiliation is not by itself a defect: title and authors both
+    # parsed, so the record is sound and must NOT be flagged (7 clean OCS 2016
+    # records were, which is how the flag stops meaning "check this").
+    assert b[0]["needs_review"] == 0
 
 
 def test_joint_meeting_elasmo_flag():

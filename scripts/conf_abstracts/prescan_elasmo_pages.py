@@ -42,21 +42,26 @@ def pages_of(pdf):
     return txt.split("\f")
 
 
-def screen(pages, context=1, before=None, after=None):
-    """Page indices to keep: every page naming an elasmobranch, plus its
-    neighbours. The two sides are not symmetric in what they buy. Keeping the
-    page AFTER protects a body that runs over the page break; keeping the page
-    BEFORE protects a title and author list printed above a mention that only
-    appears further down. Both controls (OCS2016, JMIH2016) put the elasmo
-    mention on the same page as the title in 100% of cases, so `before` is the
-    cheaper one to give up."""
+def screen(pages, context=1, before=None, after=None, skip_pages=()):
+    """`skip_pages` is 1-based and applied BEFORE screening, for front matter
+    that names elasmobranchs without being about them. IPFC 2009 lists every
+    talk in a contents section on pages 3-4; those pages passed the lexicon,
+    were kept, and the Fable agents extracted 356 title+author records from the
+    LISTING instead of reading the abstract pages behind it — 369 of its 416
+    records came back with no body. Docling does not help here: it labels those
+    pages plain `text`, not `document_index`."""
+    # Keeping the page AFTER a hit protects a body running over the page break;
+    # keeping the page BEFORE buys nothing, since both controls (OCS2016 n=66,
+    # JMIH2016 n=226) put the mention on the title's own page in 100% of cases.
     before = context if before is None else before
     after = context if after is None else after
-    hits = {i for i, p in enumerate(pages) if lexicon.is_elasmo_text(p, "")}
+    skip = {n - 1 for n in skip_pages}
+    hits = {i for i, p in enumerate(pages)
+            if i not in skip and lexicon.is_elasmo_text(p, "")}
     keep = set()
     for i in hits:
         keep.update(range(max(0, i - before), min(len(pages), i + after + 1)))
-    return hits, sorted(keep)
+    return hits, sorted(keep - skip)
 
 
 def reduce_text(pages, keep):
