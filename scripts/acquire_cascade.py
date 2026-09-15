@@ -62,6 +62,7 @@ the corpus itself.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import json
 import os
@@ -387,6 +388,132 @@ def atomic_write_json(data, path: Path) -> None:
     os.replace(tmp, path)
 
 
+def _papers_data_mutate(**kwargs):
+    """The locked read-modify-write from scripts/lib/papers_data_io.py.
+
+    Imported lazily so tests can repoint the module at a temporary file
+    (mirrors the pattern in sync_shark_references.py, which this module's
+    QUEUE == mutate()'s PAPERS_DATA, same file).
+    """
+    scripts_dir = str(Path(__file__).resolve().parent)
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from lib import papers_data_io
+    return papers_data_io.mutate(**kwargs)
+
+
+# Sentinel stored in a diff dict to mean "delete this key", since a plain
+# dict.update() can never remove a key -- see _row_diff / apply_run_updates.
+_DELETED = object()
+
+# Fields run_cascade_on_paper() documents itself as writing back (see the
+# "Cascade, per paper" list in this file's module docstring): doi, the
+# Unpaywall oa_status/oa_url, publisher (needs_library dead end), plus the
+# three bookkeeping fields it always sets. A diff touching anything outside
+# this set is unexpected -- surfaced as a warning rather than either
+# silently written (which could paper over a real bug) or silently dropped
+# (which would lose a legitimate change if this list goes stale).
+CASCADE_OWNED_FIELDS = {
+    "doi", "oa_status", "oa_url", "publisher",
+    "last_status", "cascade_stage", "cascade_checked",
+}
+
+
+def _row_diff(before: dict, after: dict) -> dict:
+    """Keys ``after`` added or changed relative to ``before``, plus deletions.
+
+    Used to turn "the whole row, mutated in place by run_cascade_on_paper"
+    into "only the fields this run actually touched" -- ``before`` must be
+    a deep copy taken BEFORE run_cascade_on_paper() runs (a shallow copy or
+    the same object would already equal ``after``, since the cascade
+    mutates the dict in place). A key present in ``before`` but missing
+    from ``after`` (the cascade deleting a field -- it doesn't currently,
+    but this is defensive) is represented as {key: _DELETED}.
+    """
+    diff = {k: v for k, v in after.items() if k not in before or before[k] != v}
+    for k in set(before) - set(after):
+        diff[k] = _DELETED
+    return diff
+
+
+def apply_run_updates(papers: list, updates: dict) -> tuple:
+    """Merge this run's per-paper field DIFFS into a freshly re-read list.
+
+    ``updates`` maps normalised literature_id -> a diff dict from
+    _row_diff(): only the fields this run's cascade pass actually changed
+    on that row, not the whole paper dict. This is what lets the write-back
+    touch ONLY those fields instead of overwriting a fresh row wholesale --
+    `paper` in main()'s loop is the SAME dict object read from `queue` at
+    the top of the run, hours before it is flushed, so merging the WHOLE
+    row (as an earlier version of this function did) would revert any
+    field a concurrent writer (backfill_findspot, DOI recovery, the
+    coauthor scan) touched in between that the cascade itself never looked
+    at -- e.g. a findspot filled in by backfill_findspot at 09:15 reverted
+    to "" by a cascade flush at 09:25 whose snapshot was taken at 09:00.
+
+    If this run's diff and a concurrent writer both touched the SAME
+    field, this run's value wins (last writer under the lock, per field,
+    not per row) -- diffs are applied via a plain per-key update/pop, with
+    no attempt to detect or merge a same-field conflict.
+
+    Only literature_ids present in ``papers`` at call time are touched: a
+    row another writer removed concurrently (e.g. finalize filing it into
+    the corpus) is left alone rather than re-added, since our copy of it
+    is no longer authoritative.
+
+    Returns (n_applied, missing_lids).
+    """
+    by_lid = {_norm_id(p.get("literature_id", "")): p for p in papers}
+    applied = 0
+    missing = []
+    for lid, fields in updates.items():
+        row = by_lid.get(lid)
+        if row is None:
+            missing.append(lid)
+            continue
+        for k, v in fields.items():
+            if v is _DELETED:
+                row.pop(k, None)
+            else:
+                row[k] = v
+        applied += 1
+    return applied, missing
+
+
+def flush_run_updates(updates: dict) -> tuple:
+    """Lock, re-read, apply this run's diffs, write -- or no-op if empty."""
+    if not updates:
+        return 0, []
+    with _papers_data_mutate() as fresh:
+        applied, missing = apply_run_updates(fresh, updates)
+    return applied, missing
+
+
+def record_run_update(pending: dict, before: dict, after: dict, log_unexpected=print) -> None:
+    """Diff ``before``/``after`` and fold the result into ``pending`` by id.
+
+    ``before`` must be a deep copy of the paper dict taken before
+    run_cascade_on_paper() ran; ``after`` is that same dict post-cascade.
+    Merges onto any existing diff already pending for this literature_id
+    this run (a paper should only be processed once per run, but this
+    keeps a second pass from clobbering the first's diff instead of
+    accumulating it). Warns (via ``log_unexpected``, a plain print by
+    default) if the diff touches a field outside CASCADE_OWNED_FIELDS,
+    since that means either this function's field list is stale or
+    run_cascade_on_paper changed something it doesn't document -- either
+    way worth a human's attention, but not worth dropping the write over.
+    """
+    lid = _norm_id(after.get("literature_id", ""))
+    diff = _row_diff(before, after)
+    if not diff:
+        return
+    unexpected = sorted(k for k in diff if k not in CASCADE_OWNED_FIELDS)
+    if unexpected:
+        log_unexpected(f"  WARNING: cascade changed unexpected field(s) on "
+                       f"literature_id={lid}: {unexpected} (still written)")
+    pending.setdefault(lid, {}).update(diff)
+
+
 def append_log_rows(rows: list, log_path: Optional[Path] = None) -> None:
     # NB: default resolved inside the body (not `log_path: Path = LOG`) so
     # that reassigning the module-level LOG constant after import (as
@@ -651,8 +778,21 @@ def main() -> int:
     stage_counts: Counter = Counter()
     doi_recovered = 0
     oa_verdict_changed = 0
+    # This run's per-paper field DIFFS, keyed by normalised literature_id
+    # (see record_run_update / _row_diff above). Flushed through
+    # lib.papers_data_io.mutate() (flush_run_updates / apply_run_updates)
+    # instead of writing the whole `queue` object back -- `queue` was
+    # loaded once at the top of main() and a run over the full pool can
+    # take hours, long enough for another writer (the cascade's own
+    # finalize step, ingest, DOI recovery, backfill_findspot, the SR sync)
+    # to have added, removed, or edited OTHER fields on rows this run also
+    # processed. Storing only the diff (not the whole `paper` dict, which
+    # is the same hours-old object all the way through) is what stops a
+    # flush from reverting a field the cascade itself never touched.
+    pending_updates: dict = {}
 
     for i, paper in enumerate(pool):
+        before_paper = copy.deepcopy(paper)
         before_doi = paper.get("doi") or ""
         before_oa = paper.get("oa_status") or ""
         result = run_cascade_on_paper(paper, ctx)
@@ -663,18 +803,28 @@ def main() -> int:
             oa_verdict_changed += 1
         stage_counts[result["cascade_stage"]] += 1
         log_rows.append(result)
+        record_run_update(pending_updates, before_paper, paper)
 
         if not args.dry_run and (i + 1) % args.flush_every == 0:
-            atomic_write_json(queue, QUEUE)
+            applied, missing = flush_run_updates(pending_updates)
+            if missing:
+                print(f"  WARNING: {len(missing)} processed paper(s) no longer in "
+                      f"papers_data.json (removed by another writer); this run's "
+                      f"update to them was dropped: {missing[:10]}")
+            pending_updates = {}
             append_log_rows(log_rows)
             log_rows = []
-            print(f"  flushed at {i + 1}/{len(pool)}")
+            print(f"  flushed at {i + 1}/{len(pool)} ({applied} row(s) written)")
 
         if args.sleep:
             time.sleep(args.sleep)
 
     if not args.dry_run:
-        atomic_write_json(queue, QUEUE)
+        applied, missing = flush_run_updates(pending_updates)
+        if missing:
+            print(f"  WARNING: {len(missing)} processed paper(s) no longer in "
+                  f"papers_data.json (removed by another writer); this run's "
+                  f"update to them was dropped: {missing[:10]}")
         if log_rows:
             append_log_rows(log_rows)
 
