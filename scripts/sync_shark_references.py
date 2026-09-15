@@ -51,6 +51,7 @@ import sys
 import time
 import urllib.request
 import urllib.parse
+from collections import Counter
 from datetime import datetime, timedelta
 from email.mime.text import MIMEText
 from pathlib import Path
@@ -339,12 +340,32 @@ def _normalise_doi(doi: str) -> str:
 # ---------------------------------------------------------------------------
 # Phase 2: Diff
 # ---------------------------------------------------------------------------
-def diff_papers(sr_papers, known_ids, known_dois, needs_pdf_ids, needs_pdf_dois, log):
+def _normalise_lid(lid) -> str:
+    """literature_id as a bare string: '123.0' and 123 both become '123'."""
+    s = str(lid if lid is not None else "").strip()
+    if s.lower() in ("", "nan", "none", "<na>"):
+        return ""
+    return re.sub(r"\.0+$", "", s)
+
+
+def diff_papers(sr_papers, known_ids, known_dois, needs_pdf_ids, needs_pdf_dois, log,
+                counts: dict | None = None):
     """
     Categorise SR papers into NEW, NEEDS_PDF, or HAVE.
 
     Matches by literature_id first, then by DOI to catch papers we have
     under synthetic 500k+ IDs from non-SR sources.
+
+    A paper is KNOWN if it is in the parquet OR in papers_data.json. The two
+    stores mean different things: the parquet holds papers we have (and have
+    extracted), papers_data.json holds papers we want but lack. Until
+    2026-09-14 only the parquet counted as known, so every paper a previous
+    sync had queued without a PDF (2,642 of them on 2026-09-14) was
+    re-declared "new" on every run: re-fetched in Phase 3 at 2 s each (~88
+    min), and counted in the headline "N new papers" (2,760 reported against
+    ~118 genuinely new on 2026-09-03). Queued papers now flow to the
+    needs-PDF branch instead, which is where an SR download link for them
+    belongs.
 
     Args:
         sr_papers: list of dicts from crawl
@@ -352,31 +373,44 @@ def diff_papers(sr_papers, known_ids, known_dois, needs_pdf_ids, needs_pdf_dois,
         known_dois: set of normalised DOI strings in our parquet
         needs_pdf_ids: set of literature_id strings in papers_data.json
         needs_pdf_dois: set of normalised DOI strings in papers_data.json
+        counts: optional dict, filled with the breakdown
+            {"new", "known_parquet", "known_queue_only", "needs_pdf"} so the
+            summary can report the queue-only papers separately.
 
     Returns:
         (new_papers, needs_pdf_papers)
     """
     new_papers = []
     needs_pdf = []
+    n_parquet = n_queue_only = 0
 
     for p in sr_papers:
-        lid = str(p["literature_id"])
+        lid = _normalise_lid(p["literature_id"])
         doi = _normalise_doi(p.get("doi", ""))
 
-        # Check if we already know this paper (by ID or DOI)
-        known_by_id = lid in known_ids
-        known_by_doi = doi and doi in known_dois
+        in_parquet = lid in known_ids or bool(doi and doi in known_dois)
+        in_queue = (bool(lid) and lid in needs_pdf_ids) or bool(doi and doi in needs_pdf_dois)
 
-        if not known_by_id and not known_by_doi:
+        if not in_parquet and not in_queue:
             new_papers.append(p)
-        elif p.get("pdf_url"):
-            # We know the paper; check if we still need its PDF
-            needs_by_id = lid in needs_pdf_ids
-            needs_by_doi = doi and doi in needs_pdf_dois
-            if needs_by_id or needs_by_doi:
-                needs_pdf.append(p)
+            continue
 
-    log.info(f"Diff results: {len(new_papers)} new, {len(needs_pdf)} known-needing-PDF-with-SR-link")
+        if in_parquet:
+            n_parquet += 1
+        else:
+            n_queue_only += 1
+
+        # We know the paper; if it is still on the want-list and SR links a
+        # PDF, try that link.
+        if in_queue and p.get("pdf_url"):
+            needs_pdf.append(p)
+
+    if counts is not None:
+        counts.update({"new": len(new_papers), "known_parquet": n_parquet,
+                       "known_queue_only": n_queue_only, "needs_pdf": len(needs_pdf)})
+    log.info(f"Diff results: {len(new_papers)} genuinely new, "
+             f"{len(needs_pdf)} known-needing-PDF-with-SR-link "
+             f"({n_queue_only} known only from papers_data.json, not counted as new)")
     return new_papers, needs_pdf
 
 
@@ -506,6 +540,41 @@ def _title_similarity(a: str, b: str):
     if not ta or not tb:
         return None
     return len(ta & tb) / min(len(ta), len(tb))
+
+
+# Two records that share a DOI are treated as the same paper only if their
+# titles also agree. Token overlap over the LONGER title (two-sided), not
+# _title_similarity's shorter-title denominator: that one scores a two-word
+# title a perfect 1.00 against any longer title containing both words (the
+# "CHIMAERAS" / "OSPREY" trap in the DOI-recovery review), and book-chapter
+# rows sharing a book DOI are exactly that shape. 0.8 lets a 5-token title
+# differ by one token (a trailing "[Abstract]", an authority, a translated
+# word) and no more.
+TITLE_AGREE_MIN = 0.8
+TITLE_AGREE_YEAR_TOL = 1
+
+
+def _title_agreement(a: str, b: str):
+    """Token overlap over the longer title. None when either side is unusable."""
+    ta, tb = _title_tokens(a), _title_tokens(b)
+    if not ta or not tb:
+        return None
+    return len(ta & tb) / max(len(ta), len(tb))
+
+
+def _doi_of(p: dict) -> str:
+    """Normalised DOI of a record; "" for a missing or non-string value."""
+    d = p.get("doi")
+    return _normalise_doi(d) if isinstance(d, str) else ""
+
+
+def _same_paper(title_a, year_a, title_b, year_b) -> bool:
+    """Titles agree (two-sided >= TITLE_AGREE_MIN) and years within +/-1 when both known."""
+    sim = _title_agreement(title_a or "", title_b or "")
+    if sim is None or sim < TITLE_AGREE_MIN:
+        return False
+    ya, yb = _year_int(year_a), _year_int(year_b)
+    return ya is None or yb is None or abs(ya - yb) <= TITLE_AGREE_YEAR_TOL
 
 
 def _crossref_lookup(session, dois: list, log) -> dict:
@@ -769,8 +838,184 @@ def download_pdf(session, paper, log) -> bool:
 # ---------------------------------------------------------------------------
 # Phase 5: Update state
 # ---------------------------------------------------------------------------
-def append_to_master_csv(new_papers, log):
-    """Append new papers to the most recent master CSV."""
+# A monthly sync genuinely adds ~100-300 papers. Appending more than this in
+# one run means the dedupe has probably stopped matching, so it is logged as
+# an error to make that visible rather than letting the file quietly double.
+MASTER_CSV_PLAUSIBLE_APPEND = 600
+
+
+def _normalise_title(text) -> str:
+    """Lowercase alphanumeric words only, HTML and punctuation stripped."""
+    if text is None or (isinstance(text, float) and pd.isna(text)):
+        return ""
+    text = re.sub(r"<[^>]+>", " ", html_mod.unescape(str(text)))
+    return " ".join(re.findall(r"[^\W_]+", text.lower()))
+
+
+def _year_int(value):
+    try:
+        return int(float(str(value).strip()))
+    except (TypeError, ValueError):
+        return None
+
+
+# Titles that recur across distinct papers by construction: a comment and
+# its reply, an erratum, a book review. The live master CSV has title+year
+# keys of this kind carried by different DOIs ("comment on an early miocene
+# extinction in pelagic sharks", 2021), so they are never a duplicate signal.
+_GENERIC_TITLE_PREFIXES = (
+    "comment on", "comments on", "reply to", "response to", "a reply to",
+    "erratum", "errata", "corrigendum", "correction to", "correction",
+    "book review", "review of", "editorial", "introduction", "preface",
+    "obituary", "in memoriam", "abstracts", "proceedings",
+)
+
+
+def _title_year_key(title, year) -> str:
+    t, y = _normalise_title(title), _year_int(year)
+    # Very short titles ("Sharks.", "Editorial") collide across papers, so
+    # they are not trusted as a duplicate signal on their own.
+    if y is None or len(t.split()) < 4 or t.startswith(_GENERIC_TITLE_PREFIXES):
+        return ""
+    return f"{y}|{t}"
+
+
+def _title_year_duplicate(key: str, doi: str, key_dois: dict) -> bool:
+    """A title+year hit counts only when the DOIs can't tell the rows apart.
+
+    ``key_dois`` maps each key to the set of normalised DOIs carrying it
+    ("" for a row with no DOI). Two rows that both carry a DOI and disagree
+    are different papers however alike their titles.
+    """
+    if not key or key not in key_dois:
+        return False
+    dois = key_dois[key]
+    return not doi or "" in dois or doi in dois
+
+
+def master_row_title(row) -> str:
+    """The bare title of a master-CSV row (a dict).
+
+    Sync-appended rows carry `title`. The January bulk rows do not: their
+    `citation` is title + findspot, truncated at ~150 characters, so it
+    never equals a bare title. Their `full_text` is authors + title +
+    findspot + DOI in full, so the title is recovered by removing the
+    authors prefix, the DOI tail, and the findspot suffix.
+    """
+    def ok(v):
+        return isinstance(v, str) and v.strip()
+
+    if ok(row.get("title")):
+        return row["title"]
+    ft, a, fs = row.get("full_text"), row.get("authors"), row.get("findspot")
+    if ok(ft):
+        ft = re.sub(r"\s*DOI:\s*10\.\S+\s*$", "", ft.strip())
+        if ok(a) and ft.startswith(a):
+            ft = ft[len(a):]
+        if ok(fs):
+            i = ft.rfind(fs.strip())
+            if i > 0:
+                ft = ft[:i]
+        return ft.strip()
+    c = row.get("citation")
+    if ok(c) and ok(fs):
+        i = c.find(fs.strip()[:20])
+        if i > 0:
+            c = c[:i]
+    return c if ok(c) else ""
+
+
+def select_master_csv_appends(df_existing: pd.DataFrame, df_new: pd.DataFrame):
+    """Decide which rows of ``df_new`` are genuinely absent from the master CSV.
+
+    A row is a duplicate if it matches an existing row on ANY of
+    literature_id, normalised DOI, or exact normalised title + year. These
+    are supplements, not alternatives: until 2026-09-14 this was an if/elif,
+    so whenever the literature_id column existed the DOI branch was never
+    reached, and 30,909 of the 34,772 master rows carry no literature_id at
+    all. The dedupe therefore compared against 11% of the file.
+
+    The existing title comes from master_row_title(), since the January
+    bulk rows keep it embedded in ``full_text`` rather than in ``title``.
+
+    Returns (to_append, reasons) where ``reasons`` counts the rows dropped
+    per matching key (first key that matched wins).
+    """
+    df_new = df_new.copy()
+    if "literature_id" not in df_new.columns:
+        df_new["literature_id"] = ""
+    df_new["literature_id"] = df_new["literature_id"].map(_normalise_lid)
+
+    def col(df, name):
+        return df[name] if name in df.columns else pd.Series([None] * len(df), index=df.index)
+
+    existing_ids = set(col(df_existing, "literature_id").map(_normalise_lid)) - {""}
+    existing_dois = set(col(df_existing, "doi").map(
+        lambda d: _normalise_doi(d) if isinstance(d, str) else "")) - {""}
+    existing_ty: dict = {}
+    for r in df_existing.to_dict("records"):
+        k = _title_year_key(master_row_title(r), r.get("year"))
+        if k:
+            d = r.get("doi")
+            existing_ty.setdefault(k, set()).add(_normalise_doi(d) if isinstance(d, str) else "")
+
+    reasons = {"literature_id": 0, "doi": 0, "title_year": 0, "within_batch": 0,
+               "title_year_ids": []}
+    keep = []
+    seen_ids, seen_dois, seen_ty = set(), set(), {}
+    for _, r in df_new.iterrows():
+        lid = r["literature_id"]
+        doi = _normalise_doi(r.get("doi") if isinstance(r.get("doi"), str) else "")
+        ty = _title_year_key(r.get("title"), r.get("year"))
+        if lid and lid in existing_ids:
+            reasons["literature_id"] += 1
+            keep.append(False)
+        elif doi and doi in existing_dois:
+            reasons["doi"] += 1
+            keep.append(False)
+        elif _title_year_duplicate(ty, doi, existing_ty):
+            # The least certain key, so the ids are kept for the log.
+            reasons["title_year"] += 1
+            reasons["title_year_ids"].append(lid)
+            keep.append(False)
+        elif ((lid and lid in seen_ids) or (doi and doi in seen_dois)
+              or _title_year_duplicate(ty, doi, seen_ty)):
+            reasons["within_batch"] += 1
+            keep.append(False)
+        else:
+            keep.append(True)
+            seen_ids.add(lid)
+            seen_dois.add(doi)
+            if ty:
+                seen_ty.setdefault(ty, set()).add(doi)
+    return df_new[pd.Series(keep, index=df_new.index, dtype=bool)], reasons
+
+
+def check_append_plausible(n_append: int, n_input: int, log,
+                           limit: int | None = None) -> str:
+    """Make a dedupe that has stopped working visible.
+
+    Returns "" when the count is plausible, else a warning message. The
+    write still goes ahead (a genuinely large SR release is possible), but
+    the message is logged as an error AND is meant to be put into
+    ``stats["errors"]`` by the caller, so it reaches the email and the ntfy
+    headline rather than only the log file.
+    """
+    if limit is None:
+        limit = MASTER_CSV_PLAUSIBLE_APPEND
+    if n_append <= limit:
+        return ""
+    msg = (f"IMPLAUSIBLE master CSV append: {n_append} of {n_input} offered rows "
+           f"were 'new' (limit {limit}); check the dedupe before trusting it")
+    log.error(f"  {msg}")
+    return msg
+
+
+def append_to_master_csv(new_papers, log, errors: list | None = None) -> int:
+    """Append new papers to the most recent master CSV. Returns rows appended.
+
+    An implausible append count is added to ``errors`` (pass stats["errors"]).
+    """
     MASTER_CSV_DIR.mkdir(parents=True, exist_ok=True)
     csv_files = sorted(MASTER_CSV_DIR.glob("shark_references_complete_*.csv"),
                        key=lambda p: p.stat().st_mtime)
@@ -779,84 +1024,173 @@ def append_to_master_csv(new_papers, log):
         master = MASTER_CSV_DIR / f"shark_references_complete_{datetime.now():%Y%m%d}.csv"
         df_new = pd.DataFrame(new_papers)
         df_new.to_csv(master, index=False, encoding="utf-8")
-        return
+        return len(df_new)
 
     master = csv_files[-1]
     df_existing = pd.read_csv(master, dtype=str)
     df_new = pd.DataFrame(new_papers)
-    df_new["literature_id"] = df_new["literature_id"].astype(str)
 
-    # Deduplicate: use literature_id if the master CSV has it, else fall back to DOI
-    if "literature_id" in df_existing.columns:
-        existing_ids = set(df_existing["literature_id"].dropna())
-        mask = ~df_new["literature_id"].isin(existing_ids)
-    elif "doi" in df_existing.columns:
-        existing_dois = {_normalise_doi(d) for d in df_existing["doi"].dropna()} - {""}
-        mask = ~df_new["doi"].apply(_normalise_doi).isin(existing_dois)
-    else:
-        mask = pd.Series([True] * len(df_new))
-    to_append = df_new[mask]
+    to_append, reasons = select_master_csv_appends(df_existing, df_new)
+    log.info(f"  Master CSV dedupe: {len(df_new)} offered, {len(to_append)} to append; "
+             f"dropped by id {reasons['literature_id']}, DOI {reasons['doi']}, "
+             f"title+year {reasons['title_year']}, within batch {reasons['within_batch']}")
+    if reasons["title_year_ids"]:
+        log.warning(f"  Master CSV: {reasons['title_year']} row(s) skipped only on an exact "
+                    f"title+year match with an id-less row: {reasons['title_year_ids'][:20]}")
+    warning = check_append_plausible(len(to_append), len(df_new), log)
+    if warning and errors is not None:
+        errors.append(warning)
 
     if len(to_append) == 0:
         log.info("No new papers to append to master CSV")
-        return
+        return 0
 
     df_combined = pd.concat([df_existing, to_append], ignore_index=True)
     df_combined.to_csv(master, index=False, encoding="utf-8")
     log.info(f"Appended {len(to_append)} papers to {master.name}")
+    return len(to_append)
 
 
-def add_to_papers_data(new_papers, downloaded_ids, log):
-    """Add new papers that failed download (or had no PDF) to papers_data.json."""
+def _papers_data_mutate(**kwargs):
+    """The locked read-modify-write from scripts/lib/papers_data_io.py.
+
+    papers_data.json has more than one writer (the cascade, ingest, DOI
+    recovery, coauthor scan). A naive read-modify-write here would silently
+    erase rows another process added while the sync ran, so every write goes
+    through the shared lock. Imported lazily so tests can repoint the module
+    at a temporary file.
+    """
+    scripts_dir = str(Path(__file__).resolve().parent)
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from lib import papers_data_io
+    return papers_data_io.mutate(**kwargs)
+
+
+def add_to_papers_data(new_papers, downloaded_ids, log) -> int:
+    """Add new papers that failed download (or had no PDF) to papers_data.json.
+
+    Returns the number of rows added. The existing-id check is made inside
+    the lock, against the file as it is at write time.
+    """
     if not PAPERS_DATA.exists():
-        return
+        return 0
 
-    data = json.loads(PAPERS_DATA.read_text())
-    existing_ids = {str(p.get("literature_id", "")) for p in data}
+    downloaded_ids = {_normalise_lid(i) for i in downloaded_ids}
+    candidates = [p for p in new_papers
+                  if _normalise_lid(p.get("literature_id", "")) not in downloaded_ids]
+    if not candidates:
+        return 0
 
     added = 0
-    for p in new_papers:
-        lid = str(p.get("literature_id", ""))
-        if lid in downloaded_ids or lid in existing_ids:
-            continue  # successfully downloaded or already on the list
-        data.append({
-            "id": len(data) + 1,
-            "literature_id": lid,
-            "year": p.get("year", ""),
-            "authors": p.get("authors", ""),
-            "title": p.get("title", ""),
-            "journal": p.get("findspot", ""),
-            "doi": p.get("doi", ""),
-            "priority_group": 3,
-            "last_status": "sr_sync_new",
-            "notes": f"Added by SR sync. PDF URL: {p.get('pdf_url', 'none')}",
-            "oa_status": "unknown",
-            "oa_url": "",
-            "oa_host_type": "",
-            "oa_license": "",
-            "journal_clean": "",
-            "publisher": "",
-        })
-        added += 1
+    with _papers_data_mutate() as data:
+        existing_ids = {_normalise_lid(p.get("literature_id", "")) for p in data}
+        for p in candidates:
+            lid = _normalise_lid(p.get("literature_id", ""))
+            if not lid or lid in existing_ids:
+                continue  # already on the list
+            existing_ids.add(lid)
+            data.append({
+                "id": len(data) + 1,
+                "literature_id": lid,
+                "year": p.get("year", ""),
+                "authors": p.get("authors", ""),
+                "title": p.get("title", ""),
+                "journal": p.get("findspot", ""),
+                "doi": p.get("doi", ""),
+                "priority_group": 3,
+                "last_status": "sr_sync_new",
+                "notes": f"Added by SR sync. PDF URL: {p.get('pdf_url', 'none')}",
+                "oa_status": "unknown",
+                "oa_url": "",
+                "oa_host_type": "",
+                "oa_license": "",
+                "journal_clean": "",
+                "publisher": "",
+            })
+            added += 1
+        # mutate() writes on clean exit whether or not anything changed; an
+        # unchanged rewrite is harmless (same rows, fresh backup).
 
     if added:
-        PAPERS_DATA.write_text(json.dumps(data, indent=2, ensure_ascii=False))
         log.info(f"Added {added} new papers to papers_data.json (failed/no-PDF downloads)")
+    return added
 
 
-def remove_from_papers_data(downloaded_ids, log):
-    """Remove successfully-downloaded papers from papers_data.json."""
+def remove_from_papers_data(downloaded_ids, log, downloaded_papers=None,
+                            report: dict | None = None) -> int:
+    """Remove successfully-downloaded papers from papers_data.json.
+
+    A queue row is removed if its literature_id was downloaded. It is also
+    removed as the DOI twin of a downloaded paper (the same paper queued
+    under a synthetic 500000+ id while SR lists it under its SR id), but
+    only when ALL of these hold, checked inside the lock:
+
+      * the row's id differs from the downloaded paper's id;
+      * that DOI occurs on exactly ONE row of papers_data.json (the live
+        queue has 21 DOIs shared by 2-3 distinct rows: book chapters on a
+        book DOI, a symposium issue's papers on one DOI);
+      * the titles agree (_same_paper: two-sided token overlap >= 0.8, year
+        within +/-1 when both are known).
+
+    Any other row sharing a downloaded DOI is kept and counted into
+    ``report["same_doi_kept"]`` (with examples in
+    ``report["same_doi_kept_rows"]``) so the summary can show it.
+
+    ``downloaded_papers`` are the SR paper dicts that were downloaded; only
+    their literature_id, doi, title and year are read. Returns the number of
+    rows removed, counted inside the lock.
+    """
+    downloaded_ids = {_normalise_lid(i) for i in (downloaded_ids or ())} - {""}
+    refs = [p for p in (downloaded_papers or ())
+            if _doi_of(p)
+            and _normalise_lid(p.get("literature_id", "")) in downloaded_ids]
     if not downloaded_ids or not PAPERS_DATA.exists():
-        return
+        return 0
 
-    data = json.loads(PAPERS_DATA.read_text())
-    before = len(data)
-    data = [p for p in data if str(p.get("literature_id", "")) not in downloaded_ids]
-    after = len(data)
+    kept_rows = []
+    with _papers_data_mutate(allow_deletions=True) as data:
+        before = len(data)
+        doi_count = Counter(_doi_of(p) for p in data)
+        doi_count.pop("", None)
+        refs_by_doi: dict = {}
+        for r in refs:
+            refs_by_doi.setdefault(_doi_of(r), []).append(r)
 
-    if before != after:
-        PAPERS_DATA.write_text(json.dumps(data, indent=2, ensure_ascii=False))
-        log.info(f"Removed {before - after} entries from papers_data.json ({after} remaining)")
+        def gone(p):
+            lid = _normalise_lid(p.get("literature_id", ""))
+            if lid in downloaded_ids:
+                return True
+            doi = _doi_of(p)
+            if not doi or doi not in refs_by_doi:
+                return False
+            twins = [r for r in refs_by_doi[doi]
+                     if _normalise_lid(r["literature_id"]) != lid
+                     and _same_paper(r.get("title"), r.get("year"),
+                                     p.get("title"), p.get("year"))]
+            if doi_count[doi] == 1 and twins:
+                return True
+            kept_rows.append({"literature_id": lid, "doi": doi,
+                              "doi_rows_in_queue": doi_count[doi],
+                              "title_agrees": bool(twins),
+                              "title": (p.get("title") or "")[:80]})
+            return False
+
+        # Slice assignment: mutate() writes the list object it handed out.
+        data[:] = [p for p in data if not gone(p)]
+        removed = before - len(data)
+        remaining = len(data)
+
+    if kept_rows:
+        log.warning(f"  Kept {len(kept_rows)} queue row(s) sharing a downloaded paper's DOI "
+                    f"(DOI on several rows, or titles disagree): "
+                    f"{[r['literature_id'] for r in kept_rows[:20]]}")
+    if report is not None:
+        report["same_doi_kept"] = report.get("same_doi_kept", 0) + len(kept_rows)
+        report.setdefault("same_doi_kept_rows", []).extend(kept_rows)
+    if removed:
+        log.info(f"Removed {removed} entries from papers_data.json ({remaining} remaining)")
+    return removed
 
 
 def generate_feedback_report(sr_papers, known_ids, needs_pdf_ids, log):
@@ -1063,7 +1397,8 @@ def run_incremental_extraction(target_ids: set[str], log) -> int:
         # Lazy import to avoid pulling extraction deps when --no-extract is set
         from extract_schema_columns import (
             ALL_SCHEMAS, OUTPUT_PARQUET, EVIDENCE_CSV, PDF_BASE as EXTRACT_PDF_BASE,
-            build_pdf_index, init_worker, process_paper,
+            apply_incremental_results, build_pdf_index, init_worker,
+            normalize_binary_columns, process_paper,
         )
     except Exception as e:
         log.error(f"  Incremental extraction unavailable (import error): {e}")
@@ -1104,21 +1439,22 @@ def run_incremental_extraction(target_ids: set[str], log) -> int:
         update_df = results_df[update_mask]
         append_df = results_df[~update_mask]
 
+        binary_cols = [c.name for s in ALL_SCHEMAS for c in s.columns]
+
+        # apply_incremental_results() overwrites matched columns
+        # unconditionally (a retracted row IS eligible for re-extraction —
+        # nothing here skips it), graduates RETRACTED_STATUS ->
+        # RE_EXTRACTED_STATUS for rows that were retracted before this run,
+        # and normalises the binary columns so still-retracted rows
+        # elsewhere in df_enr keep their NULLs. See extract_schema_columns.py.
         if len(update_df):
-            lookup = dict(zip(update_df["literature_id"], update_df.index))
-            new_cols = [c for c in update_df.columns if c != "literature_id"]
-            for idx, lid in enumerate(df_enr["literature_id"]):
-                if lid in lookup:
-                    src = update_df.loc[lookup[lid]]
-                    for col in new_cols:
-                        df_enr.at[idx, col] = src[col]
+            df_enr, n_updated = apply_incremental_results(df_enr, update_df, binary_cols)
+        else:
+            n_updated = 0
         if len(append_df):
             df_enr = pd.concat([df_enr, append_df], ignore_index=True)
+            df_enr = normalize_binary_columns(df_enr, binary_cols)
 
-        binary_cols = [c.name for s in ALL_SCHEMAS for c in s.columns]
-        for c in binary_cols:
-            if c in df_enr.columns:
-                df_enr[c] = df_enr[c].fillna(0).astype(int)
         df_enr.to_parquet(OUTPUT_PARQUET, index=False)
         log.info(f"  Enriched parquet: updated {len(update_df)}, "
                  f"appended {len(append_df)} (total {len(df_enr)})")
@@ -1142,6 +1478,97 @@ def run_incremental_extraction(target_ids: set[str], log) -> int:
         return 0
 
 
+def plan_phase5b(new_papers, needs_pdf_papers, downloaded_ids, known_ids, known_dois,
+                 parquet_doi_rows: dict | None = None) -> dict:
+    """Decide which downloaded papers Phase 5 removes and Phase 5b propagates.
+
+    Returns a dict of lists of SR paper dicts:
+
+    new_to_propagate
+        genuinely new papers whose PDF was downloaded (unchanged behaviour).
+    queue_only_to_propagate
+        known papers that were on papers_data.json but NOT in the parquet by
+        literature_id OR by DOI, whose PDF was downloaded. They need a base
+        parquet row, and before 2026-09-14 they reached Phase 5b as "new"
+        with Phase 3 details and Phase 3b DOI checks, so the caller runs
+        those on this (small) subset before propagating.
+    held_by_doi
+        the SR id is not in the parquet but the DOI is, on exactly ONE
+        parquet row whose title agrees (_same_paper). The parquet holds the
+        paper under a synthetic 500000+ id, so it is not propagated (that
+        would be a second row) and is taken off the queue.
+    doi_conflict_review
+        the SR id is not in the parquet and the DOI is, but on several
+        parquet rows, or on one row whose title disagrees, or on a row with
+        no usable title. A DOI alone cannot say whether this is the held
+        paper or a different one sharing the DOI (a chapter on a book DOI).
+        CHOICE: neither propagate (a wrong guess makes a duplicate row) nor
+        silently skip. The paper is left on papers_data.json and counted in
+        the summary as needing review, so a person decides.
+
+    ``parquet_doi_rows`` maps a normalised DOI to [(literature_id, title,
+    year), ...] for every parquet row carrying it. Without it every DOI hit
+    goes to doi_conflict_review, which is the safe default.
+    """
+    downloaded = {_normalise_lid(i) for i in downloaded_ids} - {""}
+    parquet_doi_rows = parquet_doi_rows or {}
+    plan = {"new_to_propagate": [], "queue_only_to_propagate": [], "held_by_doi": [],
+            "doi_conflict_review": []}
+    for p in new_papers:
+        if _normalise_lid(p.get("literature_id", "")) in downloaded:
+            plan["new_to_propagate"].append(p)
+    for p in needs_pdf_papers:
+        lid = _normalise_lid(p.get("literature_id", ""))
+        if not lid or lid not in downloaded or lid in known_ids:
+            continue
+        doi = _doi_of(p)
+        if not (doi and doi in known_dois):
+            plan["queue_only_to_propagate"].append(p)
+            continue
+        rows = parquet_doi_rows.get(doi, [])
+        if len(rows) == 1 and _same_paper(p.get("title"), p.get("year"), rows[0][1], rows[0][2]):
+            plan["held_by_doi"].append(p)
+        else:
+            plan["doi_conflict_review"].append(p)
+    return plan
+
+
+def phase5_removal_ids(plan: dict, downloaded_ids) -> set:
+    """Downloaded ids Phase 5 may take off the queue now.
+
+    Excludes queue-only papers (removed after Phase 5b has propagated them)
+    and DOI conflicts (left queued for review; see plan_phase5b).
+    """
+    hold = {_normalise_lid(p["literature_id"])
+            for p in plan["queue_only_to_propagate"] + plan["doi_conflict_review"]}
+    return {_normalise_lid(i) for i in downloaded_ids} - {""} - hold
+
+
+def build_parquet_doi_rows(df) -> dict:
+    """{normalised DOI: [(literature_id, title, year), ...]} from a parquet frame."""
+    out: dict = {}
+    for lid, doi, title, year in zip(df["literature_id"], df["doi"], df["title"], df["year"]):
+        d = _normalise_doi(doi) if isinstance(doi, str) else ""
+        if d:
+            out.setdefault(d, []).append((_normalise_lid(lid), title, year))
+    return out
+
+
+def enrich_queue_only_papers(session, papers, log) -> int:
+    """Phase 3 detail fetch for the downloaded queue-only subset.
+
+    Deliberately NOT enrich_new_papers(): that resumes from the Phase 3
+    checkpoint (phase3_last_id), which would skip every paper in a different
+    list, and it rewrites the checkpoint that still holds Phase 4 progress.
+    The subset is small (a handful per run), so no checkpointing is needed.
+    """
+    for i, paper in enumerate(papers):
+        paper.update(fetch_details(session, paper, log))
+        if i < len(papers) - 1:
+            time.sleep(DETAIL_DELAY)
+    return len(papers)
+
+
 def build_summary(stats: dict) -> tuple[str, str]:
     """Build short (ntfy) and long (email) summaries from run stats."""
     short = (
@@ -1156,6 +1583,11 @@ def build_summary(stats: dict) -> tuple[str, str]:
     if stats.get("dedupe_linked"):
         short += (f", {stats['dedupe_linked']} dupes linked "
                   f"({stats['dedupe_reclaimed_mb']:.0f} MB)")
+    if any(str(e).startswith("IMPLAUSIBLE") for e in stats.get("errors", [])):
+        short += " | WARNING implausible master CSV append (see email)"
+    if stats.get("doi_conflict_review") or stats.get("same_doi_kept"):
+        short += (f" | review: {stats.get('doi_conflict_review', 0)} DOI conflict(s), "
+                  f"{stats.get('same_doi_kept', 0)} same-DOI row(s) kept")
     if stats.get("doi_rejected"):
         short += f" | WARNING {stats['doi_rejected']} bad DOI(s) quarantined"
 
@@ -1164,8 +1596,10 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"{'=' * 60}",
         f"",
         f"Papers on SR:         {stats['sr_total']:,}",
-        f"Known in our DB:      {stats['known_total']:,}",
+        f"Known in parquet:     {stats['known_total']:,}",
         f"Still need PDFs:      {stats['needs_pdf_total']:,}",
+        f"On SR, queued in papers_data.json but not in parquet: "
+        f"{stats.get('known_queue_only', 0):,} (known, NOT counted as new)",
         f"",
         f"--- Orphan staging (Phase 0) ---",
         f"Orphan PDFs scanned:  {stats.get('orphans_scanned', 0)}",
@@ -1173,7 +1607,7 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"Orphans unresolved:   {stats.get('orphans_failed', 0)}",
         f"",
         f"--- New papers ---",
-        f"New papers found:     {stats['new_found']}",
+        f"New papers found:     {stats['new_found']} (absent from parquet AND papers_data.json)",
         f"Details fetched:      {stats['details_fetched']}",
         f"",
         f"--- PDF downloads ---",
@@ -1190,7 +1624,11 @@ def build_summary(stats: dict) -> tuple[str, str]:
         f"",
         f"--- State updates ---",
         f"Appended to CSV:      {stats['csv_appended']}",
+        f"Added to JSON:        {stats.get('json_added', 0)}",
         f"Removed from JSON:    {stats['json_removed']}",
+        f"Same-DOI queue rows kept (ambiguous): {stats.get('same_doi_kept', 0)}",
+        f"DOI conflicts left queued for review: {stats.get('doi_conflict_review', 0)}"
+        + (f" {stats['doi_conflict_review_ids'][:20]}" if stats.get('doi_conflict_review') else ""),
         f"SR feedback entries:  {stats['feedback_count']}",
         f"",
         f"--- Parquet propagation (Phase 5b) ---",
@@ -1249,7 +1687,9 @@ def main():
     parser.add_argument("--no-verify-dois", action="store_true",
                         help="Skip Phase 3b Crossref DOI verification")
     parser.add_argument("--no-extract", action="store_true",
-                        help="Skip Phase 5b parquet propagation + incremental extraction")
+                        help="Skip Phase 5b parquet propagation + incremental extraction. "
+                        "Downloaded papers that are queued but not in the parquet stay "
+                        "on papers_data.json until the next run without this flag")
     parser.add_argument("--no-dedupe", action="store_true",
                         help="Skip Phase 5c hardlink sweep of duplicate PDFs")
     args = parser.parse_args()
@@ -1334,16 +1774,25 @@ def main():
         # --- Load our state ---
         log.info("Loading known papers...")
         df_known = pd.read_parquet(PARQUET, columns=["literature_id", "doi"])
-        known_ids = set(df_known["literature_id"].dropna().astype(str))
+        known_ids = set(df_known["literature_id"].map(_normalise_lid)) - {""}
         known_dois = {_normalise_doi(d) for d in df_known["doi"].dropna().astype(str)} - {""}
         stats["known_total"] = len(known_ids)
         log.info(f"  Known papers: {len(known_ids):,} (by ID), {len(known_dois):,} (by DOI)")
+        # Titles for the DOI-twin checks come from the BASE parquet: 1,209
+        # enriched rows have a null title (measured 2026-09-14).
+        try:
+            parquet_doi_rows = build_parquet_doi_rows(pd.read_parquet(
+                BASE_PARQUET, columns=["literature_id", "doi", "title", "year"]))
+        except Exception as e:  # noqa: BLE001
+            log.warning(f"  Base parquet titles unavailable ({e}); DOI-only matches "
+                        f"will be flagged for review, not treated as held")
+            parquet_doi_rows = {}
 
         needs_pdf_ids = set()
         needs_pdf_dois = set()
         if PAPERS_DATA.exists():
             papers_data = json.loads(PAPERS_DATA.read_text())
-            needs_pdf_ids = {str(p.get("literature_id", "")) for p in papers_data}
+            needs_pdf_ids = {_normalise_lid(p.get("literature_id", "")) for p in papers_data}
             needs_pdf_ids.discard("")
             needs_pdf_dois = {_normalise_doi(p.get("doi", "")) for p in papers_data} - {""}
         stats["needs_pdf_total"] = len(needs_pdf_ids)
@@ -1361,17 +1810,25 @@ def main():
         # --- Phase 2: Diff ---
         log.info("")
         log.info("Phase 2: Diffing against known papers...")
+        diff_counts: dict = {}
         new_papers, needs_pdf_papers = diff_papers(
-            sr_papers, known_ids, known_dois, needs_pdf_ids, needs_pdf_dois, log
+            sr_papers, known_ids, known_dois, needs_pdf_ids, needs_pdf_dois, log,
+            counts=diff_counts,
         )
+        # new_found is GENUINELY new: absent from the parquet and from
+        # papers_data.json. Papers queued by an earlier run but not yet in
+        # the parquet are reported separately as known_queue_only.
         stats["new_found"] = len(new_papers)
+        stats["known_queue_only"] = diff_counts["known_queue_only"]
+        stats["needs_pdf_with_sr_link"] = diff_counts["needs_pdf"]
         stats["new_paper_list"] = new_papers[:50]
 
         if args.dry_run:
             log.info("")
             log.info("DRY RUN — stopping here. Summary:")
             log.info(f"  SR total:        {stats['sr_total']:,}")
-            log.info(f"  New papers:      {stats['new_found']}")
+            log.info(f"  New papers:      {stats['new_found']} (genuinely new)")
+            log.info(f"  Queued, not in parquet: {stats['known_queue_only']} (not counted as new)")
             log.info(f"  Known need PDF:  {len(needs_pdf_papers)}")
             if new_papers:
                 log.info("  New papers found:")
@@ -1480,20 +1937,38 @@ def main():
         log.info("Phase 5: Updating state...")
 
         if new_papers:
-            append_to_master_csv(new_papers, log)
-            stats["csv_appended"] = len(new_papers)
+            # Count what was actually written, not what was offered: the
+            # headline used to report len(new_papers) here.
+            stats["csv_appended"] = append_to_master_csv(new_papers, log,
+                                                         errors=stats["errors"])
             # Add new papers that failed download (or had no PDF) to todo list
-            add_to_papers_data(new_papers, downloaded_ids, log)
+            stats["json_added"] = add_to_papers_data(new_papers, downloaded_ids, log)
 
+        # Queue-only papers (on papers_data.json, not in the parquet) that
+        # downloaded this run stay queued until Phase 5b has given them a
+        # base parquet row. Removing them first meant a --no-extract run, or
+        # a crash in Phase 5b, dropped them from both stores. Under
+        # --no-extract they remain queued; the next extracting run finds the
+        # PDF on disk ("exists" counts as downloaded) and propagates them.
+        plan = plan_phase5b(new_papers, needs_pdf_papers, downloaded_ids,
+                            known_ids, known_dois, parquet_doi_rows)
+        deferred = plan["queue_only_to_propagate"]
+        deferred_ids = {_normalise_lid(p["literature_id"]) for p in deferred}
+        # DOI conflicts stay queued for a person to decide (see plan_phase5b).
+        review_ids = {_normalise_lid(p["literature_id"]) for p in plan["doi_conflict_review"]}
+        stats["doi_conflict_review"] = len(review_ids)
+        stats["doi_conflict_review_ids"] = sorted(review_ids)
+        if review_ids:
+            log.warning(f"  {len(review_ids)} downloaded paper(s) share a DOI with parquet "
+                        f"row(s) that are not clearly the same paper: left queued for "
+                        f"review, not propagated: {sorted(review_ids)[:20]}")
         if downloaded_ids:
-            json_before = len(needs_pdf_ids)
-            remove_from_papers_data(downloaded_ids, log)
-            # Re-read to get actual count
-            if PAPERS_DATA.exists():
-                json_after = len(json.loads(PAPERS_DATA.read_text()))
-            else:
-                json_after = 0
-            stats["json_removed"] = json_before - (json_after if PAPERS_DATA.exists() else 0)
+            remove_now = phase5_removal_ids(plan, downloaded_ids)
+            stats["json_removed"] = remove_from_papers_data(
+                remove_now, log,
+                downloaded_papers=[p for p in list(new_papers) + list(needs_pdf_papers)
+                                   if _normalise_lid(p.get("literature_id", "")) in remove_now],
+                report=stats)
 
         feedback_count = generate_feedback_report(sr_papers, known_ids, needs_pdf_ids, log)
         stats["feedback_count"] = feedback_count
@@ -1507,19 +1982,36 @@ def main():
             log.info("")
             log.info("Phase 5b: Propagating to base parquet + extracting...")
 
-            ids_to_propagate = set(orphan_new_ids)
-            for p in new_papers:
-                lid = str(p.get("literature_id", "")).strip()
-                if lid and lid in downloaded_ids:
-                    ids_to_propagate.add(lid)
+            # A queue-only paper that downloaded needs a base parquet row or
+            # extraction finds nothing for it. Before propagating, give it
+            # what it used to get as a "new" paper: Phase 3 details and the
+            # Phase 3b Crossref DOI check (respecting --no-verify-dois).
+            if deferred:
+                log.info(f"  {len(deferred)} downloaded queue-only paper(s): "
+                         f"fetching details before propagation")
+                enrich_queue_only_papers(session, deferred, log)
+                if not args.no_verify_dois:
+                    q_doi = verify_new_paper_dois(session, deferred, log)
+                    stats["doi_checked"] = stats.get("doi_checked", 0) + q_doi["checked"]
+                    stats["doi_ok"] = stats.get("doi_ok", 0) + q_doi["ok"]
+                    stats["doi_rejected"] = stats.get("doi_rejected", 0) + q_doi["rejected"]
+                    stats["doi_unverifiable"] = (stats.get("doi_unverifiable", 0)
+                                                 + q_doi["unverifiable"])
+            if plan["held_by_doi"]:
+                log.info(f"  {len(plan['held_by_doi'])} downloaded paper(s) already in the "
+                         f"parquet under another id (DOI match): not propagated")
 
-            if new_papers:
-                added = propagate_to_base_parquet(
-                    [p for p in new_papers
-                     if str(p.get("literature_id", "")) in ids_to_propagate],
-                    log,
-                )
+            propagate_candidates = plan["new_to_propagate"] + deferred
+            if propagate_candidates:
+                added = propagate_to_base_parquet(propagate_candidates, log)
                 stats["base_parquet_added"] = added
+
+            # Only now, with a base row in place, take the deferred papers
+            # off the queue. Their DOI is used as-is after verification (a
+            # rejected DOI was blanked, so it cannot remove the wrong row).
+            if deferred and BASE_PARQUET.exists():
+                stats["json_removed"] = stats.get("json_removed", 0) + remove_from_papers_data(
+                    deferred_ids, log, downloaded_papers=deferred, report=stats)
 
             ids_to_extract = set(orphan_new_ids)
             for p in new_papers:

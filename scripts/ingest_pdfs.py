@@ -23,6 +23,7 @@ import json
 import re
 import shutil
 import subprocess
+import sys
 import time
 import unicodedata
 from datetime import datetime
@@ -1293,17 +1294,34 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
 # Tracking updates (from ingest_jurgen_pdfs.py pattern)
 # ---------------------------------------------------------------------------
 
+def _papers_data_mutate(**kwargs):
+    """The locked read-modify-write from scripts/lib/papers_data_io.py.
+
+    papers_data.json has more than one writer (the cascade, this ingest
+    pass, DOI recovery, the SR sync, the coauthor scan). Imported lazily,
+    with the scripts/ dir put on sys.path, so tests can repoint the module
+    at a temporary file -- mirrors the pattern in sync_shark_references.py.
+    """
+    scripts_dir = str(Path(__file__).resolve().parent)
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from lib import papers_data_io
+    return papers_data_io.mutate(**kwargs)
+
+
 def update_papers_data_json(copied_ids: set, copied_dois: set,
                             timestamp: str, source_label: str) -> int:
     """Remove matched papers from docs/papers_data.json (they are no longer missing).
 
-    Matches by literature_id first, then by DOI for papers with empty literature_ids.
+    Matches by literature_id first, then by DOI for papers with empty
+    literature_ids. The match sets built below are pure id/DOI string work
+    (no PDF I/O), so they cost nothing to build before taking the lock;
+    the actual filter is then applied to the list mutate() re-reads fresh,
+    so a row another writer added or removed between this function being
+    called and the lock being acquired is not silently clobbered by an
+    earlier read of the file.
     """
     if not PAPERS_DATA_JSON.exists():
-        return 0
-    with open(PAPERS_DATA_JSON) as f:
-        data = json.load(f)
-    if not data:
         return 0
 
     id_lookup = set()
@@ -1328,23 +1346,20 @@ def update_papers_data_json(copied_ids: set, copied_dois: set,
         if nd:
             doi_lookup.add(nd)
 
-    before = len(data)
-    filtered = []
-    for entry in data:
+    if not id_lookup and not doi_lookup:
+        return 0
+
+    def matched(entry) -> bool:
         lid = str(entry.get("literature_id", "")).strip()
         if lid and lid in id_lookup:
-            continue  # matched by literature_id
+            return True  # matched by literature_id
         entry_doi = normalise_doi(str(entry.get("doi", "")))
-        if entry_doi and entry_doi in doi_lookup:
-            continue  # matched by DOI (catches empty-lit_id papers)
-        filtered.append(entry)
-    data = filtered
-    after = len(data)
-    removed = before - after
+        return bool(entry_doi and entry_doi in doi_lookup)  # matched by DOI
 
-    if removed > 0:
-        with open(PAPERS_DATA_JSON, "w") as f:
-            json.dump(data, f, indent=2)
+    with _papers_data_mutate(allow_deletions=True) as data:
+        before = len(data)
+        data[:] = [entry for entry in data if not matched(entry)]
+        removed = before - len(data)
 
     return removed
 

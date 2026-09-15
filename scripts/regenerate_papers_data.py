@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -19,6 +20,8 @@ PROJECT = Path(__file__).resolve().parent.parent
 LIB = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers")
 QUEUE = PROJECT / "docs" / "papers_data.json"
 HTML_PAGE = PROJECT / "docs" / "remaining_downloads.html"
+
+SCRIPTS_DIR = str(Path(__file__).resolve().parent)
 
 _FNAME_RE = re.compile(
     r"^([A-Za-zÀ-ÿ'\-]+?)[.\- ](?:etal\.)?(\d{4})\.(.+)\.pdf$",
@@ -80,6 +83,19 @@ def filter_queue(queue: list[dict], pdf_idx: dict) -> tuple[list[dict], list[dic
     return kept, removed
 
 
+def _papers_data_mutate(**kwargs):
+    """The locked read-modify-write from scripts/lib/papers_data_io.py.
+
+    Imported lazily, with the scripts/ dir put on sys.path, so tests can
+    repoint the module at a temporary file -- mirrors the pattern in
+    sync_shark_references.py and ingest_pdfs.py.
+    """
+    if SCRIPTS_DIR not in sys.path:
+        sys.path.insert(0, SCRIPTS_DIR)
+    from lib import papers_data_io
+    return papers_data_io.mutate(**kwargs)
+
+
 def update_html_stamp(new_count: int) -> None:
     if not HTML_PAGE.exists():
         return
@@ -101,27 +117,65 @@ def main() -> None:
     args = ap.parse_args()
 
     print("Scanning PDF library…")
+    # Heavy local I/O (a full rglob of the PDF library) -- done before any
+    # lock is taken, so a concurrent papers_data.json writer is never kept
+    # waiting on a filesystem walk that has nothing to do with the lock.
     pdf_idx = build_pdf_index()
     total_pdfs = sum(len(v) for v in pdf_idx.values())
     print(f"  {len(pdf_idx):,} (surname, year) keys · {total_pdfs:,} PDFs indexed")
 
-    print("Loading queue…")
-    queue = json.loads(QUEUE.read_text())
-    print(f"  {len(queue):,} entries loaded")
-
-    kept, removed = filter_queue(queue, pdf_idx)
-    print(f"Removing {len(removed):,} entries with matched PDFs on disk")
-    print(f"New queue size: {len(kept):,}")
-
     if args.dry_run:
+        print("Loading queue…")
+        queue = json.loads(QUEUE.read_text())
+        print(f"  {len(queue):,} entries loaded")
+        kept, removed = filter_queue(queue, pdf_idx)
+        print(f"Removing {len(removed):,} entries with matched PDFs on disk")
+        print(f"New queue size: {len(kept):,}")
         print("\n(dry-run — nothing written)")
         return
 
-    # Reassign id field to be consecutive (DataTables uses it as a stable key)
-    for i, entry in enumerate(kept, start=1):
-        entry["id"] = i
+    # This script is a WHOLE-FILE regeneration by design, not an id-keyed
+    # patch: every surviving row gets a fresh, consecutive `id` (the
+    # DataTables page depends on it being dense), so the decision has to
+    # be made over the full row set, not a diff against a handful of
+    # literature_ids like the cascade's or ingest_pdfs's writers.
+    #
+    # Two ways to make a whole-file decision safe against a writer that
+    # mutates the file concurrently were considered:
+    #   (a) read once, decide kept/removed, then refuse to write if the
+    #       file's mtime/hash changed while filter_queue() ran; or
+    #   (b) re-run filter_queue() itself on the list mutate() hands back
+    #       AFTER it re-reads the file inside the lock, and let that
+    #       fresh decision be what gets written.
+    # (b) is what is implemented below. filter_queue() is a pure function
+    # of each entry's own fields (author/year/title) plus pdf_idx (built
+    # once, above, and independent of papers_data.json's contents) -- its
+    # answer for a given entry does not depend on when the list was read,
+    # so re-deriving kept/removed against the FRESH in-lock list is exactly
+    # as correct as deriving it against a stale one. (a) would instead make
+    # this script simply fail (and need a re-run) any time another writer
+    # happens to touch the file in the few seconds this one takes, with no
+    # gain: it would still filter and reassign against the same file it
+    # could just filter now. (b) has no such failure mode -- a row another
+    # writer added concurrently gets judged on its own merits (kept or
+    # matched-and-removed exactly as any other row); a row another writer
+    # removed concurrently is simply absent from the fresh list and never
+    # considered; nothing this script itself decided to remove needs
+    # allow_deletions to mean anything other than "some rows now have a
+    # matching PDF."
+    with _papers_data_mutate(allow_deletions=True) as queue:
+        print(f"  {len(queue):,} entries loaded (fresh, inside the lock)")
+        kept, removed = filter_queue(queue, pdf_idx)
+        print(f"Removing {len(removed):,} entries with matched PDFs on disk")
+        print(f"New queue size: {len(kept):,}")
 
-    QUEUE.write_text(json.dumps(kept, indent=2, ensure_ascii=False))
+        # Reassign id field to be consecutive (DataTables uses it as a
+        # stable key). Slice assignment onto `queue` (not a rebind) is
+        # required -- mutate() writes back the list object it handed out.
+        for i, entry in enumerate(kept, start=1):
+            entry["id"] = i
+        queue[:] = kept
+
     update_html_stamp(len(kept))
     print(f"\nWrote {QUEUE.relative_to(PROJECT)} ({len(kept):,} entries)")
     print(f"Updated Updated-stamp in {HTML_PAGE.relative_to(PROJECT)}")

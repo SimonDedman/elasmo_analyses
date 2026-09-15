@@ -27,6 +27,7 @@ from extract_schema_columns import (
     OUTPUT_PARQUET,
     EVIDENCE_CSV,
     PDF_BASE,
+    apply_incremental_results,
     build_pdf_index,
     init_worker,
     process_paper,
@@ -116,30 +117,15 @@ def main() -> None:
     # --- Patch into enriched parquet ---
     print(f"\nPatching into {OUTPUT_PARQUET} ...")
     df_enriched = pd.read_parquet(OUTPUT_PARQUET)
-    df_enriched["literature_id"] = df_enriched["literature_id"].astype(str)
-    results_df["literature_id"] = results_df["literature_id"].astype(str)
 
-    # Build lookup from results
-    results_lookup = {}
-    for i, lid in enumerate(results_df["literature_id"]):
-        if lid not in results_lookup:
-            results_lookup[lid] = i
-
-    # Update columns for matched papers
-    new_cols = [c for c in results_df.columns if c != "literature_id"]
-    updated = 0
-    for idx, lid in enumerate(df_enriched["literature_id"]):
-        if lid in results_lookup:
-            ri = results_lookup[lid]
-            for col in new_cols:
-                df_enriched.at[idx, col] = results_df.at[ri, col]
-            updated += 1
-
-    # Ensure binary columns are int
+    # apply_incremental_results() overwrites matched columns unconditionally
+    # (so a retracted row IS eligible for re-extraction — nothing here skips
+    # it), graduates RETRACTED_STATUS -> RE_EXTRACTED_STATUS for rows that
+    # were retracted before this run, and 0-fills/normalises the binary
+    # columns for everything else while leaving still-retracted rows' NULLs
+    # intact. See extract_schema_columns.py.
     binary_cols = [col.name for schema in ALL_SCHEMAS for col in schema.columns]
-    for col_name in binary_cols:
-        if col_name in df_enriched.columns:
-            df_enriched[col_name] = df_enriched[col_name].fillna(0).astype(int)
+    df_enriched, updated = apply_incremental_results(df_enriched, results_df, binary_cols)
 
     df_enriched.to_parquet(OUTPUT_PARQUET, index=False)
     print(f"Updated {updated} rows in enriched parquet ({len(df_enriched)} total)")

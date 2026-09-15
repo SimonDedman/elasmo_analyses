@@ -468,6 +468,146 @@ ALL_SCHEMAS = [ECO, PR, GEAR, IMP, DISC, BASIN, SUB_BASIN]
 
 
 # ---------------------------------------------------------------------------
+# Retraction provenance (2026-09-14). scripts/retract_wrong_pdf_extractions.py
+# owns the act of retracting a misfiled-PDF row (nulling its extraction
+# columns and stamping these); this module owns the vocabulary and the one
+# place that fills/casts the binary columns, so every writer that touches
+# them — this script's own main(), extract_incremental.py,
+# sync_shark_references.py's run_incremental_extraction() — normalises them
+# identically instead of drifting. See
+# outputs/misfile_blast_radius_2026-09-14/retraction_dry_run.txt.
+# ---------------------------------------------------------------------------
+
+EXTRACTION_STATUS_COL = "extraction_status"
+RETRACTED_STATUS = "retracted_wrong_pdf"
+RE_EXTRACTED_STATUS = "re_extracted"
+PROVENANCE_COLS = [
+    EXTRACTION_STATUS_COL,
+    "extraction_retracted_at",
+    "extraction_retracted_reason",
+]
+
+
+def normalize_binary_columns(
+    df: pd.DataFrame, binary_cols: list[str] | None = None,
+) -> pd.DataFrame:
+    """0-fill NaN binary columns, except for rows retracted as
+    RETRACTED_STATUS, whose NaN must survive.
+
+    Binary columns are plain 0/1 with no NaN in the shipped parquet — every
+    writer used to do ``df[col].fillna(0).astype(int)`` unconditionally,
+    which is exactly what silently re-zeroes a retracted row's NULLs on the
+    next incremental extraction or monthly sync. This is the one place that
+    fill happens now.
+
+    dtype: a plain numpy int64 column cannot hold NaN at all (pandas would
+    raise or silently upcast to float64, losing the "0 vs unknown" binary
+    semantics for the WHOLE column, not just retracted rows). pandas'
+    nullable ``Int64`` keeps 0/1 as real integers and NaN as ``pd.NA`` in one
+    dtype. On the wire this is unremarkable: parquet/Arrow's int64 physical
+    type always carries a validity bitmap, retracted or not, so ``Int64``
+    round-trips through ``to_parquet``/``read_parquet`` and through R's
+    ``arrow::read_parquet`` exactly like the plain int64 column always did
+    (verified 2026-09-14 — see the retraction dry-run log for the round-trip
+    check). Downstream code that does ``col == 1`` or ``sum(..., na.rm=TRUE)``
+    (the pattern used throughout the R viz scripts and
+    generate_validation_pages.py's ``pd.notna()`` guards) already treats a
+    null cell as "unknown", not "0" — this dtype change doesn't require
+    touching those readers.
+    """
+    if binary_cols is None:
+        binary_cols = [col.name for schema in ALL_SCHEMAS for col in schema.columns]
+    if EXTRACTION_STATUS_COL in df.columns:
+        retracted_mask = df[EXTRACTION_STATUS_COL] == RETRACTED_STATUS
+    else:
+        # Old parquet with no extraction_status column at all: nothing is
+        # retracted, so behaviour is identical to the old unconditional fill.
+        retracted_mask = pd.Series(False, index=df.index)
+    any_retracted = bool(retracted_mask.any())
+    for col_name in binary_cols:
+        if col_name not in df.columns:
+            continue
+        col = df[col_name]
+        fillable = col.isna() & ~retracted_mask
+        if fillable.any():
+            df.loc[fillable, col_name] = 0
+        # Only pay the Int64 dtype (and the churn of touching every reader's
+        # expectations) when there is actually a NULL to preserve somewhere
+        # in this column. The overwhelmingly common case — no retraction in
+        # play — stays byte-for-byte the old plain-int64, fillna(0) behaviour.
+        if any_retracted or df[col_name].isna().any():
+            df[col_name] = df[col_name].astype("Int64")
+        else:
+            df[col_name] = df[col_name].astype(int)
+    return df
+
+
+def apply_incremental_results(
+    df_enriched: pd.DataFrame,
+    results_df: pd.DataFrame,
+    binary_cols: list[str] | None = None,
+) -> tuple[pd.DataFrame, int]:
+    """Patch a batch of process_paper() results into the full enriched
+    dataframe. Single implementation shared by extract_incremental.py's
+    main() and sync_shark_references.py's run_incremental_extraction(),
+    which used to each carry their own copy of this merge loop.
+
+    For every literature_id present in both frames:
+      - every column results_df carries (other than literature_id)
+        overwrites the matching cell in df_enriched, unconditionally. This
+        is what makes a RETRACTED_STATUS row eligible for re-extraction:
+        nothing here skips or special-cases it — it is patched exactly like
+        any other row that was targeted this run.
+      - if that row was RETRACTED_STATUS beforehand, it graduates to
+        RE_EXTRACTED_STATUS. extraction_retracted_at/_reason are left alone
+        so the retraction stays visible as history.
+
+    binary_cols are then run through normalize_binary_columns() so a row
+    that's still RETRACTED_STATUS elsewhere in df_enriched (not targeted
+    this run) keeps its NULLs.
+
+    Returns (patched df_enriched, n_rows_updated). Literature_ids in
+    results_df with no match in df_enriched are the caller's problem
+    (extract_incremental.py ignores them; sync_shark_references.py appends
+    them as new rows) — this function only updates existing rows.
+    """
+    if binary_cols is None:
+        binary_cols = [col.name for schema in ALL_SCHEMAS for col in schema.columns]
+
+    df_enriched = df_enriched.copy()
+    df_enriched["literature_id"] = df_enriched["literature_id"].astype(str)
+    results_df = results_df.copy()
+    results_df["literature_id"] = results_df["literature_id"].astype(str)
+
+    if EXTRACTION_STATUS_COL not in df_enriched.columns:
+        df_enriched[EXTRACTION_STATUS_COL] = None
+    previously_retracted = set(
+        df_enriched.loc[
+            df_enriched[EXTRACTION_STATUS_COL] == RETRACTED_STATUS, "literature_id",
+        ]
+    )
+
+    results_lookup: dict[str, int] = {}
+    for i, lid in enumerate(results_df["literature_id"]):
+        if lid not in results_lookup:
+            results_lookup[lid] = i
+
+    new_cols = [c for c in results_df.columns if c != "literature_id"]
+    updated = 0
+    for idx, lid in zip(df_enriched.index, df_enriched["literature_id"]):
+        if lid in results_lookup:
+            ri = results_lookup[lid]
+            for col in new_cols:
+                df_enriched.at[idx, col] = results_df.at[ri, col]
+            updated += 1
+            if lid in previously_retracted:
+                df_enriched.at[idx, EXTRACTION_STATUS_COL] = RE_EXTRACTED_STATUS
+
+    df_enriched = normalize_binary_columns(df_enriched, binary_cols)
+    return df_enriched, updated
+
+
+# ---------------------------------------------------------------------------
 # SM fix: Subject Mismatch — elasmobranch proximity check
 # ---------------------------------------------------------------------------
 # For columns listed in PROXIMITY_CHECK_COLUMNS, each keyword match is only
@@ -2393,10 +2533,10 @@ def main() -> None:
         col_values = results_df[col_name].values
         df[col_name] = [col_values[i] if i >= 0 else None for i in result_indices]
 
-    # Fill NaN for binary columns (papers not processed)
-    for col_name in binary_cols:
-        if col_name in df.columns:
-            df[col_name] = df[col_name].fillna(0).astype(int)
+    # Fill NaN for binary columns (papers not processed) — except rows
+    # retracted as misfiled-PDF, whose NULLs must survive. See
+    # normalize_binary_columns() above.
+    df = normalize_binary_columns(df, binary_cols)
 
     logger.info("Writing enriched parquet: %s", OUTPUT_PARQUET)
     df.to_parquet(OUTPUT_PARQUET, index=False)
