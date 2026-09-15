@@ -639,6 +639,10 @@ def rag_apply(ids: list[str], expected_ids: int | None) -> None:
             f"REFUSING: expected {expected_ids} ids with chunks, found {len(counts)}."
         )
 
+    # Import BEFORE any write: on 2026-09-14 a run under system python wrote the
+    # filtered chunks and embeddings, then died here, leaving index.faiss stale.
+    import faiss  # requires the fashion-clip venv
+
     id_set = set(ids)
     chunks = []
     keep_mask = []
@@ -681,8 +685,6 @@ def rag_apply(ids: list[str], expected_ids: int | None) -> None:
     tmp_emb = paths["embeddings"].with_suffix(".tmp.npy")
     np.save(tmp_emb, kept_embeddings)
     os.replace(tmp_emb, paths["embeddings"])
-
-    import faiss  # requires the fashion-clip venv
 
     index = faiss.IndexFlatIP(kept_embeddings.shape[1])
     index.add(kept_embeddings)

@@ -1,6 +1,6 @@
 # Pipeline Overview (as-built)
 
-**Last updated:** 2026-07-21
+**Last updated:** 2026-09-14
 
 A single map of how the project turns a bare citation into an answerable
 question, with the current corpus figures and the script that owns each
@@ -19,19 +19,29 @@ rather than editing a number in place.
 
 <!-- BEGIN corpus_stats: paste from outputs/corpus_stats.md -->
 
-*Generated 2026-08-06.*
+*Generated 2026-09-14.*
+
+**Provenance note:** 85 papers (101 parquet rows; some literature_ids have
+duplicate rows) were retracted 2026-09-14: extraction ran over the wrong
+PDF. Their 180 extraction columns are now NULL and
+`extraction_status='retracted_wrong_pdf'`; see
+`outputs/misfile_blast_radius_2026-09-14/SUMMARY.md`. This dropped the RAG
+index from 19,885/204,508 to 19,801 papers / 203,731 chunks and added three
+provenance columns (`extraction_status`, `extraction_retracted_at`,
+`extraction_retracted_reason`) to the parquet, which is why "Parquet
+columns" below reads 1,747, not 1,744.
 
 | Metric | Value | Notes |
 |--------|------:|-------|
-| Papers catalogued | 31,653 | rows in the enriched parquet |
-| Parquet columns | 1,744 | all families plus metadata |
-| PDF files on disk | 20,404 | raw count; over-counts supplements and duplicates |
-| Evidence rows | 293,107 | audit trail across 19,945 papers |
+| Papers catalogued | 31,772 | rows in the enriched parquet |
+| Parquet columns | 1,747 | all families plus metadata |
+| PDF files on disk | 20,371 | raw count; over-counts supplements and duplicates |
+| Evidence rows | 295,569 | audit trail across 20,067 papers |
 | Unique authors (OpenAlex) | 29,929 | `outputs/openalex_unique_authors.csv` |
-| Techniques in taxonomy | 215 | `data/master_techniques.csv` |
+| Techniques in taxonomy | 215 | `data/master_techniques.csv` (NOT the taxonomy DB, whose table is empty) |
 | Species columns | 1,308 | `sp_` prefix |
-| RAG index | 19,885 papers / 204,508 chunks | `outputs/rag/build_status.json` |
-| Conference abstracts | 9,792 | 3,174 chondrichthyan, 54 meetings |
+| RAG index | 19,801 papers / 203,731 chunks | `outputs/rag/build_status.json`; reduced 2026-09-14 by the retraction above (was 19,885 / 204,508) |
+| Conference abstracts | 22,095 | 7,349 chondrichthyan, 118 meetings |
 | Geographic coverage | ~18.6% | merged `geo_` columns (not yet generated) |
 
 Column families in the parquet:

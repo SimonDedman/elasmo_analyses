@@ -110,7 +110,7 @@ s5 <- make_boxes(5, X_L, yt5,
 
 ## -- Stage 6: Outputs (5 items, tweak 2+3: moved parquet here, 118+) ----------
 s6 <- make_boxes(6, X_R, yt6,
-  c("Output: enriched\n.parquet (1,744 cols)",
+  c("Output: enriched\n.parquet (1,747 cols)",
     "118+ analytical\nvisualisations",
     "Schema extraction\nevidence CSV",
     "Per-journal download\npages",
@@ -288,7 +288,7 @@ p <- ggplot() +
   ) +
   labs(
     title    = "EEA 2025 Data Panel: Project Pipeline",
-    subtitle = "31,653 papers  |  20,404 PDFs  |  1,744 schema columns  |  29,929 authors"
+    subtitle = "31,772 papers  |  20,371 PDFs  |  1,747 schema columns  |  29,929 authors"
   ) +
   coord_cartesian(xlim = c(0, 20), ylim = c(y_lo, y_hi), expand = FALSE) +
 
