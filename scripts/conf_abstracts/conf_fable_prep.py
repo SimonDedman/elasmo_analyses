@@ -264,7 +264,12 @@ def build(only=None):
         # loop uses, not from an EEA-shaped guess: a `--only` run reaches this
         # branch for every OTHER book, and hardcoding dropped IPFC's host city
         # and gave a general fish conference an AES society hint.
-        src = next((f for f in cands if "AbstractBook" in f.name), None) or \
+        # A PDF whose own key IS this key wins. Taking the first AbstractBook of
+        # the year pointed JMIH2019_part2 at part1's PDF, so the merge (which
+        # groups chunks by source_pdf) folded both halves into one meeting and
+        # left the real part2 meeting beside it: 424 double-counted (2026-09-15).
+        src = next((f for f in cands if _key(f) == key), None) or \
+            next((f for f in cands if "AbstractBook" in f.name), None) or \
             (cands[0] if cands else None)
         city = (_city(src) if src else None) or C.MEETING_CITIES.get((mtg, yr))
         if mtg == "EEA":

@@ -242,14 +242,22 @@ def supersede():
     """elasmo.org is the authoritative AES source for its years: remove JMIH/ASIH-book
     elasmo records that are AES-session talks (duplicates by construction) or
     needs_review (degraded OCR; title match can't see them). Non-AES elasmo
-    talks with clean titles are kept."""
+    talks with clean titles are kept.
+
+    AES must come from the book (session prefix, award, symposium, membership,
+    taxon group), never society_basis='content': infer_society_missing tags EVERY
+    elasmo abstract AES from the lexicon, so trusting it here deletes talks
+    elasmo.org does not hold. Harmless only while the backfill ran after this;
+    once merge_fable_into_main carried tags forward it would have deleted 44
+    un-matched 1998/2005 records, one of them a sturgeon talk (2026-09-15)."""
     con = sqlite3.connect(str(C.DB_PATH))
     years = [r[0] for r in con.execute("SELECT DISTINCT year FROM meetings WHERE meeting='AES'")]
     tot = 0
     for y in years:
         rows = con.execute("""SELECT a.abstract_id FROM abstracts a JOIN meetings m USING(meeting_id)
                               WHERE m.meeting IN ('JMIH','ASIH') AND m.year=? AND a.is_elasmo=1
-                                AND (a.society='AES' OR a.needs_review=1)""", (y,)).fetchall()
+                                AND ((a.society='AES' AND COALESCE(a.society_basis, '') <> 'content')
+                                     OR a.needs_review=1)""", (y,)).fetchall()
         if not rows:
             continue
         for (aid,) in rows:

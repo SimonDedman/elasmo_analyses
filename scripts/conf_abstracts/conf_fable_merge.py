@@ -79,6 +79,18 @@ def _mk_record(a: dict, meeting: str, is_elasmo_meeting: bool, soc_hint: str,
 
 def merge(db_path):
     wl = json.loads(WORKLIST.read_text(encoding="utf-8"))
+    # Chunks become one meeting per source_pdf, so a book pointing at ANOTHER
+    # book's PDF merges the two silently. Refuse before touching anything
+    # (JMIH2019_part2 carried part1's PDF: 2026-09-15).
+    from conf_abstracts.conf_fable_prep import _key
+    wrong = sorted({(w.get("book_key", w["key"]), Path(w["source_pdf"]).name) for w in wl
+                    if _key(Path(w["source_pdf"])) != w.get("book_key", w["key"])})
+    if wrong:
+        for bk, pdf in wrong:
+            print(f"  ABORT {bk}: worklist source_pdf is {pdf}, which keys to "
+                  f"{_key(Path(pdf))}")
+        raise SystemExit("worklist book_key/source_pdf mismatch — fix the worklist "
+                         "(re-run conf_fable_prep.py) before merging")
     # rebuild fresh from the caches every run — the DB is a derived artifact, so
     # rebuilding keeps per-book counts accurate and the merge idempotent (an
     # append would dedup re-merged books to "0 inserted").
