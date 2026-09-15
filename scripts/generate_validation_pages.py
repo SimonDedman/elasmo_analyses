@@ -711,8 +711,10 @@ def generate_pages(
     # --- Load evidence ---
     evidence = load_evidence(all_lit_ids)
 
-    # --- Load altmetric ---
-    altmetric = load_altmetric(all_lit_ids)
+    # --- Altmetric: NOT embedded. These pages are public, and Altmetric's free research access does not permit
+    # public display, so the values stay in the local outputs/altmetric_scores.csv (scrubbed 2026-09-15).
+    # validate.js shows "Altmetric: held locally" for every paper with a DOI instead.
+    altmetric: dict[str, dict] = {}
 
     # --- Load OA status ---
     oa_status = load_oa_status(all_lit_ids)

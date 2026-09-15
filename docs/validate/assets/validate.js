@@ -1125,8 +1125,6 @@
     var country    = meta.country     || '';
     var superregion = meta.superregion || '';
     var epoch      = meta.epoch       || '';
-    var altmetric  = meta.altmetric   || {};
-    var altScore   = altmetric.alt_score || '';
     var oaStatus   = meta.oa_status   || '';
     var oaLicense  = meta.oa_license  || '';
 
@@ -1176,26 +1174,10 @@
       if (oaLicense) { html += ' (' + escapeHtml(oaLicense) + ')'; }
       html += '</span>';
     }
-    if (altScore) {
-      var altNum = parseFloat(altScore);
-      var altBin = altNum >= 500 ? 'exceptional' : altNum >= 100 ? 'very high' : altNum >= 50 ? 'high' : altNum >= 10 ? 'moderate' : altNum >= 1 ? 'low' : 'minimal';
-      var altBinColour = altNum >= 500 ? '#e03131' : altNum >= 100 ? '#f76707' : altNum >= 50 ? '#f59f00' : altNum >= 10 ? '#37b24d' : '#868e96';
-      var altTooltip = 'Altmetric attention score. Bins: minimal (<1), low (1-10), moderate (10-50), high (50-100), very high (100-500), exceptional (500+)';
-      if (altmetric.alt_pct_journal) { altTooltip += '\\nJournal percentile: ' + altmetric.alt_pct_journal + '%'; }
-      if (altmetric.alt_pct_all) { altTooltip += '\\nAll papers percentile: ' + altmetric.alt_pct_all + '%'; }
-      html += '<span class="meta-item" title="' + escapeHtml(altTooltip) + '"><strong>Altmetric:</strong> ' + escapeHtml(altScore) + ' <span style="color:' + altBinColour + ';font-weight:600;">(' + altBin + ')</span></span>';
-      // Altmetric breakdown
-      var altParts = [];
-      if (altmetric.alt_tweeters) { altParts.push('tweets:' + altmetric.alt_tweeters); }
-      if (altmetric.alt_news) { altParts.push('news:' + altmetric.alt_news); }
-      if (altmetric.alt_blogs) { altParts.push('blogs:' + altmetric.alt_blogs); }
-      if (altmetric.alt_policy) { altParts.push('policy:' + altmetric.alt_policy); }
-      if (altmetric.alt_wikipedia) { altParts.push('wiki:' + altmetric.alt_wikipedia); }
-      if (altmetric.alt_mendeley) { altParts.push('Mendeley:' + altmetric.alt_mendeley); }
-      if (altmetric.alt_pct_journal) { altParts.push('pct(journal):' + altmetric.alt_pct_journal + '%'); }
-      if (altParts.length > 0) {
-        html += '<span class="meta-item" style="font-size:0.75rem;color:#868e96;">' + altParts.join(' · ') + '</span>';
-      }
+    // Altmetric values are not published: Altmetric's free research access does not permit public display
+    // (scrubbed 2026-09-15). Shown for every paper with a DOI so the note does not reveal Altmetric coverage.
+    if (doi) {
+      html += '<span class="meta-item" title="Altmetric attention data (score, news, policy, social media, Mendeley) were retrieved for this project under Altmetric\'s free research access, which does not permit public display. The project team holds them locally for analysis."><strong>Altmetric:</strong> <span style="color:#868e96;">held locally</span></span>';
     }
     html += '<span class="meta-item" title="Internal Shark References literature database ID"><strong>ID:</strong> ' + escapeHtml(String(paperId)) + '</span>';
 

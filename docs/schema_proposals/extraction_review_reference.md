@@ -401,11 +401,11 @@ These columns pick a single best-guess label from the binary eco_ columns above.
 
 ---
 
-### Altmetric social attention — [`altmetric_scores.csv`](../../outputs/altmetric_scores.csv)
+### Altmetric social attention — `altmetric_scores.csv`
 
 **Lookup key:** DOI → [Altmetric Details Page API](https://www.altmetric.com/products/altmetric-api/)
 **Script:** [`scripts/enrich_altmetric.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/enrich_altmetric.py)
-**Output:** [`outputs/altmetric_scores.csv`](../../outputs/altmetric_scores.csv) (880 KB, one row per paper; 10,897 papers, 65.5% hit rate)
+**Output:** `outputs/altmetric_scores.csv`, held locally by the project team, not published (Altmetric's research-access terms don't permit public display)
 
 | Field | Label | Techniques | Description | Notes |
 |-------|-------|------------|-------------|-------|
