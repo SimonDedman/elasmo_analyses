@@ -25,7 +25,7 @@ Each schema or data source has a designated lead who reviews validator feedback,
 | Impact / Response | `imp_` | David Ruiz-Garcia |
 | Author enrichment (OpenAlex) | `outputs/openalex_*.csv` | Simon Dedman |
 | Author enrichment (NamSor gender/origin) | `outputs/namsor_*.csv` | Elena Fernández-Corredor |
-| Altmetric social attention | `outputs/altmetric_scores.csv` | David Shiffman |
+| Altmetric social attention | `outputs/altmetric_scores.csv` (held locally, not published) | David Shiffman |
 | Open access status (Unpaywall) | `outputs/unpaywall_oa_by_doi.csv` | Elena Fernández-Corredor |
 | Journal quality (SCImago) | `data/journal_quality/` | Elena Fernández-Corredor |
 | Geographic extraction | `database/technique_taxonomy.db` | Simon Dedman |

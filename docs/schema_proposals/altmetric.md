@@ -12,7 +12,7 @@ Measure the online attention each paper has received beyond traditional citation
 [Altmetric](https://www.altmetric.com/) collects online mentions of scholarly outputs by DOI. API access was approved via the Scholarly Research Assistance and Data (SRAD) programme in March 2026. The API key is stored in `memory/reference_altmetric_api.md`.
 
 - **Script:** `scripts/enrich_altmetric.py`
-- **Output file:** `outputs/altmetric_scores.csv`
+- **Output file:** `outputs/altmetric_scores.csv`, held locally by the project team, not published (Altmetric's research-access terms don't permit public display)
 - **Coverage:** 10,897 papers with Altmetric records (65.5 % hit rate across the full database)
 
 Papers without an Altmetric record receive no score; a score of zero isn't assigned — the row is simply absent from the output file.

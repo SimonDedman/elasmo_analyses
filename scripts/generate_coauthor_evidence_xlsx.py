@@ -363,8 +363,10 @@ def build_extra_evidence(
         for _, arow in alt_sub.iterrows():
             lid = int(arow["lit_id_int"])
             m = meta_lookup.get(lid, {})
+            # meeting_review workbooks are committed to the public repo, and Altmetric's free research access does
+            # not permit public display: record that a value exists locally, never the value (scrubbed 2026-09-15)
             score = arow.get("alt_score", "")
-            summary = f"alt_score={score}"
+            summary = "held locally (Altmetric data not published)"
             rows.append(make_extra_row(
                 lit_id=lid,
                 year=m.get("year", ""), authors=m.get("authors", ""),
