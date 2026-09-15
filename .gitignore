@@ -198,3 +198,13 @@ elasmo_analyses/
 
 # Cached pdftotext output for the misfile checker; regenerable, ~300 MB
 outputs/.pdf_text_cache/
+
+# Ingested source content: never version it (repo bloat; third-party text).
+# Conference abstract-book text extracted from PDFs, and the Fable response cache
+# built from it. Both were force-added in Aug 2026 despite outputs/*; untracked 2026-09-14.
+outputs/conf_abstracts/.fable_src/
+outputs/conf_abstracts/.fable_cache/
+
+# Altmetric data: free research access does not permit public display; held locally only (2026-09-15)
+outputs/altmetric_scores*.csv
+outputs/altmetric_refresh_*/
