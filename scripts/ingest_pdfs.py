@@ -1442,9 +1442,23 @@ def update_tracking_dbs(copied_ids: set, pdf_names: dict, timestamp: str, source
 def ingest_source(label: str, pdf_paths: list[Path],
                   doi_lookup: dict, author_year_lookup: dict,
                   all_rows: list[dict],
-                  filed_map: dict | None = None) -> tuple[set, set, dict, list[str]]:
+                  filed_map: dict | None = None,
+                  prefer_lid_rows: dict | None = None,
+                  filed_rows: dict | None = None) -> tuple[set, set, dict, list[str]]:
     """
     Ingest a list of PDFs. Returns (copied_ids, copied_dois, pdf_names, log_lines).
+
+    ``prefer_lid_rows`` (optional): {str(source_pdf_path): corpus row}. A file
+    listed here was staged by us as "<literature_id>.pdf" for a row we know is
+    outstanding, so it is filed under THAT record instead of being re-matched
+    by title/author -- the identifier we wrote is better evidence than a fuzzy
+    title match. The PDF's own text still has to AGREE (title words or the
+    first author's surname); a file whose text names a different paper is left
+    UNMATCHED for review rather than filed by either route, and a file with no
+    text layer is filed by id and logged as ``verified=scan``.
+
+    ``filed_rows`` (optional): populated in-place with {literature_id: row} for
+    everything filed, so a caller can identity-check a destination.
 
     ``filed_map`` (optional): if a dict is passed, it is populated in-place with
     ``{str(source_pdf_path): literature_id}`` for every matched PDF. Lets callers
@@ -1538,8 +1552,24 @@ def ingest_source(label: str, pdf_paths: list[Path],
             print(f"    Falling through to normal matching for {pdf_path.name}")
 
         text_path = ensure_text_extractable(pdf_path)
-        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
-                                all_rows, text_path=text_path)
+        lid_row = (prefer_lid_rows or {}).get(str(pdf_path))
+        if lid_row is not None:
+            import acquire_cascade as _ac
+            verdict, detail = _ac.identity_check(_ac.pdf_text(text_path), lid_row)
+            if verdict is False:
+                unmatched += 1
+                msg = (f"staged as literature_id {lid_row['literature_id']} but its "
+                       f"text names a different paper ({detail}) -- held for review")
+                log_lines.append(f"UNMATCHED: {pdf_path.name} \u2014 {msg}")
+                print(f"  UNMATCHED: {pdf_path.name}")
+                print(f"            Reason: {msg}")
+                continue
+            row = lid_row
+            method = (f"literature_id from staged filename "
+                      f"({'verified=scan, no text layer' if verdict is None else detail})")
+        else:
+            row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
+                                    all_rows, text_path=text_path)
 
         if row is None:
             unmatched += 1
@@ -1551,6 +1581,8 @@ def ingest_source(label: str, pdf_paths: list[Path],
         # Prefer OCR'd version for the library so future extraction has text
         file_src = text_path if text_path != pdf_path else pdf_path
         _file_one(file_src, row, method)
+        if filed_rows is not None:
+            filed_rows[str(row["literature_id"])] = row
         if filed_map is not None:
             # Map the ORIGINAL input path (not the OCR cache) to its corpus id.
             filed_map[str(pdf_path)] = row["literature_id"]
@@ -1626,8 +1658,24 @@ def check_source(label: str, pdf_paths: list[Path],
             continue
 
         text_path = ensure_text_extractable(pdf_path)
-        row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
-                                all_rows, text_path=text_path)
+        lid_row = (prefer_lid_rows or {}).get(str(pdf_path))
+        if lid_row is not None:
+            import acquire_cascade as _ac
+            verdict, detail = _ac.identity_check(_ac.pdf_text(text_path), lid_row)
+            if verdict is False:
+                unmatched += 1
+                msg = (f"staged as literature_id {lid_row['literature_id']} but its "
+                       f"text names a different paper ({detail}) -- held for review")
+                log_lines.append(f"UNMATCHED: {pdf_path.name} \u2014 {msg}")
+                print(f"  UNMATCHED: {pdf_path.name}")
+                print(f"            Reason: {msg}")
+                continue
+            row = lid_row
+            method = (f"literature_id from staged filename "
+                      f"({'verified=scan, no text layer' if verdict is None else detail})")
+        else:
+            row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
+                                    all_rows, text_path=text_path)
 
         if row is None:
             unmatched += 1

@@ -277,7 +277,15 @@ def main() -> None:
     # to a team member. Mark the route explicitly: fetch_bhl_archive.py skips
     # every DOI-bearing row, so without this the recovered DOI would silently
     # remove these papers from the one harvester that can actually get them.
-    FREE_FULLTEXT_PREFIXES = {"10.5962": "bhl"}
+    # Track E, 2026-09-17: three DataCite prefixes whose DOIs carry a real
+    # url/content field and resolve to free full text, so they belong here
+    # rather than in the assignable (subscription) pool.
+    FREE_FULLTEXT_PREFIXES = {
+        "10.5962": "bhl",
+        "10.5169": "datacite_free",   # e-periodica.ch (Birkhauser / SNSN)
+        "10.21411": "datacite_free",  # Station Biologique de Roscoff (Cah. Biol. Mar.)
+        "10.5281": "datacite_free",   # Zenodo
+    }
 
     n = routed = 0
     # Everything below happens under an exclusive lock on a FRESHLY read copy,
@@ -306,8 +314,9 @@ def main() -> None:
                 routed += 1
 
     print(f"\napplied {n:,} recovered DOIs")
-    print(f"  {routed:,} papers routed to BHL (free full text, "
-          f"acquisition_route=bhl) rather than the assignable pool")
+    print(f"  {routed:,} papers routed to free full text "
+          f"(acquisition_route bhl / datacite_free) rather than the "
+          f"assignable pool")
     print("NOTE: run the sync's Phase 3b DOI verification over these before "
           "the download helper links to any of them.")
 

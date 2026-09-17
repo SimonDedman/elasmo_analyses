@@ -101,6 +101,10 @@ SCOPE = [
     (str(C.CONFERENCES / "*" / "*_IPFC_AbstractBook*.pdf"), "IPFC", "", False),
     # SQERF 2005 has no abstract book; its proceedings PDF is the only source.
     (str(C.CONFERENCES / "*" / "*_SQERF_ProgrammeBook*.pdf"), "SQERF", "AES", True),
+    # SOMEPEC (Sociedad Mexicana de Peces Cartilaginosos) symposium books,
+    # 2004-2025, Spanish, wholly elasmo. Simon approved Fable 2026-09-17. The
+    # 2021 file is a programme (no bodies) and is deliberately excluded.
+    (str(C.CONFERENCES / "*" / "*_SOMEPEC_AbstractBook*.pdf"), "SOMEPEC", "AES", True),
 ]
 
 
@@ -237,7 +241,7 @@ def build(only=None):
             src.write_text(text, encoding="utf-8")
             by_key[key] = dict(
                 key=key, meeting=meeting, year=_year(pdf),
-                city=_city(pdf) or _EEA_CITIES.get(_year(pdf)),
+                city=_city(pdf) or (_EEA_CITIES.get(_year(pdf)) if meeting == "EEA" else None),  # EEA map only: it gave SOMEPEC 2025 "Rotterdam"
                 society_hint=soc_hint, is_elasmo_meeting=elasmo,
                 source_pdf=str(pdf), src_txt=str(src),
                 cache_path=str(CACHE_DIR / f"{key}.json"), n_chars=len(text))

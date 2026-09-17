@@ -22,13 +22,17 @@ QUEUE = BASE / "docs/papers_data.json"
 UW_LOG = BASE / "logs/unpaywall_download_log.csv"
 # Published under docs/ so the team can actually reach these pages: anything in
 # outputs/ is gitignored and therefore never reaches GitHub Pages.
+import sys as _sys
+_sys.path.insert(0, str((BASE / "scripts").resolve()))
+from lib.crossref_prefix import publisher_for_prefix  # noqa: E402
+
 OUT = BASE / "docs/closed_access"
 MONITOR = (BASE / "scripts/monitor_firefox_pdfs.py").resolve()
 
 # DOI prefix -> publisher (for the many queue rows with a blank publisher field)
 PREFIX = {
     "10.1016": "Elsevier", "10.1002": "Wiley", "10.1111": "Wiley",
-    "10.1046": "Wiley", "10.1006": "Wiley", "10.1007": "Springer", "10.1023": "Springer",
+    "10.1046": "Wiley", "10.1006": "Elsevier (Academic Press)", "10.1007": "Springer", "10.1023": "Springer",
     "10.1038": "Springer Nature", "10.1017": "Cambridge University Press",
     "10.1080": "Taylor & Francis", "10.1201": "Taylor & Francis (CRC)",
     "10.1071": "CSIRO Publishing", "10.1139": "Canadian Science Publishing",
@@ -41,6 +45,46 @@ PREFIX = {
     "10.1670": "Herpetologists' League / SSAR", "10.1242": "Company of Biologists",
     "10.1242/jeb": "Company of Biologists", "10.1554": "Wiley (Evolution)",
     "10.1643": "ASIH (Copeia)",
+    # Track E 2026-09-17: Crossref/DataCite-resolved prefixes covering the
+    # bulk of rows previously shown under an unclear publisher.
+    "10.5962": "Biodiversity Heritage Library",
+    "10.3390": "MDPI",
+    "10.1144": "Geological Society of London",
+    "10.2989": "National Inquiry Services Center (NISC)",
+    "10.18785": "University of Southern Mississippi",
+    "10.1660": "Kansas Academy of Science",
+    "10.18563": "Centre National de la Recherche Scientifique - Institut des Sciences de l'Evolution de Montpellier",
+    "10.4324": "Taylor & Francis",
+    "10.1638": "American Association of Zoo Veterinarians",
+    "10.1371": "PLoS",
+    "10.1578": "Aquatic Mammals Journal",
+    "10.15517": "Universidad de Costa Rica",
+    "10.1590": "SciELO",
+    "10.3989": "Editorial CSIC",
+    "10.2331": "Japanese Society of Fisheries Science",
+    "10.5479": "Smithsonian Institution",
+    "10.1163": "Brill",
+    "10.1645": "American Society of Parasitologists",
+    "10.4049": "The American Association of Immunologists",
+    "10.3406": "PERSEE Program",
+    "10.26515": "Zoological Survey of India",
+    "10.1130": "Geological Society of America",
+    "10.7589": "Wildlife Disease Association",
+    "10.1577": "American Fisheries Society",
+    "10.25268": "Marine and Coastal Research Institute INVEMAR",
+    "10.4067": "SciELO (ANID)",
+    "10.32360": "Arquivos de Ciências do Mar",
+    "10.1671": "Society of Vertebrate Paleontology",
+    "10.2960": "Northwest Atlantic Fisheries Organization (NAFO)",
+    "10.1097": "Ovid Technologies (Wolters Kluwer Health)",
+    "10.1042": "Portland Press Ltd.",
+    "10.2475": "American Journal of Science (AJS)",
+    "10.56577": "New Mexico Geological Society",
+    "10.1051": "EDP Sciences",
+    "10.1186": "Springer",
+    "10.18475": "University of Puerto Rico at Mayaguez",
+    "10.1656": "Humboldt Field Research Institute",
+    "10.13140": "ResearchGate (pseudo-DOI, not a publisher)",
 }
 
 def sanitize(name):
@@ -75,7 +119,12 @@ def resolve_publisher(p):
     if not doi:
         return "Unknown publisher"
     prefix = doi.split("/")[0]
-    return PREFIX.get(prefix, f"Other ({prefix})")
+    if prefix in PREFIX:
+        return PREFIX[prefix]
+    # Sub-prefixes the hand map never listed (Wiley 10.1002, Elsevier 10.1006,
+    # Informa 10.1080 variants ...): ask Crossref once, cached on disk.
+    name = publisher_for_prefix(prefix)
+    return name or f"Other ({prefix})"
 
 CSS = """
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }

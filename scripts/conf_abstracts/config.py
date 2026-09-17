@@ -59,7 +59,15 @@ ELASMO_SOCIETIES = {"AES"}
 # OCS is the Oceania Chondrichthyan Society: every talk is elasmo, so the
 # meeting is tagged wholesale rather than per-session (added 2026-09-06 with
 # Brit's 18-book donation).
-ELASMO_MEETINGS = {"SI", "EEA", "OCS"}
+# SOMEPEC (Sociedad Mexicana de Peces Cartilaginosos) is wholly elasmo;
+# approved series 2026-09-17. It is NOT a joint meeting, so the blanket rule
+# applies (the JOINT_MEETINGS carve-out below is only for OCS's joint years).
+# Added because conf_fable_prep.py already declares SOMEPEC with
+# is_elasmo_meeting=True, which makes conf_fable_merge SKIP the per-abstract
+# lexicon fallback, while its absence from this set meant tag.resolve() never
+# set the flag either: all 322 SOMEPEC abstracts landed is_elasmo=0. The two
+# lists must agree, and this set is the one tag.resolve() reads.
+ELASMO_MEETINGS = {"SI", "EEA", "OCS", "SOMEPEC"}
 
 # OCS years that were JOINT meetings with a general fish or marine-science
 # society, where the book is mostly teleost work and the blanket

@@ -370,3 +370,129 @@ def test_append_log_rows_honours_reassigned_module_log_path(tmp_path, monkeypatc
         "append_log_rows() must honour the current ac.LOG value, "
         "not a stale import-time default"
     )
+
+
+# ---------------------------------------------------------------------------
+# lid-named staging and the deletion gate (2026-09-17 repair)
+#
+# The download push staged every fetch as "<literature_id>.pdf". finalize threw
+# that id away, re-matched by title/author, and filed 11 correct downloads
+# under other papers' names; on the EXISTS branch it deleted 8 correct
+# downloads because an unrelated file already occupied the destination.
+# ---------------------------------------------------------------------------
+
+ROW_A = {"literature_id": "13330", "year": "1993",
+         "authors": "Polovina, J.J. & Lau, B.B. (1993)",
+         "title": "Temporal and spatial distribution of catches of tiger sharks, "
+                  "Galeocerdo cuvier, in the pelagic longline fishery", "doi": ""}
+ROW_B = {"literature_id": "3605", "year": "1992", "authors": "Randall, J.E. (1992)",
+         "title": "Review of the biology of the tiger shark (Galeocerdo cuvier).",
+         "doi": ""}
+
+TEXT_A = ("Temporal and Spatial Distribution of Catches of Tiger Sharks, "
+          "Galeocerdo cuvier, in the Pelagic Longline Fishery Around the "
+          "Hawaiian Islands. Jeffrey J. Polovina and Bert B. Lau. Abstract. " * 3)
+
+
+def test_identity_check_accepts_the_paper_named_by_the_staged_id():
+    verdict, detail = ac.identity_check(TEXT_A, ROW_A)
+    assert verdict is True, detail
+
+
+ROW_C = {"literature_id": "11382", "year": "2004", "authors": "Bozzano, A. (2004)",
+         "title": "Retinal specialisations in the dogfish Centroscymnus coelolepis "
+                  "from the Mediterranean deep-sea", "doi": ""}
+
+
+def test_identity_check_rejects_an_unrelated_paper():
+    verdict, _ = ac.identity_check(TEXT_A, ROW_C)
+    assert verdict is False
+
+
+def test_identity_check_is_strict_enough_to_separate_same_subject_titles():
+    """Corroboration tolerates a same-subject title; a deletion decision must
+    not. 4 of ROW_B's 6 content words appear in ROW_A's paper."""
+    assert ac.identity_check(TEXT_A, ROW_B)[0] is True
+    assert ac.identity_check(TEXT_A, ROW_B,
+                             min_coverage=ac.IDENTITY_STRICT_COVERAGE)[0] is False
+
+
+def test_identity_check_reports_no_text_layer_as_untestable_not_as_wrong():
+    verdict, detail = ac.identity_check("", ROW_A)
+    assert verdict is None and "no text" in detail
+
+
+def test_lid_named_rows_files_a_staged_file_under_its_own_literature_id(tmp_path):
+    staged = tmp_path / "13330.pdf"
+    staged.write_bytes(b"%PDF-1.4\n")
+    queue = [{"literature_id": "13330", "last_status": "needs_library"}]
+    prefer = ac.lid_named_rows([staged], [ROW_A, ROW_B], queue=queue)
+    assert prefer[str(staged)] is ROW_A, (
+        "a file named <literature_id>.pdf for an outstanding row must be filed "
+        "under THAT record, never re-matched by title/author"
+    )
+
+
+def test_lid_named_rows_ignores_ids_that_are_not_outstanding(tmp_path):
+    staged = tmp_path / "13330.pdf"
+    staged.write_bytes(b"%PDF-1.4\n")
+    queue = [{"literature_id": "13330", "last_status": "acquired_oa"}]
+    assert ac.lid_named_rows([staged], [ROW_A], queue=queue) == {}
+
+
+def test_lid_named_rows_ignores_files_not_named_after_a_record(tmp_path):
+    staged = tmp_path / "5c2c637d84a43ec4.pdf"
+    staged.write_bytes(b"%PDF-1.4\n")
+    queue = [{"literature_id": "13330", "last_status": "needs_library"}]
+    assert ac.lid_named_rows([staged], [ROW_A], queue=queue) == {}
+
+
+def test_exists_branch_never_deletes_a_staged_file_whose_sha_differs(tmp_path, monkeypatch):
+    """The EXISTS casualty of 2026-09-17: a staged download must survive when
+    the destination is a different file, whatever its size."""
+    staging = tmp_path / "staging"; staging.mkdir()
+    lib = tmp_path / "library" / "2016"; lib.mkdir(parents=True)
+    staged = staging / "25261.pdf"
+    staged.write_bytes(b"%PDF-1.4\n" + b"the sicklefin lemon shark paper " * 200)
+    dest = lib / "Mendez.etal.2016.Cestodes of the blue shark.pdf"
+    dest.write_bytes(b"%PDF-1.4\n" + b"an entirely different paper " * 200)
+    monkeypatch.setattr(ac, "pdf_text", lambda p, timeout=240: "")
+
+    deleted, kept, _freed = ac.delete_verified_staging(
+        [staged], {"25261"},
+        {"25261": "2016/Mendez.etal.2016.Cestodes of the blue shark.pdf"},
+        tmp_path / "library", staging_dirs=[staging], filed_rows={})
+    assert deleted == 0 and kept == 1
+    assert staged.exists(), "a staged download differing from the destination must be kept"
+
+
+def test_delete_verified_staging_still_deletes_a_byte_identical_copy(tmp_path):
+    staging = tmp_path / "staging"; staging.mkdir()
+    lib = tmp_path / "library" / "1993"; lib.mkdir(parents=True)
+    payload = b"%PDF-1.4\n" + b"same bytes both sides " * 200
+    staged = staging / "13330.pdf"; staged.write_bytes(payload)
+    dest = lib / "Polovina.etal.1993.Temporal and spatial distribution.pdf"
+    dest.write_bytes(payload)
+
+    deleted, kept, _freed = ac.delete_verified_staging(
+        [staged], {"13330"},
+        {"13330": "1993/Polovina.etal.1993.Temporal and spatial distribution.pdf"},
+        tmp_path / "library", staging_dirs=[staging], filed_rows={"13330": ROW_A})
+    assert deleted == 1 and kept == 0 and not staged.exists()
+
+
+def test_delete_verified_staging_deletes_when_the_destination_identity_passes(
+        tmp_path, monkeypatch):
+    staging = tmp_path / "staging"; staging.mkdir()
+    lib = tmp_path / "library" / "1993"; lib.mkdir(parents=True)
+    staged = staging / "13330.pdf"
+    staged.write_bytes(b"%PDF-1.4\n" + b"staged copy " * 200)
+    dest = lib / "Polovina.etal.1993.Temporal and spatial distribution.pdf"
+    dest.write_bytes(b"%PDF-1.4\n" + b"library copy " * 200)
+    monkeypatch.setattr(ac, "pdf_text", lambda p, timeout=240: TEXT_A)
+
+    deleted, kept, _freed = ac.delete_verified_staging(
+        [staged], {"13330"},
+        {"13330": "1993/Polovina.etal.1993.Temporal and spatial distribution.pdf"},
+        tmp_path / "library", staging_dirs=[staging], filed_rows={"13330": ROW_A})
+    assert deleted == 1 and kept == 0
