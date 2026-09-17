@@ -99,7 +99,7 @@ USER_AGENT = (
     "academic literature acquisition for EEA elasmobranch systematic review; "
     "contact for any concern)"
 )
-REQUEST_TIMEOUT = 30
+REQUEST_TIMEOUT = 60  # BHL api3 PublicationSearch measured at ~19 s (2026-09-17)
 DELAY_MIN = 3.0
 DELAY_MAX = 5.0
 
@@ -107,7 +107,23 @@ IA_SEARCH_URL = "https://archive.org/advancedsearch.php"
 IA_METADATA_URL = "https://archive.org/metadata"
 IA_DOWNLOAD_URL = "https://archive.org/download"
 
-BHL_API_KEY = os.environ.get("BHL_API_KEY", "").strip()
+def _env_from_dotenv(name: str) -> str:
+    """Read NAME from the project's gitignored .env when the environment lacks
+    it, so cron jobs and subagents get the key without a shell `source`.
+    (python-dotenv is not installed; this is the 6-line equivalent.)"""
+    val = os.environ.get(name, "").strip()
+    if val:
+        return val
+    env = Path(__file__).resolve().parent.parent / ".env"
+    if env.exists():
+        for line in env.read_text().splitlines():
+            if line.startswith(name + "="):
+                return line.split("=", 1)[1].strip().strip('"').strip("'")
+    return ""
+
+
+# Key obtained 2026-09-17 (free registration, Simon); lives in <project>/.env.
+BHL_API_KEY = _env_from_dotenv("BHL_API_KEY")
 BHL_BASE_URL = "https://www.biodiversitylibrary.org/api3"
 
 MATCH_LOG_FIELDS = [

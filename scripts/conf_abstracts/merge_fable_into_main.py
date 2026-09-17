@@ -60,15 +60,30 @@ def _shared_titles(con, new_mids):
             for (a, b), n in pairs.items() if n > MAX_SHARED_TITLES]
 
 
-def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True):
+def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True, only_books=None):
+    """only_books: optional set of source_pdf BASENAMES. When given, ONLY those
+    Fable books are folded in and only the main meetings they supersede are
+    replaced -- the blanket "replace every EEA meeting" rule is skipped too.
+    Added 2026-09-17 to fold SOMEPEC + IPFC 2009 in on their own, without also
+    swapping main's JMIH 1998/2005 books for their Fable versions (which need
+    Simon's sign-off). Passing nothing keeps the original whole-DB behaviour."""
     main = schema.create_db(db_path)
     fab = sqlite3.connect(str(fable_path))
     fab.row_factory = sqlite3.Row
     # replace every main meeting that the Fable set supersedes: all EEA rows, plus
     # any regex-parsed book whose source_pdf Fable has also extracted (JMIH 2005/2016)
     fab_srcs = [r[0] for r in fab.execute("SELECT source_pdf FROM meetings")]
-    old = main.execute("SELECT meeting_id FROM meetings WHERE meeting='EEA' OR source_pdf IN (%s)"
-                       % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
+    if only_books is not None:
+        only_books = set(only_books)
+        fab_srcs = [s for s in fab_srcs if Path(s or "").name in only_books]
+        unknown = only_books - {Path(s or "").name for s in fab_srcs}
+        if unknown:
+            raise SystemExit(f"no such book in the Fable DB: {sorted(unknown)}")
+        old = main.execute("SELECT meeting_id FROM meetings WHERE source_pdf IN (%s)"
+                           % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
+    else:
+        old = main.execute("SELECT meeting_id FROM meetings WHERE meeting='EEA' OR source_pdf IN (%s)"
+                           % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
 
     # A flatbed rescan SUPERSEDES the phone scan of the same meeting, but the two
     # have different filenames (..._phonescan.pdf), so matching on source_pdf
@@ -78,7 +93,8 @@ def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True):
     # meeting, but ONLY where a clean book for that same meeting-year is actually
     # being merged — for 1997/1999/2000/2001 the phone scan is still the only
     # source we have and must be kept.
-    fab_years = {(r[0], r[1]) for r in fab.execute("SELECT meeting, year FROM meetings")}
+    fab_years = {(r[0], r[1]) for r in fab.execute("SELECT meeting, year, source_pdf FROM meetings")
+                 if only_books is None or Path(r[2] or "").name in only_books}
     for mid, meeting, year, src in main.execute(
             "SELECT meeting_id, meeting, year, source_pdf FROM meetings").fetchall():
         if not src or not any(frag in src for frag in C.SKIP_NAME_FRAGMENTS):
@@ -110,6 +126,8 @@ def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True):
     n_m = n_a = n_u = n_soc = 0
     new_mids = set()
     for m in fab.execute("SELECT * FROM meetings ORDER BY year"):
+        if only_books is not None and Path(m["source_pdf"] or "").name not in only_books:
+            continue
         cur = main.execute(f"INSERT INTO meetings ({','.join(mcols)}) VALUES ({','.join('?'*len(mcols))})",
                            [m[c] for c in mcols])
         new_mid = cur.lastrowid; n_m += 1
@@ -168,4 +186,15 @@ def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True):
 
 
 if __name__ == "__main__":
-    merge()
+    import argparse
+
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--only", nargs="+", metavar="BOOK.pdf",
+                    help="fold in ONLY these Fable books (source_pdf basenames) "
+                         "and replace only the main meetings they supersede")
+    ap.add_argument("--db", default=str(C.DB_PATH), help="main DB to merge into")
+    ap.add_argument("--no-finish-chain", action="store_true",
+                    help="skip the dedup/supersede/export chain (testing only)")
+    a = ap.parse_args()
+    merge(db_path=Path(a.db), only_books=a.only,
+          finish_chain=not a.no_finish_chain)

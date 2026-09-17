@@ -228,6 +228,7 @@ def make_ctx(**overrides) -> dict:
         "resolve_publisher": gcah.resolve_publisher,
         "normalise_doi": oat._ndoi,
         "enable_scihub": False,
+        "unpaywall_only": False,
         "scihub_fetch": None,
         "oa_dir": OA_DOWNLOAD_DIR,
         "bhl_dir": BHL_DOWNLOAD_DIR,
@@ -279,7 +280,10 @@ def run_cascade_on_paper(paper: dict, ctx: dict) -> dict:
             # "failed" or "no_url" -> fall through to step 4
 
     # --- Step 4: OA trawl fallback (OpenAlex, then Semantic Scholar) ---------
-    if stage is None:
+    # unpaywall_only: a fast pass for rows whose DOI arrived after their
+    # cascade run (Unpaywall never asked); the trawl and BHL steps cost ~20 s
+    # a paper and are left to a later full --recheck.
+    if stage is None and not ctx.get("unpaywall_only"):
         title = paper.get("title") or ""
         year = paper.get("year")
         trawl_channels = (
@@ -305,7 +309,7 @@ def run_cascade_on_paper(paper: dict, ctx: dict) -> dict:
                 break
 
     # --- Step 5: BHL / archive.org (pre-1970 or taxonomy/paleo only) --------
-    if stage is None and is_bhl_eligible(paper):
+    if stage is None and not ctx.get("unpaywall_only") and is_bhl_eligible(paper):
         journal = paper.get("journal_clean") or paper.get("journal") or ""
         year_int = paper.get("year") if isinstance(paper.get("year"), int) else 0
         try:
@@ -552,19 +556,165 @@ def _norm_id(x) -> str:
     return s[:-2] if s.endswith(".0") else s
 
 
-def _staged_pdfs() -> list:
-    """All staged download PDFs awaiting ingestion, from both source dirs."""
+def _staged_pdfs(staging_dirs=None) -> list:
+    """Staged download PDFs awaiting ingestion.
+
+    Defaults to both source dirs. ``staging_dirs`` restricts the sweep to the
+    directories given (2026-09-17): outputs/bhl_downloads/ holds a 504-PDF
+    untracked remnant from July with its own booked review, and a finalize run
+    aimed at a fresh batch in outputs/oa_downloads/ must not hoover that up.
+    """
     staged: list = []
-    for d in (BHL_DOWNLOAD_DIR, OA_DOWNLOAD_DIR):
+    for d in (staging_dirs if staging_dirs is not None
+              else (BHL_DOWNLOAD_DIR, OA_DOWNLOAD_DIR)):
         if d.exists():
             staged.extend(sorted(d.glob("*.pdf")))
             staged.extend(sorted(d.glob("*.PDF")))
     return staged
 
 
+# --- lid-named staging: trust the filename, sanity-check the content ------
+#
+# 2026-09-17: the download push staged every fetch as "<literature_id>.pdf",
+# and finalize threw that identifier away and re-matched by title/author. It
+# filed 11 correct downloads under a different paper's name and, on the EXISTS
+# branch, deleted 8 correct downloads because an unrelated file already sat at
+# the destination. The staged filename is the strongest evidence we have about
+# what a file is -- we put it there ourselves -- so it now wins, subject to a
+# content sanity check that only has to agree, never to choose.
+
+OUTSTANDING_STATUSES = {"needs_library", "needs_pdf", "sr_sync_new"}
+IDENTITY_MIN_COVERAGE = 0.5     # corroborating an id we already have
+IDENTITY_STRICT_COVERAGE = 0.75  # choosing to DELETE the only other copy
+IDENTITY_HEAD_TOKENS = 600      # a title page, not the whole document
+IDENTITY_MIN_TOKENS = 40        # below this there is no text layer to judge
+_IDENT_STOP = {"the", "of", "and", "a", "an", "in", "on", "for", "from",
+               "with", "to", "by", "at", "its", "new", "some", "notes"}
+
+
+def pdf_text(path: Path, timeout: int = 240) -> str:
+    """Plain text of a PDF, or "" when there is no text layer / no pdftotext."""
+    try:
+        return subprocess.run(["pdftotext", str(path), "-"], capture_output=True,
+                              text=True, timeout=timeout).stdout
+    except (subprocess.TimeoutExpired, OSError):
+        return ""
+
+
+def _ident_norm(text: str) -> str:
+    import unicodedata
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def _ident_words(title: str) -> list:
+    return [w for w in _ident_norm(title).split()
+            if len(w) > 3 and w not in _IDENT_STOP]
+
+
+def identity_check(text: str, row: dict,
+                   min_coverage: float = IDENTITY_MIN_COVERAGE) -> tuple:
+    """Does this text look like the paper ``row`` describes?
+
+    Returns (verdict, detail). ``verdict`` is True (agrees), False (good text,
+    no agreement) or None (no text layer -- untestable, NOT a disagreement).
+    Agreement is either enough of the title's content words in the opening of
+    the document, or the first author's surname. Both are corroboration of an
+    identifier we already have; neither is asked to pick a record.
+    """
+    tokens = _ident_norm(text).split()
+    if len(tokens) < IDENTITY_MIN_TOKENS:
+        return None, "no text layer"
+    head = set(tokens[:IDENTITY_HEAD_TOKENS])
+    words = _ident_words(row.get("title", "") or "")
+    if len(words) >= 3:
+        hits = sum(1 for w in words if any(t.startswith(w) for t in head))
+        cov = hits / len(words)
+        if cov >= min_coverage:
+            return True, f"title {hits}/{len(words)} words"
+    surname = _ident_norm(_first_surname(row.get("authors", "") or ""))
+    if surname and len(surname) > 3 and surname in head:
+        return True, f"first author {surname}"
+    detail = (f"title {len(words)} words, none matched" if words
+              else "title too short to judge")
+    return False, detail
+
+
+def _first_surname(authors: str) -> str:
+    first = re.split(r"\s*&\s*", str(authors).strip())[0].strip()
+    first = re.sub(r"\(\d{4}\)", "", first).strip()
+    if "," in first:
+        return first.split(",")[0].strip()
+    parts = first.split()
+    return parts[-1] if parts else ""
+
+
+def lid_named_rows(staged: list, all_rows: list, queue: list | None = None) -> dict:
+    """{staged path: corpus row} for files named "<literature_id>.pdf" whose id
+    is an outstanding queue row. These bypass the title/author matcher."""
+    if queue is None:
+        try:
+            queue = load_queue()
+        except (OSError, ValueError):
+            queue = []
+    outstanding = {_norm_id(p.get("literature_id"))
+                   for p in queue
+                   if p.get("last_status") in OUTSTANDING_STATUSES}
+    by_lid = {}
+    for r in all_rows:
+        by_lid.setdefault(_norm_id(r.get("literature_id")), r)
+    out = {}
+    for p in staged:
+        lid = _norm_id(Path(p).stem)
+        if lid and lid in outstanding and lid in by_lid:
+            out[str(p)] = by_lid[lid]
+    return out
+
+
+def _sha256(path: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for block in iter(lambda: fh.read(1 << 20), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def same_paper_as_dest(staged: Path, dest: Path, row: dict | None = None) -> tuple:
+    """Is it safe to delete ``staged`` because ``dest`` holds the same paper?
+
+    Two ways to say yes, and no third: the bytes are identical, or the
+    destination passes the identity check for the record it is filed as.
+    Anything else -- including "could not test" -- is a no, because a staged
+    download is the only copy we have and a wrong deletion is unrecoverable.
+    (2026-09-17: the old gate tested only that the destination existed and was
+    bigger than 1 KB, which deleted 8 correct downloads sitting behind an
+    unrelated file.)
+    """
+    try:
+        if staged.stat().st_size == dest.stat().st_size and \
+                _sha256(staged) == _sha256(dest):
+            return True, "sha256 identical"
+    except OSError as e:
+        return False, f"unreadable: {e}"
+    if not row:
+        return False, "differs from destination; no record to identity-check"
+    # Deleting is irreversible, so the destination has to clear a higher bar
+    # than "same subject": two tiger-shark titles share most of their words.
+    verdict, detail = identity_check(pdf_text(dest), row,
+                                     min_coverage=IDENTITY_STRICT_COVERAGE)
+    if verdict:
+        return True, f"destination identity check passed ({detail})"
+    if verdict is None:
+        return False, "destination has no text layer; cannot verify"
+    return False, f"destination is a different paper ({detail})"
+
+
 def delete_verified_staging(staged: list, copied_ids: set,
                             pdf_names: dict, pdf_base: Path,
-                            filed_map: dict | None = None) -> tuple:
+                            filed_map: dict | None = None,
+                            staging_dirs=None,
+                            filed_rows: dict | None = None) -> tuple:
     """Delete staged PDFs that are provably filed in the library.
 
     A staged file is deleted only if ALL gates pass:
@@ -582,9 +732,11 @@ def delete_verified_staging(staged: list, copied_ids: set,
     are provably in the library and safe to remove, but the stem-only gate would
     conservatively keep them.
     """
-    staging_dirs = {BHL_DOWNLOAD_DIR.resolve(), OA_DOWNLOAD_DIR.resolve()}
+    staging_dirs = ({d.resolve() for d in staging_dirs} if staging_dirs
+                    else {BHL_DOWNLOAD_DIR.resolve(), OA_DOWNLOAD_DIR.resolve()})
     copied_norm = {_norm_id(x) for x in copied_ids}
     names_norm = {_norm_id(k): v for k, v in pdf_names.items()}
+    rows_norm = {_norm_id(k): v for k, v in (filed_rows or {}).items()}
 
     to_delete = []   # (staged_path, dest_rel, staged_size, dest_size)
     kept = 0
@@ -608,6 +760,11 @@ def delete_verified_staging(staged: list, copied_ids: set,
         dest = pdf_base / dest_rel
         if not dest.exists() or dest.stat().st_size <= 1024:
             print(f"  KEEP (dest missing/too small): {p.name} -> {dest_rel}")
+            kept += 1
+            continue
+        ok, why = same_paper_as_dest(p, dest, rows_norm.get(lid))
+        if not ok:
+            print(f"  KEEP (not verified same paper): {p.name} -> {dest_rel}: {why}")
             kept += 1
             continue
         to_delete.append((p, dest_rel, p.stat().st_size, dest.stat().st_size))
@@ -639,7 +796,7 @@ def delete_verified_staging(staged: list, copied_ids: set,
 
 def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
                           dry_run: bool = False, skip_books: bool = True,
-                          do_enrich: bool = True) -> None:
+                          do_enrich: bool = True, staging_dirs=None) -> None:
     """Ingest staged downloads into the corpus, delete verified staging copies,
     then run incremental schema extraction on the newly-filed ids.
 
@@ -651,7 +808,10 @@ def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
     skip_books=False (CLI --include-books) only once that pipeline exists.
     """
     import ingest_pdfs as ing            # heavy deps loaded only when finalizing
-    staged = _staged_pdfs()
+    if staging_dirs:
+        print(f"  staging dirs restricted to: "
+              f"{', '.join(str(d) for d in staging_dirs)}")
+    staged = _staged_pdfs(staging_dirs)
     if skip_books:
         before = len(staged)
         staged = [p for p in staged if not ing.detect_book(p)]
@@ -670,10 +830,18 @@ def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
         print("\n[DRY RUN] No files ingested, deleted, or extracted.")
         return
 
+    # Files we staged ourselves as "<literature_id>.pdf" are filed under THAT
+    # record, not under whatever the title matcher prefers (2026-09-17).
+    prefer = lid_named_rows(staged, all_rows)
+    if prefer:
+        print(f"  lid-named staging: {len(prefer)} of {len(staged)} files carry an "
+              f"outstanding literature_id and will be filed under it")
+
     filed_map: dict = {}
+    filed_rows: dict = {}
     copied_ids, copied_dois, pdf_names, _log = ing.ingest_source(
         "cascade-finalize", staged, doi_lookup, ay_lookup, all_rows,
-        filed_map=filed_map)
+        filed_map=filed_map, prefer_lid_rows=prefer, filed_rows=filed_rows)
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     n_json = ing.update_papers_data_json(copied_ids, copied_dois, ts, "cascade-finalize")
@@ -684,7 +852,8 @@ def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
         print("  --keep-staging set: staging copies retained.")
     else:
         deleted, kept, freed = delete_verified_staging(
-            staged, copied_ids, pdf_names, ing.PDF_BASE, filed_map=filed_map)
+            staged, copied_ids, pdf_names, ing.PDF_BASE, filed_map=filed_map,
+            staging_dirs=staging_dirs, filed_rows=filed_rows)
         print(f"  Deleted {deleted} staged copies ({freed / 1e9:.2f} GB freed); "
               f"{kept} kept for review.")
 
@@ -730,12 +899,27 @@ def main() -> int:
                      help="No writes, no downloads -- report what WOULD happen")
     ap.add_argument("--recheck", action="store_true",
                      help="Re-process papers already marked cascade_checked")
+    ap.add_argument("--only-oa-unknown", action="store_true",
+                     help="Restrict the pool to DOI-bearing rows whose oa_status is "
+                          "not a real Unpaywall colour (unknown/blank): the rows whose "
+                          "DOI was recovered AFTER their cascade pass, so Unpaywall "
+                          "was never asked. Implies --recheck for those rows.")
+    ap.add_argument("--unpaywall-only", action="store_true",
+                     help="Skip the OA trawl and BHL steps; Unpaywall lookup + download only.")
+    ap.add_argument("--no-finalize", action="store_true",
+                     help="Skip the finalize step (ingest/extract of staged PDFs) at "
+                          "the end; leave staging for a deliberate later finalize.")
     ap.add_argument("--enable-scihub", action="store_true",
                      help="Enable the (currently inert) sci-hub/tor hook")
     ap.add_argument("--flush-every", type=int, default=50,
                      help="Flush the queue + log to disk every N papers")
     ap.add_argument("--sleep", type=float, default=0.3,
                      help="Seconds to sleep between papers (politeness)")
+    ap.add_argument("--staging-dir", action="append", metavar="DIR",
+                     help="Restrict finalize to this staging directory "
+                          "(repeatable). Default: outputs/oa_downloads AND "
+                          "outputs/bhl_downloads. Use this to finalize one "
+                          "batch without sweeping the other dir's backlog.")
     ap.add_argument("--finalize-only", action="store_true",
                      help="Skip the download loop; only ingest staged PDFs, "
                           "delete verified staging copies, and extract.")
@@ -750,17 +934,25 @@ def main() -> int:
                      help="During finalize, INCLUDE detected books (>200pp volumes). "
                           "Default excludes them; only enable once book-chapter mining exists.")
     args = ap.parse_args()
+    staging_dirs = ([Path(d).resolve() for d in args.staging_dir]
+                    if args.staging_dir else None)
 
     if args.finalize_only:
         finalize_acquisitions(keep_staging=args.keep_staging,
                               do_extract=not args.no_extract,
                               dry_run=args.dry_run,
                               skip_books=not args.include_books,
-                              do_enrich=not args.no_enrich)
+                              do_enrich=not args.no_enrich,
+                              staging_dirs=staging_dirs)
         return 0
 
     queue = load_queue(QUEUE)
-    pool = select_pool(queue, recheck=args.recheck)
+    pool = select_pool(queue, recheck=args.recheck or args.only_oa_unknown)
+    if args.only_oa_unknown:
+        _colours = {"gold", "green", "hybrid", "bronze", "closed"}
+        pool = [p for p in pool if (p.get("doi") or "").strip()
+                and (p.get("oa_status") or "").lower() not in _colours
+                and p.get("last_status") in ("needs_library", "needs_pdf", "sr_sync_new")]
     if args.limit:
         pool = pool[: args.limit]
 
@@ -772,7 +964,8 @@ def main() -> int:
         backup_path = backup_queue(QUEUE, BACKUP_DIR)
         print(f"Backed up queue -> {backup_path}")
 
-    ctx = make_ctx(dry_run=args.dry_run, enable_scihub=args.enable_scihub)
+    ctx = make_ctx(dry_run=args.dry_run, enable_scihub=args.enable_scihub,
+                   unpaywall_only=args.unpaywall_only)
 
     log_rows: list = []
     stage_counts: Counter = Counter()
@@ -846,10 +1039,14 @@ def main() -> int:
         print(f"Log appended to:       {LOG}")
 
     # After downloading, file everything into the corpus and extract.
-    finalize_acquisitions(keep_staging=args.keep_staging,
-                          do_extract=not args.no_extract,
-                          dry_run=args.dry_run,
-                          skip_books=not args.include_books)
+    if args.no_finalize:
+        print("--no-finalize: staged PDFs left in place for a deliberate finalize.")
+    else:
+        finalize_acquisitions(keep_staging=args.keep_staging,
+                              do_extract=not args.no_extract,
+                              dry_run=args.dry_run,
+                              skip_books=not args.include_books,
+                              staging_dirs=staging_dirs)
     return 0
 
 

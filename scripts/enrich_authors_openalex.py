@@ -156,6 +156,18 @@ def extract_institution(
 # OpenAlex API interaction
 # ---------------------------------------------------------------------------
 
+class BatchNotFetched(RuntimeError):
+    """Raised when a batch could not be fetched at all (retries exhausted).
+
+    An empty result list means "OpenAlex holds nothing for these DOIs", which
+    is a real answer worth banking. Retry exhaustion on a 429/5xx/network
+    error means "we never asked successfully", which is not. Returning [] for
+    both let run_pipeline() bank 69 DOIs on 2026-09-17 that it had never
+    fetched, so they would have been skipped permanently on every later run.
+    Only a 200-class outcome may be recorded as processed.
+    """
+
+
 class OpenAlexClient:
     """Thin wrapper around the OpenAlex Works API with rate limiting.
 
@@ -200,6 +212,9 @@ class OpenAlexClient:
 
         Raises:
             requests.HTTPError: On non-retryable HTTP errors.
+            BatchNotFetched: When all retries were exhausted (429/5xx/network),
+                i.e. the batch was never successfully fetched. Distinct from a
+                successful call that returned no works.
         """
         if not dois:
             return []
@@ -269,6 +284,10 @@ class OpenAlexClient:
                     try:
                         single = self.fetch_works_by_dois([single_doi])
                         all_results.extend(single)
+                    except BatchNotFetched:
+                        # Never fetched: propagate so the caller does not bank
+                        # the rest of this batch as processed either.
+                        raise
                     except Exception:
                         logger.debug(
                             "Skipping DOI that caused error: %s", single_doi
@@ -280,10 +299,12 @@ class OpenAlexClient:
             return data.get("results", [])
 
         logger.error(
-            "All %d retries exhausted for batch of %d DOIs.",
+            "All %d retries exhausted for batch of %d DOIs — NOT fetched.",
             MAX_RETRIES, len(dois),
         )
-        return []
+        raise BatchNotFetched(
+            f"all {MAX_RETRIES} retries exhausted for batch of {len(dois)} DOIs"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -559,6 +580,9 @@ def run_pipeline(
 
     # Process in batches
     papers_since_save = 0
+    # DOIs we asked for but never successfully fetched. They are NOT added to
+    # completed_dois, so the next --resume run picks them up again.
+    unfetched_dois: list[str] = []
     total_batches = (len(remaining_dois) + batch_size - 1) // batch_size
 
     with tqdm(total=len(remaining_dois), desc="Papers", unit="paper") as pbar:
@@ -567,7 +591,19 @@ def run_pipeline(
             end = min(start + batch_size, len(remaining_dois))
             batch_dois = remaining_dois[start:end]
 
-            works = client.fetch_works_by_dois(batch_dois)
+            try:
+                works = client.fetch_works_by_dois(batch_dois)
+            except BatchNotFetched as exc:
+                # Never fetched, so nothing is known about these DOIs. Banking
+                # them would make a transient block permanent.
+                unfetched_dois.extend(batch_dois)
+                logger.error(
+                    "Batch %d of %d NOT banked (%s): %d DOIs will be retried "
+                    "on the next run.",
+                    batch_idx + 1, total_batches, exc, len(batch_dois),
+                )
+                pbar.update(len(batch_dois))
+                continue
 
             # Extract authors from each returned work
             batch_record_count = 0
@@ -618,6 +654,18 @@ def run_pipeline(
 
     # Final save
     save_progress(completed_dois, all_records)
+
+    if unfetched_dois:
+        # Loud, and separate from the success tally: exit code 0 from this
+        # script does not mean every DOI was enriched.
+        logger.error(
+            "%d of %d DOIs were NEVER FETCHED (retries exhausted, e.g. "
+            "sustained 429). They are not recorded as processed and will be "
+            "retried on the next --resume run.",
+            len(unfetched_dois), len(remaining_dois),
+        )
+        print(f"  OpenAlex: {len(unfetched_dois)} DOI(s) not fetched "
+              f"(rate-limited/unreachable); NOT banked, will retry.")
 
     # Write output CSVs
     logger.info("Writing %d author-paper records.", len(all_records))

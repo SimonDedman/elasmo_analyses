@@ -78,6 +78,8 @@ outputs/validation/ab_viability.md
 
 # Data files (keep structure but not actual data)
 data/*.csv
+# hand-curated routing table, small, must be tracked (2026-09-17)
+!data/venue_routing.csv
 data/*.xlsx
 data/*.duckdb
 data/*.pdf
