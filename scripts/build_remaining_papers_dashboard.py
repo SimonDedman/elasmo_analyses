@@ -685,6 +685,8 @@ function vcols(c, cats, series, get, opts = {}) {
 
 // ---- header
 document.getElementById('sub').textContent = `${fmt(D.outstanding)} papers wanted and not yet held, from ${fmt(D.total_rows)} rows in docs/papers_data.json. Generated ${D.generated}.`;
+const belowLine = D.team.filter(t => t.person !== 'Simon' && !t.abstract_team && t.total < D.coauthor_target).length;
+const assignable = D.classes.filter(k => k.id === 'doi_closed' || k.id === 'doi_unknown').reduce((a, k) => a + k.n, 0);
 const tiles = [
   [D.outstanding, 'outstanding', 'wanted, not held'],
   [D.with_doi, 'have a DOI', 'publisher resolves; assignable to a person'],
@@ -692,6 +694,7 @@ const tiles = [
   [D.abstracts, 'conference abstracts', 'abstracts project, not a download'],
   [D.recent_total, 'published 2024 or later', `${fmt(D.recent_doi)} of them have a DOI`],
   [D.pre1950, 'pre-1950', 'scans, BHL, archive.org, ILL'],
+  [Math.round(assignable / Math.max(1, belowLine)), 'assignable papers per person below the line', `${fmt(assignable)} DOI + closed/unknown ÷ ${belowLine} people under ${fmt(D.coauthor_target)} pts; the 500 line should track this`],
 ];
 document.getElementById('tiles').innerHTML = tiles.map(([v, k, d]) => `<div class="tile"><div class="v">${fmt(v)}</div><div class="k">${k}</div><div class="d">${d}</div></div>`).join('');
 
