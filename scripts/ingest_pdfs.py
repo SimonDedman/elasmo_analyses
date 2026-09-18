@@ -1599,7 +1599,8 @@ def ingest_source(label: str, pdf_paths: list[Path],
 
 def check_source(label: str, pdf_paths: list[Path],
                   doi_lookup: dict, author_year_lookup: dict,
-                  all_rows: list[dict]) -> None:
+                  all_rows: list[dict],
+                  prefer_lid_rows: dict | None = None) -> None:
     """
     Dry-run: check which PDFs match the database without copying or updating anything.
     Prints a summary table and saves CSV to outputs/ingest_check.csv.
@@ -1666,7 +1667,9 @@ def check_source(label: str, pdf_paths: list[Path],
                 unmatched += 1
                 msg = (f"staged as literature_id {lid_row['literature_id']} but its "
                        f"text names a different paper ({detail}) -- held for review")
-                log_lines.append(f"UNMATCHED: {pdf_path.name} \u2014 {msg}")
+                results.append({"filename": pdf_path.name, "status": "UNMATCHED (identity check)",
+                                "match_method": "lid-named staging", "literature_id": str(lid_row["literature_id"]),
+                                "matched_title": "", "matched_doi": "", "reason": msg})
                 print(f"  UNMATCHED: {pdf_path.name}")
                 print(f"            Reason: {msg}")
                 continue
