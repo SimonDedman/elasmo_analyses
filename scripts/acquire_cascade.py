@@ -826,7 +826,8 @@ def finalize_acquisitions(keep_staging: bool = False, do_extract: bool = True,
     all_rows, doi_lookup, ay_lookup = ing.load_database()
 
     if dry_run:
-        ing.check_source("cascade-finalize", staged, doi_lookup, ay_lookup, all_rows)
+        ing.check_source("cascade-finalize", staged, doi_lookup, ay_lookup, all_rows,
+                         prefer_lid_rows=lid_named_rows(staged, all_rows))
         print("\n[DRY RUN] No files ingested, deleted, or extracted.")
         return
 
