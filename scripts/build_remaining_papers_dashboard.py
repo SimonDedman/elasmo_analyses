@@ -696,11 +696,13 @@ function vcols(c, cats, series, get, opts = {}) {
 }
 
 // ---- header
-document.getElementById('sub').textContent = `${fmt(D.outstanding)} papers wanted and not yet held, from ${fmt(D.total_rows)} rows in docs/papers_data.json. Generated ${D.generated}.`;
+// Bridge to the download hub's headline so the two pages can be reconciled at a glance.
+const flaggedAbs = (D.classes.find(k => k.id === 'abstract') || {n: 0}).n;
+document.getElementById('sub').innerHTML = `${fmt(D.outstanding)} outstanding = ${fmt(D.outstanding - flaggedAbs)} papers to get (the <a href="${HUB}">download hub</a>'s "Remaining") + ${fmt(flaggedAbs)} flagged conference abstracts. ${fmt(D.total_rows - D.outstanding)} more rows in docs/papers_data.json are already downloaded and await filing. Generated ${D.generated}.`;
 const belowLine = D.team.filter(t => t.person !== 'Simon' && !t.abstract_team && t.total < D.coauthor_target).length;
 const assignable = D.classes.filter(k => k.id === 'doi_closed' || k.id === 'doi_unknown').reduce((a, k) => a + k.n, 0);
 const tiles = [
-  [D.outstanding, 'outstanding', 'wanted, not held'],
+  [D.outstanding, 'outstanding', `wanted, not held: ${fmt(D.outstanding - flaggedAbs)} papers + ${fmt(flaggedAbs)} flagged abstracts`],
   [D.with_doi, 'have a DOI', 'publisher resolves; assignable to a person'],
   [D.no_doi, 'no DOI', 'DOI recovery, metadata repair, or archival'],
   [D.abstracts, 'conference abstracts', 'abstracts project, not a download'],
