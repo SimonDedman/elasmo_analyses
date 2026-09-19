@@ -2,15 +2,22 @@
 """
 generate_closed_access_html.py
 
-Manual-download helper HTMLs for CLOSED (not-open-access) papers still in the
-queue. Grouped by PUBLISHER (one file each, for shared institutional auth),
-then by JOURNAL within the file (most papers first). Links resolve via
-https://doi.org/<doi> to the publisher page, where an authenticated user
-downloads the PDF. Reuses the style + localStorage progress tracker from
-generate_manual_download_html.py.
+Download-helper pages for EVERY outstanding paper (conference abstracts
+excluded): one card per paper with search buttons and a "Got it" button that
+writes to the shared record the downloading hub also reads.
+
+- Papers WITH a DOI: one page per publisher (shared institutional login),
+  journals grouped within it.
+- Papers WITHOUT a DOI: one page per journal with >= 20 such papers, the rest
+  pooled alphabetically into pages of about 300.
+
+Also writes helper_map.json (hub journal / publisher -> helper page), which
+docs/remaining_downloads.html uses to offer "Open the download helper".
+The name is historical (the pages once covered closed-access DOIs only); the
+output directory keeps its name so links already sent out keep working.
 
 Usage:  python3 scripts/generate_closed_access_html.py
-Output: outputs/manual_downloads/closed_access/<publisher>.html  + index.html
+Output: docs/closed_access/*.html + index.html + helper_map.json
 """
 import json, csv, re, urllib.parse
 from pathlib import Path
@@ -180,223 +187,347 @@ TEAM = ["Alex", "Andrew", "Brit", "Carylanne", "Cat", "Chiara", "Chris", "David 
 USER_OPTIONS = '<option value="">--</option>' + "".join(
     f'<option value="{n}">{n}</option>' for n in TEAM)
 
+CSS_EXTRA = """
+    .citation { color: #566573; font-size: 0.85em; margin: 3px 0; }
+    .oa-badge { display: inline-block; font-size: 0.75em; border-radius: 4px; padding: 1px 6px; margin-left: 8px; background: #d5f5e3; color: #1e8449; }
+    .alt-google { background: #566573; } .alt-google:hover { background: #3d4a55; }
+    .alt-bhl    { background: #117864; } .alt-bhl:hover    { background: #0b5345; }
+    .alt-oa     { background: #1e8449; } .alt-oa:hover     { background: #145a32; }
+    .outcome { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .got, .cant, .undo { border: 1px solid #bdc3c7; background: #fff; border-radius: 4px; padding: 5px 12px; cursor: pointer; font-weight: bold; font-size: 0.85em; }
+    .got { border-color: #27ae60; color: #1e8449; } .got:hover { background: #eafaf1; }
+    .cant { border-color: #c0392b; color: #922b21; } .cant:hover { background: #fdedec; }
+    .who { color: #7f8c8d; font-size: 0.8em; }
+    .paper.done { opacity: 0.45; border-left-color: #95a5a6; }
+    .paper.nope { border-left-color: #c0392b; }
+    .paper.nope .title::after { content: "  (you couldn't get this)"; font-weight: normal; color: #922b21; font-size: 0.85em; }
+    .toc { background: #fff; padding: 10px 15px; border-radius: 8px; margin: 12px 0; font-size: 0.9em; line-height: 1.8; }
+    .toc a { color: #1f618d; margin-right: 12px; white-space: nowrap; }
+    .hidebar { font-size: 0.85em; margin-left: 16px; font-weight: normal; color: #2c3e50; }
+    .back { font-size: 0.9em; }
+"""
+
+# The shared record (a Google Apps Script sheet) is keyed by DOI. Rows without a
+# DOI use "lid:<literature_id>", which the hub uses too, so a mark made on either
+# page shows on both.
 JS = """
-    // Same Apps Script endpoint as docs/remaining_downloads.html, so progress made
-    // here lands in the shared record instead of being trapped in one browser.
     const SHEET = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
+    const MINE = 'helper_outcomes';          // per-browser: {key: 'got'|'cant'}
+    let mine = {};
+    try { mine = JSON.parse(localStorage.getItem(MINE) || '{}'); } catch (e) {}
+    let shared = {};                         // key -> {by, at}, from the shared record
+    const keyOf = el => el.dataset.key;
+    const me = () => localStorage.getItem('eea_username') || 'Anon';
 
-    let clicked = new Set();
-    const KEY = 'clicked_' + document.title;
-
-    function paint(id) {
-        const el = document.getElementById('paper-' + id);
-        if (el) { el.style.opacity = '0.5'; el.style.borderLeftColor = '#95a5a6'; }
-    }
-    function refreshCount() { document.getElementById('count').textContent = clicked.size; }
-
-    if (localStorage.getItem(KEY)) {
-        clicked = new Set(JSON.parse(localStorage.getItem(KEY)));
-        refreshCount(); clicked.forEach(paint);
-    }
-
-    // Pull the shared record so a paper someone else already did shows as done.
-    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
-        const done = new Set((res.data || []).map(x => (x.doi || '').trim().toLowerCase()));
+    function paint() {
+        let done = 0, cant = 0;
         document.querySelectorAll('.paper').forEach(el => {
-            const d = (el.dataset.doi || '').trim().toLowerCase();
-            if (d && done.has(d)) { clicked.add(el.id.replace('paper-', '')); paint(el.id.replace('paper-', '')); }
+            const k = keyOf(el), s = shared[k], m = mine[k];
+            el.classList.toggle('done', !!s || m === 'got');
+            el.classList.toggle('nope', m === 'cant' && !s);
+            const w = el.querySelector('.who');
+            w.textContent = s ? ('Marked as got by ' + (s.by || 'someone') + (s.at ? ' on ' + String(s.at).slice(0, 10) : '') + '; not filed yet. If you have it too, drop it in anyway.') : '';
+            el.querySelector('.got').style.display = s ? 'none' : '';
+            el.querySelector('.undo').style.display = s ? '' : 'none';
+            if (s || m === 'got') done++; else if (m === 'cant') cant++;
         });
-        localStorage.setItem(KEY, JSON.stringify([...clicked]));
-        refreshCount();
-        const s = document.getElementById('syncStatus');
-        if (s) s.textContent = 'Synced with the shared record';
+        document.getElementById('count').textContent = done;
+        document.getElementById('cantcount').textContent = cant;
+        applyHide();
+    }
+    function applyHide() {
+        const hide = document.getElementById('hideDone').checked;
+        document.querySelectorAll('.paper.done').forEach(el => el.style.display = hide ? 'none' : '');
+        document.querySelectorAll('.paper:not(.done)').forEach(el => el.style.display = '');
+    }
+    function saveMine() { try { localStorage.setItem(MINE, JSON.stringify(mine)); } catch (e) {} }
+    function post(body) { return fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify(body)}).catch(() => {}); }
+
+    // "Got it" is the only thing that tells the team a paper is done. Clicking a
+    // search button records nothing: a click that hit a paywall got no PDF.
+    function got(btn) {
+        const el = btn.closest('.paper'), k = keyOf(el);
+        mine[k] = 'got'; saveMine();
+        shared[k] = {by: me(), at: new Date().toISOString()};
+        post({action: 'markClicked', doi: k, title: el.dataset.title || '', by: me(), at: shared[k].at});
+        paint();
+    }
+    function cant(btn) {
+        const el = btn.closest('.paper'), k = keyOf(el);
+        mine[k] = mine[k] === 'cant' ? undefined : 'cant'; saveMine(); paint();
+    }
+    function undo(btn) {
+        const el = btn.closest('.paper'), k = keyOf(el);
+        delete shared[k]; delete mine[k]; saveMine();
+        post({action: 'unmark', doi: k}); paint();
+    }
+
+    fetch(SHEET + '?action=getAll').then(r => r.json()).then(res => {
+        (res.data || []).forEach(x => { const k = String(x.doi || '').trim(); if (k) shared[k] = {by: x.by, at: x.at}; });
+        // the sheet stores DOIs as typed; match case-insensitively
+        const lower = {}; Object.keys(shared).forEach(k => lower[k.toLowerCase()] = shared[k]);
+        document.querySelectorAll('.paper').forEach(el => { const k = keyOf(el); if (!shared[k] && lower[k.toLowerCase()]) shared[k] = lower[k.toLowerCase()]; });
+        document.getElementById('syncStatus').textContent = 'Synced with the shared record';
+        paint();
     }).catch(() => {
-        const s = document.getElementById('syncStatus');
-        if (s) s.textContent = 'Offline — progress saved locally only';
+        document.getElementById('syncStatus').textContent = 'Offline: shared record unreachable, showing your own marks only';
+        paint();
     });
 
-    function markClicked(id) {
-        if (!clicked.has(id)) {
-            clicked.add(id); refreshCount();
-            localStorage.setItem(KEY, JSON.stringify([...clicked]));
-            paint(id);
-        }
-        // Push to the shared record. no-cors: this is a blind write, we only need it to land.
-        const el = document.getElementById('paper-' + id);
-        const doi = el && el.dataset.doi;
-        if (SHEET && doi) {
-            fetch(SHEET, {method: 'POST', mode: 'no-cors', body: JSON.stringify({
-                action: 'markClicked', doi: doi, title: (el.dataset.title || ''),
-                by: (localStorage.getItem('eea_username') || 'Anon'),
-                at: new Date().toISOString()})}).catch(() => {});
-        }
-    }
-
-    // Who am I — shares the eea_username key with the main download helper.
     function initUser() {
         const sel = document.getElementById('userName');
-        if (!sel) return;
         const saved = localStorage.getItem('eea_username');
         if (saved) sel.value = saved;
         sel.addEventListener('change', () => localStorage.setItem('eea_username', sel.value));
     }
 
-    // The library link defaults to FIU, which is no use to anyone else, so let
-    // each person store their own institution's search URL with a {TITLE} slot.
+    // Each person's own library search, with {TITLE} where the title goes.
+    // WorldCat is the default because it works for everyone; FIU is one click away.
     const LIBKEY = 'eea_library_url';
     const LIB_FIU = 'https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query=any,contains,{TITLE}&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0';
     const LIB_WORLDCAT = 'https://search.worldcat.org/search?q={TITLE}';
-    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_FIU; }
+    function libTemplate() { return localStorage.getItem(LIBKEY) || LIB_WORLDCAT; }
     function applyLibrary() {
         const tpl = libTemplate();
         document.querySelectorAll('a.alt-fiu').forEach(a => {
             const p = a.closest('.paper');
-            const t = (p && p.dataset.title) || '';
-            a.href = tpl.replace('{TITLE}', encodeURIComponent(t));
-            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch'
-                          : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
+            a.href = tpl.replace('{TITLE}', encodeURIComponent((p && p.dataset.title) || ''));
+            a.textContent = tpl === LIB_FIU ? 'FIU OneSearch' : tpl === LIB_WORLDCAT ? 'WorldCat' : 'My library';
         });
-        const inp = document.getElementById('libUrl');
-        if (inp) inp.value = tpl;
+        document.getElementById('libUrl').value = tpl;
     }
     function saveLibrary() {
         const v = document.getElementById('libUrl').value.trim();
         if (v) localStorage.setItem(LIBKEY, v); else localStorage.removeItem(LIBKEY);
         applyLibrary();
     }
-    function presetLibrary(which) {
-        localStorage.setItem(LIBKEY, which === 'worldcat' ? LIB_WORLDCAT : LIB_FIU);
-        applyLibrary();
-    }
-    // Route tracker: record which access route worked for each paper (last wins),
-    // so the FIU access-map can be reconstructed from an exported routes JSON.
-    let routes = {};
-    const RKEY = 'routes_' + document.title;
-    if (localStorage.getItem(RKEY)) { try { routes = JSON.parse(localStorage.getItem(RKEY)); } catch(e) {} }
-    function useRoute(id, route) {
-        routes[id] = route; localStorage.setItem(RKEY, JSON.stringify(routes)); markClicked(id);
-    }
-    function exportRoutes() {
-        const blob = new Blob([JSON.stringify(routes, null, 2)], {type: 'application/json'});
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-        a.download = document.title.replace(/[^a-z0-9]+/gi, '_') + '_routes.json'; a.click();
-    }
-    document.addEventListener('keydown', e => { if (e.ctrlKey && e.key==='r') { if (confirm('Reset progress?')) { localStorage.removeItem(KEY); localStorage.removeItem(RKEY); location.reload(); } } });
+    function presetLibrary(which) { localStorage.setItem(LIBKEY, which === 'fiu' ? LIB_FIU : LIB_WORLDCAT); applyLibrary(); }
 
     initUser();
     applyLibrary();
+    paint();
 """
 
-def build_page(publisher, papers):
-    # group by journal, most papers first
+HUB = "https://simondedman.github.io/elasmo_analyses/remaining_downloads.html"
+OUTSTANDING = {"needs_library", "needs_pdf", "sr_sync_new"}   # same set as the hub and the dashboard
+OA_OPEN = {"gold", "green", "hybrid", "bronze"}
+
+
+def esc(s):
+    return (str(s or "").replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def hub_journal(p):
+    """The journal string the hub filters on (docs/remaining_downloads.html)."""
+    return (p.get("journal_clean") or p.get("journal") or "Unknown").strip()
+
+
+def paper_card(p, i):
+    lid = p.get("literature_id")
+    doi = str(p.get("doi") or "").strip()
+    key = doi or f"lid:{lid}"
+    raw_title = (p.get("title") or "").strip().rstrip(".").strip()
+    enc = urllib.parse.quote(raw_title, safe="")
+    first = re.split(r"[,;]", p.get("authors") or "")[0].strip()
+    google = "https://www.google.com/search?q=" + urllib.parse.quote(f'"{raw_title}" filetype:pdf', safe="")
+    scholar = f"https://scholar.google.com/scholar?q={enc}"
+    jstor = f"https://www.jstor.org/action/doBasicSearch?Query={enc}&so=rel"
+    bhl = "https://www.biodiversitylibrary.org/search?searchTerm=" + urllib.parse.quote(f"{raw_title} {first}".strip(), safe="")
+    oa = (p.get("oa_status") or "").lower()
+    buttons = []
+    if doi:
+        if oa in OA_OPEN and p.get("oa_url"):
+            buttons.append(f'<a href="{esc(p["oa_url"])}" class="url-link" target="_blank">Open-access copy</a>')
+            buttons.append(f'<a href="https://doi.org/{esc(doi)}" class="alt-link alt-jstor" target="_blank">Publisher page (DOI)</a>')
+        else:
+            buttons.append(f'<a href="https://doi.org/{esc(doi)}" class="url-link" target="_blank">Publisher page (DOI)</a>')
+            buttons.append(f'<a href="{jstor}" class="alt-link alt-jstor" target="_blank">JSTOR</a>')
+    else:
+        buttons.append(f'<a href="{scholar}" class="url-link" target="_blank">Google Scholar</a>')
+        buttons.append(f'<a href="{google}" class="alt-link alt-google" target="_blank">Google (PDF)</a>')
+        buttons.append(f'<a href="{bhl}" class="alt-link alt-bhl" target="_blank">BHL</a>')
+        buttons.append(f'<a href="{jstor}" class="alt-link alt-jstor" target="_blank">JSTOR</a>')
+    buttons.append('<a href="#" class="alt-link alt-fiu" target="_blank">WorldCat</a>')
+    if doi:
+        buttons.append(f'<a href="{scholar}" class="alt-link alt-schol" target="_blank">Scholar</a>')
+    badge = f'<span class="oa-badge">flagged open access</span>' if doi and oa in OA_OPEN else ""
+    cite = esc(p.get("findspot_raw") or "")
+    return (f'<div class="paper" id="paper-{lid}" data-key="{esc(key)}" data-title="{esc(raw_title)}">'
+            f'<span class="paper-number">{i}</span><span class="paper-id">ID {lid}</span>'
+            f'{f"<span class=doi>{esc(doi)}</span>" if doi else ""}{badge}'
+            f'<div class="title">{esc(raw_title)}</div><div class="authors">{esc(p.get("authors"))}</div>'
+            f'<div class="year">Year: {esc(p.get("year"))}</div>'
+            f'{f"<div class=citation>{cite}</div>" if cite else ""}'
+            f'{"".join(buttons)}'
+            f'<div class="outcome"><button class="got" onclick="got(this)">Got it</button>'
+            f'<button class="undo" style="display:none" onclick="undo(this)">Undo</button>'
+            f'<button class="cant" onclick="cant(this)">Can\'t get it</button><span class="who"></span></div></div>')
+
+
+def anchor(name):
+    return "j-" + sanitize(name)[:60]
+
+
+def build_page(heading, subtitle, papers, kind):
+    """kind: 'doi' (grouped by journal within a publisher) or 'nodoi'."""
     byj = defaultdict(list)
     for p in papers:
         byj[clean_journal_name(p)].append(p)
-    journals = sorted(byj.items(), key=lambda kv: kv[0].lower())  # alphabetical by journal
+    journals = sorted(byj.items(), key=lambda kv: kv[0].lower())
     n = len(papers)
-    parts = [f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+    toc = ""
+    if len(journals) > 1:
+        toc = '<div class="toc"><strong>Journals on this page:</strong><br>' + "".join(
+            f'<a href="#{anchor(j)}">{esc(j)} ({len(ps)})</a>' for j, ps in journals) + "</div>"
+    routes = ("the <strong>Publisher page (DOI)</strong> first; if your login doesn't reach it, try JSTOR, "
+              "then your library (WorldCat by default; set your own below), then Scholar."
+              if kind == "doi" else
+              "<strong>Google Scholar</strong> first (look for an [PDF] link on the right), then Google restricted "
+              "to PDFs, then BHL for older and taxonomic work, then JSTOR and your library. Where there is a "
+              "citation line under the title, it gives the volume and pages as Shark-References records them.")
+    head = f"""<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Closed-access downloads: {publisher}</title><style>{CSS}</style></head><body>
-<h1>🔒 Closed-access manual downloads: {publisher}</h1>
-<div class="stats"><strong>Publisher:</strong> {publisher}<br><strong>Total papers:</strong> {n}
-&nbsp;across&nbsp;{len(journals)} journal(s)<br><strong>Generated:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M')}</div>
-<div class="instructions"><h3>📋 Instructions</h3><ol>
-<li><strong>Log in once</strong> to your publisher/library access (VPN, FIU OneSearch, JSTOR) before starting.</li>
-<li>Per paper, try routes in order: <strong>Download PDF (DOI)</strong> first; if no access, <strong>JSTOR</strong> → <strong>FIU OneSearch</strong> → <strong>Scholar</strong>. Save the PDF to your Downloads folder (it will be batch-ingested later).</li>
-<li>Clicking any route greys the paper and records <em>which route worked</em> — this feeds the FIU access-map.</li>
-<li>When you finish a page or pause, click <strong>⬇ Export routes</strong> and send the JSON: that reveals which journals/years need the library fallback vs. work direct.</li>
-<li>Journals are ordered alphabetically; clear a whole journal before moving on. Pause every ~25.</li>
+<title>Download helper: {esc(heading)}</title><style>{CSS}{CSS_EXTRA}</style></head><body>
+<p class="back"><a href="index.html">&larr; All download helpers</a> &nbsp;|&nbsp; <a href="{HUB}">Downloading hub</a></p>
+<h1>Download helper: {esc(heading)}</h1>
+<div class="stats">{subtitle}<br><strong>{n}</strong> papers across {len(journals)} journal(s). Generated {datetime.now().strftime('%Y-%m-%d %H:%M')}; papers filed since then still appear until the next rebuild.</div>
+<div class="instructions"><h3>How to use this page</h3><ol>
+<li>Pick your name under <strong>You</strong> and, if you like, set your own library's search link.</li>
+<li>For each paper try {routes}</li>
+<li>If you get the PDF, save it and click <strong>Got it</strong>. That greys it out for everyone, here and on the downloading hub. Clicking a search button records nothing, so a dead end costs nobody anything.</li>
+<li>If you can't get it, click <strong>Can't get it</strong>. That only marks it on your own browser, so you don't try it twice; someone with different access may still succeed.</li>
+<li>Put the PDFs in your named folder on Simon's NAS. Any filename is fine. No NAS link yet? Email Simon and he'll send one.</li>
 </ol></div>
-<div class="controls">
-<label><strong>You:</strong>
-<select id="userName">{USER_OPTIONS}</select></label>
+<div class="controls"><label><strong>You:</strong> <select id="userName">{USER_OPTIONS}</select></label>
 &nbsp;<span id="syncStatus" style="color:#7f8c8d;font-size:0.85em;">Connecting to the shared record…</span>
-<div style="margin-top:8px;font-size:0.85em;">
-<strong>Library link:</strong>
-<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;"
- title="Your library's search URL. Put {{TITLE}} where the paper title goes.">
-<button onclick="saveLibrary()">Save</button>
-<button onclick="presetLibrary('fiu')">FIU</button>
-<button onclick="presetLibrary('worldcat')">WorldCat</button>
-<br><em>Not at FIU? Paste your own library search URL with <code>{{TITLE}}</code> where the title goes; it's remembered on this browser.</em>
-</div></div>
-<div class="progress">Progress: <span id="count">0</span> / {n} papers clicked
-<button class="export-btn" onclick="exportRoutes()">⬇ Export routes</button></div><div id="papers">"""]
+<div style="margin-top:8px;font-size:0.85em;"><strong>Library link:</strong>
+<input id="libUrl" style="width:min(560px,70%);font-size:0.85em;padding:3px 6px;" title="Your library's search URL, with {{TITLE}} where the paper title goes.">
+<button onclick="saveLibrary()">Save</button> <button onclick="presetLibrary('worldcat')">WorldCat</button> <button onclick="presetLibrary('fiu')">FIU</button>
+<br><em>Paste your own library's search URL with <code>{{TITLE}}</code> where the title goes; this browser remembers it.</em></div></div>
+<div class="progress">Got: <span id="count">0</span> / {n} &nbsp;·&nbsp; Can't get (you): <span id="cantcount">0</span>
+<label class="hidebar"><input type="checkbox" id="hideDone" onchange="applyHide()"> hide papers already got</label></div>
+{toc}<div id="papers">"""
+    parts = [head]
     i = 0
     for jname, ps in journals:
-        parts.append(f'<div class="journal-header">📚 {jname} &nbsp;({len(ps)})</div>')
+        parts.append(f'<div class="journal-header" id="{anchor(jname)}">{esc(jname)} &nbsp;({len(ps)})</div>')
         for p in sorted(ps, key=lambda x: str(x.get("year", ""))):
             i += 1
-            lid = p.get("literature_id"); doi = str(p.get("doi", "")).strip()
-            url = f"https://doi.org/{doi}"
-            # Strip terminal period(s)/whitespace — a trailing "." breaks JSTOR/FIU/
-            # Scholar title lookups, so remove it for both display and search URLs.
-            raw_title = (p.get("title") or "").strip().rstrip(".").strip()
-            enc = urllib.parse.quote(raw_title, safe="")
-            fiu_q = urllib.parse.quote("any,contains," + raw_title, safe="")
-            jstor = f"https://www.jstor.org/action/doBasicSearch?Query={enc}&so=rel"
-            fiu = (f"https://fiu-flvc.primo.exlibrisgroup.com/discovery/search?query={fiu_q}"
-                   f"&tab=Everything&search_scope=MyInst_and_CI&vid=01FALSC_FIU%3AFIU&offset=0")
-            scholar = f"https://scholar.google.com/scholar?q={enc}"
-            title = raw_title.replace("<", "&lt;").replace(">", "&gt;")
-            authors = (p.get("authors") or "").replace("<", "&lt;").replace(">", "&gt;")
-            title_attr = title.replace('"', "&quot;")
-            parts.append(f"""<div class="paper" id="paper-{lid}" data-doi="{doi}" data-title="{title_attr}"><span class="paper-number">{i}</span>
-<span class="paper-id">ID: {lid}</span><span class="doi">{doi}</span>
-<div class="title">{title}</div><div class="authors">{authors}</div><div class="year">Year: {p.get('year','')}</div>
-<a href="{url}" class="url-link" target="_blank" onclick="useRoute('{lid}','doi')">📥 Download PDF (DOI)</a>
-<a href="{jstor}" class="alt-link alt-jstor" target="_blank" onclick="useRoute('{lid}','jstor')">JSTOR</a>
-<a href="{fiu}" class="alt-link alt-fiu" target="_blank" onclick="useRoute('{lid}','fiu')">FIU OneSearch</a>
-<a href="{scholar}" class="alt-link alt-schol" target="_blank" onclick="useRoute('{lid}','scholar')">Scholar</a></div>""")
+            parts.append(paper_card(p, i))
     parts.append(f"</div><script>{JS}</script></body></html>")
     return "".join(parts)
 
+
+def chunk_journals(groups, target=300):
+    """Pool small journals alphabetically into pages of about `target` papers,
+    never splitting a journal across two pages."""
+    pages, cur = [], []
+    for name, ps in sorted(groups.items(), key=lambda kv: kv[0].lower()):
+        if cur and sum(len(x[1]) for x in cur) + len(ps) > target:
+            pages.append(cur)
+            cur = []
+        cur.append((name, ps))
+    if cur:
+        pages.append(cur)
+    return pages
+
+
 def main():
     d = json.load(open(QUEUE))
-    uw = {}
-    with open(UW_LOG) as f:
-        r = csv.reader(f); next(r)
-        for row in r:
-            if len(row) >= 12:
-                uw[row[0].strip().lower()] = row[10]
-    closed = [p for p in d if str(p.get("doi", "")).strip()
-              and uw.get(str(p.get("doi", "")).strip().lower()) == "not_open_access"]
-    bypub = defaultdict(list)
-    for p in closed:
-        bypub[resolve_publisher(p)].append(p)
+    rows = [p for p in d if p.get("last_status") in OUTSTANDING and p.get("triage") != "conference_abstract"]
     OUT.mkdir(parents=True, exist_ok=True)
-    THRESHOLD = 15  # publishers below this get folded into one "smaller_publishers" file
-    big = {k: v for k, v in bypub.items() if len(v) >= THRESHOLD}
+    for old in OUT.glob("*.html"):   # rebuilt from scratch: a stale page lists papers already filed
+        old.unlink()
+    helper_map = {"journal": {}, "publisher": {}}
+    index_doi, index_nodoi = [], []
+
+    def note(p, url):
+        helper_map["journal"].setdefault(hub_journal(p), url)
+
+    # ---- DOI rows: one page per publisher -------------------------------
+    doi_rows = [p for p in rows if str(p.get("doi") or "").strip()]
+    bypub = defaultdict(list)
+    for p in doi_rows:
+        bypub[resolve_publisher(p)].append(p)
+    THRESHOLD = 15  # publishers below this share one "smaller publishers" page
     small = [p for k, v in bypub.items() if len(v) < THRESHOLD for p in v]
-    # Publishers whose HTML must NOT be overwritten (user is actively working them;
-    # leaving them preserves their in-progress ordering/click state).
-    SKIP_REGEN = {"Canadian Science Publishing"}
-    index_rows = []
-    for pub, papers in sorted(big.items(), key=lambda kv: -len(kv[1])):
+    for pub, papers in sorted(bypub.items(), key=lambda kv: -len(kv[1])):
+        if len(papers) < THRESHOLD:
+            continue
         fn = f"{sanitize(pub)}.html"
-        if pub in SKIP_REGEN and (OUT / fn).exists():
-            print(f"  {len(papers):4d}  {pub}  -> {fn}  (SKIPPED — left as-is)")
-        else:
-            (OUT / fn).write_text(build_page(pub, papers), encoding="utf-8")
-            print(f"  {len(papers):4d}  {pub}  -> {fn}")
-        index_rows.append((pub, len(papers), fn))
+        n_oa = sum((p.get("oa_status") or "").lower() in OA_OPEN for p in papers)
+        (OUT / fn).write_text(build_page(pub, f"<strong>Publisher:</strong> {esc(pub)}. Papers with a DOI; "
+                                         f"{n_oa} are flagged open access but our scripts failed to fetch them.",
+                                         papers, "doi"), encoding="utf-8")
+        index_doi.append((pub, len(papers), fn))
+        for p in papers:
+            note(p, f"{fn}#{anchor(clean_journal_name(p))}")
+            helper_map["publisher"].setdefault((p.get("publisher") or "").strip() or pub, fn)
     if small:
-        (OUT / "smaller_publishers.html").write_text(
-            build_page("Smaller publishers (mixed)", small), encoding="utf-8")
-        index_rows.append((f"Smaller publishers (<{THRESHOLD} each)", len(small), "smaller_publishers.html"))
-        print(f"  {len(small):4d}  smaller publishers -> smaller_publishers.html")
-    # index
-    links = "\n".join(f'<li><a href="{fn}">{pub}</a> — {n} papers</li>'
-                      for pub, n, fn in index_rows)
-    (OUT / "index.html").write_text(f"""<!DOCTYPE html><html><head><meta charset="UTF-8">
-<title>Closed-access download helpers</title><style>{CSS}</style></head><body>
-<h1>🔒 Closed-access download helpers (by publisher)</h1>
-<div class="stats"><strong>Total closed papers:</strong> {len(closed)}<br>
-<strong>Publisher files:</strong> {len(index_rows)}<br>
+        fn = "smaller_publishers.html"
+        (OUT / fn).write_text(build_page("Smaller publishers", f"Publishers with fewer than {THRESHOLD} papers each.",
+                                         small, "doi"), encoding="utf-8")
+        index_doi.append((f"Smaller publishers (fewer than {THRESHOLD} each)", len(small), fn))
+        for p in small:
+            note(p, f"{fn}#{anchor(clean_journal_name(p))}")
+            helper_map["publisher"].setdefault((p.get("publisher") or "").strip() or resolve_publisher(p), fn)
+
+    # ---- no-DOI rows: one page per big journal, the rest pooled A-Z -----
+    nodoi = [p for p in rows if not str(p.get("doi") or "").strip()]
+    byj = defaultdict(list)
+    for p in nodoi:
+        byj[clean_journal_name(p)].append(p)
+    OWN = 20  # journals with at least this many papers get a page of their own
+    for j, papers in sorted(byj.items(), key=lambda kv: -len(kv[1])):
+        if len(papers) < OWN:
+            continue
+        fn = f"nodoi_{sanitize(j)[:70]}.html"
+        (OUT / fn).write_text(build_page(j, "Papers with no DOI in this journal.", papers, "nodoi"), encoding="utf-8")
+        index_nodoi.append((j, len(papers), fn))
+        for p in papers:
+            note(p, fn)
+    rest = {j: ps for j, ps in byj.items() if len(ps) < OWN}
+    for k, group in enumerate(chunk_journals(rest), 1):
+        fn = f"nodoi_other_{k:02d}.html"
+        span = f"{group[0][0][:28]} … {group[-1][0][:28]}"
+        papers = [p for _, ps in group for p in ps]
+        (OUT / fn).write_text(build_page(f"Other journals, {span}",
+                                         f"Papers with no DOI, from journals with fewer than {OWN} such papers each.",
+                                         papers, "nodoi"), encoding="utf-8")
+        index_nodoi.append((f"Other journals: {span}", len(papers), fn))
+        for p in papers:
+            note(p, f"{fn}#{anchor(clean_journal_name(p))}")
+
+    # The hub reads this to offer "Open the download helper" for its current filter.
+    (OUT / "helper_map.json").write_text(json.dumps(helper_map, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+    def lis(items):
+        return "\n".join(f'<li><a href="{fn}">{esc(name)}</a>: {n} papers</li>' for name, n, fn in items)
+    n_doi, n_nodoi = sum(x[1] for x in index_doi), sum(x[1] for x in index_nodoi)
+    (OUT / "index.html").write_text(f"""<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download helpers</title><style>{CSS}{CSS_EXTRA}</style></head><body>
+<p class="back"><a href="{HUB}">&larr; Downloading hub</a></p>
+<h1>Download helpers</h1>
+<div class="stats">Every paper still to get, {n_doi + n_nodoi:,} in all, laid out for working through: one card per paper with
+the right search buttons, and a <strong>Got it</strong> button that tells the team it is done. The <a href="{HUB}">hub</a> tracks
+progress across the whole list; these pages are for doing the downloading.<br>
+Conference abstracts are left out (the abstracts project covers them).<br>
 <strong>Generated:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M')}</div>
-<ul style="font-size:1.1em;line-height:1.8">{links}</ul></body></html>""", encoding="utf-8")
-    print(f"\nTotal closed: {len(closed)} across {len(bypub)} publishers")
+<div class="instructions"><h3>Where to start</h3><ol>
+<li><strong>Papers with a DOI</strong> ({n_doi:,}): pick a publisher your institution subscribes to.</li>
+<li><strong>Papers without a DOI</strong> ({n_nodoi:,}): pick a journal you know, or one in your language or region.
+These need searching rather than a login, and many turn up on Scholar, BHL, or a society website.</li>
+<li>Save the PDFs to your named folder on Simon's NAS (any filename), and click <strong>Got it</strong> on each.</li>
+</ol></div>
+<h2>Papers with a DOI, by publisher</h2><ul style="font-size:1.05em;line-height:1.8">{lis(index_doi)}</ul>
+<h2>Papers without a DOI, by journal</h2><ul style="font-size:1.05em;line-height:1.8">{lis(index_nodoi)}</ul>
+</body></html>""", encoding="utf-8")
+    print(f"DOI rows {n_doi:,} on {len(index_doi)} pages; no-DOI rows {n_nodoi:,} on {len(index_nodoi)} pages; "
+          f"outstanding non-abstract rows {len(rows):,}")
     print(f"Index: {OUT / 'index.html'}")
+
 
 if __name__ == "__main__":
     main()
