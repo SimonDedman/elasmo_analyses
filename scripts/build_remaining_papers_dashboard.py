@@ -421,7 +421,7 @@ HTML = r"""<!DOCTYPE html>
   color-scheme: light;
   --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
   --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
-  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #008300; --s7: #4a3aa7; --s8: #e34948; --s9: #b0368f; --s10: #0099ad;
   --seq: #2a78d6;
 }
 @media (prefers-color-scheme: dark) {
@@ -429,7 +429,7 @@ HTML = r"""<!DOCTYPE html>
     color-scheme: dark;
     --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
-    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767; --s9: #c24aa0; --s10: #16a6b8;
     --seq: #3987e5;
   }
 }
@@ -437,7 +437,7 @@ HTML = r"""<!DOCTYPE html>
   color-scheme: dark;
   --page: #0d0d0d; --surface: #1a1a19; --ink: #ffffff; --ink2: #c3c2b7; --muted: #898781;
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
-  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767; --s9: #c24aa0; --s10: #16a6b8;
   --seq: #3987e5;
 }
 * { box-sizing: border-box; }
@@ -518,8 +518,11 @@ const D = JSON.parse(document.getElementById('data').textContent);
 // outputs/download_push_2026-09-17/G_comments/apps_script_additions.gs.
 const COMMENTS_URL = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
 const fmt = n => n.toLocaleString('en-GB');
-const CLS_COLOR = { abstract:'var(--s7)', conf_shaped:'var(--s5)', doi_oa:'var(--s3)', doi_closed:'var(--s2)', doi_unknown:'var(--s4)', nodoi_damaged:'var(--s8)', nodoi_article:'var(--s1)' };
-const OA_COLOR = { closed:'var(--s2)', unknown:'var(--s4)', open:'var(--s3)' };
+// One meaning per colour on every chart (Simon, 2026-09-19): DOI family = blue (closed) / green (open) / amber
+// (unknown); no DOI = orange, with teal for damaged metadata; abstracts = violet, conference-shaped = plum.
+// Validated with the dataviz skill's validate_palette.js in stack order, light and dark: all checks pass.
+const CLS_COLOR = { abstract:'var(--s7)', conf_shaped:'var(--s9)', doi_oa:'var(--s3)', doi_closed:'var(--s1)', doi_unknown:'var(--s4)', nodoi_damaged:'var(--s10)', nodoi_article:'var(--s2)' };
+const OA_COLOR = { closed:'var(--s1)', unknown:'var(--s4)', open:'var(--s3)' };  // same as the DOI classes above
 const OA_LABEL = { closed:'Closed', unknown:'OA unknown', open:'Open access (fetch failed)' };
 const clsLabel = Object.fromEntries(D.classes.map(c => [c.id, c.label]));
 
@@ -839,7 +842,7 @@ const pubLink = r => /^Other \(\d+ publishers\)$/.test(r.name) ? null : hubLink(
   const labW = 300, rowH = 22, barH = 14, padT = 6, W = 1180, barW = 300, H = padT + rows.length * rowH + 24;
   const svg = el('svg', {viewBox: `0 0 ${W} ${H}`}, c);
   const max = niceMax(Math.max(...rows.map(r => r.n)) * 1.02); const scale = v => barW * v / max;
-  const ROUTE_COLOR = {'automated': 'var(--s3)', 'abstracts project': 'var(--s7)', 'book': 'var(--s4)', 'check DOI': 'var(--s2)', 'ask member': 'var(--s1)', 'repair metadata': 'var(--s8)', '': 'var(--muted)'};
+  const ROUTE_COLOR = {'automated': 'var(--s3)', 'abstracts project': 'var(--s7)', 'book': 'var(--s4)', 'check DOI': 'var(--s2)', 'ask member': 'var(--s1)', 'repair metadata': 'var(--s9)', '': 'var(--muted)'};
   for (const tv of ticks(max, 2)) { const x = labW + scale(tv); el('line', {x1: x, x2: x, y1: padT, y2: padT + rows.length * rowH, class: 'grid'}, svg); text(svg, x, H - 8, fmt(tv), '', 'middle'); }
   el('line', {x1: labW, x2: labW, y1: padT, y2: padT + rows.length * rowH, class: 'axis'}, svg);
   rows.forEach((r, i) => {
