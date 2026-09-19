@@ -33,7 +33,7 @@ MONITOR = (BASE / "scripts/monitor_firefox_pdfs.py").resolve()
 PREFIX = {
     "10.1016": "Elsevier", "10.1002": "Wiley", "10.1111": "Wiley",
     "10.1046": "Wiley", "10.1006": "Elsevier (Academic Press)", "10.1007": "Springer", "10.1023": "Springer",
-    "10.1038": "Springer Nature", "10.1017": "Cambridge University Press",
+    "10.1038": "Springer", "10.1017": "Cambridge University Press",
     "10.1080": "Taylor & Francis", "10.1201": "Taylor & Francis (CRC)",
     "10.1071": "CSIRO Publishing", "10.1139": "Canadian Science Publishing",
     "10.1093": "Oxford University Press", "10.1098": "Royal Society",
@@ -111,20 +111,37 @@ _EMPTY_PUBLISHERS = {"blank", "other", "unknown", "unknown publisher",
                      "none", "n/a", "na", "-"}
 
 
+# One name per publisher. Stored values and Crossref member names both pass
+# through this, so "MDPI AG" and "MDPI" are one bar on the dashboard and one
+# filter value on the download hub (Simon, 2026-09-18). Keys are lower-case.
+PUBLISHER_ALIASES = {
+    "mdpi ag": "MDPI",
+    "springer nature": "Springer",
+    "nature/springer": "Springer",
+    "springer science and business media llc": "Springer",
+    "museum national d'histoire naturelle, paris, france": "Museum Nat Hist Naturelle",
+}
+
+
+def canonical_publisher(name: str) -> str:
+    name = (name or "").strip()
+    return PUBLISHER_ALIASES.get(name.lower(), name)
+
+
 def resolve_publisher(p):
     pub = (p.get("publisher") or "").strip()
     if pub and pub.lower() not in _EMPTY_PUBLISHERS:
-        return pub
+        return canonical_publisher(pub)
     doi = str(p.get("doi", "")).strip().lower()
     if not doi:
         return "Unknown publisher"
     prefix = doi.split("/")[0]
     if prefix in PREFIX:
-        return PREFIX[prefix]
+        return canonical_publisher(PREFIX[prefix])
     # Sub-prefixes the hand map never listed (Wiley 10.1002, Elsevier 10.1006,
     # Informa 10.1080 variants ...): ask Crossref once, cached on disk.
     name = publisher_for_prefix(prefix)
-    return name or f"Other ({prefix})"
+    return canonical_publisher(name) if name else f"Other ({prefix})"
 
 CSS = """
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
