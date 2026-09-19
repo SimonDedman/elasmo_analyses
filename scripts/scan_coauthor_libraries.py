@@ -24,6 +24,7 @@ Usage:
 
 from __future__ import annotations
 
+import re
 import argparse
 import json
 import sys
@@ -128,6 +129,50 @@ def save_state(state: dict) -> None:
     STATE_FILE.write_text(json.dumps(state, indent=1), encoding="utf-8")
 
 
+CONFERENCES = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences")
+_BOOK_NAME = re.compile(r"(?i)(abstract|program|programme|proceedings|resumen|memorias|simposi|symposium|"
+                        r"book[ _-]?of|khondros)")
+
+
+def is_conference_book(pdf: Path) -> bool:
+    """A meeting's abstract / programme book, not a queue delivery. These belong to the
+    conference-abstracts pipeline (SharkPapers/Conferences/YYYY/YYYY_Conf_Type.pdf); the paper
+    matcher cannot match them and must not try (see ingest_pdfs.ingest_source on handle_book)."""
+    if not _BOOK_NAME.search(pdf.stem):
+        return False
+    try:
+        import pymupdf
+        return pymupdf.open(str(pdf)).page_count >= 30 or pdf.stat().st_size == 0
+    except Exception:  # noqa: BLE001 - an unreadable "abstract book" is still not a paper
+        return True
+
+
+def conference_copy(pdf: Path) -> Path | None:
+    """The library's copy of this book: same bytes, or same meeting-year folder and page count
+    (the library copy is often an OCR'd version of the delivered scan)."""
+    import hashlib
+    if not CONFERENCES.exists():
+        return None
+    size = pdf.stat().st_size
+    digest = None
+    for c in CONFERENCES.rglob("*.pdf"):
+        if c.stat().st_size == size:
+            digest = digest or hashlib.sha256(pdf.read_bytes()).hexdigest()
+            if hashlib.sha256(c.read_bytes()).hexdigest() == digest:
+                return c
+    m = re.match(r"(\d{4})", pdf.name)
+    if m and (CONFERENCES / m.group(1)).is_dir():
+        try:
+            import pymupdf
+            n = pymupdf.open(str(pdf)).page_count
+            for c in (CONFERENCES / m.group(1)).glob("*.pdf"):
+                if n and pymupdf.open(str(c)).page_count == n:
+                    return c
+        except Exception:  # noqa: BLE001
+            return None
+    return None
+
+
 def discover(person: str | None) -> dict[str, list[Path]]:
     """Coauthor name -> PDFs found anywhere beneath their folder."""
     found: dict[str, list[Path]] = {}
@@ -228,8 +273,16 @@ def main() -> int:
     matched_total = 0
     log_lines: list[str] = [f"Coauthor library scan {timestamp}"]
 
+    books: list[dict] = []
     for person, pdfs in libraries.items():
         todo = [p for p in pdfs if args.all or str(p) not in seen]
+        for b in [p for p in todo if is_conference_book(p)]:
+            held = conference_copy(b)
+            books.append({"person": person, "filename": b.name,
+                          "status": "abstract book: held in Conferences" if held else "abstract book: NOT in Conferences",
+                          "reason": str(held) if held else "give to the conference-abstracts pipeline (or the file is unreadable)",
+                          "pdf_doi": "", "clicked_by": "", "clicked_at": "", "path": str(b)})
+        todo = [p for p in todo if not is_conference_book(p)]
         if not todo:
             continue
 
@@ -307,6 +360,11 @@ def main() -> int:
     print(f"\n{'=' * 70}\n  SUMMARY\n{'=' * 70}")
     print(f"  Matched:     {matched_total}")
     print(f"  Unresolved:  {len(unresolved)}")
+    print(f"  Abstract books (not papers): {len(books)}, of which NOT yet in Conferences: "
+          f"{sum(1 for b in books if 'NOT' in b['status'])}")
+    for b in books:
+        if "NOT" in b["status"]:
+            print(f"      {b['person']}: {b['filename']}")
     if args.delete_ingested:
         print(f"  Deleted:     {len(deleted)} source PDFs")
 

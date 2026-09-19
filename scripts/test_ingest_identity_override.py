@@ -70,3 +70,18 @@ def test_whole_volume_is_held_and_an_article_is_not(tmp_path):
     assert whole_volume_reason(make(101), row)                        # whole issue
     assert whole_volume_reason(make(14), row) is None                 # article + plates
     assert whole_volume_reason(make(101), {"findspot_raw": "no pages here"}) is None
+
+
+def test_match_pdf_uses_a_filename_that_is_a_doi_suffix(tmp_path):
+    from ingest_pdfs import match_pdf
+    f = tmp_path / "rstb.1924.0007.pdf"
+    f.write_bytes(b"%PDF-1.4\n")
+    row = {"literature_id": "10908", "title": "Some Peculiarities", "authors": "Burne, R.H. (1924)", "year": 1924}
+    other = {"literature_id": "1", "title": "x", "authors": "y", "year": 1939}
+    lookup = {"10.1098/rstb.1924.0007": row, "10.1098/rstb.1939.0008": other}
+    got, how = match_pdf(f, lookup, {}, [row, other])
+    assert got is row and "DOI suffix" in how
+    # two DOIs sharing a suffix is ambiguous, so it must not match on this rule
+    lookup["10.9999/rstb.1924.0007"] = other
+    got, how = match_pdf(f, lookup, {}, [row, other])
+    assert not (got is row and "DOI suffix" in (how or ""))
