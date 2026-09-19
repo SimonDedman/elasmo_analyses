@@ -174,8 +174,8 @@ CSS = """
 
 # Kept in step with the YOU dropdown in docs/remaining_downloads.html; the
 # selection is shared through the same localStorage key.
-TEAM = ["Alex", "Andrew", "Carylanne", "Chiara", "Chris", "David RG", "David S",
-        "Deven", "Dovi", "Elena", "Emily", "Guuske", "Lola", "Nathan", "Nick",
+TEAM = ["Alex", "Andrew", "Brit", "Carylanne", "Cat", "Chiara", "Chris", "David Green", "David RG", "David S",
+        "Deven", "Dovi", "Elena", "Emily", "Guuske", "Jürgen", "Lola", "Mike", "Nathan", "Nick",
         "Rima", "Ryan", "Simon", "Sophia", "Tobi-Dawne", "Ulrich", "Other"]
 USER_OPTIONS = '<option value="">--</option>' + "".join(
     f'<option value="{n}">{n}</option>' for n in TEAM)

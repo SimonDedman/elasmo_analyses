@@ -120,8 +120,17 @@ NOT_PEOPLE = {"SOMEPEC"}  # a society's drop folder, contributor unknown
 PREFIX_CACHE = ROOT / "outputs" / ".crossref_prefix_cache.json"  # DOI prefix -> Crossref member name
 VENUE_ROUTING = ROOT / "data" / "venue_routing.csv"  # hand-curated: venue -> country, route, likely members
 # Display names. Drop-folder / tracker names on the left; the team roster (docs/remaining_downloads.html) on the right.
+# Drop-folder names (database/others_libraries/<name>/) and helper-page short names -> the name shown
+# on the team chart. Every folder needs an entry whose value matches ROSTER, or a delivery from "Alex"
+# would appear as a second person beside "Alex McInturf". Folders for the whole team: 2026-09-19.
 NAME_MAP = {"David": "David RG", "DavidGreen": "David Green", "Elena": "Elena", "Guuske": "Guuske",
-            "David S": "David Shiffman", "Chiara": "Chiara Gambardella"}  # helper-page short names -> full names
+            "David S": "David Shiffman", "DavidS": "David Shiffman", "Chiara": "Chiara Gambardella",
+            "Alex": "Alex McInturf", "Andrew": "Andrew Temple", "Chris": "Chris Mull", "Deven": "Deven Guerrero",
+            "Dovi": "Dovi Kacev", "Emily": "Emily Warren", "Jurgen": "Jürgen (Shark-References)",
+            "Jürgen": "Jürgen (Shark-References)",
+            "Lola": "Lola Riesgo", "Mike": "Mike Heithaus", "Nathan": "Nathan Perisic", "Nick": "Nick Dulvy",
+            "Rima": "Rima Jabado", "Ryan": "Ryan McMullen", "Sophia": "Sophia Pelletier",
+            "Tobi-Dawne": "Tobi-Dawne Smith"}
 # Simon, 2026-09-18: Dovi Kacev, Rima Jabado, Nick Dulvy, Nathan Perisic, and Emily Warren are not part of the
 # download push, so they no longer count towards "people below the line". Anyone who delivers PDFs still appears.
 ROSTER = ["Simon", "Guuske", "David RG", "Elena", "David Shiffman", "Chris Mull", "Alex McInturf", "Sophia Pelletier", "Deven Guerrero",
