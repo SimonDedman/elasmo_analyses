@@ -1439,6 +1439,34 @@ def update_tracking_dbs(copied_ids: set, pdf_names: dict, timestamp: str, source
 # Main
 # ---------------------------------------------------------------------------
 
+def load_identity_override(pdf_path: Path, literature_id) -> str | None:
+    """Evidence string from ``<lid>.identity.json`` beside a lid-named staged PDF, or None.
+
+    The automatic identity check reads the opening of the document only, so it
+    rightly holds a correct file whose heading sits further in (a species
+    account that starts part-way down a page) or whose byline has no text
+    layer. A person or an upstream check that HAS verified such a file records
+    it here: {"literature_id": "...", "verified_by": "...", "evidence": "..."}.
+    Accepted only when the literature_id equals the staged filename's id and
+    the evidence is non-empty; the evidence is written into the ingest log.
+    It never applies to fuzzy-matched files, only to lid-named staging.
+    """
+    import json as _json
+    side = Path(pdf_path).with_suffix(".identity.json")
+    if not side.exists():
+        return None
+    try:
+        data = _json.loads(side.read_text())
+    except (OSError, ValueError):
+        return None
+    same = str(data.get("literature_id", "")).strip() == str(literature_id).strip() == Path(pdf_path).stem
+    evidence = str(data.get("evidence", "")).strip()
+    if not same or len(evidence) < 20 or not str(data.get("verified_by", "")).strip():
+        return None
+    return f"identity override by {data['verified_by']}: {evidence}"
+
+
+
 def ingest_source(label: str, pdf_paths: list[Path],
                   doi_lookup: dict, author_year_lookup: dict,
                   all_rows: list[dict],
@@ -1557,6 +1585,10 @@ def ingest_source(label: str, pdf_paths: list[Path],
             import acquire_cascade as _ac
             verdict, detail = _ac.identity_check(_ac.pdf_text(text_path), lid_row)
             if verdict is False:
+                override = load_identity_override(pdf_path, lid_row["literature_id"])
+                if override:
+                    verdict, detail = True, override
+            if verdict is False:
                 unmatched += 1
                 msg = (f"staged as literature_id {lid_row['literature_id']} but its "
                        f"text names a different paper ({detail}) -- held for review")
@@ -1567,6 +1599,15 @@ def ingest_source(label: str, pdf_paths: list[Path],
             row = lid_row
             method = (f"literature_id from staged filename "
                       f"({'verified=scan, no text layer' if verdict is None else detail})")
+        elif prefer_lid_rows is not None and pdf_path.stem.isdigit():
+            # Staged BY literature_id, but that id is no longer an outstanding
+            # queue row (already filed on an earlier run, or never queued). It
+            # must NOT fall through to fuzzy title matching: on 2026-09-18 a
+            # re-run over a --keep-staging folder filed Stevens 2010 as Stevens
+            # 1997 and Kyne 2010 as Walker 1999 on a 4-word title overlap.
+            row = None
+            method = (f"staged as literature_id {pdf_path.stem}, which is not an "
+                      f"outstanding queue row (already filed?) -- not fuzzy-matched")
         else:
             row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
                                     all_rows, text_path=text_path)
@@ -1664,6 +1705,10 @@ def check_source(label: str, pdf_paths: list[Path],
             import acquire_cascade as _ac
             verdict, detail = _ac.identity_check(_ac.pdf_text(text_path), lid_row)
             if verdict is False:
+                override = load_identity_override(pdf_path, lid_row["literature_id"])
+                if override:
+                    verdict, detail = True, override
+            if verdict is False:
                 unmatched += 1
                 msg = (f"staged as literature_id {lid_row['literature_id']} but its "
                        f"text names a different paper ({detail}) -- held for review")
@@ -1676,6 +1721,11 @@ def check_source(label: str, pdf_paths: list[Path],
             row = lid_row
             method = (f"literature_id from staged filename "
                       f"({'verified=scan, no text layer' if verdict is None else detail})")
+        elif prefer_lid_rows is not None and pdf_path.stem.isdigit():
+            # mirror ingest_source(): a lid-named file whose id has left the queue is never fuzzy-matched
+            row = None
+            method = (f"staged as literature_id {pdf_path.stem}, which is not an "
+                      f"outstanding queue row (already filed?) -- not fuzzy-matched")
         else:
             row, method = match_pdf(pdf_path, doi_lookup, author_year_lookup,
                                     all_rows, text_path=text_path)

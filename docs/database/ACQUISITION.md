@@ -123,3 +123,51 @@ filtering, and the manifest schema. No network calls.
 ```bash
 python3 -m pytest -q scripts/test_fetch_free_sources.py
 ```
+
+## Whole volumes and book chapters (added 2026-09-18)
+
+Two more scripts stage `<literature_id>.pdf` files for the same finalize step.
+
+`scripts/fetch_digitalcommons_series.py` fetches the items of a free bepress /
+DigitalCommons series (e.g. Thorson 1976 at `digitalcommons.unl.edu/ichthynicar`)
+and matches them to queue rows by title. It stops the host on the first 403/429.
+Some `viewcontent.cgi` items sit behind a Cloudflare browser challenge: those are
+blocked to scripts, not absent, and download normally in a real browser.
+
+`scripts/split_volume_by_pages.py` splits a staged whole volume
+(`database/book_chapter_staging/`) into per-row PDFs using the printed page
+ranges already in each row's `findspot_raw` plus a **measured** offset
+(`pdf_page - printed_page`, read off the running page numbers). Each extract is
+checked for the row's title words (or every named taxon, for "Species accounts:"
+and "Families" rows) and the first author's surname. Run it once with a
+deliberately wrong `--offset` as a negative control: it should stage nothing.
+
+```bash
+python3 scripts/split_volume_by_pages.py --dry-run \
+    --volume database/book_chapter_staging/A2_reports_tr90_pratt_1990_elasmobranchs_living_resources.pdf \
+    --venue "NOAA Technical Report NMFS, 90" --offset 10 \
+    --staging-dir outputs/<batch>/split_pratt1990
+```
+
+### Rules learned the hard way (2026-09-18)
+
+- **One finalize pass per staging folder.** A second pass over a `--keep-staging`
+  folder used to send already-filed, lid-named PDFs to the fuzzy title matcher,
+  which filed two of them under other papers. `ingest_pdfs.py` now reports a
+  lid-named file whose id has left the queue as UNMATCHED instead. Still: stage
+  every batch in a fresh folder.
+- **After every finalize**, diff the ids removed from `docs/papers_data.json`
+  against the ids you meant to file, and check each staged file has exactly one
+  byte-identical copy in the library.
+- **An editor-surname stub is not a book.** Check the rows' years before naming
+  the volume: "SMITH" was Mark Smith's Husbandry Manuals, not Smiths' Sea Fishes.
+
+### Identity override
+
+The finalize identity check reads only the opening of a document, so it rightly
+holds a correct extract whose heading sits part-way down a page, whose byline has
+no text layer, or whose title has fewer than three content words. Once such a
+file has been verified some other way, put `<literature_id>.identity.json` beside
+it: `{"literature_id": "...", "verified_by": "...", "evidence": "..."}`. It is
+accepted only when the id equals the filename, and the evidence is written into
+the ingest log. Tests: `scripts/test_ingest_identity_override.py`.
