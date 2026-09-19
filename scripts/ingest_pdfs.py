@@ -1445,16 +1445,25 @@ def update_tracking_dbs(copied_ids: set, pdf_names: dict, timestamp: str, source
 # ---------------------------------------------------------------------------
 
 def expected_page_length(row: dict) -> int | None:
-    """Printed length of a record from the LAST "a-b" pair in its findspot, else None."""
+    """Printed length of a record from its findspot, else None.
+
+    Plate / figure / table ranges are removed first, then the spans of ALL remaining arabic
+    "a-b" pairs are summed. Taking the last pair (the first version, 2026-09-18) read
+    "25: 1-164, Pls. 1-6 ... p. 165-166" as 2 pages and "pl. 1-10" as 10, and three works were
+    filed as fragments. Summing also suits "259-260, 262-264" species accounts.
+    """
     import re as _re
     spot = str(row.get("findspot_raw") or row.get("journal") or "")
-    pairs = _re.findall(r"(\d{1,4})\s*[\u2013\u2014-]\s*(\d{1,4})", spot)
-    if not pairs:
-        return None
-    a, b = (int(x) for x in pairs[-1])
-    if b < a:  # "304-26"
-        b = int(str(a)[: len(str(a)) - len(str(b))] + str(b))
-    return (b - a + 1) if 0 <= b - a < 600 else None
+    spot = _re.sub(r"(?i)\b(pls?|plates?|pis|taf(?:el|eln)?|tabs?|tables?|text-?figs?|figs?|abb)\b\.?\s*"
+                   r"[ivxlcdm\d]+(\s*[\u2013\u2014-]\s*[ivxlcdm\d]+)?", " ", spot)
+    total = 0
+    for a, b in _re.findall(r"(?<![\d(])(\d{1,4})\s*[\u2013\u2014-]\s*(\d{1,4})(?![\d)])", spot):
+        a, b = int(a), int(b)
+        if b < a:  # "304-26"
+            b = int(str(a)[: len(str(a)) - len(str(b))] + str(b))
+        if 0 <= b - a < 1500 and not (1500 <= a <= 2100 and 1500 <= b <= 2100):  # not a year span
+            total += b - a + 1
+    return total or None
 
 
 def whole_volume_reason(pdf_path, row: dict) -> str | None:
