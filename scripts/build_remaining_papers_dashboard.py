@@ -275,15 +275,13 @@ def venue_routing():
         return {r["venue"]: r for r in csv.DictReader(fh)}
 
 
-def publisher_of(p, prefix_map) -> str:
-    """papers_data's publisher field, else the Crossref member name for the DOI prefix."""
-    name = (p.get("publisher") or "").strip()
-    if name and name != "Unknown publisher":
-        return name
-    m = re.match(r"\s*(10\.\d{4,9})/", p.get("doi") or "")
-    if m and prefix_map.get(m.group(1)):
-        return prefix_map[m.group(1)] + " *"
-    return "(unresolved)"
+def publisher_of(p, prefix_map=None) -> str:
+    """The same publisher name the closed-access pages use and that
+    backfill_queue_publishers.py writes into the queue, so a bar's label is
+    always a value docs/remaining_downloads.html can filter on."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from generate_closed_access_html import resolve_publisher  # noqa: WPS433
+    return resolve_publisher(p)
 
 
 def nodoi_type(p) -> str:
@@ -332,7 +330,8 @@ def build():
     from lib.crossref_prefix import _load as _prefix_cache  # noqa: WPS433
 
     prefix_map = _prefix_cache()
-    n_prefix_resolved = sum(1 for p in with_doi if publisher_of(p, prefix_map).endswith(" *"))
+    # rows whose STORED publisher is empty, so the hub cannot filter to them until the backfill runs
+    n_prefix_resolved = sum(1 for p in with_doi if (p.get("publisher") or "").strip() in ("", "Unknown publisher"))
 
     # publisher x OA class (with DOI)
     pub = defaultdict(Counter)
@@ -462,6 +461,8 @@ h1 { font-size: 26px; margin: 0 0 4px; font-weight: 650; }
 svg { display: block; width: 100%; height: auto; overflow: visible; }
 svg text { font: 12px system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--ink2); }
 svg text.lab { fill: var(--ink); }
+svg a text.lab { fill: var(--link, #1a5fb4); text-decoration: underline; cursor: pointer; }
+svg a:hover text.lab { opacity: .75; }
 svg text.val { fill: var(--ink2); }
 svg line.grid { stroke: var(--grid); stroke-width: 1; }
 svg line.axis { stroke: var(--axis); stroke-width: 1; }
@@ -618,10 +619,17 @@ function card(title, note, wide, noComments) {
   return c;
 }
 function legend(c, items) { const l = document.createElement('div'); l.className = 'legend'; l.innerHTML = items.map(([lab, col]) => `<span style="--c:${col}">${lab}</span>`).join(''); c.appendChild(l); }
+// The download hub (docs/remaining_downloads.html) takes ?publisher= and ?journal= deep links and
+// matches them against the exact stored value. Relative on the site; absolute from a local copy.
+const HUB = location.protocol === 'file:' ? 'https://simondedman.github.io/elasmo_analyses/remaining_downloads.html' : '../remaining_downloads.html';
+const hubLink = (param, value) => `${HUB}?${param}=${encodeURIComponent(value)}`;
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[ch]));
+function svgLink(parent, href, title) { const a = el('a', {href, target: '_blank', rel: 'noopener'}, parent); const t = el('title', {}, a); t.textContent = title; return a; }
+
 function tableView(c, header, rows) {
   const d = document.createElement('details'); d.innerHTML = `<summary>Table view</summary>`;
   const t = document.createElement('table');
-  t.innerHTML = '<tr>' + header.map((h, i) => `<th class="${i ? 'n' : ''}">${h}</th>`).join('') + '</tr>' + rows.map(r => '<tr>' + r.map((v, i) => `<td class="${i ? 'n' : ''}">${typeof v === 'number' ? fmt(v) : v}</td>`).join('') + '</tr>').join('');
+  t.innerHTML = '<tr>' + header.map((h, i) => `<th class="${i ? 'n' : ''}">${h}</th>`).join('') + '</tr>' + rows.map(r => '<tr>' + r.map((v, i) => `<td class="${i ? 'n' : ''}">${typeof v === 'number' ? fmt(v) : (v && v.href ? `<a href="${esc(v.href)}" target="_blank" rel="noopener">${esc(v.text)}</a>` : v)}</td>`).join('') + '</tr>').join('');
   d.appendChild(t); c.appendChild(d);
 }
 
@@ -638,7 +646,8 @@ function hbars(c, rows, series, opts = {}) {
   rows.forEach((r, i) => {
     const g = el('g', {class: 'row'}, svg); const y = padT + i * rowH + (rowH - barH) / 2;
     const name = r.name.length > 34 ? r.name.slice(0, 33) + '…' : r.name;
-    text(g, labW - 8, y + barH / 2, name, 'lab', 'end').setAttribute('title', r.name);
+    const href = opts.link ? opts.link(r) : null;
+    text(href ? svgLink(g, href, `Open the ${r.name} papers in the download hub`) : g, labW - 8, y + barH / 2, name, 'lab', 'end').setAttribute('title', r.name);
     let x = labW;
     const html = `<b>${r.name}</b><br>` + series.map(s => `${s.label}: ${fmt(r[s.key] || 0)}`).join('<br>') + (series.length > 1 ? `<br>Total: ${fmt(totals[i])}` : '');
     series.forEach((s, si) => {
@@ -652,7 +661,7 @@ function hbars(c, rows, series, opts = {}) {
     hover(g, html);
   });
   if (series.length > 1) legend(c, series.map(s => [s.label, s.color]));
-  tableView(c, ['', ...series.map(s => s.label), ...(series.length > 1 ? ['Total'] : [])], rows.map((r, i) => [r.name, ...series.map(s => r[s.key] || 0), ...(series.length > 1 ? [totals[i]] : [])]));
+  tableView(c, ['', ...series.map(s => s.label), ...(series.length > 1 ? ['Total'] : [])], rows.map((r, i) => [opts.link && opts.link(r) ? {text: r.name, href: opts.link(r)} : r.name, ...series.map(s => r[s.key] || 0), ...(series.length > 1 ? [totals[i]] : [])]));
 }
 
 // Vertical stacked columns; cats = x labels, series as above, get(cat,key)
@@ -760,15 +769,16 @@ document.getElementById('tiles').innerHTML = tiles.map(([v, k, d]) => `<div clas
 }
 
 // ---- 4. publishers
+const pubLink = r => /^Other \(\d+ publishers\)$/.test(r.name) ? null : hubLink('publisher', r.name);
 {
-  const c = card(`Publisher of the ${fmt(D.with_doi)} papers with a DOI`, `Top ${D.publishers.length - 1} of ${D.publishers_total} publishers, plus the rest. Names marked * (${fmt(D.prefix_resolved)} papers) were unresolved by our own prefix map and are filled from the Crossref member record for the DOI prefix.`);
-  hbars(c, D.publishers, [{key: 'closed', label: OA_LABEL.closed, color: OA_COLOR.closed}, {key: 'unknown', label: OA_LABEL.unknown, color: OA_COLOR.unknown}, {key: 'open', label: OA_LABEL.open, color: OA_COLOR.open}], {labW: 210});
+  const c = card(`Publisher of the ${fmt(D.with_doi)} papers with a DOI`, `Top ${D.publishers.length - 1} of ${D.publishers_total} publishers, plus the rest. Click a publisher to open its papers in the download hub (all of that publisher's queue rows, so the hub's count can be a little higher than the bar). ${fmt(D.prefix_resolved)} DOI papers have no stored publisher and are named from their DOI prefix; run scripts/backfill_queue_publishers.py --apply to make them filterable.`);
+  hbars(c, D.publishers, [{key: 'closed', label: OA_LABEL.closed, color: OA_COLOR.closed}, {key: 'unknown', label: OA_LABEL.unknown, color: OA_COLOR.unknown}, {key: 'open', label: OA_LABEL.open, color: OA_COLOR.open}], {labW: 210, link: pubLink});
 }
 
 // ---- 5. recent
 {
-  const c = card(`Published 2024 or later, with a DOI (${fmt(D.recent_doi)})`, 'The embargo-and-subscription slice: newest papers, so the most likely to be behind a paywall a team member can pass.');
-  hbars(c, D.recent_publishers, [{key: 'closed', label: OA_LABEL.closed, color: OA_COLOR.closed}, {key: 'unknown', label: OA_LABEL.unknown, color: OA_COLOR.unknown}, {key: 'open', label: OA_LABEL.open, color: OA_COLOR.open}], {labW: 210});
+  const c = card(`Published 2024 or later, with a DOI (${fmt(D.recent_doi)})`, 'The embargo-and-subscription slice: newest papers, so the most likely to be behind a paywall a team member can pass. Click a publisher to open it in the download hub (all years: the hub filters one year at a time).');
+  hbars(c, D.recent_publishers, [{key: 'closed', label: OA_LABEL.closed, color: OA_COLOR.closed}, {key: 'unknown', label: OA_LABEL.unknown, color: OA_COLOR.unknown}, {key: 'open', label: OA_LABEL.open, color: OA_COLOR.open}], {labW: 210, link: pubLink});
 }
 
 // ---- 6a. Simon vs everyone (thin card)
@@ -822,7 +832,7 @@ document.getElementById('tiles').innerHTML = tiles.map(([v, k, d]) => `<div clas
 
 // ---- 7b. no-DOI venues with routing flags
 {
-  const c = card(`Where the ${fmt(D.nodoi_pool)} no-DOI papers were published: top 45 venues, with a proposed route`, 'Country, route, and likely team members come from data/venue_routing.csv (Claude\'s inference, 2026-09-16, unverified: correct the CSV and rebuild). Routes: automated = free online, a script job; abstracts project = these are meeting abstracts; book = one book covers the rows; check DOI = the journal issues DOIs so the title match failed; ask member = needs a person or a library.', true);
+  const c = card(`Where the ${fmt(D.nodoi_pool)} no-DOI papers were published: top 45 venues, with a proposed route`, 'Country, route, and likely team members come from data/venue_routing.csv (Claude\'s inference, 2026-09-16, unverified: correct the CSV and rebuild). Click a venue to open its papers in the download hub. Routes: automated = free online, a script job; abstracts project = these are meeting abstracts; book = one book covers the rows; check DOI = the journal issues DOIs so the title match failed; ask member = needs a person or a library.', true);
   const rows = D.nodoi_venues;
   const labW = 300, rowH = 22, barH = 14, padT = 6, W = 1180, barW = 300, H = padT + rows.length * rowH + 24;
   const svg = el('svg', {viewBox: `0 0 ${W} ${H}`}, c);
@@ -833,14 +843,15 @@ document.getElementById('tiles').innerHTML = tiles.map(([v, k, d]) => `<div clas
   rows.forEach((r, i) => {
     const g = el('g', {class: 'row'}, svg); const y = padT + i * rowH + (rowH - barH) / 2;
     const name = r.name.length > 44 ? r.name.slice(0, 43) + '…' : r.name;
-    text(g, labW - 8, y + barH / 2, name, 'lab', 'end');
+    const vhref = hubLink('journal', r.name || 'Unknown');  // the hub labels a blank venue "Unknown"
+    text(svgLink(g, vhref, `Open the ${r.name || 'blank-venue'} papers in the download hub`), labW - 8, y + barH / 2, name, 'lab', 'end');
     el('path', {d: barPathH(labW, y, scale(r.n), barH, 4), fill: ROUTE_COLOR[r.route] || 'var(--muted)', class: 'bar'}, g);
     const flags = [r.country, r.route, r.members].filter(Boolean).join(' · ');
     text(g, labW + scale(r.n) + 6, y + barH / 2, `${fmt(r.n)}   ${flags}`, 'val');
     hover(g, `<b>${r.name}</b><br>${fmt(r.n)} papers${r.kind ? '<br>Kind: ' + r.kind : ''}${r.country ? '<br>Country: ' + r.country : ''}${r.route ? '<br>Route: ' + r.route : ''}${r.members ? '<br>Likely: ' + r.members : ''}${r.notes ? '<br><i>' + r.notes + '</i>' : ''}`);
   });
   legend(c, Object.entries(ROUTE_COLOR).filter(([k]) => k).map(([k, v]) => ['route: ' + k, v]));
-  tableView(c, ['Venue', 'Papers', 'Country', 'Kind', 'Route', 'Likely members', 'Notes'], rows.map(r => [r.name, r.n, r.country, r.kind, r.route, r.members, r.notes]));
+  tableView(c, ['Venue', 'Papers', 'Country', 'Kind', 'Route', 'Likely members', 'Notes'], rows.map(r => [{text: r.name || '(blank)', href: hubLink('journal', r.name || 'Unknown')}, r.n, r.country, r.kind, r.route, r.members, r.notes]));
 }
 
 // ---- comments: fetch existing, render per-card + collated ----
