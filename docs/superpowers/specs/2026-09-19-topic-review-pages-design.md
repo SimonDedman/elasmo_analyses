@@ -180,7 +180,9 @@ collected before the definition changes are wasted.
    rules, and which of those are worth a gold list at all (see the workload table on the hub).
 2. The champion writes the concept definitions. `build_topic_features.py` runs once for the
    topic's vocabulary (about 20 minutes unattended for the whole corpus; seconds thereafter).
-3. Primary reviewer works the margin (scenario A or C), with spot checks above and below.
+3. Primary reviewer judges in the margin queue: closest to the line first, random spot checks
+   from well above and well below, and (question 4) a random sample of papers with no keyword
+   hit. How far down the margin they go depends on question 1.
 4. Checker reviews the primary's `unsure` papers plus a random sample of the rest; conflicts are
    resolved in the "reviewers disagree" view. (Alternative: two independent full passes. Costs
    double, gives an agreement statistic. Question 7.)
