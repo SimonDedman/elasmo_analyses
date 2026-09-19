@@ -22,7 +22,9 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from generate_closed_access_html import _EMPTY_PUBLISHERS, resolve_publisher  # noqa: E402
+from generate_closed_access_html import (  # noqa: E402
+    _EMPTY_PUBLISHERS, canonical_publisher, resolve_publisher,
+)
 from lib.papers_data_io import mutate  # noqa: E402
 
 
@@ -49,18 +51,26 @@ def main():
           f"resolvable: {sum(filled.values()):,} | still unknown: {still:,}")
     for name, n in filled.most_common(25):
         print(f"  {n:5d}  {name}")
+    aliased = Counter((p.get("publisher") or "").strip() for p in papers
+                      if (p.get("publisher") or "").strip() and canonical_publisher(p.get("publisher")) != (p.get("publisher") or "").strip())
+    print(f"alias names to make canonical: {sum(aliased.values()):,} {dict(aliased)}")
     if not args.apply:
         print("dry run: nothing written (use --apply)")
         return
-    n = 0
+    n = renamed = 0
     with mutate() as live:
         for p in live:
+            stored = (p.get("publisher") or "").strip()
+            if stored and canonical_publisher(stored) != stored:  # alias -> the one canonical name
+                p["publisher"] = canonical_publisher(stored)
+                renamed += 1
+                continue
             if wants_fill(p):
                 new = resolve_publisher({**p, "publisher": ""})
                 if new and new != "Unknown publisher" and not PLACEHOLDER.match(new):
                     p["publisher"] = new
                     n += 1
-    print(f"applied: {n:,} rows given a publisher")
+    print(f"applied: {n:,} rows given a publisher; {renamed:,} alias names made canonical")
 
 
 if __name__ == "__main__":
