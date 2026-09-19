@@ -63,6 +63,9 @@
         .table-controls .dt-buttons .dt-button { padding: 3px 10px; font-size: 12px; margin: 0; }
         .stats .help-toggle { margin-left: auto; white-space: nowrap; }
         .scope-note { font-size: 11px; color: #7f8c8d; margin: -4px 0 8px 2px; }
+        .helper-link { margin: 0 0 10px 2px; font-size: 13px; }
+        .helper-link a.go { display: inline-block; background: #27ae60; color: #fff; padding: 5px 12px; border-radius: 4px; font-weight: 600; text-decoration: none; margin-right: 8px; }
+        .helper-link a.go:hover { background: #1e8449; }
     </style>
 </head>
 <body>
@@ -139,6 +142,7 @@
             <span class="help-toggle" onclick="$('#helpPanel').toggle()">Help / OA legend</span>
         </div>
         <div class="scope-note" id="scopeNote"></div>
+        <div class="helper-link" id="helperLink"></div>
 
         <div class="help-panel" id="helpPanel">
             <ol>
@@ -178,7 +182,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
     var GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwCmkL89I8GGK3-IoCZh9x9XAVpvTshOysMlnWiRmqoXAtICFO16TkljEPlxTwXaufR/exec';
-    var clickedDois = {}, paperData = [], dataTable = null;
+    var clickedDois = {}, paperData = [], dataTable = null, helperMap = null;
+    // Key into the shared record: the DOI, or lid:<literature_id> for rows without one.
+    // docs/closed_access/*.html (the download helpers) write the same keys.
+    function keyOf(r){ var d=String((r&&r.doi)||'').trim(); return d||('lid:'+(r&&r.literature_id)); }
 
     function escapeHtml(t) { return t ? String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
     function escapeAttr(t) { return t ? String(t).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;') : ''; }
@@ -214,13 +221,15 @@
         // and removed, so the raw total reads as a far bigger backlog than exists.
         var live=0;
         if(paperData&&paperData.length){
-            var q={};paperData.forEach(function(r){if(r.doi)q[String(r.doi).trim().toLowerCase()]=1;});
+            var q={};paperData.forEach(function(r){q[keyOf(r).toLowerCase()]=1;});
             Object.keys(clickedDois).forEach(function(d){if(q[String(d).trim().toLowerCase()])live++;});
         }
         $('#stat-clicked').text(live);
+        var lowerClicked={};Object.keys(clickedDois).forEach(function(k){lowerClicked[String(k).toLowerCase()]=clickedDois[k];});
         dataTable.rows().every(function(){
-            var d=this.data(),doi=$(d[0]).text()||'',n=this.node();
-            if(clickedDois[doi]){$(n).addClass('clicked-row');var i=clickedDois[doi];
+            var d=this.data(),doi=keyOf(paperData[this.index()]),n=this.node();
+            var hit=clickedDois[doi]||lowerClicked[doi.toLowerCase()];
+            if(hit){$(n).addClass('clicked-row');var i=hit;
                 d[8]='<button class="btn-clicked" onclick="unmarkClicked(\''+escapeAttr(doi)+'\')" title="'+escapeHtml(i.by)+' '+i.at+'">Undo</button>';
             }else{$(n).removeClass('clicked-row');
                 d[8]='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(doi)+'\',\''+escapeAttr(d[1])+'\')">Mark</button>';
@@ -313,7 +322,7 @@
                 var au=escapeHtml(r.authors),aus=au.length>50?au.substring(0,50)+'...':au;
                 var jn=escapeHtml(r.journal_clean||r.journal||'');
                 var pub=escapeHtml(r.publisher||'');
-                var ab='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(r.doi)+'\',\''+escapeAttr(r.title)+'\')">Mark</button>';
+                var ab='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(keyOf(r))+'\',\''+escapeAttr(r.title)+'\')">Mark</button>';
                 return[dl,escapeHtml(r.title),'<span title="'+au+'">'+aus+'</span>',r.year,jn,pub,ob,
                     '<span class="priority-'+r.priority_group+'">'+r.priority_group+'</span>',ab];
             });
@@ -337,6 +346,16 @@
             var $w=$('#papersTable_wrapper');
             ['.dataTables_info','.dataTables_length','.dataTables_filter','.dt-buttons'].forEach(function(sel){$w.find(sel).appendTo('#tableControls');});  // count first, beside the pills
 
+            function showHelper(){
+                var j=$('#filterJournal').val(),p=$('#filterPublisher').val(),url=null,label='';
+                if(helperMap&&j&&helperMap.journal[j]){url=helperMap.journal[j];label=j;}
+                else if(helperMap&&p&&helperMap.publisher[p]){url=helperMap.publisher[p];label=p;}
+                $('#helperLink').html(url
+                    ?'<a class="go" href="closed_access/'+url+'" target="_blank">Open the download helper for '+escapeHtml(label)+'</a>one card per paper, with search buttons and a Got it button'
+                    :'<a href="closed_access/">Download helpers</a>: every remaining paper as cards with search buttons, by publisher or journal. Pick a journal or publisher above to jump to its page.');
+            }
+            $.getJSON('closed_access/helper_map.json',function(m){helperMap=m;showHelper();}).fail(function(){showHelper();});
+            $('#filterJournal,#filterPublisher').on('change',showHelper);
             $('#filterJournal').on('change',function(){var v=$(this).val();dataTable.column(4).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
             $('#filterPublisher').on('change',function(){var v=$(this).val();dataTable.column(5).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
             $('#filterYear').on('change',function(){var v=$(this).val();dataTable.column(3).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
