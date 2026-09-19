@@ -584,6 +584,11 @@ def _staged_pdfs(staging_dirs=None) -> list:
 # content sanity check that only has to agree, never to choose.
 
 OUTSTANDING_STATUSES = {"needs_library", "needs_pdf", "sr_sync_new"}
+# Rows a download step marked acquired but whose PDF never reached the library (finalize was
+# skipped, or held the file). They are exactly what a finalize pass exists to file, so a
+# lid-named staged PDF may claim one. Found 2026-09-18: 427 such rows sat unfileable because
+# lid_named_rows() only looked at OUTSTANDING_STATUSES.
+ACQUIRED_UNFILED_STATUSES = {"acquired_oa", "acquired_bhl"}
 IDENTITY_MIN_COVERAGE = 0.5     # corroborating an id we already have
 IDENTITY_STRICT_COVERAGE = 0.75  # choosing to DELETE the only other copy
 IDENTITY_HEAD_TOKENS = 600      # a title page, not the whole document
@@ -659,7 +664,7 @@ def lid_named_rows(staged: list, all_rows: list, queue: list | None = None) -> d
             queue = []
     outstanding = {_norm_id(p.get("literature_id"))
                    for p in queue
-                   if p.get("last_status") in OUTSTANDING_STATUSES}
+                   if p.get("last_status") in OUTSTANDING_STATUSES | ACQUIRED_UNFILED_STATUSES}
     by_lid = {}
     for r in all_rows:
         by_lid.setdefault(_norm_id(r.get("literature_id")), r)

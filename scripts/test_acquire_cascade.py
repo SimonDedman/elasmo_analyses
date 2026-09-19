@@ -436,8 +436,19 @@ def test_lid_named_rows_files_a_staged_file_under_its_own_literature_id(tmp_path
 def test_lid_named_rows_ignores_ids_that_are_not_outstanding(tmp_path):
     staged = tmp_path / "13330.pdf"
     staged.write_bytes(b"%PDF-1.4\n")
-    queue = [{"literature_id": "13330", "last_status": "acquired_oa"}]
+    queue = [{"literature_id": "13330", "last_status": "not_wanted"}]
     assert ac.lid_named_rows([staged], [ROW_A], queue=queue) == {}
+
+
+def test_lid_named_rows_claims_acquired_but_unfiled_rows(tmp_path):
+    # acquired_oa / acquired_bhl = downloaded, never filed (finalize skipped or held it). The
+    # 2026-09-17 repair parked correct downloads in this state; excluding it left 427 rows
+    # unfileable until 2026-09-18. The identity check still has to pass at ingest.
+    staged = tmp_path / "13330.pdf"
+    staged.write_bytes(b"%PDF-1.4\n")
+    for status in ("acquired_oa", "acquired_bhl"):
+        queue = [{"literature_id": "13330", "last_status": status}]
+        assert list(ac.lid_named_rows([staged], [ROW_A], queue=queue).values()) == [ROW_A]
 
 
 def test_lid_named_rows_ignores_files_not_named_after_a_record(tmp_path):
