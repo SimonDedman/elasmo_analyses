@@ -120,10 +120,13 @@ NOT_PEOPLE = {"SOMEPEC"}  # a society's drop folder, contributor unknown
 PREFIX_CACHE = ROOT / "outputs" / ".crossref_prefix_cache.json"  # DOI prefix -> Crossref member name
 VENUE_ROUTING = ROOT / "data" / "venue_routing.csv"  # hand-curated: venue -> country, route, likely members
 # Display names. Drop-folder / tracker names on the left; the team roster (docs/remaining_downloads.html) on the right.
-NAME_MAP = {"David": "David RG", "DavidGreen": "David Green", "Elena": "Elena", "Guuske": "Guuske"}
-ROSTER = ["Simon", "Guuske", "David RG", "Elena", "David S", "Chris Mull", "Alex McInturf", "Sophia Pelletier", "Deven Guerrero",
-          "Ryan McMullen", "Lola Riesgo", "Emily Warren", "Ulrich", "Carylanne", "Tobi-Dawne Smith", "Chiara", "Nathan Perisic",
-          "Rima Jabado", "Nick Dulvy", "Andrew Temple", "Dovi Kacev", "Cat", "Brit", "David Green"]
+NAME_MAP = {"David": "David RG", "DavidGreen": "David Green", "Elena": "Elena", "Guuske": "Guuske",
+            "David S": "David Shiffman", "Chiara": "Chiara Gambardella"}  # helper-page short names -> full names
+# Simon, 2026-09-18: Dovi Kacev, Rima Jabado, Nick Dulvy, Nathan Perisic, and Emily Warren are not part of the
+# download push, so they no longer count towards "people below the line". Anyone who delivers PDFs still appears.
+ROSTER = ["Simon", "Guuske", "David RG", "Elena", "David Shiffman", "Chris Mull", "Alex McInturf", "Sophia Pelletier", "Deven Guerrero",
+          "Ryan McMullen", "Lola Riesgo", "Ulrich", "Carylanne", "Tobi-Dawne Smith", "Chiara Gambardella",
+          "Andrew Temple", "Cat", "Brit", "David Green"]
 ABSTRACT_TEAM = {"Carylanne", "Cat", "Brit", "David Green"}  # deliver conference programmes, a different incentive
 COAUTHOR_TARGET = 500  # score points for coauthorship (Simon, 2026-09-16; to be revisited against the pool)
 ABSTRACT_CREDIT = 0.25  # one abstract book of N elasmo abstracts = ceil(N/4) papers (Simon, 2026-09-16)
