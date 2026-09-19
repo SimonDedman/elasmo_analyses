@@ -1197,6 +1197,15 @@ def match_pdf(pdf_path: Path, doi_lookup: dict, author_year_lookup: dict,
         if nd in doi_lookup:
             return doi_lookup[nd], f"DOI reconstructed from filename: {recon_doi}"
 
+    # Strategy 2b: the filename IS the suffix of exactly one corpus DOI. Publishers name
+    # downloads that way (rstb.1924.0007.pdf -> 10.1098/rstb.1924.0007), and old scans carry
+    # no DOI in their text. Exact, case-insensitive suffix equality with a unique hit only.
+    stem = pdf_path.stem.strip().lower()
+    if len(stem) >= 8 and re.search(r"\d", stem) and not re.search(r"\s", stem):
+        suffix_hits = [d for d in doi_lookup if d.split("/", 1)[-1] == stem]
+        if len(suffix_hits) == 1:
+            return doi_lookup[suffix_hits[0]], f"filename equals the DOI suffix: {suffix_hits[0]}"
+
     # Strategy 3: filename-based author+year matching
     finfo = parse_filename_info(pdf_path.name)
     if finfo["author"] and finfo["year"]:
@@ -1521,7 +1530,8 @@ def ingest_source(label: str, pdf_paths: list[Path],
                   all_rows: list[dict],
                   filed_map: dict | None = None,
                   prefer_lid_rows: dict | None = None,
-                  filed_rows: dict | None = None) -> tuple[set, set, dict, list[str]]:
+                  filed_rows: dict | None = None,
+                  allow_book_chapters: bool = False) -> tuple[set, set, dict, list[str]]:
     """
     Ingest a list of PDFs. Returns (copied_ids, copied_dois, pdf_names, log_lines).
 
@@ -1616,8 +1626,13 @@ def ingest_source(label: str, pdf_paths: list[Path],
             return False
 
     for pdf_path in pdf_paths:
-        # Book detection: handle multi-chapter books specially
-        if detect_book(pdf_path):
+        # Book detection: handle multi-chapter books specially. OFF unless the caller opts in:
+        # handle_book() fuzzy-matches contents entries against the WHOLE corpus on a 3-word
+        # overlap and files the "chapter" pages as that paper. Run daily over coauthor drop
+        # folders it turned SOMEPEC / OCS abstract books into 9 bogus library papers (an abstract
+        # and the later thesis or paper often share a title), found 2026-09-19. Whole volumes
+        # belong to scripts/split_volume_by_pages.py, which checks identity on the extract.
+        if allow_book_chapters and detect_book(pdf_path):
             chapters = handle_book(pdf_path, doi_lookup, author_year_lookup, all_rows)
             if chapters:
                 for ch_path, ch_row, ch_method in chapters:

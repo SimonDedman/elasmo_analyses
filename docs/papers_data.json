@@ -189490,27 +189490,6 @@
   "findspot_raw": "Biological Conservation, 315, in press"
  },
  {
-  "id": 9745,
-  "literature_id": "10908",
-  "year": 1924,
-  "authors": "Burne, R.H. (1924)",
-  "title": "Some Peculiarities of the Blood-Vascular System of the Porbeagle Shark (Lamna Cornubica).",
-  "journal": "Philosophical Transactions of the Royal Society of London, Series B, Containing Papers of a Biological Character, 212, 209–257",
-  "doi": "10.1098/rstb.1924.0007",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: ",
-  "oa_status": "gold",
-  "oa_url": "https://doi.org/10.1098/rstb.1924.0007",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Royal Society",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "Philosophical Transactions of the Royal Society of London, Series B, Containing Papers of a Biological Character, 212, 209–257"
- },
- {
   "id": 9746,
   "literature_id": "35038",
   "year": 2025,
@@ -208373,27 +208352,6 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Cell and Tissue Research, 5(5), 629–664"
- },
- {
-  "id": 10773,
-  "literature_id": "10905",
-  "year": 1939,
-  "authors": "Metten, H. (1939)",
-  "title": "Studies on the Reproduction of the Dogfish.",
-  "journal": "Philosophical Transactions of the Royal Society of London, Series B, Biological Sciences, 230(569), 217–238",
-  "doi": "10.1098/rstb.1939.0008",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: ",
-  "oa_status": "bronze",
-  "oa_url": "https://royalsocietypublishing.org/doi/pdf/10.1098/rstb.1939.0008",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Royal Society",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "Philosophical Transactions of the Royal Society of London, Series B, Biological Sciences, 230(569), 217–238"
  },
  {
   "id": 10774,
@@ -235113,5 +235071,49 @@
   "cascade_stage": "bhl",
   "cascade_checked": true,
   "findspot_raw": "C. W. Kreidel's Verlag, Wiesbaden: 149, 195–198, 204–205"
+ },
+ {
+  "literature_id": "21413",
+  "id": 12285,
+  "title": "Amplificación cruzada de diez loci microsatelitales en el tiburón martillo (Sphyrna lewini) [Abstract].",
+  "authors": "Isaac Vissuet, E.F. & García-De-León, F.J. & Galván-Magaña, F. & McCoy, M. (2008)",
+  "year": 2008,
+  "doi": "",
+  "journal": "In III Simposion Nacioinal de Tiburones y Rayas. Facultad de Ciencias UNAM",
+  "notes": "re-added 2026-09-19: PDF was misfiled and has been renamed onto its real paper",
+  "last_status": "needs_pdf"
+ },
+ {
+  "literature_id": "26768",
+  "id": 12286,
+  "title": "Nicho Trófico de Rhinoptera steindachneri en la Bahía De La Paz, Baja California Sur, México.",
+  "authors": "Ehemann, N.R. (2017)",
+  "year": 2017,
+  "doi": "",
+  "journal": "Thesis",
+  "notes": "re-added 2026-09-19: PDF was misfiled and has been renamed onto its real paper",
+  "last_status": "needs_pdf"
+ },
+ {
+  "literature_id": "15361",
+  "id": 12287,
+  "title": "Save our sharks: Using international fisheries law within regional fisheries management organizations to improve shark conservation.",
+  "authors": "Van Osch, S. (2012)",
+  "year": 2012,
+  "doi": "",
+  "journal": "Michigan Journal of International Law",
+  "notes": "re-added 2026-09-19: PDF was misfiled and has been renamed onto its real paper",
+  "last_status": "needs_pdf"
+ },
+ {
+  "literature_id": "32068",
+  "id": 12288,
+  "title": "Research on swimming performance of fish in different species.",
+  "authors": "Gao, P.C. & Huang, Q.G. & Pan, G. & Song, D. & Cao, Y. (2023)",
+  "year": 2023,
+  "doi": "10.1063/5.0154914",
+  "journal": "Physics of Fluids",
+  "notes": "re-added 2026-09-19: PDF was misfiled and has been renamed onto its real paper",
+  "last_status": "needs_pdf"
  }
 ]
