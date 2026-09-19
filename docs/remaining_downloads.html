@@ -54,6 +54,15 @@
         .help-panel li { margin: 2px 0; }
         .oa-legend { font-size: 11px; color: #666; margin-top: 4px; }
         .oa-legend span { margin-right: 8px; }
+        /* Table controls (count, page length, search, CSV) live in the stats row to save vertical space */
+        .stats { align-items: center; }
+        .table-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; flex: 1 1 auto; }
+        .table-controls .dataTables_info { float: none; padding: 0; font-size: 17px; font-weight: 600; color: #2c3e50; }
+        .table-controls .dataTables_length, .table-controls .dataTables_filter, .table-controls .dt-buttons { float: none; margin: 0; font-size: 12px; }
+        .table-controls .dataTables_filter input { padding: 3px 6px; }
+        .table-controls .dt-buttons .dt-button { padding: 3px 10px; font-size: 12px; margin: 0; }
+        .stats .help-toggle { margin-left: auto; white-space: nowrap; }
+        .scope-note { font-size: 11px; color: #7f8c8d; margin: -4px 0 8px 2px; }
     </style>
 </head>
 <body>
@@ -121,8 +130,10 @@
             <div class="stat-box"><div class="stat-number" id="stat-clicked">0</div><div class="stat-label">Clicked</div></div>
             <div class="stat-box"><div class="stat-number" id="stat-oa">...</div><div class="stat-label">Open Access</div></div>
             <div class="stat-box"><div class="stat-number" id="stat-closed">...</div><div class="stat-label">Closed</div></div>
+            <div class="table-controls" id="tableControls"></div>
             <span class="help-toggle" onclick="$('#helpPanel').toggle()">Help / OA legend</span>
         </div>
+        <div class="scope-note" id="scopeNote"></div>
 
         <div class="help-panel" id="helpPanel">
             <ol>
@@ -229,6 +240,15 @@
         $('#hideClicked').on('change',function(){applyHideFilter();});
 
         $.getJSON('papers_data.json',function(data){
+            // ONE definition of "remaining", shared with scripts/build_remaining_papers_dashboard.py
+            // (OUTSTANDING = needs_library, needs_pdf, sr_sync_new). Rows with any other status
+            // (acquired_oa, acquired_bhl) are already downloaded and only await filing, so they are
+            // not work for anyone and are not listed. Before 2026-09-18 they were counted here,
+            // which made this page's headline disagree with the dashboard's.
+            var OUTSTANDING=['needs_library','needs_pdf','sr_sync_new'];
+            var nAll=data.length;
+            data=data.filter(function(r){return OUTSTANDING.indexOf(r.last_status)>=0;});
+            var nAwaitingFiling=nAll-data.length;
             paperData=data;
             // Conference abstracts (triage:conference_abstract) are hidden by default:
             // the full text generally never existed, so they aren't downloadable work.
@@ -241,6 +261,8 @@
             var oaOpen=['gold','green','hybrid','bronze'];
             var oaAvail=data.filter(function(r){return !isAbs(r)&&oaOpen.indexOf(r.oa_status)>=0;}).length;
             $('#stat-total').text(total);$('#stat-oa').text(oaAvail);$('#stat-closed').text(total-oaAvail);
+            var nf=function(n){return Number(n).toLocaleString('en-GB');};
+            $('#scopeNote').html('Remaining = '+nf(total)+' papers to get. The <a href="acquisition/remaining_papers.html">dashboard</a>\'s '+nf(data.length)+' outstanding = these + '+nf(nAbs)+' conference abstracts (hidden here unless ticked). '+nf(nAwaitingFiling)+' more are already downloaded and await filing, so they are not listed.');
             // Always-on filter; the checkbox decides whether abstracts pass.
             $.fn.dataTable.ext.search.push(function(s,d,dataIndex){
                 if($('#showAbstracts').is(':checked'))return true;
@@ -297,8 +319,18 @@
                 order:[[7,'asc'],[3,'desc']],
                 columnDefs:[{type:'oa-status',targets:6},{orderable:false,targets:8},{width:'60px',targets:8}],
                 dom:'Blfrtip',
+                // "of N" is what passes every filter; "filtered from" is the pool currently in play
+                // (papers only, or papers + abstracts when that box is ticked), not the raw row count.
+                infoCallback:function(settings,start,end,max,shown){
+                    var pool=$('#showAbstracts').is(':checked')?data.length:total;
+                    if(!shown)return 'No papers match (of '+nf(pool)+' remaining)';
+                    return 'Showing '+nf(start)+'\u2013'+nf(end)+' of '+nf(shown)+(shown<pool?' (filtered from '+nf(pool)+' remaining)':' remaining');
+                },
                 buttons:[{extend:'csv',text:'CSV',filename:'remaining_'+new Date().toISOString().slice(0,10)}]
             });
+            // DataTables keeps references to these nodes, so they keep updating after the move.
+            var $w=$('#papersTable_wrapper');
+            ['.dataTables_info','.dataTables_length','.dataTables_filter','.dt-buttons'].forEach(function(sel){$w.find(sel).appendTo('#tableControls');});  // count first, beside the pills
 
             $('#filterJournal').on('change',function(){var v=$(this).val();dataTable.column(4).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
             $('#filterPublisher').on('change',function(){var v=$(this).val();dataTable.column(5).search(v?'^'+$.fn.dataTable.util.escapeRegex(v)+'$':'',true,false).draw();});
