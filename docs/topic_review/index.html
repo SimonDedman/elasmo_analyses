@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Topic review hub</title>
+<style>
+:root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.10);--seq:#2a78d6;--warn:#eda100}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500}}
+:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1380px;margin:0 auto;padding:24px 16px 60px}
+h1{font-size:26px;margin:0 0 4px}h2{font-size:18px;margin:34px 0 8px}
+p{margin:8px 0}.lede{color:var(--ink2);max-width:820px}
+a{color:inherit}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-top:12px}
+.cardx{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-decoration:none;display:block}
+.cardx:hover{border-color:var(--ink2)}
+.cardx b{display:block;margin-bottom:4px}.cardx span{color:var(--ink2);font-size:13.5px}
+.cardx i{font-style:normal;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0}
+.kv div{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px}
+.kv b{display:block;font-size:22px;font-variant-numeric:tabular-nums}.kv span{font-size:12.5px;color:var(--ink2)}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{white-space:normal;vertical-align:bottom}
+th{color:var(--ink2);font-weight:600;cursor:pointer;position:sticky;top:0;background:var(--surface)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.grp td{background:var(--page);font-weight:650;color:var(--ink2)}
+.bar{display:inline-block;height:9px;border-radius:3px;background:var(--seq);vertical-align:middle;margin-right:6px}
+.chip{font-size:11px;border-radius:4px;padding:1px 6px;background:var(--grid)}
+.note{font-size:13px;color:var(--ink2);border-left:3px solid var(--warn);padding:6px 10px;margin:10px 0;background:var(--surface)}
+ol li{margin:4px 0}
+</style>
+</head>
+<body><div class="wrap">
+<h1 id="h1">Topic review</h1>
+<p class="lede" id="lede"></p>
+
+<h2>The scenarios to compare</h2>
+<p class="lede">Each opens the same fisheries data. They differ in what the reviewer is asked to do, which is the open design question. Labels made in any of them stay in your browser only.</p>
+<div class="cards" id="scen"></div>
+
+<h2>What the first full run found (2026-09-19, <code>d_fisheries</code>)</h2>
+<div class="kv" id="found"></div>
+<ol class="lede">
+<li><b>The top of the list is safe to assume; the bottom is not.</b> Among papers Fable has read, 96% of those scoring 10 or more are fisheries papers by its reading, but so are 37% of those scoring under 0.5. "Everything below this is OUT" would be wrong for about two papers in five, if Fable is right. The spot checks in scenario C exist to settle that with an expert's eyes.</li>
+<li><b>The margin is wide.</b> 1,905 papers sit within half a point of the line. Read exhaustively at four a minute that is eight hours for this one column. A stratified sample of a few hundred is enough to fit and measure the rule; an exhaustive pass only makes sense where the corrected list is itself the product.</li>
+<li><b>Single keywords do real damage and the page shows which.</b> <i>retention</i> alone tips 256 papers over the line: urea retention, sperm retention, chromatographic retention time. Of the 23 Fable read, 21 are not fisheries papers. Scenario E shows them.</li>
+<li><b>The search finds a better rule in under a second.</b> On 869 Fable-labelled papers the live rule scores F1 62.5%. The proposed rule (threshold 1, proximity filter off, <i>retention</i> and <i>discard*</i> dropped, unlabelled text given weight) scores 73.8% on held-out papers. These are silver labels, so treat the size of the gain as indicative and the mechanism as proven.</li>
+<li><b>Text the section labeller cannot place is ignored entirely</b> (weight 0), which is why thousands of papers that mention fisheries keywords score 0. Raising that weight was the second-best single change the search found on the Fable labels (+4.5 points of F1).</li>
+</ol>
+
+<h2>How it works</h2>
+<ol class="lede">
+<li>One pass over every PDF counted every candidate keyword, per section, with and without the shark-or-ray proximity filter. That table is the whole input: a rule is only a way of adding the counts up.</li>
+<li>So a change to a threshold, a section weight, a keyword, or the proximity filter re-scores every paper in the browser, immediately. No corpus re-run.</li>
+<li>The reviewer judges papers against a written definition of the concept. Papers well above the line and well below it are spot-checked at random; the rest of the reading time goes on the papers near it.</li>
+<li>Once a topic has labels, the search in the Optimiser tab proposes the rule that reproduces them best and reports accuracy on held-out labels, so reviewers never need to tune numbers by hand.</li>
+</ol>
+
+<h2>Is the instrument right?</h2>
+<div class="kv" id="cov"></div>
+<p class="lede" id="ctrl"></p>
+
+<h2>Every rule in the topic, with its reviewing workload</h2>
+<p class="lede">"Margin" is the number of papers whose score lies within 0.5 of the line. Minutes assume four papers a minute on the margin plus 80 spot checks; that rate is a guess until someone has done a topic. Click a header to sort, a rule to open it.</p>
+<div class="tablewrap"><table id="rules"></table></div>
+<div class="note" id="notes"></div>
+</div>
+<script>
+const TOPIC = new URLSearchParams(location.search).get('topic') || 'fisheries';
+const fmt = n => Number(n).toLocaleString('en-GB'), esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const s = document.createElement('script'); s.src = `./${TOPIC}/data/meta.js`; s.onload = draw; document.head.appendChild(s);
+let sortKey = null, sortDir = -1;
+function draw(){
+  const M = window.TR_META, c = M.coverage;
+  document.title = `${M.topic.title}: topic review hub`;
+  document.getElementById('h1').textContent = `${M.topic.title}: expert review by topic`;
+  document.getElementById('lede').innerHTML = `A mock-up, built ${esc(M.built)} on the real corpus. The per-author pages ask "is my paper coded correctly?". These ask the complementary question, one concept at a time: "of every paper the corpus holds, which are genuinely about <i>this</i>?" The answers become a gold-standard list per concept, tied to the expert who made it, and the rules are then fitted to the list.`;
+  const R = `./review.html?topic=${TOPIC}`;
+  const sc = [
+    ['A', 'Ladder with the rule lab', 'Papers ordered by score with the threshold drawn in the list. Drag, shift-click, "all above is IN". The Rule tab edits keywords, weights and threshold, and the line moves as you type.', `${R}&rule=d_fisheries`],
+    ['B', 'Judge-only ladder', 'The same list with the rule lab removed. The reviewer only judges; the rule fitting is ours to run afterwards.', `${R}&rule=d_fisheries&mode=judge`],
+    ['C', 'Margin queue', 'One paper per card, closest to the line first, with every fifth card a random spot check from far above or below it, so "the top is surely IN" is measured instead of assumed.', `${R}&rule=d_fisheries&view=queue`],
+    ['C2', 'Margin queue, blind', 'As C, but the score, the stratum, and the Fable verdict are hidden, so the expert is not steered by the machine opinion they are there to check.', `${R}&rule=d_fisheries&view=queue&blind=1&mode=judge`],
+    ['D', 'Optimiser on real labels', 'Loads the 1,641 papers Fable has read as stand-in labels, runs the search, and shows the proposed rule with held-out accuracy and the best single changes.', `${R}&rule=d_fisheries&demo=opt`],
+    ['E', 'A rule edit and what it moves', 'Threshold raised by one and the keyword "retention" dropped: the list filters to exactly the papers that cross the line.', `${R}&rule=d_fisheries&demo=edit`],
+    ['F', 'A proposed rule that has never been run', 'David\'s "Capture: CPUE" keywords and anchors, scored on the corpus for the first time, next to the live imp_cpue column it would replace.', `${R}&rule=drg_03_capture_cpue`],
+    ['G', 'Second reviewer', 'Export your labels from any scenario, switch reviewer, Import the file, then choose "reviewers disagree": only the conflicts are left to discuss.', `${R}&rule=pr_bycatch&who=Guuske`],
+  ];
+  document.getElementById('scen').innerHTML = sc.map(x => `<a class="cardx" href="${x[3]}"><i>Scenario ${x[0]}</i><b>${x[1]}</b><span>${x[2]}</span></a>`).join('');
+  document.getElementById('cov').innerHTML = [[c.rows_in_scope, 'corpus rows in scope'], [c.ok, 'with readable PDF text'], [c.no_pdf, 'no PDF resolved'], [c.no_text, 'PDF with no text'], [c.suspect_text, 'flagged: text from another paper'], [M.vocab.length, 'keywords and anchors counted']]
+    .map(([n, l]) => `<div><b>${fmt(n)}</b><span>${l}</span></div>`).join('');
+  const ctl = Object.entries(M.control || {}), comp = ctl.reduce((a, [, v]) => a + v.compared, 0), agree = ctl.reduce((a, [, v]) => a + v.binary_agree, 0);
+  const worst = ctl.filter(([, v]) => v.compared > 50).sort((a, b) => a[1].binary_agree / a[1].compared - b[1].binary_agree / b[1].compared)[0];
+  document.getElementById('ctrl').innerHTML = comp ? `Positive control: the ${ctl.length} live columns were re-scored from the stored counts and compared with the production extraction, paper by paper. ${fmt(agree)} of ${fmt(comp)} decisions agree (${(100 * agree / comp).toFixed(2)}%); the weakest column is ${esc(worst[0])} at ${(100 * worst[1].binary_agree / worst[1].compared).toFixed(2)}%. The page and the extractor are doing the same sum.` : 'Positive control not run yet.';
+  document.getElementById('found').innerHTML = [['7,781', 'papers mention a d_fisheries keyword'], ['2,581', 'qualify under the live rule'], ['1,905', 'within 0.5 of the line'], ['73.7% / 54.4%', 'precision / recall against Fable silver (n = 1,602)'], ['44', 'Fable-IN papers no keyword reaches'], ['1,146', 'decisions in 40 columns that hinge on half-to-even rounding']].map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('');
+  drawTable();
+  document.getElementById('notes').innerHTML = `Scores for proposed rules use the discipline-schema section weights and the proximity filter, which is an assumption made for the mock-up. Snippets are stored for ${M.featured.length} featured rules only; the rest open with keyword chips and counts.`;
+}
+function drawTable(){
+  const M = window.TR_META, F = new Set(M.featured);
+  let rows = M.overview.map(o => ({ ...o, mins:Math.round((o.margin + 80) / 4) }));
+  if (sortKey) rows.sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
+  const max = Math.max(...rows.map(r => r.papers_with_hit));
+  const cols = [['label', 'rule', 0], ['threshold', 'thr', 1], ['n_terms', 'keywords', 1], ['n_anchors', 'anchors', 1], ['papers_with_hit', 'papers with a mention', 1], ['papers_in', 'qualify', 1], ['margin', 'margin', 1], ['anchor_gate_fails', 'fail anchor gate', 1], ['fable_in', 'Fable IN', 1], ['mins', 'est. minutes', 1]];
+  let html = `<tr>${cols.map(c => `<th class="${c[2] ? 'n' : ''}" data-k="${c[0]}">${c[1]}</th>`).join('')}<th>champion</th><th>checker</th></tr>`, g = null;
+  for (const r of rows){
+    if (!sortKey && r.group !== g){ g = r.group; html += `<tr class="grp"><td colspan="12">${esc(g)}</td></tr>`; }
+    html += `<tr><td><a href="./review.html?topic=${TOPIC}&rule=${encodeURIComponent(r.id)}">${esc(r.label)}</a> ${F.has(r.id) ? '<span class="chip">snippets</span>' : ''}</td><td class="n">${r.threshold}</td><td class="n">${r.n_terms}</td><td class="n">${r.n_anchors}</td>
+      <td class="n"><span class="bar" style="width:${Math.round(70 * r.papers_with_hit / max)}px"></span>${fmt(r.papers_with_hit)}</td><td class="n">${fmt(r.papers_in)}</td><td class="n">${fmt(r.margin)}</td><td class="n">${fmt(r.anchor_gate_fails)}</td><td class="n">${r.kind === 'live' ? fmt(r.fable_in) : ''}</td><td class="n">${fmt(r.mins)}</td><td style="color:var(--muted)">unassigned</td><td style="color:var(--muted)">unassigned</td></tr>`;
+  }
+  const t = document.getElementById('rules'); t.innerHTML = html;
+  t.querySelectorAll('th[data-k]').forEach(th => th.onclick = () => { const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (k === 'label' ? 1 : -1); sortKey = k; drawTable(); });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1842 @@
+{
+ "id": "fisheries",
+ "title": "Fisheries",
+ "champion": "David Ruiz-García (proposed)",
+ "provenance": "live_columns read from scripts/extract_schema_columns.py at build time; proposed_rules from docs/2026-09-10_FisheriesApproach_keywords_DRG.xlsx (66 rows); all-caps tokens of 2-6 letters treated as case-sensitive acronyms (INFERRED, not David's instruction)",
+ "live_columns": [
+  "d_fisheries",
+  "pr_fishing_commercial",
+  "pr_fishing_artisanal",
+  "pr_fishing_recreational",
+  "pr_fishing_iuu",
+  "pr_bycatch",
+  "pr_shark_finning",
+  "pr_targeted_fishing",
+  "pr_discarding",
+  "imp_cpue",
+  "imp_post_release",
+  "imp_mortality",
+  "gear_longline",
+  "gear_gillnet",
+  "gear_trawl",
+  "gear_purse_seine",
+  "gear_seine",
+  "gear_hook_line",
+  "gear_trap",
+  "gear_net_other",
+  "gear_harpoon",
+  "gear_dredge",
+  "gear_trawl_beam",
+  "gear_trawl_otter",
+  "gear_survey",
+  "gear_pelagic",
+  "gear_demersal",
+  "gear_artisanal",
+  "gear_mit_circle_hook",
+  "gear_mit_brd",
+  "gear_mit_deterrent",
+  "gear_mit_time_area",
+  "gear_mit_handling",
+  "gear_mit_weak_hook",
+  "gear_mit_line_weight",
+  "gear_mit_setting",
+  "gear_mit_pinger",
+  "gear_mit_illumination",
+  "gear_mit_wire_leader",
+  "gear_ghost"
+ ],
+ "proposed_rules": [
+  {
+   "id": "drg_00_spatial_overlap_distribution",
+   "section": "Interaction",
+   "category": "Spatial overlap",
+   "subcategory": "Distribution",
+   "meaning": "Characterises horizontal distribution of chondrichthyan species.",
+   "terms": [
+    "distribution",
+    "occurrence",
+    "presence",
+    "habitat range",
+    "habitat use",
+    "habitat utilization",
+    "habitat suitability",
+    "spatial pattern*"
+   ],
+   "anchors": [
+    "habitat",
+    "area",
+    "region",
+    "location",
+    "site",
+    "environment",
+    "spatial"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_01_encounter_bathymetrical_range",
+   "section": "Interaction",
+   "category": "Encounter",
+   "subcategory": "Bathymetrical range",
+   "meaning": "Vertical distribution of chondrichthyan species.",
+   "terms": [
+    "depth range",
+    "bathymetric range",
+    "bathymetric distribution",
+    "depth distribution",
+    "depth preference",
+    "preferred depth",
+    "depth habitat",
+    "vertical habitat use",
+    "depth zonation"
+   ],
+   "anchors": [
+    "habitat",
+    "distribution",
+    "range",
+    "preference",
+    "zonation"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_02_encounter_spatio_temporal_distribution",
+   "section": "Interaction",
+   "category": "Encounter",
+   "subcategory": "Spatio-temporal distribution",
+   "meaning": "Spatio-temporal horizontal and/or vertical distribution of chondrichthyan species (including seasonality, diel patterns, and other timings).",
+   "terms": [
+    "seasonal distribution",
+    "seasonal occurrence",
+    "diel distribution",
+    "temporal* distribution",
+    "temporal shift*",
+    "temporal change in distribution",
+    "distribution shift*",
+    "range shift*",
+    "spatial-temporal variation",
+    "time series distribution"
+   ],
+   "anchors": [
+    "distribution",
+    "occurrence",
+    "range",
+    "habitat"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_03_capture_cpue",
+   "section": "Interaction",
+   "category": "Capture",
+   "subcategory": "CPUE",
+   "meaning": "Use of catch-per-unit-effort or related fishery-dependent catch metrics as an index of interaction or capture intensity.",
+   "terms": [
+    "CPUE",
+    "BPUE",
+    "catch per unit effort",
+    "bycatch per unit effort",
+    "catch rate*",
+    "bycatch rate*",
+    "hooking rate*",
+    "encounter rate*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fisher*",
+    "effort",
+    "gear"
+   ],
+   "threshold": 2,
+   "case_sensitive": [
+    "CPUE",
+    "BPUE"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_04_capture_gear_selectivity",
+   "section": "Interaction",
+   "category": "Capture",
+   "subcategory": "Gear selectivity",
+   "meaning": "Evidence that capture depends on gear design or configuration, determining which species or sizes are retained or excluded.",
+   "terms": [
+    "gear selectiv*",
+    "size selectiv*",
+    "species selectiv*",
+    "retention selectiv*",
+    "escape selectiv*",
+    "mesh selectiv*"
+   ],
+   "anchors": [
+    "gear",
+    "hook",
+    "mesh",
+    "net",
+    "trawl",
+    "longline",
+    "gillnet",
+    "fish*",
+    "bycatch"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_05_capture_catchability",
+   "section": "Interaction",
+   "category": "Capture",
+   "subcategory": "Catchability",
+   "meaning": "Probability that a species is caught once exposed or encountered, driven by behaviour, morphology, sensory ecology, or gear interaction.",
+   "terms": [
+    "catchab*",
+    "capture success",
+    "hooking probability",
+    "entanglement probability",
+    "escap* probability",
+    "probability of escap*",
+    "escap* success",
+    "gear avoid*",
+    "avoid* behaviour",
+    "avoid* behavior"
+   ],
+   "anchors": [
+    "gear",
+    "fishing",
+    "hook",
+    "bait",
+    "net",
+    "trawl",
+    "longline",
+    "gillnet",
+    "capture"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_06_at_vessel_mortality_avm",
+   "section": "Interaction",
+   "category": "At-vessel mortality",
+   "subcategory": "AVM",
+   "meaning": "Mortality occurring before release, during hauling, capture, handling, or time on deck or alongside the vessel.",
+   "terms": [
+    "at-vessel mortality",
+    "AVM",
+    "haulback mortality",
+    "on-deck mortality",
+    "deck mortality",
+    "mortality at capture",
+    "immediate mortality",
+    "dead at haulback",
+    "dead on retrieval",
+    "DOA"
+   ],
+   "anchors": [
+    "captur*",
+    "haul*",
+    "handling",
+    "deck",
+    "vessel"
+   ],
+   "threshold": 2,
+   "case_sensitive": [
+    "AVM",
+    "DOA"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_07_post_release_mortality_health_assessment_physical",
+   "section": "Interaction",
+   "category": "Post-release mortality",
+   "subcategory": "Health assessment (physical)",
+   "meaning": "Assessment of physical impairment at capture or release used as a proxy for subsequent survival.",
+   "terms": [
+    "body condition",
+    "condition index",
+    "physical condition",
+    "injur*",
+    "wound*",
+    "lesion*",
+    "trauma*",
+    "damage",
+    "bleeding",
+    "haemorrhag*",
+    "hemorrhag*",
+    "blood loss",
+    "bruis*",
+    "contusion*"
+   ],
+   "anchors": [
+    "captur*",
+    "haul*",
+    "handling",
+    "deck",
+    "vessel",
+    "fishing"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_08_post_release_mortality_health_assessment_behavioural",
+   "section": "Interaction",
+   "category": "Post-release mortality",
+   "subcategory": "Health assessment (behavioural)",
+   "meaning": "Assessment of behavioural impairment at capture or release used as a proxy for subsequent survival.",
+   "terms": [
+    "reflex impairment",
+    "RAMP",
+    "vitality",
+    "behavioral response",
+    "activity level",
+    "impaired movement",
+    "equilibrium",
+    "righting reflex",
+    "mandibular reflex",
+    "jaw response",
+    "spiracle pump*",
+    "ventilation rate",
+    "breathing rate",
+    "respiratory activity",
+    "ventilatory response",
+    "stress response behaviour*",
+    "behavior*",
+    "escape response"
+   ],
+   "anchors": [
+    "captur*",
+    "haul*",
+    "handling",
+    "deck",
+    "vessel",
+    "fishing"
+   ],
+   "threshold": 2,
+   "case_sensitive": [
+    "RAMP"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_09_post_release_mortality_health_assessment_physiologica",
+   "section": "Interaction",
+   "category": "Post-release mortality",
+   "subcategory": "Health assessment (physiological)",
+   "meaning": "Assessment of physiological impairment at capture or release used as a proxy for subsequent survival.",
+   "terms": [
+    "physiolog* stress",
+    "blood parameter*",
+    "blood chemistry",
+    "haematolog*",
+    "hematolog*",
+    "lactate",
+    "glucose",
+    "cortisol",
+    "pH",
+    "pCO2",
+    "oxygen saturation",
+    "sO2",
+    "acid-base",
+    "metabolic stress",
+    "biochemical marker*",
+    "enzyme*",
+    "CK",
+    "LDH",
+    "AST",
+    "ALT"
+   ],
+   "anchors": [
+    "captur*",
+    "haul*",
+    "handling",
+    "deck",
+    "vessel",
+    "fishing",
+    "blood"
+   ],
+   "threshold": 2,
+   "case_sensitive": [
+    "CK",
+    "LDH",
+    "AST",
+    "ALT"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_10_post_release_mortality_prm",
+   "section": "Interaction",
+   "category": "Post-release mortality",
+   "subcategory": "PRM",
+   "meaning": "Mortality occurring after release due to injury, physiological stress, predation risk, or delayed effects.",
+   "terms": [
+    "mortality",
+    "PRM",
+    "postrelease mortality",
+    "delayed mortality",
+    "mortality after release",
+    "survival after release",
+    "post-release survival",
+    "discard survival",
+    "postcapture mortality",
+    "post-capture mortality",
+    "post-capture survival",
+    "postcapture survival"
+   ],
+   "anchors": [
+    "release",
+    "tag*",
+    "discard*",
+    "survival"
+   ],
+   "threshold": 1,
+   "case_sensitive": [
+    "PRM"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_11_area_based_tools_permanent_fisheries_restricted_areas",
+   "section": "Mitigation",
+   "category": "Area-based tools",
+   "subcategory": "Permanent Fisheries Restricted Areas",
+   "meaning": "Permanent spatial closures or restricted areas intended to avoid bycatch by excluding fishing from high-risk areas.",
+   "terms": [
+    "permanent closure*",
+    "permanent* clos* area*",
+    "fisher* restricted area*",
+    "FRA",
+    "static closure*",
+    "no-take area*"
+   ],
+   "anchors": [
+    "fishing",
+    "fishery"
+   ],
+   "threshold": 1,
+   "case_sensitive": [
+    "FRA"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_12_area_based_tools_temporal_fisheries_restricted_areas",
+   "section": "Mitigation",
+   "category": "Area-based tools",
+   "subcategory": "Temporal Fisheries Restricted Areas",
+   "meaning": "Seasonal or temporary spatial closures applied during periods of elevated bycatch risk.",
+   "terms": [
+    "seasonal closure*",
+    "tempora* closure*",
+    "time-area closure*",
+    "seasonal restriction*",
+    "clos* season*"
+   ],
+   "anchors": [
+    "fishing",
+    "fishery"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_13_area_based_tools_quasi_real_time_closures",
+   "section": "Mitigation",
+   "category": "Area-based tools",
+   "subcategory": "Quasi-real time closures",
+   "meaning": "Rapidly updated closures based on recent observations, forecasts, or risk indicators.",
+   "terms": [
+    "quasi-real-time closure*",
+    "quasi real time closure*",
+    "real-time closure*",
+    "real time closure*",
+    "rolling closure*",
+    "dynamic closure*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fishery"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_14_area_based_tools_move_on_rules",
+   "section": "Mitigation",
+   "category": "Area-based tools",
+   "subcategory": "Move-on rules",
+   "meaning": "Rules requiring vessels to leave an area after a bycatch event or threshold is reached.",
+   "terms": [
+    "move-on rule*",
+    "move on rule*",
+    "move-on provision*",
+    "leave the area",
+    "relocate after bycatch",
+    "hotspot avoidance rule*"
+   ],
+   "anchors": [
+    "bycatch",
+    "threshold",
+    "closure",
+    "fishing",
+    "fishery"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_15_area_based_tools_time_of_day_restrictions",
+   "section": "Mitigation",
+   "category": "Area-based tools",
+   "subcategory": "Time-of-day restrictions",
+   "meaning": "Restrictions on fishing at certain times of day or night to avoid periods of higher bycatch risk.",
+   "terms": [
+    "time-of-day restriction*",
+    "day-night setting",
+    "night setting",
+    "daytime setting",
+    "set at night",
+    "fish at night",
+    "night-time fishing",
+    "daytime fishing"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fishery",
+    "regulation",
+    "management"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_16_area_based_tools_voluntary_fleet_communication",
+   "section": "Mitigation",
+   "category": "Area-based tools",
+   "subcategory": "Voluntary fleet communication",
+   "meaning": "Fleet-led communication systems sharing bycatch hotspots or recent events to help vessels avoid risky areas.",
+   "terms": [
+    "fleet communication",
+    "fleet communication program*",
+    "hotspot communication",
+    "voluntary avoidance program*",
+    "fleet advisory",
+    "vessel alert network*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fleet",
+    "fishery"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_17_limiting_effort_vessel_entry",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Vessel entry",
+   "meaning": "Restrictions on the number or type of vessels allowed to participate in a fishery.",
+   "terms": [
+    "limit* entr*",
+    "vessel* entr*",
+    "entr* limit*",
+    "permit captur*",
+    "licence captur*",
+    "license captur*",
+    "number of vessel*",
+    "vessel* number"
+   ],
+   "anchors": [
+    "fishery",
+    "effort",
+    "vessel",
+    "fishing"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_18_limiting_effort_fishing_capability",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Fishing capability",
+   "meaning": "Limits on vessel size, engine power, hold capacity, or other attributes that determine fishing capacity.",
+   "terms": [
+    "fishing capacity",
+    "fishing capabilit*",
+    "vessel size limit*",
+    "engine power limit*",
+    "hold capacity limit*",
+    "fleet capacit*",
+    "vessel* capacit*"
+   ],
+   "anchors": [
+    "fishing",
+    "fishery",
+    "effort",
+    "vessel"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_19_limiting_effort_fishing_days",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Fishing days",
+   "meaning": "Limits on the number of days vessels are allowed to fish.",
+   "terms": [
+    "fishing days",
+    "days at sea",
+    "effort day*",
+    "day limit*",
+    "limited day*",
+    "maximum day*"
+   ],
+   "anchors": [
+    "fishing",
+    "fishery",
+    "effort",
+    "vessel"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_20_limiting_effort_gear_limits",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Gear limits",
+   "meaning": "Restrictions on the amount, size, or configuration of fishing gear that can be deployed.",
+   "terms": [
+    "gear limit*",
+    "gear restriction*",
+    "number of hooks",
+    "hook limit*",
+    "net length limit*",
+    "line length limit*",
+    "number of net*",
+    "amount of gear*"
+   ],
+   "anchors": [
+    "fishery",
+    "effort",
+    "deploy*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_21_limiting_effort_soak_duration",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Soak duration",
+   "meaning": "Limits on how long gear can remain in the water before retrieval.",
+   "terms": [
+    "soak* time*",
+    "soak* duration*",
+    "longer soak",
+    "shorter soak",
+    "haul* time*"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_22_limiting_effort_number_of_fishing_operations",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Number of fishing operations",
+   "meaning": "Limits on the number of sets, hauls, or deployments over a defined period.",
+   "terms": [
+    "number of set*",
+    "set limit*",
+    "haul limit*",
+    "deployments per day",
+    "fishing operation*",
+    "number of haul*",
+    "haul* number*"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_23_limiting_effort_buyback_programmes",
+   "section": "Mitigation",
+   "category": "Limiting effort",
+   "subcategory": "Buyback programmes",
+   "meaning": "Programmes that reduce overall effort by purchasing vessels, licenses, or gear out of the fishery.",
+   "terms": [
+    "buyback program*",
+    "buy-back program*",
+    "vessel buyback",
+    "licence buyback",
+    "license buyback",
+    "decommission* program*"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_24_increase_selectivity_excluder_grids",
+   "section": "Mitigation",
+   "category": "Increase selectivity",
+   "subcategory": "Excluder grids",
+   "meaning": "Grid devices or equivalent structures that allow non-target organisms to escape while retaining target catch.",
+   "terms": [
+    "excluder grid*",
+    "turtle excluder device*",
+    "TED",
+    "separator grid*",
+    "Nordmore grid*",
+    "exclud* device*",
+    "escape panel*",
+    "escape opening*",
+    "enlarged opening*",
+    "escape hatch*",
+    "release panel*"
+   ],
+   "anchors": [
+    "trawl",
+    "bycatch",
+    "pot",
+    "trap",
+    "net"
+   ],
+   "threshold": 2,
+   "case_sensitive": [
+    "TED"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_25_increase_selectivity_mesh_size",
+   "section": "Mitigation",
+   "category": "Increase selectivity",
+   "subcategory": "Mesh size",
+   "meaning": "Changes in mesh size to alter which species or size classes are retained or escape.",
+   "terms": [
+    "mesh siz*",
+    "mesh selectiv*",
+    "larger mesh",
+    "smaller mesh",
+    "square mesh",
+    "codend mesh"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_26_increase_selectivity_hook_size_type",
+   "section": "Mitigation",
+   "category": "Increase selectivity",
+   "subcategory": "Hook size/type",
+   "meaning": "Changes in hook design, size, or shape to reduce the capture of non-target species.",
+   "terms": [
+    "circle hook*",
+    "J hook*",
+    "hook size*",
+    "hook type",
+    "wider hook*",
+    "smaller hook*"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_27_increase_selectivity_weak_hooks_or_breakable_gear",
+   "section": "Mitigation",
+   "category": "Increase selectivity",
+   "subcategory": "Weak hooks or breakable gear",
+   "meaning": "Gear components designed to fail or release under the force of larger non-target species.",
+   "terms": [
+    "weak* hook*",
+    "break* hook*",
+    "break* leader*",
+    "monofilament leader*",
+    "weak link*"
+   ],
+   "anchors": [
+    "bycatch",
+    "hook",
+    "leader"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_28_increase_selectivity_hook_shielding_devices",
+   "section": "Mitigation",
+   "category": "Increase selectivity",
+   "subcategory": "Hook shielding devices",
+   "meaning": "Devices that physically shield hooks or bait to reduce unwanted hooking.",
+   "terms": [
+    "hook shield*",
+    "hook-shielding device*",
+    "hook shielding device*",
+    "SMART hook",
+    "shielded hook*"
+   ],
+   "anchors": [
+    "longline",
+    "hook",
+    "bycatch"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_29_sensory_deterrents_acoustic_deterrents",
+   "section": "Mitigation",
+   "category": "Sensory deterrents",
+   "subcategory": "Acoustic deterrents",
+   "meaning": "Use of sound-emitting devices to deter or alert animals and reduce bycatch interactions.",
+   "terms": [
+    "pinger*",
+    "acoustic deterrent*",
+    "acoustic alarm*",
+    "acoustic harassment device*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_30_sensory_deterrents_magnetic_deterrents",
+   "section": "Mitigation",
+   "category": "Sensory deterrents",
+   "subcategory": "Magnetic deterrents",
+   "meaning": "Use of magnets or electropositive materials intended to repel sensitive species such as sharks and rays.",
+   "terms": [
+    "magnet*",
+    "magnetic deterrent*",
+    "rare earth metal*",
+    "electropositive metal*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_31_sensory_deterrents_electrical_deterrents",
+   "section": "Mitigation",
+   "category": "Sensory deterrents",
+   "subcategory": "Electrical deterrents",
+   "meaning": "Use of electric stimuli or electrified gear components to discourage interactions with fishing gear.",
+   "terms": [
+    "electr* deterrent*",
+    "electr* deterrent*",
+    "electr* field",
+    "electr* gear*",
+    "electr* wire*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_32_sensory_deterrents_visual_deterrents",
+   "section": "Mitigation",
+   "category": "Sensory deterrents",
+   "subcategory": "Visual deterrents",
+   "meaning": "Use of visual cues such as lights, colored materials, or conspicuous devices to reduce bycatch.",
+   "terms": [
+    "visual deterrent*",
+    "illuminat*",
+    "net illumination",
+    "streamer line*",
+    "toriline*",
+    "artificial shark model*",
+    "colored gear*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_33_sensory_deterrents_chemical_deterrents",
+   "section": "Mitigation",
+   "category": "Sensory deterrents",
+   "subcategory": "Chemical deterrents",
+   "meaning": "Use of chemical substances or scent-based deterrents to reduce attraction or contact with gear.",
+   "terms": [
+    "chemical deterrent*",
+    "semiochem*",
+    "olfactory deterrent*",
+    "scent deterrent*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_34_reduce_attraction_bait_modification",
+   "section": "Mitigation",
+   "category": "Reduce attraction",
+   "subcategory": "Bait modification",
+   "meaning": "Changes in bait type, size, color, or presentation to lower attractiveness to bycatch species.",
+   "terms": [
+    "bait modification*",
+    "bait type*",
+    "bait size*",
+    "bait colour*",
+    "bait color*",
+    "dyed bait*",
+    "blue-dyed bait*"
+   ],
+   "anchors": [
+    "longline",
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_35_reduce_attraction_artificial_bait",
+   "section": "Mitigation",
+   "category": "Reduce attraction",
+   "subcategory": "Artificial bait",
+   "meaning": "Use of artificial or alternative bait types to reduce incidental attraction of vulnerable species.",
+   "terms": [
+    "artificial bait*",
+    "synthetic bait*",
+    "bait substitute*"
+   ],
+   "anchors": [
+    "longline",
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_36_reduce_attraction_offal_management",
+   "section": "Mitigation",
+   "category": "Reduce attraction",
+   "subcategory": "Offal management",
+   "meaning": "Measures controlling offal discharge or discard practices that may attract bycatch species during fishing.",
+   "terms": [
+    "offal",
+    "offal discharg*",
+    "discard discharg*",
+    "spent bait discharg*",
+    "retain* offal",
+    "discharg* offal",
+    "offal retention"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_37_reduce_attraction_light_or_stimulus_restrictions",
+   "section": "Mitigation",
+   "category": "Reduce attraction",
+   "subcategory": "Light or stimulus restrictions",
+   "meaning": "Restrictions on lightsticks, lights, or other stimuli that can attract bycatch species.",
+   "terms": [
+    "lightstick*",
+    "glow stick*",
+    "chemiluminescent",
+    "restriction on light*",
+    "vessel light*",
+    "bait light*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_38_gear_detectability_gear_detectability",
+   "section": "Mitigation",
+   "category": "Gear detectability",
+   "subcategory": "Gear detectability",
+   "meaning": "Modifications that make gear more detectable to non-target species, improving avoidance, or modifications that reduce sensory cues that attract or expose gear to non-target species.",
+   "terms": [
+    "gear detectability",
+    "detectable gear*",
+    "net illumination",
+    "illuminated net*",
+    "LED",
+    "light-emitting diode*",
+    "pinger*",
+    "acoustic pinger*",
+    "white mesh",
+    "white net*",
+    "camouflage* gear*",
+    "dyed bait*",
+    "acoustic mask*",
+    "barium sulphate net*",
+    "barium sulfate net*",
+    "iron-oxide net*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [
+    "LED"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_39_reduce_encounter_fishing_depth_changes",
+   "section": "Mitigation",
+   "category": "Reduce encounter",
+   "subcategory": "Fishing depth changes",
+   "meaning": "Adjustments in fishing depth to reduce overlap with the vertical distribution of bycatch species.",
+   "terms": [
+    "deeper set*",
+    "shallower set*",
+    "set deeper",
+    "fishing depth",
+    "depth of set",
+    "branchline depth",
+    "set* depth"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_40_reduce_encounter_gear_profile_or_configuration",
+   "section": "Mitigation",
+   "category": "Reduce encounter",
+   "subcategory": "Gear profile or configuration",
+   "meaning": "Changes in gear profile, hanging ratio, height, or configuration that reduce contact with bycatch species.",
+   "terms": [
+    "hanging ratio*",
+    "net profil*",
+    "vertical profil*",
+    "tiedown*",
+    "gear height",
+    "gear profil*",
+    "gear* configuration*",
+    "subsurface net*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_41_reduce_encounter_deployment_timing",
+   "section": "Mitigation",
+   "category": "Reduce encounter",
+   "subcategory": "Deployment timing",
+   "meaning": "Adjustments in set or haul timing to avoid periods when bycatch species are more likely to encounter gear.",
+   "terms": [
+    "set tim*",
+    "haul tim*",
+    "dawn set*",
+    "dusk set*",
+    "night set*",
+    "daytime set*",
+    "tim* of deployment",
+    "deployment tim*"
+   ],
+   "anchors": [
+    "management",
+    "regulation*"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_42_reduce_stress_immediate_release",
+   "section": "Mitigation",
+   "category": "Reduce stress",
+   "subcategory": "Immediate release",
+   "meaning": "Rapid release of live bycatch to reduce handling time and stress exposure.",
+   "terms": [
+    "immediate releas*",
+    "rapid releas*",
+    "prompt releas*",
+    "release immediat*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_43_reduce_stress_improved_handling",
+   "section": "Mitigation",
+   "category": "Reduce stress",
+   "subcategory": "Improved handling",
+   "meaning": "Handling protocols designed to minimize injury, stress, and physiological impairment.",
+   "terms": [
+    "handling protocol*",
+    "best handling practice*",
+    "careful handling",
+    "dehook*",
+    "best practic*",
+    "good practic*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_44_reduce_stress_improved_deck_condition",
+   "section": "Mitigation",
+   "category": "Reduce stress",
+   "subcategory": "Improved deck condition",
+   "meaning": "On-deck measures such as shade, water, ventilation, or soft surfaces that reduce stress while animals are aboard.",
+   "terms": [
+    "deck condition",
+    "wet deck*",
+    "shaded deck*",
+    "padded deck*",
+    "seawater spray*",
+    "water spray*",
+    "cool* on deck"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_45_reduce_stress_reduced_air_exposure",
+   "section": "Mitigation",
+   "category": "Reduce stress",
+   "subcategory": "Reduced air exposure",
+   "meaning": "Measures specifically aimed at minimizing time exposed to air before release.",
+   "terms": [
+    "air expos*",
+    "expos* to air",
+    "minim* air expos*",
+    "minim* air expos*",
+    "reduc* air expos*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_46_reduce_retention_retention_limits",
+   "section": "Mitigation",
+   "category": "Reduce retention",
+   "subcategory": "Retention limits",
+   "meaning": "Limits on the number or amount of bycatch individuals or species that may be retained.",
+   "terms": [
+    "retention limit*",
+    "landing limit*",
+    "trip limit*",
+    "bycatch quota*",
+    "retention quota*",
+    "TAC*",
+    "total allowable catch"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [
+    "TAC*"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_47_reduce_retention_retention_ban",
+   "section": "Mitigation",
+   "category": "Reduce retention",
+   "subcategory": "Retention ban",
+   "meaning": "Rules prohibiting retention of specified bycatch species.",
+   "terms": [
+    "retention ban*",
+    "no-retention",
+    "no retention",
+    "prohibition of retention",
+    "mandatory live release",
+    "retention prohibit*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_48_reduce_retention_shark_finning_ban",
+   "section": "Mitigation",
+   "category": "Reduce retention",
+   "subcategory": "Shark finning ban",
+   "meaning": "Rules prohibiting finning or requiring sharks to be landed with fins naturally attached.",
+   "terms": [
+    "shark finning",
+    "finning ban*",
+    "fins naturally attached",
+    "naturally attached fins",
+    "landed with fins attached"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 3,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_49_reduce_retention_trade_ban",
+   "section": "Mitigation",
+   "category": "Reduce retention",
+   "subcategory": "Trade ban",
+   "meaning": "Restrictions or bans on the sale or trade of species or products to discourage retention.",
+   "terms": [
+    "trad* ban*",
+    "sal* ban*",
+    "market* ban*",
+    "trad* restriction*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fishing",
+    "fisher*",
+    "trad*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_50_reduce_retention_cites_restrictions",
+   "section": "Mitigation",
+   "category": "Reduce retention",
+   "subcategory": "CITES restrictions",
+   "meaning": "Trade controls linked to CITES listings that may reduce incentives to retain vulnerable species.",
+   "terms": [
+    "CITES",
+    "Appendix I",
+    "Appendix II",
+    "Convention on International Trade in Endangered Species"
+   ],
+   "anchors": [],
+   "threshold": 3,
+   "case_sensitive": [
+    "CITES"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_51_offsets_direct_offsets",
+   "section": "Mitigation",
+   "category": "Offsets",
+   "subcategory": "Direct offsets",
+   "meaning": "Compensatory conservation actions implemented directly by the entity responsible for residual bycatch impacts.",
+   "terms": [
+    "direct offset*",
+    "permittee-responsible offset*",
+    "compensatory mitigation"
+   ],
+   "anchors": [],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_52_offsets_offset_funding",
+   "section": "Mitigation",
+   "category": "Offsets",
+   "subcategory": "Offset funding",
+   "meaning": "Compensatory mitigation payments to a public or private body that implements offset conservation actions.",
+   "terms": [
+    "in-lieu fee",
+    "in lieu fee",
+    "offset fund*",
+    "compensatory payment*",
+    "mitigation fee*"
+   ],
+   "anchors": [],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_53_offsets_conservation_banking",
+   "section": "Mitigation",
+   "category": "Offsets",
+   "subcategory": "Conservation banking",
+   "meaning": "Use of biodiversity or conservation credits generated in advance to compensate residual bycatch impacts.",
+   "terms": [
+    "conservation bank*",
+    "mitigation bank*",
+    "biodiversity credit*",
+    "offset credit*"
+   ],
+   "anchors": [],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_54_distribution_technology_biologging",
+   "section": "New technologies",
+   "category": "Distribution technology",
+   "subcategory": "Biologging",
+   "meaning": "Animal-borne tags or sensors used to quantify movement, habitat use, and overlap relevant to bycatch.",
+   "terms": [
+    "biologging",
+    "bio-logging",
+    "archival tag*",
+    "satellite tag*",
+    "pop-up satellite archival tag*",
+    "acceleromet*",
+    "telemetry",
+    "pop-up tag*"
+   ],
+   "anchors": [
+    "habitat",
+    "movement",
+    "surviv*",
+    "mortality"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_55_distribution_technology_environmental_dna",
+   "section": "New technologies",
+   "category": "Distribution technology",
+   "subcategory": "Environmental DNA",
+   "meaning": "Use of eDNA to detect presence, habitat use, or distribution of species relevant to bycatch risk.",
+   "terms": [
+    "environmental DNA",
+    "eDNA",
+    "metabarcod*",
+    "water sample DNA"
+   ],
+   "anchors": [],
+   "threshold": 3,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_56_fishing_effort_data_sources_vessel_tracking",
+   "section": "New technologies",
+   "category": "Fishing effort data sources",
+   "subcategory": "Vessel tracking",
+   "meaning": "Automatic Identification System or Vessel Monitoring System vessel tracking data used to infer fishing effort and overlap with bycatch risk.",
+   "terms": [
+    "AIS",
+    "Automatic Identification System",
+    "VMS",
+    "Vessel Monitoring System",
+    "vessel tracking",
+    "vessel track*",
+    "fishing effort",
+    "Global Fishing Watch"
+   ],
+   "anchors": [
+    "fishing",
+    "fisher*",
+    "vessel",
+    "effort",
+    "overlap",
+    "bycatch"
+   ],
+   "threshold": 3,
+   "case_sensitive": [
+    "AIS",
+    "VMS"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_57_gear_based_sensing_on_gear_cameras",
+   "section": "New technologies",
+   "category": "Gear-based sensing",
+   "subcategory": "On-gear cameras",
+   "meaning": "Cameras attached to gear or deployed near gear to document interactions and bycatch behaviour.",
+   "terms": [
+    "underwater camera*",
+    "on-gear camera*",
+    "gear* camera*",
+    "camera* attach* to gear*"
+   ],
+   "anchors": [
+    "fishing",
+    "fisher*",
+    "bycatch"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_58_gear_based_sensing_on_gear_sensors",
+   "section": "New technologies",
+   "category": "Gear-based sensing",
+   "subcategory": "On-gear sensors",
+   "meaning": "Sensors mounted on or integrated with fishing gear to detect gear behaviour, catch events, or potential bycatch interactions.",
+   "terms": [
+    "on-gear sensor*",
+    "gear sensor*",
+    "tension sensor*",
+    "movement sensor*",
+    "strike sensor*",
+    "acceleromet*",
+    "hook timer*",
+    "line tension",
+    "sensor-equipped gear*"
+   ],
+   "anchors": [
+    "gear",
+    "hook",
+    "line",
+    "longline",
+    "trawl",
+    "net",
+    "bycatch",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_59_gear_based_sensing_ai_species_detection",
+   "section": "New technologies",
+   "category": "Gear-based sensing",
+   "subcategory": "AI species detection",
+   "meaning": "Artificial intelligence systems used to detect, classify, or respond to bycatch species in near real time.",
+   "terms": [
+    "artificial intelligence detect*",
+    "machine learning detect*",
+    "computer vision",
+    "species detection algorithm*"
+   ],
+   "anchors": [
+    "camera",
+    "bycatch",
+    "real-time",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_60_decision_support_systems_dynamic_risk_forecasting",
+   "section": "New technologies",
+   "category": "Decision-support systems",
+   "subcategory": "Dynamic risk forecasting",
+   "meaning": "Systems that combine recent data and models to forecast bycatch risk and guide short-term decisions.",
+   "terms": [
+    "risk forecast*",
+    "dynamic risk model*",
+    "forecast* bycatch",
+    "real-time risk",
+    "predictive closure*"
+   ],
+   "anchors": [
+    "bycatch",
+    "management",
+    "dynamic",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 2,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_61_decision_support_systems_onboard_decision_support",
+   "section": "New technologies",
+   "category": "Decision-support systems",
+   "subcategory": "Onboard decision support",
+   "meaning": "Tools that integrate monitoring, risk information, and regulations to support real-time skipper decisions.",
+   "terms": [
+    "decision support system*",
+    "onboard decision tool*",
+    "skipper advis*",
+    "real-time guid*"
+   ],
+   "anchors": [
+    "vessel",
+    "bycatch",
+    "management",
+    "fishing",
+    "fisher*"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_62_distribution_methods_species_distribution_models",
+   "section": "New methods",
+   "category": "Distribution methods",
+   "subcategory": "Species distribution models",
+   "meaning": "Models estimating species distribution using non-fisheries data, such as surveys, telemetry, or environmental observations.",
+   "terms": [
+    "species distribution model*",
+    "habitat suitability model*",
+    "ecological niche model*",
+    "MaxEnt",
+    "boosted regression tree*",
+    "random forest",
+    "INLA",
+    "bycatch risk model*"
+   ],
+   "anchors": [
+    "occurrence",
+    "habitat",
+    "distribution"
+   ],
+   "threshold": 1,
+   "case_sensitive": [
+    "INLA"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_63_distribution_methods_bycatch_risk_models",
+   "section": "New methods",
+   "category": "Distribution methods",
+   "subcategory": "Bycatch risk models",
+   "meaning": "Models estimating spatial or spatio-temporal bycatch risk using fisheries-dependent data, alone or integrated with environmental predictors.",
+   "terms": [
+    "bycatch risk model*",
+    "bycatch hotspot model*",
+    "fisher*-dependent* model*",
+    "observer data model*",
+    "bycatch risk map*"
+   ],
+   "anchors": [
+    "bycatch",
+    "CPUE",
+    "fisher*",
+    "effort",
+    "fishing"
+   ],
+   "threshold": 1,
+   "case_sensitive": [
+    "CPUE"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_64_risk_assessment_risk_assessment_frameworks",
+   "section": "New methods",
+   "category": "Risk assessment",
+   "subcategory": "Risk assessment frameworks",
+   "meaning": "Frameworks evaluating vulnerability or risk of bycatch at species, population, or fishery level, including PSA, ByRA, and overlap-based risk metrics.",
+   "terms": [
+    "productivity-susceptibility analysis",
+    "PSA",
+    "ByRA",
+    "bycatch risk assessment",
+    "ecological risk assessment*",
+    "vulnerability assessment*",
+    "Red List*"
+   ],
+   "anchors": [
+    "bycatch",
+    "fisher*",
+    "fishing"
+   ],
+   "threshold": 2,
+   "case_sensitive": [
+    "PSA"
+   ],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  },
+  {
+   "id": "drg_65_management_strategy_evaluation_management_strategy_ev",
+   "section": "New methods",
+   "category": "Management strategy evaluation",
+   "subcategory": "Management strategy evaluation",
+   "meaning": "Simulation-based approaches used to evaluate alternative management scenarios, trade-offs, and expected bycatch outcomes.",
+   "terms": [
+    "management strategy evaluation*",
+    "simulation model*",
+    "scenario analys*",
+    "trade-off analys*",
+    "management strategy assess*"
+   ],
+   "anchors": [
+    "bycatch",
+    "management",
+    "fisher*",
+    "fishing"
+   ],
+   "threshold": 1,
+   "case_sensitive": [],
+   "proximity": true,
+   "prefix": "d_",
+   "reference_paper": null
+  }
+ ],
+ "featured": [
+  "d_fisheries",
+  "pr_bycatch",
+  "imp_cpue",
+  "gear_longline",
+  "drg_03_capture_cpue",
+  "drg_06_at_vessel_mortality_avm",
+  "drg_10_post_release_mortality_prm",
+  "drg_48_reduce_retention_shark_finning_ban"
+ ]
+}
