@@ -50,6 +50,11 @@ def test_expected_page_length_reads_the_last_range():
     assert expected_page_length({"findspot_raw": "NOAA Technical Report NMFS, 90: 304\u201326"}) == 23
     assert expected_page_length({"journal": "Biological Bulletin, 59, 179-186"}) == 8
     assert expected_page_length({"findspot_raw": "Tokai U. Press"}) is None
+    # plates, figures and a trailing appendix pair must not be mistaken for the page range
+    assert expected_page_length({"findspot_raw": "Verh. Batav. Genoot., 25: 1\u2013164, Pls. 1\u20136. [+ 6 pls. in v. 26, p. 165\u2013166."}) == 166
+    assert expected_page_length({"findspot_raw": "London, vol. 1, pp. i\u2013vii, 1\u201378, pls 1\u201350"}) == 78
+    assert expected_page_length({"findspot_raw": "Gen\u00e8ve, Fick, 1850, pl. 1\u201310."}) is None
+    assert expected_page_length({"findspot_raw": "Gland: 259\u2013260, 262\u2013264"}) == 5
 
 
 def test_whole_volume_is_held_and_an_article_is_not(tmp_path):
