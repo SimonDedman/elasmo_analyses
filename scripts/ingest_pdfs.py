@@ -1351,10 +1351,15 @@ def update_papers_data_json(copied_ids: set, copied_dois: set,
 
     def matched(entry) -> bool:
         lid = str(entry.get("literature_id", "")).strip()
-        if lid and lid in id_lookup:
-            return True  # matched by literature_id
+        if lid:
+            # A row that HAS an id is only ever closed by that id. DOIs are not
+            # paper-unique: BHL volume DOIs (10.5962/bhl.title.*) and meeting-abstract
+            # supplements are shared by sibling papers. On 2026-09-18, filing 28376
+            # also deleted the unfiled 10334 through their shared DOI; 26 DOIs are
+            # shared across 57 queue rows.
+            return lid in id_lookup
         entry_doi = normalise_doi(str(entry.get("doi", "")))
-        return bool(entry_doi and entry_doi in doi_lookup)  # matched by DOI
+        return bool(entry_doi and entry_doi in doi_lookup)  # id-less rows only
 
     with _papers_data_mutate(allow_deletions=True) as data:
         before = len(data)
@@ -1438,6 +1443,41 @@ def update_tracking_dbs(copied_ids: set, pdf_names: dict, timestamp: str, source
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
+def expected_page_length(row: dict) -> int | None:
+    """Printed length of a record from the LAST "a-b" pair in its findspot, else None."""
+    import re as _re
+    spot = str(row.get("findspot_raw") or row.get("journal") or "")
+    pairs = _re.findall(r"(\d{1,4})\s*[\u2013\u2014-]\s*(\d{1,4})", spot)
+    if not pairs:
+        return None
+    a, b = (int(x) for x in pairs[-1])
+    if b < a:  # "304-26"
+        b = int(str(a)[: len(str(a)) - len(str(b))] + str(b))
+    return (b - a + 1) if 0 <= b - a < 600 else None
+
+
+def whole_volume_reason(pdf_path, row: dict) -> str | None:
+    """Why a lid-named staged PDF must be split rather than filed, or None.
+
+    BHL and archive.org fetches are often a whole issue or volume. On 2026-09-18 four such
+    files (101, 66, 148 and 191 pages for records of 11, 27, 6 and 6 pages) passed the
+    identity check, which only reads the opening words, and were filed as single articles.
+    Plates and covers make scans longer than the printed range, hence the generous margin.
+    """
+    want = expected_page_length(row)
+    if not want:
+        return None
+    try:
+        import pymupdf as _mu
+        have = _mu.open(str(pdf_path)).page_count
+    except Exception:  # noqa: BLE001
+        return None
+    if have > 2 * want + 6:
+        return (f"{have} pages staged for a {want}-page record: a whole issue or volume, "
+                f"split the article out (scripts/split_volume_by_pages.py) before filing")
+    return None
+
 
 def load_identity_override(pdf_path: Path, literature_id) -> str | None:
     """Evidence string from ``<lid>.identity.json`` beside a lid-named staged PDF, or None.
@@ -1595,6 +1635,13 @@ def ingest_source(label: str, pdf_paths: list[Path],
                 log_lines.append(f"UNMATCHED: {pdf_path.name} \u2014 {msg}")
                 print(f"  UNMATCHED: {pdf_path.name}")
                 print(f"            Reason: {msg}")
+                continue
+            too_long = whole_volume_reason(pdf_path, lid_row)
+            if too_long and not load_identity_override(pdf_path, lid_row["literature_id"]):
+                unmatched += 1
+                log_lines.append(f"UNMATCHED: {pdf_path.name} \u2014 {too_long}")
+                print(f"  UNMATCHED: {pdf_path.name}")
+                print(f"            Reason: {too_long}")
                 continue
             row = lid_row
             method = (f"literature_id from staged filename "
