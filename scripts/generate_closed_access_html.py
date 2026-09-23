@@ -200,6 +200,7 @@ CSS_EXTRA = """
     .who { color: #7f8c8d; font-size: 0.8em; }
     .paper.done { opacity: 0.45; border-left-color: #95a5a6; }
     .paper.nope { border-left-color: #c0392b; }
+    .paper.lapsed { border-left-color: #f39c12; background: #fffdf6; }
     .paper.nope .title::after { content: "  (you couldn't get this)"; font-weight: normal; color: #922b21; font-size: 0.85em; }
     .toc { background: #fff; padding: 10px 15px; border-radius: 8px; margin: 12px 0; font-size: 0.9em; line-height: 1.8; }
     .toc a { color: #1f618d; margin-right: 12px; white-space: nowrap; }
@@ -216,20 +217,28 @@ JS = """
     let mine = {};
     try { mine = JSON.parse(localStorage.getItem(MINE) || '{}'); } catch (e) {}
     let shared = {};                         // key -> {by, at}, from the shared record
+    // A mark holds a paper for STALE_DAYS. If the paper is still on this page after
+    // that, it was never filed, so it goes back on offer instead of staying locked.
+    const STALE_DAYS = 14;
+    const ageDays = s => { if (!s || !s.at) return null; const t = Date.parse(s.at); return isNaN(t) ? null : Math.floor((Date.now() - t) / 86400000); };
+    const stale = s => { const a = ageDays(s); return a === null || a >= STALE_DAYS; };
     const keyOf = el => el.dataset.key;
     const me = () => localStorage.getItem('eea_username') || 'Anon';
 
     function paint() {
         let done = 0, cant = 0;
         document.querySelectorAll('.paper').forEach(el => {
-            const k = keyOf(el), s = shared[k], m = mine[k];
-            el.classList.toggle('done', !!s || m === 'got');
+            const k = keyOf(el), s = shared[k], m = mine[k], old = s && stale(s);
+            el.classList.toggle('done', (!!s && !old) || m === 'got');
+            el.classList.toggle('lapsed', !!old && m !== 'got');
             el.classList.toggle('nope', m === 'cant' && !s);
-            const w = el.querySelector('.who');
-            w.textContent = s ? ('Marked as got by ' + (s.by || 'someone') + (s.at ? ' on ' + String(s.at).slice(0, 10) : '') + '; not filed yet. If you have it too, drop it in anyway.') : '';
-            el.querySelector('.got').style.display = s ? 'none' : '';
-            el.querySelector('.undo').style.display = s ? '' : 'none';
-            if (s || m === 'got') done++; else if (m === 'cant') cant++;
+            const w = el.querySelector('.who'), a = ageDays(s);
+            w.textContent = !s ? ''
+                : old ? (s.by || 'Someone') + ' marked this ' + (a === null ? 'a while' : a + ' days') + ' ago and it never arrived, so it is free to take.'
+                : 'Marked as got by ' + (s.by || 'someone') + (s.at ? ' on ' + String(s.at).slice(0, 10) : '') + '; not filed yet. If you have it too, drop it in anyway.';
+            el.querySelector('.got').style.display = (s && !old) ? 'none' : '';
+            el.querySelector('.undo').style.display = (s && !old) ? '' : 'none';
+            if ((s && !old) || m === 'got') done++; else if (m === 'cant') cant++;
         });
         document.getElementById('count').textContent = done;
         document.getElementById('cantcount').textContent = cant;

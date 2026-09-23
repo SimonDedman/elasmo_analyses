@@ -34,6 +34,8 @@
         #loading { text-align: center; padding: 30px; font-size: 16px; color: #7f8c8d; }
         tr.clicked-row { opacity: 0.4; }
         tr.clicked-row td { text-decoration: line-through; color: #aaa !important; }
+        tr.stale-row { background: #fff8e1; }   /* marked, never filed: free to take */
+        tr.stale-row td:first-child::after { content: ' (lapsed claim)'; color: #b9770e; font-size: 10px; }
         .btn-clicked { background: #27ae60; color: white; border: none; padding: 2px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; }
         .btn-unclicked { background: #3498db; color: white; border: none; padding: 2px 8px; border-radius: 3px; font-size: 11px; cursor: pointer; }
         .btn-clicked:hover { background: #229954; }
@@ -185,6 +187,9 @@
     var clickedDois = {}, paperData = [], dataTable = null, helperMap = null;
     // Key into the shared record: the DOI, or lid:<literature_id> for rows without one.
     // docs/closed_access/*.html (the download helpers) write the same keys.
+    var STALE_DAYS=14;   // a mark on a paper still in the queue expires after this
+    function markAgeDays(i){ if(!i||!i.at) return null; var t=Date.parse(i.at); return isNaN(t)?null:Math.floor((Date.now()-t)/86400000); }
+    function isStale(i){ var a=markAgeDays(i); return a===null||a>=STALE_DAYS; }
     function keyOf(r){ var d=String((r&&r.doi)||'').trim(); return d||('lid:'+(r&&r.literature_id)); }
 
     function escapeHtml(t) { return t ? String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
@@ -222,16 +227,20 @@
         var live=0;
         if(paperData&&paperData.length){
             var q={};paperData.forEach(function(r){q[keyOf(r).toLowerCase()]=1;});
-            Object.keys(clickedDois).forEach(function(d){if(q[String(d).trim().toLowerCase()])live++;});
+            Object.keys(clickedDois).forEach(function(d){if(q[String(d).trim().toLowerCase()]&&!isStale(clickedDois[d]))live++;});
         }
         $('#stat-clicked').text(live);
         var lowerClicked={};Object.keys(clickedDois).forEach(function(k){lowerClicked[String(k).toLowerCase()]=clickedDois[k];});
         dataTable.rows().every(function(){
             var d=this.data(),doi=keyOf(paperData[this.index()]),n=this.node();
             var hit=clickedDois[doi]||lowerClicked[doi.toLowerCase()];
-            if(hit){$(n).addClass('clicked-row');var i=hit;
+            if(hit&&!isStale(hit)){$(n).addClass('clicked-row').removeClass('stale-row');var i=hit;
                 d[8]='<button class="btn-clicked" onclick="unmarkClicked(\''+escapeAttr(doi)+'\')" title="'+escapeHtml(i.by)+' '+i.at+'">Undo</button>';
-            }else{$(n).removeClass('clicked-row');
+            }else if(hit){ // marked, but the paper is still here: back on offer
+                var a=markAgeDays(hit);
+                $(n).removeClass('clicked-row').addClass('stale-row');
+                d[8]='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(doi)+'\',\''+escapeAttr(d[1])+'\')" title="'+escapeHtml(hit.by||'someone')+' marked this '+(a===null?'a while':a+' days')+' ago and it is still missing, so it is free to take">Retake</button>';
+            }else{$(n).removeClass('clicked-row stale-row');
                 d[8]='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(doi)+'\',\''+escapeAttr(d[1])+'\')">Mark</button>';
             }
             this.data(d);
