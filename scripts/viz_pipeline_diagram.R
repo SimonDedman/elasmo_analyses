@@ -288,7 +288,7 @@ p <- ggplot() +
   ) +
   labs(
     title    = "EEA 2025 Data Panel: Project Pipeline",
-    subtitle = "31,772 papers  |  20,371 PDFs  |  1,747 schema columns  |  29,929 authors"
+    subtitle = "31,772 papers  |  21,253 PDFs  |  1,747 schema columns  |  30,316 authors"
   ) +
   coord_cartesian(xlim = c(0, 20), ylim = c(y_lo, y_hi), expand = FALSE) +
 
