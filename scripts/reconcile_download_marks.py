@@ -38,6 +38,9 @@ OUTSTANDING = {"needs_library", "needs_pdf", "sr_sync_new"}
 # Drop-folder name per hub display name, where they differ.
 FOLDER = {"David RG": "David_RG", "David S": "DavidS", "David Green": "DavidGreen",
           "Jürgen": "Jurgen", "Tobi-Dawne": "Tobi-Dawne"}
+# A drop folder can hold work for a different project, so a high count is not
+# evidence of unfiled paper downloads.
+FOLDER_NOTE = {"Carylanne": "folder holds conference abstract books, not paper downloads"}
 
 
 def key(p):
@@ -104,9 +107,11 @@ def main():
         pubs = Counter(resolve_publisher(p) for p, _ in rows).most_common(3)
         print(f"{who:14s} {len(rows):5d} {max(ages) if ages else 0:6d}d {min(ages) if ages else 0:6d}d  "
               f"{('no folder' if n_drop is None else n_drop):>19}  "
-              + ", ".join(f"{n} {k}" for k, n in pubs))
-    print("\nA person with held papers and an empty drop folder either has PDFs they have not uploaded,")
-    print("or clicked without downloading. Ask; the papers are already back on offer either way.")
+              + ", ".join(f"{n} {k}" for k, n in pubs)
+              + (f"   [{FOLDER_NOTE[who]}]" if who in FOLDER_NOTE else ""))
+    print("\nBefore chasing anyone: check the library first. On 2026-09-23, 83 of Elena's 89 held papers")
+    print("were already filed and verified; her folder was empty because the PDFs had been ingested and")
+    print("removed, and only the queue row stayed open. See scripts/find_queue_rows_already_filed.py.")
 
     if args.csv:
         args.csv.parent.mkdir(parents=True, exist_ok=True)
