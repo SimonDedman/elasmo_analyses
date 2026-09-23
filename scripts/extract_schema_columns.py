@@ -42,6 +42,11 @@ PDF_BASE = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers"
 INPUT_PARQUET = PROJECT_BASE / "outputs/literature_review.parquet"
 OUTPUT_PARQUET = PROJECT_BASE / "outputs/literature_review_enriched.parquet"
 EVIDENCE_CSV = PROJECT_BASE / "outputs/schema_extraction_evidence.csv"
+# literature_id -> library PDF, built by scripts/build_pdf_id_map.py from the
+# filename the library itself generates. This REPLACES resolution by
+# (first-author surname, year), which paired 1,471 papers with another paper's
+# text because a surname and a year are not an identity (measured 2026-09-18).
+PDF_ID_MAP_CSV = PROJECT_BASE / "outputs/pdf_id_map.csv"
 RESUME_FILE = PROJECT_BASE / "outputs/.schema_extraction_progress.json"
 
 TEXT_TIMEOUT = 10  # seconds for pdftotext
@@ -1860,16 +1865,39 @@ def extract_text_from_pdf(pdf_path: Path) -> str | None:
 # These are initialised once per worker via init_worker()
 _COMPILED_SCHEMAS: list[tuple[str, list[CompiledColumn]]] = []
 _PDF_INDEX: dict[tuple[str, int], list[Path]] = {}
+_PDF_BY_ID: dict[str, Path] = {}
 
 
-def init_worker(pdf_index: dict[tuple[str, int], list[Path]]) -> None:
+def load_pdf_id_map(path: Path = PDF_ID_MAP_CSV) -> dict[str, Path]:
+    """{literature_id: pdf} from build_pdf_id_map.py. Empty if it has not been built.
+
+    A paper absent from the map has no PDF as far as extraction is concerned.
+    That is deliberate: the map is the only evidence that ties a file to a
+    record, so "no entry" means "nothing establishes which file is this paper's",
+    not "use whatever else that author published that year".
+    """
+    import csv as _csv
+    out: dict[str, Path] = {}
+    if not path.exists():
+        return out
+    with open(path, newline="") as fh:
+        for row in _csv.DictReader(fh):
+            lid = str(row["literature_id"]).split(".")[0].strip()
+            if lid:
+                out[lid] = Path(row["pdf"])
+    return out
+
+
+def init_worker(pdf_index: dict[tuple[str, int], list[Path]],
+                pdf_by_id: dict[str, Path] | None = None) -> None:
     """Initialise global state for each worker process."""
-    global _COMPILED_SCHEMAS, _PDF_INDEX
+    global _COMPILED_SCHEMAS, _PDF_INDEX, _PDF_BY_ID
     _COMPILED_SCHEMAS = [
         (schema.prefix.rstrip("_"), compile_schema(schema))
         for schema in ALL_SCHEMAS
     ]
     _PDF_INDEX = pdf_index
+    _PDF_BY_ID = pdf_by_id if pdf_by_id is not None else load_pdf_id_map()
 
 
 @dataclass
@@ -2153,16 +2181,13 @@ def process_paper(row_dict: dict[str, Any]) -> dict[str, Any]:
     text_parts: list[str] = []
     pdf_found = False
 
-    if authors and year:
-        surname = _first_surname(authors)
-        if surname:
-            candidates = _PDF_INDEX.get((surname, year), [])
-            best_pdf = _pick_best_pdf(candidates, title)
-            if best_pdf is not None:
-                extracted = extract_text_from_pdf(best_pdf)
-                if extracted:
-                    text_parts.append(extracted)
-                    pdf_found = True
+    # The id map is the only accepted evidence that a file is this paper's.
+    best_pdf = _PDF_BY_ID.get(str(lit_id_for_evidence).split(".")[0]) if _PDF_BY_ID else None
+    if best_pdf is not None and best_pdf.exists():
+        extracted = extract_text_from_pdf(best_pdf)
+        if extracted:
+            text_parts.append(extracted)
+            pdf_found = True
 
     # Only use PDF text — skip papers without PDFs
     full_text = "\n".join(text_parts)
@@ -2413,7 +2438,7 @@ def main() -> None:
 
     if n_workers <= 1:
         # Single-process mode (easier debugging)
-        init_worker(pdf_index)
+        init_worker(pdf_index, load_pdf_id_map())
         for row in tqdm(rows, desc="Extracting", unit="paper"):
             results.append(process_paper(row))
     else:
