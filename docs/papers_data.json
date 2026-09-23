@@ -225618,27 +225618,6 @@
   "findspot_raw": "Natuurkundig Tijdschrift voor Nederlandsch Indië, 11, 383–414"
  },
  {
-  "id": 11914,
-  "literature_id": "12017",
-  "year": 1838,
-  "authors": "Bonaparte, C.L. (1838)",
-  "title": "Selachorum tabula analytica, Systema Ichthyologicum.",
-  "journal": "Memoires de la Societe Neuchateloise des Sciences Naturelles, 2: 1–16",
-  "doi": "10.5169/seals-100091",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: https://retro.seals.ch/digbib/fr/view?rid=mem-001:1839:2::23&id=hitlist",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Other (10.5169)",
-  "findspot_raw": "Memoires de la Societe Neuchateloise des Sciences Naturelles, 2: 1–16",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true
- },
- {
   "id": 11915,
   "literature_id": "36110",
   "year": 2026,
