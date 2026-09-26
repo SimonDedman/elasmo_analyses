@@ -56817,7 +56817,7 @@
   "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
-  "notes": "triage 2026-09-17 track C: Ichthyolith Issues 2008 (title_abstract_marker)",
+  "notes": "triage 2026-09-17 track C: Ichthyolith Issues 2008 (title_abstract_marker) Duplicate of literature_id 2414 (same title, same PDF).",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -56827,7 +56827,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Ichthyolith Issues, Special Publication, 11, 20–21",
-  "triage": "conference_abstract"
+  "triage": "conference_abstract",
+  "merged_into": "2414"
  },
  {
   "id": 2972,
@@ -228564,25 +228565,6 @@
   "findspot_raw": "Fisheries Research, 300, Article 107804",
   "cascade_stage": "needs_library",
   "cascade_checked": true
- },
- {
-  "id": 12100,
-  "literature_id": "2932",
-  "year": 1915,
-  "authors": "Ogilby, J.D. (1915)",
-  "title": "Ichthyological notes.",
-  "journal": "Memoirs of the Queensland Museum, 3, 90–93",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "sr_sync_new",
-  "notes": "Added by SR sync. PDF URL: ",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "",
-  "findspot_raw": "Memoirs of the Queensland Museum, 3, 90–93"
  },
  {
   "id": 12102,

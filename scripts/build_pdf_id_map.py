@@ -49,6 +49,7 @@ import extract_schema_columns as X  # noqa: E402
 from sync_shark_references import build_pdf_path  # noqa: E402
 
 OUT = ROOT / "outputs" / "pdf_id_map.csv"
+MERGED = ROOT / "outputs" / "merged_records.csv"   # duplicate records, marked by merge_duplicate_records.py
 CONFLICTS = ROOT / "outputs" / "pdf_id_map_conflicts.csv"
 COVERAGE = ROOT / "outputs" / "pdf_id_map_coverage.json"
 
@@ -99,7 +100,15 @@ def main():
     df = df[df.literature_id.notna()]
     records = [{"lid": str(r.literature_id).split(".")[0], "title": r.title, "authors": r.authors,
                 "year": r.year} for r in df.itertuples()]
-    print(f"corpus records: {len(records):,}")
+    # A record marked as a duplicate of another does not compete for the file: its
+    # canonical twin takes it, and the conflict disappears instead of being guessed.
+    merged = {}
+    if MERGED.exists():
+        with open(MERGED, newline="") as fh:
+            merged = {r["literature_id"]: r["merged_into"] for r in csv.DictReader(fh)}
+    before = len(records)
+    records = [r for r in records if r["lid"] not in merged]
+    print(f"corpus records: {before:,}" + (f" ({len(merged):,} set aside as duplicates of another record)" if merged else ""))
 
     lib_by_squash, lib_by_surname_year, n_files = {}, defaultdict(list), 0
     for root, _, files in os.walk(X.PDF_BASE):
