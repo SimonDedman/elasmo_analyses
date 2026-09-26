@@ -29,7 +29,7 @@ The work began as a panel session at the **European Elasmobranch Association (EE
 | Papers catalogued | ~31,770 |
 | PDF files on disk | ~21,250 |
 | Extraction columns | ~1,740 total; 127 binary across the 6 core schemas |
-| Evidence rows (audit trail) | ~260,700 across ~17,900 papers |
+| Evidence rows (audit trail) | ~271,400 across ~18,600 papers |
 | Unique authors (OpenAlex) | ~30,300 |
 | Species columns | ~1,300 |
 | Techniques in taxonomy | 215 |

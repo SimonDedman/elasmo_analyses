@@ -60,8 +60,14 @@ Column families:
   `outputs/pdf_id_map.csv`, built by inverting the library's own naming function,
   and a paper with no entry there has no PDF. 47,304 evidence rows taken from the
   wrong paper were removed and 4,697 correct ones added, so the count went
-  303,329 -> 260,734, across 17,867 papers rather than 20,642. Do not restore the
-  old figure.
+  303,329 -> 260,734. Do not restore the old figure.
+- **The score is no longer rounded before the threshold comparison** (2026-09-25).
+  `round()` is half-to-even, so a weighted total of 1.5 met a threshold of 2 while
+  2.5 failed a threshold of 3: every threshold sat half a point lower, and
+  inconsistently. Measured over the 40 fisheries columns, 6.1% of qualifying
+  decisions existed only because of it (`gear_hook_line` 21.5%, `d_fisheries`
+  12.9%). The evidence table now stores the unrounded weighted total, so
+  `total_freq` is a float and a third of its rows carry a fraction.
 
 - **"123 extraction columns" is retired.** It counted the original six binary
   schemas before sub-basins landed. The six-schema binary set is now **127**
