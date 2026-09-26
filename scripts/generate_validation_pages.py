@@ -214,7 +214,8 @@ def load_evidence(all_lit_ids: set[str]) -> dict[str, dict[str, list[dict]]]:
         ev_entry = {
             "matched_terms": str(row.matched_terms) if pd.notna(row.matched_terms) else "",
             "section": str(row.section) if pd.notna(row.section) else "",
-            "total_freq": str(row.total_freq),
+            # unrounded weighted total since 2026-09-25: trim a trailing .0
+            "total_freq": (f"{float(row.total_freq):g}" if str(row.total_freq).strip() else ""),
             "threshold": str(row.threshold),
             "context": str(row.context) if pd.notna(row.context) else "",
         }

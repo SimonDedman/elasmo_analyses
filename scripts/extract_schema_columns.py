@@ -1905,7 +1905,7 @@ class MatchResult:
     """Result of matching a single column against text."""
 
     binary: int                    # 0 or 1
-    total_freq: int                # weighted mention count (after SW fix)
+    total_freq: float              # weighted mention count, UNROUNDED (2026-09-25)
     raw_freq: int                  # SW fix: unweighted mention count for audit
     term_count: int                # number of distinct terms that fired
     matched_terms: list[str]       # which search terms fired (with frequency)
@@ -2108,8 +2108,16 @@ def _match_column(
         if total_freq < 0:
             total_freq = 0.0
 
-    # SW fix: round weighted total to nearest integer for threshold comparison
-    total_freq_int = round(total_freq) if use_section_weights else int(total_freq)
+    # NO ROUNDING (Simon, 2026-09-25). The weighted total is compared with the
+    # threshold as it stands. Until now it was passed through round(), which is
+    # half-to-even in Python, so a total of 1.5 met a threshold of 2 while 2.5
+    # failed a threshold of 3: every threshold was effectively half a point lower,
+    # inconsistently, and nobody had chosen that. Measured before the change: 6.1%
+    # of qualifying decisions across the 40 fisheries columns existed only because
+    # of the rounding (d_fisheries 12.9%, gear_hook_line 21.5%).
+    # The value is kept as a float so the evidence table records what was actually
+    # compared, rather than a rounded shadow of it.
+    total_weighted = round(total_freq, 2) if use_section_weights else int(total_freq)
 
     term_count = len(fired_terms)
     # Format matched_terms with frequency: "marine(12); ocean(5)"
@@ -2129,14 +2137,14 @@ def _match_column(
     if col.anchors and not fired_anchors:
         # Anchors defined but none fired — reject regardless of frequency
         binary = 0
-    elif total_freq_int >= col.threshold:
+    elif total_weighted >= col.threshold:
         binary = 1
     else:
         binary = 0
 
     return MatchResult(
         binary=binary,
-        total_freq=total_freq_int,
+        total_freq=total_weighted,
         raw_freq=raw_freq_total,
         term_count=term_count,
         matched_terms=matched_terms_str,
