@@ -745,22 +745,14 @@ def extract_first_author(authors: str) -> str:
 
 
 def build_pdf_path(paper: dict) -> Path:
-    """Build the target PDF path following library convention."""
-    author = extract_first_author(paper.get("authors", ""))
-    year = paper.get("year")
-    try:
-        year_str = str(int(year))
-    except (TypeError, ValueError):
-        year_str = "Unknown"
+    """Target path for this record, per scripts/lib/library_naming.py.
 
-    title = clean_for_filename(paper.get("title", ""), max_len=60)
-    has_multi = "&" in str(paper.get("authors", ""))
-    if has_multi:
-        filename = f"{author}.etal.{year_str}.{title}.pdf"
-    else:
-        filename = f"{author}.{year_str}.{title}.pdf"
-
-    return PDF_BASE / year_str / filename
+    That module is the single definition, because build_pdf_id_map.py regenerates
+    this name to decide which file belongs to which paper: two copies of the rule
+    means the map stops finding files the moment they drift.
+    """
+    from lib.library_naming import build_pdf_path as _build
+    return _build(paper, base=PDF_BASE)
 
 
 def validate_pdf(filepath: Path, log) -> bool:

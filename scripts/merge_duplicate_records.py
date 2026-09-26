@@ -40,6 +40,10 @@ import extract_schema_columns as X  # noqa: E402
 from lib.papers_data_io import mutate  # noqa: E402
 
 CONFLICTS = ROOT / "outputs" / "pdf_id_map_conflicts.csv"
+# resolve_filename_collisions.py opens each shared file and can tell a series apart
+# from the same paper catalogued twice; its "same paper" verdicts are merges too,
+# and they catch the pairs whose titles were transcribed differently.
+RESOLVED = ROOT / "outputs" / "filename_collisions_resolved.csv"
 OUT = ROOT / "outputs" / "merged_records.csv"
 
 
@@ -66,7 +70,13 @@ def main():
     df = pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id", "title", "year", "authors", "doi"])
     meta = {str(r.literature_id).split(".")[0]: r for r in df.itertuples()}
 
+    # the file is the record of every merge ever marked, not just this run's: once a
+    # duplicate is set aside it stops appearing in the conflicts list, so rewriting
+    # from scratch would quietly un-merge everything decided earlier.
     merges, mixed = [], []
+    if OUT.exists():
+        merges = [dict(r) for r in csv.DictReader(open(OUT))]
+        print(f"already marked in {OUT.name}: {len(merges):,}")
     for row in csv.DictReader(open(CONFLICTS)):
         ids = [i for i in row["literature_ids"].split(";") if i]
         known = [i for i in ids if i in meta]
@@ -74,7 +84,8 @@ def main():
             continue
         titles = {squash(meta[i].title)[:args.title_chars] for i in known}
         dois = {str(meta[i].doi or "").strip().lower() for i in known if str(meta[i].doi or "").strip()}
-        if len(titles) == 1:
+        already = {m["literature_id"] for m in merges}
+        if len(titles) == 1 and not set(known) & already:
             canon = sorted(known, key=lid_key)[0]
             why = "same title" + (", same DOI" if len(dois) == 1 and dois else "")
             for i in known:
@@ -84,6 +95,21 @@ def main():
                                    "pdf": row["pdf"]})
         else:
             mixed.append((row["pdf"], known, [(i, (meta[i].title or "")[:70]) for i in known]))
+
+    if RESOLVED.exists():
+        seen = {m["literature_id"] for m in merges}
+        extra = 0
+        for r in csv.DictReader(open(RESOLVED)):
+            if not r["verdict"].startswith("same paper, keep "):
+                continue
+            keep = r["verdict"].rsplit(" ", 1)[1]
+            lid = r["literature_id"]
+            if lid != keep and lid not in seen and lid in meta:
+                merges.append({"literature_id": lid, "merged_into": keep,
+                               "title": (meta[lid].title or "")[:120],
+                               "why": "same paper, titles transcribed differently", "pdf": r["pdf"]})
+                seen.add(lid); extra += 1
+        print(f"from the collision resolver: {extra:,} further duplicate records")
 
     print(f"conflict files: {sum(1 for _ in csv.DictReader(open(CONFLICTS))):,}")
     print(f"  duplicate records to mark: {len(merges):,} (keeping {len({m['merged_into'] for m in merges}):,} canonical records)")
