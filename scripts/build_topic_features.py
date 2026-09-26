@@ -225,7 +225,7 @@ def work(row):
 # Scoring (the reference implementation the browser mirrors)
 # ---------------------------------------------------------------------------
 def score(counts_by_term, col, weights):
-    """round(sum count*weight) and the anchor gate, as _match_column does."""
+    """sum(count*weight) and the anchor gate, as _match_column does (unrounded since 2026-09-25)."""
     total = 0.0
     fired = set()
     for tid in col["term_ids"]:
@@ -235,13 +235,14 @@ def score(counts_by_term, col, weights):
                 fired.add(tid)
                 total += n * weights.get(SECTIONS[s], 0.25)
     anchors_ok = (not col["anchor_ids"]) or any(counts_by_term.get(a) for a in col["anchor_ids"])
-    return round(total), bool(fired), anchors_ok
+    return round(total, 2), bool(fired), anchors_ok
 
 
 def control(topic_dir, live):
     ev = pd.read_csv(X.EVIDENCE_CSV, low_memory=False, usecols=["literature_id", "column", "binary", "total_freq"])
     ev = ev[ev.column.isin(live)].drop_duplicates(["literature_id", "column"], keep="last")
-    truth = {(str(r.literature_id), r.column): (int(r.binary), int(r.total_freq)) for r in ev.itertuples()}
+    # total_freq is the UNROUNDED weighted total as of 2026-09-25
+    truth = {(str(r.literature_id), r.column): (int(r.binary), float(r.total_freq)) for r in ev.itertuples()}
     rep = {c: {"compared": 0, "binary_agree": 0, "score_agree": 0, "only_in_evidence": 0, "only_here": 0,
                "skipped_prerequisites": bool(live[c]["prerequisites"])} for c in live}
     seen = set()
@@ -254,6 +255,7 @@ def control(topic_dir, live):
             by_term.setdefault(ti, []).append((s, raw, prox))
         for c, col in live.items():
             sc, fired, anchors_ok = score(by_term, col, X._SECTION_WEIGHTS.get(col["prefix"], {}))
+            sc = round(sc, 2)
             key = (str(p["lid"]), c)
             if not fired:
                 continue
@@ -264,7 +266,7 @@ def control(topic_dir, live):
             b = int(anchors_ok and sc >= col["threshold"])
             rep[c]["compared"] += 1
             rep[c]["binary_agree"] += int(b == truth[key][0])
-            rep[c]["score_agree"] += int(sc == truth[key][1])
+            rep[c]["score_agree"] += int(abs(sc - truth[key][1]) < 0.01)
     for key in truth:
         if key not in seen:
             rep[key[1]]["only_in_evidence"] += 1

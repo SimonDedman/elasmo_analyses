@@ -229,7 +229,7 @@ const myLab = lid => (S.labels[S.rule.id] || {})[lid];
 function ruleParams(r){
   const W = META.sections.map(s => (META.section_weights[r.prefix] || {})[s] ?? .25);
   const tw = {}; r.term_ids.forEach(t => tw[t] = 1);
-  return { theta:r.threshold, W, tw, prox:!!r.proximity, gate:r.anchor_ids.length > 0, anchors:[...r.anchor_ids], round:true };
+  return { theta:r.threshold, W, tw, prox:!!r.proximity, gate:r.anchor_ids.length > 0, anchors:[...r.anchor_ids], round:false };
 }
 const clone = p => ({ theta:p.theta, W:[...p.W], tw:{...p.tw}, prox:p.prox, gate:p.gate, anchors:[...p.anchors], round:p.round });
 function scoreOf(p, R){
@@ -477,7 +477,7 @@ function paperHTML(p, big){
   };
 
   /* the score strip: threshold underlined, this paper's rounded score in bold */
-  const hi = Math.max(R.theta + 2, Math.ceil(p.s) + 1, 5), mine = pyRound(p.s);
+  const hi = Math.max(R.theta + 2, Math.ceil(p.s) + 1, 5), mine = R.round ? pyRound(p.s) : Math.floor(p.s);
   const strip = Array.from({length: hi + 1}, (_, n) => {
     const isT = n === R.theta, isP = n === mine;
     return `<span class="sc ${isT ? 'thr' : ''} ${isP ? 'got' : ''}" title="${isT && isP ? 'this paper sits exactly on the threshold' : isT ? 'threshold' : isP ? "this paper's score" : ''}">${n}${n === hi ? '+' : ''}</span>`;
@@ -490,13 +490,14 @@ function paperHTML(p, big){
     : '<h3>Anchor words</h3><p class="note-sm">This rule has none, so nothing gates it besides the score.</p>';
 
   const rounding = Math.abs(p.s - mine) > 1e-9
-    ? ` The weighted total is ${trim(p.s)}, which the extractor rounds to <b>${mine}</b> before comparing. Rounding is half-to-even, so 1.5 and 2.5 both become 2, and a paper below the threshold on the raw total can still qualify.`
+    ? ` The weighted total is ${trim(p.s)}, which this view is rounding to <b>${mine}</b> before comparing because the "round the score" box is ticked. The extractor stopped doing that on 2026-09-25: it compares the total as it stands.`
     : '';
+  const shown = R.round ? mine : trim(p.s);
   const verdict = p.in
-    ? `<b class="yes">Qualifies</b>: rounded score ${mine} reaches the threshold of ${R.theta}${R.gate ? ', and an anchor word is present' : ''}.`
+    ? `<b class="yes">Qualifies</b>: score ${shown} reaches the threshold of ${R.theta}${R.gate ? ', and an anchor word is present' : ''}.`
     : (R.gate && !p.a)
-      ? `<b class="no">Does not qualify</b>: no anchor word appears anywhere in the paper, so the rule cannot fire (its score is ${mine}).`
-      : `<b class="no">Does not qualify</b>: rounded score ${mine} is below the threshold of ${R.theta}.`;
+      ? `<b class="no">Does not qualify</b>: no anchor word appears anywhere in the paper, so the rule cannot fire (its score is ${shown}).`
+      : `<b class="no">Does not qualify</b>: score ${shown} is below the threshold of ${R.theta}.`;
 
   return `<${big ? 'h2' : 'h3'}>${esc(P[1])}</${big ? 'h2' : 'h3'}>
     <div class="sub" style="color:var(--ink2);font-size:13px">${esc(P[3])} ${P[2] ?? ''} &middot; ${esc(P[4])} &middot; id ${esc(P[0])}${P[5] ? ` &middot; <a href="https://doi.org/${esc(P[5])}" target="_blank" rel="noopener">DOI</a>` : ''}</div>
@@ -547,7 +548,7 @@ function drawRule(){
     <p>Every change re-scores all ${fmt(S.RP.length)} papers here in the browser. Nothing is written to the corpus until a proposal is accepted.</p>
     <span class="inl ${R.theta !== B.theta ? 'changed' : ''}">Threshold <input type="number" id="theta" value="${R.theta}" min="1" max="30" step="1" style="width:60px"></span>
     <label class="inl ${R.prox !== B.prox ? 'changed' : ''}" title="Count a mention only when a shark or ray term is within one sentence"><input type="checkbox" id="prox" ${R.prox ? 'checked' : ''}> elasmobranch proximity</label>
-    <label class="inl ${R.round !== B.round ? 'changed' : ''}" title="The extractor rounds the weighted score half-to-even before comparing, so 1.5 passes a threshold of 2 but 2.5 fails a threshold of 3"><input type="checkbox" id="round" ${R.round ? 'checked' : ''}> round like the extractor</label>
+    <label class="inl ${R.round !== B.round ? 'changed' : ''}" title="Retired 2026-09-25: the extractor used to round the weighted score half-to-even before comparing, so 1.5 met a threshold of 2 while 2.5 failed a threshold of 3. It now compares the total as it stands. Tick this only to see what the old behaviour did."><input type="checkbox" id="round" ${R.round ? 'checked' : ''}> round the score (retired)</label>
     <button id="resetRule">Reset to live rule</button>
     <h3>Section weights</h3><div class="wgrid">${META.sections.map((s, i) => `<label>${s.replace(/_/g, ' ').toLowerCase()}${wsel(R.W[i], R.W[i] !== B.W[i] ? 'changed' : '', `data-w="${i}"`)}</label>`).join('')}</div>
     ${anchors}
