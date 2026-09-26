@@ -26,7 +26,11 @@ a{color:inherit}
 table{border-collapse:collapse;width:100%;font-size:13px}
 th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--grid);white-space:nowrap}
 th{white-space:normal;vertical-align:bottom}
-th{color:var(--ink2);font-weight:600;cursor:pointer;position:sticky;top:0;background:var(--surface)}
+th{color:var(--ink2);font-weight:600;cursor:pointer;background:var(--surface)}
+tr.hdr th{position:sticky;top:0;z-index:1}
+td .kwlist{font-size:11px;color:var(--muted);white-space:normal;max-width:430px;margin-top:2px;line-height:1.35}
+td .kwlist .anch{color:var(--seq)}
+.cardx .does{display:block;margin-top:6px;color:var(--ink2);font-size:12.5px}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
 tr.grp td{background:var(--page);font-weight:650;color:var(--ink2)}
 .bar{display:inline-block;height:9px;border-radius:3px;background:var(--seq);vertical-align:middle;margin-right:6px}
@@ -82,16 +86,40 @@ function draw(){
   document.getElementById('lede').innerHTML = `A mock-up, built ${esc(M.built)} on the real corpus. The per-author pages ask "is my paper coded correctly?". These ask the complementary question, one concept at a time: "of every paper the corpus holds, which are genuinely about <i>this</i>?" The answers become a gold-standard list per concept, tied to the expert who made it, and the rules are then fitted to the list.`;
   const R = `./review.html?topic=${TOPIC}`;
   const sc = [
-    ['A', 'Ladder with the rule lab', 'Papers ordered by score with the threshold drawn in the list. Drag, shift-click, "all above is IN". The Rule tab edits keywords, weights and threshold, and the line moves as you type.', `${R}&rule=d_fisheries`],
-    ['B', 'Judge-only ladder', 'The same list with the rule lab removed. The reviewer only judges; the rule fitting is ours to run afterwards.', `${R}&rule=d_fisheries&mode=judge`],
-    ['C', 'Margin queue', 'One paper per card, closest to the line first, with every fifth card a random spot check from far above or below it, so "the top is surely IN" is measured instead of assumed.', `${R}&rule=d_fisheries&view=queue`],
-    ['C2', 'Margin queue, blind', 'As C, but the score, the stratum, and the Fable verdict are hidden, so the expert is not steered by the machine opinion they are there to check.', `${R}&rule=d_fisheries&view=queue&blind=1&mode=judge`],
-    ['D', 'Optimiser on real labels', 'Loads the 1,641 papers Fable has read as stand-in labels, runs the search, and shows the proposed rule with held-out accuracy and the best single changes.', `${R}&rule=d_fisheries&demo=opt`],
-    ['E', 'A rule edit and what it moves', 'Threshold raised by one and the keyword "retention" dropped: the list filters to exactly the papers that cross the line.', `${R}&rule=d_fisheries&demo=edit`],
-    ['F', 'A proposed rule that has never been run', 'David\'s "Capture: CPUE" keywords and anchors, scored on the corpus for the first time, next to the live imp_cpue column it would replace.', `${R}&rule=drg_03_capture_cpue`],
-    ['G', 'Second reviewer', 'Export your labels from any scenario, switch reviewer, Import the file, then choose "reviewers disagree": only the conflicts are left to discuss.', `${R}&rule=pr_bycatch&who=Guuske`],
+    ['A', 'Ladder with the rule lab',
+     'Every paper that mentions a keyword, ordered by score, with the threshold drawn as a black bar inside the list. The page opens at that bar.',
+     'You judge papers near the bar; the Rule tab lets you edit keywords, section weights and the threshold, and the bar moves as you type.',
+     `${R}&rule=d_fisheries`],
+    ['B', 'Judge-only ladder',
+     'The same ordered list with the rule lab removed.',
+     'You only say IN or OUT. Fitting the rule to your answers is our job afterwards, not yours.',
+     `${R}&rule=d_fisheries&mode=judge`],
+    ['C', 'Margin queue',
+     'One paper per card, closest to the threshold first, with the full keyword evidence beneath it.',
+     'Answer IN, OUT or unsure with one key. Every fifth card is a random paper from far above or far below the line, so "the top is obviously right" gets measured rather than assumed.',
+     `${R}&rule=d_fisheries&view=queue`],
+    ['C2', 'Margin queue, blind',
+     'Scenario C with the score, the stratum and the machine verdict hidden.',
+     'You judge the paper on its own evidence. Use this for labels that will be treated as gold, since nothing steers you toward the rule you are checking.',
+     `${R}&rule=d_fisheries&view=queue&blind=1&mode=judge`],
+    ['D', 'Optimiser on real labels',
+     'The 1,641 papers Fable has already read are loaded as stand-in labels, and a search fits the rule to them.',
+     'Nothing to judge here: look at whether the proposed rule beats the live one on held-out papers, and at which single change helps most.',
+     `${R}&rule=d_fisheries&demo=opt`],
+    ['E', 'A rule edit and what it moves',
+     'Opens on the Rule tab with two edits already made: the threshold raised by one, and the keyword "retention" dropped.',
+     'Watch the list: it is filtered to exactly the papers that cross the line because of those edits. This is what a champion does when a keyword is misfiring.',
+     `${R}&rule=d_fisheries&demo=edit&panel=rule`],
+    ['F', 'A proposed rule that has never been run',
+     'David\'s "Capture: CPUE" proposal from his keyword workbook (CPUE, BPUE, catch rate*, hooking rate*, plus anchors bycatch / fisher* / effort / gear), scored on the corpus for the first time.',
+     'Compare it with the live imp_cpue column it would replace: 1,018 papers qualify under his wording. Judge whether that set is what "capture rate" should mean.',
+     `${R}&rule=drg_03_capture_cpue&panel=rule`],
+    ['G', 'Second reviewer',
+     'Two people labelling the same concept independently.',
+     'Export your labels, switch the reviewer name, import the other person\'s file, then choose "reviewers disagree" in Show: only the conflicts are left to discuss.',
+     `${R}&rule=pr_bycatch&who=Guuske`],
   ];
-  document.getElementById('scen').innerHTML = sc.map(x => `<a class="cardx" href="${x[3]}"><i>Scenario ${x[0]}</i><b>${x[1]}</b><span>${x[2]}</span></a>`).join('');
+  document.getElementById('scen').innerHTML = sc.map(x => `<a class="cardx" href="${x[4]}"><i>Scenario ${x[0]}</i><b>${x[1]}</b><span>${x[2]}</span><span class="does"><b>What you do:</b> ${x[3]}</span></a>`).join('');
   document.getElementById('cov').innerHTML = [[c.rows_in_scope, 'corpus rows in scope'], [c.ok, 'with readable PDF text'], [c.no_pdf, 'no PDF resolved'], [c.no_text, 'PDF with no text'], [c.suspect_text, 'flagged: text from another paper'], [M.vocab.length, 'keywords and anchors counted']]
     .map(([n, l]) => `<div><b>${fmt(n)}</b><span>${l}</span></div>`).join('');
   const ctl = Object.entries(M.control || {}), comp = ctl.reduce((a, [, v]) => a + v.compared, 0), agree = ctl.reduce((a, [, v]) => a + v.binary_agree, 0);
@@ -107,10 +135,13 @@ function drawTable(){
   if (sortKey) rows.sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
   const max = Math.max(...rows.map(r => r.papers_with_hit));
   const cols = [['label', 'rule', 0], ['threshold', 'thr', 1], ['n_terms', 'keywords', 1], ['n_anchors', 'anchors', 1], ['papers_with_hit', 'papers with a mention', 1], ['papers_in', 'qualify', 1], ['margin', 'margin', 1], ['anchor_gate_fails', 'fail anchor gate', 1], ['fable_in', 'Fable IN', 1], ['mins', 'est. minutes', 1]];
-  let html = `<tr>${cols.map(c => `<th class="${c[2] ? 'n' : ''}" data-k="${c[0]}">${c[1]}</th>`).join('')}<th>champion</th><th>checker</th></tr>`, g = null;
+  const headRow = cs => `<tr class="hdr">${cs.map(c => `<th class="${c[2] ? 'n' : ''}" data-k="${c[0]}">${c[1]}</th>`).join('')}<th>champion</th><th>checker</th></tr>`;
+  let html = headRow(cols), g = null;
   for (const r of rows){
-    if (!sortKey && r.group !== g){ g = r.group; html += `<tr class="grp"><td colspan="12">${esc(g)}</td></tr>`; }
-    html += `<tr><td><a href="./review.html?topic=${TOPIC}&rule=${encodeURIComponent(r.id)}">${esc(r.label)}</a> ${F.has(r.id) ? '<span class="chip">snippets</span>' : ''}</td><td class="n">${r.threshold}</td><td class="n">${r.n_terms}</td><td class="n">${r.n_anchors}</td>
+    if (!sortKey && r.group !== g){ g = r.group;
+      html += `<tr class="grp"><td colspan="12">${esc(g)}</td></tr>` + headRow(cols); }
+    html += `<tr><td><a href="./review.html?topic=${TOPIC}&rule=${encodeURIComponent(r.id)}">${esc(r.label)}</a> ${F.has(r.id) ? '<span class="chip">snippets</span>' : ''}`
+      + (r.terms && r.terms.length ? `<div class="kwlist">${esc(r.terms.join(', '))}${r.anchors && r.anchors.length ? `<br><span class="anch">anchors: ${esc(r.anchors.join(', '))}</span>` : ''}</div>` : '') + `</td><td class="n">${r.threshold}</td><td class="n">${r.n_terms}</td><td class="n">${r.n_anchors}</td>
       <td class="n"><span class="bar" style="width:${Math.round(70 * r.papers_with_hit / max)}px"></span>${fmt(r.papers_with_hit)}</td><td class="n">${fmt(r.papers_in)}</td><td class="n">${fmt(r.margin)}</td><td class="n">${fmt(r.anchor_gate_fails)}</td><td class="n">${r.kind === 'live' ? fmt(r.fable_in) : ''}</td><td class="n">${fmt(r.mins)}</td><td style="color:var(--muted)">unassigned</td><td style="color:var(--muted)">unassigned</td></tr>`;
   }
   const t = document.getElementById('rules'); t.innerHTML = html;

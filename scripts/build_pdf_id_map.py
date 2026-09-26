@@ -90,6 +90,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--cover", type=float, default=0.85)
     ap.add_argument("--verify", type=int, default=0, help="open this many mapped PDFs and check the title on pages 1-2")
+    ap.add_argument("--compare-old-matcher", action="store_true",
+                    help="also report how the map differs from the retired surname+year matcher (slow)")
     ap.add_argument("--out", type=Path, default=OUT)
     args = ap.parse_args()
 
@@ -161,28 +163,34 @@ def main():
     print(f"files claimed by more than one record: {len(conflicts):,} "
           f"(covering {sum(len(c) for c in conflicts.values()):,} records)")
 
-    # what the CURRENT extractor would do, for comparison
-    idx = X.build_pdf_index(X.PDF_BASE)
-    old = {}
-    for rec in records:
-        sur = X._first_surname(rec["authors"])
-        try:
-            yr = int(rec["year"])
-        except (TypeError, ValueError):
-            continue
-        if not sur:
-            continue
-        best = X._pick_best_pdf(idx.get((sur, yr), []), rec["title"] or "")
-        if best is not None:
-            old[rec["lid"]] = str(best)
+    # Diff against the PREVIOUS map, which is what extraction actually used, so the
+    # change list is exactly the set of rows that need re-extracting. (The retired
+    # surname+year matcher is only interesting on a first build: --compare-old-matcher.)
+    if args.compare_old_matcher:
+        idx = X.build_pdf_index(X.PDF_BASE)
+        old = {}
+        for rec in records:
+            sur = X._first_surname(rec["authors"])
+            try:
+                yr = int(rec["year"])
+            except (TypeError, ValueError):
+                continue
+            if sur and X._pick_best_pdf(idx.get((sur, yr), []), rec["title"] or "") is not None:
+                old[rec["lid"]] = str(X._pick_best_pdf(idx.get((sur, yr), []), rec["title"] or ""))
+    else:
+        old = {}
+        if args.out.exists():
+            with open(args.out, newline="") as fh:
+                old = {r["literature_id"]: r["pdf"] for r in csv.DictReader(fh)}
+    label = "the retired surname+year matcher" if args.compare_old_matcher else "the previous map"
     same = sum(1 for lid, (p, _) in resolved.items() if old.get(lid) == p)
     changed = {lid: (old.get(lid), p) for lid, (p, _) in resolved.items() if old.get(lid) != p}
     lost = {lid: old[lid] for lid in old if lid not in resolved}
-    print(f"\nagainst the current surname+year matcher:")
-    print(f"  identical assignment: {same:,}")
-    print(f"  different PDF now:    {len(changed):,}")
-    print(f"  had a PDF, now none:  {len(lost):,}  (no filename evidence ties them to a file)")
-    print(f"  had none, now mapped: {sum(1 for lid in resolved if lid not in old):,}")
+    print(f"\nagainst {label}" + (" (none on disk: first build, everything counts as new)" if not old else "") + ":")
+    print(f"  unchanged:            {same:,}")
+    print(f"  different PDF now:    {len([1 for lid, (o, n) in changed.items() if o]):,}")
+    print(f"  had a PDF, now none:  {len(lost):,}")
+    print(f"  newly mapped:         {len([1 for lid, (o, n) in changed.items() if not o]):,}")
 
     verified = unverified = 0
     if args.verify:

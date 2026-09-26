@@ -92,6 +92,24 @@ tr.changed td:first-child{box-shadow:inset 3px 0 0 var(--silver)}
 .wgrid select.changed,.inl.changed{box-shadow:0 0 0 2px var(--silver)}
 .inl{display:inline-flex;gap:6px;align-items:center;margin-right:14px}
 .note{font-size:12px;color:var(--ink2);border-left:3px solid var(--unsure);padding:4px 8px;margin:8px 0;background:var(--margin-bg)}
+.note-sm{font-size:11.5px;color:var(--ink2);margin:4px 0 8px}
+.tabnote{font-size:12px;color:var(--ink2);background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--silver);border-radius:6px;padding:6px 9px;margin:0 0 10px}
+table.kw th{font-weight:600}
+table.kw td:first-child{max-width:230px;overflow:hidden;text-overflow:ellipsis}
+table.kw tr.absent td{color:var(--muted)}
+table.kw tr.off td:first-child{text-decoration:line-through}
+table.kw td.zero{color:var(--muted)}
+table.kw tr.tot td{border-top:2px solid var(--axis);border-bottom:0}
+table.kw .lost{color:var(--out);font-size:10px;margin-left:2px}
+table.kw sub{color:var(--muted);font-weight:400}
+.muted{color:var(--muted)}
+b.yes{color:var(--in)}b.no{color:var(--out)}
+.strip{margin:8px 0;font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.scwrap{display:inline-flex;gap:2px}
+.sc{min-width:20px;text-align:center;border:1px solid var(--grid);border-radius:4px;padding:1px 4px;font-variant-numeric:tabular-nums;background:var(--surface)}
+.sc.thr{text-decoration:underline;text-underline-offset:2px;border-color:var(--ink2)}
+.sc.got{font-weight:700;color:var(--ink);border-color:var(--silver);background:var(--sel-bg)}
+.legend-sm{font-size:11px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}
 #toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--page);border-radius:8px;padding:8px 14px;display:none;gap:12px;align-items:center;z-index:9}
 #toast button{background:transparent;color:inherit;border-color:currentColor}
 #tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--page);font-size:12px;border-radius:6px;padding:4px 8px;display:none;z-index:9}
@@ -182,6 +200,10 @@ const Q = new URLSearchParams(location.search);
 const TOPIC = Q.get('topic') || 'fisheries';
 const ROWH = 62, LINEH = 30;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+/* RESULTS and RESULTS_AND_DISCUSSION both start with R, so use explicit codes */
+const SECCODE = {TITLE:'T', KEYWORDS:'K', ABSTRACT:'A', INTRODUCTION:'I', METHODS:'M', RESULTS:'R',
+                 RESULTS_AND_DISCUSSION:'RD', DISCUSSION:'D', CONCLUSIONS:'C', OTHER:'O'};
+const code = i => SECCODE[META.sections[i]] || META.sections[i].slice(0, 1);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = n => Number(n).toLocaleString('en-GB');
 const load = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error('missing ' + src)); document.head.appendChild(s); });
@@ -426,18 +448,74 @@ document.addEventListener('keydown', ev => {
 /* ---------- paper panel ---------- */
 function paperHTML(p, big){
   const P = PAPERS[p.i], sn = SNIPS[p.lid] || [], f = (SEED.fable[S.rule.id] || {})[p.lid], fy = fableLab(p.lid);
-  const bySec = {}; for (let k = 0; k < p.e.length; k += 4){ const t = META.vocab[p.e[k]], s = p.e[k+1]; (bySec[t] || (bySec[t] = {}))[s] = [p.e[k+2], p.e[k+3]]; }
-  const secs = META.sections.map((s, i) => i).filter(i => Object.values(bySec).some(o => o[i]));
-  const tbl = `<table><tr><th>term</th>${secs.map(i => `<th class="n" title="${META.sections[i]} (weight ${S.cur.W[i]})">${META.sections[i].slice(0, 5).toLowerCase()}</th>`).join('')}</tr>${
-    Object.entries(bySec).map(([t, o]) => `<tr><td>${esc(t)}</td>${secs.map(i => `<td class="n">${o[i] ? (o[i][0] === o[i][1] ? o[i][0] : `${o[i][1]}<span style="color:var(--muted)">/${o[i][0]}</span>`) : ''}</td>`).join('')}</tr>`).join('')}</table>`;
+  const R = S.cur, r = S.rule;
+  /* counts for THIS paper, keyed by term then section */
+  const bySec = {};
+  for (let k = 0; k < p.e.length; k += 4){ const o = bySec[p.e[k]] || (bySec[p.e[k]] = {}); o[p.e[k+1]] = [p.e[k+2], p.e[k+3]]; }
+  /* every section the rule can score in (weight > 0), plus any the paper actually used */
+  const secs = META.sections.map((_, i) => i).filter(i => R.W[i] > 0 || Object.values(bySec).some(o => o[i]));
+
+  const cell = (tid, i) => {
+    const o = (bySec[tid] || {})[i];
+    if (!o) return '<td class="n zero"></td>';                 // counted, not found here
+    const n = R.prox ? o[1] : o[0];
+    const letter = code(i);
+    const lost = R.prox && o[1] < o[0] ? `<span class="lost" title="${o[0] - o[1]} mention(s) discarded: no shark or ray term within a sentence">&minus;${o[0] - o[1]}</span>` : '';
+    return `<td class="n${n ? '' : ' zero'}" title="${META.sections[i]}: ${o[0]} mention(s), ${o[1]} near an elasmobranch term">${n ? `<b>${letter}</b>${n > 1 ? n : ''}` : ''}${lost}</td>`;
+  };
+  const contrib = tid => {
+    let c = 0;
+    for (const i in (bySec[tid] || {})){ const o = bySec[tid][i]; c += (R.prox ? o[1] : o[0]) * R.W[i] * (R.tw[tid] || 0); }
+    return c;
+  };
+  const termRow = (tid, kind) => {
+    const c = contrib(tid), found = !!bySec[tid], off = !R.tw[tid] && kind === 'term';
+    return `<tr class="${found ? '' : 'absent'} ${off ? 'off' : ''}">
+      <td>${esc(META.vocab[tid])}${META.vocab_cs[tid] ? ' <span class="chip" title="case-sensitive">Aa</span>' : ''}${off ? ' <span class="chip">dropped</span>' : ''}</td>
+      ${secs.map(i => cell(tid, i)).join('')}
+      <td class="n">${found ? (c ? trim(c) : '0') : '<span class="muted">not found</span>'}</td></tr>`;
+  };
+
+  /* the score strip: threshold underlined, this paper's rounded score in bold */
+  const hi = Math.max(R.theta + 2, Math.ceil(p.s) + 1, 5), mine = pyRound(p.s);
+  const strip = Array.from({length: hi + 1}, (_, n) => {
+    const isT = n === R.theta, isP = n === mine;
+    return `<span class="sc ${isT ? 'thr' : ''} ${isP ? 'got' : ''}" title="${isT && isP ? 'this paper sits exactly on the threshold' : isT ? 'threshold' : isP ? "this paper's score" : ''}">${n}${n === hi ? '+' : ''}</span>`;
+  }).join('');
+
+  const anchors = r.anchor_ids.length
+    ? `<h3>Anchor words</h3><p class="note-sm">At least one must appear anywhere in the paper, or the rule cannot fire whatever the score.</p>
+       <table class="kw"><tr><th>anchor</th>${secs.map(i => `<th class="n" title="${META.sections[i]}">${code(i)}</th>`).join('')}<th class="n">found</th></tr>
+       ${r.anchor_ids.map(a => termRow(a, 'anchor')).join('')}</table>`
+    : '<h3>Anchor words</h3><p class="note-sm">This rule has none, so nothing gates it besides the score.</p>';
+
+  const rounding = Math.abs(p.s - mine) > 1e-9
+    ? ` The weighted total is ${trim(p.s)}, which the extractor rounds to <b>${mine}</b> before comparing. Rounding is half-to-even, so 1.5 and 2.5 both become 2, and a paper below the threshold on the raw total can still qualify.`
+    : '';
+  const verdict = p.in
+    ? `<b class="yes">Qualifies</b>: rounded score ${mine} reaches the threshold of ${R.theta}${R.gate ? ', and an anchor word is present' : ''}.`
+    : (R.gate && !p.a)
+      ? `<b class="no">Does not qualify</b>: no anchor word appears anywhere in the paper, so the rule cannot fire (its score is ${mine}).`
+      : `<b class="no">Does not qualify</b>: rounded score ${mine} is below the threshold of ${R.theta}.`;
+
   return `<${big ? 'h2' : 'h3'}>${esc(P[1])}</${big ? 'h2' : 'h3'}>
     <div class="sub" style="color:var(--ink2);font-size:13px">${esc(P[3])} ${P[2] ?? ''} &middot; ${esc(P[4])} &middot; id ${esc(P[0])}${P[5] ? ` &middot; <a href="https://doi.org/${esc(P[5])}" target="_blank" rel="noopener">DOI</a>` : ''}</div>
-    <p><b style="color:var(--ink)">Score ${trim(p.s)}</b> against a threshold of ${S.cur.theta}: ${p.in ? 'qualifies' : 'does not qualify'}${S.cur.gate && !p.a ? ' (no anchor word)' : ''}.${p.sus ? ' <b style="color:var(--ink)">Warning:</b> the text was probably taken from a different paper by the same first author and year.' : ''}</p>
-    ${sn.map(x => `<blockquote>&hellip;${mark(x[2])}&hellip; <small>${META.sections[x[1]].toLowerCase()}</small></blockquote>`).join('') || '<p>No snippet stored for this rule in the mock-up.</p>'}
+    <p>${verdict}${rounding}${p.sus ? ' <b class="no">Warning:</b> this text was probably taken from a different paper by the same first author and year.' : ''}</p>
+    <div class="strip">score <span class="scwrap">${strip}</span> <span class="legend-sm"><span class="sc thr">n</span> threshold &nbsp; <span class="sc got">n</span> this paper</span></div>
+    ${sn.map(x => `<blockquote>&hellip;${mark(x[2])}&hellip; <small>${META.sections[x[1]].toLowerCase()}</small></blockquote>`).join('') || '<p class="note-sm">No stored quotation for this rule in the mock-up.</p>'}
     ${fy !== undefined ? `<p><span class="flag ${fy ? 'fy' : ''}">Fable (silver): ${fy ? 'IN' : 'out'}</span> ${f ? esc(f[1]) + ` <span style="color:var(--muted)">(confidence ${f[0]})</span>` : 'Fable read this paper and did not flag this column.'}</p>` : ''}
-    <h3>Mentions by section</h3><p style="font-size:12px">Counted near a shark or ray term / all mentions, where they differ.</p>${tbl}`;
+    <h3>Every keyword in this rule, found or not</h3>
+    <p class="note-sm">A letter marks the section a keyword was found in (${secs.map(i => `<b>${code(i)}</b>=${META.sections[i].toLowerCase().replace(/_/g, ' ')}`).join(', ')}), with the count after it when there is more than one. Greyed rows are keywords this rule looks for and did <b>not</b> find. &minus;n means mentions discarded for having no shark or ray term within a sentence. The last column is what the keyword contributed: mentions x that section's weight, shown small beside each letter. A section at weight 0 (usually text the section labeller could not place) contributes nothing.</p>
+    <table class="kw"><tr><th>keyword</th>${secs.map(i => `<th class="n" title="${META.sections[i]} (weight ${R.W[i]})">${code(i)}<sub>${R.W[i]}</sub></th>`).join('')}<th class="n">score</th></tr>
+      ${r.term_ids.map(t => termRow(t, 'term')).join('')}
+      <tr class="tot"><td>total</td>${secs.map(() => '<td></td>').join('')}<td class="n"><b>${trim(p.s)}</b></td></tr></table>
+    ${anchors}`;
 }
-function drawPaper(){ const p = S.view[S.cursor]; $('#p-paper').innerHTML = p ? paperHTML(p, false) : '<p>No paper selected.</p>'; }
+function drawPaper(){
+  const p = S.view[S.cursor];
+  const lead = '<div class="tabnote"><b>Paper.</b> Everything the rule saw in the paper under the cursor: the verdict and why, the quotations, and every keyword the rule looks for, including the ones it did not find. Move the cursor with the arrow keys.</div>';
+  $('#p-paper').innerHTML = lead + (p ? paperHTML(p, false) : '<p>No paper selected.</p>');
+}
 
 /* ---------- rule editor ---------- */
 function termStats(){
@@ -463,6 +541,7 @@ function drawRule(){
   const anchors = r.anchor_ids.length ? `<h3>Anchors</h3><p>At least one must occur anywhere in the paper: ${r.anchor_ids.map(a => `<span class="chip">${esc(META.vocab[a])}</span>`).join(' ')}</p>
     <label class="inl ${R.gate !== B.gate ? 'changed' : ''}"><input type="checkbox" id="gate" ${R.gate ? 'checked' : ''}> require an anchor</label>` : '<h3>Anchors</h3><p>This rule has none.</p>';
   $('#p-rule').innerHTML = `
+    <div class="tabnote"><b>Rule.</b> The rule itself: which keywords count, how much a mention is worth in each section of a paper, the score a paper must reach, and any anchor word that must be present. Change anything here and every paper in the list is re-scored at once, so the threshold bar moves as you type. Nothing you do here touches the corpus.</div>
     <h3>${esc(r.label)} <span class="chip">${r.kind === 'live' ? 'live column' : 'proposed, not yet extracted'}</span></h3>
     ${r.meaning ? `<p>${esc(r.meaning)}</p>` : ''}
     <p>Every change re-scores all ${fmt(S.RP.length)} papers here in the browser. Nothing is written to the corpus until a proposal is accepted.</p>
@@ -512,6 +591,7 @@ function drawImpact(){
     return `<tr><td>${name}</td><td class="n">${fmt(c.n)}</td><td class="n">${pct(c.P)}</td><td class="n">${pct(c.R)}</td><td class="n"><b>${pct(c.F)}</b></td><td class="n" style="color:var(--ink2)">${pct(b.F)}</td><td class="n">${c.fp}</td><td class="n" title="${c.unreach} of these never mention any keyword, so no threshold can reach them">${c.fn}${c.unreach ? ` (${c.unreach})` : ''}</td></tr>`; }).join('');
   const d = ruleDiff(S.cur, S.base);
   $('#p-impact').innerHTML = `
+    <div class="tabnote"><b>Impact.</b> What your rule edits and your labels add up to across the whole corpus: how many papers qualify now against the live rule, where the scores sit, how much of the margin you have judged, and how well the rule agrees with each source of labels.</div>
     <h3>Corpus effect</h3>
     <div class="kv"><div><b>${fmt(nIn)}</b><span>qualify now</span></div><div><b>${fmt(nB)}</b><span>under the live rule</span></div><div><b>${fmt(up)}</b><span><a href="#" data-f="cross">newly IN</a></span></div><div><b>${fmt(down)}</b><span><a href="#" data-f="cross">newly OUT</a></span></div></div>
     <p>${d.length ? 'Your proposal: ' + d.join('; ') + '.' : 'No rule edits: this is the live rule.'}</p>
@@ -579,6 +659,7 @@ function descend(start, D, unreach, beta, space, skipFold){
 function drawOpt(result){
   const nMine = Object.values(S.labels[S.rule.id] || {}).filter(l => l[0] !== 2).length;
   $('#p-opt').innerHTML = `
+    <div class="tabnote"><b>Optimiser.</b> You judge papers; this searches for the rule that best reproduces your judgements, instead of anyone tuning numbers by hand. It reports accuracy on labels held back from the fitting, which is the figure that means anything.</div>
     <h3>Search for the rule that best reproduces the labels</h3>
     <p>The judge labels papers; the search proposes the keyword weights, section weights and threshold. It tries one setting at a time, keeps whatever raises the score, repeats until nothing improves, and charges a small penalty per change so that it prefers rules close to the current one.</p>
     <p><label>Labels <select id="optSrc"><option value="fable">Fable silver (${fmt(S.fableSeen.size)} papers read)</option><option value="mine">my labels (${fmt(nMine)})</option><option value="mine_i">my inspected labels only</option><option value="gold">earlier author validations</option></select></label>
