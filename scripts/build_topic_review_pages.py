@@ -201,6 +201,8 @@ def main():
             b = min(int(total), 15)
             hist[b] = hist.get(b, 0) + 1
         overview.append({"id": r["id"], "label": r["label"], "kind": r["kind"], "group": r["group"],
+                         "terms": [vocab[t]["term"] for t in r["term_ids"]],
+                         "anchors": [vocab[a]["term"] for a in r["anchor_ids"]],
                          "threshold": r["threshold"], "n_terms": len(r["term_ids"]), "n_anchors": len(r["anchor_ids"]),
                          "papers_with_hit": n_hit, "papers_in": int(n_in), "margin": n_margin,
                          "anchor_gate_fails": n_gate_fail, "hist": hist,
