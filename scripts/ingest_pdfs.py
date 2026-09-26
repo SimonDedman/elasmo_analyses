@@ -112,21 +112,45 @@ def has_multiple_authors(authors: str) -> bool:
     return '&' in str(authors)
 
 
-def build_filename(row: dict) -> str:
-    """Build filename in library convention: Author.etal.Year.Title.pdf"""
-    author = extract_first_author(row["authors"])
-    year_val = row.get("year", "")
-    try:
-        year_int = int(float(year_val))
-        year_str = str(year_int)
-    except (ValueError, TypeError):
-        year_str = "Unknown"
-    title = clean_for_filename(row["title"], max_len=60)
+def build_filename(row: dict, disambiguate: bool = False) -> str:
+    """Library filename, per scripts/lib/library_naming.py (the single definition).
 
-    if has_multiple_authors(row["authors"]):
-        return f"{author}.etal.{year_str}.{title}.pdf"
-    else:
-        return f"{author}.{year_str}.{title}.pdf"
+    Series titles keep their part designator even when the 60-character truncation
+    would drop it: without that, "Preservative Experiment of the Smoked Shark-Fillet"
+    and its "Part II" produced the same name and filing the second overwrote the
+    first. 128 library files were shared that way (measured 2026-09-25).
+    """
+    from lib.library_naming import build_filename as _name
+    return _name(row, disambiguate=disambiguate)
+
+
+_PDF_OWNER_CACHE = None
+
+
+def _pdf_owner() -> dict:
+    """{library path: literature_id} from outputs/pdf_id_map.csv, loaded once.
+
+    Empty when the map has never been built, in which case an existing file is
+    treated as this paper's, exactly as before.
+    """
+    global _PDF_OWNER_CACHE
+    if _PDF_OWNER_CACHE is None:
+        import csv as _csv
+        m = PROJECT_ROOT / "outputs" / "pdf_id_map.csv" if "PROJECT_ROOT" in globals() else Path(
+            __file__).resolve().parent.parent / "outputs" / "pdf_id_map.csv"
+        _PDF_OWNER_CACHE = {}
+        if m.exists():
+            with open(m, newline="") as fh:
+                for r in _csv.DictReader(fh):
+                    _PDF_OWNER_CACHE[r["pdf"]] = str(r["literature_id"]).split(".")[0]
+    return _PDF_OWNER_CACHE
+
+
+def free_filename(row: dict, year_dir: Path) -> str:
+    """The name to file this row under: the plain one, unless another paper already
+    holds it, in which case the id-suffixed one."""
+    plain = build_filename(row)
+    return plain if not (year_dir / plain).exists() else build_filename(row, disambiguate=True)
 
 
 def normalise_doi(doi: str) -> str:
@@ -1581,6 +1605,17 @@ def ingest_source(label: str, pdf_paths: list[Path],
 
         year_dir = PDF_BASE / year_str
         target = year_dir / new_name
+
+        # A file already at this name is usually this paper, filed earlier. It is
+        # NOT when two records truncate to the same name (a series and its Part II):
+        # filing here would overwrite another paper. The id map says who owns a
+        # path, so ask it, and step aside to the id-suffixed name when the answer
+        # is somebody else.
+        if target.exists():
+            owner = _pdf_owner().get(str(target))
+            if owner is not None and owner != str(lit_id).split(".")[0]:
+                target = year_dir / build_filename(row, disambiguate=True)
+                print(f"    name taken by literature_id {owner}; filing as {target.name}")
 
         if target.exists():
             skipped_exists += 1
