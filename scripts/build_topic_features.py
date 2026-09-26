@@ -102,16 +102,22 @@ def build_vocab(topic, live):
 _VOCAB = []
 _COMPILED = []
 _PDF_INDEX = {}
+_PDF_BY_ID = {}
 _CACHE = None
 
 
 def _init(vocab, pdf_index):
-    global _VOCAB, _COMPILED, _PDF_INDEX, _CACHE
+    global _VOCAB, _COMPILED, _PDF_INDEX, _CACHE, _PDF_BY_ID
     _VOCAB = vocab
     _COMPILED = [X.compile_term(v["term"], case_sensitive=v["cs"]) for v in vocab]
     _PDF_INDEX = pdf_index
+    _PDF_BY_ID = X.load_pdf_id_map()
     if TEXT_CACHE.exists():
-        _CACHE = sqlite3.connect(f"file:{TEXT_CACHE}?mode=ro", uri=True)
+        # every worker now reads the cache on every paper while the parent writes
+        # new rows to it, so readers must wait rather than fail: WAL on the writer,
+        # a long busy timeout here.
+        _CACHE = sqlite3.connect(f"file:{TEXT_CACHE}?mode=ro", uri=True, timeout=120)
+        _CACHE.execute("PRAGMA busy_timeout=120000")
 
 
 def _sentence_index(chunk):
@@ -147,16 +153,15 @@ def _count(regex, chunk, sent_idx):
 
 
 def resolve_text(row):
-    """(labelled_sections, pdf_path) exactly as process_paper builds them, or (None, None)."""
-    authors, title = row.get("authors"), row.get("title") or ""
-    year = row.get("year")
-    if not authors or year is None or (isinstance(year, float) and math.isnan(year)):
-        return None, None
-    surname = X._first_surname(authors)
-    if not surname:
-        return None, None
-    best = X._pick_best_pdf(_PDF_INDEX.get((surname, int(year)), []), title)
-    if best is None:
+    """(labelled_sections, pdf_path) exactly as process_paper builds them, or (None, None).
+
+    Resolution goes through the literature_id map (scripts/build_pdf_id_map.py),
+    the same as production since 2026-09-23. Resolving by surname and year here
+    would put another paper's text under this paper's id, which is the bug that
+    map exists to kill."""
+    title = row.get("title") or ""
+    best = _PDF_BY_ID.get(str(row.get("literature_id")).split(".")[0])
+    if best is None or not best.exists():
         return None, None
     text = X.extract_text_from_pdf(best)
     if not text:
@@ -167,11 +172,18 @@ def resolve_text(row):
 
 
 def work(row):
-    lid = row["literature_id"]
-    sections, pdf, fresh = None, row.get("_cached_pdf"), False
-    if pdf and _CACHE is not None:
-        hit = _CACHE.execute("SELECT blob FROM sections WHERE lid=?", (str(lid),)).fetchone()
-        if hit:
+    lid = str(row["literature_id"]).split(".")[0]
+    # The id map decides which file is this paper's. The text cache is keyed by id
+    # and was first filled while the old surname+year matcher was in charge, so a
+    # cached blob is only usable when it came from the file the map now names:
+    # otherwise the cache quietly reinstates the borrowed-PDF bug.
+    want = _PDF_BY_ID.get(lid)
+    if want is None:
+        return {"lid": row["literature_id"], "pdf": None, "status": "no_pdf"}
+    sections, pdf, fresh = None, str(want), False
+    if _CACHE is not None:
+        hit = _CACHE.execute("SELECT blob, pdf FROM sections WHERE lid=?", (lid,)).fetchone()
+        if hit and hit[1] == str(want):
             sections = [tuple(x) for x in json.loads(zlib.decompress(hit[0]))]
     if sections is None:
         sections, pdf = resolve_text(row)
@@ -301,7 +313,9 @@ def main():
         df = df.head(args.limit)
     rows = df.to_dict("records")
 
-    db = sqlite3.connect(TEXT_CACHE)
+    db = sqlite3.connect(TEXT_CACHE, timeout=120)
+    db.execute("PRAGMA journal_mode=WAL")      # readers (the workers) must not be blocked out
+    db.execute("PRAGMA busy_timeout=120000")
     db.execute("CREATE TABLE IF NOT EXISTS sections (lid TEXT PRIMARY KEY, pdf TEXT, mtime REAL, blob BLOB)")
     cached = {r[0]: (r[1], r[2]) for r in db.execute("SELECT lid, pdf, mtime FROM sections")}
     n_cached = 0
