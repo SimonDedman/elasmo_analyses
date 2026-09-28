@@ -41,6 +41,7 @@ from lib.library_naming import build_filename  # noqa: E402
 
 CONFLICTS = ROOT / "outputs" / "pdf_id_map_conflicts.csv"
 OUT_CSV = ROOT / "outputs" / "filename_collisions_resolved.csv"
+OWNERS = ROOT / "outputs" / "pdf_owner_overrides.csv"   # file -> the record it is, once decided
 QUEUE = ROOT / "docs" / "papers_data.json"
 OUTSTANDING = {"needs_library", "needs_pdf", "sr_sync_new"}
 
@@ -160,12 +161,14 @@ def main():
                                  "score": dict(zip([i for _, i in scored], [s for s, _ in scored]))[lid],
                                  "verdict": "same paper, keep " + lo, "new_name": "",
                                  "on_queue": "yes" if queue.get(lid, {}).get("last_status") in OUTSTANDING else "no",
-                                 "year": meta[lid].year, "title": (meta[lid].title or "")[:150]})
+                                 "year": meta[lid].year, "title": (meta[lid].title or "")[:150],
+                                 "pdf_first_page": head})
             continue
         (s1, win), rest = scored[0], scored[1:]
         s2 = rest[0][0] if rest else 0.0
         clear = bool(text.strip()) and s1 >= args.min_score and (s1 - s2) >= args.min_lead
-        for sc, lid in scored:
+        head = " ".join(text.split())[:300]          # what the file itself says, so the
+        for sc, lid in scored:                        # workbook can be judged without opening it
             q = queue.get(lid)
             verdicts.append({
                 "pdf": pdf, "literature_id": lid, "score": sc,
@@ -173,12 +176,13 @@ def main():
                 "new_name": build_filename({**meta[lid]._asdict(), "literature_id": lid}) if lid == win and clear else "",
                 "on_queue": "yes" if q and q.get("last_status") in OUTSTANDING else "no",
                 "year": meta[lid].year, "title": (meta[lid].title or "")[:150],
+                "pdf_first_page": head,
             })
 
     OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_CSV, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=["pdf", "literature_id", "score", "verdict",
-                                           "new_name", "on_queue", "year", "title"])
+                                           "new_name", "on_queue", "year", "title", "pdf_first_page"])
         w.writeheader()
         w.writerows(verdicts)
 
@@ -196,6 +200,13 @@ def main():
         print("dry run: nothing renamed (use --apply)")
         return
 
+    # A rename only separates the two when the winner's own name changes. When it does
+    # not, the loser still generates that name, so ownership has to be stated outright:
+    # the map reads this and lets nobody else claim the file.
+    owners = {}
+    if OWNERS.exists():
+        owners = {r["pdf"]: r["literature_id"] for r in csv.DictReader(open(OWNERS))}
+
     renamed = collide = 0
     for v in verdicts:
         if v["verdict"] != "winner" or not v["new_name"]:
@@ -208,8 +219,19 @@ def main():
             collide += 1
             continue
         src.rename(dst)
+        owners.pop(str(src), None)
+        owners[str(dst)] = v["literature_id"]
         renamed += 1
+    for v in verdicts:                       # including the ones whose name did not change
+        if v["verdict"] == "winner":
+            owners.setdefault(v["pdf"], v["literature_id"])
+    with open(OWNERS, "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["pdf", "literature_id"])
+        for k, lid in sorted(owners.items()):
+            w.writerow([k, lid])
     print(f"renamed {renamed:,} files ({collide:,} skipped: the new name was already taken)")
+    print(f"{OWNERS.name}: {len(owners):,} files with a stated owner")
     print("Next: rebuild the id map, then re-extract what moved "
           "(sh scripts/refresh_pdf_map_and_extract.sh).")
 

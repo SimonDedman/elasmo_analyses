@@ -50,6 +50,7 @@ from sync_shark_references import build_pdf_path  # noqa: E402
 
 OUT = ROOT / "outputs" / "pdf_id_map.csv"
 MERGED = ROOT / "outputs" / "merged_records.csv"   # duplicate records, marked by merge_duplicate_records.py
+OWNERS = ROOT / "outputs" / "pdf_owner_overrides.csv"  # files whose owner was settled by opening them
 CONFLICTS = ROOT / "outputs" / "pdf_id_map_conflicts.csv"
 COVERAGE = ROOT / "outputs" / "pdf_id_map_coverage.json"
 
@@ -98,8 +99,13 @@ def main():
 
     df = pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id", "title", "authors", "year"])
     df = df[df.literature_id.notna()]
-    records = [{"lid": str(r.literature_id).split(".")[0], "title": r.title, "authors": r.authors,
-                "year": r.year} for r in df.itertuples()]
+    records, _seen_lid = [], set()
+    for r in df.itertuples():
+        lid = str(r.literature_id).split(".")[0]
+        if lid in _seen_lid:
+            continue        # the corpus table repeats a few ids; a record must not claim its file twice,
+        _seen_lid.add(lid)  # or it shows up as being in conflict with itself
+        records.append({"lid": lid, "title": r.title, "authors": r.authors, "year": r.year})
     # A record marked as a duplicate of another does not compete for the file: its
     # canonical twin takes it, and the conflict disappears instead of being guessed.
     merged = {}
@@ -122,6 +128,12 @@ def main():
             if sur:
                 lib_by_surname_year[(sur, yr)].append(full)
     print(f"library PDFs: {n_files:,}")
+
+    owners = {}
+    if OWNERS.exists():
+        with open(OWNERS, newline="") as fh:
+            owners = {r["pdf"]: r["literature_id"] for r in csv.DictReader(fh)}
+        print(f"files with an owner settled by hand or by opening them: {len(owners):,}")
 
     claims = defaultdict(list)   # pdf path -> [(lid, method)]
     picks = {}                   # lid -> (pdf, method)
@@ -152,6 +164,8 @@ def main():
             if best is None:
                 continue
             path, method = best, "title"
+        if path in owners and owners[path] != rec["lid"]:
+            continue                      # settled: this file is another record's
         picks[rec["lid"]] = (path, method)
         claims[path].append((rec["lid"], method))
 

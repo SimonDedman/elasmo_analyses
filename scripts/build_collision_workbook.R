@@ -20,9 +20,10 @@ class(d$open_pdf) <- "formula"
 d$action_status <- "you: open the PDF and say which paper it is"
 d$proposed_action <- "name the literature_id the file belongs to, or say it is one paper twice"
 d$your_decision <- ""
+if (!"pdf_first_page" %in% names(d)) d$pdf_first_page <- ""
 d <- d[order(d$file, -d$score),
        c("action_status", "file", "literature_id", "title", "year", "score",
-         "on_queue", "pdf", "open_pdf", "proposed_action", "your_decision")]
+         "on_queue", "pdf_first_page", "pdf", "open_pdf", "proposed_action", "your_decision")]
 n_files <- length(unique(d$file))
 
 info <- data.frame(`Library files shared by two or more papers` = c(
@@ -40,8 +41,10 @@ info <- data.frame(`Library files shared by two or more papers` = c(
          " id map, so they cannot drift apart again."),
   paste0("2. Every shared file was OPENED and scored against each claiming record, on the words that make",
          " that title different from its rivals, plus the part number printed in the paper itself."),
-  "3. 51 files proved to be one paper catalogued twice: those records now carry merged_into = the lowest id.",
-  paste0("4. 49 files were resolved outright and renamed to the winner's unambiguous name. 62 papers were",
+  "3. 63 files proved to be one paper catalogued twice, or a corrigendum, errata or retraction note",
+  "   printed with its paper: those records now carry merged_into = the record they belong to.",
+  paste0("4. 49 files were resolved by opening them: each is now stated to belong to one record in",
+         " outputs/pdf_owner_overrides.csv, and renamed where its own name changed. 62 papers were",
          " proved NOT held, and 61 of them went back on the download queue."),
   paste0("5. ", n_files, " files could not be called with confidence. They are this workbook."),
   "",
@@ -59,6 +62,8 @@ info <- data.frame(`Library files shared by two or more papers` = c(
   "score  - share of that record's distinctive title words found on the first pages, +0.5 when the part",
   "         number printed in the paper matches it, -0.5 when a rival's number matches instead.",
   "on_queue - whether that record is already listed as still to download.",
+  "pdf_first_page - the first 300 characters of the file itself, so most rows can be judged here",
+  "         without opening anything. The same text for every row of a group: it is one file.",
   "",
   "PROVENANCE",
   "outputs/filename_collisions_resolved.csv, written by scripts/resolve_filename_collisions.py."),
@@ -69,7 +74,7 @@ addWorksheet(wb, "Info"); writeData(wb, "Info", info)
 addStyle(wb, "Info", createStyle(textDecoration = "bold"), rows = 1, cols = 1)
 setColWidths(wb, "Info", cols = 1, widths = 120)
 d2 <- review_sheet(wb, "rows", d, proposal_col = "proposed_action", decision_col = "your_decision",
-                   widths = c(40, 52, 9, 78, 6, 7, 9, 60, 10, 62, 16))
+                   widths = c(40, 52, 9, 78, 6, 7, 9, 90, 60, 10, 62, 16))
 addStyle(wb, "rows", createStyle(fontColour = "#0563C1", textDecoration = "underline"),
          rows = 2:(nrow(d2) + 1), cols = which(names(d2) == "open_pdf"), gridExpand = TRUE)
 worksheetOrder(wb) <- c(1, 2)
