@@ -446,7 +446,7 @@ document.addEventListener('keydown', ev => {
 });
 
 /* ---------- paper panel ---------- */
-function paperHTML(p, big){
+function paperHTML(p, big, blind){
   const P = PAPERS[p.i], sn = SNIPS[p.lid] || [], f = (SEED.fable[S.rule.id] || {})[p.lid], fy = fableLab(p.lid);
   const R = S.cur, r = S.rule;
   /* counts for THIS paper, keyed by term then section */
@@ -473,7 +473,7 @@ function paperHTML(p, big){
     return `<tr class="${found ? '' : 'absent'} ${off ? 'off' : ''}">
       <td>${esc(META.vocab[tid])}${META.vocab_cs[tid] ? ' <span class="chip" title="case-sensitive">Aa</span>' : ''}${off ? ' <span class="chip">dropped</span>' : ''}</td>
       ${secs.map(i => cell(tid, i)).join('')}
-      <td class="n">${found ? (c ? trim(c) : '0') : '<span class="muted">not found</span>'}</td></tr>`;
+      <td class="n">${found ? (blind ? '&#10003;' : (c ? trim(c) : '0')) : '<span class="muted">not found</span>'}</td></tr>`;
   };
 
   /* the score strip: threshold underlined, this paper's rounded score in bold */
@@ -501,21 +501,21 @@ function paperHTML(p, big){
 
   return `<${big ? 'h2' : 'h3'}>${esc(P[1])}</${big ? 'h2' : 'h3'}>
     <div class="sub" style="color:var(--ink2);font-size:13px">${esc(P[3])} ${P[2] ?? ''} &middot; ${esc(P[4])} &middot; id ${esc(P[0])}${P[5] ? ` &middot; <a href="https://doi.org/${esc(P[5])}" target="_blank" rel="noopener">DOI</a>` : ''}</div>
-    <p>${verdict}${rounding}${p.sus ? ' <b class="no">Warning:</b> this text was probably taken from a different paper by the same first author and year.' : ''}</p>
-    <div class="strip">score <span class="scwrap">${strip}</span> <span class="legend-sm"><span class="sc thr">n</span> threshold &nbsp; <span class="sc got">n</span> this paper</span></div>
+    ${blind ? '<p class="note-sm">Scores and the machine\'s verdict are hidden here on purpose: judge the paper on its evidence.</p>' : `<p>${verdict}${rounding}${p.sus ? ' <b class="no">Warning:</b> this text was probably taken from a different paper by the same first author and year.' : ''}</p>
+    <div class="strip">score <span class="scwrap">${strip}</span> <span class="legend-sm"><span class="sc thr">n</span> threshold &nbsp; <span class="sc got">n</span> this paper</span></div>`}
     ${sn.map(x => `<blockquote>&hellip;${mark(x[2])}&hellip; <small>${META.sections[x[1]].toLowerCase()}</small></blockquote>`).join('') || '<p class="note-sm">No stored quotation for this rule in the mock-up.</p>'}
-    ${fy !== undefined ? `<p><span class="flag ${fy ? 'fy' : ''}">Fable (silver): ${fy ? 'IN' : 'out'}</span> ${f ? esc(f[1]) + ` <span style="color:var(--muted)">(confidence ${f[0]})</span>` : 'Fable read this paper and did not flag this column.'}</p>` : ''}
+    ${(!blind && fy !== undefined) ? `<p><span class="flag ${fy ? 'fy' : ''}">Fable (silver): ${fy ? 'IN' : 'out'}</span> ${f ? esc(f[1]) + ` <span style="color:var(--muted)">(confidence ${f[0]})</span>` : 'Fable read this paper and did not flag this column.'}</p>` : ''}
     <h3>Every keyword in this rule, found or not</h3>
     <p class="note-sm">A letter marks the section a keyword was found in (${secs.map(i => `<b>${code(i)}</b>=${META.sections[i].toLowerCase().replace(/_/g, ' ')}`).join(', ')}), with the count after it when there is more than one. Greyed rows are keywords this rule looks for and did <b>not</b> find. &minus;n means mentions discarded for having no shark or ray term within a sentence. The last column is what the keyword contributed: mentions x that section's weight, shown small beside each letter. A section at weight 0 (usually text the section labeller could not place) contributes nothing.</p>
     <table class="kw"><tr><th>keyword</th>${secs.map(i => `<th class="n" title="${META.sections[i]} (weight ${R.W[i]})">${code(i)}<sub>${R.W[i]}</sub></th>`).join('')}<th class="n">score</th></tr>
       ${r.term_ids.map(t => termRow(t, 'term')).join('')}
-      <tr class="tot"><td>total</td>${secs.map(() => '<td></td>').join('')}<td class="n"><b>${trim(p.s)}</b></td></tr></table>
+      ${blind ? '' : `<tr class="tot"><td>total</td>${secs.map(() => '<td></td>').join('')}<td class="n"><b>${trim(p.s)}</b></td></tr>`}</table>
     ${anchors}`;
 }
 function drawPaper(){
-  const p = S.view[S.cursor];
+  const p = S.view[S.cursor], blind = Q.get('blind') === '1';
   const lead = '<div class="tabnote"><b>Paper.</b> Everything the rule saw in the paper under the cursor: the verdict and why, the quotations, and every keyword the rule looks for, including the ones it did not find. Move the cursor with the arrow keys.</div>';
-  $('#p-paper').innerHTML = lead + (p ? paperHTML(p, false) : '<p>No paper selected.</p>');
+  $('#p-paper').innerHTML = lead + (p ? paperHTML(p, false, blind) : '<p>No paper selected.</p>');
 }
 
 /* ---------- rule editor ---------- */
@@ -721,7 +721,7 @@ function drawQueue(){
   const stat = `<div class="qstat"><span>Margin band: <b>${fmt(md)}</b> of <b>${fmt(st.margin.length)}</b> judged</span><span>Well above the line, spot-checked: <b>${ta}/${tn}</b> IN</span><span>Well below, spot-checked: <b>${ba}/${bn}</b> OUT</span><span>Card ${fmt(S.qpos + 1)} of ${fmt(S.queue.length)}</span></div>`;
   if (!q){ $('#queue').innerHTML = stat + '<div class="card"><h2>Queue finished</h2><p>Everything in the margin band has a label.</p></div>'; return; }
   const m = myLab(q.p.lid), blind = Q.get('blind') === '1';
-  let body = paperHTML(q.p, true); if (blind) body = body.replace(/<p><b style="color:var\(--ink\)">Score[\s\S]*?<\/p>/, '').replace(/<p><span class="flag[\s\S]*?<\/p>/, '');
+  const body = paperHTML(q.p, true, blind);
   $('#queue').innerHTML = stat + `<div class="card">${blind ? '' : `<span class="chip">${q.stratum === 'margin' ? 'near the line' : q.stratum === 'top' ? 'spot check: well above the line' : 'spot check: well below the line'}</span>`}
     ${body}<div class="btns"><button class="lab-in" data-q="1">IN <kbd>I</kbd></button><button class="lab-out" data-q="0">OUT <kbd>O</kbd></button><button class="lab-un" data-q="2">Unsure <kbd>U</kbd></button><button data-q="skip">Skip <kbd>&rarr;</kbd></button>
     ${m ? `<span class="pill p${m[0]}" style="align-self:center">currently ${['OUT', 'IN', 'unsure'][m[0]]}</span>` : ''}</div></div>

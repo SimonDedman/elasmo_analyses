@@ -131,9 +131,14 @@ def main():
 
     owners = {}
     if OWNERS.exists():
+        owners = defaultdict(set)
         with open(OWNERS, newline="") as fh:
-            owners = {r["pdf"]: r["literature_id"] for r in csv.DictReader(fh)}
-        print(f"files with an owner settled by hand or by opening them: {len(owners):,}")
+            for r in csv.DictReader(fh):
+                owners[r["pdf"]].add(r["literature_id"])
+        owners = dict(owners)
+        shared = sum(1 for v in owners.values() if len(v) > 1)
+        print(f"files with an owner settled by hand or by opening them: {len(owners):,}"
+              + (f" ({shared} of them serve more than one record: a combined document)" if shared else ""))
 
     claims = defaultdict(list)   # pdf path -> [(lid, method)]
     picks = {}                   # lid -> (pdf, method)
@@ -164,7 +169,7 @@ def main():
             if best is None:
                 continue
             path, method = best, "title"
-        if path in owners and owners[path] != rec["lid"]:
+        if path in owners and rec["lid"] not in owners[path]:
             continue                      # settled: this file is another record's
         picks[rec["lid"]] = (path, method)
         claims[path].append((rec["lid"], method))
@@ -181,6 +186,16 @@ def main():
         best = sorted(c, key=lambda t: rank[t[1]])
         if rank[best[0][1]] < rank[best[1][1]]:      # one record names it better than the rest
             resolved[best[0][0]] = (path, best[0][1] + "_won")
+    # a record can be told to share a file it would never generate the name of
+    stated = 0
+    for path, lids in owners.items():
+        for lid in lids:
+            if resolved.get(lid, (None,))[0] != path and Path(path).exists():
+                resolved[lid] = (path, "stated")
+                stated += 1
+    if stated:
+        print(f"records given a file by an explicit statement: {stated:,}")
+
     print(f"\nmapped: {len(resolved):,} records -> a PDF")
     print("by method:", Counter(m for _, m in resolved.values()).most_common())
     print(f"files claimed by more than one record: {len(conflicts):,} "
