@@ -176,7 +176,12 @@ def main():
 
     # a file claimed by several records, or a record claiming a file another record
     # claimed more strongly, is a conflict: leave it out rather than guess.
-    conflicts = {p: c for p, c in claims.items() if len(c) > 1}
+    # A file deliberately shared between records (a combined document, stated in
+    # pdf_owner_overrides.csv) is not a conflict: it is a decision already taken.
+    conflicts = {p: c for p, c in claims.items()
+                 if len(c) > 1 and not (p in owners and {lid for lid, _ in c} <= owners[p])}
+    settled_shares = sum(1 for p, c in claims.items()
+                         if len(c) > 1 and p in owners and {lid for lid, _ in c} <= owners[p])
     rank = {"exact": 0, "nospace": 1, "title": 2}
     resolved = {}
     for path, c in claims.items():
@@ -199,7 +204,8 @@ def main():
     print(f"\nmapped: {len(resolved):,} records -> a PDF")
     print("by method:", Counter(m for _, m in resolved.values()).most_common())
     print(f"files claimed by more than one record: {len(conflicts):,} "
-          f"(covering {sum(len(c) for c in conflicts.values()):,} records)")
+          f"(covering {sum(len(c) for c in conflicts.values()):,} records)"
+          + (f"; {settled_shares} more are shared on purpose" if settled_shares else ""))
 
     # Diff against the PREVIOUS map, which is what extraction actually used, so the
     # change list is exactly the set of rows that need re-extracting. (The retired

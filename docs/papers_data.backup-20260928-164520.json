@@ -232318,26 +232318,5 @@
   "findspot_raw": "Journal of Ultrastructure Research",
   "id": null,
   "notes": "Re-opened 2026-09-28: Simon confirmed the library file under this name is a different paper. Never held."
- },
- {
-  "literature_id": "331",
-  "title": "Révision de Cestracion duponti WINKLER, 1874 (Selachii, Batomorphii) du Bruxellien de Woluwe-Saint-Lambert (Eocène moyen de Belgique).",
-  "authors": "Cappetta, H. (1982)",
-  "year": 1982,
-  "journal": "Mededelingen Van De Werkgroep Voor Tertiaire En Kwartaire Geologie",
-  "journal_clean": "",
-  "doi": "",
-  "publisher": "",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "priority_group": "C",
-  "cascade_checked": false,
-  "cascade_stage": "needs_library",
-  "last_status": "needs_library",
-  "findspot_raw": "Mededelingen Van De Werkgroep Voor Tertiaire En Kwartaire Geologie",
-  "id": null,
-  "notes": "Re-opened 2026-09-28: the Cappetta 1982 'Selachii' file in the library is the book chapter, not this Revision de Cestracion duponti paper. Never held."
  }
 ]
