@@ -13,24 +13,28 @@
   --axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--good:#199e70;--warn:#c98500}
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.wrap{max-width:1320px;margin:0 auto;padding:26px 18px 70px}
+.wrap{max-width:1500px;margin:0 auto;padding:26px 18px 70px}
 h1{font-size:25px;margin:0 0 6px}
 h2{font-size:15px;margin:30px 0 2px;display:flex;align-items:baseline;gap:10px}
 h2 .n{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 p.lede{color:var(--ink2);max-width:74ch;margin:6px 0 0}
 p.fam{color:var(--ink2);font-size:13px;margin:2px 0 12px;max-width:80ch}
 a{color:inherit}
-.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:18px}
+.row{display:grid;grid-template-columns:1fr;gap:20px}
+@media (min-width:1500px){.row{grid-template-columns:repeat(2,1fr)}}
+.row .card{flex-direction:row}
+@media (max-width:900px){.row .card{flex-direction:column}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;
   display:flex;flex-direction:column;transition:border-color .12s,transform .12s}
 .card:hover{border-color:var(--ink2);transform:translateY(-2px)}
-.shot{position:relative;aspect-ratio:16/10;background:var(--grid);overflow:hidden;border-bottom:1px solid var(--border)}
+.row .shot{position:relative;flex:0 0 62%;aspect-ratio:16/10;background:var(--grid);overflow:hidden;border-right:1px solid var(--border)}
+@media (max-width:900px){.row .shot{flex:none;width:100%;border-right:0;border-bottom:1px solid var(--border)}}
 .shot img{transition:transform .25s ease}
 .card:hover .shot img{transform:scale(1.04)}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
 .badge{position:absolute;top:8px;left:8px;background:var(--ink);color:var(--page);border-radius:6px;padding:2px 7px;
   font-size:11px;font-weight:600;letter-spacing:.04em}
-.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body{padding:16px 18px 16px;display:flex;flex-direction:column;gap:7px;flex:1;min-width:0}
 .body b{font-size:16px}
 .body .what{color:var(--ink2);font-size:13.5px}
 .body .does{font-size:13px}
@@ -142,5 +146,5 @@ a{color:inherit}
   </a>
 </div>
 
-<div class="note"><b>Mock-up, for layout only.</b> Thumbnails are live screenshots, one card per row on a laptop and two on a wide screen, and they grow slightly on hover. The groups, the ordering and the times are proposals; the times are guesses until someone has done a concept for real. Two questions: is three families the right cut, and should 1C (the whole list) go to everyone or only to champions, given how easy it is to accept a hundred papers in one drag?</div>
+<div class="note"><b>Mock-up, for layout only.</b> Thumbnails are live screenshots at full card width, one card per row unless your screen is wider than 1500px, and they grow slightly on hover. If they still look small, tell me and I will make the shot the whole card with the text beneath it. The groups, the ordering and the times are proposals; the times are guesses until someone has done a concept for real. Two questions: is three families the right cut, and should 1C (the whole list) go to everyone or only to champions, given how easy it is to accept a hundred papers in one drag?</div>
 </div></body></html>
