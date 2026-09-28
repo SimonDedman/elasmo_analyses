@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choose how to review</title>
+<style>
+:root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+  --border:rgba(11,11,11,.10);--seq:#2a78d6;--good:#1baf7a;--warn:#eda100;--dim:#898781}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;
+  --muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--good:#199e70;--warn:#c98500}}
+:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;
+  --axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--good:#199e70;--warn:#c98500}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:26px 18px 70px}
+h1{font-size:25px;margin:0 0 6px}
+h2{font-size:15px;margin:30px 0 2px;display:flex;align-items:baseline;gap:10px}
+h2 .n{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+p.lede{color:var(--ink2);max-width:74ch;margin:6px 0 0}
+p.fam{color:var(--ink2);font-size:13px;margin:2px 0 12px;max-width:80ch}
+a{color:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;
+  display:flex;flex-direction:column;transition:border-color .12s,transform .12s}
+.card:hover{border-color:var(--ink2);transform:translateY(-2px)}
+.shot{position:relative;aspect-ratio:16/10;background:var(--grid);overflow:hidden;border-bottom:1px solid var(--border)}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.badge{position:absolute;top:8px;left:8px;background:var(--ink);color:var(--page);border-radius:6px;padding:2px 7px;
+  font-size:11px;font-weight:600;letter-spacing:.04em}
+.body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body b{font-size:15px}
+.body .what{color:var(--ink2);font-size:13px}
+.body .does{font-size:13px}
+.body .does i{font-style:normal;color:var(--muted)}
+.meta{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap;padding-top:8px}
+.tag{font-size:11px;border:1px solid var(--axis);border-radius:999px;padding:1px 8px;color:var(--ink2);white-space:nowrap}
+.tag.best{border-color:var(--good);color:var(--good)}
+.tag.time{border-color:var(--seq);color:var(--seq)}
+.tag.skill{border-color:var(--warn);color:var(--warn)}
+.icon{width:15px;height:15px;vertical-align:-2px;margin-right:5px}
+.note{font-size:13px;color:var(--ink2);border-left:3px solid var(--warn);background:var(--surface);padding:8px 11px;
+  border-radius:0 8px 8px 0;margin:18px 0 0;max-width:80ch}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>Fisheries: choose how you want to review</h1>
+<p class="lede">Every option judges the same question, "of every paper we hold, which are genuinely about this concept?", and every one of them records your answers the same way. They differ only in how much the page shows you and how much it asks for. Pick whichever suits how you work; you can switch at any time and your answers follow you.</p>
+<div class="legend">
+  <span>Grouped by what you are doing, most useful first within each group.</span>
+  <span><span class="tag best">recommended</span> where we would start</span>
+  <span><span class="tag time">time</span> per 50 papers</span>
+</div>
+
+<h2><span class="n">Family 1</span> Judging papers</h2>
+<p class="fam">The core job: say whether each paper really belongs to the concept. Start here.</p>
+<div class="row">
+  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&view=queue&blind=1&mode=judge">
+    <div class="shot"><span class="badge">1A</span><img src="./shots/blind.png" alt="One paper per card with the evidence beneath it"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M5 6.5h6M5 9.5h4"/></svg>One paper at a time</b>
+      <span class="what">A card per paper, closest to the borderline first, with the quotations and every keyword the rule looked for. The machine's own verdict is hidden.</span>
+      <span class="does"><i>You do:</i> read, then press I, O or U. Nothing else.</span>
+      <div class="meta"><span class="tag best">recommended</span><span class="tag time">~20 min</span><span class="tag">no training</span><span class="tag">keyboard only</span></div>
+    </div>
+  </a>
+  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&view=queue">
+    <div class="shot"><span class="badge">1B</span><img src="./shots/queue.png" alt="The same cards, showing the score"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M5 6.5h6M5 9.5h4M11.5 12.5l2 2"/></svg>One paper at a time, with the score shown</b>
+      <span class="what">The same cards, but you can see the score, how the rule voted, and whether the card is a borderline case or a spot check.</span>
+      <span class="does"><i>You do:</i> the same, with the option to disagree with the rule deliberately.</span>
+      <div class="meta"><span class="tag time">~20 min</span><span class="tag">no training</span></div>
+    </div>
+  </a>
+  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&mode=judge">
+    <div class="shot"><span class="badge">1C</span><img src="./shots/ladder.png" alt="The whole list ordered by score"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/><path d="M2.5 8h11" stroke-width="2.6"/></svg>The whole list at once</b>
+      <span class="what">Every paper ordered by score with the qualifying line drawn in, so you can see the shape of the problem and work outwards from the line.</span>
+      <span class="does"><i>You do:</i> drag or shift-click a run of papers and judge them together.</span>
+      <div class="meta"><span class="tag time">~8 min</span><span class="tag">fastest</span><span class="tag skill">easy to over-claim</span></div>
+    </div>
+  </a>
+</div>
+
+<h2><span class="n">Family 2</span> Improving the rule</h2>
+<p class="fam">For the concept's champion, once some papers are judged: change the rule and watch what it does to the list.</p>
+<div class="row">
+  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&panel=rule">
+    <div class="shot"><span class="badge">2A</span><img src="./shots/rulelab.png" alt="The rule editor beside the list"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12.5 12.5 3M10 3h3v3"/><circle cx="5" cy="11" r="2"/></svg>Edit the rule</b>
+      <span class="what">Keywords, how much a mention counts in each part of a paper, the score needed, and the anchor words. The line moves as you type.</span>
+      <span class="does"><i>You do:</i> drop a keyword that misfires, or adjust the bar, and see which papers cross.</span>
+      <div class="meta"><span class="tag best">for champions</span><span class="tag time">open-ended</span></div>
+    </div>
+  </a>
+  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&demo=edit&panel=impact">
+    <div class="shot"><span class="badge">2B</span><img src="./shots/impact.png" alt="What an edit changes across the corpus"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 13V7M6.5 13V4M10.5 13V9M14 13V2"/></svg>See what an edit changes</b>
+      <span class="what">One worked example: the bar raised by one and a misfiring keyword dropped. The list filters to exactly the papers that move.</span>
+      <span class="does"><i>You do:</i> nothing. This is the one to look at before you touch anything.</span>
+      <div class="meta"><span class="tag time">~3 min</span><span class="tag">read only</span></div>
+    </div>
+  </a>
+  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&demo=opt&panel=opt">
+    <div class="shot"><span class="badge">2C</span><img src="./shots/optimiser.png" alt="A search for the rule that matches the judgements"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2 14 14"/></svg>Let the search fit the rule</b>
+      <span class="what">Instead of anyone tuning numbers, a search finds the rule that best reproduces the judgements, and reports how it does on papers held back from the fitting.</span>
+      <span class="does"><i>You do:</i> judge papers first; then read the proposal and accept or reject it.</span>
+      <div class="meta"><span class="tag time">~5 min</span><span class="tag">needs ~30 judged</span></div>
+    </div>
+  </a>
+</div>
+
+<h2><span class="n">Family 3</span> Checking each other</h2>
+<p class="fam">Two people on one concept, and concepts that have never been run.</p>
+<div class="row">
+  <a class="card" href="./review.html?topic=fisheries&rule=pr_bycatch&who=Guuske">
+    <div class="shot"><span class="badge">3A</span><img src="./shots/ladder.png" alt="Two reviewers compared"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5.6" cy="6" r="2.2"/><circle cx="10.4" cy="6" r="2.2"/><path d="M2.5 13c.6-2 2-3 3.1-3M13.5 13c-.6-2-2-3-3.1-3"/></svg>Compare two reviewers</b>
+      <span class="what">Export your answers, load someone else's, and filter to the papers where you disagree.</span>
+      <span class="does"><i>You do:</i> discuss only the conflicts, which are usually where the concept's edge really is.</span>
+      <div class="meta"><span class="tag time">~10 min</span><span class="tag">second pass</span></div>
+    </div>
+  </a>
+  <a class="card" href="./review.html?topic=fisheries&rule=drg_03_capture_cpue&panel=rule">
+    <div class="shot"><span class="badge">3B</span><img src="./shots/rulelab.png" alt="A proposed rule scored for the first time"></div>
+    <div class="body">
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2.5v11M2.5 8h11"/></svg>Try a concept we have never run</b>
+      <span class="what">David's proposed "Capture: CPUE" wording, scored across the corpus for the first time, beside the live column it would replace.</span>
+      <span class="does"><i>You do:</i> judge whether the set of papers it picks is what the concept should mean.</span>
+      <div class="meta"><span class="tag time">~15 min</span><span class="tag">new concepts</span></div>
+    </div>
+  </a>
+</div>
+
+<div class="note"><b>Mock-up, for layout only.</b> The thumbnails are live screenshots of each page, the groups and orderings are proposals, and the times are guesses until someone has done a concept for real. Two questions for you: is three families the right cut, and should 1C (the whole list) be offered to everyone or kept for champions, given how easy it is to accept a hundred papers at once?</div>
+</div></body></html>
