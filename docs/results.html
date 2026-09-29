@@ -69,6 +69,17 @@
     font-size: 1rem;
     max-width: 62ch;
   }
+  header.page-head .inner { position: relative; }
+  /* out of the flow, so the header and the tiles below it keep their layout */
+  header.page-head .site-logo {
+    position: absolute; top: 0; right: 0; padding: 0.5rem 0.7rem;
+    background: #fff; border-radius: 10px; line-height: 0;
+  }
+  header.page-head .site-logo img { height: 118px; width: auto; }
+  @media (max-width: 900px) {
+    header.page-head .site-logo { position: static; display: inline-block; margin-bottom: 0.9rem; }
+    header.page-head .site-logo img { height: 96px; }
+  }
   header.page-head .back-link {
     display: inline-block;
     margin-bottom: 1rem;
@@ -212,11 +223,15 @@
     border-top: 1px solid var(--border);
   }
 </style>
+<link rel="icon" href="assets/logo/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 </head>
 <body>
 
 <header class="page-head">
   <div class="inner">
+    <a class="site-logo" href="https://github.com/SimonDedman/elasmo_analyses"><img src="assets/logo/shark_oracle_logo_stacked.svg" alt="Shark Oracle"></a>
     <a class="back-link" href="https://github.com/SimonDedman/elasmo_analyses">&larr; Project README</a>
     <h1>Elasmobranch Analytical Methods Review — Results Index</h1>
     <p class="subtitle">

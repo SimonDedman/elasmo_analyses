@@ -210,3 +210,7 @@ outputs/conf_abstracts/.fable_cache/
 # Altmetric data: free research access does not permit public display; held locally only (2026-09-15)
 outputs/altmetric_scores*.csv
 outputs/altmetric_refresh_*/
+
+# Logo working folder: sources, build scripts, and finals stay local (Simon, 2026-09-29).
+# The published copy lives in docs/assets/logo/.
+/logo/

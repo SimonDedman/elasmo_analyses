@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/logo/shark_oracle_logo_stacked.png" alt="Shark Oracle logo: a brain shaped like a crystal ball, holding six sharks, rays, and a chimaera on fishing lines" width="260">
+</p>
+
 # Elasmobranch Analytical Methods Review
 
 **A systematic review of the analytical techniques used across shark, ray, and chimaera research.**
