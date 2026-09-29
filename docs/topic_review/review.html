@@ -513,9 +513,12 @@ function paperHTML(p, big, blind){
     ${anchors}`;
 }
 function drawPaper(){
-  const p = S.view[S.cursor], blind = Q.get('blind') === '1';
+  const blind = Q.get('blind') === '1';
+  // in the queue the card IS the paper under review; the ladder cursor means nothing there
+  const p = (S.mode === 'queue') ? (S.queue[S.qpos] || {}).p : S.view[S.cursor];
   const lead = '<div class="tabnote"><b>Paper.</b> Everything the rule saw in the paper under the cursor: the verdict and why, the quotations, and every keyword the rule looks for, including the ones it did not find. Move the cursor with the arrow keys.</div>';
-  $('#p-paper').innerHTML = lead + (p ? paperHTML(p, false, blind) : '<p>No paper selected.</p>');
+  $('#p-paper').innerHTML = lead + (p ? paperHTML(p, false, blind)
+    : '<p class="note-sm">No paper selected. Move the cursor in the list with the arrow keys.</p>');
 }
 
 /* ---------- rule editor ---------- */
@@ -715,6 +718,7 @@ function buildQueue(){
   S.qstrata = { margin, top, bot }; S.qpos = Math.max(0, S.queue.findIndex(q => !myLab(q.p.lid)));
 }
 function drawQueue(){
+  if ($('#p-paper').classList.contains('on')) setTimeout(drawPaper, 0);
   while (S.qpos < S.queue.length && S.skipDone && myLab(S.queue[S.qpos].p.lid)) S.qpos++;
   const q = S.queue[S.qpos], st = S.qstrata, agree = (arr, want) => { let n = 0, a = 0; for (const p of arr){ const m = myLab(p.lid); if (m && m[1] === 'i' && m[0] !== 2){ n++; if (m[0] === want) a++; } } return [a, n]; };
   const [ta, tn] = agree(st.top, 1), [ba, bn] = agree(st.bot, 0), md = st.margin.filter(p => myLab(p.lid)).length;
@@ -727,7 +731,7 @@ function drawQueue(){
     ${m ? `<span class="pill p${m[0]}" style="align-self:center">currently ${['OUT', 'IN', 'unsure'][m[0]]}</span>` : ''}</div></div>
     <p style="max-width:900px;margin:12px auto;color:var(--ink2);font-size:13px">Cards come closest-to-the-line first. Every fifth card is a random paper from well above or well below the line: if those spot checks keep agreeing with the rule, the rest of the top and bottom can be accepted as assumed without reading them. The assumption is measured instead of taken on trust.</p>`;
 }
-function queueLabel(v){ const q = S.queue[S.qpos]; if (!q) return; const rl = S.labels[S.rule.id] || (S.labels[S.rule.id] = {}), prev = rl[q.p.lid]; rl[q.p.lid] = [v, 'i', Date.now()]; S.undo.push({ rule:S.rule.id, undo:[[q.p.lid, prev]] }); saveLabels(); S.qpos++; drawQueue(); drawImpact(); }
+function queueLabel(v){ const q = S.queue[S.qpos]; if (!q) return; const rl = S.labels[S.rule.id] || (S.labels[S.rule.id] = {}), prev = rl[q.p.lid]; rl[q.p.lid] = [v, 'i', Date.now()]; S.undo.push({ rule:S.rule.id, undo:[[q.p.lid, prev]] }); saveLabels(); S.qpos++; drawQueue(); drawImpact(); drawPaper(); }
 $('#queue').addEventListener('click', ev => { const b = ev.target.closest('button[data-q]'); if (!b) return; if (b.dataset.q === 'skip'){ S.qpos++; drawQueue(); } else queueLabel(+b.dataset.q); });
 
 /* ---------- export / import ---------- */
@@ -742,8 +746,8 @@ $('#importFile').onchange = ev => { const f = ev.target.files[0]; if (!f) return
 /* ---------- wiring ---------- */
 function setMode(m){ S.mode = m; $$('#viewTabs button').forEach(b => b.classList.toggle('on', b.dataset.v === m));
   $('#viewport').style.display = m === 'ladder' ? '' : 'none'; $('#tb1').style.display = m === 'ladder' ? '' : 'none'; $('#tb2').style.display = m === 'ladder' ? '' : 'none'; $('#queue').style.display = m === 'queue' ? 'block' : 'none';
-  if (m === 'queue'){ buildQueue(); drawQueue(); showPanel('impact'); } else { refreshView(); } }
-function showPanel(p){ $$('#rtabs button').forEach(b => b.classList.toggle('on', b.dataset.p === p)); $$('.panel').forEach(x => x.classList.toggle('on', x.id === 'p-' + p)); if (p === 'rule') drawRule(); if (p === 'impact') drawImpact(); if (p === 'opt') drawOpt(); }
+  if (m === 'queue'){ buildQueue(); drawQueue(); showPanel(Q.get('panel') || 'paper'); } else { refreshView(); } }
+function showPanel(p){ $$('#rtabs button').forEach(b => b.classList.toggle('on', b.dataset.p === p)); $$('.panel').forEach(x => x.classList.toggle('on', x.id === 'p-' + p)); if (p === 'paper') drawPaper(); if (p === 'rule') drawRule(); if (p === 'impact') drawImpact(); if (p === 'opt') drawOpt(); }
 $('#viewTabs').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) setMode(b.dataset.v); });
 $('#rtabs').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) showPanel(b.dataset.p); });
 ['filter', 'sort', 'band', 'showSus'].forEach(id => $('#' + id).addEventListener('change', () => { S.sel.clear(); refreshView(); drawImpact(); }));
@@ -764,7 +768,10 @@ async function selectRule(id){
     <span>${fmt(ov.papers_with_hit || S.RP.length)} papers mention a keyword; ${fmt(ov.papers_in || 0)} qualify; topic champion: ${esc(META.topic.champion)}.</span>`;
   const u = new URL(location); u.searchParams.set('rule', S.rule.id); history.replaceState(null, '', u);
   if (S.mode === 'queue'){ buildQueue(); drawQueue(); } else { $('#viewport').scrollTop = 0; refreshView(); }
-  const on = ($$('#rtabs button.on')[0] || {}).dataset; showPanel(on ? on.p : 'paper');
+  const on = ($$('#rtabs button.on')[0] || {}).dataset;
+  const dflt = Q.get('panel') || (document.body.classList.contains('judge') || Q.get('blind') === '1'
+                                  ? 'paper' : (S.mode === 'queue' ? 'paper' : 'rule'));
+  showPanel(on && on.p ? on.p : dflt);
   /* land on the line: that is where the judgement is needed */
   if (S.mode === 'ladder' && Q.get('top') !== '1'){ const li = S.items.find(x => x.line); if (li){ vp.scrollTop = Math.max(0, li.y - vp.clientHeight / 2); const k = S.items[S.items.indexOf(li) - 1]; if (k && k.k !== undefined){ S.cursor = k.k; S.anchor = k.k; } drawRows(); drawSel(); } }
 }

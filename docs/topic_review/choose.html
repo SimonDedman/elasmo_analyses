@@ -54,97 +54,72 @@ a{color:inherit}
 <h1>Fisheries: choose how you want to review</h1>
 <p class="lede">Every option judges the same question, "of every paper we hold, which are genuinely about this concept?", and every one of them records your answers the same way. They differ only in how much the page shows you and how much it asks for. Pick whichever suits how you work; you can switch at any time and your answers follow you.</p>
 <div class="legend">
-  <span>Grouped by what you are doing, most useful first within each group.</span>
+  <span>Two modes, then what lives inside both.</span>
   <span><span class="tag best">recommended</span> where we would start</span>
   <span><span class="tag time">time</span> per 50 papers</span>
 </div>
 
-<h2><span class="n">Family 1</span> Judging papers</h2>
-<p class="fam">The core job: say whether each paper really belongs to the concept. Start here.</p>
+<h2><span class="n">Pick one</span> Two ways in, and the dashboard behind both</h2>
+<p class="fam">There are only two real choices: judge papers one at a time, or work the whole list. Everything else you might have thought of as a separate tool, editing the rule, the optimiser, trying a concept nobody has run, comparing two reviewers, is a tab or a dropdown inside the same dashboard, and you can reach it from either mode.</p>
 <div class="row">
-  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&view=queue&blind=1&mode=judge">
-    <div class="shot"><span class="badge">1A</span><img src="./shots/blind.png" alt="One paper per card with the evidence beneath it"></div>
+  <a class="card" href="./review.html?topic=fisheries&amp;rule=d_fisheries&amp;view=queue&amp;blind=1&amp;mode=judge">
+    <div class="shot"><span class="badge">1</span><img src="./shots/blind.png" alt="One paper per card, score hidden"></div>
     <div class="body">
       <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M5 6.5h6M5 9.5h4"/></svg>One paper at a time</b>
-      <span class="what">A card per paper, closest to the borderline first, with the quotations and every keyword the rule looked for. The machine's own verdict is hidden.</span>
-      <span class="does"><i>You do:</i> read, then press I, O or U. Nothing else.</span>
-      <div class="meta"><span class="tag best">recommended</span><span class="tag time">~20 min</span><span class="tag">no training</span><span class="tag">keyboard only</span></div>
+      <span class="what">A card per paper, closest to the borderline first, with the quotations and every keyword the rule looked for. Every fifth card is a random paper from well above or below the line, so the assumption that the extremes are safe gets tested rather than trusted.</span>
+      <span class="does"><i>You do:</i> read, then press I, O or U.</span>
+      <span class="does"><i>Score hidden by default</i>, so nothing steers you toward the answer the rule already has. Add <code>&amp;blind=0</code> to see it, or just switch the Paper tab.</span>
+      <div class="meta"><span class="tag best">start here</span><span class="tag time">~20 min per 50</span><span class="tag">no training</span><span class="tag">keyboard only</span></div>
     </div>
   </a>
-  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&view=queue">
-    <div class="shot"><span class="badge">1B</span><img src="./shots/queue.png" alt="The same cards, showing the score"></div>
+  <a class="card" href="./review.html?topic=fisheries&amp;rule=d_fisheries">
+    <div class="shot"><span class="badge">2</span><img src="./shots/rulelab.png" alt="The whole list with the rule editor beside it"></div>
     <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2.5" width="12" height="11" rx="2"/><path d="M5 6.5h6M5 9.5h4M11.5 12.5l2 2"/></svg>One paper at a time, with the score shown</b>
-      <span class="what">The same cards, but you can see the score, how the rule voted, and whether the card is a borderline case or a spot check.</span>
-      <span class="does"><i>You do:</i> the same, with the option to disagree with the rule deliberately.</span>
-      <div class="meta"><span class="tag time">~20 min</span><span class="tag">no training</span></div>
-    </div>
-  </a>
-  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&mode=judge">
-    <div class="shot"><span class="badge">1C</span><img src="./shots/ladder.png" alt="The whole list ordered by score"></div>
-    <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/><path d="M2.5 8h11" stroke-width="2.6"/></svg>The whole list at once</b>
-      <span class="what">Every paper ordered by score with the qualifying line drawn in, so you can see the shape of the problem and work outwards from the line.</span>
-      <span class="does"><i>You do:</i> drag or shift-click a run of papers and judge them together.</span>
-      <div class="meta"><span class="tag time">~8 min</span><span class="tag">fastest</span><span class="tag skill">easy to over-claim</span></div>
+      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/><path d="M2.5 8h11" stroke-width="2.6"/></svg>The whole list, and the rule beside it</b>
+      <span class="what">Every paper that mentions a keyword, ordered by score, with the qualifying line drawn in. The panel on the right is the whole toolkit.</span>
+      <span class="does"><i>You do:</i> judge runs of papers by dragging or shift-clicking, and change the rule when a keyword is obviously misfiring.</span>
+      <span class="does"><i>Opens on the Rule tab.</i></span>
+      <div class="meta"><span class="tag best">for champions</span><span class="tag time">~8 min per 50</span><span class="tag skill">easy to over-claim</span></div>
     </div>
   </a>
 </div>
 
-<h2><span class="n">Family 2</span> Improving the rule</h2>
-<p class="fam">For the concept's champion, once some papers are judged: change the rule and watch what it does to the list.</p>
+<h2><span class="n">Inside either one</span> The four tabs, and the dropdown</h2>
+<p class="fam">Nothing below needs its own page. This is what the right-hand panel and the rule selector already do.</p>
 <div class="row">
-  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&panel=rule">
-    <div class="shot"><span class="badge">2A</span><img src="./shots/rulelab.png" alt="The rule editor beside the list"></div>
+  <a class="card" href="./review.html?topic=fisheries&amp;rule=d_fisheries&amp;panel=impact">
+    <div class="shot"><span class="badge">Impact tab</span><img src="./shots/impact.png" alt="What an edit changes across the corpus"></div>
     <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12.5 12.5 3M10 3h3v3"/><circle cx="5" cy="11" r="2"/></svg>Edit the rule</b>
-      <span class="what">Keywords, how much a mention counts in each part of a paper, the score needed, and the anchor words. The line moves as you type.</span>
-      <span class="does"><i>You do:</i> drop a keyword that misfires, or adjust the bar, and see which papers cross.</span>
-      <div class="meta"><span class="tag best">for champions</span><span class="tag time">open-ended</span></div>
+      <b>What your edits and your labels add up to</b>
+      <span class="what">How many papers qualify now against the live rule, where the scores sit, how much of the borderline you have judged, and how well the rule agrees with each source of labels. Filter the list to "moved by my rule edits" to see exactly which papers cross.</span>
+      <div class="meta"><span class="tag">read only</span></div>
     </div>
   </a>
-  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&demo=edit&panel=impact">
-    <div class="shot"><span class="badge">2B</span><img src="./shots/impact.png" alt="What an edit changes across the corpus"></div>
+  <a class="card" href="./review.html?topic=fisheries&amp;rule=d_fisheries&amp;demo=opt&amp;panel=opt">
+    <div class="shot"><span class="badge">Optimiser tab</span><img src="./shots/optimiser.png" alt="A search for the rule that matches the judgements"></div>
     <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2.5 13V7M6.5 13V4M10.5 13V9M14 13V2"/></svg>See what an edit changes</b>
-      <span class="what">One worked example: the bar raised by one and a misfiring keyword dropped. The list filters to exactly the papers that move.</span>
-      <span class="does"><i>You do:</i> nothing. This is the one to look at before you touch anything.</span>
-      <div class="meta"><span class="tag time">~3 min</span><span class="tag">read only</span></div>
+      <b>Let a search fit the rule to your judgements</b>
+      <span class="what">Rather than anyone tuning numbers, it proposes the rule that best reproduces your answers and reports how that rule does on papers held back from the fitting. It also lists the single best and worst changes.</span>
+      <div class="meta"><span class="tag">needs ~30 judged</span></div>
     </div>
   </a>
-  <a class="card" href="./review.html?topic=fisheries&rule=d_fisheries&demo=opt&panel=opt">
-    <div class="shot"><span class="badge">2C</span><img src="./shots/optimiser.png" alt="A search for the rule that matches the judgements"></div>
+  <a class="card" href="./review.html?topic=fisheries&amp;rule=drg_03_capture_cpue&amp;panel=rule">
+    <div class="shot"><span class="badge">the dropdown</span><img src="./shots/newrule.png" alt="A proposed concept scored for the first time"></div>
     <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.2"/><path d="M10.2 10.2 14 14"/></svg>Let the search fit the rule</b>
-      <span class="what">Instead of anyone tuning numbers, a search finds the rule that best reproduces the judgements, and reports how it does on papers held back from the fitting.</span>
-      <span class="does"><i>You do:</i> judge papers first; then read the proposal and accept or reject it.</span>
-      <div class="meta"><span class="tag time">~5 min</span><span class="tag">needs ~30 judged</span></div>
+      <b>Any concept, including ones never run</b>
+      <span class="what">The selector at the top carries all 40 live columns and David's 66 proposed subcategories. Choosing one of his scores it across the corpus on the spot, beside the live column it would replace. That is all "try a new concept" was.</span>
+      <div class="meta"><span class="tag">106 concepts</span></div>
     </div>
   </a>
-</div>
-
-<h2><span class="n">Family 3</span> Checking each other</h2>
-<p class="fam">Two people on one concept, and concepts that have never been run.</p>
-<div class="row">
-  <a class="card" href="./review.html?topic=fisheries&rule=pr_bycatch&who=Guuske">
-    <div class="shot"><span class="badge">3A</span><img src="./shots/compare.png" alt="Two reviewers compared"></div>
+  <a class="card" href="./review.html?topic=fisheries&amp;rule=pr_bycatch&amp;who=Guuske">
+    <div class="shot"><span class="badge">Export / Import</span><img src="./shots/compare.png" alt="Two reviewers compared"></div>
     <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5.6" cy="6" r="2.2"/><circle cx="10.4" cy="6" r="2.2"/><path d="M2.5 13c.6-2 2-3 3.1-3M13.5 13c-.6-2-2-3-3.1-3"/></svg>Compare two reviewers</b>
-      <span class="what">Export your answers, load someone else's, and filter to the papers where you disagree.</span>
-      <span class="does"><i>You do:</i> discuss only the conflicts, which are usually where the concept's edge really is.</span>
-      <div class="meta"><span class="tag time">~10 min</span><span class="tag">second pass</span></div>
-    </div>
-  </a>
-  <a class="card" href="./review.html?topic=fisheries&rule=drg_03_capture_cpue&panel=rule">
-    <div class="shot"><span class="badge">3B</span><img src="./shots/newrule.png" alt="A proposed rule scored for the first time"></div>
-    <div class="body">
-      <b><svg class="icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2.5v11M2.5 8h11"/></svg>Try a concept we have never run</b>
-      <span class="what">David's proposed "Capture: CPUE" wording, scored across the corpus for the first time, beside the live column it would replace.</span>
-      <span class="does"><i>You do:</i> judge whether the set of papers it picks is what the concept should mean.</span>
-      <div class="meta"><span class="tag time">~15 min</span><span class="tag">new concepts</span></div>
+      <b>Compare two reviewers</b>
+      <span class="what">Export your answers, load someone else's, then choose "reviewers disagree" in Show. Also a tab of its own in spirit only: it is two buttons in the header and one filter.</span>
+      <div class="meta"><span class="tag">second pass</span></div>
     </div>
   </a>
 </div>
 
-<div class="note"><b>Mock-up, for layout only.</b> Thumbnails are live screenshots at full card width, one card per row unless your screen is wider than 1500px, and they grow slightly on hover. If they still look small, tell me and I will make the shot the whole card with the text beneath it. The groups, the ordering and the times are proposals; the times are guesses until someone has done a concept for real. Two questions: is three families the right cut, and should 1C (the whole list) go to everyone or only to champions, given how easy it is to accept a hundred papers in one drag?</div>
+<div class="note"><b>Mock-up, for layout only.</b> Revised after Simon pointed out that the "families" were mostly the same dashboard wearing different hats: the only real fork is one paper at a time versus the whole list, and blind or not. Open question: should the whole-list mode be offered to everyone, or only to champions, given that one drag can accept a hundred papers? The groups, the ordering and the times are proposals; the times are guesses until someone has done a concept for real. Two questions: is three families the right cut, and should 1C (the whole list) go to everyone or only to champions, given how easy it is to accept a hundred papers in one drag?</div>
 </div></body></html>
