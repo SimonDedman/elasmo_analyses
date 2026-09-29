@@ -206,7 +206,10 @@ def main():
     print("IUCN RED LIST API + PDF DOWNLOADER")
     print("=" * 80)
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"\nUsing API token: {IUCN_API_KEY[:10]}...")
+    if not IUCN_API_KEY:
+        print("\n❌ IUCN_API_KEY is not set. Add it to .env or export it, then re-run.")
+        return
+    print("\nUsing API token from IUCN_API_KEY (value not shown)")
 
     # Create directories
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

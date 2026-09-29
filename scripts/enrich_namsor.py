@@ -29,6 +29,7 @@ import argparse
 import csv
 import json
 import logging
+import os
 import sys
 import time
 from datetime import datetime
@@ -53,7 +54,19 @@ OUTPUT_DIR = PROJECT_BASE / "outputs"
 LOG_DIR = PROJECT_BASE / "outputs/logs"
 CACHE_PATH = OUTPUT_DIR / ".namsor_cache.json"
 
-NAMSOR_API_KEY = "***REMOVED***"
+# Load API key from .env or environment
+ENV_FILE = PROJECT_BASE / ".env"
+NAMSOR_API_KEY = os.environ.get("NAMSOR_API_KEY", "")
+if not NAMSOR_API_KEY and ENV_FILE.exists():
+    for line in ENV_FILE.read_text().splitlines():
+        line = line.strip()
+        if line.startswith("NAMSOR_API_KEY="):
+            NAMSOR_API_KEY = line.split("=", 1)[1].strip()
+            break
+
+if not NAMSOR_API_KEY:
+    print("ERROR: NAMSOR_API_KEY not found in .env or environment")
+    sys.exit(1)
 NAMSOR_BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json"
 BATCH_SIZE = 100  # NamSor max per request
 
