@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to read this dashboard</title>
+<style>
+:root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;
+  --border:rgba(11,11,11,.10);--seq:#2a78d6;--warn:#eda100;--good:#1baf7a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;
+  --muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500;--good:#199e70}}
+:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;
+  --axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500;--good:#199e70}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1500px;margin:0 auto;padding:22px 18px 60px}
+h1{font-size:24px;margin:0 0 4px}
+p.lede{color:var(--ink2);max-width:80ch;margin:6px 0 16px}
+a{color:inherit}
+.stage{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+@media (max-width:1100px){.stage{grid-template-columns:1fr}}
+.shotwrap{position:relative;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface)}
+.shotwrap img{width:100%;display:block}
+.mask{position:absolute;inset:0;background:rgba(10,10,10,.55);pointer-events:none;opacity:0;transition:opacity .2s}
+.shotwrap.on .mask{opacity:1}
+.hole{position:absolute;border:2px solid var(--warn);border-radius:6px;box-shadow:0 0 0 9999px rgba(10,10,10,.55);
+  opacity:0;transition:opacity .2s,left .25s,top .25s,width .25s,height .25s;pointer-events:none}
+.shotwrap.on .hole{opacity:1}
+.pin{position:absolute;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--page);
+  font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transform:translate(-50%,-50%);border:2px solid var(--page);z-index:3;transition:transform .15s,background .15s}
+.pin:hover{transform:translate(-50%,-50%) scale(1.25)}
+.pin.on{background:var(--warn);color:#0b0b0b;transform:translate(-50%,-50%) scale(1.3)}
+.side{position:sticky;top:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.side .step{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.side h3{margin:4px 0 8px;font-size:17px}
+.side p{margin:0 0 10px;color:var(--ink2);font-size:14px}
+.side .why{color:var(--ink);font-size:13.5px;border-left:3px solid var(--warn);padding-left:9px;margin:10px 0}
+.nav{display:flex;gap:8px;align-items:center;margin-top:14px}
+button{font:inherit;background:var(--surface);color:inherit;border:1px solid var(--axis);border-radius:7px;
+  padding:6px 13px;cursor:pointer}
+button:hover{border-color:var(--ink2)}
+button.primary{background:var(--ink);color:var(--page);border-color:var(--ink)}
+button[disabled]{opacity:.4;cursor:not-allowed}
+.dots{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap;max-width:150px;justify-content:flex-end}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--grid);cursor:pointer}
+.dot.on{background:var(--warn)}
+.dot.seen{background:var(--axis)}
+.cta{margin-top:22px;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--good);
+  border-radius:0 12px 12px 0;padding:14px 18px;max-width:80ch}
+.cta b{display:block;margin-bottom:4px}
+.cta a{display:inline-block;margin-top:8px;background:var(--good);color:#fff;text-decoration:none;
+  padding:7px 14px;border-radius:7px;font-weight:600}
+.cta a.second{background:transparent;color:inherit;border:1px solid var(--axis);margin-left:8px}
+kbd{font:12px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-width:2px;border-radius:4px;padding:0 4px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>How to read this dashboard</h1>
+<p class="lede">It is a busy page, so here it is one piece at a time. Click a numbered pin, or walk through in order with <b>Next</b>. Nothing here is live: it is a photograph of the real thing. When you have had enough, there is a sandbox at the bottom with ten papers where you can press every button and none of it counts.</p>
+
+<div class="stage">
+  <div class="shotwrap" id="stagewrap">
+    <img src="./shots/tour.png" alt="The topic review dashboard">
+    <div class="hole" id="hole"></div>
+    <div id="pins"></div>
+  </div>
+  <div class="side">
+    <div class="step" id="stepn">Step 1 of 12</div>
+    <h3 id="title">Start here</h3>
+    <p id="text"></p>
+    <div class="why" id="why"></div>
+    <div class="nav">
+      <button id="prev">Back</button>
+      <button id="next" class="primary">Next</button>
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+</div>
+
+<div class="cta">
+  <b>Now try it, with nothing at stake</b>
+  The sandbox gives you ten papers from this concept: a few that clearly qualify, a few that clearly do not, and several on the line. Label them, drag the threshold about, drop a keyword, run the search. None of it is saved, sent, or counted, and closing the tab forgets everything.
+  <a href="./review.html?topic=fisheries&amp;rule=d_fisheries&amp;sandbox=1">Open the sandbox (10 papers)</a>
+  <a class="second" href="./review.html?topic=fisheries&amp;rule=d_fisheries">Go to the real thing</a>
+</div>
+
+<script>
+/* x,y are the pin's position and box is the region to spotlight, both as % of the
+   screenshot, so the tour survives the image being re-shot at another size. */
+const STEPS = [
+  {x:55.5,y:2.6, box:[13,0.4,41,4.6], t:"The concept you are judging",
+   p:"One concept at a time. This selector holds all 106 in the fisheries topic: the 40 columns the pipeline extracts today, and the 66 David has proposed that have never been run.",
+   w:"Picking one of David's scores it across the whole corpus on the spot, so you can see what his wording would actually pick up before anybody commits to it."},
+  {x:86.5,y:7, box:[1,5.2,84,3.4], t:"What you are actually deciding",
+   p:"Judge the concept, not the keywords. The champion writes a short definition here, with examples of what counts and what does not, before anyone labels.",
+   w:"Without that line two reviewers will disagree about what \\"fisheries\\" means, and the disagreement will have nothing to do with the papers."},
+  {x:47.5,y:10.4, box:[1,8.8,45,3], t:"The size of the job",
+   p:"How many papers mention any keyword of this concept, and how many currently qualify.",
+   w:"The gap between those two numbers is where the argument is. Everything else either obviously belongs or obviously does not."},
+  {x:6,y:14.3, box:[1,15.5,22,5], t:"Your verdict on one paper",
+   p:"IN, OUT, or Unsure, by button or by pressing I, O or U. The cursor then moves to the next paper.",
+   w:"Unsure is a real answer: it hands the paper to the second reviewer instead of guessing."},
+  {x:30,y:14.3, box:[21,15.5,26,5], t:"Judging a run of papers at once",
+   p:"\\"All above\\" marks every unlabelled paper above the cursor as IN, \\"All below\\" marks everything below as OUT.",
+   w:"These are stored as assumed rather than inspected, and the rule is never fitted to them. The top of the list is usually safe; the bottom is not, so treat them as tidying, not as judgement."},
+  {x:61.5,y:22.2, box:[1,20.5,60,4], t:"What the list shows you",
+   p:"Filter to the unlabelled, to the borderline band, to papers your rule edits have just moved, or to those where you and the machine disagree. Order by score, or by closeness to the line.",
+   w:"\\"Closest to the line first\\" is the honest way to spend your attention: that is where the concept's edge actually is."},
+  {x:60.5,y:31, box:[1,28,60,8], t:"One paper in the list",
+   p:"The score on the left, then the title, then the keywords that fired with how often, and a quotation showing one of them in context.",
+   w:"If a keyword is doing something silly, such as retention meaning urea retention, you can usually see it here without opening anything."},
+  {x:61.5,y:60.7, box:[1,59,60,3.4], t:"The line",
+   p:"Everything above this bar qualifies for the concept; everything below mentions a keyword but falls short.",
+   w:"The bar moves as you change the rule, which is the quickest way to see what an edit really does."},
+  {x:84,y:13.6, box:[62,15.5,37,4], t:"The four tabs",
+   p:"Paper is the full evidence for the paper under the cursor. Rule is the rule itself. Impact is what your edits and labels add up to. Optimiser fits a rule to your answers.",
+   w:"There is no separate tool anywhere: everything this project can do to a concept is behind these four tabs and the selector at the top."},
+  {x:96,y:35.2, box:[62,36,37,5], t:"The score a paper must reach",
+   p:"The threshold, whether a mention only counts when a shark or ray is named within a sentence, and a retired switch that used to round the score.",
+   w:"Rounding was dropped on 25 September: it silently lowered every threshold by half a point, and 6% of qualifying decisions existed only because of it."},
+  {x:96.5,y:42.5, box:[62,44,37,13], t:"Where in a paper a mention counts",
+   p:"A keyword in the title or the author's own keywords counts double; one in the methods counts once; one in text the section labeller could not place counts nothing.",
+   w:"This is why a paper can mention a keyword ten times and still score zero, which surprises everyone the first time they see it."},
+  {x:88.5,y:66.5, box:[62,65,37,33], t:"The keywords, and which ones are earning their place",
+   p:"Every keyword, how many papers it appears in, how often those papers are judged IN, and how many papers qualify because of that keyword alone.",
+   w:"A keyword with a low IN share and a high decisive count is the one to drop. Untick it and watch the list move."}
+];
+
+const pins = document.getElementById('pins'), hole = document.getElementById('hole'),
+      wrap = document.getElementById('stagewrap'), dots = document.getElementById('dots');
+let at = -1;
+STEPS.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'pin'; b.style.left = s.x + '%'; b.style.top = s.y + '%';
+  b.textContent = i + 1; b.onclick = () => go(i); b.title = s.t;
+  pins.appendChild(b);
+  const d = document.createElement('span'); d.className = 'dot'; d.onclick = () => go(i); dots.appendChild(d);
+});
+function go(i){
+  at = Math.max(0, Math.min(STEPS.length - 1, i));
+  const s = STEPS[at];
+  wrap.classList.add('on');
+  hole.style.left = s.box[0] + '%'; hole.style.top = s.box[1] + '%';
+  hole.style.width = s.box[2] + '%'; hole.style.height = s.box[3] + '%';
+  document.getElementById('stepn').textContent = `Step ${at + 1} of ${STEPS.length}`;
+  document.getElementById('title').textContent = s.t;
+  document.getElementById('text').textContent = s.p;
+  document.getElementById('why').textContent = s.w;
+  [...pins.children].forEach((p, k) => p.classList.toggle('on', k === at));
+  [...dots.children].forEach((d, k) => { d.classList.toggle('on', k === at); d.classList.toggle('seen', k < at); });
+  document.getElementById('prev').disabled = at === 0;
+  document.getElementById('next').textContent = at === STEPS.length - 1 ? 'Start again' : 'Next';
+}
+document.getElementById('next').onclick = () => go(at >= STEPS.length - 1 ? 0 : at + 1);
+document.getElementById('prev').onclick = () => go(at - 1);
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(at + 1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(at - 1); }
+});
+go(0);
+</script>
+</div></body></html>

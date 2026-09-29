@@ -36,8 +36,13 @@ header .grow{flex:1}
 .tabs{display:flex;gap:2px;background:var(--grid);border-radius:8px;padding:2px}
 .tabs button{border:0;background:transparent;border-radius:6px;padding:4px 12px}
 .tabs button.on{background:var(--surface);box-shadow:0 0 0 1px var(--border)}
+#sandboxBar{background:var(--unsure-bg);border-bottom:1px solid var(--unsure);padding:7px 16px;font-size:13px;color:var(--ink)}
+#sandboxBar a{color:inherit;font-weight:600}
+body.sandbox #submitBtn{display:none}
 #defn{padding:8px 16px;border-bottom:1px solid var(--border);color:var(--ink2);font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
 #defn b{color:var(--ink)}
+.rulecount{padding:4px 16px 8px;font-size:12px;color:var(--ink2);border-bottom:1px solid var(--border)}
+.rulecount b{color:var(--ink)}
 main{flex:1;min-height:0;display:flex}
 #left{flex:1 1 62%;min-width:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
 #right{flex:0 0 38%;max-width:640px;min-width:340px;display:flex;flex-direction:column;min-height:0}
@@ -128,6 +133,7 @@ svg text{fill:var(--ink2);font-size:10.5px}
 </style>
 </head>
 <body>
+<div id="sandboxBar" hidden>Sandbox: ten papers, and nothing you do here is saved or sent anywhere. Label them, change the rule, run the search, it all disappears when you close the tab. <a id="sandboxOut" href="#">Leave the sandbox and work on the real list</a></div>
 <header>
   <h1><a href="./index.html" style="color:inherit;text-decoration:none">Topic review</a> <span class="crumb" id="crumb"></span></h1>
   <select id="ruleSel" title="Rule under review"></select>
@@ -142,6 +148,7 @@ svg text{fill:var(--ink2);font-size:10.5px}
   <input type="file" id="importFile" accept="application/json" hidden>
 </header>
 <div id="defn"></div>
+<div id="ruleCount" class="rulecount"></div>
 <main>
   <section id="left">
     <div class="toolbar" id="tb1">
@@ -198,6 +205,11 @@ svg text{fill:var(--ink2);font-size:10.5px}
 'use strict';
 const Q = new URLSearchParams(location.search);
 const TOPIC = Q.get('topic') || 'fisheries';
+/* Sandbox: ten papers, and nothing leaves the page. Somebody meeting this dashboard
+   for the first time should be able to press every button without wondering whether
+   they have just told the project something wrong. */
+const SANDBOX = Q.get('sandbox') === '1';
+const SANDBOX_N = 10;
 const ROWH = 62, LINEH = 30;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 /* RESULTS and RESULTS_AND_DISCUSSION both start with R, so use explicit codes */
@@ -215,9 +227,12 @@ const S = { rule:null, base:null, cur:null, RP:[], byLid:new Map(), view:[], ite
             labels:{}, others:{}, undo:[], mode:'ladder', queue:[], qpos:0, terms:[] };
 
 /* ---------- storage ---------- */
+const _mem = {};
 const store = {
-  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
-  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+  get(k, d){ if (SANDBOX) return k in _mem ? _mem[k] : d;
+             try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ if (SANDBOX){ _mem[k] = v; return; }
+             try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 };
 const who = () => $('#who').value;
 const lkey = () => `tr:${TOPIC}:${who()}`;
@@ -256,6 +271,15 @@ function buildRP(){
     S.RP.push(p); S.byLid.set(p.lid, p);
   }
   rescore(true);
+  if (SANDBOX){
+    const cut = cutoff(S.cur), ok = S.RP.filter(p => !p.sus);
+    const near = ok.filter(p => Math.abs(p.s - cut) <= 1).sort((a, b) => Math.abs(a.s - cut) - Math.abs(b.s - cut));
+    const high = ok.filter(p => p.s - cut > 3).sort((a, b) => b.s - a.s);
+    const low = ok.filter(p => cut - p.s > 1).sort((a, b) => a.s - b.s);
+    const pick = [...high.slice(0, 3), ...near.slice(0, 5), ...low.slice(0, 2)];
+    S.RP = pick.length >= 4 ? pick : ok.slice(0, SANDBOX_N);
+    S.byLid = new Map(S.RP.map(p => [p.lid, p]));
+  }
 }
 function rescore(alsoBase){
   for (const p of S.RP){
@@ -781,9 +805,20 @@ async function selectRule(id){
   META = window.TR_META; PAPERS = window.TR_PAPERS; COUNTS = window.TR_COUNTS; SEED = window.TR_SEED; S.fableSeen = new Set(SEED.fable_seen);
   document.title = `${META.topic.title}: topic review`;
   if (Q.get('mode') === 'judge') document.body.classList.add('judge');
+  if (SANDBOX){
+    document.body.classList.add('sandbox');
+    const bar = $('#sandboxBar'); bar.hidden = false;
+    const u = new URL(location); u.searchParams.delete('sandbox');
+    $('#sandboxOut').href = u.pathname + u.search;
+  }
   $('#who').innerHTML = META.team.map(n => `<option>${esc(n)}</option>`).join(''); $('#who').value = Q.get('who') || store.get('tr:who', 'Simon'); if (!$('#who').value) $('#who').value = 'Simon';
   const groups = {}; META.rules.forEach(r => (groups[r.group] || (groups[r.group] = [])).push(r));
-  $('#ruleSel').innerHTML = Object.entries(groups).map(([g, rs]) => `<optgroup label="${esc(g)}">${rs.map(r => `<option value="${esc(r.id)}">${esc(r.label)}${META.featured.includes(r.id) ? '' : ' (no snippets in mock-up)'}</option>`).join('')}</optgroup>`).join('');
+  $('#ruleSel').innerHTML = Object.entries(groups).map(([g, rs]) =>
+    `<optgroup label="${esc(g)} \u2014 ${rs.length} concept${rs.length > 1 ? 's' : ''}">${
+      rs.map(r => `<option value="${esc(r.id)}">${esc(r.label)}${r.kind === 'proposed' ? '  \u00b7 proposed, never run' : ''}</option>`).join('')}</optgroup>`).join('');
+  const nLive = META.rules.filter(r => r.kind === 'live').length, nProp = META.rules.length - nLive;
+  $('#ruleCount').innerHTML = `${META.rules.length} concepts in this topic: ${nLive} live extraction columns, `
+    + `<b>${nProp} proposed by David that have never been run</b> \u2014 all in the selector above.`;
   loadLabels();
   const rid = Q.get('rule') || META.featured[0] || META.rules[0].id; $('#ruleSel').value = rid;
   if (Q.get('view') === 'queue') S.mode = 'queue';
