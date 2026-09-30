@@ -641,6 +641,81 @@ def build_page_data(
 # Main generation
 # ---------------------------------------------------------------------------
 
+# ---------------------------------------------------------------------------
+# Landing-page author index
+# ---------------------------------------------------------------------------
+
+AUTHOR_INDEX_PATH = DOCS_VALIDATE_DIR / "assets" / "authors_index.json"
+
+
+def write_author_index(rows: list[list], today_str: str) -> None:
+    """Write assets/authors_index.json: one compact row per author who has a page.
+
+    rows: [openalex_id, display_name, institution, paper_count]. The landing
+    page matches names against this in the browser (assets/author_search.js),
+    so a search never depends on OpenAlex's per-IP daily budget.
+    """
+    AUTHOR_INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
+    payload = {"generated": today_str, "count": len(rows), "authors": rows}
+    AUTHOR_INDEX_PATH.write_text(
+        json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+    )
+
+
+def write_index_page(tmpl_index, primary_ids: list[str], base_url: str) -> None:
+    known_ids_json = json.dumps(primary_ids, ensure_ascii=False)
+    index_html = tmpl_index.render(known_ids_json=known_ids_json, base_url=base_url)
+    (DOCS_VALIDATE_DIR / "index.html").write_text(index_html, encoding="utf-8")
+
+
+def rebuild_index_only() -> None:
+    """Regenerate index.html and authors_index.json from the pages already on disk.
+
+    A primary author page is any docs/validate/A*.html that is not a redirect
+    stub. Names, institutions, and paper counts come from
+    outputs/openalex_unique_authors.csv, which is what the full run uses too.
+    """
+    today_str = pd.Timestamp.today().strftime("%Y-%m-%d")
+    _, unique_auth = load_authors()
+    unique_auth_idx = unique_auth.set_index("openalex_author_id")
+    secondary_to_primary = build_merge_groups(unique_auth)
+
+    primary_ids: list[str] = []
+    stale_secondaries = 0
+    for path in sorted(DOCS_VALIDATE_DIR.glob("A*.html")):
+        head = path.read_text(encoding="utf-8", errors="replace")[:600]
+        if 'http-equiv="refresh"' in head:
+            continue
+        if path.stem in secondary_to_primary:
+            # A full page left over from before this ID was merged into another;
+            # the next full run replaces it with a redirect stub. Don't list it.
+            stale_secondaries += 1
+            continue
+        primary_ids.append(path.stem)
+
+    rows: list[list] = []
+    missing = 0
+    for pid in primary_ids:
+        if pid not in unique_auth_idx.index:
+            missing += 1
+            continue
+        r = unique_auth_idx.loc[pid]
+        name = str(r["display_name"]) if pd.notna(r.get("display_name")) else ""
+        inst = str(r["most_common_institution"]) if pd.notna(r.get("most_common_institution")) else ""
+        try:
+            n = int(r.get("paper_count") or 0)
+        except (TypeError, ValueError):
+            n = 0
+        rows.append([pid, name, inst, n])
+
+    env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)), autoescape=False)
+    write_index_page(env.get_template("validate_index.html.j2"), primary_ids, DEFAULT_VALIDATE_URL)
+    write_author_index(rows, today_str)
+    print(f"index-only: {len(primary_ids)} primary pages on disk, {len(rows)} indexed, "
+          f"{missing} without a unique_authors row, {stale_secondaries} stale merged-away pages skipped "
+          f"-> {AUTHOR_INDEX_PATH}")
+
+
 def generate_pages(
     target_author_id: str | None = None,
     limit: int | None = None,
@@ -740,6 +815,7 @@ def generate_pages(
     assets_prefix = DEFAULT_BASE_URL
 
     generated_primary_ids: list[str] = []
+    author_index_rows: list[list] = []  # [id, name, institution, paper_count] for assets/authors_index.json
     secondary_redirect_map: dict[str, str] = {}  # secondary_id -> primary_id
 
     print("Generating author pages…")
@@ -826,6 +902,7 @@ def generate_pages(
         out_path = DOCS_VALIDATE_DIR / f"{primary_id}.html"
         out_path.write_text(html, encoding="utf-8")
         generated_primary_ids.append(primary_id)
+        author_index_rows.append([primary_id, author_name, institution, paper_count])
 
         # Queue redirect pages for secondaries
         for sec_id in merged_ids:
@@ -839,14 +916,15 @@ def generate_pages(
         out_path = DOCS_VALIDATE_DIR / f"{sec_id}.html"
         out_path.write_text(html, encoding="utf-8")
 
-    # --- Index page ---
-    print("Generating index page…")
-    known_ids_json = json.dumps(generated_primary_ids, ensure_ascii=False)
-    index_html = tmpl_index.render(
-        known_ids_json=known_ids_json,
-        base_url=base_url,
-    )
-    (DOCS_VALIDATE_DIR / "index.html").write_text(index_html, encoding="utf-8")
+    # --- Index page + local author index (full runs only: a --author or --limit
+    #     run knows about a handful of primaries and would clobber the real list) ---
+    if target_author_id or limit is not None:
+        print("Partial run: leaving index.html and assets/authors_index.json untouched "
+              "(run with --index-only to rebuild them from the pages on disk).")
+    else:
+        print("Generating index page and author index…")
+        write_index_page(tmpl_index, generated_primary_ids, base_url)
+        write_author_index(author_index_rows, today_str)
 
     # --- Shared options file (sp_ and a_ column lists, loaded once by JS) ---
     print("Generating shared options JSON…")
@@ -882,7 +960,13 @@ def main() -> None:
     parser.add_argument("--limit", type=int, metavar="N", help="Process only the first N primary authors")
     parser.add_argument("--proxy-url", default="", metavar="URL", help="Proxy URL for submission")
     parser.add_argument("--dispatch-token", default="", metavar="TOKEN", help="GitHub dispatch token for submission")
+    parser.add_argument("--index-only", action="store_true",
+                        help="Rebuild only index.html and assets/authors_index.json from the pages already on disk")
     args = parser.parse_args()
+
+    if args.index_only:
+        rebuild_index_only()
+        return
 
     generate_pages(
         target_author_id=args.author,

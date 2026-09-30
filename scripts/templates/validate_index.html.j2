@@ -27,7 +27,9 @@
 
     <div class="help-text">
       <p>
-        Search for your name above to find your author page. Results come from
+        Search for your name above to find your author page. Accents, hyphens, and name order don't matter
+        ("Fernandez Corredor" finds "Elena Fernández‐Corredor"). Names in our database are matched here;
+        other researchers are looked up on
         <a href="https://openalex.org" target="_blank" rel="noopener noreferrer">OpenAlex</a>.
         If your page is not yet in our database, please locate your
         <a href="https://openalex.org/authors" target="_blank" rel="noopener noreferrer">OpenAlex author ID</a>
@@ -42,6 +44,7 @@
     </div>
   </div>
 
+  <script src="assets/author_search.js"></script>
   <script>
     const KNOWN_IDS = new Set({{ known_ids_json }});
     const BASE_URL = '{{ base_url }}';
@@ -91,40 +94,39 @@
       };
     }
 
-    function renderResults(authors) {
+    /* Result rendering. Each item: {id, name, institution, works, inDb}. */
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function renderResults(items, note) {
       const container = document.getElementById('search-results');
-      if (!authors || authors.length === 0) {
-        container.innerHTML = '<p class="no-results">No authors found. Try a different spelling.</p>';
+      if (!items || items.length === 0) {
+        container.innerHTML = '<p class="no-results">No authors found. Try a different spelling.</p>' + (note || '');
         return;
       }
 
-      container.innerHTML = authors.map(author => {
-        const id = author.id.replace('https://openalex.org/', '');
-        const name = author.display_name || 'Unknown name';
-        const institution = (author.last_known_institutions && author.last_known_institutions[0])
-          ? author.last_known_institutions[0].display_name
-          : 'Institution unknown';
-        const worksCount = author.works_count != null ? author.works_count.toLocaleString() : '?';
-        const inDatabase = KNOWN_IDS.has(id);
-
-        if (inDatabase) {
+      container.innerHTML = items.map(item => {
+        const id = esc(item.id), name = esc(item.name || 'Unknown name');
+        const institution = esc(item.institution || 'Institution unknown');
+        const works = item.works != null ? Number(item.works).toLocaleString() : '?';
+        const worksLabel = item.worksLabel || 'works';
+        if (item.inDb) {
           return `
             <a class="result-card" href="${BASE_URL}${id}.html">
               <div class="result-name">${name}</div>
-              <div class="result-meta">${institution} · ${worksCount} works · ${id}</div>
+              <div class="result-meta">${institution} · ${works} ${worksLabel} · ${id}</div>
               <div class="result-badge in-db">In our database</div>
             </a>`;
-        } else {
-          return `
+        }
+        return `
             <div class="result-card result-card--disabled" data-id="${id}" data-name="${name}">
               <div class="result-name">${name}</div>
-              <div class="result-meta">${institution} · ${worksCount} works · ${id}</div>
+              <div class="result-meta">${institution} · ${works} ${worksLabel} · ${id}</div>
               <div class="result-badge not-in-db">Not in our database</div>
             </div>`;
-        }
-      }).join('');
+      }).join('') + (note || '');
 
-      // Attach click handlers for greyed-out cards
       container.querySelectorAll('.result-card--disabled').forEach(card => {
         card.addEventListener('click', () => {
           alert(tNotInDb(card.dataset.name, card.dataset.id));
@@ -132,33 +134,88 @@
       });
     }
 
+    /* --- Local index of every author who has a page (assets/authors_index.json).
+       Loaded once; matched in the browser with accent/hyphen/order folding, so a
+       search never depends on OpenAlex being reachable or within budget. --- */
+    let LOCAL_INDEX = null;
+    let localIndexError = null;
+    fetch('assets/authors_index.json')
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(data => { LOCAL_INDEX = AuthorSearch.buildIndex(data.authors || []); })
+      .catch(err => { localIndexError = err; });
+
+    const RATE_LIMIT_NOTE = `<p class="error" style="background:#fff3cd;border-left:3px solid #B6862C;padding:0.6rem 0.8rem;color:#5c4617;font-size:0.85rem;">
+            <strong>OpenAlex lookup is unavailable right now</strong> (its free daily budget for your network's IP address is used up; it resets at midnight UTC).
+            Names already in our database are still matched above. If you know your OpenAlex author ID, you can go directly to
+            <code>https://simondedman.github.io/elasmo_analyses/validate/A&lt;your-id&gt;.html</code>.
+          </p>`;
+
+    async function fetchJson(url) {
+      const response = await fetch(url);
+      if (response.status === 429) { const e = new Error('rate-limited'); e.rateLimited = true; throw e; }
+      if (!response.ok) throw new Error(`OpenAlex API error: ${response.status}`);
+      return response.json();
+    }
+
+    /* OpenAlex: the /autocomplete endpoint is what openalex.org's own search box
+       uses. It prefix-matches and is free of the daily budget; the /authors?search=
+       list endpoint is whole-word only and costs 10 credits per call, so it is
+       used just once, as a last resort, when nothing else matched. */
+    async function searchOpenAlex(query, allowPaidFallback) {
+      const q = encodeURIComponent(query.trim());
+      let data = await fetchJson(`https://api.openalex.org/autocomplete/authors?q=${q}`);
+      let results = (data.results || []).map(a => ({
+        id: a.id.replace('https://openalex.org/', ''),
+        name: a.display_name,
+        institution: a.hint || '',
+        works: a.works_count,
+      }));
+      if (results.length === 0 && allowPaidFallback) {
+        data = await fetchJson(`https://api.openalex.org/authors?search=${q}&per_page=10`);
+        results = (data.results || []).map(a => ({
+          id: a.id.replace('https://openalex.org/', ''),
+          name: a.display_name,
+          institution: (a.last_known_institutions && a.last_known_institutions[0]) ? a.last_known_institutions[0].display_name : '',
+          works: a.works_count,
+        }));
+      }
+      return results;
+    }
+
+    let searchSeq = 0;  // responses arriving out of order must not overwrite a newer query's list
+
     async function searchAuthors(query) {
       const container = document.getElementById('search-results');
+      const seq = ++searchSeq;
       if (!query || query.trim().length < 2) {
         container.innerHTML = '';
         return;
       }
 
-      container.innerHTML = '<p class="searching">Searching...</p>';
+      // 1. Our own database, instantly.
+      const local = LOCAL_INDEX
+        ? AuthorSearch.searchLocal(LOCAL_INDEX, query, 10).map(e => ({
+            id: e.id, name: e.name, institution: e.institution, works: e.count, worksLabel: 'papers in our database', inDb: true }))
+        : [];
+      const shown = new Set(local.map(r => r.id));
+      renderResults(local, local.length ? '<p class="searching">Checking OpenAlex for other matches…</p>' : '<p class="searching">Searching OpenAlex…</p>');
 
+      // 2. OpenAlex for everyone else.
+      let note = '';
+      let remote = [];
       try {
-        const url = `https://api.openalex.org/authors?search=${encodeURIComponent(query.trim())}&per_page=10`;
-        const response = await fetch(url);
-        if (response.status === 429) {
-          container.innerHTML = `<p class="error" style="background:#fff3cd;border-left:3px solid #B6862C;padding:0.6rem 0.8rem;color:#5c4617;">
-            <strong>OpenAlex search is temporarily rate-limited.</strong><br>
-            This resets daily at midnight UTC. Meanwhile, if you know your OpenAlex author ID, you can go directly to your validation page:<br>
-            <code>https://simondedman.github.io/elasmo_analyses/validate/A&lt;your-id&gt;.html</code><br>
-            Find your ID at <a href="https://openalex.org" target="_blank" rel="noopener">openalex.org</a> by searching your name and copying the ID from the URL (e.g. <code>A5086753224</code>).
-          </p>`;
-          return;
-        }
-        if (!response.ok) throw new Error(`OpenAlex API error: ${response.status}`);
-        const data = await response.json();
-        renderResults(data.results || []);
+        remote = await searchOpenAlex(query, local.length === 0);
       } catch (err) {
-        container.innerHTML = `<p class="error">Search failed: ${err.message}. Please try again.</p>`;
+        note = err.rateLimited ? RATE_LIMIT_NOTE : `<p class="error">OpenAlex lookup failed: ${esc(err.message)}.</p>`;
       }
+      if (seq !== searchSeq) return;  // a newer keystroke has taken over
+      const merged = local.concat(remote
+        .filter(r => !shown.has(r.id))
+        .map(r => Object.assign(r, { inDb: KNOWN_IDS.has(r.id) })));
+      if (local.length === 0 && remote.length === 0 && LOCAL_INDEX === null && localIndexError) {
+        note += `<p class="error">Our author index failed to load (${esc(localIndexError.message)}); reload the page to try again.</p>`;
+      }
+      renderResults(merged, note);
     }
 
     const debouncedSearch = debounce(searchAuthors, 300);
