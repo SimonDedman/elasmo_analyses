@@ -45,6 +45,8 @@ from ingest_pdfs import (  # noqa: E402
     load_database,
     match_pdf,
     normalise_doi,
+    update_papers_data_json,
+    update_tracking_dbs,
 )
 
 LIBRARIES = PROJECT / "database/others_libraries"
@@ -307,10 +309,19 @@ def main() -> int:
                     })
         else:
             filed_map: dict = {}
-            _ids, _dois, _names, lines = ingest_source(
+            ids, _dois, names, lines = ingest_source(
                 person, todo, doi_lookup, author_year_lookup, all_rows,
                 filed_map=filed_map)
             log_lines.extend(lines)
+            # Close the queue rows. Until 2026-10-04 this script filed the PDFs
+            # and dropped the ids, so every delivery stayed on the todo list
+            # (the 190 "already filed" rows found on 2026-09-23). By id only:
+            # DOIs are not paper-unique (see update_papers_data_json).
+            if ids:
+                n_json = update_papers_data_json(ids, set(), timestamp,
+                                                 f"coauthor-scan:{person}")
+                print(f"  papers_data.json: {n_json} entries removed (no longer missing)")
+                update_tracking_dbs(ids, names, timestamp, f"coauthor-scan:{person}")
             matched_total += len(filed_map)
             for p in todo:
                 if str(p) in filed_map:

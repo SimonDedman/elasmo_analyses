@@ -235,7 +235,10 @@ def papers_by_person():
     per = defaultdict(set)
     if SCAN_STATE.exists():
         for path, v in json.load(open(SCAN_STATE)).get("seen", {}).items():
-            per[v.get("person") or "?"].add(str(v.get("literature_id") or path))
+            # A point is a FILED paper. Entries without a literature_id are files the
+            # scan holds for review (reviews, supplements, wrong papers): no credit.
+            if v.get("literature_id"):
+                per[v.get("person") or "?"].add(str(v["literature_id"]))
     if TRACKER.exists():
         import sqlite3
 
