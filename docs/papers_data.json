@@ -11654,7 +11654,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Rapport de la Commission Internationale pour la Mer Méditerranée, 41, 326",
-  "triage": "conference_abstract"
+  "triage": "conference_abstract",
+  "prior_false_dl": "the 2017 Arabian Seas devil ray paper was sent; we need the Mobula japanica Mediterranean paper"
  },
  {
   "id": 868,
@@ -59322,7 +59323,8 @@
   "journal_clean": "Faszination Meeresforschung. Ein ökologisches Lesebuch. G. & I. Hempel",
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
-  "cascade_checked": true
+  "cascade_checked": true,
+  "prior_false_dl": "a 2026 Steinkern article on chimaera egg capsules was sent; we need Stehmann 2006"
  },
  {
   "id": 3384,
@@ -65553,11 +65555,11 @@
   "authors": "Heemstra, P.C. & Heemstra, E. (2004)",
   "title": "Coastal fishes of southern Africa.",
   "journal": "NISC and SAIAB. i-xxiv +",
-  "doi": "10.2989/18142320509504093",
+  "doi": "",
   "priority_group": 1,
   "last_status": "needs_library",
-  "notes": "",
-  "oa_status": "closed",
+  "notes": "DOI 10.2989/18142320509504093 removed 2026-10-05: found by our own DOI recovery, it resolves to a review of this work.",
+  "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
   "oa_license": "",
@@ -65565,7 +65567,8 @@
   "publisher": "National Inquiry Services Center (NISC)",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "a review of this book (Compagno 2005) was sent; we need the book"
  },
  {
   "id": 3790,
@@ -70163,7 +70166,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Aqua, International Journal of Ichthyology, 7(2), 45–60",
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "Orlov's 2001 conference paper was sent; we need the 2003 paper with this exact title"
  },
  {
   "id": 4060,
@@ -75643,7 +75647,8 @@
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Verlag: Pfeil, F., Munich, 144pp"
+  "findspot_raw": "Verlag: Pfeil, F., Munich, 144pp",
+  "prior_false_dl": "a 2023 Schwaebische Heimat article was sent; we need the 2001 book"
  },
  {
   "id": 4357,
@@ -87932,19 +87937,20 @@
   "authors": "Hoese, H.D. & Moore, R.H. (1998)",
   "title": "Fishes of the Gulf of Mexico. 2nd Ed. Texas, Louisiana and adjacent waters.",
   "journal": "Texas A&M Press",
-  "doi": "10.18785/goms.1502.08",
+  "doi": "",
   "priority_group": 1,
   "last_status": "needs_library",
-  "notes": "",
-  "oa_status": "bronze",
-  "oa_url": "https://aquila.usm.edu/cgi/viewcontent.cgi?article=1288&context=goms",
+  "notes": "DOI 10.18785/goms.1502.08 removed 2026-10-05: found by our own DOI recovery, it resolves to a review of this work.",
+  "oa_status": "unknown",
+  "oa_url": "",
   "oa_host_type": "",
   "oa_license": "",
   "journal_clean": "Texas A&M Press",
   "publisher": "University of Southern Mississippi",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "doi_source": "crossref_nearmiss_review_2026-09-14"
+  "doi_source": "crossref_nearmiss_review_2026-09-14",
+  "prior_false_dl": "a review of this book (Cowan 1997) was sent; we need the book"
  },
  {
   "id": 4989,
@@ -102943,7 +102949,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Neues Jahrbuch für Geologie und Paläontologie, Abhandlungen, 192(1), 1–16",
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "Duffin & Delsate 1995 (Myriacanthus paradoxus, Belgium) was sent; we need Duffin 1994 (British Late Triassic)"
  },
  {
   "id": 5746,
@@ -106254,7 +106261,8 @@
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Stuttgarter Beiträge zur Naturkunde, Serie B, 193, 1–13"
+  "findspot_raw": "Stuttgarter Beiträge zur Naturkunde, Serie B, 193, 1–13",
+  "prior_false_dl": "Delsate & Duffin 1993 (Sinemurien de Belgique) was sent; we need Duffin 1993 (Late Jurassic teeth, southern Germany)"
  },
  {
   "id": 5923,
@@ -180257,12 +180265,12 @@
   "authors": "Clark, R.S. (1926)",
   "title": "Rays and skates. A revision of the European species.",
   "journal": "Fishery Board for Scotland. Scientific Investigations, 1926(1), 1–66",
-  "doi": "10.1038/118800c0",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: ",
-  "oa_status": "bronze",
-  "oa_url": "https://www.nature.com/articles/118800c0.pdf",
+  "notes": "Added by SR sync. PDF URL:  DOI 10.1038/118800c0 removed 2026-10-05: found by our own DOI recovery, it resolves to a review of this work.",
+  "oa_status": "unknown",
+  "oa_url": "",
   "oa_host_type": "",
   "oa_license": "",
   "journal_clean": "",
@@ -180270,7 +180278,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Fishery Board for Scotland. Scientific Investigations, 1926(1), 1–66",
-  "doi_source": "crossref_nearmiss_review_2026-09-14"
+  "doi_source": "crossref_nearmiss_review_2026-09-14",
+  "prior_false_dl": "a one-page Nature notice was sent; we need the Fishery Board report"
  },
  {
   "id": 9825,
@@ -181600,7 +181609,8 @@
   "publisher": "Oxford University Press",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Genome Biology and Evolution, 17(10), Article evaf176"
+  "findspot_raw": "Genome Biology and Evolution, 17(10), Article evaf176",
+  "prior_false_dl": "the supplementary materials were sent; we need the article itself"
  },
  {
   "id": 9905,
@@ -187658,7 +187668,8 @@
   "publisher": "Canadian Science Publishing",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Canadian Journal of Earth Sciences, 63, Article 22"
+  "findspot_raw": "Canadian Journal of Earth Sciences, 63, Article 22",
+  "prior_false_dl": "the authors' Reply (Bateman & Larsson) was sent twice; we need Greenfield's Comment"
  },
  {
   "id": 10272,
@@ -191557,7 +191568,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Bulletin de la Société Belge de Géologie, de Paléontologie et d'Hydrologie, 13(4), 205–215",
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "a Geological Magazine review (by A.S.W.) was sent; we need Karpinsky's paper"
  },
  {
   "id": 10509,
@@ -202311,7 +202323,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Mémoires de la Société Académique de l'Arrondissement de Boulogne–sur–Mer, 2: 53–152, pl. 1–4.",
-  "doi_source": "crossref_nearmiss_review_2026-09-14"
+  "doi_source": "crossref_nearmiss_review_2026-09-14",
+  "prior_false_dl": "a Geological Magazine review was sent; we need Sauvage's work"
  },
  {
   "id": 11142,
@@ -203027,7 +203040,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "American Naturalist, 50, 641–663",
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "a two-page German abstract (Referat) was sent; we need the American Naturalist paper, 50: 641-663"
  },
  {
   "id": 11180,
@@ -206027,7 +206041,8 @@
   "publisher": "Springer",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "In The Indian zoological memoirs on Indian animal types. Lucknow, Methodist Publishing House, vol. 2:116 p"
+  "findspot_raw": "In The Indian zoological memoirs on Indian animal types. Lucknow, Methodist Publishing House, vol. 2:116 p",
+  "prior_false_dl": "a Nature review was sent; we need the memoir"
  },
  {
   "id": 11349,
@@ -207688,7 +207703,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Atti della Reale Accademia delle Scienze Fisiche e Matematiche di Napoli, 4, Append. 3(2), 1–28",
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "a Geological Magazine review of this monograph was sent; we need the monograph"
  },
  {
   "id": 11439,
@@ -209335,7 +209351,8 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "British Museum (Natural History): 121 p., 162 fig.",
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "a Geological Magazine review was sent; we need the monograph"
  },
  {
   "id": 11529,
@@ -212400,7 +212417,8 @@
   "publisher": "Springer",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Scientific Reports, 16(1), Article 13763"
+  "findspot_raw": "Scientific Reports, 16(1), Article 13763",
+  "prior_false_dl": "the one-page Correction was sent; we need the article itself"
  },
  {
   "id": 11755,
@@ -214703,7 +214721,8 @@
   "publisher": "Company of Biologists",
   "findspot_raw": "Development, 153(9), Article dev205258",
   "cascade_stage": "needs_library",
-  "cascade_checked": true
+  "cascade_checked": true,
+  "prior_false_dl": "the supplementary figures were sent; we need the article itself"
  },
  {
   "id": 11962,
@@ -216838,7 +216857,8 @@
   "findspot_raw": "Fishery Bulletin, 124(3), 71–84",
   "doi_source": "crossref_recovery_2026-09",
   "cascade_stage": "needs_library",
-  "cascade_checked": true
+  "cascade_checked": true,
+  "prior_false_dl": "the supplementary materials were sent; we need the article (Fishery Bulletin 124: 71-84)"
  },
  {
   "id": 12152,
@@ -217543,7 +217563,8 @@
   "findspot_raw": "Memoirs of the Geological Survey of New South Wales. Palaentology, 10: V + 32 pp.",
   "doi_source": "crossref_nearmiss_review_2026-09-14",
   "cascade_stage": "needs_library",
-  "cascade_checked": true
+  "cascade_checked": true,
+  "prior_false_dl": "a one-page Nature notice was sent; we need the 32-page memoir"
  },
  {
   "id": 12216,
@@ -217825,19 +217846,20 @@
   "authors": "Klimpel, S. & Seehagen, A. & Palm, H.W. & Rosenthal, H. (2001)",
   "title": "Deep-water Metazoan Fish Parasites of the World.",
   "journal": "Logos Verlag",
-  "doi": "10.14411/fp.2002.004",
+  "doi": "",
   "priority_group": 1,
   "last_status": "needs_library",
-  "notes": "2026-09-18: closed in error by the night's filing pass and reopened: the open-access download was a 1-page notice of the book, not the 1,316-page book.",
-  "oa_status": "bronze",
-  "oa_url": "http://folia.paru.cas.cz/doi/10.14411/fp.2002.004.pdf",
+  "notes": "2026-09-18: closed in error by the night's filing pass and reopened: the open-access download was a 1-page notice of the book, not the 1,316-page book. DOI 10.14411/fp.2002.004 removed 2026-10-05: found by our own DOI recovery, it resolves to a review of this work.",
+  "oa_status": "unknown",
+  "oa_url": "",
   "oa_host_type": "",
   "oa_license": "",
   "journal_clean": "Logos Verlag",
   "publisher": "Biology Centre, AS CR",
   "cascade_stage": "unpaywall",
   "cascade_checked": true,
-  "doi_source": "crossref_recovery_2026-09"
+  "doi_source": "crossref_recovery_2026-09",
+  "prior_false_dl": "a review of this book (Scholz 2002) was sent; we need the book"
  },
  {
   "literature_id": "20658",
@@ -218320,7 +218342,8 @@
   "doi": "10.1063/5.0154914",
   "journal": "Physics of Fluids",
   "notes": "re-added 2026-09-19: PDF was misfiled and has been renamed onto its real paper",
-  "last_status": "needs_pdf"
+  "last_status": "needs_pdf",
+  "publisher": "AIP Publishing"
  },
  {
   "literature_id": "10592",
@@ -218351,7 +218374,7 @@
   "journal": "Journal of Experimental Biology",
   "journal_clean": "",
   "doi": "10.1242/jeb.00504",
-  "publisher": "",
+  "publisher": "Company of Biologists",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218393,7 +218416,7 @@
   "journal": "Journal of Fish Biology",
   "journal_clean": "",
   "doi": "10.1111/j.1095-8649.1987.tb05782.x",
-  "publisher": "",
+  "publisher": "Wiley",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218456,7 +218479,7 @@
   "journal": "Parasitology Research",
   "journal_clean": "",
   "doi": "10.1007/s00436-011-2327-2SEP2011SEP2011",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218477,7 +218500,7 @@
   "journal": "Journal of Experimental Marine Biology and Ecology",
   "journal_clean": "",
   "doi": "10.1016/j.jembe.2006.07.018",
-  "publisher": "",
+  "publisher": "Elsevier",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218519,7 +218542,7 @@
   "journal": "Evolution & Development",
   "journal_clean": "",
   "doi": "10.1111/j.1525-142X.2012.00543.x",
-  "publisher": "",
+  "publisher": "Wiley",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218582,7 +218605,7 @@
   "journal": "Ecotoxicology",
   "journal_clean": "",
   "doi": "10.1007/2Fs10646-014-1403-7",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218603,7 +218626,7 @@
   "journal": "Palaeogeography",
   "journal_clean": "",
   "doi": "10.1016/S0031-0182(03)00663-1",
-  "publisher": "",
+  "publisher": "Elsevier",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218750,7 +218773,7 @@
   "journal": "Mitochondrial DNA Part B",
   "journal_clean": "",
   "doi": "10.1080/23802359.2016.1186519",
-  "publisher": "",
+  "publisher": "Taylor & Francis",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218855,7 +218878,7 @@
   "journal": "Marine Biology",
   "journal_clean": "",
   "doi": "10.1007/s00227-020-03763-1",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218876,7 +218899,7 @@
   "journal": "Science",
   "journal_clean": "",
   "doi": "10.1126/science.abj9522",
-  "publisher": "",
+  "publisher": "AAAS (Science)",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218897,7 +218920,7 @@
   "journal": "Science",
   "journal_clean": "",
   "doi": "10.1126/science.abk1733",
-  "publisher": "",
+  "publisher": "AAAS (Science)",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218939,7 +218962,7 @@
   "journal": "In R.W. Jabado",
   "journal_clean": "",
   "doi": "10.59216/ssg.gsrsrc.2024",
-  "publisher": "",
+  "publisher": "IUCN SSC Shark Specialist Group",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218960,7 +218983,7 @@
   "journal": "In R.W. Jabado",
   "journal_clean": "",
   "doi": "10.59216/ssg.gsrsrc.2024",
-  "publisher": "",
+  "publisher": "IUCN SSC Shark Specialist Group",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -218981,7 +219004,7 @@
   "journal": "In R.W. Jabado",
   "journal_clean": "",
   "doi": "10.59216/ssg.gsrsrc.2024",
-  "publisher": "",
+  "publisher": "IUCN SSC Shark Specialist Group",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219002,7 +219025,7 @@
   "journal": "In R.W. Jabado",
   "journal_clean": "",
   "doi": "10.59216/ssg.gsrsrc.2024",
-  "publisher": "",
+  "publisher": "IUCN SSC Shark Specialist Group",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219023,7 +219046,7 @@
   "journal": "In R.W. Jabado",
   "journal_clean": "",
   "doi": "10.59216/ssg.gsrsrc.2024",
-  "publisher": "",
+  "publisher": "IUCN SSC Shark Specialist Group",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219044,7 +219067,7 @@
   "journal": "Marine Biology",
   "journal_clean": "",
   "doi": "10.1007/s00227-002-0914-6",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219107,7 +219130,7 @@
   "journal": "Journal of Fish Biology",
   "journal_clean": "",
   "doi": "10.1111/j.1095-8649.1987.tb05784.x",
-  "publisher": "",
+  "publisher": "Wiley",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219149,7 +219172,7 @@
   "journal": "Journal of General Physiology",
   "journal_clean": "",
   "doi": "10.1085/jgp.44.4.805",
-  "publisher": "",
+  "publisher": "Rockefeller University Press",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219170,7 +219193,7 @@
   "journal": "Journal of Comparative Physiology A: Neuroethology",
   "journal_clean": "",
   "doi": "10.1007/BF00188121",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219191,7 +219214,7 @@
   "journal": "Environmental Biology of Fishes",
   "journal_clean": "",
   "doi": "10.1023/A:1007358922066",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219212,7 +219235,7 @@
   "journal": "Systematic Parasitology",
   "journal_clean": "",
   "doi": "10.1023/B:SYPA.0000019085.44664.6d",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219254,7 +219277,7 @@
   "journal": "Biochemistry",
   "journal_clean": "",
   "doi": "10.1021/bi020151+",
-  "publisher": "",
+  "publisher": "American Chemical Society (ACS)",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219296,7 +219319,7 @@
   "journal": "Naturwissenschaften",
   "journal_clean": "",
   "doi": "10.1007/s00114-005-0614-4",
-  "publisher": "",
+  "publisher": "Springer",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219317,7 +219340,7 @@
   "journal": "European Journal of Biochemistry / FEBS",
   "journal_clean": "",
   "doi": "10.1111/j.1432-1033.1991.tb16016.x",
-  "publisher": "",
+  "publisher": "Wiley",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219338,7 +219361,7 @@
   "journal": "General Pharmacology",
   "journal_clean": "",
   "doi": "10.1016/0306-3623(77)90067-2",
-  "publisher": "",
+  "publisher": "Elsevier",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219380,7 +219403,7 @@
   "journal": "Journal of Experimental Marine Biology and Ecology",
   "journal_clean": "",
   "doi": "10.1016/j.jembe.2010.01.013",
-  "publisher": "",
+  "publisher": "Elsevier",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219443,7 +219466,7 @@
   "journal": "Journal of Ultrastructure Research",
   "journal_clean": "",
   "doi": "10.1016/S0022-5320(67)90279-1",
-  "publisher": "",
+  "publisher": "Elsevier",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
@@ -219583,7 +219606,7 @@
   "oa_host_type": "",
   "oa_license": "",
   "journal_clean": "",
-  "publisher": ""
+  "publisher": "Geological Society of London"
  },
  {
   "id": 10483,

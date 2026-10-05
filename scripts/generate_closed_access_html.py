@@ -189,6 +189,7 @@ USER_OPTIONS = '<option value="">--</option>' + "".join(
 
 CSS_EXTRA = """
     .citation { color: #566573; font-size: 0.85em; margin: 3px 0; }
+    .false-dl { display: inline-block; margin: 4px 0; font-size: 0.85em; border-radius: 4px; padding: 2px 8px; background: #fdebd0; color: #7e5109; border: 1px solid #e59866; }
     .oa-badge { display: inline-block; font-size: 0.75em; border-radius: 4px; padding: 1px 6px; margin-left: 8px; background: #d5f5e3; color: #1e8449; }
     .alt-google { background: #566573; } .alt-google:hover { background: #3d4a55; }
     .alt-bhl    { background: #117864; } .alt-bhl:hover    { background: #0b5345; }
@@ -362,12 +363,17 @@ def paper_card(p, i):
         buttons.append(f'<a href="{scholar}" class="alt-link alt-schol" target="_blank">Scholar</a>')
     badge = f'<span class="oa-badge">flagged open access</span>' if doi and oa in OA_OPEN else ""
     cite = esc(p.get("findspot_raw") or "")
+    # Someone already delivered the wrong thing for this row (a review of the work, the
+    # supplement, a reply, a sibling paper): see flag_prior_false_downloads.py.
+    warn = (f'<div class="false-dl">&#9888; Prior false download: {esc(p["prior_false_dl"])}</div>'
+            if p.get("prior_false_dl") else "")
     return (f'<div class="paper" id="paper-{lid}" data-key="{esc(key)}" data-title="{esc(raw_title)}">'
             f'<span class="paper-number">{i}</span><span class="paper-id">ID {lid}</span>'
             f'{f"<span class=doi>{esc(doi)}</span>" if doi else ""}{badge}'
             f'<div class="title">{esc(raw_title)}</div><div class="authors">{esc(p.get("authors"))}</div>'
             f'<div class="year">Year: {esc(p.get("year"))}</div>'
             f'{f"<div class=citation>{cite}</div>" if cite else ""}'
+            f'{warn}'
             f'{"".join(buttons)}'
             f'<div class="outcome"><button class="got" onclick="got(this)">Got it</button>'
             f'<button class="undo" style="display:none" onclick="undo(this)">Undo</button>'

@@ -23,6 +23,7 @@
         .oa-hybrid { background: #3498db; color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 11px; }
         .oa-bronze { background: #cd6155; color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 11px; }
         .oa-closed { background: #7f8c8d; color: #fff; padding: 1px 6px; border-radius: 3px; font-size: 11px; }
+        .false-dl { display: inline-block; background: #fdebd0; color: #7e5109; border: 1px solid #e59866; padding: 1px 6px; border-radius: 3px; font-size: 11px; }
         .oa-unknown { background: #bdc3c7; color: #000; padding: 1px 6px; border-radius: 3px; font-size: 11px; }
         .priority-1 { font-weight: bold; color: #c0392b; }
         .priority-2 { color: #e67e22; }
@@ -332,7 +333,8 @@
                 var jn=escapeHtml(r.journal_clean||r.journal||'');
                 var pub=escapeHtml(r.publisher||'');
                 var ab='<button class="btn-unclicked" onclick="markClicked(\''+escapeAttr(keyOf(r))+'\',\''+escapeAttr(r.title)+'\')">Mark</button>';
-                return[dl,escapeHtml(r.title),'<span title="'+au+'">'+aus+'</span>',r.year,jn,pub,ob,
+                var warn=r.prior_false_dl?' <span class="false-dl">&#9888; prior false download: '+escapeHtml(r.prior_false_dl)+'</span>':'';
+                return[dl,escapeHtml(r.title)+warn,'<span title="'+au+'">'+aus+'</span>',r.year,jn,pub,ob,
                     '<span class="priority-'+r.priority_group+'">'+r.priority_group+'</span>',ab];
             });
 
