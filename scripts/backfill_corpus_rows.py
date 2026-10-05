@@ -186,6 +186,12 @@ def main() -> int:
 
         # New rows are invisible to extraction until the id -> PDF map knows them.
         subprocess.run([sys.executable, str(ROOT / "scripts/build_pdf_id_map.py")], check=True)
+        # That rebuild diffs against the previous map and so consumes the list of
+        # records whose PDF moved. Keep a copy for refresh_pdf_map_and_extract.sh,
+        # whose own rebuild straight afterwards would otherwise report no change.
+        changes = ROOT / "outputs/pdf_id_map_changes.csv"
+        if changes.exists():
+            shutil.copy2(changes, ROOT / "outputs/pdf_id_map_changes_backfill.csv")
         ids = {r["literature_id"] for r in to_add}
         with_pdf = sr.run_incremental_extraction(ids, log)
         print(f"extracted: {len(ids):,} rows, {with_pdf:,} with PDF text")

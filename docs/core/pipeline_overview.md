@@ -22,10 +22,10 @@ rather than editing a number in place.
 
 | Metric | Value | Notes |
 |--------|------:|-------|
-| Papers catalogued | 34,390 | rows in the enriched parquet |
+| Papers catalogued | 34,394 | rows in the enriched parquet |
 | Parquet columns | 1,748 | all families plus metadata |
-| PDF files on disk | 21,867 | raw count; over-counts supplements and duplicates |
-| Evidence rows | 430,965 | audit trail across 19,695 papers |
+| PDF files on disk | 21,850 | raw count; over-counts supplements and duplicates |
+| Evidence rows | 430,696 | audit trail across 19,685 papers |
 | Unique authors (OpenAlex) | 30,316 | `outputs/openalex_unique_authors.csv` |
 | Techniques in taxonomy | 215 | `data/master_techniques.csv` (NOT the taxonomy DB, whose table is empty) |
 | Species columns | 1,308 | `sp_` prefix |

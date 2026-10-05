@@ -17,6 +17,7 @@ echo "== 0/3 corpus rows for every master record =="
 echo "STEP 0/3 corpus rows $(date '+%H:%M:%S %Z')" >> "$MARK"
 # A record filed by the drop-folder scan or the cascade has no corpus row unless
 # this runs: the map and the extraction below only see records in the parquet.
+rm -f outputs/pdf_id_map_changes_backfill.csv
 python3 scripts/backfill_corpus_rows.py --apply
 
 echo "== 1/3 rebuilding the id -> PDF map =="
@@ -34,6 +35,10 @@ import extract_schema_columns as X
 stamp = sys.argv[1]
 # build_pdf_id_map.py diffs against the previous map, so this IS the re-extract set
 changed = {r["literature_id"] for r in csv.DictReader(open("outputs/pdf_id_map_changes.csv"))}
+# step 0 rebuilt the map too when it added corpus rows; its diff holds the real changes
+import os
+if os.path.exists("outputs/pdf_id_map_changes_backfill.csv"):
+    changed |= {r["literature_id"] for r in csv.DictReader(open("outputs/pdf_id_map_changes_backfill.csv"))}
 corpus = {str(v).split(".")[0] for v in
           pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id"]).literature_id}
 todo = sorted(changed & corpus)

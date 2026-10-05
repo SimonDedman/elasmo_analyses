@@ -66,7 +66,7 @@ yt7 <- min(yt5 - stage_total_h(N5), yt6 - stage_total_h(N6)) - COL_GAP
 
 ## -- Stage 1: Data Sources ----------------------------------------------------
 s1 <- make_boxes(1, X_L, yt1,
-  c("Shark-References DB\n(34,390 papers)",
+  c("Shark-References DB\n(34,394 papers)",
     "OpenAlex API\n(authors + citations)",
     "Sharkipedia API\n(species traits)",
     "Genderize.io\n(gender inference)",
@@ -75,7 +75,7 @@ s1 <- make_boxes(1, X_L, yt1,
 
 ## -- Stage 2: Paper Acquisition -----------------------------------------------
 s2 <- make_boxes(2, X_R, yt2,
-  c("PDF library\n(21,867 PDFs)",
+  c("PDF library\n(21,850 PDFs)",
     "Shark-References NAS\n(Jurgen uploads)",
     "Direct download &\ncoauthor contributions",
     "Download tracking\nweb interface"),
@@ -288,7 +288,7 @@ p <- ggplot() +
   ) +
   labs(
     title    = "EEA 2025 Data Panel: Project Pipeline",
-    subtitle = "34,390 papers  |  21,867 PDFs  |  1,748 schema columns  |  30,316 authors"
+    subtitle = "34,394 papers  |  21,850 PDFs  |  1,748 schema columns  |  30,316 authors"
   ) +
   coord_cartesian(xlim = c(0, 20), ylim = c(y_lo, y_hi), expand = FALSE) +
 
