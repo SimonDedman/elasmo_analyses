@@ -30,7 +30,7 @@ The work began as a panel session at the **European Elasmobranch Association (EE
 
 | Metric | Value |
 |--------|-------|
-| Papers catalogued | ~34,390 |
+| Papers catalogued | ~34,420 |
 | PDF files on disk | ~21,850 |
 | Extraction columns | ~1,750 total; 127 binary across the 6 core schemas |
 | Evidence rows (audit trail) | ~431,000 across ~19,700 papers |

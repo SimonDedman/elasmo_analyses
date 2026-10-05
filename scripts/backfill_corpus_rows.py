@@ -64,9 +64,30 @@ def latest_master() -> Path:
     return files[-1]
 
 
+MERGED_CSV = ROOT / "outputs/merged_records.csv"        # literature_id, merged_into, ...
+ALLOW_CSV = ROOT / "outputs/corpus_backfill_allow.csv"  # literature_id, why
+
+
+def _id_column(path: Path) -> set:
+    if not path.exists():
+        return set()
+    with open(path, newline="", encoding="utf-8") as fh:
+        return {_lid(r.get("literature_id")) for r in csv.DictReader(fh)} - {""}
+
+
 def plan(df_base: pd.DataFrame, master: Path):
-    """Split master records lacking a base row into (to_add, held)."""
+    """Split master records lacking a base row into (to_add, held).
+
+    Two hand-kept lists settle what the guards below cannot. A record in
+    merged_records.csv is a duplicate of another: it is never added, and its
+    existing row never blocks its canonical record. A record in
+    corpus_backfill_allow.csv has been confirmed a distinct paper despite an
+    identical title and year (a multi-part work) or a DOI that Shark References
+    put on the wrong record: it is added without the guards.
+    """
+    merged, allowed = _id_column(MERGED_CSV), _id_column(ALLOW_CSV)
     known = {_lid(v) for v in df_base["literature_id"]} - {""}
+    df_base = df_base[~df_base["literature_id"].map(_lid).isin(merged)]
     doi_rows = sr.build_parquet_doi_rows(df_base)
     key_dois: dict = {}
     for title, year, doi in zip(df_base["title"], df_base["year"], df_base["doi"]):
@@ -80,7 +101,7 @@ def plan(df_base: pd.DataFrame, master: Path):
     with open(master, encoding="utf-8") as f:
         for r in csv.DictReader(f):
             lid = _lid(r.get("literature_id"))
-            if not lid or lid in known or lid in seen:
+            if not lid or lid in known or lid in seen or lid in merged:
                 continue
             seen.add(lid)
             title = sr.master_row_title(r).strip()
@@ -95,6 +116,8 @@ def plan(df_base: pd.DataFrame, master: Path):
             why = other = ""
             if not title:
                 why = "no title in the master CSV"
+            elif lid in allowed:
+                pass
             elif doi and doi in doi_rows:
                 rows = doi_rows[doi]
                 other = ", ".join(x[0] for x in rows)
