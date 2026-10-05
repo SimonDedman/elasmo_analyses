@@ -2022,6 +2022,21 @@ def main():
             else:
                 log.info("  No new IDs to extract this run")
 
+            # Every record on the master CSV gets a corpus row, downloaded or
+            # not. Until 2026-10-04 only papers downloaded on this run did, so
+            # 2,652 records (575 with a PDF filed later by another route) had
+            # no row and were never extracted. Idempotent; never aborts the sync.
+            try:
+                r = subprocess.run(
+                    [sys.executable, str(Path(__file__).resolve().parent / "backfill_corpus_rows.py"),
+                     "--apply"], capture_output=True, text=True, timeout=3 * 3600)
+                for line in r.stdout.splitlines()[-8:]:
+                    log.info(f"  corpus backfill: {line}")
+                if r.returncode != 0:
+                    log.error(f"  corpus backfill failed (rc={r.returncode}): {r.stderr[-500:]}")
+            except Exception as e:
+                log.error(f"  corpus backfill failed: {e}")
+
         # --- Phase 5c: Collapse byte-identical PDFs onto shared inodes ---
         # A scanned volume backs many articles, so the library accumulates
         # exact copies from every acquisition route, not just BHL: journal

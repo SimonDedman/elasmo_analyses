@@ -13,6 +13,12 @@ STAMP=$(date +%Y-%m-%d)
 MARK="logs/refresh_pdf_map.state"
 echo "STARTED $(date '+%Y-%m-%d %H:%M:%S %Z')" > "$MARK"
 
+echo "== 0/3 corpus rows for every master record =="
+echo "STEP 0/3 corpus rows $(date '+%H:%M:%S %Z')" >> "$MARK"
+# A record filed by the drop-folder scan or the cascade has no corpus row unless
+# this runs: the map and the extraction below only see records in the parquet.
+python3 scripts/backfill_corpus_rows.py --apply
+
 echo "== 1/3 rebuilding the id -> PDF map =="
 echo "STEP 1/3 map $(date '+%H:%M:%S %Z')" >> "$MARK"
 python3 scripts/build_pdf_id_map.py --verify 200
