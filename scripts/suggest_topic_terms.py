@@ -264,15 +264,9 @@ def main():
         return fightin(df[i][w], tot[i], df[j][w], tot[j], pooled[w], ptot, args.prior)
 
     authors = author_tokens()
-    author_rows = []
     cands = []
     for w, c in df[1].items():
         if c < args.min_in:
-            continue
-        if is_author(w, authors):
-            z = score(w, 1)
-            if z > 0:
-                author_rows.append((w, z, c, df[0][w]))
             continue
         rel = existing_relation(w, matchers)
         if rel and rel[0] == "same" and not args.keep_existing:
@@ -285,10 +279,9 @@ def main():
     cands.sort(key=lambda x: -x[1])
     all_rank = {w: i + 1 for i, (w, _, _) in enumerate(cands)}  # full ranking, for the control
     cands = cands[:args.top]
-    author_rows.sort(key=lambda x: -x[1])
     negs = []
     for w, c in df[0].items():
-        if c < args.min_in or is_author(w, authors):
+        if c < args.min_in:
             continue
         rel = existing_relation(w, matchers)
         if rel and rel[0] == "same" and not args.keep_existing:
@@ -303,10 +296,10 @@ def main():
     anchors = []
     for w, c in df[1].items():
         cov = c / max(n_in, 1)
-        if cov < .5 or is_author(w, authors):
+        if cov < .5:
             continue
         rel = existing_relation(w, matchers)
-        anchors.append(dict(term=w, in_cov=round(100 * cov, 1), out_cov=round(100 * df[0][w] / max(n_out, 1), 1),
+        anchors.append(dict(term=w.title() if is_author(w, authors) else w, author="yes" if is_author(w, authors) else "", in_cov=round(100 * cov, 1), out_cov=round(100 * df[0][w] / max(n_out, 1), 1),
                             n_in=c, n_out=df[0][w], existing=("yes" if rel and rel[0] == "same" else ("extends " + rel[1]) if rel else "")))
     anchors.sort(key=lambda a: (-a["in_cov"], a["out_cov"]))
     anchors = anchors[:60]
@@ -343,7 +336,8 @@ def main():
     for w, z, ext in cands:
         nin, nout = df[1][w], df[0][w]
         sc = sec_df[w]
-        rows.append(dict(term=w, n_in=nin, n_out=nout, share_in_pct=round(100 * nin / max(n_in, 1), 1),
+        au = is_author(w, authors)
+        rows.append(dict(term=w.title() if au else w, author="yes" if au else "", n_in=nin, n_out=nout, share_in_pct=round(100 * nin / max(n_in, 1), 1),
                          z=round(z, 2), section=sc.most_common(1)[0][0] if sc else "",
                          extends=ext, snippet=snip.get(w, "")))
 
@@ -368,11 +362,10 @@ def main():
                label_sources=sources, existing_terms_excluded=len(existing), parameters=params,
                generated=datetime.datetime.now().isoformat(timespec="seconds"))
     jp.write_text(json.dumps(dict(candidates=[dict(term=r["term"], n_in=r["n_in"], n_out=r["n_out"], z=r["z"],
-                                                   section=r["section"], extends_existing_term=r["extends"])
+                                                   section=r["section"], extends_existing_term=r["extends"], author=r["author"])
                                               for r in rows],
                                   negative_terms=[dict(term=w, z=round(z, 2), n_out=df[0][w], n_in=df[1][w]) for w, z in negs],
                                   anchor_candidates=anchors,
-                                  author_names_excluded=[dict(term=w.title(), z=round(z, 2), n_in=a, n_out=b) for w, z, a, b in author_rows],
                                   coverage=cov), indent=1))
 
     from openpyxl import Workbook
@@ -402,7 +395,7 @@ def main():
         ("2. Fill the decision column with accept, reject, or anchor (anchor = accept and require it as an anchor word). Use note for anything unusual.",),
         ("3. Terms flagged in extends_existing_term are usually redundant; accept only if the longer phrase adds precision.",),
         ("4. The negative_terms tab lists words enriched in OUT papers: candidates for exclusion terms. It needs no decision unless you want one used.",),
-        ("6. The author_names tab lists author surnames that WOULD have ranked as keywords (they are cited in IN papers more than OUT). They are excluded from the other tabs on purpose: a surname marks who a paper cites, not what it is about. It needs no decision.",),
+        ("6. Author surnames are included, Title-cased and marked yes in the author column. A surname marks who the IN papers cite rather than what they are about, so it is usually a poor keyword; the decision is yours.",),
         ("5. The anchor_candidates tab ranks terms by the share of IN papers that contain them (at least half). An anchor gates the rule, so it must be nearly universal in IN papers; its OUT share matters less. Terms already in the vocabulary are included and marked in the existing column.",),
         ("",),
         ("What happens next",),
@@ -429,16 +422,14 @@ def main():
             s.column_dimensions[get_column_letter(i)].width = w
 
     sheet("candidates",
-          ["term", "n_in_papers", "n_out_papers", "share_in_pct", "log_odds_z", "main_section",
+          ["term", "author", "n_in_papers", "n_out_papers", "share_in_pct", "log_odds_z", "main_section",
            "extends_existing_term", "example_snippet", "decision", "note"],
-          [[r["term"], r["n_in"], r["n_out"], r["share_in_pct"], r["z"], r["section"], r["extends"], r["snippet"], "", ""] for r in rows],
-          [28, 11, 12, 11, 11, 22, 24, 90, 12, 30])
+          [[r["term"], r["author"], r["n_in"], r["n_out"], r["share_in_pct"], r["z"], r["section"], r["extends"], r["snippet"], "", ""] for r in rows],
+          [28, 8, 11, 12, 11, 11, 22, 24, 90, 12, 30])
     sheet("negative_terms", ["term", "n_out_papers", "n_in_papers", "log_odds_z_out"],
           [[w, df[0][w], df[1][w], round(z, 2)] for w, z in negs], [32, 13, 12, 14])
-    sheet("author_names", ["surname", "n_in_papers", "n_out_papers", "log_odds_z"],
-          [[w.title(), a, b, round(z, 2)] for w, z, a, b in author_rows[:100]], [28, 12, 13, 12])
-    sheet("anchor_candidates", ["term", "in_coverage_pct", "out_coverage_pct", "n_in_papers", "n_out_papers", "existing", "decision", "note"],
-          [[a["term"], a["in_cov"], a["out_cov"], a["n_in"], a["n_out"], a["existing"], "", ""] for a in anchors], [30, 15, 16, 12, 13, 22, 12, 30])
+    sheet("anchor_candidates", ["term", "author", "in_coverage_pct", "out_coverage_pct", "n_in_papers", "n_out_papers", "existing", "decision", "note"],
+          [[a["term"], a["author"], a["in_cov"], a["out_cov"], a["n_in"], a["n_out"], a["existing"], "", ""] for a in anchors], [30, 8, 15, 16, 12, 13, 22, 12, 30])
     wb.save(xp)
 
     el = time.time() - t0
@@ -446,7 +437,7 @@ def main():
     for i, r in enumerate(rows[:25], 1):
         print(f"{i:3d} {r['term']:34s} z={r['z']:6.2f} in={r['n_in']:4d} out={r['n_out']:4d} {r['section']:12s} {('ext:' + r['extends']) if r['extends'] else ''}")
     print("\ntop 15 negative terms:", ", ".join(f"{w} ({z:.1f})" for w, z in negs[:15]))
-    print("\nauthor surnames excluded:", len(author_rows), "e.g.", ", ".join(w.title() for w, *_ in author_rows[:12]))
+    print("\nauthor surnames among candidates (marked):", sum(1 for r in rows if r["author"]), "e.g.", ", ".join(r["term"] for r in rows if r["author"])[:120])
     print("\ntop 12 anchor candidates (IN% / OUT%):", ", ".join(f"{a['term']} {a['in_cov']:.0f}/{a['out_cov']:.0f}{' [existing]' if a['existing'] == 'yes' else ''}" for a in anchors[:12]))
     if ctrl:
         print("\npositive control (rank of rule's own terms):", ctrl)

@@ -650,15 +650,14 @@ function rankSuggestions(){
   const kw = [], an = [];
   const push = (o) => { o.z = fightin(o.nIn, tin, o.nOut, tout, o.nIn + o.nOut, tin + tout, a0); if (o.nIn >= 3 && o.z > 0) kw.push(o);
     const cov = o.nIn / Math.max(1, nIn); if (cov >= .5) an.push({ ...o, cov, covOut:o.nOut / Math.max(1, nOut) }); };
-  /* author surnames (flagged by the pool builder against the corpus author field) are citation markers, not concepts:
-     kept out of both lists, named below the table so nothing vanishes silently */
-  const isAuth = k => CANDS.author && CANDS.author[k];
-  const authors = [];
-  for (let k = 0; k < K; k++) if (!folded.has(k)){ const o = { k, term:CANDS.terms[k], ext:CANDS.ext[k], nIn:cin[k], nOut:cout[k] };
-    if (isAuth(k)){ o.z = fightin(o.nIn, tin, o.nOut, tout, o.nIn + o.nOut, tin + tout, a0); if (o.nIn >= 3 && o.z > 0) authors.push(o); continue; } push(o); }
-  for (const g of groups) if (!g.members.some((_, j) => isAuth([g.k, ...g.members.slice(1).map(m => idx.get(m))][j]))) push({ ...g, term:g.stem });
-  kw.sort((a, b) => b.z - a.z); an.sort((a, b) => b.cov - a.cov || a.covOut - b.covOut); authors.sort((a, b) => b.z - a.z);
-  return { src, nIn, nOut, kw:kw.slice(0, 25), an:an.slice(0, 12), authors:authors.slice(0, 15) };
+  /* author surnames (flagged by the pool builder against the corpus author field) stay in the lists, marked
+     [Author]: a surname says who the IN papers cite rather than what they are about, but whether to try it is
+     the reviewer's call (Simon, 2026-10-06) */
+  const isAuth = k => !!(CANDS.author && CANDS.author[k]);
+  for (let k = 0; k < K; k++) if (!folded.has(k)) push({ k, term:CANDS.terms[k], ext:CANDS.ext[k], nIn:cin[k], nOut:cout[k], author:isAuth(k) });
+  for (const g of groups) push({ ...g, term:g.stem, author:isAuth(g.k) });
+  kw.sort((a, b) => b.z - a.z); an.sort((a, b) => b.cov - a.cov || a.covOut - b.covOut);
+  return { src, nIn, nOut, kw:kw.slice(0, 25), an:an.slice(0, 12) };
 }
 function suggestionsHTML(){
   if (!CANDS) return `<h3>Suggested keywords and anchors</h3><p class="note-sm">Ranks ${fmt(3000)} frequent words and phrases the vocabulary does not have, by how much more often they appear in papers labelled IN than OUT. Loads about 9 MB once.</p>
@@ -666,13 +665,14 @@ function suggestionsHTML(){
   const r = rankSuggestions();
   if (!r.src) return `<h3>Suggested keywords and anchors</h3><p class="note-sm">Nothing to rank against yet: label at least 5 papers IN and 5 OUT (inspected, not bulk) for this concept.</p>`;
   const prop = new Set(proposedTerms().map(x => x.term.toLowerCase()));
-  const row = (x, extra) => `<tr><td>${esc(x.term)}${x.members ? ` <span class="muted" title="a stem: matches any word starting this way, so check it does not also catch an unrelated word">covers ${x.members.map(esc).join(', ')}</span>` : ''}${x.ext ? ` <span class="chip" title="contains the existing term ${esc(x.ext)}">extends ${esc(x.ext)}</span>` : ''}</td>${extra}
+  const shown = x => x.author ? esc(x.term.replace(/\b\w/g, c => c.toUpperCase())) + ' <span class="muted" title="an author surname in the corpus: marks who these papers cite rather than what they are about; your call whether to try it">[Author]</span>' : esc(x.term);
+  const row = (x, extra) => `<tr><td>${shown(x)}${x.members ? ` <span class="muted" title="a stem: matches any word starting this way, so check it does not also catch an unrelated word">covers ${x.members.map(esc).join(', ')}</span>` : ''}${x.ext ? ` <span class="chip" title="contains the existing term ${esc(x.ext)}">extends ${esc(x.ext)}</span>` : ''}</td>${extra}
     <td>${prop.has(x.term.toLowerCase()) ? '<span class="muted">proposed</span>' : `<button data-propose="${esc(x.term)}" title="Add to my proposed keywords">propose</button>`}</td></tr>`;
   return `<h3>Suggested keywords and anchors</h3>
     <p class="note-sm">Ranked against ${r.src}. Live: every label you add re-ranks the list. A term is only a suggestion until it is counted; press propose to queue it.</p>
     <table><tr><th>keyword candidate</th><th class="n" title="labelled IN papers containing it">IN</th><th class="n" title="labelled OUT papers containing it">OUT</th><th class="n" title="weighted log-odds, IN vs OUT">z</th><th></th></tr>
     ${r.kw.map(x => row(x, `<td class="n">${x.nIn}</td><td class="n">${x.nOut}</td><td class="n">${x.z.toFixed(1)}</td>`)).join('') || '<tr><td colspan="5" class="muted">no term is more frequent in IN than OUT</td></tr>'}</table>
-    ${r.authors.length ? `<p class="note-sm">Not offered, because they are author surnames (who IN papers cite, not what they are about): ${r.authors.map(a => `${esc(a.term.replace(/\b\w/g, c => c.toUpperCase()))} <span class="muted">${a.z.toFixed(1)}</span>`).join(', ')}.</p>` : ''}
+
     <h4 style="margin:12px 0 4px">Anchor candidates</h4>
     <p class="note-sm">An anchor must appear in a paper for the rule to fire at all, so the useful ones are present in nearly every IN paper, whatever they do in OUT papers.</p>
     <table><tr><th>anchor candidate</th><th class="n" title="share of labelled IN papers containing it">in IN</th><th class="n" title="share of labelled OUT papers containing it">in OUT</th><th></th></tr>
