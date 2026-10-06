@@ -31,7 +31,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from suggest_topic_terms import CACHE, ACADEMIC, tokens_of, ngram_set, term_matcher, existing_relation, load_js  # noqa: E402
+from suggest_topic_terms import CACHE, ACADEMIC, tokens_of, ngram_set, term_matcher, existing_relation, load_js, author_tokens, is_author  # noqa: E402
 
 MIN_DF = 20
 TOP_UNIGRAMS_FOR_BIGRAMS = 6000
@@ -150,6 +150,10 @@ def main():
         if len(terms) >= args.pool:
             break
     index = {t: k for k, t in enumerate(terms)}
+    authors = author_tokens()
+    author_flag = [1 if is_author(t, authors) else 0 for t in terms]
+    print(f"author surnames in the pool, flagged for the page to hide: {sum(author_flag)} "
+          f"(e.g. {', '.join(t.title() for t, f in zip(terms, author_flag) if f)[:160]})", flush=True)
     print(f"pool: {len(terms)} terms (df {df[-1]}..{df[0]}); {dropped_same} already in the vocabulary skipped; "
           f"{sum(1 for e in ext if e)} flagged as extending an existing term", flush=True)
 
@@ -160,7 +164,7 @@ def main():
             if i % 20 == 0:
                 print(f"  pass 3 (bitsets): {len(bits):,} papers, {time.time() - t0:.0f}s", flush=True)
     assert len(bits) == len(lids)
-    out = {"terms": terms, "df": df, "ext": ext, "n_papers": len(lids), "no_text": sum(1 for b in bits if b is None),
+    out = {"terms": terms, "df": df, "ext": ext, "author": author_flag, "n_papers": len(lids), "no_text": sum(1 for b in bits if b is None),
            "min_df": MIN_DF, "built": time.strftime("%Y-%m-%d %H:%M %Z"), "bits": bits}
     path = ddir / "cands.js"
     path.write_text("window.TR_CANDS = " + json.dumps(out, ensure_ascii=False, separators=(",", ":")) + ";\n")
