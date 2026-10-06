@@ -35,9 +35,11 @@ from build_topic_features import OUT_BASE, SECTIONS, SEC_IDX, TEXT_CACHE, build_
 SUSPECTS = ROOT / "outputs" / "extraction_borrowed_pdf_suspects_2026-09-18.csv"
 FABLE_CACHE = ROOT / "outputs" / "validation" / ".fable_corpus_cache"
 GOLD = ROOT / "outputs" / "validation" / "gold_labels.csv"
-SNIPS_PER_PAPER = 3
+SNIPS_PER_PAPER = 6      # Simon, 2026-10-06: six quotations per paper, one per distinct keyword
+SNIP_MAX_CHARS = 600     # a "sentence" in OCR text can run for a page; cap it around the match
+SENT_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\[\"“])|\n{2,}")
 ABS_SHARDS = 64   # abstracts ship in 64 files keyed by literature_id mod 64, loaded by the page on demand
-WINDOW = 110
+WINDOW = 110   # no longer used for quotations (whole sentences since 2026-10-06); kept for reference
 
 
 def js(path, name, obj):
@@ -69,9 +71,27 @@ def score(by_term, rule, weights):
     return total, fired, gate
 
 
+def sentence_around(chunk, start, end):
+    """The whole sentence containing [start, end): back to the previous sentence end, forward to the
+    next. Boundaries are a terminal mark followed by whitespace and a capital (so "Fig. 3" and "et al."
+    mostly survive). Capped at SNIP_MAX_CHARS around the match, since OCR text has run-on 'sentences'."""
+    lo_cap, hi_cap = max(0, start - SNIP_MAX_CHARS // 2), min(len(chunk), end + SNIP_MAX_CHARS // 2)
+    lo = lo_cap
+    # endpos must reach one past `start`, or the lookahead for the capital letter cannot see it
+    for m in SENT_END.finditer(chunk, lo_cap, min(len(chunk), start + 1)):
+        if m.end() <= start:
+            lo = m.end()
+    hi = hi_cap
+    m = SENT_END.search(chunk, end, hi_cap)
+    if m:
+        hi = m.start()
+    return lo, hi
+
+
 def snippets_for(rule, vocab, lids, out_path):
-    """Up to SNIPS_PER_PAPER snippets per paper for THIS rule's terms, read from the text
-    cache: highest-weighted section first, one snippet per distinct term."""
+    """Up to SNIPS_PER_PAPER quotations per paper for THIS rule's terms, read from the text
+    cache: highest-weighted section first, one per distinct term, each the full sentence
+    containing the first match (capped), with the match marked «like this»."""
     terms = [(tid, X.compile_term(vocab[tid]["term"], case_sensitive=vocab[tid]["cs"])) for tid in rule["term_ids"]]
     weights = X._SECTION_WEIGHTS.get(rule["prefix"], {})
     db = sqlite3.connect(f"file:{TEXT_CACHE}?mode=ro", uri=True, timeout=120)
@@ -82,7 +102,8 @@ def snippets_for(rule, vocab, lids, out_path):
             continue
         sections = json.loads(zlib.decompress(row[0]))
         order = sorted(range(len(sections)), key=lambda i: -weights.get(sections[i][0], 0.25))
-        got, seen = [], set()
+        # one quotation per sentence: two keywords in the same sentence are both marked in one entry
+        spans, seen = {}, set()   # (section i, lo, hi) -> [tid, label, [(start, end), ...]]
         for i in order:
             label, chunk = sections[i]
             for tid, ct in terms:
@@ -92,13 +113,22 @@ def snippets_for(rule, vocab, lids, out_path):
                 if not m:
                     continue
                 seen.add(tid)
-                lo, hi = max(0, m.start() - WINDOW), min(len(chunk), m.end() + WINDOW)
-                text = " ".join((chunk[lo:m.start()] + "«" + m.group(0) + "»" + chunk[m.end():hi]).split())
-                got.append([tid, SEC_IDX.get(label, 9), text])
-                if len(got) == SNIPS_PER_PAPER:
-                    break
-            if len(got) == SNIPS_PER_PAPER:
-                break
+                lo, hi = sentence_around(chunk, m.start(), m.end())
+                key = next((k for k in spans if k[0] == i and k[1] < m.end() and m.start() < k[2]), None)
+                if key is None:
+                    if len(spans) == SNIPS_PER_PAPER:
+                        continue
+                    spans[(i, lo, hi)] = [tid, label, [(m.start(), m.end())]]
+                else:
+                    spans[key][2].append((m.start(), m.end()))
+        got = []
+        for (i, lo, hi), (tid, label, ranges) in spans.items():
+            chunk = sections[i][1]
+            text = chunk[lo:hi]
+            for a, b in sorted(ranges, reverse=True):
+                a, b = max(a, lo), min(b, hi)
+                text = text[:a - lo] + "«" + text[a - lo:b - lo] + "»" + text[b - lo:]
+            got.append([tid, SEC_IDX.get(label, 9), " ".join(text.split())])
         if got:
             out[str(lid)] = got
     return js(out_path, "TR_SNIPS", out)
