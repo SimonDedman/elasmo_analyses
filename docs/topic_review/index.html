@@ -43,8 +43,8 @@ ol li{margin:4px 0}
 <h1 id="h1">Topic review</h1>
 <p class="lede" id="lede"></p>
 
-<h2>The scenarios to compare</h2>
-<p class="lede">Each opens the same fisheries data. They differ in what the reviewer is asked to do, which is the open design question. Labels made in any of them stay in your browser only.</p>
+<h2>Start here</h2>
+<p class="lede">There is one review page. Everything that once looked like a separate tool (judging blind, editing the rule, the optimiser, trying a concept nobody has run, comparing two reviewers) is a tab or a dropdown inside it. Labels stay in your browser until you submit.</p>
 <div class="cards" id="scen"></div>
 
 <h2>What the first full run found (2026-09-19, <code>d_fisheries</code>)</h2>
@@ -86,40 +86,16 @@ function draw(){
   document.getElementById('lede').innerHTML = `A mock-up, built ${esc(M.built)} on the real corpus. The per-author pages ask "is my paper coded correctly?". These ask the complementary question, one concept at a time: "of every paper the corpus holds, which are genuinely about <i>this</i>?" The answers become a gold-standard list per concept, tied to the expert who made it, and the rules are then fitted to the list.`;
   const R = `./review.html?topic=${TOPIC}`;
   const sc = [
-    ['A', 'Ladder with the rule lab',
-     'Every paper that mentions a keyword, ordered by score, with the threshold drawn as a black bar inside the list. The page opens at that bar.',
-     'You judge papers near the bar; the Rule tab lets you edit keywords, section weights and the threshold, and the bar moves as you type.',
-     `${R}&rule=d_fisheries`],
-    ['B', 'Judge-only ladder',
-     'The same ordered list with the rule lab removed.',
-     'You only say IN or OUT. Fitting the rule to your answers is our job afterwards, not yours.',
-     `${R}&rule=d_fisheries&mode=judge`],
-    ['C', 'Margin queue',
-     'One paper per card, closest to the threshold first, with the full keyword evidence beneath it.',
-     'Answer IN, OUT or unsure with one key. Every fifth card is a random paper from far above or far below the line, so "the top is obviously right" gets measured rather than assumed.',
-     `${R}&rule=d_fisheries&view=queue`],
-    ['C2', 'Margin queue, blind',
-     'Scenario C with the score, the stratum and the machine verdict hidden.',
-     'You judge the paper on its own evidence. Use this for labels that will be treated as gold, since nothing steers you toward the rule you are checking.',
-     `${R}&rule=d_fisheries&view=queue&blind=1&mode=judge`],
-    ['D', 'Optimiser on real labels',
-     'The 1,641 papers Fable has already read are loaded as stand-in labels, and a search fits the rule to them.',
-     'Nothing to judge here: look at whether the proposed rule beats the live one on held-out papers, and at which single change helps most.',
-     `${R}&rule=d_fisheries&demo=opt`],
-    ['E', 'A rule edit and what it moves',
-     'Opens on the Rule tab with two edits already made: the threshold raised by one, and the keyword "retention" dropped.',
-     'Watch the list: it is filtered to exactly the papers that cross the line because of those edits. This is what a champion does when a keyword is misfiring.',
-     `${R}&rule=d_fisheries&demo=edit&panel=rule`],
-    ['F', 'A proposed rule that has never been run',
-     'David\'s "Capture: CPUE" proposal from his keyword workbook (CPUE, BPUE, catch rate*, hooking rate*, plus anchors bycatch / fisher* / effort / gear), scored on the corpus for the first time.',
-     'Compare it with the live imp_cpue column it would replace: 1,018 papers qualify under his wording. Judge whether that set is what "capture rate" should mean.',
-     `${R}&rule=drg_03_capture_cpue&panel=rule`],
-    ['G', 'Second reviewer',
-     'Two people labelling the same concept independently.',
-     'Export your labels, switch the reviewer name, import the other person\'s file, then choose "reviewers disagree" in Show: only the conflicts are left to discuss.',
-     `${R}&rule=pr_bycatch&who=Guuske`],
+    ['Start reviewing', 'The whole list, and the rule beside it',
+     'Every paper that mentions a keyword, ordered by score, with the qualifying line drawn in. The panel on the right is the whole toolkit.',
+     'Read a paper, press I, O or U, and change the rule when a keyword is obviously misfiring. Opens on the Rule tab.',
+     './choose.html'],
+    ['First time?', 'The twelve-step tour, then the sandbox',
+     'A photograph of the page with numbered pins: what each control is and why it is there. About four minutes.',
+     'Walk the twelve steps, then try the sandbox: ten papers where you can label, drag the threshold and drop a keyword, and nothing is saved or counted.',
+     './explain.html'],
   ];
-  document.getElementById('scen').innerHTML = sc.map(x => `<a class="cardx" href="${x[4]}"><i>Scenario ${x[0]}</i><b>${x[1]}</b><span>${x[2]}</span><span class="does"><b>What you do:</b> ${x[3]}</span></a>`).join('');
+  document.getElementById('scen').innerHTML = sc.map(x => `<a class="cardx" href="${x[4]}"><i>${x[0]}</i><b>${x[1]}</b><span>${x[2]}</span><span class="does"><b>What you do:</b> ${x[3]}</span></a>`).join('');
   document.getElementById('cov').innerHTML = [[c.rows_in_scope, 'corpus rows in scope'], [c.ok, 'with readable PDF text'], [c.no_pdf, 'no PDF resolved'], [c.no_text, 'PDF with no text'], [c.suspect_text, 'flagged: text from another paper'], [M.vocab.length, 'keywords and anchors counted']]
     .map(([n, l]) => `<div><b>${fmt(n)}</b><span>${l}</span></div>`).join('');
   const ctl = Object.entries(M.control || {}), comp = ctl.reduce((a, [, v]) => a + v.compared, 0), agree = ctl.reduce((a, [, v]) => a + v.binary_agree, 0);
