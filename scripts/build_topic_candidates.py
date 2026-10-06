@@ -2,7 +2,7 @@
 """Precompute a candidate-keyword pool for a topic so the dashboard can suggest NEW keywords and
 anchors in the browser, re-ranked live as the reviewer labels papers.
 
-    python3 scripts/build_topic_candidates.py --topic fisheries [--pool 3000] [--workers 10]
+    python3 scripts/build_topic_candidates.py [--pool 3000] [--workers 10]      # shared across topics
 
 Reads the section-labelled text cache for every paper in the topic's pages (papers.js order), in
 two passes over 10 workers: (1) document frequency of unigrams, (2) document frequency of bigrams
@@ -12,7 +12,7 @@ removed, the tokeniser being suggest_topic_terms.py's) with document frequency >
 anything already in the topic's counted vocabulary (a candidate that merely extends an existing
 term, e.g. "fishing gear" against "fish*", is kept and flagged).
 
-Writes docs/topic_review/<topic>/data/cands.js:
+Writes docs/topic_review/shared/cands.js (one pool for every topic; papers in shared/papers.js order):
     window.TR_CANDS = {terms:[...], df:[...], ext:[...], n_papers, built, bits:[base64 per paper, PAPERS order]}
 Bit k of paper i is set when terms[k] occurs anywhere in that paper outside OTHER-labelled text.
 About 9 MB for 3,000 terms x 18,700 papers; the page loads it only when suggestions are asked for.
@@ -104,16 +104,18 @@ def chunks(xs, n):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--topic", default="fisheries")
+    ap.add_argument("--topic", default="shared", help="ignored since 2026-10-06: the pool is shared across topics")
     ap.add_argument("--pool", type=int, default=3000)
     ap.add_argument("--workers", type=int, default=10)
     ap.add_argument("--limit", type=int, help="first N papers only (smoke test)")
     args = ap.parse_args()
     t0 = time.time()
-    ddir = ROOT / "docs" / "topic_review" / args.topic / "data"
-    papers = load_js(ddir / "papers.js", "window.TR_PAPERS")
+    shared = ROOT / "docs" / "topic_review" / "shared"
+    papers = load_js(shared / "papers.js", "window.TR_PAPERS")
     lids = [str(p[0]) for p in papers][: args.limit or None]
-    vocab = [v["term"] for v in json.loads((ROOT / "outputs" / "topic_review" / args.topic / "vocab.json").read_text())["vocab"]]
+    # exclude the union of every topic's counted vocabulary: the pool is shared, so a term counted anywhere is not "new"
+    vocab = sorted({v["term"] for vj in (ROOT / "outputs" / "topic_review").glob("*/vocab.json")
+                    for v in json.loads(vj.read_text())["vocab"]})
     matchers = [(t, term_matcher(t)) for t in vocab]
     ch = chunks(lids, 200)
     print(f"{len(lids):,} papers, {len(vocab)} vocabulary terms, {args.workers} workers", flush=True)
@@ -166,7 +168,7 @@ def main():
     assert len(bits) == len(lids)
     out = {"terms": terms, "df": df, "ext": ext, "author": author_flag, "n_papers": len(lids), "no_text": sum(1 for b in bits if b is None),
            "min_df": MIN_DF, "built": time.strftime("%Y-%m-%d %H:%M %Z"), "bits": bits}
-    path = ddir / "cands.js"
+    path = shared / "cands.js"
     path.write_text("window.TR_CANDS = " + json.dumps(out, ensure_ascii=False, separators=(",", ":")) + ";\n")
     print(f"wrote {path} ({path.stat().st_size / 1e6:.1f} MB); papers without text {out['no_text']}; {time.time() - t0:.0f}s total")
     print("first 40 pool terms:", ", ".join(terms[:40]))

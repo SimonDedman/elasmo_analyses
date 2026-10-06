@@ -39,6 +39,60 @@ SNIPS_PER_PAPER = 6      # Simon, 2026-10-06: six quotations per paper, one per 
 SNIP_MAX_CHARS = 600     # a "sentence" in OCR text can run for a page; cap it around the match
 SENT_END = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\[\"“])|\n{2,}")
 ABS_SHARDS = 64   # abstracts ship in 64 files keyed by literature_id mod 64, loaded by the page on demand
+SHARED = ROOT / "docs" / "topic_review" / "shared"   # paper metadata, abstracts and the suggestion pool: one copy for every topic
+TOPICS_JS = ROOT / "docs" / "topic_review" / "topics.js"
+
+
+def build_shared(meta, suspects):
+    """Every corpus paper that has cached text, in literature_id order: shared/papers.js and shared/abs/.
+    Per-topic counts.js files index into this list, so it must only be rebuilt deliberately (--shared),
+    and every topic rebuilt after it."""
+    db = sqlite3.connect(f"file:{TEXT_CACHE}?mode=ro", uri=True, timeout=120)
+    cached = {r[0] for r in db.execute("SELECT lid FROM sections")}
+    lids = sorted((lid for lid in meta if lid in cached), key=int)
+    papers, abstracts = [], {}
+    for lid in lids:
+        m = meta[lid]
+        year = None if pd.isna(m.year) else int(m.year)
+        papers.append([lid, (m.title or "")[:220], year, first_author(m.authors), (m.journal or "")[:70] if isinstance(m.journal, str) else "",
+                       m.doi if isinstance(m.doi, str) else "", 1 if lid in suspects else 0])
+        if isinstance(m.abstract, str) and len(m.abstract.strip()) > 40:
+            abstracts.setdefault(int(lid) % ABS_SHARDS, {})[lid] = re.sub(r"\s+", " ", m.abstract.strip())
+    SHARED.mkdir(parents=True, exist_ok=True)
+    size = js(SHARED / "papers.js", "TR_PAPERS", papers)
+    adir = SHARED / "abs"
+    adir.mkdir(exist_ok=True)
+    for old in adir.glob("a*.js"):
+        old.unlink()
+    for shard, d in abstracts.items():
+        (adir / f"a{shard}.js").write_text("window.TR_ABS = Object.assign(window.TR_ABS || {}, "
+                                           + json.dumps(d, ensure_ascii=False, separators=(",", ":")) + ");\n")
+    print(f"shared: {len(papers):,} papers with cached text ({size/1e6:.1f} MB); abstracts for "
+          f"{sum(len(d) for d in abstracts.values()):,} in {len(abstracts)} shards "
+          f"({sum(f.stat().st_size for f in adir.glob('a*.js'))/1e6:.1f} MB)")
+    return papers
+
+
+def load_shared():
+    path = SHARED / "papers.js"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text().split("=", 1)[1].strip().rstrip(";"))
+
+
+def update_topics_js(summary):
+    """Merge this topic's build summary into the landing page's register."""
+    reg = {"topics": []}
+    if TOPICS_JS.exists():
+        reg = json.loads(TOPICS_JS.read_text().split("=", 1)[1].strip().rstrip(";"))
+    found = False
+    for t in reg["topics"]:
+        if t["id"] == summary["id"]:
+            t.update(summary)
+            found = True
+    if not found:
+        reg["topics"].append(summary)
+    TOPICS_JS.write_text("window.TR_TOPICS = " + json.dumps(reg, ensure_ascii=False) + ";\n")
 WINDOW = 110   # no longer used for quotations (whole sentences since 2026-10-06); kept for reference
 
 
@@ -137,6 +191,7 @@ def snippets_for(rule, vocab, lids, out_path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--topic", required=True, type=Path)
+    ap.add_argument("--shared", action="store_true", help="(re)build shared/papers.js and shared/abs/ first; every other topic must then be rebuilt too")
     args = ap.parse_args()
     topic = json.load(open(args.topic))
     tdir = OUT_BASE / topic["id"]
@@ -166,28 +221,30 @@ def main():
     if SUSPECTS.exists():
         suspects = {str(r["lid"]).split(".")[0] for r in csv.DictReader(open(SUSPECTS))}
 
-    papers, counts, by_lid, abstracts = [], [], {}, {}
-    status = {"ok": 0, "no_pdf": 0, "no_text": 0}
+    papers = None if args.shared else load_shared()
+    if papers is None:
+        papers = build_shared(meta, suspects)
+    lid2i = {p[0]: i for i, p in enumerate(papers)}
+    counts, by_lid = [[] for _ in papers], {}
+    status = {"ok": 0, "no_pdf": 0, "no_text": 0, "not_in_shared": 0}
     for line in open(tdir / "features.jsonl"):
         p = json.loads(line)
         status[p["status"]] += 1
         if p["status"] != "ok" or not p["counts"]:
             continue
         lid = str(p["lid"]).split(".")[0]
-        m = meta.get(lid)
-        if m is None or lid in by_lid:   # the corpus table repeats a few literature_ids: keep the first
-            status["duplicate_id"] = status.get("duplicate_id", 0) + (lid in by_lid)
+        if lid in by_lid:   # the corpus table repeats a few literature_ids: keep the first
+            status["duplicate_id"] = status.get("duplicate_id", 0) + 1
+            continue
+        i = lid2i.get(lid)
+        if i is None:       # a paper whose text was cached after shared/papers.js was built: rebuild with --shared
+            status["not_in_shared"] += 1
             continue
         flat = []
         for ti, s, raw, prox in p["counts"]:
             flat += [ti * 10 + s, raw, prox]
-        year = None if pd.isna(m.year) else int(m.year)
-        papers.append([lid, (m.title or "")[:220], year, first_author(m.authors), (m.journal or "")[:70] if isinstance(m.journal, str) else "",
-                       m.doi if isinstance(m.doi, str) else "", 1 if lid in suspects else 0])
-        counts.append(flat)
+        counts[i] = flat
         by_lid[lid] = p["counts"]
-        if isinstance(m.abstract, str) and len(m.abstract.strip()) > 40:
-            abstracts.setdefault(int(lid) % ABS_SHARDS, {})[lid] = re.sub(r"\s+", " ", m.abstract.strip())
 
     # --- seed labels -------------------------------------------------------
     rule_ids = {r["id"] for r in rules}
@@ -246,25 +303,20 @@ def main():
     sizes = {}
     control = json.load(open(tdir / "control.json")) if (tdir / "control.json").exists() else {}
     sizes["meta.js"] = js(ddir / "meta.js", "TR_META", {
-        "topic": {k: topic[k] for k in ("id", "title", "champion")}, "sections": SECTIONS,
+        "topic": {k: topic.get(k) for k in ("id", "title", "champion", "discipline")}, "sections": SECTIONS,
         "vocab": [v["term"] for v in vocab], "vocab_cs": [int(v["cs"]) for v in vocab],
         "team": TEAM, "rules": rules, "section_weights": X._SECTION_WEIGHTS, "featured": topic.get("featured", []),
-        "overview": overview, "coverage": {**json.load(open(tdir / "coverage.json")), **status, "papers_in_pages": len(papers),
-                                           "suspect_text": sum(p[6] for p in papers)},
+        "overview": overview, "coverage": {**json.load(open(tdir / "coverage.json")), **status, "papers_in_pages": len(by_lid),
+                                           "shared_papers": len(papers), "suspect_text": sum(p[6] for p in papers)},
         "control": control, "built": time.strftime("%Y-%m-%d %H:%M %Z")})
-    sizes["papers.js"] = js(ddir / "papers.js", "TR_PAPERS", papers)
     sizes["counts.js"] = js(ddir / "counts.js", "TR_COUNTS", counts)
-    adir = ddir / "abs"
-    adir.mkdir(exist_ok=True)
-    for old in adir.glob("a*.js"):
-        old.unlink()
-    n_abs = 0
-    for shard, d in abstracts.items():
-        n_abs += len(d)
-        (adir / f"a{shard}.js").write_text("window.TR_ABS = Object.assign(window.TR_ABS || {}, "
-                                           + json.dumps(d, ensure_ascii=False, separators=(",", ":")) + ");\n")
-    sizes["abs/*.js"] = sum(f.stat().st_size for f in adir.glob("a*.js"))
-    print(f"abstracts: {n_abs:,} of {len(papers):,} papers, in {len(abstracts)} shard files")
+    for stale in ("papers.js",):   # per-topic copies from before the shared layout (2026-10-06)
+        if (ddir / stale).exists():
+            (ddir / stale).unlink()
+    if (ddir / "abs").exists():
+        for f in (ddir / "abs").glob("a*.js"):
+            f.unlink()
+        (ddir / "abs").rmdir()
     sizes["seed_labels.js"] = js(ddir / "seed_labels.js", "TR_SEED", {"fable": fable, "fable_seen": fable_seen, "gold": gold})
     for rid in topic.get("featured", []):
         r = next(x for x in rules if x["id"] == rid)
@@ -275,9 +327,15 @@ def main():
                 lids.append(lid)
         sizes[f"snips_{rid}.js"] = snippets_for(r, vocab, lids, ddir / f"snips_{rid}.js")
     json.dump(overview, open(ddir / "rules_overview.json", "w"), indent=1)
+    disc = next((o for o in overview if o["id"] == topic.get("discipline")), overview[0])
+    update_topics_js({"id": topic["id"], "title": topic["title"], "champion": topic.get("champion"), "discipline": topic.get("discipline"),
+                      "n_rules": len(rules), "n_live": sum(1 for r in rules if r["kind"] == "live"),
+                      "n_proposed": sum(1 for r in rules if r["kind"] != "live"),
+                      "papers_with_hit": disc["papers_with_hit"], "papers_in": disc["papers_in"], "papers_any_hit": len(by_lid),
+                      "fable_seen": len(fable_seen), "built": time.strftime("%Y-%m-%d %H:%M %Z")})
     for k, v in sizes.items():
         print(f"{v/1e6:8.2f} MB  {k}")
-    print(f"papers in pages: {len(papers):,}; suspect-text flagged: {sum(p[6] for p in papers):,}; "
+    print(f"papers with a hit in this topic: {len(by_lid):,} of {len(papers):,} shared; suspect-text flagged: {sum(p[6] for p in papers):,}; "
           f"fable-read papers: {len(fable_seen):,}; gold labels: {sum(len(v) for v in gold.values())}")
 
 

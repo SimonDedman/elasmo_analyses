@@ -2,6 +2,7 @@
  "id": "fisheries",
  "title": "Fisheries",
  "champion": "David Ruiz-García (proposed)",
+ "discipline": "d_fisheries",
  "provenance": "live_columns read from scripts/extract_schema_columns.py at build time; proposed_rules from docs/2026-09-10_FisheriesApproach_keywords_DRG.xlsx (66 rows); all-caps tokens of 2-6 letters treated as case-sensitive acronyms (INFERRED, not David's instruction)",
  "live_columns": [
   "d_fisheries",

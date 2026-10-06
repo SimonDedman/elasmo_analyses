@@ -560,7 +560,7 @@ function paperHTML(p, big, blind){
 }
 /* abstracts live in 64 shard files (by literature_id mod 64) and load the first time a paper from that shard is shown */
 const ABS_SHARDS = new Map();
-function absShard(lid){ const n = parseInt(lid, 10) % 64; if (!ABS_SHARDS.has(n)) ABS_SHARDS.set(n, load(`./${TOPIC}/data/abs/a${n}.js`).catch(() => {})); return ABS_SHARDS.get(n); }
+function absShard(lid){ const n = parseInt(lid, 10) % 64; if (!ABS_SHARDS.has(n)) ABS_SHARDS.set(n, load(`./shared/abs/a${n}.js`).catch(() => {})); return ABS_SHARDS.get(n); }
 function fillAbstracts(){
   for (const el of $$('.abs[data-abs]:not([data-done])')){
     const lid = el.dataset.abs;
@@ -605,7 +605,7 @@ function proposedHTML(){
 let CANDS = null, candsLoading = null, candBits = null;
 function loadCands(){
   if (CANDS) return Promise.resolve(CANDS);
-  if (!candsLoading) candsLoading = load(`./${TOPIC}/data/cands.js`).then(() => {
+  if (!candsLoading) candsLoading = load('./shared/cands.js').then(() => {
     CANDS = window.TR_CANDS; const dec = atob;
     candBits = CANDS.bits.map(b => { if (!b) return null; const bin = dec(b), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; });
     return CANDS; }).catch(e => { candsLoading = null; throw e; });
@@ -927,7 +927,7 @@ async function selectRule(id){
   if (META.featured.includes(S.rule.id)){ try { await load(`./${TOPIC}/data/snips_${S.rule.id}.js`); SNIPS = window.TR_SNIPS || {}; } catch(e){} }
   buildRP();
   const ov = META.overview.find(o => o.id === S.rule.id) || {};
-  $('#crumb').textContent = `› ${META.topic.title}`;
+  $('#crumb').innerHTML = `› <a href="./hub.html?topic=${encodeURIComponent(TOPIC)}" style="color:inherit;text-decoration:none">${esc(META.topic.title)}</a>`;
   $('#defn').innerHTML = `<span><b>${esc(S.rule.label)}</b> ${S.rule.kind === 'live' ? 'is a live extraction column' : 'is a proposed rule that has never been run'}.</span>
     <span>Judge the <b>concept</b>, not the keywords: ${esc(S.rule.meaning || 'the champion writes a two-line definition with inclusion and exclusion examples here before anyone labels.')}</span>
     <span>${fmt(ov.papers_with_hit || S.RP.length)} papers mention a keyword; ${fmt(ov.papers_in || 0)} qualify; topic champion: ${esc(META.topic.champion)}.</span>`;
@@ -942,7 +942,7 @@ async function selectRule(id){
   if (S.mode === 'ladder' && Q.get('top') !== '1'){ const li = S.items.find(x => x.line); if (li){ vp.scrollTop = Math.max(0, li.y - vp.clientHeight / 2); const k = S.items[S.items.indexOf(li) - 1]; if (k && k.k !== undefined){ S.cursor = k.k; S.anchor = k.k; } drawRows(); drawSel(); } }
 }
 (async function init(){
-  try { await Promise.all(['meta', 'papers', 'counts', 'seed_labels'].map(f => load(`./${TOPIC}/data/${f}.js`))); }
+  try { await Promise.all([load('./shared/papers.js'), ...['meta', 'counts', 'seed_labels'].map(f => load(`./${TOPIC}/data/${f}.js`))]); }
   catch(e){ document.body.innerHTML = `<p style="padding:24px">Could not load the data files for topic "${esc(TOPIC)}": ${esc(e.message)}</p>`; return; }
   META = window.TR_META; PAPERS = window.TR_PAPERS; COUNTS = window.TR_COUNTS; SEED = window.TR_SEED; S.fableSeen = new Set(SEED.fable_seen);
   document.title = `${META.topic.title}: topic review`;

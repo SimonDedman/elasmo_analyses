@@ -56,6 +56,7 @@ kbd{font:12px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-
 </style>
 </head>
 <body><div class="wrap">
+<p class="lede" style="margin:0 0 6px"><a href="./index.html">Topic review</a> › <a id="hubLink" href="./hub.html?topic=fisheries">Fisheries</a> › tour</p>
 <h1>How to read this dashboard</h1>
 <p class="lede">It is a busy page, so here it is one piece at a time. Click a numbered pin, or walk through in order with <b>Next</b>. Nothing here is live: it is a photograph of the real thing. When you have had enough, there is a sandbox at the bottom with ten papers where you can press every button and none of it counts.</p>
 
@@ -81,8 +82,8 @@ kbd{font:12px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-
 <div class="cta">
   <b>Now try it, with nothing at stake</b>
   The sandbox gives you ten papers from this concept: a few that clearly qualify, a few that clearly do not, and several on the line. Label them, drag the threshold about, drop a keyword, run the search. None of it is saved, sent, or counted, and closing the tab forgets everything.
-  <a href="./review.html?topic=fisheries&amp;rule=d_fisheries&amp;sandbox=1">Open the sandbox (10 papers)</a>
-  <a class="second" href="./review.html?topic=fisheries&amp;rule=d_fisheries">Go to the real thing</a>
+  <a id="sandboxLink" href="./review.html?topic=fisheries&amp;rule=d_fisheries&amp;sandbox=1">Open the sandbox (10 papers)</a>
+  <a id="realLink" class="second" href="./review.html?topic=fisheries&amp;rule=d_fisheries">Go to the real thing</a>
 </div>
 
 <script>
@@ -162,5 +163,17 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') { e.preventDefault(); go(at - 1); }
 });
 go(0);
+/* the photograph is of the fisheries dashboard; the links follow whichever topic the reader came from */
+(async () => {
+  const topic = new URLSearchParams(location.search).get('topic') || 'fisheries';
+  try {
+    await new Promise((res, rej) => { const s = document.createElement('script'); s.src = './topics.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+    const t = (window.TR_TOPICS.topics || []).find(x => x.id === topic); if (!t) return;
+    const rule = t.discipline || '';
+    document.getElementById('sandboxLink').href = `./review.html?topic=${topic}&rule=${rule}&sandbox=1`;
+    document.getElementById('realLink').href = `./review.html?topic=${topic}&rule=${rule}`;
+    const h = document.getElementById('hubLink'); h.href = `./hub.html?topic=${topic}`; h.textContent = t.title;
+  } catch (e) {}
+})();
 </script>
 </div></body></html>
