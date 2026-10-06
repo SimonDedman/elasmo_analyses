@@ -37,7 +37,24 @@ pdf copyright elsevier springer wiley journal press university department receiv
 corresponding author authors email email@ ltd inc cambridge oxford taylor francis plos pone sci res mar biol ecol
 doi.org supporting information data set sets study studies result results show shown showed found however paper
 """.split())
-STOP = BASE_STOP | EXTRA
+# generic academic prose that no reviewer would make a keyword or anchor
+ACADEMIC = set("""high higher highest low lower lowest due similar different difference differences number numbers size sizes
+reported report reports following followed follow well large larger largest small smaller smallest known present presented presence
+time times along likely unlikely potential potentially collected collection important importance less given length lengths provide
+provided provides compared compare comparison comparisons limited limit limits associated association particularly despite including
+include included includes total totals observed observation observations analysis analyses research study studies result results
+based used use using show showed shown shows found find findings suggest suggests suggested indicate indicates indicated increase
+increased increases increasing decrease decreased decreases decreasing significant significantly significance mean means range ranges
+within between among across over under per approximately respectively however therefore thus although whereas further additional
+addition general generally overall several various specific specifically previous previously recent recently current currently
+available data information approach approaches method methods model models value values level levels rate rates area areas region
+regions period periods year years day days month months first second third two three four five six ten one new old main major minor
+possible possibly obtained estimated estimate estimates estimation considered consider relative relatively greater lesser higher-
+lower- least most more much many often common commonly rare rarely require required requires work works example examples case cases
+part parts type types table figure section paper authors author version online press published publication copyright rights reserved
+university department institute journal volume issue pages received accepted revised corresponding email abstract keywords introduction
+discussion conclusion conclusions acknowledgements references appendix""".split())
+STOP = BASE_STOP | EXTRA | ACADEMIC
 TOK = re.compile(r"[a-z0-9][a-z0-9-]*[a-z0-9]|[a-z0-9]")
 SPLIT = re.compile(r"[.;:!?\n\r()\[\]\"“”,]+")
 
@@ -237,6 +254,18 @@ def main():
     negs.sort(key=lambda x: -x[1])
     negs = negs[:50]
 
+    # ---- anchor candidates: present in at least half the IN papers, whatever they do in OUT (existing terms included, flagged)
+    anchors = []
+    for w, c in df[1].items():
+        cov = c / max(n_in, 1)
+        if cov < .5:
+            continue
+        rel = existing_relation(w, matchers)
+        anchors.append(dict(term=w, in_cov=round(100 * cov, 1), out_cov=round(100 * df[0][w] / max(n_out, 1), 1),
+                            n_in=c, n_out=df[0][w], existing=("yes" if rel and rel[0] == "same" else ("extends " + rel[1]) if rel else "")))
+    anchors.sort(key=lambda a: (-a["in_cov"], a["out_cov"]))
+    anchors = anchors[:60]
+
     # ---- section + snippet for final candidates (IN papers only)
     want = {w for w, _, _ in cands}
     sec_df = defaultdict(Counter)
@@ -297,6 +326,7 @@ def main():
                                                    section=r["section"], extends_existing_term=r["extends"])
                                               for r in rows],
                                   negative_terms=[dict(term=w, z=round(z, 2), n_out=df[0][w], n_in=df[1][w]) for w, z in negs],
+                                  anchor_candidates=anchors,
                                   coverage=cov), indent=1))
 
     from openpyxl import Workbook
@@ -326,6 +356,7 @@ def main():
         ("2. Fill the decision column with accept, reject, or anchor (anchor = accept and require it as an anchor word). Use note for anything unusual.",),
         ("3. Terms flagged in extends_existing_term are usually redundant; accept only if the longer phrase adds precision.",),
         ("4. The negative_terms tab lists words enriched in OUT papers: candidates for exclusion terms. It needs no decision unless you want one used.",),
+        ("5. The anchor_candidates tab ranks terms by the share of IN papers that contain them (at least half). An anchor gates the rule, so it must be nearly universal in IN papers; its OUT share matters less. Terms already in the vocabulary are included and marked in the existing column.",),
         ("",),
         ("What happens next",),
         (f"Accepted terms go into data/topic_review/{args.topic}.json under reviewer_terms and are counted by the re-count step; this workbook is not edited further.",),
@@ -357,6 +388,8 @@ def main():
           [28, 11, 12, 11, 11, 22, 24, 90, 12, 30])
     sheet("negative_terms", ["term", "n_out_papers", "n_in_papers", "log_odds_z_out"],
           [[w, df[0][w], df[1][w], round(z, 2)] for w, z in negs], [32, 13, 12, 14])
+    sheet("anchor_candidates", ["term", "in_coverage_pct", "out_coverage_pct", "n_in_papers", "n_out_papers", "existing", "decision", "note"],
+          [[a["term"], a["in_cov"], a["out_cov"], a["n_in"], a["n_out"], a["existing"], "", ""] for a in anchors], [30, 15, 16, 12, 13, 22, 12, 30])
     wb.save(xp)
 
     el = time.time() - t0
@@ -364,6 +397,7 @@ def main():
     for i, r in enumerate(rows[:25], 1):
         print(f"{i:3d} {r['term']:34s} z={r['z']:6.2f} in={r['n_in']:4d} out={r['n_out']:4d} {r['section']:12s} {('ext:' + r['extends']) if r['extends'] else ''}")
     print("\ntop 15 negative terms:", ", ".join(f"{w} ({z:.1f})" for w, z in negs[:15]))
+    print("\ntop 12 anchor candidates (IN% / OUT%):", ", ".join(f"{a['term']} {a['in_cov']:.0f}/{a['out_cov']:.0f}{' [existing]' if a['existing'] == 'yes' else ''}" for a in anchors[:12]))
     if ctrl:
         print("\npositive control (rank of rule's own terms):", ctrl)
     print(f"\nwall-clock {el:.0f}s\n{xp}\n{jp}")

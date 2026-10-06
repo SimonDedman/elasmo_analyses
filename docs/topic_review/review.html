@@ -597,6 +597,82 @@ function proposedHTML(){
     <div class="note">A term not in the counted vocabulary cannot be scored in the browser, so it is kept here and goes out with Export. The re-count reads the cached text for every corpus paper (about ten minutes, no PDF re-reading), adds the term to the vocabulary, and after the pages rebuild it appears above as a tickable keyword with its paper count and IN share, where the optimiser can test it.</div>`;
 }
 
+/* ---------- suggested keywords and anchors, from the candidate pool ---------- */
+/* cands.js: 3,000 frequent content n-grams not in the vocabulary, with one presence bitset per paper (PAPERS order).
+   Ranked here, in the browser, against whatever labels exist: the reviewer's inspected IN/OUT if there are enough,
+   else Fable's silver labels for a live column. Weighted log-odds with an informative Dirichlet prior
+   (Monroe, Colaresi & Quinn 2008), the same formula as scripts/suggest_topic_terms.py. */
+let CANDS = null, candsLoading = null, candBits = null;
+function loadCands(){
+  if (CANDS) return Promise.resolve(CANDS);
+  if (!candsLoading) candsLoading = load(`./${TOPIC}/data/cands.js`).then(() => {
+    CANDS = window.TR_CANDS; const dec = atob;
+    candBits = CANDS.bits.map(b => { if (!b) return null; const bin = dec(b), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; });
+    return CANDS; }).catch(e => { candsLoading = null; throw e; });
+  return candsLoading;
+}
+const hasBit = (u, k) => !!(u[k >> 3] & (1 << (k & 7)));
+function suggestionLabels(){
+  /* [source name, Map lid -> 0|1] */
+  const mine = new Map();
+  for (const [lid, v] of Object.entries(S.labels[S.rule.id] || {})) if (v[1] === 'i' && (v[0] === 0 || v[0] === 1)) mine.set(lid, v[0]);
+  const nIn = [...mine.values()].filter(x => x === 1).length, nOut = mine.size - nIn;
+  if (nIn >= 5 && nOut >= 5) return [`your inspected labels (${nIn} IN, ${nOut} OUT)`, mine];
+  if (S.rule.kind === 'live' && S.fableSeen.size){ const m = new Map(); for (const lid of S.fableSeen) m.set(lid, fableLab(lid)); const fi = [...m.values()].filter(x => x === 1).length;
+    return [`Fable's silver labels (${fmt(fi)} IN, ${fmt(m.size - fi)} OUT); your own take over once you have 5 of each`, m]; }
+  return [null, null];
+}
+function lgamma(x){ /* Lanczos */ const g = 7, c = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+  if (x < 0.5) return Math.log(Math.PI / Math.sin(Math.PI * x)) - lgamma(1 - x); x -= 1; let a = c[0]; const t = x + g + 0.5; for (let i = 1; i < g + 2; i++) a += c[i] / (x + i); return 0.5 * Math.log(2 * Math.PI) + (x + 0.5) * Math.log(t) - t + Math.log(a); }
+function fightin(yi, ni, yj, nj, yp, np, a0){
+  /* weighted log-odds ratio with informative Dirichlet prior; returns z */
+  const aw = a0 * yp / np, d = Math.log((yi + aw) / (ni + a0 - yi - aw)) - Math.log((yj + aw) / (nj + a0 - yj - aw));
+  const v = 1 / (yi + aw) + 1 / (yj + aw); return d / Math.sqrt(v);
+}
+function rankSuggestions(){
+  const [src, lab] = suggestionLabels(); if (!lab) return { src:null };
+  const K = CANDS.terms.length, cin = new Int32Array(K), cout = new Int32Array(K); let nIn = 0, nOut = 0;
+  /* labelled papers the rule never reached (no keyword mention) are still evidence: index every paper, not just S.RP */
+  if (!S.lidIndex){ S.lidIndex = new Map(); PAPERS.forEach((P, i) => S.lidIndex.set(P[0], i)); }
+  const labelled = []; for (const [lid, y] of lab){ const i = S.lidIndex.get(lid); const u = i !== undefined && candBits[i]; if (!u) continue; labelled.push([u, y]); }
+  for (const [u, y] of labelled){ if (y === 1) nIn++; else nOut++; const arr = y === 1 ? cin : cout; for (let k = 0; k < K; k++) if (hasBit(u, k)) arr[k]++; }
+  const tin = cin.reduce((a, b) => a + b, 0), tout = cout.reduce((a, b) => a + b, 0), a0 = 500;
+  /* stems: when catch, catches and catching are all in the pool, the extractor's catch* covers them in one term.
+     Group a single word with its inflections, count papers containing ANY of them, and fold the members under the stem. */
+  const idx = new Map(CANDS.terms.map((t, k) => [t, k])), SUF = ['s', 'es', 'ed', 'ing', 'er', 'ers'], folded = new Set(), groups = [];
+  for (let k = 0; k < K; k++){ const t = CANDS.terms[k]; if (t.includes(' ') || t.length < 5 || folded.has(k)) continue;
+    const mem = SUF.map(x => idx.get(t + x)).filter(m => m !== undefined && !folded.has(m)); if (!mem.length) continue;
+    /* an OCR line-break fragment ("speci" from "speci- mens") is far rarer than the word it begins: not a stem */
+    if (CANDS.df[k] < 0.25 * Math.max(...mem.map(m => CANDS.df[m]))) continue;
+    const all = [k, ...mem]; let gi = 0, go = 0;
+    for (const [u, y] of labelled){ if (all.some(m => hasBit(u, m))) { if (y === 1) gi++; else go++; } }
+    all.forEach(m => folded.add(m)); groups.push({ stem:t + '*', members:all.map(m => CANDS.terms[m]), k, nIn:gi, nOut:go, ext:CANDS.ext[k] }); }
+  const kw = [], an = [];
+  const push = (o) => { o.z = fightin(o.nIn, tin, o.nOut, tout, o.nIn + o.nOut, tin + tout, a0); if (o.nIn >= 3 && o.z > 0) kw.push(o);
+    const cov = o.nIn / Math.max(1, nIn); if (cov >= .5) an.push({ ...o, cov, covOut:o.nOut / Math.max(1, nOut) }); };
+  for (let k = 0; k < K; k++) if (!folded.has(k)) push({ k, term:CANDS.terms[k], ext:CANDS.ext[k], nIn:cin[k], nOut:cout[k] });
+  for (const g of groups) push({ ...g, term:g.stem });
+  kw.sort((a, b) => b.z - a.z); an.sort((a, b) => b.cov - a.cov || a.covOut - b.covOut);
+  return { src, nIn, nOut, kw:kw.slice(0, 25), an:an.slice(0, 12) };
+}
+function suggestionsHTML(){
+  if (!CANDS) return `<h3>Suggested keywords and anchors</h3><p class="note-sm">Ranks ${fmt(3000)} frequent words and phrases the vocabulary does not have, by how much more often they appear in papers labelled IN than OUT. Loads about 9 MB once.</p>
+    <p><button id="sugLoad">Suggest keywords from the labels</button> <span id="sugStatus" class="muted"></span></p>`;
+  const r = rankSuggestions();
+  if (!r.src) return `<h3>Suggested keywords and anchors</h3><p class="note-sm">Nothing to rank against yet: label at least 5 papers IN and 5 OUT (inspected, not bulk) for this concept.</p>`;
+  const prop = new Set(proposedTerms().map(x => x.term.toLowerCase()));
+  const row = (x, extra) => `<tr><td>${esc(x.term)}${x.members ? ` <span class="muted" title="a stem: matches any word starting this way, so check it does not also catch an unrelated word">covers ${x.members.map(esc).join(', ')}</span>` : ''}${x.ext ? ` <span class="chip" title="contains the existing term ${esc(x.ext)}">extends ${esc(x.ext)}</span>` : ''}</td>${extra}
+    <td>${prop.has(x.term.toLowerCase()) ? '<span class="muted">proposed</span>' : `<button data-propose="${esc(x.term)}" title="Add to my proposed keywords">propose</button>`}</td></tr>`;
+  return `<h3>Suggested keywords and anchors</h3>
+    <p class="note-sm">Ranked against ${r.src}. Live: every label you add re-ranks the list. A term is only a suggestion until it is counted; press propose to queue it.</p>
+    <table><tr><th>keyword candidate</th><th class="n" title="labelled IN papers containing it">IN</th><th class="n" title="labelled OUT papers containing it">OUT</th><th class="n" title="weighted log-odds, IN vs OUT">z</th><th></th></tr>
+    ${r.kw.map(x => row(x, `<td class="n">${x.nIn}</td><td class="n">${x.nOut}</td><td class="n">${x.z.toFixed(1)}</td>`)).join('') || '<tr><td colspan="5" class="muted">no term is more frequent in IN than OUT</td></tr>'}</table>
+    <h4 style="margin:12px 0 4px">Anchor candidates</h4>
+    <p class="note-sm">An anchor must appear in a paper for the rule to fire at all, so the useful ones are present in nearly every IN paper, whatever they do in OUT papers.</p>
+    <table><tr><th>anchor candidate</th><th class="n" title="share of labelled IN papers containing it">in IN</th><th class="n" title="share of labelled OUT papers containing it">in OUT</th><th></th></tr>
+    ${r.an.map(x => row(x, `<td class="n">${Math.round(100 * x.cov)}%</td><td class="n">${Math.round(100 * x.covOut)}%</td>`)).join('') || '<tr><td colspan="4" class="muted">no candidate covers half the IN papers</td></tr>'}</table>`;
+}
+
 /* ---------- rule editor ---------- */
 function termStats(){
   const R = S.cur, cut = cutoff(R), st = {};
@@ -636,7 +712,8 @@ function drawRule(){
     <p style="margin-top:10px"><input type="text" id="addTerm" list="vocabList" placeholder="add a keyword: from the counted vocabulary, or propose a new one" style="width:70%"> <button id="addBtn">Add</button></p>
     <datalist id="vocabList">${META.vocab.map((t, i) => R.tw[i] === undefined ? `<option value="${esc(t)}">` : '').join('')}</datalist>
     <div class="note">Only the ${fmt(META.vocab.length)} terms counted in the last corpus pass can be added instantly. Anything else is added to your proposed list below.</div>
-    ${proposedHTML()}`;
+    ${proposedHTML()}
+    <div id="sugBox">${suggestionsHTML()}</div>`;
 }
 $('#p-rule').addEventListener('change', ev => {
   const t = ev.target, R = S.cur; let rebuild = false;
@@ -651,6 +728,9 @@ $('#p-rule').addEventListener('click', ev => {
   if (ev.target.id === 'addBtn'){ const v = $('#addTerm').value.trim(); if (!v) return; const i = META.vocab.indexOf(v);
     if (i < 0){ proposeTerm(v); return; }
     S.cur.tw[i] = 1; buildRP(); ruleChanged(false, true); }
+  if (ev.target.id === 'sugLoad'){ ev.target.disabled = true; $('#sugStatus').textContent = 'loading the candidate pool…';
+    loadCands().then(() => { $('#sugBox').innerHTML = suggestionsHTML(); }).catch(e => { $('#sugStatus').textContent = `could not load cands.js: ${e.message}`; ev.target.disabled = false; }); return; }
+  if (ev.target.dataset.propose !== undefined){ proposeTerm(ev.target.dataset.propose); return; }
   if (ev.target.dataset.unpropose !== undefined){ const L = proposedTerms().filter(x => x.term !== ev.target.dataset.unpropose); saveProposed(L); drawRule(); }
 });
 function ruleChanged(_, skipScore){ if (!skipScore) rescore(false); const lid = S.view[S.cursor] && S.view[S.cursor].lid; S.sel.clear(); refreshView(lid); drawRule(); drawImpact(); scrollToCursor(); }

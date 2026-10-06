@@ -20,6 +20,7 @@ const W = 1600, H = 1000;
 
 /* what the tour points at: name -> CSS selector (first match) */
 const TARGETS = {
+  viewTabs: '#viewTabs', reviewerCluster: 'header > label, #exportBtn, #importBtn, #submitBtn',
   selector: '#ruleSel', selectorLabel: '.sellab', ruleCount: '#ruleCount', defn: '#defn', defnWhat: '#defn span:nth-child(1), #defn span:nth-child(2)', defnSize: '#defn span:nth-child(3)', sideTag: '#viewport .row .side',
   verdictButtons: '#tb1 button[data-act="in"], #tb1 button[data-act="unsure"]', bulkButtons: '#tb1 button[data-act="above"], #tb1 button[data-act="below"]',
   showOrder: '#tb2', firstRow: '#viewport .row', line: '#viewport .line', tabs: '#rtabs',
