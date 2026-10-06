@@ -12,7 +12,8 @@ geography topics (habitat eco_, ocean basins b_, sub-basins sb_) have no discipl
 champion yet; Simon asked for them anyway ("even if they'll be messy").
 
 ORDER is the landing-page order, in five groups, proposed 2026-10-06 from Simon's sketch "ecology,
-behavioural biology, biology, cons&mgt, ecotourism, fisheries, toxicology, data science".
+behavioural biology, biology, cons&mgt, ecotourism, fisheries, toxicology, data science"; Biology and
+Human interactions reordered to his numbers the same day.
 """
 import argparse
 import json
@@ -27,8 +28,8 @@ import extract_schema_columns as X  # noqa: E402
 GROUPS = {
     "Ecology": ["trophic", "movement", "habitat", "basins", "subbasins"],
     "Behavioural biology": ["behaviour", "sensory"],
-    "Biology": ["biology", "reproductive", "physiology", "biomechanics", "immunology", "genetics", "taxonomy", "paleontology"],
-    "Human interactions": ["conservation", "ecotourism", "human_dimensions", "fisheries", "husbandry", "toxicology"],
+    "Biology": ["taxonomy", "paleontology", "biology", "physiology", "biomechanics", "reproductive", "genetics", "immunology"],
+    "Human interactions": ["conservation", "fisheries", "husbandry", "ecotourism", "human_dimensions", "toxicology"],
     "Methods": ["data_science"],
 }
 ORDER = [t for g in GROUPS.values() for t in g]
