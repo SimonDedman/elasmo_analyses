@@ -34,9 +34,8 @@ a{color:inherit}
 <p class="lede">One question, asked one discipline at a time: of every paper the corpus holds, which are genuinely about <i>this</i>? Each topic bundles a discipline's extraction column with the pressure, impact and gear columns that belong to it. A subject expert judges the papers near the line, and the rules are then fitted to those judgements.</p>
 <p class="lede">First time here? <a href="./explain.html">Take the tour</a> (four minutes, then a sandbox where nothing counts).</p>
 
-<h2>Disciplines</h2>
-<div class="cards" id="cards"></div>
-<div class="note" id="unassigned">Not yet in any topic: the 20 habitat columns (eco_), 9 ocean basins (b_) and 43 sub-basins (sb_). They cut across disciplines and have no single champion.</div>
+<div id="groups"></div>
+<div class="note">The three geography topics (habitat, ocean basins, sub-basins) are not disciplines: every paper has a place, so their lists are long and nobody is their champion yet. They are here because the same question still applies to each column.</div>
 <p class="lede" id="gen" style="font-size:12.5px"></p>
 
 <script src="./topics.js"></script>
@@ -44,16 +43,17 @@ a{color:inherit}
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = n => n === undefined || n === null ? '–' : Number(n).toLocaleString('en-GB');
 const T = (window.TR_TOPICS || {topics: []}).topics;
-const order = ['fisheries'];
-T.sort((a, b) => (order.indexOf(b.id) - order.indexOf(a.id)) || a.title.localeCompare(b.title));
-document.getElementById('cards').innerHTML = T.map(t => {
+T.sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.title.localeCompare(b.title));
+const groups = [...new Set(T.map(t => t.group || 'Other'))];
+document.getElementById('groups').innerHTML = groups.map(g => `<h2>${esc(g)}</h2><div class="cards">${T.filter(t => (t.group || 'Other') === g).map(card).join('')}</div>`).join('');
+function card(t){
   const built = !!t.built, rule = t.discipline || '';
   return `<div class="card">
     <h3><a href="./hub.html?topic=${esc(t.id)}">${esc(t.title)}</a> ${built ? '' : '<span class="chip warn">not built yet</span>'}</h3>
-    <div class="meta">${esc(t.discipline)} · ${t.n_live} live column${t.n_live === 1 ? '' : 's'}${t.n_proposed ? ` · ${t.n_proposed} proposed` : ''} · champion: ${esc(t.champion || '(unassigned)')}</div>
+    <div class="meta">${t.geography ? `${t.n_live} columns, no discipline column` : esc(t.discipline)} · ${t.geography ? '' : `${t.n_live} live column${t.n_live === 1 ? '' : 's'}`}${t.n_proposed ? ` · ${t.n_proposed} proposed` : ''} · champion: ${esc(t.champion || '(unassigned)')}</div>
     ${built ? `<div class="nums"><span><b>${fmt(t.papers_with_hit)}</b>mention a keyword</span><span><b>${fmt(t.papers_in)}</b>qualify today</span><span><b>${fmt(t.fable_seen)}</b>Fable-read</span></div>` : '<div class="meta">The feature pass for this topic has not run; the pages appear here once it has.</div>'}
     <div class="links">${built ? `<a class="primary" href="./review.html?topic=${esc(t.id)}&rule=${esc(rule)}">Review</a><a href="./hub.html?topic=${esc(t.id)}">Hub</a><a href="./explain.html?topic=${esc(t.id)}">Tour</a>` : ''}</div>
-  </div>`; }).join('');
+  </div>`; }
 document.getElementById('gen').textContent = `${T.length} topics; ${T.filter(t => t.built).length} built. Register generated ${(window.TR_TOPICS || {}).generated || ''}.`;
 </script>
 </div></body></html>
