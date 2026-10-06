@@ -1,0 +1,49 @@
+[
+ {
+  "id": "d_taxonomy",
+  "label": "d_taxonomy",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "taxonom*",
+   "new species",
+   "sp. nov.",
+   "new genus",
+   "morphometric*",
+   "meristic*",
+   "dichotomous key",
+   "identification key",
+   "redescription",
+   "synonymy",
+   "type specimen"
+  ],
+  "anchors": [],
+  "threshold": 1,
+  "n_terms": 11,
+  "n_anchors": 0,
+  "papers_with_hit": 5175,
+  "papers_in": 3418,
+  "margin": 2475,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "2": 816,
+   "0": 1757,
+   "1": 1449,
+   "14": 10,
+   "3": 341,
+   "11": 28,
+   "8": 50,
+   "15": 82,
+   "4": 229,
+   "6": 100,
+   "5": 151,
+   "12": 21,
+   "10": 33,
+   "7": 62,
+   "9": 34,
+   "13": 12
+  },
+  "fable_in": 590,
+  "gold": 0
+ }
+]

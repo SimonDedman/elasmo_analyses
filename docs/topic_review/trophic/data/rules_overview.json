@@ -1,0 +1,78 @@
+[
+ {
+  "id": "imp_trophic",
+  "label": "imp_trophic",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "trophic level change",
+   "dietary shift",
+   "prey depletion",
+   "mesopredator release"
+  ],
+  "anchors": [],
+  "threshold": 1,
+  "n_terms": 4,
+  "n_anchors": 0,
+  "papers_with_hit": 217,
+  "papers_in": 139,
+  "margin": 143,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "0": 78,
+   "1": 111,
+   "2": 16,
+   "3": 5,
+   "4": 2,
+   "7": 1,
+   "6": 1,
+   "5": 3
+  },
+  "fable_in": 72,
+  "gold": 1
+ },
+ {
+  "id": "d_trophic",
+  "label": "d_trophic",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "trophic",
+   "diet",
+   "feeding ecology",
+   "stomach content*",
+   "prey composition",
+   "stable isotope",
+   "fatty acid",
+   "food web"
+  ],
+  "anchors": [],
+  "threshold": 2,
+  "n_terms": 8,
+  "n_anchors": 0,
+  "papers_with_hit": 4348,
+  "papers_in": 2042,
+  "margin": 734,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "0": 1279,
+   "5": 142,
+   "15": 479,
+   "2": 493,
+   "4": 199,
+   "10": 51,
+   "1": 1027,
+   "3": 216,
+   "7": 82,
+   "13": 32,
+   "11": 46,
+   "9": 70,
+   "12": 49,
+   "6": 93,
+   "8": 65,
+   "14": 25
+  },
+  "fable_in": 353,
+  "gold": 2
+ }
+]

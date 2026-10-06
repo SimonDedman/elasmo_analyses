@@ -126,7 +126,8 @@ def main():
         except Exception:
             existing = {}
     for r in register:
-        r.update({k: v for k, v in existing.get(r["id"], {}).items() if k.startswith("built") or k.startswith("papers_") or k == "n_rules"})
+        # keep everything the page builder merged in (built, papers_*, n_rules, fable_seen, ...); the register only owns identity and order
+        r.update({k: v for k, v in existing.get(r["id"], {}).items() if k not in r})
     if not args.dry_run:
         reg_path.write_text("window.TR_TOPICS = " + json.dumps({"topics": register, "generated": time.strftime("%Y-%m-%d %H:%M %Z")},
                                                               ensure_ascii=False) + ";\n")

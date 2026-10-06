@@ -959,7 +959,8 @@ async function selectRule(id){
     `<optgroup label="${esc(g)} \u2014 ${rs.length} concept${rs.length > 1 ? 's' : ''}">${
       rs.map(r => `<option value="${esc(r.id)}">${esc(r.label)}${r.kind === 'proposed' ? '  \u00b7 proposed, never run' : ''}</option>`).join('')}</optgroup>`).join('');
   const nLive = META.rules.filter(r => r.kind === 'live').length, nProp = META.rules.length - nLive;
-  $('#ruleCount').innerHTML = `${META.rules.length} concepts in the ${esc(META.topic.title)} topic: ${nLive} live extraction columns and <b>${nProp} proposed by David, never run</b>.`;
+  $('#ruleCount').innerHTML = nProp ? `${META.rules.length} concepts in the ${esc(META.topic.title)} topic: ${nLive} live extraction columns and <b>${nProp} proposed, never run</b>.`
+                                    : `${META.rules.length} concept${META.rules.length === 1 ? '' : 's'} in the ${esc(META.topic.title)} topic, all live extraction columns. No proposed rules yet: a champion's keyword workbook would add them, as David's did for fisheries.`;
   loadLabels();
   const rid = Q.get('rule') || META.featured[0] || META.rules[0].id; $('#ruleSel').value = rid;
   if (Q.get('view') === 'queue') S.mode = 'queue';

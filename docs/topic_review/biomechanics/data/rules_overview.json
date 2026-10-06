@@ -1,0 +1,46 @@
+[
+ {
+  "id": "d_biomechanics",
+  "label": "d_biomechanics",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "biomechani*",
+   "functional morphology",
+   "locomot*",
+   "kinematics",
+   "bite force",
+   "jaw mechanics",
+   "hydrodynamic*",
+   "swimming performance"
+  ],
+  "anchors": [],
+  "threshold": 1,
+  "n_terms": 8,
+  "n_anchors": 0,
+  "papers_with_hit": 1132,
+  "papers_in": 747,
+  "margin": 591,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "0": 385,
+   "1": 296,
+   "15": 55,
+   "4": 44,
+   "11": 13,
+   "7": 19,
+   "2": 154,
+   "8": 18,
+   "3": 56,
+   "5": 34,
+   "6": 13,
+   "10": 10,
+   "9": 14,
+   "12": 4,
+   "14": 7,
+   "13": 10
+  },
+  "fable_in": 111,
+  "gold": 2
+ }
+]

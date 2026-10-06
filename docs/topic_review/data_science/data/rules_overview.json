@@ -1,0 +1,46 @@
+[
+ {
+  "id": "d_data_science",
+  "label": "d_data_science",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "machine learning",
+   "deep learning",
+   "neural network",
+   "random forest",
+   "Bayesian",
+   "meta-analysis",
+   "systematic review",
+   "simulation model"
+  ],
+  "anchors": [],
+  "threshold": 2,
+  "n_terms": 8,
+  "n_anchors": 0,
+  "papers_with_hit": 806,
+  "papers_in": 312,
+  "margin": 168,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "1": 289,
+   "0": 205,
+   "2": 126,
+   "7": 13,
+   "8": 8,
+   "5": 29,
+   "4": 38,
+   "3": 61,
+   "6": 16,
+   "9": 6,
+   "15": 5,
+   "13": 2,
+   "14": 1,
+   "12": 2,
+   "10": 4,
+   "11": 1
+  },
+  "fable_in": 412,
+  "gold": 0
+ }
+]

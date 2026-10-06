@@ -1,0 +1,81 @@
+[
+ {
+  "id": "imp_distribution",
+  "label": "imp_distribution",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "distribution shift",
+   "range shift",
+   "range contraction",
+   "habitat shift"
+  ],
+  "anchors": [],
+  "threshold": 1,
+  "n_terms": 4,
+  "n_anchors": 0,
+  "papers_with_hit": 128,
+  "papers_in": 72,
+  "margin": 67,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "2": 22,
+   "1": 36,
+   "0": 56,
+   "5": 3,
+   "12": 1,
+   "3": 7,
+   "6": 1,
+   "4": 1,
+   "11": 1
+  },
+  "fable_in": 196,
+  "gold": 6
+ },
+ {
+  "id": "d_movement",
+  "label": "d_movement",
+  "kind": "live",
+  "group": "Live extraction columns",
+  "terms": [
+   "movement",
+   "telemetry",
+   "satellite tag*",
+   "acoustic tag*",
+   "archival tag*",
+   "home range",
+   "migration",
+   "habitat use",
+   "space use",
+   "tracking"
+  ],
+  "anchors": [],
+  "threshold": 3,
+  "n_terms": 10,
+  "n_anchors": 0,
+  "papers_with_hit": 5035,
+  "papers_in": 1828,
+  "margin": 477,
+  "anchor_gate_fails": 0,
+  "hist": {
+   "7": 102,
+   "1": 1150,
+   "5": 158,
+   "3": 313,
+   "2": 628,
+   "15": 516,
+   "0": 1429,
+   "6": 116,
+   "11": 50,
+   "14": 45,
+   "12": 55,
+   "4": 222,
+   "8": 85,
+   "10": 66,
+   "9": 59,
+   "13": 41
+  },
+  "fable_in": 409,
+  "gold": 1
+ }
+]

@@ -31,7 +31,8 @@ for t in topics:
 pool = st("_shared", "pool")[0]; chain = st("_all", "chain")[0]
 if pool == "QUEUED": remaining += 70
 failed = any("FAILED" in r[1] or "FAILED" in r[3] for r in rows) or pool == "FAILED"
-state = "DONE" if chain == "DONE" else ("FAILED (chain continues)" if failed else "RUNNING")
+running = any("RUNNING" in r[1] or "RUNNING" in r[3] for r in rows) or pool == "RUNNING"
+state = "RUNNING" if running else ("DONE" if chain == "DONE" else ("FAILED (chain continues)" if failed else "RUNNING"))
 if ST.exists() and now - ST.stat().st_mtime > 1800 and chain != "DONE": state = "STALLED? (no status change for %d min)" % ((now - ST.stat().st_mtime) / 60)
 print(f"topic review build-all   {state}   updated {d.get('_updated', '-')}")
 print(f"{'topic':18s} {'features':14s} {'took':7s} {'pages':14s} {'took':7s}")
