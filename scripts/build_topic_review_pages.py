@@ -36,6 +36,7 @@ SUSPECTS = ROOT / "outputs" / "extraction_borrowed_pdf_suspects_2026-09-18.csv"
 FABLE_CACHE = ROOT / "outputs" / "validation" / ".fable_corpus_cache"
 GOLD = ROOT / "outputs" / "validation" / "gold_labels.csv"
 SNIPS_PER_PAPER = 3
+ABS_SHARDS = 64   # abstracts ship in 64 files keyed by literature_id mod 64, loaded by the page on demand
 WINDOW = 110
 
 
@@ -128,14 +129,14 @@ def main():
                       "prefix": p.get("prefix", "d_"), "meaning": p.get("meaning"), "ref": p.get("reference_paper"),
                       "prerequisites": False})
 
-    meta_df = pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id", "title", "authors", "year", "journal", "doi"])
+    meta_df = pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id", "title", "authors", "year", "journal", "doi", "abstract"])
     meta_df = meta_df[meta_df.literature_id.notna()]
     meta = {str(r.literature_id).split(".")[0]: r for r in meta_df.itertuples()}
     suspects = set()
     if SUSPECTS.exists():
         suspects = {str(r["lid"]).split(".")[0] for r in csv.DictReader(open(SUSPECTS))}
 
-    papers, counts, by_lid = [], [], {}
+    papers, counts, by_lid, abstracts = [], [], {}, {}
     status = {"ok": 0, "no_pdf": 0, "no_text": 0}
     for line in open(tdir / "features.jsonl"):
         p = json.loads(line)
@@ -155,6 +156,8 @@ def main():
                        m.doi if isinstance(m.doi, str) else "", 1 if lid in suspects else 0])
         counts.append(flat)
         by_lid[lid] = p["counts"]
+        if isinstance(m.abstract, str) and len(m.abstract.strip()) > 40:
+            abstracts.setdefault(int(lid) % ABS_SHARDS, {})[lid] = re.sub(r"\s+", " ", m.abstract.strip())
 
     # --- seed labels -------------------------------------------------------
     rule_ids = {r["id"] for r in rules}
@@ -192,11 +195,11 @@ def main():
             if not fired:
                 continue
             n_hit += 1
-            sc = py_round(total)
-            is_in = gate and sc >= r["threshold"]
+            # the extractor stopped rounding on 2026-09-25: compare the weighted total as it stands
+            is_in = gate and total >= r["threshold"]
             n_in += is_in
             n_gate_fail += (not gate)
-            if gate and abs(total - (r["threshold"] - 0.5)) <= 0.5:
+            if gate and abs(total - r["threshold"]) <= 0.5:
                 n_margin += 1
             b = min(int(total), 15)
             hist[b] = hist.get(b, 0) + 1
@@ -221,6 +224,17 @@ def main():
         "control": control, "built": time.strftime("%Y-%m-%d %H:%M %Z")})
     sizes["papers.js"] = js(ddir / "papers.js", "TR_PAPERS", papers)
     sizes["counts.js"] = js(ddir / "counts.js", "TR_COUNTS", counts)
+    adir = ddir / "abs"
+    adir.mkdir(exist_ok=True)
+    for old in adir.glob("a*.js"):
+        old.unlink()
+    n_abs = 0
+    for shard, d in abstracts.items():
+        n_abs += len(d)
+        (adir / f"a{shard}.js").write_text("window.TR_ABS = Object.assign(window.TR_ABS || {}, "
+                                           + json.dumps(d, ensure_ascii=False, separators=(",", ":")) + ");\n")
+    sizes["abs/*.js"] = sum(f.stat().st_size for f in adir.glob("a*.js"))
+    print(f"abstracts: {n_abs:,} of {len(papers):,} papers, in {len(abstracts)} shard files")
     sizes["seed_labels.js"] = js(ddir / "seed_labels.js", "TR_SEED", {"fable": fable, "fable_seen": fable_seen, "gold": gold})
     for rid in topic.get("featured", []):
         r = next(x for x in rules if x["id"] == rid)

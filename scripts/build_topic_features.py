@@ -93,6 +93,10 @@ def build_vocab(topic, live):
         cs = set(prop.get("case_sensitive", []))
         prop["term_ids"] = [add(t, t in cs) for t in prop["terms"]]
         prop["anchor_ids"] = [add(a, a in cs) for a in prop.get("anchors", [])]
+    # keywords proposed by reviewers in the dashboard (merged in by scripts/topic_review_ingest_proposals.py):
+    # counted like any other term so the page can offer them as tickable keywords after the next pass
+    for t in topic.get("reviewer_terms", []):
+        add(t["term"], t.get("cs", False))
     return vocab
 
 
