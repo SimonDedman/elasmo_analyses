@@ -66,7 +66,7 @@ kbd{font:12px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-
     <div id="pins"></div>
   </div>
   <div class="side">
-    <div class="step" id="stepn">Step 1 of 11</div>
+    <div class="step" id="stepn">Step 1 of 13</div>
     <h3 id="title">Start here</h3>
     <p id="text"></p>
     <div class="why" id="why"></div>
@@ -95,6 +95,9 @@ const STEPS = [
   {x:38.5,y:13.9, box:[0.5,12.5,37,2.8], t:"The size of the job",
    p:"How many papers mention any keyword of this concept, and how many currently qualify.",
    w:"The gap between those two numbers is where the argument is. Everything else either obviously belongs or obviously does not."},
+  {x:66.5,y:1.3, box:[59.7,2.3,13,4], t:"Two ways through the list",
+   p:"Ladder is the whole list on the left, with the toolkit beside it. Margin queue deals one paper at a time as a card: closest to the line first, and every fourth card a random spot check from well above or well below the line.",
+   w:"If the spot checks keep agreeing with the rule, the far top and bottom can be accepted as assumed without reading them. If they do not, the line is in the wrong place and the queue has told you so cheaply."},
   {x:16.5,y:18, box:[0.5,16.2,15.5,3.6], t:"Your verdict on one paper",
    p:"IN, OUT, or Unsure, by button or by pressing I, O or U. The cursor then moves to the next paper.",
    w:"Unsure is a real answer: it hands the paper to the second reviewer instead of guessing."},
@@ -121,7 +124,10 @@ const STEPS = [
    w:"This is why a paper can mention a keyword ten times and still score zero, which surprises everyone the first time they see it."},
   {x:96.5,y:67, box:[62.5,66.3,37,33.2], t:"The keywords, and which ones are earning their place",
    p:"Every keyword, how many papers it appears in, how often those papers are judged IN, and how many papers qualify because of that keyword alone. Below the table you can add a keyword, or propose one the corpus has never been counted for.",
-   w:"A keyword with a low IN share and a high decisive count is the one to drop. Untick it and watch the list move."}
+   w:"A keyword with a low IN share and a high decisive count is the one to drop. Untick it and watch the list move."},
+  {x:93,y:1.3, box:[72.5,2.3,27,4], t:"Who you are, and getting labels out",
+   p:"Reviewer is the name every label is stored under, in this browser only. Export downloads your labels, any rule edits and any keywords you proposed as one JSON file. Import loads another reviewer's file so Show can be set to \"reviewers disagree\". Submit will send labels to the project; it is not wired yet.",
+   w:"Nothing leaves your browser until you export or submit, so a closed tab loses nothing and a cleared browser loses everything: export at the end of a session."}
 ];
 
 const pins = document.getElementById('pins'), hole = document.getElementById('hole'),
