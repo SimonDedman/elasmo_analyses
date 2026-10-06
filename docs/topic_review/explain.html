@@ -66,7 +66,7 @@ kbd{font:12px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-
     <div id="pins"></div>
   </div>
   <div class="side">
-    <div class="step" id="stepn">Step 1 of 12</div>
+    <div class="step" id="stepn">Step 1 of 11</div>
     <h3 id="title">Start here</h3>
     <p id="text"></p>
     <div class="why" id="why"></div>
@@ -89,41 +89,38 @@ kbd{font:12px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-
 /* x,y are the pin's position and box is the region to spotlight, both as % of the
    screenshot, so the tour survives the image being re-shot at another size. */
 const STEPS = [
-  {x:55.5,y:2.6, box:[13,0.4,41,4.6], t:"The concept you are judging",
-   p:"One concept at a time. This selector holds all 106 in the fisheries topic: the 40 columns the pipeline extracts today, and the 66 David has proposed that have never been run.",
-   w:"Picking one of David's scores it across the whole corpus on the spot, so you can see what his wording would actually pick up before anybody commits to it."},
-  {x:86.5,y:7, box:[1,5.2,84,3.4], t:"What you are actually deciding",
-   p:"Judge the concept, not the keywords. The champion writes a short definition here, with examples of what counts and what does not, before anyone labels.",
-   w:"Without that line two reviewers will disagree about what \"fisheries\" means, and the disagreement will have nothing to do with the papers."},
-  {x:47.5,y:10.4, box:[1,8.8,45,3], t:"The size of the job",
+  {x:55.5,y:3.4, box:[12.5,0.5,87,14.6], t:"The concept you are judging",
+   p:"Each option in this selector is one extraction column: a yes/no column in the database that records whether a paper is about this concept. The fisheries topic has 106 of them, 40 live columns the pipeline extracts today and 66 David has proposed that have never been run. The line under the selector gives that count; the two lines below it say what the chosen concept means, in the champion's words, with examples of what counts and what does not.",
+   w:"Judge the concept, not the keywords. Picking one of David's proposed columns scores it across the whole corpus on the spot, so you can see what his wording would pick up before anybody commits to it."},
+  {x:38.5,y:13.9, box:[0.5,12.5,37,2.8], t:"The size of the job",
    p:"How many papers mention any keyword of this concept, and how many currently qualify.",
    w:"The gap between those two numbers is where the argument is. Everything else either obviously belongs or obviously does not."},
-  {x:6,y:14.3, box:[1,15.5,22,5], t:"Your verdict on one paper",
+  {x:16.5,y:18, box:[0.5,16.2,15.5,3.6], t:"Your verdict on one paper",
    p:"IN, OUT, or Unsure, by button or by pressing I, O or U. The cursor then moves to the next paper.",
    w:"Unsure is a real answer: it hands the paper to the second reviewer instead of guessing."},
-  {x:30,y:14.3, box:[21,15.5,26,5], t:"Judging a run of papers at once",
+  {x:41.5,y:18, box:[21.3,16.2,19.5,3.6], t:"Judging a run of papers at once",
    p:"\"All above\" marks every unlabelled paper above the cursor as IN, \"All below\" marks everything below as OUT.",
    w:"These are stored as assumed rather than inspected, and the rule is never fitted to them. The top of the list is usually safe; the bottom is not, so treat them as tidying, not as judgement."},
-  {x:61.5,y:22.2, box:[1,20.5,60,4], t:"What the list shows you",
-   p:"Filter to the unlabelled, to the borderline band, to papers your rule edits have just moved, or to those where you and the machine disagree. Order by score, or by closeness to the line.",
-   w:"\"Closest to the line first\" is the honest way to spend your attention: that is where the concept's edge actually is."},
-  {x:60.5,y:31, box:[1,28,60,8], t:"One paper in the list",
-   p:"The score on the left, then the title, then the keywords that fired with how often, and a quotation showing one of them in context.",
+  {x:62.5,y:22.7, box:[0.5,20.6,61.2,4.4], t:"What the list shows you",
+   p:"Filter to the unlabelled, to the borderline band, to papers your rule edits have just moved, or to those where you and the machine disagree. Order is closest to the line first by default, or by score.",
+   w:"Closest to the line first is where the concept's edge actually is, so that is where your attention goes. Score order draws the threshold as a black bar in the list instead."},
+  {x:62.5,y:31, box:[0.5,28,61.2,6.3], t:"One paper in the list",
+   p:"The score on the left, then the title, then which side of the line the paper sits, the keywords that fired with how often, and a quotation showing one of them in context.",
    w:"If a keyword is doing something silly, such as retention meaning urea retention, you can usually see it here without opening anything."},
-  {x:61.5,y:60.7, box:[1,59,60,3.4], t:"The line",
-   p:"Everything above this bar qualifies for the concept; everything below mentions a keyword but falls short.",
-   w:"The bar moves as you change the rule, which is the quickest way to see what an edit really does."},
-  {x:84,y:13.6, box:[62,15.5,37,4], t:"The four tabs",
-   p:"Paper is the full evidence for the paper under the cursor. Rule is the rule itself. Impact is what your edits and labels add up to. Optimiser fits a rule to your answers.",
+  {x:10.5,y:31.6, box:[3.4,30.3,6.6,2.6], t:"The line",
+   p:"Every row says whether it sits at or above the threshold (qualifies) or below it (mentions a keyword but falls short). In score order the same line is drawn as a black bar across the list.",
+   w:"Which side a paper is on changes as you change the rule, which is the quickest way to see what an edit really does."},
+  {x:91,y:16.2, box:[62.2,15.8,37.5,4.8], t:"The four tabs",
+   p:"Paper is the full evidence for the paper under the cursor, with its abstract. Rule is the rule itself: the keywords, the score a paper must reach, and the section weights. Impact is what your edits and labels add up to, and how they change which papers qualify. Optimiser fits a rule to your answers.",
    w:"There is no separate tool anywhere: everything this project can do to a concept is behind these four tabs and the selector at the top."},
-  {x:96,y:35.2, box:[62,36,37,5], t:"The score a paper must reach",
+  {x:96,y:39.4, box:[62.5,37.3,37,4.4], t:"The score a paper must reach",
    p:"The threshold, whether a mention only counts when a shark or ray is named within a sentence, and a retired switch that used to round the score.",
    w:"Rounding was dropped on 25 September: it silently lowered every threshold by half a point, and 6% of qualifying decisions existed only because of it."},
-  {x:96.5,y:42.5, box:[62,44,37,13], t:"Where in a paper a mention counts",
+  {x:96.5,y:48.2, box:[62.5,47.2,37,11.8], t:"Where in a paper a mention counts",
    p:"A keyword in the title or the author's own keywords counts double; one in the methods counts once; one in text the section labeller could not place counts nothing.",
    w:"This is why a paper can mention a keyword ten times and still score zero, which surprises everyone the first time they see it."},
-  {x:88.5,y:66.5, box:[62,65,37,33], t:"The keywords, and which ones are earning their place",
-   p:"Every keyword, how many papers it appears in, how often those papers are judged IN, and how many papers qualify because of that keyword alone.",
+  {x:96.5,y:67, box:[62.5,66.3,37,33.2], t:"The keywords, and which ones are earning their place",
+   p:"Every keyword, how many papers it appears in, how often those papers are judged IN, and how many papers qualify because of that keyword alone. Below the table you can add a keyword, or propose one the corpus has never been counted for.",
    w:"A keyword with a low IN share and a high decisive count is the one to drop. Untick it and watch the list move."}
 ];
 

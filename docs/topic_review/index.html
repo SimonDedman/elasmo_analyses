@@ -12,6 +12,7 @@
 body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:1380px;margin:0 auto;padding:24px 16px 60px}
 h1{font-size:26px;margin:0 0 4px}h2{font-size:18px;margin:34px 0 8px}
+h2.sec{font-size:22px;margin:40px 0 6px;padding-top:14px;border-top:1px solid var(--border)}
 p{margin:8px 0}.lede{color:var(--ink2);max-width:820px}
 a{color:inherit}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-top:12px}
@@ -43,16 +44,17 @@ ol li{margin:4px 0}
 <h1 id="h1">Topic review</h1>
 <p class="lede" id="lede"></p>
 
-<h2>Start here</h2>
-<p class="lede">There is one review page. Everything that once looked like a separate tool (judging blind, editing the rule, the optimiser, trying a concept nobody has run, comparing two reviewers) is a tab or a dropdown inside it. Labels stay in your browser until you submit.</p>
+<h2 class="sec">Review pages</h2>
+<p class="lede">There is one review page. Labels stay in your browser until you submit.</p>
 <div class="cards" id="scen"></div>
 
+<h2 class="sec">Explore existing rule performance</h2>
 <h2>What the first full run found (2026-09-19, <code>d_fisheries</code>)</h2>
 <div class="kv" id="found"></div>
 <ol class="lede">
-<li><b>The top of the list is safe to assume; the bottom is not.</b> Among papers Fable has read, 96% of those scoring 10 or more are fisheries papers by its reading, but so are 37% of those scoring under 0.5. "Everything below this is OUT" would be wrong for about two papers in five, if Fable is right. The spot checks in scenario C exist to settle that with an expert's eyes.</li>
+<li><b>The top of the list is safe to assume; the bottom is not.</b> Among papers Fable has read, 96% of those scoring 10 or more are fisheries papers by its reading, but so are 37% of those scoring under 0.5. "Everything below this is OUT" would be wrong for about two papers in five, if Fable is right. The spot checks in the margin queue exist to settle that with an expert's eyes.</li>
 <li><b>The margin is wide.</b> 1,905 papers sit within half a point of the line. Read exhaustively at four a minute that is eight hours for this one column. A stratified sample of a few hundred is enough to fit and measure the rule; an exhaustive pass only makes sense where the corrected list is itself the product.</li>
-<li><b>Single keywords do real damage and the page shows which.</b> <i>retention</i> alone tips 256 papers over the line: urea retention, sperm retention, chromatographic retention time. Of the 23 Fable read, 21 are not fisheries papers. Scenario E shows them.</li>
+<li><b>Single keywords do real damage and the page shows which.</b> <i>retention</i> alone tips 256 papers over the line: urea retention, sperm retention, chromatographic retention time. Of the 23 Fable read, 21 are not fisheries papers. The Rule tab shows which papers each keyword alone lets through.</li>
 <li><b>The search finds a better rule in under a second.</b> On 869 Fable-labelled papers the live rule scores F1 62.5%. The proposed rule (threshold 1, proximity filter off, <i>retention</i> and <i>discard*</i> dropped, unlabelled text given weight) scores 73.8% on held-out papers. These are silver labels, so treat the size of the gain as indicative and the mechanism as proven.</li>
 <li><b>Text the section labeller cannot place is ignored entirely</b> (weight 0), which is why thousands of papers that mention fisheries keywords score 0. Raising that weight was the second-best single change the search found on the Fable labels (+4.5 points of F1).</li>
 </ol>
@@ -86,14 +88,14 @@ function draw(){
   document.getElementById('lede').innerHTML = `A mock-up, built ${esc(M.built)} on the real corpus. The per-author pages ask "is my paper coded correctly?". These ask the complementary question, one concept at a time: "of every paper the corpus holds, which are genuinely about <i>this</i>?" The answers become a gold-standard list per concept, tied to the expert who made it, and the rules are then fitted to the list.`;
   const R = `./review.html?topic=${TOPIC}`;
   const sc = [
-    ['Start reviewing', 'The whole list, and the rule beside it',
-     'Every paper that mentions a keyword, ordered by score, with the qualifying line drawn in. The panel on the right is the whole toolkit.',
-     'Read a paper, press I, O or U, and change the rule when a keyword is obviously misfiring. Opens on the Rule tab.',
-     './choose.html'],
-    ['First time?', 'The twelve-step tour, then the sandbox',
-     'A photograph of the page with numbered pins: what each control is and why it is there. About four minutes.',
-     'Walk the twelve steps, then try the sandbox: ten papers where you can label, drag the threshold and drop a keyword, and nothing is saved or counted.',
+    ['First time?', 'The guided tour, then the sandbox',
+     'A photograph of the review page with numbered pins: what each control is and why it is there. About four minutes.',
+     'Walk the steps, then try the sandbox: ten papers where you can label, drag the threshold and drop a keyword, and nothing is saved or counted.',
      './explain.html'],
+    ['Start reviewing', 'The review page',
+     'Every paper that mentions a keyword of the concept, closest to the qualifying line first, each row saying which side of it the paper sits. The panel on the right is the whole toolkit: Paper, Rule, Impact, Optimiser.',
+     'Read a paper, press I, O or U, and change the rule when a keyword is obviously misfiring. Judging blind, trying a concept nobody has run, and comparing two reviewers all live inside this page.',
+     `${R}&rule=d_fisheries`],
   ];
   document.getElementById('scen').innerHTML = sc.map(x => `<a class="cardx" href="${x[4]}"><i>${x[0]}</i><b>${x[1]}</b><span>${x[2]}</span><span class="does"><b>What you do:</b> ${x[3]}</span></a>`).join('');
   document.getElementById('cov').innerHTML = [[c.rows_in_scope, 'corpus rows in scope'], [c.ok, 'with readable PDF text'], [c.no_pdf, 'no PDF resolved'], [c.no_text, 'PDF with no text'], [c.suspect_text, 'flagged: text from another paper'], [M.vocab.length, 'keywords and anchors counted']]

@@ -41,7 +41,15 @@ header .grow{flex:1}
 body.sandbox #submitBtn{display:none}
 #defn{padding:8px 16px;border-bottom:1px solid var(--border);color:var(--ink2);font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
 #defn b{color:var(--ink)}
-.rulecount{padding:4px 16px 8px;font-size:12px;color:var(--ink2);border-bottom:1px solid var(--border)}
+.selwrap{display:flex;flex-direction:column;gap:2px;min-width:420px}
+.sellab{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:600}
+.sellab .muted{text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted)}
+.rulecount{font-size:11.5px;color:var(--ink2)}
+.abs{margin:8px 0 10px;padding:8px 10px;border-left:3px solid var(--axis);background:var(--page);font-size:13px;color:var(--ink2);line-height:1.45}
+.abs b.lbl{color:var(--ink);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:3px}
+.row.belowline .score{color:var(--muted)}
+.row .side{font-size:10.5px;color:var(--muted);flex:none;border:1px solid var(--grid);border-radius:4px;padding:0 5px;line-height:16px}
+.proposed-terms li{margin:3px 0}
 .rulecount b{color:var(--ink)}
 main{flex:1;min-height:0;display:flex}
 #left{flex:1 1 62%;min-width:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
@@ -136,7 +144,7 @@ svg text{fill:var(--ink2);font-size:10.5px}
 <div id="sandboxBar" hidden>Sandbox: ten papers, and nothing you do here is saved or sent anywhere. Label them, change the rule, run the search, it all disappears when you close the tab. <a id="sandboxOut" href="#">Leave the sandbox and work on the real list</a></div>
 <header>
   <h1><a href="./index.html" style="color:inherit;text-decoration:none">Topic review</a> <span class="crumb" id="crumb"></span></h1>
-  <select id="ruleSel" title="Rule under review"></select>
+  <div class="selwrap"><label for="ruleSel" class="sellab">Concept <span class="muted">(extraction column)</span></label><select id="ruleSel" title="The concept under review: one extraction column, live or proposed"></select><div id="ruleCount" class="rulecount"></div></div>
   <span class="grow"></span>
   <div class="tabs" id="viewTabs">
     <button data-v="ladder" class="on">Ladder</button><button data-v="queue">Margin queue</button>
@@ -148,7 +156,6 @@ svg text{fill:var(--ink2);font-size:10.5px}
   <input type="file" id="importFile" accept="application/json" hidden>
 </header>
 <div id="defn"></div>
-<div id="ruleCount" class="rulecount"></div>
 <main>
   <section id="left">
     <div class="toolbar" id="tb1">
@@ -170,7 +177,7 @@ svg text{fill:var(--ink2);font-size:10.5px}
         <option value="cross">moved by my rule edits</option><option value="dis">my label disagrees with the rule</option>
         <option value="fdis">Fable (silver) disagrees with the rule</option><option value="conf">reviewers disagree</option>
         <option value="l1">labelled IN</option><option value="l0">labelled OUT</option><option value="l2">unsure</option></select></label>
-      <label>Order <select id="sort"><option value="score">score, high to low</option><option value="margin">closest to the line first</option></select></label>
+      <label>Order <select id="sort"><option value="margin" selected>closest to the line first</option><option value="score">score, high to low</option></select></label>
       <label>Margin &plusmn; <input type="number" id="band" value="0.5" step="0.5" min="0.5" max="6" style="width:58px"></label>
       <input type="search" id="search" placeholder="title, author, journal, id" style="flex:1;min-width:140px">
       <label class="inl" title="1,471 corpus rows were extracted from another paper's PDF (known bug). Hidden by default."><input type="checkbox" id="showSus"> suspect text</label>
@@ -367,13 +374,27 @@ function topTerms(p){
   return Object.entries(by).sort((a, b) => b[1].c - a[1].c || b[1].n - a[1].n).slice(0, 5);
 }
 const mark = t => esc(t).replace(/«/g, '<mark>').replace(/»/g, '</mark>');
+/* abstracts arrive as plain text: wrap the rule's active keywords and anchors. Trailing * is a stem; case-sensitive
+   acronyms match as written; everything else case-insensitively at a word start. Display only, not the extractor. */
+function hiTerms(text){
+  const ids = [...new Set([...Object.keys(S.cur.tw).filter(t => S.cur.tw[t] > 0).map(Number), ...S.cur.anchors])];
+  const specs = ids.map(t => { const raw = META.vocab[t]; if (!raw) return null; const stem = raw.endsWith('*');
+    const core = (stem ? raw.slice(0, -1) : raw).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), pat = core + (stem ? '\\w*' : '');
+    return { pat, exact: new RegExp(`^${pat}$`, META.vocab_cs[t] ? '' : 'i') }; }).filter(Boolean);
+  if (!specs.length) return esc(text);
+  /* one case-insensitive scan finds every candidate; each hit is then confirmed by its own term, so a
+     case-sensitive acronym (MSY) does not stop an ordinary term from matching when capitalised (Bycatch) */
+  const re = new RegExp(`\\b(${specs.map(x => x.pat).join('|')})\\b`, 'gi');
+  return esc(text).replace(re, m => specs.some(x => x.exact.test(m)) ? `<mark>${m}</mark>` : m);
+}
 function rowHTML(it){
   if (it.line){
     const c = S.cur, b = S.base, moved = c.theta !== b.theta ? ` (live rule: ${b.theta})` : '';
     return `<div class="line" style="top:${it.y}px">THRESHOLD ${c.theta}${moved}<span>papers above qualify for ${esc(S.rule.label)}; papers below have at least one mention but do not</span></div>`;
   }
   const p = it.p, P = PAPERS[p.i], m = myLab(p.lid), cut = cutoff(S.cur), band = +$('#band').value;
-  const cls = ['row']; if (m) cls.push('l' + m[0]);
+  const cls = ['row']; if (m) cls.push('l' + m[0]); if (!p.in) cls.push('belowline');
+  const side = $('#sort').value === 'margin' ? `<span class="side" title="${p.in ? 'at or above the threshold: qualifies' : 'below the threshold: does not qualify'}">${p.in ? 'above the line' : 'below the line'}</span>` : '';
   if (Math.abs(p.s - cut) <= band) cls.push('margin'); if (S.sel.has(it.k)) cls.push('sel'); if (it.k === S.cursor) cls.push('cur');
   const pill = m ? `<span class="pill p${m[0]} ${m[1] === 'b' ? 'bulk' : ''}" title="${m[1] === 'b' ? 'assumed (bulk), not inspected' : 'inspected'}">${['OUT','IN','unsure'][m[0]]}</span>` : '';
   const fy = fableLab(p.lid), o = otherLab(p.lid);
@@ -387,7 +408,7 @@ function rowHTML(it){
   return `<div class="${cls.join(' ')}" data-k="${it.k}" style="top:${it.y}px">
     <div class="l1line"><span class="rank">${it.k + 1}</span><span class="score" title="weighted score; rounds to ${pyRound(p.s)}">${trim(p.s)}</span>${pill}
       <span class="title">${esc(P[1])}</span><span class="meta">${P[2] ?? ''} &middot; ${esc(P[3])} &middot; ${esc(P[4])}</span></div>
-    <div class="l2line">${flags}${chips}<span class="snip">${sn ? '&hellip;' + mark(sn[2]) + '&hellip;' : ''}</span></div></div>`;
+    <div class="l2line">${side}${flags}${chips}<span class="snip">${sn ? '&hellip;' + mark(sn[2]) + '&hellip;' : ''}</span></div></div>`;
 }
 function drawRows(){
   const top = vp.scrollTop, h = vp.clientHeight || 600, lo = top - 400, hi = top + h + 400;
@@ -525,6 +546,7 @@ function paperHTML(p, big, blind){
 
   return `<${big ? 'h2' : 'h3'}>${esc(P[1])}</${big ? 'h2' : 'h3'}>
     <div class="sub" style="color:var(--ink2);font-size:13px">${esc(P[3])} ${P[2] ?? ''} &middot; ${esc(P[4])} &middot; id ${esc(P[0])}${P[5] ? ` &middot; <a href="https://doi.org/${esc(P[5])}" target="_blank" rel="noopener">DOI</a>` : ''}</div>
+    <div class="abs" data-abs="${esc(P[0])}"><b class="lbl">Abstract</b><span class="muted">loading&hellip;</span></div>
     ${blind ? '<p class="note-sm">Scores and the machine\'s verdict are hidden here on purpose: judge the paper on its evidence.</p>' : `<p>${verdict}${rounding}${p.sus ? ' <b class="no">Warning:</b> this text was probably taken from a different paper by the same first author and year.' : ''}</p>
     <div class="strip">score <span class="scwrap">${strip}</span> <span class="legend-sm"><span class="sc thr">n</span> threshold &nbsp; <span class="sc got">n</span> this paper</span></div>`}
     ${sn.map(x => `<blockquote>&hellip;${mark(x[2])}&hellip; <small>${META.sections[x[1]].toLowerCase()}</small></blockquote>`).join('') || '<p class="note-sm">No stored quotation for this rule in the mock-up.</p>'}
@@ -536,6 +558,16 @@ function paperHTML(p, big, blind){
       ${blind ? '' : `<tr class="tot"><td>total</td>${secs.map(() => '<td></td>').join('')}<td class="n"><b>${trim(p.s)}</b></td></tr>`}</table>
     ${anchors}`;
 }
+/* abstracts live in 64 shard files (by literature_id mod 64) and load the first time a paper from that shard is shown */
+const ABS_SHARDS = new Map();
+function absShard(lid){ const n = parseInt(lid, 10) % 64; if (!ABS_SHARDS.has(n)) ABS_SHARDS.set(n, load(`./${TOPIC}/data/abs/a${n}.js`).catch(() => {})); return ABS_SHARDS.get(n); }
+function fillAbstracts(){
+  for (const el of $$('.abs[data-abs]:not([data-done])')){
+    const lid = el.dataset.abs;
+    absShard(lid).then(() => { const a = (window.TR_ABS || {})[lid]; el.dataset.done = '1';
+      el.innerHTML = `<b class="lbl">Abstract</b>` + (a ? hiTerms(a) : '<span class="muted">No abstract held for this paper. The DOI link above opens the publisher page.</span>'); });
+  }
+}
 function drawPaper(){
   const blind = Q.get('blind') === '1';
   // in the queue the card IS the paper under review; the ladder cursor means nothing there
@@ -543,6 +575,26 @@ function drawPaper(){
   const lead = '<div class="tabnote"><b>Paper.</b> Everything the rule saw in the paper under the cursor: the verdict and why, the quotations, and every keyword the rule looks for, including the ones it did not find. Move the cursor with the arrow keys.</div>';
   $('#p-paper').innerHTML = lead + (p ? paperHTML(p, false, blind)
     : '<p class="note-sm">No paper selected. Move the cursor in the list with the arrow keys.</p>');
+  fillAbstracts();
+}
+
+/* ---------- proposed new keywords (not yet counted) ---------- */
+const pkey = () => `tr:${TOPIC}:${who()}:proposed_terms`;
+const proposedTerms = () => store.get(pkey(), []);
+const saveProposed = L => store.set(pkey(), L);
+function proposeTerm(term){
+  const L = proposedTerms();
+  if (L.some(x => x.term.toLowerCase() === term.toLowerCase())) return toast('Already on your proposed list');
+  L.push({ term, rule: S.rule.id, when: new Date().toISOString().slice(0, 16) }); saveProposed(L); $('#addTerm').value = '';
+  toast(`"${term}" added to your proposed keywords: it is counted at the next re-count and then becomes tickable here`); drawRule();
+}
+function proposedHTML(){
+  const L = proposedTerms(), mine = L.filter(x => x.rule === S.rule.id), other = L.length - mine.length;
+  return `<h3>New keywords you have proposed</h3>
+    ${mine.length ? `<ul class="proposed-terms">${mine.map(x => `<li><b>${esc(x.term)}</b> <span class="muted">${esc(x.when.replace('T', ' '))}</span> <button data-unpropose="${esc(x.term)}" title="Remove from my proposals">remove</button></li>`).join('')}</ul>`
+                  : '<p class="note-sm">None yet for this concept. Type a word the rule is missing into the box above and press Add.</p>'}
+    ${other ? `<p class="note-sm">${other} more proposed for other concepts in this topic.</p>` : ''}
+    <div class="note">A term not in the counted vocabulary cannot be scored in the browser, so it is kept here and goes out with Export. The re-count reads the cached text for every corpus paper (about ten minutes, no PDF re-reading), adds the term to the vocabulary, and after the pages rebuild it appears above as a tickable keyword with its paper count and IN share, where the optimiser can test it.</div>`;
 }
 
 /* ---------- rule editor ---------- */
@@ -581,9 +633,10 @@ function drawRule(){
     ${anchors}
     <h3>Keywords</h3>
     <table><tr><th></th><th>term</th><th>weight</th><th class="n">papers</th><th class="n" title="Of labelled papers mentioning the term, the share labelled IN (your labels, else Fable silver)">IN share</th><th class="n" title="Papers that qualify only because of this term (labelled IN / OUT)">decisive</th></tr>${rows}</table>
-    <p style="margin-top:10px"><input type="text" id="addTerm" list="vocabList" placeholder="add a keyword from the topic vocabulary" style="width:70%"> <button id="addBtn">Add</button></p>
+    <p style="margin-top:10px"><input type="text" id="addTerm" list="vocabList" placeholder="add a keyword: from the counted vocabulary, or propose a new one" style="width:70%"> <button id="addBtn">Add</button></p>
     <datalist id="vocabList">${META.vocab.map((t, i) => R.tw[i] === undefined ? `<option value="${esc(t)}">` : '').join('')}</datalist>
-    <div class="note">Only the ${fmt(META.vocab.length)} terms counted in the last corpus pass can be added instantly. A brand-new term is queued for a re-count from the cached text (about ten minutes for the whole corpus, no PDF re-reading), after which it behaves like the rest.</div>`;
+    <div class="note">Only the ${fmt(META.vocab.length)} terms counted in the last corpus pass can be added instantly. Anything else is added to your proposed list below.</div>
+    ${proposedHTML()}`;
 }
 $('#p-rule').addEventListener('change', ev => {
   const t = ev.target, R = S.cur; let rebuild = false;
@@ -595,9 +648,10 @@ $('#p-rule').addEventListener('change', ev => {
 });
 $('#p-rule').addEventListener('click', ev => {
   if (ev.target.id === 'resetRule'){ S.cur = clone(S.base); buildRP(); ruleChanged(false, true); }
-  if (ev.target.id === 'addBtn'){ const v = $('#addTerm').value.trim(), i = META.vocab.indexOf(v);
-    if (i < 0) return toast('Not in the counted vocabulary: it would be queued for a re-count');
+  if (ev.target.id === 'addBtn'){ const v = $('#addTerm').value.trim(); if (!v) return; const i = META.vocab.indexOf(v);
+    if (i < 0){ proposeTerm(v); return; }
     S.cur.tw[i] = 1; buildRP(); ruleChanged(false, true); }
+  if (ev.target.dataset.unpropose !== undefined){ const L = proposedTerms().filter(x => x.term !== ev.target.dataset.unpropose); saveProposed(L); drawRule(); }
 });
 function ruleChanged(_, skipScore){ if (!skipScore) rescore(false); const lid = S.view[S.cursor] && S.view[S.cursor].lid; S.sel.clear(); refreshView(lid); drawRule(); drawImpact(); scrollToCursor(); }
 
@@ -754,13 +808,14 @@ function drawQueue(){
     ${body}<div class="btns"><button class="lab-in" data-q="1">IN <kbd>I</kbd></button><button class="lab-out" data-q="0">OUT <kbd>O</kbd></button><button class="lab-un" data-q="2">Unsure <kbd>U</kbd></button><button data-q="skip">Skip <kbd>&rarr;</kbd></button>
     ${m ? `<span class="pill p${m[0]}" style="align-self:center">currently ${['OUT', 'IN', 'unsure'][m[0]]}</span>` : ''}</div></div>
     <p style="max-width:900px;margin:12px auto;color:var(--ink2);font-size:13px">Cards come closest-to-the-line first. Every fifth card is a random paper from well above or well below the line: if those spot checks keep agreeing with the rule, the rest of the top and bottom can be accepted as assumed without reading them. The assumption is measured instead of taken on trust.</p>`;
+  fillAbstracts();
 }
 function queueLabel(v){ const q = S.queue[S.qpos]; if (!q) return; const rl = S.labels[S.rule.id] || (S.labels[S.rule.id] = {}), prev = rl[q.p.lid]; rl[q.p.lid] = [v, 'i', Date.now()]; S.undo.push({ rule:S.rule.id, undo:[[q.p.lid, prev]] }); saveLabels(); S.qpos++; drawQueue(); drawImpact(); drawPaper(); }
 $('#queue').addEventListener('click', ev => { const b = ev.target.closest('button[data-q]'); if (!b) return; if (b.dataset.q === 'skip'){ S.qpos++; drawQueue(); } else queueLabel(+b.dataset.q); });
 
 /* ---------- export / import ---------- */
 $('#exportBtn').onclick = () => {
-  const out = { page_version:META.built, topic:TOPIC, reviewer:who(), exported:new Date().toISOString(), labels:S.labels,
+  const out = { page_version:META.built, topic:TOPIC, reviewer:who(), exported:new Date().toISOString(), labels:S.labels, proposed_terms:proposedTerms(),
                 proposals:{ [S.rule.id]:{ changes:ruleDiff(S.cur, S.base).map(x => x.replace(/<[^>]+>/g, '').replace(/&rarr;/g, '->').replace(/&times;/g, 'x')), params:S.cur } } };
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(out)], { type:'application/json' })); a.download = `topic_review_${TOPIC}_${who().replace(/\W+/g, '_')}.json`; a.click();
 };
@@ -792,7 +847,8 @@ async function selectRule(id){
     <span>${fmt(ov.papers_with_hit || S.RP.length)} papers mention a keyword; ${fmt(ov.papers_in || 0)} qualify; topic champion: ${esc(META.topic.champion)}.</span>`;
   const u = new URL(location); u.searchParams.set('rule', S.rule.id); history.replaceState(null, '', u);
   if (S.mode === 'queue'){ buildQueue(); drawQueue(); } else { $('#viewport').scrollTop = 0; refreshView(); }
-  const on = ($$('#rtabs button.on')[0] || {}).dataset;
+  /* keep the reviewer's tab when they switch concept; on first load the static HTML pre-marks Paper, so ignore it */
+  const on = S.everSelected ? ($$('#rtabs button.on')[0] || {}).dataset : null; S.everSelected = true;
   const dflt = Q.get('panel') || (document.body.classList.contains('judge') || Q.get('blind') === '1'
                                   ? 'paper' : (S.mode === 'queue' ? 'paper' : 'rule'));
   showPanel(on && on.p ? on.p : dflt);
@@ -817,8 +873,7 @@ async function selectRule(id){
     `<optgroup label="${esc(g)} \u2014 ${rs.length} concept${rs.length > 1 ? 's' : ''}">${
       rs.map(r => `<option value="${esc(r.id)}">${esc(r.label)}${r.kind === 'proposed' ? '  \u00b7 proposed, never run' : ''}</option>`).join('')}</optgroup>`).join('');
   const nLive = META.rules.filter(r => r.kind === 'live').length, nProp = META.rules.length - nLive;
-  $('#ruleCount').innerHTML = `${META.rules.length} concepts in this topic: ${nLive} live extraction columns, `
-    + `<b>${nProp} proposed by David that have never been run</b> \u2014 all in the selector above.`;
+  $('#ruleCount').innerHTML = `${META.rules.length} concepts in the ${esc(META.topic.title)} topic: ${nLive} live extraction columns and <b>${nProp} proposed by David, never run</b>.`;
   loadLabels();
   const rid = Q.get('rule') || META.featured[0] || META.rules[0].id; $('#ruleSel').value = rid;
   if (Q.get('view') === 'queue') S.mode = 'queue';
