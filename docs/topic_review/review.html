@@ -41,6 +41,7 @@ header .grow{flex:1}
 body.sandbox #submitBtn{display:none}
 #defn{padding:8px 16px;border-bottom:1px solid var(--border);color:var(--ink2);font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
 #defn b{color:var(--ink)}
+#defn .champ,.champ{font-weight:700;color:var(--unsure)}
 .selwrap{display:flex;flex-direction:column;gap:2px;min-width:420px}
 .sellab{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-weight:600}
 .sellab .muted{text-transform:none;letter-spacing:0;font-weight:400;color:var(--muted)}
@@ -224,6 +225,7 @@ const SECCODE = {TITLE:'T', KEYWORDS:'K', ABSTRACT:'A', INTRODUCTION:'I', METHOD
                  RESULTS_AND_DISCUSSION:'RD', DISCUSSION:'D', CONCLUSIONS:'C', OTHER:'O'};
 const code = i => SECCODE[META.sections[i]] || META.sections[i].slice(0, 1);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const champ = c => { const s = esc(c || '(unassigned)'); return /unassigned/i.test(s) ? s : `<span class="champ">${s}</span>`; };
 const fmt = n => Number(n).toLocaleString('en-GB');
 const load = src => new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.onload = res; s.onerror = () => rej(new Error('missing ' + src)); document.head.appendChild(s); });
 const pyRound = x => { const f = Math.floor(x), d = x - f; return Math.abs(d - .5) < 1e-9 ? (f % 2 === 0 ? f : f + 1) : Math.round(x); };
@@ -930,7 +932,7 @@ async function selectRule(id){
   $('#crumb').innerHTML = `› <a href="./hub.html?topic=${encodeURIComponent(TOPIC)}" style="color:inherit;text-decoration:none">${esc(META.topic.title)}</a>`;
   $('#defn').innerHTML = `<span><b>${esc(S.rule.label)}</b> ${S.rule.kind === 'live' ? 'is a live extraction column' : 'is a proposed rule that has never been run'}.</span>
     <span>Judge the <b>concept</b>, not the keywords: ${esc(S.rule.meaning || 'the champion writes a two-line definition with inclusion and exclusion examples here before anyone labels.')}</span>
-    <span>${fmt(ov.papers_with_hit || S.RP.length)} papers mention a keyword; ${fmt(ov.papers_in || 0)} qualify; topic champion: ${esc(META.topic.champion)}.</span>`;
+    <span>${fmt(ov.papers_with_hit || S.RP.length)} papers mention a keyword; ${fmt(ov.papers_in || 0)} qualify; topic champion: ${champ(META.topic.champion)}.</span>`;
   const u = new URL(location); u.searchParams.set('rule', S.rule.id); history.replaceState(null, '', u);
   if (S.mode === 'queue'){ buildQueue(); drawQueue(); } else { $('#viewport').scrollTop = 0; refreshView(); }
   /* keep the reviewer's tab when they switch concept; on first load the static HTML pre-marks Paper, so ignore it */

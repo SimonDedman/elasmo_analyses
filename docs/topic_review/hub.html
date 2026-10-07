@@ -37,12 +37,14 @@ tr.grp td{background:var(--page);font-weight:650;color:var(--ink2)}
 .bar{display:inline-block;height:9px;border-radius:3px;background:var(--seq);vertical-align:middle;margin-right:6px}
 .chip{font-size:11px;border-radius:4px;padding:1px 6px;background:var(--grid)}
 .note{font-size:13px;color:var(--ink2);border-left:3px solid var(--warn);padding:6px 10px;margin:10px 0;background:var(--surface)}
+.champ{font-weight:700;color:var(--warn)}
 ol li{margin:4px 0}
 </style>
 </head>
 <body><div class="wrap">
 <p class="lede" style="margin:0 0 6px"><a href="./index.html">Topic review</a> › <span id="crumbTopic"></span></p>
 <h1 id="h1">Topic review</h1>
+<p class="lede" id="champ" style="margin:0 0 6px"></p>
 <p class="lede" id="lede"></p>
 
 <h2 class="sec">Review pages</h2>
@@ -84,11 +86,13 @@ const TOPIC = new URLSearchParams(location.search).get('topic') || 'fisheries';
 const fmt = n => Number(n).toLocaleString('en-GB'), esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const s = document.createElement('script'); s.src = `./${TOPIC}/data/meta.js`; s.onload = draw; document.head.appendChild(s);
 let sortKey = null, sortDir = -1;
+const champ = c => { const s = esc(c || '(unassigned)'); return /unassigned/i.test(s) ? s : `<span class="champ">${s}</span>`; };
 function draw(){
   const M = window.TR_META, c = M.coverage;
   document.title = `${M.topic.title}: topic review hub`;
   document.getElementById('h1').textContent = `${M.topic.title}: expert review by topic`;
   document.getElementById('crumbTopic').textContent = M.topic.title;
+  document.getElementById('champ').innerHTML = `Topic champion: ${champ(M.topic.champion)}`;
   document.getElementById('fisheriesOnly').style.display = TOPIC === 'fisheries' ? '' : 'none';
   document.getElementById('lede').innerHTML = `A mock-up, built ${esc(M.built)} on the real corpus. The per-author pages ask "is my paper coded correctly?". These ask the complementary question, one concept at a time: "of every paper the corpus holds, which are genuinely about <i>this</i>?" The answers become a gold-standard list per concept, tied to the expert who made it, and the rules are then fitted to the list.`;
   const R = `./review.html?topic=${TOPIC}`;

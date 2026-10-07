@@ -26,6 +26,7 @@ a{color:inherit}
 .card .links a.primary{background:var(--ink);color:var(--page);border-color:var(--ink)}
 .chip{font-size:11px;border-radius:4px;padding:1px 6px;background:var(--grid);color:var(--ink2)}
 .chip.warn{background:var(--warn);color:#0b0b0b}
+.champ{font-weight:700;color:var(--warn)}
 .note{font-size:13px;color:var(--ink2);border-left:3px solid var(--warn);padding:6px 10px;margin:14px 0;background:var(--surface)}
 </style>
 </head>
@@ -42,6 +43,7 @@ a{color:inherit}
 <script>
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = n => n === undefined || n === null ? '–' : Number(n).toLocaleString('en-GB');
+const champ = c => { const s = esc(c || '(unassigned)'); return /unassigned/i.test(s) ? s : `<span class="champ">${s}</span>`; };
 const T = (window.TR_TOPICS || {topics: []}).topics;
 T.sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.title.localeCompare(b.title));
 const groups = [...new Set(T.map(t => t.group || 'Other'))];
@@ -50,7 +52,7 @@ function card(t){
   const built = !!t.built, rule = t.discipline || '';
   return `<div class="card">
     <h3><a href="./hub.html?topic=${esc(t.id)}">${esc(t.title)}</a> ${built ? '' : '<span class="chip warn">not built yet</span>'}</h3>
-    <div class="meta">${t.geography ? `${t.n_live} columns, no discipline column` : esc(t.discipline)} · ${t.geography ? '' : `${t.n_live} live column${t.n_live === 1 ? '' : 's'}`}${t.n_proposed ? ` · ${t.n_proposed} proposed` : ''} · champion: ${esc(t.champion || '(unassigned)')}</div>
+    <div class="meta">${t.geography ? `${t.n_live} columns, no discipline column` : esc(t.discipline)} · ${t.geography ? '' : `${t.n_live} live column${t.n_live === 1 ? '' : 's'}`}${t.n_proposed ? ` · ${t.n_proposed} proposed` : ''} · champion: ${champ(t.champion)}</div>
     ${built ? `<div class="nums"><span><b>${fmt(t.papers_with_hit)}</b>mention a keyword</span><span><b>${fmt(t.papers_in)}</b>qualify today</span><span><b>${fmt(t.fable_seen)}</b>Fable-read</span></div>` : '<div class="meta">The feature pass for this topic has not run; the pages appear here once it has.</div>'}
     <div class="links">${built ? `<a class="primary" href="./review.html?topic=${esc(t.id)}&rule=${esc(rule)}">Review</a><a href="./hub.html?topic=${esc(t.id)}">Hub</a><a href="./explain.html?topic=${esc(t.id)}">Tour</a>` : ''}</div>
   </div>`; }
