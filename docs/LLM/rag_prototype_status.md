@@ -1,4 +1,16 @@
-# RAG prototype status (2026-07-06, updated 2026-07-07: cross-encoder re-ranker)
+# RAG prototype status (2026-07-06, updated 2026-07-07: cross-encoder re-ranker; 2026-10-07: see below)
+
+> **2026-10-07 update.** The July index was built from a text cache resolved by the
+> surname+year matcher: 2,975 of its texts belonged to a PDF the id map assigns to
+> another record (2,670 of them byte-identical duplicates, so one passage was cited to
+> two papers), and 2,948 records filed since July had no text. The cache is now keyed
+> by `outputs/pdf_id_map.csv`, unbacked texts are quarantined, the index is rebuilt
+> with paragraph-bounded chunks and hash dedupe, and `scripts/rag/sync_index.sh` runs
+> after every filing batch. Same day: hybrid FTS5+vector retrieval (`hybrid.py`),
+> an entailment-based claim-strength badge (`entailment.py`), LLM-backend/auth/history
+> seams, a name matcher shared with the validation pages (`author_match.py`), and the
+> first retrieval-evaluation harness (`scripts/rag/eval/`). Numbers from the harness
+> are the only retrieval-quality figures that may be quoted.
 
 First working end-to-end Retrieval-Augmented-Generation prototype over the
 SharkPapers PDF corpus: embed → retrieve → cite → generate → rate claim
@@ -177,6 +189,20 @@ Retrieval-only mode (`--no-generate`) prints the same ranked, cited,
 re-ranked evidence list without calling the LLM, so citation + ranking work
 even with no model server running.
 
+## Claim-strength badge: agreement of claim (2026-10-07)
+
+When an answer is generated, `claim_strength` is now computed from the answer, not from retrieval alone (`scripts/rag/entailment.py`). Each sentence is split off with its `[id]` citations and tested by a small NLI cross-encoder (`cross-encoder/nli-deberta-v3-xsmall`, CPU) with the chunk as premise and the sentence as hypothesis. Per sentence the result is `entailed` (a cited chunk entails it, p >= 0.5), `neutral` (cited, nothing entails it), `contradicted` (a retrieved chunk that is topically relevant, `ce_score` >= 0, contradicts it at p >= 0.9 and shares at least 3 content words with the sentence, without any chunk entailing it) or `uncited`.
+
+- `well-supported`: at least 3 distinct papers each entail an answer sentence, and nothing contradicts.
+- `contested`: any sentence is contradicted by a retrieved chunk; the reason and `contested[]` name the papers on each side. Shown in red.
+- `limited`: 1 or 2 entailing papers.
+- `unresolved`: no sentence is entailed.
+- `groundedness` is the fraction of cited sentences entailed; `n_entailing_papers` and `nli_model` are returned alongside.
+
+The old rating is kept unchanged as `claim_strength_topic` (relevance of retrieved papers to the question, agreement of topic). With no generated answer (retrieval-only, no LLM, generation error) `claim_strength` falls back to the topic rating and its `reason` says so (`basis: "topic"`). The front-end puts a marker after each sentence (check, tilde, cross, question mark) with the supporting or contradicting ids on hover.
+
+Limits: the xsmall model is lexically sensitive (a paraphrase can score neutral) and over-calls contradiction on unrelated text, hence the relevance guard on contradictions. Thresholds are INFERRED, not calibrated on a gold set; at most 8 sentences x 8 chunks are scored per answer. NLI cannot tell a paper that states a claim from one that merely mentions it. Treat the badge as indicative until the evaluation set in `docs/superpowers/specs/2026-08-06-retrieval-evaluation-design.md` exists.
+
 ## Limitations (be honest about these)
 
 - **[SUPERSEDED 2026-08-06 — the full index build completed 2026-07-11: 19,885 papers / 204,508 chunks. The paragraph below describes the 300-paper prototype and is kept for history.]** 300 of ~20,000 PDFs indexed (~1.5%). Most questions about niche
@@ -213,9 +239,11 @@ even with no model server running.
      the LLM to flag cross-source contradictions (its own claim still
      cross-checked, not trusted blindly).
 
-  Until (2) is addressed, treat the label as "how much genuinely relevant
-  evidence was retrieved", **not** "how correct the answer is" or "whether
-  sources agree on the specific claim". (1) is fixed; (2) remains the next
+  **(2) was addressed on 2026-10-07** (see "Entailment-based claim-strength"
+  below): when an answer is generated, the badge now comes from an NLI pass
+  between each answer sentence and the retrieved text, and `claim_strength_topic`
+  keeps the rating described here. Without a generated answer the topic rating is
+  shown and its reason says so. (1) is fixed; the paragraph below is kept as the
   thing to harden before the sharkatlas.org-style rating goes in front of
   users.
 - **Chunking is naive** (fixed word count, no section/heading awareness).

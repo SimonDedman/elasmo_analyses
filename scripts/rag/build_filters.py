@@ -7,7 +7,7 @@ re-runnable whenever the registry (filter_config.py) or the parquet changes.
 Outputs (git-ignored, under outputs/rag/):
   paper_filters.parquet   literature_id + every registry-named filter column
   author_index.parquet    long form: openalex_author_id -> literature_id
-  author_suggest.parquet  display_name, openalex_author_id, paper_count, norm
+  author_suggest.parquet  display_name, openalex_author_id, paper_count, norm, tokens
 
 Run with the fashion-clip venv:
     /home/simon/.venvs/fashion-clip/bin/python scripts/rag/build_filters.py
@@ -24,6 +24,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import PARQUET_PATH, PROJECT_ROOT, RAG_OUT_DIR  # noqa: E402
 from filter_config import sidecar_columns  # noqa: E402
+from author_match import add_match_columns  # noqa: E402
 
 PAPER_FILTERS = RAG_OUT_DIR / "paper_filters.parquet"
 AUTHOR_INDEX = RAG_OUT_DIR / "author_index.parquet"
@@ -39,9 +40,9 @@ def clean_id(s) -> str:
 
 
 def norm_name(s: str) -> str:
-    s = "".join(c for c in unicodedata.normalize("NFKD", str(s))
-                if not unicodedata.combining(c))
-    return s.lower().strip()
+    """One definition: author_match.fold (port of the validation page matcher)."""
+    from author_match import fold
+    return fold(s)
 
 
 def build_paper_filters() -> None:
@@ -78,7 +79,7 @@ def build_author_index() -> None:
                 .reset_index(name="paper_count"))
         ua["display_name"] = ua["openalex_author_id"]
     ua = ua.dropna(subset=["openalex_author_id", "display_name"])
-    ua["norm"] = ua["display_name"].map(norm_name)
+    ua = add_match_columns(ua)  # adds norm (folded name) and tokens
     ua = ua.sort_values("paper_count", ascending=False)
     ua.to_parquet(AUTHOR_SUGGEST, index=False)
     print(f"[authors] wrote {AUTHOR_SUGGEST} — {len(ua):,} unique authors")

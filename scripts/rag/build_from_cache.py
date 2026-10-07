@@ -35,12 +35,30 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (  # noqa: E402
-    CHUNKS_JSONL, EMBED_MODEL_NAME, EMBEDDINGS_NPY, FAISS_INDEX_PATH,
-    PROJECT_ROOT, RAG_OUT_DIR, chunk_text, load_metadata,
+    CHUNKS_JSONL, EMBED_MODEL_NAME, EMBEDDINGS_NPY, FABLE_TEXTS_DIR,
+    FABLE_TEXTS_MANIFEST, FAISS_INDEX_PATH, RAG_OUT_DIR, chunk_text,
+    load_metadata,
 )
 
-FABLE_TEXTS_DIR = PROJECT_ROOT / "outputs" / "validation" / ".fable_texts"
 BUILD_STATUS_JSON = RAG_OUT_DIR / "build_status.json"
+DEDUPE_SKIPPED_CSV = RAG_OUT_DIR / "dedupe_skipped.csv"
+# literature_id -> PDF sha its chunks were embedded from; lets an incremental run
+# notice a record whose PDF the id map reassigned and re-embed it
+INDEXED_MANIFEST = RAG_OUT_DIR / "indexed_manifest.json"
+EVICTED_CSV = RAG_OUT_DIR / "evicted.csv"
+
+
+def load_text_shas() -> dict[str, str]:
+    """literature_id -> SHA-1 of the PDF its cached text came from (prepass
+    manifest). Empty when the manifest has not been written yet."""
+    import csv
+    out: dict[str, str] = {}
+    if FABLE_TEXTS_MANIFEST.exists():
+        with open(FABLE_TEXTS_MANIFEST, newline="") as fh:
+            for r in csv.DictReader(fh):
+                if r.get("sha"):
+                    out[r["lit_id"]] = r["sha"]
+    return out
 
 
 def clean_id(s: str) -> str:
@@ -84,6 +102,15 @@ def atomic_write(all_chunks: list[dict], all_vecs: np.ndarray) -> None:
     os.replace(tmp_faiss, FAISS_INDEX_PATH)
 
 
+def write_indexed_manifest(indexed_shas: dict[str, str], lids: set[str], shas: dict[str, str]) -> None:
+    for lid in lids:
+        if lid in shas:
+            indexed_shas[lid] = shas[lid]
+    tmp = INDEXED_MANIFEST.with_name(INDEXED_MANIFEST.name + ".tmp")
+    tmp.write_text(json.dumps(indexed_shas))
+    os.replace(tmp, INDEXED_MANIFEST)
+
+
 def write_status(papers: int, chunks: int, total_papers: int, done: bool) -> None:
     tmp = BUILD_STATUS_JSON.with_name(BUILD_STATUS_JSON.name + ".tmp")
     with open(tmp, "w", encoding="utf-8") as f:
@@ -105,6 +132,10 @@ def main() -> None:
     ap.add_argument("--batch-size", type=int, default=32)
     ap.add_argument("--limit", type=int, default=None,
                     help="cap new papers this run (for testing)")
+    ap.add_argument("--fresh", action="store_true",
+                    help="ignore any index already in RAG_OUT_DIR and build from "
+                         "nothing (point RAG_OUT_DIR at a new directory so the live "
+                         "index keeps serving; scripts/rag/sync_index.sh --rebuild does this)")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -116,21 +147,107 @@ def main() -> None:
     print(f"      {len(meta):,} unique literature_ids in parquet")
 
     print(f"[2/4] Loading existing index state ...")
-    all_chunks, existing_vecs = load_existing()
+    if args.fresh:
+        all_chunks, existing_vecs = [], None
+        print("      --fresh: starting from an empty index")
+    else:
+        all_chunks, existing_vecs = load_existing()
+    shas = load_text_shas()
+    indexed_shas: dict[str, str] = {}
+    if INDEXED_MANIFEST.exists() and not args.fresh:
+        try:
+            indexed_shas = json.loads(INDEXED_MANIFEST.read_text())
+        except (OSError, ValueError):
+            indexed_shas = {}
+    # Evict records whose text is gone (quarantined by the prepass) or whose PDF
+    # changed since they were embedded; they re-enter below if a text exists now.
+    evict: dict[str, str] = {}
+    if all_chunks:
+        for lid in {clean_id(c["literature_id"]) for c in all_chunks}:
+            if not (text_dir / f"{lid}.txt").exists():
+                evict[lid] = "text_gone"
+            elif lid in indexed_shas and shas.get(lid) and shas[lid] != indexed_shas[lid]:
+                evict[lid] = "pdf_changed"
+        if evict:
+            keep = np.array([clean_id(c["literature_id"]) not in evict for c in all_chunks])
+            all_chunks = [c for c, k in zip(all_chunks, keep) if k]
+            if existing_vecs is not None:
+                existing_vecs = existing_vecs[keep]
+            import csv
+            with open(EVICTED_CSV, "a", newline="") as fh:
+                w = csv.writer(fh)
+                if fh.tell() == 0:
+                    w.writerow(["literature_id", "reason", "evicted_at"])
+                w.writerows([lid, why, time.strftime("%Y-%m-%d %H:%M")] for lid, why in sorted(evict.items()))
+            for lid in evict:
+                indexed_shas.pop(lid, None)
+            print(f"      evicted {len(evict):,} papers ({sum(v == 'text_gone' for v in evict.values()):,} text gone, "
+                  f"{sum(v == 'pdf_changed' for v in evict.values()):,} PDF changed) -> {EVICTED_CSV.name}")
+    evicted_any = bool(evict)
     indexed_ids = {clean_id(c["literature_id"]) for c in all_chunks}
     vec_blocks: list[np.ndarray] = [existing_vecs] if existing_vecs is not None else []
     print(f"      {len(indexed_ids):,} papers already indexed (carried over)")
 
     txt_ids = sorted(
-        p.stem for p in text_dir.glob("*.txt")
-        if p.stem not in indexed_ids and p.stem in meta.index
+        (p.stem for p in text_dir.glob("*.txt")
+         if p.stem not in indexed_ids and p.stem in meta.index),
+        key=lambda x: (len(x), x),
     )
+    # One PDF, one set of chunks. Byte-identical PDFs under two records (the
+    # library hard-links its duplicates) would otherwise put the same passage
+    # in the index twice, cited to two papers. The first record keeps it; the
+    # others are listed in dedupe_skipped.csv so the omission is visible.
+    sha_owner: dict[str, str] = {}
+    for lid in indexed_ids:
+        if lid in shas:
+            sha_owner.setdefault(shas[lid], lid)
+    # Two different PDF files can still yield identical text (the same paper
+    # downloaded twice, or two records for one paper); hash the text as well.
+    import hashlib
+    text_owner: dict[str, str] = {}
+    for lid in indexed_ids:
+        try:
+            text_owner.setdefault(hashlib.sha1((text_dir / f"{lid}.txt").read_bytes()).hexdigest(), lid)
+        except OSError:
+            continue
+    kept, skipped = [], []
+    for lid in txt_ids:
+        sha = shas.get(lid)
+        if sha and sha in sha_owner and sha_owner[sha] != lid:
+            skipped.append((lid, sha_owner[sha], sha))
+            continue
+        try:
+            th = hashlib.sha1((text_dir / f"{lid}.txt").read_bytes()).hexdigest()
+        except OSError:
+            continue
+        if th in text_owner and text_owner[th] != lid:
+            skipped.append((lid, text_owner[th], f"text:{th}"))
+            continue
+        text_owner.setdefault(th, lid)
+        if sha:
+            sha_owner.setdefault(sha, lid)
+        kept.append(lid)
+    txt_ids = kept
+    if skipped:
+        import csv
+        new_file = not DEDUPE_SKIPPED_CSV.exists() or args.fresh
+        with open(DEDUPE_SKIPPED_CSV, "w" if new_file else "a", newline="") as fh:
+            w = csv.writer(fh)
+            if new_file:
+                w.writerow(["literature_id", "same_as", "sha_or_text_hash"])
+            w.writerows(skipped)
+        print(f"      {len(skipped):,} papers share a PDF with one already indexed "
+              f"-> skipped (see {DEDUPE_SKIPPED_CSV.name})")
     if args.limit:
         txt_ids = txt_ids[:args.limit]
     total_target = len(indexed_ids) + len(txt_ids)
     print(f"[3/4] {len(txt_ids):,} new papers to index from {text_dir}")
     if not txt_ids:
         print("      Nothing new to index. Exiting.")
+        if evicted_any:
+            atomic_write(all_chunks, np.vstack(vec_blocks) if vec_blocks else np.zeros((0, 384), "float32"))
+        write_indexed_manifest(indexed_shas, indexed_ids, shas)
+        write_status(len(indexed_ids), len(all_chunks), total_target, True)
         return
 
     print(f"[4/4] Loading embedding model {EMBED_MODEL_NAME} on CPU ...")
@@ -159,6 +276,7 @@ def main() -> None:
         vec_blocks.append(vecs)
         combined = np.vstack(vec_blocks)
         atomic_write(all_chunks, combined)
+        write_indexed_manifest(indexed_shas, {clean_id(m["literature_id"]) for m in pending_meta}, shas)
         n_papers = len({clean_id(c["literature_id"]) for c in all_chunks})
         write_status(n_papers, len(all_chunks), total_target, final)
         print(f"      checkpoint: {n_papers:,} papers / {len(all_chunks):,} chunks "

@@ -29,9 +29,9 @@ def clean_id(s) -> str:
 
 
 def norm_name(s: str) -> str:
-    s = "".join(c for c in unicodedata.normalize("NFKD", str(s))
-                if not unicodedata.combining(c))
-    return s.lower().strip()
+    """One definition: author_match.fold (port of the validation page matcher)."""
+    from author_match import fold
+    return fold(s)
 
 
 def build_position_map(chunks: list[dict]) -> dict[str, list[int]]:
@@ -162,5 +162,48 @@ def search_preloaded(
             continue
         c = dict(chunks[idx])
         c["score"] = float(score)
+        c["pos"] = int(idx)
         hits.append(c)
     return hits
+
+
+def search_hybrid(
+    index, chunks: list[dict], model, question: str,
+    retrieve_n: int, allowed_positions: np.ndarray | None,
+    query_prefix: str, fts_db,
+) -> list[dict]:
+    """Vector candidates fused with BM25 keyword candidates (reciprocal rank
+    fusion). Same hit shape as search_preloaded plus fts_score, fused_score
+    and channels. `score` is the cosine similarity (computed from the stored
+    vector for chunks only the keyword channel found, 0.0 if that fails)."""
+    from hybrid import fts_search, rrf_fuse
+
+    vec_hits = search_preloaded(index, chunks, model, question, retrieve_n,
+                                allowed_positions, query_prefix)
+    fts_hits = fts_search(fts_db, question, retrieve_n, allowed_positions)
+    fts_score = dict(fts_hits)
+    vec_by_pos = {h["pos"]: h for h in vec_hits}
+    fused = rrf_fuse([(h["pos"], h["score"]) for h in vec_hits], fts_hits,
+                     n=retrieve_n)
+
+    qvec = None
+    out = []
+    for pos, fscore, chans in fused:
+        if pos in vec_by_pos:
+            h = dict(vec_by_pos[pos])
+        else:
+            h = dict(chunks[pos])
+            h["pos"] = pos
+            try:
+                if qvec is None:
+                    qvec = model.encode([query_prefix + question],
+                                        normalize_embeddings=True,
+                                        convert_to_numpy=True).astype("float32")[0]
+                h["score"] = float(np.dot(qvec, index.reconstruct(pos)))
+            except Exception:
+                h["score"] = 0.0
+        h["fts_score"] = fts_score.get(pos)
+        h["fused_score"] = fscore
+        h["channels"] = chans
+        out.append(h)
+    return out

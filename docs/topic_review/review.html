@@ -181,7 +181,6 @@ svg text{fill:var(--ink2);font-size:10.5px}
       <label>Order <select id="sort"><option value="margin" selected>closest to the line first</option><option value="score">score, high to low</option></select></label>
       <label>Margin &plusmn; <input type="number" id="band" value="0.5" step="0.5" min="0.5" max="6" style="width:58px"></label>
       <input type="search" id="search" placeholder="title, author, journal, id" style="flex:1;min-width:140px">
-      <label class="inl" title="1,471 corpus rows were extracted from another paper's PDF (known bug). Hidden by default."><input type="checkbox" id="showSus"> suspect text</label>
       <span class="count" id="listCount"></span>
     </div>
     <div id="viewport" tabindex="0"><div id="spacer"></div></div>
@@ -276,12 +275,12 @@ function buildRP(){
       if (anchorSet.has(ti)) a = true;
     }
     if (!e) continue;
-    const p = { i, lid:PAPERS[i][0], e, a, sus:PAPERS[i][6] === 1 };
+    const p = { i, lid:PAPERS[i][0], e, a };
     S.RP.push(p); S.byLid.set(p.lid, p);
   }
   rescore(true);
   if (SANDBOX){
-    const cut = cutoff(S.cur), ok = S.RP.filter(p => !p.sus);
+    const cut = cutoff(S.cur), ok = S.RP;
     const near = ok.filter(p => Math.abs(p.s - cut) <= 1).sort((a, b) => Math.abs(a.s - cut) - Math.abs(b.s - cut));
     const high = ok.filter(p => p.s - cut > 3).sort((a, b) => b.s - a.s);
     const low = ok.filter(p => cut - p.s > 1).sort((a, b) => a.s - b.s);
@@ -320,7 +319,7 @@ function confusion(src, R, useBase){
   for (const lid of labelledLids(src)){
     const y = labelFrom(src, lid); if (y === undefined) continue;
     const p = S.byLid.get(lid); let pred = false;
-    if (p && !(p.sus && !$('#showSus').checked)) pred = useBase ? p.bin : (R === S.cur ? p.in : isIn(p, scoreOf(p, R), R));
+    if (p) pred = useBase ? p.bin : (R === S.cur ? p.in : isIn(p, scoreOf(p, R), R));
     if (y === 1 && !p) unreach++;
     if (y === 1) pred ? tp++ : fn++; else pred ? fp++ : tn++;
   }
@@ -332,9 +331,8 @@ const pct = x => isNaN(x) ? 'n/a' : (100 * x).toFixed(1) + '%';
 /* ---------- view (filter + order) ---------- */
 function refreshView(keepCursorLid){
   const f = $('#filter').value, so = $('#sort').value, band = +$('#band').value, cut = cutoff(S.cur);
-  const q = $('#search').value.trim().toLowerCase(), showSus = $('#showSus').checked;
+  const q = $('#search').value.trim().toLowerCase();
   let v = S.RP.filter(p => {
-    if (p.sus && !showSus) return false;
     const m = myLab(p.lid), P = PAPERS[p.i];
     if (q && !(`${P[0]} ${P[1]} ${P[3]} ${P[4]}`.toLowerCase().includes(q))) return false;
     switch (f){
@@ -403,8 +401,7 @@ function rowHTML(it){
   const flags = (p.in !== p.bin ? `<span class="flag" title="Moved by your rule edits">${p.in ? '&#9650; now IN' : '&#9660; now OUT'}</span>` : '')
     + (fy !== undefined ? `<span class="flag ${fy ? 'fy' : ''}" title="Fable read this paper (silver label, not expert)">Fable: ${fy ? 'IN' : 'out'}</span>` : '')
     + (o !== undefined ? `<span class="flag" title="Second reviewer">2nd: ${['OUT','IN','unsure'][o]}</span>` : '')
-    + (S.cur.gate && !p.a ? `<span class="flag warn" title="No anchor word anywhere in the paper">no anchor</span>` : '')
-    + (p.sus ? `<span class="flag warn" title="Text probably comes from a different paper (borrowed-PDF bug)">suspect text</span>` : '');
+    + (S.cur.gate && !p.a ? `<span class="flag warn" title="No anchor word anywhere in the paper">no anchor</span>` : '');
   const chips = topTerms(p).map(([t, o]) => `<span class="chip" title="${o.n} mention(s), contributing ${trim(o.c)}">${esc(META.vocab[t])} &times;${o.n}</span>`).join('');
   const sn = (SNIPS[p.lid] || [])[0];
   return `<div class="${cls.join(' ')}" data-k="${it.k}" style="top:${it.y}px">
@@ -549,7 +546,7 @@ function paperHTML(p, big, blind){
   return `<${big ? 'h2' : 'h3'}>${esc(P[1])}</${big ? 'h2' : 'h3'}>
     <div class="sub" style="color:var(--ink2);font-size:13px">${esc(P[3])} ${P[2] ?? ''} &middot; ${esc(P[4])} &middot; id ${esc(P[0])}${P[5] ? ` &middot; <a href="https://doi.org/${esc(P[5])}" target="_blank" rel="noopener">DOI</a>` : ''}</div>
     <div class="abs" data-abs="${esc(P[0])}"><b class="lbl">Abstract</b><span class="muted">loading&hellip;</span></div>
-    ${blind ? '<p class="note-sm">Scores and the machine\'s verdict are hidden here on purpose: judge the paper on its evidence.</p>' : `<p>${verdict}${rounding}${p.sus ? ' <b class="no">Warning:</b> this text was probably taken from a different paper by the same first author and year.' : ''}</p>
+    ${blind ? '<p class="note-sm">Scores and the machine\'s verdict are hidden here on purpose: judge the paper on its evidence.</p>' : `<p>${verdict}${rounding}</p>
     <div class="strip">score <span class="scwrap">${strip}</span> <span class="legend-sm"><span class="sc thr">n</span> threshold &nbsp; <span class="sc got">n</span> this paper</span></div>`}
     ${sn.map(x => `<blockquote>${mark(x[2])} <small>${META.sections[x[1]].toLowerCase().replace(/_/g, ' ')}</small></blockquote>`).join('') || '<p class="note-sm">No stored quotation for this rule in the mock-up.</p>'}
     ${(!blind && fy !== undefined) ? `<p><span class="flag ${fy ? 'fy' : ''}">Fable (silver): ${fy ? 'IN' : 'out'}</span> ${f ? esc(f[1]) + ` <span style="color:var(--muted)">(confidence ${f[0]})</span>` : 'Fable read this paper and did not flag this column.'}</p>` : ''}
@@ -686,7 +683,6 @@ function termStats(){
   const R = S.cur, cut = cutoff(R), st = {};
   for (const t in R.tw) st[t] = { n:0, li:0, lo:0, dec:0, decIn:0, decOut:0 };
   for (const p of S.RP){
-    if (p.sus && !$('#showSus').checked) continue;
     const contrib = {}; for (let k = 0; k < p.e.length; k += 4){ const n = R.prox ? p.e[k+3] : p.e[k+2]; if (!n) continue; contrib[p.e[k]] = (contrib[p.e[k]] || 0) + n * R.W[p.e[k+1]] * (R.tw[p.e[k]] || 0); }
     const m = myLab(p.lid), y = m && m[0] !== 2 ? m[0] : fableLab(p.lid);
     for (const t in contrib){ const o = st[t]; if (!o) continue; o.n++; if (y === 1) o.li++; else if (y === 0) o.lo++;
@@ -752,7 +748,7 @@ function ruleDiff(R, B){
   return d;
 }
 function drawImpact(){
-  const vis = S.RP.filter(p => !(p.sus && !$('#showSus').checked)), nIn = vis.filter(p => p.in).length, nB = vis.filter(p => p.bin).length;
+  const vis = S.RP, nIn = vis.filter(p => p.in).length, nB = vis.filter(p => p.bin).length;
   const up = vis.filter(p => p.in && !p.bin).length, down = vis.filter(p => !p.in && p.bin).length, cut = cutoff(S.cur), band = +$('#band').value;
   const margin = vis.filter(p => Math.abs(p.s - cut) <= band && (!S.cur.gate || p.a)), mDone = margin.filter(p => myLab(p.lid)).length;
   const rl = S.labels[S.rule.id] || {}, nI = Object.values(rl).filter(l => l[1] === 'i').length, nBk = Object.values(rl).filter(l => l[1] === 'b').length;
@@ -797,7 +793,7 @@ document.addEventListener('mousemove', ev => { const t = ev.target.dataset && ev
 function optData(src){
   const D = []; let unreach = 0;
   for (const lid of labelledLids(src)){ const y = labelFrom(src, lid); if (y === undefined) continue; const p = S.byLid.get(lid);
-    if (!p){ if (y === 1) unreach++; continue; } if (p.sus) continue; D.push({ p, y, fold:[...lid].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % 5 }); }
+    if (!p){ if (y === 1) unreach++; continue; } D.push({ p, y, fold:[...lid].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % 5 }); }
   return { D, unreach };
 }
 function fbeta(R, D, unreach, beta, skipFold, onlyFold){
@@ -876,7 +872,7 @@ function runOpt(){
 /* ---------- margin queue ---------- */
 function buildQueue(){
   const cut = cutoff(S.cur), rnd = lid => ([...lid].reduce((a, c) => (a * 33 + c.charCodeAt(0)) >>> 0, 5381) % 1000) / 1000;
-  const ok = S.RP.filter(p => !p.sus && (!S.cur.gate || p.a)), band = +$('#band').value;
+  const ok = S.RP.filter(p => (!S.cur.gate || p.a)), band = +$('#band').value;
   const margin = ok.filter(p => Math.abs(p.s - cut) <= band).sort((a, b) => Math.abs(a.s - cut) - Math.abs(b.s - cut) || rnd(a.lid) - rnd(b.lid));
   const top = ok.filter(p => p.s - cut > band).sort((a, b) => rnd(a.lid) - rnd(b.lid)).slice(0, 40), bot = ok.filter(p => cut - p.s > band).sort((a, b) => rnd(a.lid) - rnd(b.lid)).slice(0, 40);
   S.queue = []; let ti = 0, bi = 0;
@@ -917,7 +913,7 @@ function setMode(m){ S.mode = m; $$('#viewTabs button').forEach(b => b.classList
 function showPanel(p){ $$('#rtabs button').forEach(b => b.classList.toggle('on', b.dataset.p === p)); $$('.panel').forEach(x => x.classList.toggle('on', x.id === 'p-' + p)); if (p === 'paper') drawPaper(); if (p === 'rule') drawRule(); if (p === 'impact') drawImpact(); if (p === 'opt') drawOpt(); }
 $('#viewTabs').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) setMode(b.dataset.v); });
 $('#rtabs').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) showPanel(b.dataset.p); });
-['filter', 'sort', 'band', 'showSus'].forEach(id => $('#' + id).addEventListener('change', () => { S.sel.clear(); refreshView(); drawImpact(); }));
+['filter', 'sort', 'band'].forEach(id => $('#' + id).addEventListener('change', () => { S.sel.clear(); refreshView(); drawImpact(); }));
 $('#search').addEventListener('input', () => { S.sel.clear(); refreshView(); });
 $('#who').addEventListener('change', () => { store.set('tr:who', who()); loadLabels(); refreshView(); drawImpact(); });
 $('#ruleSel').addEventListener('change', () => selectRule($('#ruleSel').value));
@@ -976,7 +972,7 @@ async function selectRule(id){
 function runDemo(kind){
   /* fills the reviewer's labels from the Fable silver labels so the accuracy, disagreement and optimiser panels have something to show */
   const rl = S.labels[S.rule.id] = {}; let n = 0;
-  for (const p of S.RP){ const y = fableLab(p.lid); if (y === undefined || p.sus) continue; rl[p.lid] = [y, 'i', 0]; n++; }
+  for (const p of S.RP){ const y = fableLab(p.lid); if (y === undefined) continue; rl[p.lid] = [y, 'i', 0]; n++; }
   toast(`Demo: ${fmt(n)} Fable silver labels copied in as if "${who()}" had judged them. Not saved.`); refreshView(); drawImpact();
   if (kind === 'opt'){ showPanel('opt'); runOpt(); }
   if (kind === 'edit'){ S.cursor = 0; S.anchor = 0; S.cur.theta = S.base.theta + 1; const drop = Object.keys(S.cur.tw).find(t => META.vocab[t] === 'retention'); if (drop) S.cur.tw[drop] = 0; ruleChanged(); showPanel('impact'); $('#filter').value = 'cross'; S.cursor = 0; refreshView(); vp.scrollTop = 0; drawRows(); }

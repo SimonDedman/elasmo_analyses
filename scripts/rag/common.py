@@ -32,8 +32,23 @@ PDF_LIBRARY_DIR = Path(
 )
 PARQUET_PATH = PROJECT_ROOT / "outputs" / "literature_review_enriched.parquet"
 
-RAG_OUT_DIR = PROJECT_ROOT / "outputs" / "rag"
+# RAG_OUT_DIR can be pointed elsewhere (a fresh rebuild lands in outputs/rag.new
+# and is swapped in when complete; a small test index lives in outputs/rag_test)
+# so the live index keeps serving while another one is being built or tested.
+import os as _os
+RAG_OUT_DIR = Path(_os.environ.get("RAG_OUT_DIR") or (PROJECT_ROOT / "outputs" / "rag"))
 RAG_OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+# State that must survive an index swap (query history, auth tokens) lives beside
+# the index directories, never inside one: sync_index.sh --rebuild renames them.
+RAG_STATE_DIR = Path(_os.environ.get("RAG_STATE_DIR") or (PROJECT_ROOT / "outputs" / "rag_state"))
+RAG_STATE_DIR.mkdir(parents=True, exist_ok=True)
+
+# Text cache the index is built from: one body-text file per literature_id,
+# written by scripts/validation/fable_corpus_prepass.py from outputs/pdf_id_map.csv.
+# The manifest beside it records which PDF (by SHA-1) each text came from.
+FABLE_TEXTS_DIR = PROJECT_ROOT / "outputs" / "validation" / ".fable_texts"
+FABLE_TEXTS_MANIFEST = PROJECT_ROOT / "outputs" / "validation" / "fable_texts_manifest.csv"
 
 CHUNKS_JSONL = RAG_OUT_DIR / "chunks_meta.jsonl"
 EMBEDDINGS_NPY = RAG_OUT_DIR / "embeddings.npy"
@@ -207,11 +222,92 @@ def extract_text_from_pdf(pdf_path: Path) -> str | None:
         return None
 
 
+_PARA_SPLIT_RE = re.compile(r"\n[ \t]*\n+")
+_SENT_SPLIT_RE = re.compile(r"(?<=[.!?])\s+(?=[A-Z(\[])")
+
+
+def _split_units(text: str, chunk_words: int) -> list[list[str]]:
+    """Paragraphs as word lists; a paragraph longer than a chunk is split at
+    sentence boundaries, and a single sentence longer than a chunk at words."""
+    units: list[list[str]] = []
+    for para in _PARA_SPLIT_RE.split(text):
+        words = para.split()
+        if not words:
+            continue
+        if len(words) <= chunk_words:
+            units.append(words)
+            continue
+        for sent in _SENT_SPLIT_RE.split(" ".join(words)):
+            sw = sent.split()
+            while len(sw) > chunk_words:
+                units.append(sw[:chunk_words])
+                sw = sw[chunk_words:]
+            if sw:
+                units.append(sw)
+    return units
+
+
 def chunk_text(
+    text: str, chunk_words: int = CHUNK_WORDS,
+    overlap_words: int = CHUNK_OVERLAP_WORDS, min_words: int = 40,
+) -> list[str]:
+    """Boundary-aware chunking (2026-10-07): packs whole paragraphs (or, for
+    long paragraphs, whole sentences) into chunks of up to chunk_words, so a
+    chunk never starts or ends mid-sentence. Consecutive chunks overlap by the
+    trailing units of the previous chunk, up to overlap_words. A trailing
+    sliver shorter than min_words is merged into the previous chunk rather
+    than dropped. The texts this runs on are already body-only (front matter,
+    references, and acknowledgements stripped by extract_text_from_pdf in
+    extract_schema_columns.py), so no section detection is repeated here.
+    chunk_text_words() is the pre-2026-10 sliding window, kept for A/B runs.
+    """
+    units = _split_units(text, chunk_words)
+    if not units:
+        return []
+    chunks: list[list[str]] = []
+    cur: list[list[str]] = []
+    cur_n = 0
+    for u in units:
+        if cur and cur_n + len(u) > chunk_words:
+            chunks.append([w for unit in cur for w in unit])
+            # overlap: carry trailing units of the finished chunk forward
+            carry: list[list[str]] = []
+            n = 0
+            room = min(overlap_words, chunk_words - len(u))
+            for unit in reversed(cur):
+                if n + len(unit) > room:
+                    break
+                carry.insert(0, unit)
+                n += len(unit)
+            cur, cur_n = carry, n
+        cur.append(u)
+        cur_n += len(u)
+    if cur:
+        tail = [w for unit in cur for w in unit]
+        # a chunk made only of carried-over overlap adds nothing new
+        carried_only = chunks and len(tail) <= overlap_words and all(
+            w in set(chunks[-1]) for w in tail)
+        if chunks and (len(tail) < min_words or carried_only):
+            # append only the words not already at the end of the previous chunk
+            prev = chunks[-1]
+            k = 0
+            for k in range(min(len(prev), len(tail)), 0, -1):
+                if prev[-k:] == tail[:k]:
+                    break
+            else:
+                k = 0
+            chunks[-1] = prev + tail[k:]
+        else:
+            chunks.append(tail)
+    return [" ".join(c) for c in chunks]
+
+
+def chunk_text_words(
     text: str, chunk_words: int = CHUNK_WORDS,
     overlap_words: int = CHUNK_OVERLAP_WORDS,
 ) -> list[str]:
-    """Word-based sliding-window chunking (~850-900 tokens/chunk, overlap)."""
+    """Word-based sliding-window chunking (~850-900 tokens/chunk, overlap).
+    Superseded by chunk_text() on 2026-10-07; kept for A/B comparison."""
     words = text.split()
     if not words:
         return []

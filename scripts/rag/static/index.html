@@ -59,6 +59,7 @@
   .answer { background:var(--panel); border:1px solid var(--line); border-radius:11px;
             padding:18px 20px; font-size:15px; line-height:1.65; margin-bottom:8px; }
   .answer a.cite { color:var(--accent); text-decoration:none; font-weight:600; white-space:nowrap; }
+  .sup { font-size:12px; font-weight:700; cursor:help; }
   .strength { display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:650;
               padding:5px 12px; border-radius:20px; margin-bottom:18px; }
   .dot { width:9px; height:9px; border-radius:50%; }
@@ -71,6 +72,12 @@
   .empty { color:var(--dim); padding:40px; text-align:center; }
   .spin { display:inline-block; width:15px; height:15px; border:2px solid var(--line);
           border-top-color:var(--accent); border-radius:50%; animation:sp .7s linear infinite; vertical-align:-2px;}
+  .hist { margin:0 0 12px; font-size:12.5px; }
+  .hist > summary { cursor:pointer; color:var(--dim); }
+  .hist .h { padding:4px 8px; margin-top:4px; background:var(--panel2); border:1px solid var(--line);
+             border-radius:6px; cursor:pointer; color:var(--ink); }
+  .hist .h:hover { border-color:var(--accent); color:var(--accent); }
+  .hist .h small { color:var(--dim); margin-left:6px; }
   @keyframes sp { to { transform:rotate(360deg); } }
 </style>
 </head>
@@ -88,6 +95,7 @@
       <button id="go">Ask</button>
     </div>
     <div class="examples" id="examples"></div>
+    <details class="hist" id="hist"><summary>Recent questions</summary><div id="histlist"></div></details>
     <div class="meta" id="qmeta"></div>
     <div id="results"><div class="empty">Ask a question to search the corpus. Add filters on the left to narrow it.</div></div>
   </main>
@@ -213,7 +221,18 @@ function collectFilters(){
   return out;
 }
 
-const STR = {'well-supported':'--green','limited':'--amber','unresolved':'--grey','':'--grey'};
+const STR = {'well-supported':'--green','contested':'--red','limited':'--amber','unresolved':'--grey','':'--grey'};
+const SUP = {entailed:['\u2713','--green'],neutral:['\u223c','--amber'],contradicted:['\u2717','--red'],uncited:['?','--grey']};
+function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function renderSentences(sents, srcById){
+  return sents.map(x=>{
+    const m=SUP[x.support]||SUP.uncited;
+    let tip=x.support;
+    if(x.best_support_id!=null) tip+=' \u00b7 supported by '+x.best_support_id;
+    if((x.contradicted_by||[]).length) tip+=' \u00b7 contradicted by '+x.contradicted_by.join(', ');
+    return linkifyCitations(esc(x.text),srcById)+` <span class="sup" style="color:var(${m[1]})" title="${esc(tip)}">${m[0]}</span>`;
+  }).join(' ');
+}
 function citeLabel(s){
   const first=(s.authors||'').split('&')[0].trim();
   const surname=(first.split(',')[0].trim())||(s.authors||'')||'?';
@@ -235,6 +254,32 @@ function linkifyCitations(text, srcById){
   });
 }
 
+// Access token (only needed when the server runs with RAG_AUTH_MODE=token).
+function getToken(){ try { return localStorage.getItem('so_token')||''; } catch(e){ return ''; } }
+function setToken(t){ try { localStorage.setItem('so_token',t); } catch(e){} }
+async function apiFetch(url, opts={}){
+  const go = () => { const h=Object.assign({}, opts.headers||{}); const t=getToken();
+                     if(t) h['Authorization']='Bearer '+t; return fetch(url, Object.assign({}, opts, {headers:h})); };
+  let r = await go();
+  if(r.status===401){
+    const t = prompt('This server needs an access token:');
+    if(t){ setToken(t.trim()); r = await go(); }
+  }
+  return r;
+}
+async function loadHistory(){
+  try {
+    const r = await apiFetch('/api/history?limit=15'); if(!r.ok) return;
+    const d = await r.json(); const box=$('#histlist'); box.innerHTML='';
+    (d.queries||[]).forEach(h=>{
+      const el=document.createElement('div'); el.className='h'; el.textContent=h.question;
+      const sm=document.createElement('small'); sm.textContent=new Date(h.ts*1000).toLocaleString();
+      el.appendChild(sm); el.onclick=()=>{ $('#q').value=h.question; ask(); }; box.appendChild(el);
+    });
+    if(!(d.queries||[]).length) box.innerHTML='<div class="meta">none yet</div>';
+  } catch(e){}
+}
+
 async function ask(){
   const question=$('#q').value.trim(); if(!question) return;
   $('#go').disabled=true;
@@ -242,8 +287,11 @@ async function ask(){
   $('#qmeta').textContent='';
   const body={question, filters:collectFilters(), top_k:8, retrieve_n:30, generate:true};
   let r;
-  try { r=await (await fetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(body)})).json(); }
+  try { const resp=await apiFetch('/api/query',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(body)});
+        if(resp.status===401){ $('#results').innerHTML='<div class="empty">Access token missing or wrong. Reload to try again.</div>';
+          setToken(''); $('#go').disabled=false; return; }
+        r=await resp.json(); }
   catch(e){ $('#results').innerHTML='<div class="empty">request failed</div>'; $('#go').disabled=false; return; }
 
   const srcById={}; (r.retrieved||[]).forEach(s=>srcById[s.literature_id]=citeLabel(s));
@@ -257,7 +305,7 @@ async function ask(){
     html=`<div class="empty">No indexed papers match the selected filters yet.<br>
           (The index is still growing — try again shortly, or loosen filters.)</div>`;
   } else {
-    if(r.answer) html+=`<div class="answer">${linkifyCitations(r.answer,srcById)}</div>`;
+    if(r.answer) html+=`<div class="answer">${(r.sentences&&r.sentences.length)?renderSentences(r.sentences,srcById):linkifyCitations(r.answer,srcById)}</div>`;
     html+=`<div class="strength" style="background:${col}22;color:${col};border:1px solid ${col}55">
              <span class="dot" style="background:${col}"></span>
              ${(cs.label||'').toUpperCase()} — ${cs.reason||''}</div>`;
@@ -273,6 +321,7 @@ async function ask(){
   }
   $('#results').innerHTML=html;
   $('#go').disabled=false;
+  loadHistory();
 }
 
 $('#go').onclick=ask;
@@ -295,6 +344,7 @@ function renderExamples(){
 
 (async function init(){
   renderExamples();
+  loadHistory();
   await loadStatus();
   try { const f=await (await fetch('/api/filters')).json(); renderFilters(f.families); }
   catch(e){ $('#filters').innerHTML='<div class="empty">filters unavailable</div>'; }

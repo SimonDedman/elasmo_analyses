@@ -57,6 +57,7 @@ from common import (  # noqa: E402
     FAISS_INDEX_PATH, OLLAMA_HOST, OLLAMA_MODEL,
 )
 from rerank import rerank as cross_encode_rerank  # noqa: E402
+from entailment import rate_answer  # noqa: E402
 
 # --- Legacy (pre-rerank) claim-strength thresholds on absolute cosine ------
 # Kept only for --no-rerank A/B comparison; this is the miscalibrated
@@ -102,9 +103,18 @@ def embed_query(question: str) -> np.ndarray:
     return vec
 
 
-def retrieve(question: str, retrieve_n: int) -> list[dict]:
-    """FAISS cosine retrieval of the top retrieve_n candidates (pre-rerank)."""
+def retrieve(question: str, retrieve_n: int, hybrid: bool = False) -> list[dict]:
+    """FAISS cosine retrieval of the top retrieve_n candidates (pre-rerank).
+    With hybrid=True and an fts.sqlite beside the index, BM25 keyword hits are
+    fused in (reciprocal rank fusion)."""
     index, chunks = load_index()
+    fts_db = FAISS_INDEX_PATH.parent / "fts.sqlite"
+    if hybrid and fts_db.exists():
+        from sentence_transformers import SentenceTransformer
+        from retrieval import search_hybrid
+        model = SentenceTransformer(EMBED_MODEL_NAME, device="cpu")
+        return search_hybrid(index, chunks, model, question, retrieve_n,
+                             None, BGE_QUERY_PREFIX, fts_db)
     qvec = embed_query(question)
     scores, idxs = index.search(qvec, retrieve_n)
     hits = []
@@ -278,20 +288,21 @@ def generate_answer(question: str, hits: list[dict]) -> str:
 
         Write a concise, well-cited answer following your instructions:
         """)
+    from llm_backend import get_backend, BackendError
     try:
-        r = requests.post(
-            f"{OLLAMA_HOST}/api/generate",
-            json={"model": OLLAMA_MODEL, "prompt": prompt,
-                  "system": load_system_context(), "stream": False,
-                  # Deterministic decoding: same question + same retrieved
-                  # context -> identical answer (greedy, fixed seed).
-                  "options": {"temperature": 0, "seed": 7}},
-            timeout=120,
-        )
-        r.raise_for_status()
-        return r.json()["response"].strip()
-    except requests.RequestException as e:
+        return get_backend().generate(load_system_context(), prompt)
+    except BackendError as e:
         return f"[generation error: {e}]"
+
+
+def llm_backend_status() -> tuple[bool, str]:
+    """(available, backend name) for the configured RAG_LLM_BACKEND."""
+    from llm_backend import get_backend, BackendError
+    try:
+        b = get_backend()
+        return b.available(), b.name
+    except BackendError as e:
+        return False, f"unavailable: {e}"
 
 
 def main() -> None:
@@ -305,6 +316,8 @@ def main() -> None:
                     help="skip the cross-encoder stage (A/B comparison only; "
                          "reinstates the over-reporting absolute-cosine bug)")
     ap.add_argument("--no-generate", action="store_true")
+    ap.add_argument("--no-hybrid", action="store_true",
+                    help="vector-only retrieval even when fts.sqlite exists")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args()
 
@@ -313,7 +326,7 @@ def main() -> None:
                   "(outputs/rag/index.faiss missing).")
 
     retrieve_n = max(args.retrieve_n, args.top_k)
-    candidates = retrieve(args.question, retrieve_n)
+    candidates = retrieve(args.question, retrieve_n, hybrid=not args.no_hybrid)
 
     if args.no_rerank:
         hits = candidates[:args.top_k]
@@ -322,13 +335,17 @@ def main() -> None:
         hits = cross_encode_rerank(args.question, candidates, args.top_k)
         strength = claim_strength(hits)
 
-    have_llm = (not args.no_generate) and ollama_available()
+    llm_ok, llm_name = llm_backend_status() if not args.no_generate else (False, "")
+    have_llm = (not args.no_generate) and llm_ok
     if have_llm:
         answer = generate_answer(args.question, hits)
-        mode = f"generated (Ollama: {OLLAMA_MODEL})"
+        mode = f"generated ({llm_name})"
     else:
         answer = None
         mode = "stub (no LLM reachable)" if not args.no_generate else "retrieval-only (--no-generate)"
+
+    rated = rate_answer(answer, hits, strength)
+    strength = rated["claim_strength"]
 
     result = {
         "question": args.question,
@@ -336,6 +353,8 @@ def main() -> None:
         "reranked": not args.no_rerank,
         "answer": answer,
         "claim_strength": strength,
+        "claim_strength_topic": rated["claim_strength_topic"],
+        "sentences": rated["sentences"],
         "retrieved": [
             {
                 "literature_id": h["literature_id"],
@@ -372,14 +391,21 @@ def main() -> None:
             print(f"  - {format_citation(h)}  ({_score_str(h)})")
 
     print(f"\nClaim strength: {strength['label'].upper()}  — {strength['reason']}")
+    topic = rated["claim_strength_topic"]
+    if strength.get("basis") == "entailment":
+        print(f"  groundedness {strength['groundedness']}, entailing papers "
+              f"{strength['n_entailing_papers']} (NLI: {strength['nli_model']}); "
+              f"topic rating was {topic['label'].upper()}")
+        for s_ in rated["sentences"]:
+            print(f"   [{s_['support']}] {s_['text'][:110]}")
     if not args.no_rerank:
-        print(f"  distinct papers retrieved: {strength['n_distinct_papers_retrieved']}, "
-              f"strong (relevance>={CE_STRONG}): {strength['n_concordant_papers']}, "
-              f"top relevance score: {strength['top_ce_score']}")
+        print(f"  distinct papers retrieved: {topic['n_distinct_papers_retrieved']}, "
+              f"strong (relevance>={CE_STRONG}): {topic['n_concordant_papers']}, "
+              f"top relevance score: {topic['top_ce_score']}")
     else:
-        print(f"  distinct papers retrieved: {strength['n_distinct_papers_retrieved']}, "
-              f"concordant (sim>={SIM_CONCORDANT}): {strength['n_concordant_papers']}, "
-              f"top similarity: {strength['top_similarity']}")
+        print(f"  distinct papers retrieved: {topic['n_distinct_papers_retrieved']}, "
+              f"concordant (sim>={SIM_CONCORDANT}): {topic['n_concordant_papers']}, "
+              f"top similarity: {topic['top_similarity']}")
 
     print("\nTop sources:")
     for h in hits[:min(args.top_k, 6)]:

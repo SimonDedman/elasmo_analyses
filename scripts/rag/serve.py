@@ -17,6 +17,7 @@ Endpoints:
     GET  /api/filters     -> filter families, options, counts, ranges
     GET  /api/authors?q=  -> author autocomplete suggestions
     POST /api/query       -> {question, filters, top_k, retrieve_n, generate}
+    GET  /api/history?limit= -> the caller's own recent queries
 """
 
 from __future__ import annotations
@@ -24,12 +25,13 @@ from __future__ import annotations
 import sys
 import json
 import threading
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 
@@ -43,6 +45,8 @@ from retrieval import (  # noqa: E402
     build_author_map, build_position_map, positions_for_ids,
     resolve_filter_ids, search_preloaded,
 )
+import history  # noqa: E402
+from auth import require_access  # noqa: E402
 import query as q  # noqa: E402  (reuse claim_strength, generate_answer, etc.)
 from rerank import rerank as cross_encode_rerank, _get_model as _get_ce  # noqa: E402
 
@@ -178,18 +182,38 @@ def authors(q: str = "", limit: int = 20):
     sug: pd.DataFrame = S["author_suggest"]
     if sug.empty or not q.strip():
         return {"suggestions": []}
-    from retrieval import norm_name
-    needle = norm_name(q)
-    hit = sug[sug["norm"].str.contains(needle, regex=False, na=False)].head(limit)
+    from author_match import match
+    hit = match(q, sug, limit)
     return {"suggestions": [
         {"display_name": r.display_name, "id": r.openalex_author_id,
          "paper_count": int(r.paper_count) if pd.notna(r.paper_count) else 0}
-        for r in hit.itertuples()
+        for r in hit
     ]}
 
 
+@app.get("/api/history")
+def api_history(limit: int = 20, client: str = Depends(require_access)):
+    """The caller's own recent queries (never another client's)."""
+    return {"client": client, "queries": history.recent(client, limit)}
+
+
 @app.post("/api/query")
-def run_query(body: QueryBody):
+def run_query(body: QueryBody, client: str = Depends(require_access)):
+    t0 = time.perf_counter()
+    resp = _run_query(body)
+    try:
+        data = json.loads(resp.body) if isinstance(resp, JSONResponse) else resp
+        history.record(
+            client, body.question, body.filters, data.get("retrieval"),
+            data.get("mode"), (data.get("claim_strength") or {}).get("label"),
+            [h.get("literature_id") for h in data.get("retrieved", [])],
+            data.get("answer"), (time.perf_counter() - t0) * 1000)
+    except Exception as e:  # noqa: BLE001 - history must never break a query
+        print(f"[history] not recorded: {e}")
+    return resp
+
+
+def _run_query(body: QueryBody):
     _reload_index_if_stale()
     pf = S["paper_filters"]
     allowed_ids = resolve_filter_ids(body.filters, pf, S["author_map"])
@@ -208,19 +232,32 @@ def run_query(body: QueryBody):
         })
 
     retrieve_n = max(body.retrieve_n, body.top_k)
-    candidates = search_preloaded(
-        S["index"], S["chunks"], S["embedder"], body.question,
-        retrieve_n, positions, BGE_QUERY_PREFIX,
-    )
+    fts_db = RAG_OUT_DIR / "fts.sqlite"
+    if fts_db.exists():
+        from retrieval import search_hybrid
+        retrieval_mode = "hybrid"
+        candidates = search_hybrid(
+            S["index"], S["chunks"], S["embedder"], body.question,
+            retrieve_n, positions, BGE_QUERY_PREFIX, fts_db,
+        )
+    else:
+        retrieval_mode = "vector"
+        candidates = search_preloaded(
+            S["index"], S["chunks"], S["embedder"], body.question,
+            retrieve_n, positions, BGE_QUERY_PREFIX,
+        )
     hits = cross_encode_rerank(body.question, candidates, body.top_k)
     strength = q.claim_strength(hits)
 
     answer, mode = None, "retrieval-only"
-    if body.generate and q.ollama_available():
+    llm_ok, llm_name = q.llm_backend_status()
+    if body.generate and llm_ok:
         answer = q.generate_answer(body.question, hits)
-        mode = f"generated ({q.OLLAMA_MODEL})"
+        mode = f"generated ({llm_name})"
     elif body.generate:
         mode = "stub (no LLM reachable)"
+
+    rated = q.rate_answer(answer, hits, strength)
 
     return {
         "question": body.question,
@@ -230,7 +267,10 @@ def run_query(body: QueryBody):
                 q_.get("literature_id") for q_ in candidates)))),
         "answer": answer,
         "mode": mode,
-        "claim_strength": strength,
+        "retrieval": retrieval_mode,
+        "claim_strength": rated["claim_strength"],
+        "claim_strength_topic": rated["claim_strength_topic"],
+        "sentences": rated["sentences"],
         "retrieved": [
             {"literature_id": h["literature_id"], "title": h["title"],
              "authors": h["authors"], "year": h["year"], "journal": h.get("journal"),

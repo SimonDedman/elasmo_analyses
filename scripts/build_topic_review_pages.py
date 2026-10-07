@@ -4,7 +4,7 @@
 Reads   outputs/topic_review/<topic>/features.jsonl, vocab.json, coverage.json, control.json
         (written by build_topic_features.py), the corpus parquet for paper metadata,
         the Fable corpus cache as SILVER labels, outputs/validation/gold_labels.csv as the
-        few existing expert labels, and the borrowed-PDF suspects list.
+        few existing expert labels.
 Writes  docs/topic_review/<topic>/data/meta.js, papers.js, counts.js, seed_labels.js,
         snips_<rule>.js for each featured rule, and rules_overview.json.
 
@@ -32,7 +32,6 @@ import extract_schema_columns as X  # noqa: E402
 from generate_closed_access_html import TEAM  # noqa: E402
 from build_topic_features import OUT_BASE, SECTIONS, SEC_IDX, TEXT_CACHE, build_vocab, live_columns  # noqa: E402
 
-SUSPECTS = ROOT / "outputs" / "extraction_borrowed_pdf_suspects_2026-09-18.csv"
 FABLE_CACHE = ROOT / "outputs" / "validation" / ".fable_corpus_cache"
 GOLD = ROOT / "outputs" / "validation" / "gold_labels.csv"
 SNIPS_PER_PAPER = 6      # Simon, 2026-10-06: six quotations per paper, one per distinct keyword
@@ -43,7 +42,7 @@ SHARED = ROOT / "docs" / "topic_review" / "shared"   # paper metadata, abstracts
 TOPICS_JS = ROOT / "docs" / "topic_review" / "topics.js"
 
 
-def build_shared(meta, suspects):
+def build_shared(meta):
     """Every corpus paper that has cached text, in literature_id order: shared/papers.js and shared/abs/.
     Per-topic counts.js files index into this list, so it must only be rebuilt deliberately (--shared),
     and every topic rebuilt after it."""
@@ -55,7 +54,7 @@ def build_shared(meta, suspects):
         m = meta[lid]
         year = None if pd.isna(m.year) else int(m.year)
         papers.append([lid, (m.title or "")[:220], year, first_author(m.authors), (m.journal or "")[:70] if isinstance(m.journal, str) else "",
-                       m.doi if isinstance(m.doi, str) else "", 1 if lid in suspects else 0])
+                       m.doi if isinstance(m.doi, str) else ""])
         if isinstance(m.abstract, str) and len(m.abstract.strip()) > 40:
             abstracts.setdefault(int(lid) % ABS_SHARDS, {})[lid] = re.sub(r"\s+", " ", m.abstract.strip())
     SHARED.mkdir(parents=True, exist_ok=True)
@@ -226,13 +225,10 @@ def main():
     meta_df = pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id", "title", "authors", "year", "journal", "doi", "abstract"])
     meta_df = meta_df[meta_df.literature_id.notna()]
     meta = {str(r.literature_id).split(".")[0]: r for r in meta_df.itertuples()}
-    suspects = set()
-    if SUSPECTS.exists():
-        suspects = {str(r["lid"]).split(".")[0] for r in csv.DictReader(open(SUSPECTS))}
 
     papers = None if args.shared else load_shared()
     if papers is None:
-        papers = build_shared(meta, suspects)
+        papers = build_shared(meta)
     lid2i = {p[0]: i for i, p in enumerate(papers)}
     counts, by_lid = [[] for _ in papers], {}
     status = {"ok": 0, "no_pdf": 0, "no_text": 0, "not_in_shared": 0}
@@ -364,7 +360,7 @@ def main():
         "vocab": [v["term"] for v in vocab], "vocab_cs": [int(v["cs"]) for v in vocab],
         "team": TEAM, "rules": rules, "section_weights": X._SECTION_WEIGHTS, "featured": topic.get("featured", []),
         "overview": overview, "coverage": {**json.load(open(tdir / "coverage.json")), **status, "papers_in_pages": len(by_lid),
-                                           "shared_papers": len(papers), "suspect_text": sum(p[6] for p in papers)},
+                                           "shared_papers": len(papers)},
         "control": control, "built": time.strftime("%Y-%m-%d %H:%M %Z")})
     sizes["counts.js"] = js(ddir / "counts.js", "TR_COUNTS", counts)
     for stale in ("papers.js",):   # per-topic copies from before the shared layout (2026-10-06)
@@ -392,7 +388,7 @@ def main():
                       "fable_seen": len(fable_seen), "built": time.strftime("%Y-%m-%d %H:%M %Z")})
     for k, v in sizes.items():
         print(f"{v/1e6:8.2f} MB  {k}")
-    print(f"papers with a hit in this topic: {len(by_lid):,} of {len(papers):,} shared; suspect-text flagged: {sum(p[6] for p in papers):,}; "
+    print(f"papers with a hit in this topic: {len(by_lid):,} of {len(papers):,} shared; "
           f"fable-read papers: {len(fable_seen):,}; gold labels: {sum(len(v) for v in gold.values())}")
 
 
