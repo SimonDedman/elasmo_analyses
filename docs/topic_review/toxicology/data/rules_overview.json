@@ -17,6 +17,9 @@
   "threshold": 3,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 2246,
   "papers_in": 771,
   "margin": 150,
@@ -40,7 +43,26 @@
    "14": 20
   },
   "fable_in": 110,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 65,
+   "fp": 60,
+   "fn": 21,
+   "unreach": 7,
+   "precision": 0.52,
+   "recall": 0.7558139534883721,
+   "f1": 0.6161137440758294,
+   "top_score": 10,
+   "top_n": 59,
+   "top_in": 50,
+   "bottom_n": 28,
+   "bottom_in": 6,
+   "solo_term": "pollut*",
+   "solo_n": 158,
+   "solo_fable_n": 29,
+   "solo_fable_in": 8
+  }
  },
  {
   "id": "pr_pollution_plastic",
@@ -58,6 +80,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 146,
   "papers_in": 128,
   "margin": 57,
@@ -81,7 +106,26 @@
    "12": 1
   },
   "fable_in": 33,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 19,
+   "fp": 10,
+   "fn": 12,
+   "unreach": 9,
+   "precision": 0.6551724137931034,
+   "recall": 0.6129032258064516,
+   "f1": 0.6333333333333333,
+   "top_score": 10,
+   "top_n": 12,
+   "top_in": 12,
+   "bottom_n": 3,
+   "bottom_in": 3,
+   "solo_term": "microplastic*",
+   "solo_n": 32,
+   "solo_fable_n": 11,
+   "solo_fable_in": 4
+  }
  },
  {
   "id": "imp_contamination",
@@ -98,6 +142,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 387,
   "papers_in": 276,
   "margin": 151,
@@ -120,7 +167,26 @@
    "9": 6
   },
   "fable_in": 73,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 41,
+   "fp": 5,
+   "fn": 31,
+   "unreach": 17,
+   "precision": 0.8913043478260869,
+   "recall": 0.5694444444444444,
+   "f1": 0.6949152542372882,
+   "top_score": 10,
+   "top_n": 6,
+   "top_in": 6,
+   "bottom_n": 7,
+   "bottom_in": 5,
+   "solo_term": "bioaccumulation",
+   "solo_n": 139,
+   "solo_fable_n": 22,
+   "solo_fable_in": 19
+  }
  },
  {
   "id": "d_toxicology",
@@ -141,6 +207,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 1291,
   "papers_in": 611,
   "margin": 174,
@@ -164,6 +233,25 @@
    "10": 23
   },
   "fable_in": 84,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 60,
+   "fp": 32,
+   "fn": 21,
+   "unreach": 11,
+   "precision": 0.6521739130434783,
+   "recall": 0.7407407407407407,
+   "f1": 0.6936416184971098,
+   "top_score": 10,
+   "top_n": 42,
+   "top_in": 41,
+   "bottom_n": 11,
+   "bottom_in": 3,
+   "solo_term": "contaminant*",
+   "solo_n": 57,
+   "solo_fable_n": 11,
+   "solo_fable_in": 1
+  }
  }
 ]

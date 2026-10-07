@@ -15,6 +15,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 197,
   "papers_in": 171,
   "margin": 122,
@@ -36,7 +39,26 @@
    "9": 1
   },
   "fable_in": 15,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 6,
+   "fp": 19,
+   "fn": 7,
+   "unreach": 7,
+   "precision": 0.24,
+   "recall": 0.46153846153846156,
+   "f1": 0.3157894736842105,
+   "top_score": 10,
+   "top_n": 2,
+   "top_in": 0,
+   "bottom_n": 0,
+   "bottom_in": 0,
+   "solo_term": "sonar",
+   "solo_n": 117,
+   "solo_fable_n": 10,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "pr_light",
@@ -52,6 +74,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 124,
   "papers_in": 45,
   "margin": 95,
@@ -66,7 +91,26 @@
    "4": 3
   },
   "fable_in": 5,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 2,
+   "fp": 5,
+   "fn": 0,
+   "unreach": 0,
+   "precision": 0.2857142857142857,
+   "recall": 1.0,
+   "f1": 0.4444444444444445,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "artificial light",
+   "solo_n": 20,
+   "solo_fable_n": 3,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "pr_electromagnetic",
@@ -83,6 +127,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 46,
   "papers_in": 32,
   "margin": 23,
@@ -100,7 +147,26 @@
    "7": 1
   },
   "fable_in": 10,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 5,
+   "fp": 3,
+   "fn": 4,
+   "unreach": 3,
+   "precision": 0.625,
+   "recall": 0.5555555555555556,
+   "f1": 0.5882352941176471,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 2,
+   "bottom_n": 1,
+   "bottom_in": 1,
+   "solo_term": "electromagnetic field",
+   "solo_n": 13,
+   "solo_fable_n": 2,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "pr_visual_disturbance",
@@ -119,6 +185,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 34,
   "papers_in": 25,
   "margin": 26,
@@ -129,7 +198,26 @@
    "0": 9
   },
   "fable_in": 27,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 0,
+   "fp": 7,
+   "fn": 21,
+   "unreach": 21,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": null,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "visual disturbance",
+   "solo_n": 8,
+   "solo_fable_n": 1,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "imp_behaviour_change",
@@ -150,6 +238,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 207,
   "papers_in": 62,
   "margin": 38,
@@ -168,7 +259,26 @@
    "13": 1
   },
   "fable_in": 89,
-  "gold": 3
+  "gold": 3,
+  "silver": {
+   "n": 1941,
+   "tp": 10,
+   "fp": 2,
+   "fn": 70,
+   "unreach": 62,
+   "precision": 0.8333333333333334,
+   "recall": 0.125,
+   "f1": 0.21739130434782608,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 5,
+   "bottom_in": 2,
+   "solo_term": "habituation",
+   "solo_n": 38,
+   "solo_fable_n": 7,
+   "solo_fable_in": 6
+  }
  },
  {
   "id": "d_behaviour",
@@ -189,6 +299,9 @@
   "threshold": 3,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 5654,
   "papers_in": 1868,
   "margin": 584,
@@ -212,6 +325,25 @@
    "14": 28
   },
   "fable_in": 412,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 194,
+   "fp": 74,
+   "fn": 177,
+   "unreach": 56,
+   "precision": 0.7238805970149254,
+   "recall": 0.522911051212938,
+   "f1": 0.6071987480438185,
+   "top_score": 10,
+   "top_n": 95,
+   "top_in": 86,
+   "bottom_n": 49,
+   "bottom_in": 21,
+   "solo_term": "behavio*",
+   "solo_n": 1407,
+   "solo_fable_n": 204,
+   "solo_fable_in": 135
+  }
  }
 ]

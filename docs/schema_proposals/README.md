@@ -81,7 +81,7 @@ All Tier 1 rules follow a common grammar defined in `scripts/extract_schema_colu
 | `anchors` | list[str] or None | Optional co-occurrence terms; if set, at least one must fire in addition to meeting the threshold |
 | `case_sensitive_terms` | set[str] | Subset of terms requiring exact case match (for acronyms like `IUU`, `CPUE`, `IUCN`) |
 
-Full rule palette as JSON: [`outputs/extraction_rules.json`](../../outputs/extraction_rules.json) (23 KB, 123 rules)
+Full rule palette as JSON: [`extraction_rules.json`](./extraction_rules.json) (166 rules in 7 schemas, each with the line of `extract_schema_columns.py` that defines it; regenerated together with the Part 2 tables of [`extraction_review_reference.md`](./extraction_review_reference.md) by `scripts/build_extraction_rules_reference.py`, which also keeps a copy at `outputs/extraction_rules.json`). Every topic's rules side by side, with counts: [topic_review/rules.html](../topic_review/rules.html).
 
 Rules are also embedded in every validation page as `assets/rules.json` so reviewers can see all rules per schema alongside which ones fired for each paper.
 

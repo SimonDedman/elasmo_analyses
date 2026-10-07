@@ -14,6 +14,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 217,
   "papers_in": 139,
   "margin": 143,
@@ -29,7 +32,26 @@
    "5": 3
   },
   "fable_in": 72,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 6,
+   "fp": 11,
+   "fn": 60,
+   "unreach": 56,
+   "precision": 0.35294117647058826,
+   "recall": 0.09090909090909091,
+   "f1": 0.14457831325301207,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 8,
+   "bottom_in": 1,
+   "solo_term": "dietary shift",
+   "solo_n": 109,
+   "solo_fable_n": 10,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "d_trophic",
@@ -50,6 +72,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 4348,
   "papers_in": 2042,
   "margin": 734,
@@ -73,6 +98,25 @@
    "14": 25
   },
   "fable_in": 353,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 168,
+   "fp": 114,
+   "fn": 139,
+   "unreach": 77,
+   "precision": 0.5957446808510638,
+   "recall": 0.5472312703583062,
+   "f1": 0.5704584040747028,
+   "top_score": 10,
+   "top_n": 91,
+   "top_in": 86,
+   "bottom_n": 32,
+   "bottom_in": 14,
+   "solo_term": "diet",
+   "solo_n": 228,
+   "solo_fable_n": 29,
+   "solo_fable_in": 10
+  }
  }
 ]

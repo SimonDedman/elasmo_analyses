@@ -18,6 +18,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 1132,
   "papers_in": 747,
   "margin": 591,
@@ -41,6 +44,25 @@
    "13": 10
   },
   "fable_in": 111,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 54,
+   "fp": 45,
+   "fn": 42,
+   "unreach": 31,
+   "precision": 0.5454545454545454,
+   "recall": 0.5625,
+   "f1": 0.5538461538461538,
+   "top_score": 10,
+   "top_n": 9,
+   "top_in": 7,
+   "bottom_n": 11,
+   "bottom_in": 4,
+   "solo_term": "locomot*",
+   "solo_n": 168,
+   "solo_fable_n": 17,
+   "solo_fable_in": 4
+  }
  }
 ]

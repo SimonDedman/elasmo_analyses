@@ -93,6 +93,7 @@ def update_topics_js(summary):
     if not found:
         reg["topics"].append(summary)
     TOPICS_JS.write_text("window.TR_TOPICS = " + json.dumps(reg, ensure_ascii=False) + ";\n")
+TOP_SCORE = 10   # hub findings: "the top of the ladder" is a weighted score of 10 or more (2026-09-19 fisheries analysis)
 WINDOW = 110   # no longer used for quotations (whole sentences since 2026-10-06); kept for reference
 
 
@@ -107,6 +108,14 @@ def first_author(authors):
         return ""
     sur = a[0].split(",")[0].strip()
     return sur + (" et al." if len(a) > 1 else "")
+
+
+def _fires(cts, rule):
+    """Does any keyword of the rule occur in this paper's counts (proximity-filtered if the rule is)?"""
+    if not cts:
+        return False
+    tids = set(rule["term_ids"])
+    return any(ti in tids and (prox if rule["proximity"] else raw) for ti, _s, raw, prox in cts)
 
 
 def py_round(x):
@@ -269,11 +278,21 @@ def main():
                 gold.setdefault(r["column"], {})[str(r["literature_id"]).split(".")[0]] = [int(float(r["human_value"])), r["reviewer"]]
 
     # --- per-rule overview (the workload table on the topic landing page) ---
+    # Each live rule also gets a "silver" block: its agreement with Fable's reading of the corpus sample,
+    # the IN rate at the top and bottom of the score ladder, and the single keyword that lets the most
+    # papers through on its own. These are the hub's findings, computed for every topic the same way
+    # the fisheries numbers were first computed by hand on 2026-09-19 (Simon, 2026-10-07).
+    seen = set(fable_seen)
     overview = []
     for r in rules:
         w = X._SECTION_WEIGHTS.get(r["prefix"], {})
         n_hit = n_in = n_margin = n_gate_fail = 0
         hist = {}
+        silver_lab = {lid: (1 if v[0] >= 0.5 else 0) for lid, v in fable.get(r["id"], {}).items()} if r["kind"] == "live" else None
+        tp = fp = fn = unreach = 0
+        top = [0, 0]      # fable-read papers scoring >= TOP_SCORE: [n, fable-IN]
+        bottom = [0, 0]   # fable-read papers with a hit scoring < 0.5
+        solo, solo_f = {}, {}   # term -> papers it alone qualifies; -> [fable-read, fable-IN] among them
         for lid, cts in by_lid.items():
             bt = {}
             for ti, s, raw, prox in cts:
@@ -290,13 +309,51 @@ def main():
                 n_margin += 1
             b = min(int(total), 15)
             hist[b] = hist.get(b, 0) + 1
+            if is_in:
+                fired_terms = {ti for ti in r["term_ids"] if any((x[2] if r["proximity"] else x[1]) for x in bt.get(ti, ()))}
+                if len(fired_terms) == 1:
+                    t1 = next(iter(fired_terms))
+                    solo[t1] = solo.get(t1, 0) + 1
+            if silver_lab is not None and lid in seen:
+                y = silver_lab.get(lid, 0)
+                if is_in and len(fired_terms) == 1:
+                    sf = solo_f.setdefault(t1, [0, 0])
+                    sf[0] += 1
+                    sf[1] += y
+                if total >= TOP_SCORE:
+                    top[0] += 1
+                    top[1] += y
+                if total < 0.5:
+                    bottom[0] += 1
+                    bottom[1] += y
+                if is_in:
+                    tp += y
+                    fp += (1 - y)
+                else:
+                    fn += y
+        silver = None
+        if silver_lab is not None:
+            # Fable-IN papers with no keyword hit at all: counted as false negatives, flagged unreachable
+            unreach = sum(1 for lid, y in silver_lab.items() if y == 1 and lid in seen and not _fires(by_lid.get(lid), r))
+            fn += unreach
+            n_lab = len(seen)
+            prec = tp / (tp + fp) if tp + fp else None
+            rec = tp / (tp + fn) if tp + fn else None
+            f1 = (2 * prec * rec / (prec + rec)) if prec and rec else None
+            worst = max(solo, key=solo.get) if solo else None
+            silver = {"n": n_lab, "tp": tp, "fp": fp, "fn": fn, "unreach": unreach,
+                      "precision": prec, "recall": rec, "f1": f1,
+                      "top_score": TOP_SCORE, "top_n": top[0], "top_in": top[1], "bottom_n": bottom[0], "bottom_in": bottom[1],
+                      "solo_term": vocab[worst]["term"] if worst is not None else None, "solo_n": solo.get(worst, 0),
+                      "solo_fable_n": solo_f.get(worst, [0, 0])[0], "solo_fable_in": solo_f.get(worst, [0, 0])[1]}
         overview.append({"id": r["id"], "label": r["label"], "kind": r["kind"], "group": r["group"],
                          "terms": [vocab[t]["term"] for t in r["term_ids"]],
                          "anchors": [vocab[a]["term"] for a in r["anchor_ids"]],
                          "threshold": r["threshold"], "n_terms": len(r["term_ids"]), "n_anchors": len(r["anchor_ids"]),
+                         "proximity": r["proximity"], "prefix": r["prefix"], "meaning": r.get("meaning"),
                          "papers_with_hit": n_hit, "papers_in": int(n_in), "margin": n_margin,
                          "anchor_gate_fails": n_gate_fail, "hist": hist,
-                         "fable_in": len(fable.get(r["id"], {})), "gold": len(gold.get(r["id"], {}))})
+                         "fable_in": len(fable.get(r["id"], {})), "gold": len(gold.get(r["id"], {})), "silver": silver})
 
     ddir = ROOT / "docs" / "topic_review" / topic["id"] / "data"
     ddir.mkdir(parents=True, exist_ok=True)

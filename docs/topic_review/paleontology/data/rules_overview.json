@@ -23,6 +23,9 @@
   "threshold": 1,
   "n_terms": 13,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 3597,
   "papers_in": 2784,
   "margin": 668,
@@ -46,6 +49,25 @@
    "10": 63
   },
   "fable_in": 267,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 213,
+   "fp": 54,
+   "fn": 50,
+   "unreach": 15,
+   "precision": 0.797752808988764,
+   "recall": 0.8098859315589354,
+   "f1": 0.8037735849056604,
+   "top_score": 10,
+   "top_n": 153,
+   "top_in": 150,
+   "bottom_n": 47,
+   "bottom_in": 33,
+   "solo_term": "fossil",
+   "solo_n": 210,
+   "solo_fable_n": 26,
+   "solo_fable_in": 5
+  }
  }
 ]

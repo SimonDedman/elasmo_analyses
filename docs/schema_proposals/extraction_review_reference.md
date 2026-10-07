@@ -2,7 +2,7 @@
 
 *For team review of classification schemas and extraction techniques*
 
-*Generated: 2026-04-03*
+*Prose written 2026-04-03. Part 2 keyword tables regenerated from the extractor by `scripts/build_extraction_rules_reference.py` on 2026-10-07 (commit f52d48ec4d); re-run it after any edit to `scripts/extract_schema_columns.py`.*
 
 **Related documents:**
 - [extraction_logic.md](extraction_logic.md) — Full technical documentation
@@ -11,7 +11,7 @@
 - [GitHub #8: Nationality, Diversity, Ethnicity](https://github.com/SimonDedman/elasmo_analyses/issues/8)
 - [GitHub #1: Ground truth vs existing lit reviews](https://github.com/SimonDedman/elasmo_analyses/issues/1)
 
-**Source of truth for all keyword/threshold definitions:** [`scripts/extract_schema_columns.py` lines 92–299](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L92-L299)
+**Source of truth for all keyword/threshold definitions:** [`scripts/extract_schema_columns.py` lines 108–467](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L108-L467) (the `BinaryColumn(...)` definitions; each row below links to its own line). Proximity-filtered columns: [`PROXIMITY_CHECK_COLUMNS`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L660); section weights: [`_SECTION_WEIGHTS`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L764). Machine-readable copy: [`extraction_rules.json`](./extraction_rules.json) (also `outputs/extraction_rules.json`).
 
 ---
 
@@ -167,28 +167,30 @@ Different schema keywords are likely to occur in different paper sections, e.g. 
 
 #### Binary columns
 
-| Column | Label | Keywords | Threshold | Techniques | Known issues / notes |
-|--------|-------|----------|-----------|------------|----------------------|
-| `eco_marine` | Marine | marine, ocean, sea, saltwater | 3 | KFT, SW | Pre-threshold hit rate 83% → expected ~47% post-threshold. Generic term needs high threshold. |
-| `eco_freshwater` | Freshwater | freshwater, freshwater river, river shark, river system, riverine, lake, estuarine, estuarin*, brackish | 3 | KFT, WC, SW | "river" removed (matched author surname "Rivera"). Now uses compounds only. |
-| `eco_brackish` | Brackish / estuarine | estuar*, brackish, lagoon, mangrove | 2 | KFT, WC, SW | |
-| `eco_pelagic` | Pelagic | pelagic, open ocean, oceanic, epipelagic, mesopelagic, bathypelagic | 2 | KFT, KPC, SW | "offshore" removed (AK: matched "30 m offshore"). Proximity check enabled. |
-| `eco_coastal` | Coastal | coastal, neritic, inshore, nearshore, continental shelf | 3 | KFT, PH, SW | |
-| `eco_demersal` | Demersal / benthic | demersal, benthic, bottom-dwelling, epibenthic, benthopelagic | 2 | KFT, SW | |
-| `eco_reef` | Reef | coral reef, reef-associated, rocky reef | 1 | KFT, PH, SW | Specific terms — low threshold appropriate. |
-| `eco_deepwater` | Deep water | deep-sea, deep-water, abyssal, hadal, bathyal, seamount | 2 | KFT, SW | |
-| `eco_intertidal` | Intertidal | intertidal, tide pool, littoral | 1 | KFT, PH, SW | |
-| `eco_mangrove` | Mangrove | mangrove | 2 | KFT, SW | |
-| `eco_seagrass` | Seagrass | seagrass, eelgrass, Posidonia, Zostera, Thalassia | 1 | KFT, SW | Genus names are specific enough for threshold=1. |
-| `eco_kelp` | Kelp | kelp forest, kelp bed, macroalgal | 1 | KFT, PH, SW | |
-| `eco_polar` | Polar | polar, arctic, antarctic, ice-edge, sea ice | 2 | KFT, PH, SW | |
-| `eco_riverine` | Riverine | river shark, freshwater stingray, bull shark river | 1 | KFT, PH, SW | Inherently elasmobranch-specific terms. |
-| `eco_nursery` | Nursery habitat | nursery habitat, nursery ground, nursery area, essential fish habitat, juvenile habitat | 1 | KFT, PH, SW | |
-| `eco_pupping` | Pupping ground | pupping ground, pupping area, parturition site, birthing ground | 1 | KFT, PH, SW | |
-| `eco_epipelagic` | Epipelagic | epipelagic, surface waters, surface layer, photic zone | 2 | KFT, PH, SW | "surface" alone removed (AK: matched "surface area"). |
-| `eco_mesopelagic` | Mesopelagic | mesopelagic, twilight zone | 1 | KFT, PH, SW | |
-| `eco_bathypelagic` | Bathypelagic | bathypelagic, deep scattering layer | 1 | KFT, PH, SW | |
-| `eco_abyssal` | Abyssal | abyssal, hadal | 1 | KFT, SW | |
+| Column | Label | Keywords | Threshold | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|------------|--------|----------------------|
+| `eco_marine` | Marine | marine, ocean, sea, saltwater | 3 | KFT, SW | [L108](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L108) | Pre-threshold hit rate 83% → expected ~47% post-threshold. Generic term needs high threshold. |
+| `eco_freshwater` | Freshwater | freshwater, freshwater river, river shark, river system, riverine, lake, estuarine, estuarin*, brackish | 3 | KFT, WC, PH, SW | [L109](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L109) | "river" removed (matched author surname "Rivera"). Now uses compounds only. |
+| `eco_brackish` | Brackish / estuarine | estuar*, brackish, lagoon, mangrove | 2 | KFT, WC, SW | [L110](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L110) |  |
+| `eco_pelagic` | Pelagic | pelagic, open ocean, oceanic, epipelagic, mesopelagic, bathypelagic | 2 | KFT, PH, KPC, SW | [L112](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L112) | "offshore" removed (AK: matched "30 m offshore"). Proximity check enabled. |
+| `eco_coastal` | Coastal | coastal, neritic, inshore, nearshore, continental shelf | 3 | KFT, PH, SW | [L113](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L113) |  |
+| `eco_demersal` | Demersal / benthic | demersal, benthic, bottom-dwelling, epibenthic, benthopelagic | 2 | KFT, PH, SW | [L114](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L114) |  |
+| `eco_reef` | Reef | coral reef, reef-associated, rocky reef | 1 | KFT, PH, SW | [L116](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L116) | Specific terms — low threshold appropriate. |
+| `eco_deepwater` | Deep water | deep-sea, deep-water, deepwater, deep water, abyssal, hadal, bathyal, seamount | 2 | KFT, PH, SW | [L117](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L117) |  |
+| `eco_intertidal` | Intertidal | intertidal, tide pool, littoral | 1 | KFT, PH, SW | [L118](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L118) |  |
+| `eco_mangrove` | Mangrove | mangrove | 2 | KFT, SW | [L119](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L119) |  |
+| `eco_seagrass` | Seagrass | seagrass, eelgrass, Posidonia, Zostera, Thalassia | 1 | KFT, SW | [L120](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L120) | Genus names are specific enough for threshold=1. |
+| `eco_kelp` | Kelp | kelp forest, kelp bed, macroalgal | 1 | KFT, PH, SW | [L121](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L121) |  |
+| `eco_polar` | Polar | polar, arctic, antarctic, ice-edge, sea ice | 2 | KFT, PH, SW | [L122](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L122) |  |
+| `eco_riverine` | Riverine | river shark, freshwater stingray, bull shark river | 1 | KFT, PH, SW | [L123](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L123) | Inherently elasmobranch-specific terms. |
+| `eco_nursery` | Nursery habitat | nursery habitat, nursery ground, nursery area, essential fish habitat, juvenile habitat | 1 | KFT, PH, SW | [L124](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L124) |  |
+| `eco_pupping` | Pupping ground | pupping ground, pupping area, parturition site, birthing ground | 1 | KFT, PH, SW | [L125](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L125) |  |
+| `eco_epipelagic` | Epipelagic | epipelagic, surface waters, surface layer, photic zone | 2 | KFT, PH, SW | [L126](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L126) | "surface" alone removed (AK: matched "surface area"). |
+| `eco_mesopelagic` | Mesopelagic | mesopelagic, twilight zone | 1 | KFT, PH, SW | [L127](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L127) |  |
+| `eco_bathypelagic` | Bathypelagic | bathypelagic, deep scattering layer | 1 | KFT, PH, SW | [L128](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L128) |  |
+| `eco_abyssal` | Abyssal | abyssal, hadal | 1 | KFT, SW | [L129](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L129) |  |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
 
 #### Derived ecosystem columns
 
@@ -206,34 +208,36 @@ These columns pick a single best-guess label from the binary eco_ columns above.
 
 **Documentation:** [Pressure proposal](pressure_proposal.md) — Column rationale and term selection
 
-| Column | Label | Keywords | Threshold | Techniques | Known issues / notes |
-|--------|-------|----------|-----------|------------|----------------------|
-| `pr_fishing_commercial` | Commercial fishing | commercial fish*, industrial fish*, fishing pressure, fishing mortality, exploitation | 3 | KFT, WC, PH, SW | Pre-threshold 29.5% → expected ~8.5% post-threshold. |
-| `pr_fishing_artisanal` | Artisanal fishing | artisanal, small-scale fish*, subsistence fish*, traditional fish* | 2 | KFT, WC, PH, SW | |
-| `pr_fishing_recreational` | Recreational fishing | recreational fish*, sport fish*, game fish*, catch-and-release, angling, angler, anglers | 2 | KFT, WC, PH, SW | "angl*" replaced with exact matches (AK: matched "angle", "angular"). |
-| `pr_fishing_iuu` | IUU fishing | illegal fish*, unreported, unregulated, IUU, poach* | 2 | KFT, WC, AC, SW | IUU case-sensitive. |
-| `pr_bycatch` | Bycatch | bycatch, by-catch, incidental capture, non-target, discards | 2 | KFT, PH, SW | |
-| `pr_shark_finning` | Shark finning | shark fin*, finning, fin trade | 1 | KFT, WC, PH, SW | Inherently specific. |
-| `pr_targeted_fishing` | Targeted shark fishing | targeted shark fish*, directed shark fish*, shark fish* | 2 | KFT, WC, PH, SW | |
-| `pr_climate_change` | Climate change | climate change, global warming, ocean warming | 3 | KFT, PH, SW | CM issue: often mentioned as background driver, not study focus. High threshold helps. |
-| `pr_ocean_acidification` | Ocean acidification | ocean acidification, (acidification AND pH), (acidification AND pCO2) | 1 | KFT, PH, AND, SW | AND logic: "acidification" alone insufficient; needs "pH" or "pCO2" co-occurrence. |
-| `pr_hypoxia` | Hypoxia | hypoxia, deoxygenation, oxygen minimum zone, OMZ | 1 | KFT, PH, AC, SW | OMZ case-sensitive. |
-| `pr_pollution_chemical` | Chemical pollution | pollut*, contaminant*, heavy metal*, mercury, PCB, PFAS, pesticide* | 3 | KFT, WC, AC, SW | PCB, PFAS case-sensitive. High threshold — common in reference titles (RB). |
-| `pr_pollution_plastic` | Plastic pollution | plastic pollution, microplastic*, macroplastic*, plastic ingestion, plastic debris | 1 | KFT, WC, PH, SW | |
-| `pr_pollution_noise` | Noise pollution | noise pollution, anthropogenic noise, shipping noise, sonar, acoustic disturbance | 1 | KFT, PH, SW | "sonar" can match non-pollution contexts (RB: reference about tube-worm mapping). |
-| `pr_habitat_loss` | Habitat loss | habitat loss, habitat degradation, coastal development, dredg*, mangrove loss | 2 | KFT, WC, PH, SW | |
-| `pr_shipping` | Shipping | ship strike, vessel strike, maritime traffic | 1 | KFT, PH, SW | |
-| `pr_tourism` | Tourism | dive tourism, ecotourism, shark tourism, provisioning, shark feed*, cage div* | 1 | KFT, WC, PH, SW | |
-| `pr_depredation` | Depredation | depredation, depredating, bait loss, catch damage | 1 | KFT, PH, SW | |
-| `pr_aquaculture` | Aquaculture | aquaculture, fish farm*, mariculture | 1 | KFT, WC, SW | |
-| `pr_invasive` | Invasive species | invasive species, non-native species, alien species | 1 | KFT, PH, SW | |
-| `pr_disease` | Disease | disease, pathogen, parasite, epizootic, infection | 3 | KFT, SW | Parasitology papers correctly trigger this — not a false positive. |
-| `pr_light` | Light pollution | light pollution, artificial light, ALAN | 1 | KFT, PH, AC, SW | ALAN case-sensitive. |
-| `pr_electromagnetic` | Electromagnetic | electromagnetic field, EMF, submarine cable, electroreception interference | 1 | KFT, PH, AC, SW | EMF case-sensitive. |
-| `pr_cumulative` | Cumulative impacts | cumulative impact, multiple stressor*, synergistic, additive effect | 2 | KFT, WC, PH, SW | |
-| `pr_discarding` | Discarding | discard*, discarding practice*, high-grading, slipping | 2 | KFT, WC, PH, SW | Added 2026-03-16. |
-| `pr_seabed_disturbance` | Seabed disturbance | seabed disturbance, bottom disturbance, benthic disturbance, physical disturbance of the seabed, sediment resuspension, trawl impact on seabed, habitat scraping | 1 | KFT, PH, SW | Added 2026-03-16. |
-| `pr_visual_disturbance` | Visual disturbance | visual disturbance, vessel presence, diver disturbance, boat disturbance, swimmer disturbance, shadow effect | 1 | KFT, PH, SW | Added 2026-03-16. |
+| Column | Label | Keywords | Threshold | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|------------|--------|----------------------|
+| `pr_fishing_commercial` | Commercial fishing | commercial fish*, industrial fish*, fishing pressure, fishing mortality, exploitation | 3 | KFT, WC, PH, SW | [L136](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L136) | Pre-threshold 29.5% → expected ~8.5% post-threshold. |
+| `pr_fishing_artisanal` | Artisanal fishing | artisanal, small-scale fish*, subsistence fish*, traditional fish* | 2 | KFT, WC, PH, SW | [L137](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L137) |  |
+| `pr_fishing_recreational` | Recreational fishing | recreational fish*, sport fish*, game fish*, catch-and-release, angling, angler, anglers | 2 | KFT, WC, PH, SW | [L140](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L140) | "angl*" replaced with exact matches (AK: matched "angle", "angular"). |
+| `pr_fishing_iuu` | IUU fishing | illegal fish*, unreported, unregulated, **IUU**, poach* | 2 | KFT, WC, PH, AC, SW | [L141](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L141) | IUU case-sensitive. |
+| `pr_bycatch` | Bycatch | bycatch, by-catch, incidental capture, non-target, discards | 2 | KFT, PH, SW | [L142](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L142) |  |
+| `pr_shark_finning` | Shark finning | shark fin*, finning, fin trade | 1 | KFT, WC, PH, SW | [L143](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L143) | Inherently specific. |
+| `pr_targeted_fishing` | Targeted shark fishing | targeted shark fish*, directed shark fish*, shark fish* | 2 | KFT, WC, PH, SW | [L144](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L144) |  |
+| `pr_climate_change` | Climate change | climate change, global warming, ocean warming | 3 | KFT, PH, SW | [L146](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L146) | CM issue: often mentioned as background driver, not study focus. High threshold helps. |
+| `pr_ocean_acidification` | Ocean acidification | ocean acidification, (acidification AND pH), (acidification AND pCO2) | 2 | KFT, PH, AND, SW | [L147](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L147) | AND logic: "acidification" alone insufficient; needs "pH" or "pCO2" co-occurrence. |
+| `pr_hypoxia` | Hypoxia | hypoxia, deoxygenation, oxygen minimum zone, **OMZ** | 1 | KFT, PH, AC, SW | [L148](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L148) | OMZ case-sensitive. |
+| `pr_pollution_chemical` | Chemical pollution | pollut*, contaminant*, heavy metal*, mercury, **PCB**, **PFAS**, pesticide* | 3 | KFT, WC, PH, AC, SW | [L149](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L149) | PCB, PFAS case-sensitive. High threshold — common in reference titles (RB). |
+| `pr_pollution_plastic` | Plastic pollution | plastic pollution, microplastic*, macroplastic*, plastic ingestion, plastic debris | 1 | KFT, WC, PH, SW | [L150](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L150) |  |
+| `pr_pollution_noise` | Noise pollution | noise pollution, anthropogenic noise, shipping noise, sonar, acoustic disturbance | 1 | KFT, PH, SW | [L151](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L151) | "sonar" can match non-pollution contexts (RB: reference about tube-worm mapping). |
+| `pr_habitat_loss` | Habitat loss | habitat loss, habitat degradation, coastal development, dredg*, mangrove loss | 2 | KFT, WC, PH, SW | [L152](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L152) |  |
+| `pr_shipping` | Shipping | ship strike, vessel strike, maritime traffic | 1 | KFT, PH, SW | [L153](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L153) |  |
+| `pr_tourism` | Tourism | dive tourism, ecotourism, shark tourism, provisioning, shark feed*, cage div* | 2 | KFT, WC, PH, SW | [L155](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L155) |  |
+| `pr_depredation` | Depredation | depredation, depredating, bait loss, catch damage | 1 | KFT, PH, SW | [L156](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L156) |  |
+| `pr_aquaculture` | Aquaculture | aquaculture, fish farm*, mariculture | 2 | KFT, WC, PH, SW | [L157](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L157) |  |
+| `pr_invasive` | Invasive species | invasive species, non-native species, alien species | 1 | KFT, PH, SW | [L158](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L158) |  |
+| `pr_disease` | Disease | disease, pathogen, parasite, epizootic, infection | 3 | KFT, SW | [L159](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L159) | Parasitology papers correctly trigger this — not a false positive. |
+| `pr_light` | Light pollution | light pollution, artificial light, **ALAN** | 1 | KFT, PH, AC, SW | [L160](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L160) | ALAN case-sensitive. |
+| `pr_electromagnetic` | Electromagnetic | electromagnetic field, **EMF**, submarine cable, electroreception interference | 1 | KFT, PH, AC, SW | [L161](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L161) | EMF case-sensitive. |
+| `pr_cumulative` | Cumulative impacts | cumulative impact, multiple stressor*, synergistic, additive effect | 2 | KFT, WC, PH, SW | [L162](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L162) |  |
+| `pr_discarding` | Discarding | discard*, discarding practice*, high-grading, slipping | 2 | KFT, WC, PH, SW | [L164](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L164) | Added 2026-03-16. |
+| `pr_seabed_disturbance` | Seabed disturbance | seabed disturbance, bottom disturbance, benthic disturbance, physical disturbance of the seabed, sediment resuspension, trawl impact on seabed, habitat scraping | 1 | KFT, PH, SW | [L165](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L165) | Added 2026-03-16. |
+| `pr_visual_disturbance` | Visual disturbance | visual disturbance, vessel presence, diver disturbance, boat disturbance, swimmer disturbance, shadow effect | 1 | KFT, PH, SW | [L166](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L166) | Added 2026-03-16. |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
 
 ---
 
@@ -243,36 +247,39 @@ These columns pick a single best-guess label from the binary eco_ columns above.
 
 #### Binary columns
 
-| Column | Label | Keywords | Threshold | Techniques | Known issues / notes |
-|--------|-------|----------|-----------|------------|----------------------|
-| `gear_longline` | Longline | longline, long-line, pelagic longline, demersal longline, bottom longline | 2 | KFT, PH, SW | CM: "longline" as ghost gear substrate (not study focus). |
-| `gear_gillnet` | Gillnet | gillnet, gill net, trammel net, entangling net, drift net, driftnet | 2 | KFT, PH, SW | |
-| `gear_trawl` | Trawl | trawl, bottom trawl, demersal trawl, pelagic trawl, otter trawl, beam trawl, shrimp trawl | 2 | KFT, PH, SW | |
-| `gear_purse_seine` | Purse seine | purse seine, purse-seine, ring net | 1 | KFT, PH, SW | |
-| `gear_seine` | Seine (other) | beach seine, Danish seine, seine net | 1 | KFT, PH, SW | |
-| `gear_hook_line` | Hook and line | hook and line, handline, rod and reel, trolling, jigging, pole and line | 2 | KFT, PH, SW | |
-| `gear_trap` | Trap / pot | trap, pot, fish trap, drumline, SMART drumline | 2 | KFT, PH, SW | "trap" is generic — threshold=2 helps. |
-| `gear_net_other` | Other nets | cast net, lift net, scoop net, fyke net, pound net, weir | 1 | KFT, PH, SW | |
-| `gear_harpoon` | Harpoon | harpoon, spearfish*, spear gun | 1 | KFT, WC, PH, SW | |
-| `gear_dredge` | Dredge | dredge, towed dredge, scallop dredge, clam dredge, oyster dredge, hydraulic dredge | 1 | KFT, PH, SW | Added 2026-03-16. |
-| `gear_trawl_beam` | Beam trawl | beam trawl, beam-trawl | 1 | KFT, PH, SW | Added 2026-03-16. |
-| `gear_trawl_otter` | Otter trawl | otter trawl, otter-trawl | 1 | KFT, PH, SW | Added 2026-03-16. |
-| `gear_survey` | Survey gear | research vessel, survey trawl, BRUVs, longline survey, fishery-independent survey, drone survey, UAV survey, ROV, submersible, diving survey, diver transect | 2 | KFT, PH, AC, SW | BRUVs, UAV, ROV case-sensitive. |
-| `gear_pelagic` | Pelagic gear | pelagic longline, pelagic trawl, midwater trawl | 1 | KFT, PH, SW | |
-| `gear_demersal` | Demersal gear | demersal longline, bottom trawl, demersal trawl, bottom longline | 1 | KFT, PH, SW | |
-| `gear_artisanal` | Artisanal gear | artisanal, traditional gear, small-scale, hand-operated | 2 | KFT, PH, SW | |
-| `gear_mit_circle_hook` | Mitigation: circle hooks | circle hook, non-offset hook | 1 | KFT, PH, SW | |
-| `gear_mit_brd` | Mitigation: BRD / TED | bycatch reduction device, BRD, turtle excluder, TED | 1 | KFT, PH, AC, SW | BRD, TED case-sensitive. |
-| `gear_mit_deterrent` | Mitigation: deterrents | shark deterrent, SharkGuard, shark guard, electropositive, Rare Earth, EPM, LED deterrent, magnetic deterrent | 1 | KFT, PH, AC, SW | EPM case-sensitive. |
-| `gear_mit_time_area` | Mitigation: time-area closure | time-area closure, spatial closure, fishing closure, seasonal closure, MPA | 2 | KFT, PH, AC, SW | MPA case-sensitive. Previously matched institutional addresses. |
-| `gear_mit_handling` | Mitigation: handling | safe release, handling practice*, live release, post-release mortality, PRM | 1 | KFT, WC, PH, AC, SW | PRM case-sensitive. |
-| `gear_mit_weak_hook` | Mitigation: weak hooks | weak hook, corrodible hook, designed to straighten | 1 | KFT, PH, SW | Added 2026-03-16 (BMIS). |
-| `gear_mit_line_weight` | Mitigation: line weighting | line weight*, weighted branchline, leaded swivel, sliding lead, lumo lead, sink rate | 1 | KFT, WC, PH, SW | Added 2026-03-16 (BMIS). |
-| `gear_mit_setting` | Mitigation: setting practices | night set*, deep set*, deep-set buoy gear, side-set*, underwater set* | 1 | KFT, WC, PH, SW | Added 2026-03-16 (BMIS). |
-| `gear_mit_pinger` | Mitigation: pingers | pinger, acoustic alarm, acoustic deterrent, porpoise alerting device, PAL | 1 | KFT, PH, AC, SW | PAL case-sensitive. Added 2026-03-16 (BMIS). |
-| `gear_mit_illumination` | Mitigation: net illumination | illuminat* net, illuminat* gillnet, LED net, net light*, lightstick*, light attract* | 1 | KFT, WC, PH, SW | Added 2026-03-16 (BMIS). |
-| `gear_mit_wire_leader` | Mitigation: wire leaders | wire leader, monofilament leader, wire trace, nylon leader | 1 | KFT, PH, SW | Added 2026-03-16 (BMIS). |
-| `gear_mit_ghost` | Mitigation: ghost gear | ghost gear, ghost net, ALDFG, abandoned gear, lost gear, derelict gear, derelict fishing | 1 | KFT, PH, AC, SW | ALDFG case-sensitive. Added 2026-03-16 (BMIS). |
+| Column | Label | Keywords | Threshold | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|------------|--------|----------------------|
+| `gear_longline` | Longline | longline, long-line, pelagic longline, demersal longline, bottom longline | 2 | KFT, PH, SW | [L173](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L173) | CM: "longline" as ghost gear substrate (not study focus). |
+| `gear_gillnet` | Gillnet | gillnet, gill net, trammel net, entangling net, drift net, driftnet | 2 | KFT, PH, SW | [L174](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L174) |  |
+| `gear_trawl` | Trawl | trawl, bottom trawl, demersal trawl, pelagic trawl, otter trawl, beam trawl, shrimp trawl | 2 | KFT, PH, SW | [L175](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L175) |  |
+| `gear_purse_seine` | Purse seine | purse seine, purse-seine, ring net | 1 | KFT, PH, SW | [L176](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L176) |  |
+| `gear_seine` | Seine (other) | beach seine, Danish seine, seine net | 1 | KFT, PH, SW | [L177](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L177) |  |
+| `gear_hook_line` | Hook and line | hook and line, handline, rod and reel, trolling, jigging, pole and line | 2 | KFT, PH, SW | [L178](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L178) |  |
+| `gear_trap` | Trap / pot | trap, pot, fish trap, drumline, SMART drumline | 2 | KFT, PH, SW | [L179](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L179) | "trap" is generic — threshold=2 helps. |
+| `gear_net_other` | Other nets | cast net, lift net, scoop net, fyke net, pound net, **weir** | 1 | KFT, PH, AC, SW | [L180](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L180) |  |
+| `gear_harpoon` | Harpoon | harpoon, spearfish*, spear gun | 1 | KFT, WC, PH, SW | [L181](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L181) |  |
+| `gear_dredge` | Dredge | dredge, towed dredge, scallop dredge, clam dredge, oyster dredge, hydraulic dredge | 1 | KFT, PH, SW | [L182](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L182) | Added 2026-03-16. |
+| `gear_trawl_beam` | Beam trawl | beam trawl, beam-trawl | 1 | KFT, PH, SW | [L183](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L183) | Added 2026-03-16. |
+| `gear_trawl_otter` | Otter trawl | otter trawl, otter-trawl | 1 | KFT, PH, SW | [L184](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L184) | Added 2026-03-16. |
+| `gear_survey` | Survey gear | research vessel, survey trawl, **BRUVs**, longline survey, fishery-independent survey, drone survey, UAV survey, **ROV**, submersible, diving survey, diver transect | 2 | KFT, PH, AC, SW | [L185](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L185) | BRUVs, UAV, ROV case-sensitive. |
+| `gear_pelagic` | Pelagic gear | pelagic longline, pelagic trawl, midwater trawl | 1 | KFT, PH, SW | [L186](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L186) |  |
+| `gear_demersal` | Demersal gear | demersal longline, bottom trawl, demersal trawl, bottom longline | 1 | KFT, PH, SW | [L187](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L187) |  |
+| `gear_artisanal` | Artisanal gear | artisanal, traditional gear, small-scale, hand-operated | 2 | KFT, PH, SW | [L188](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L188) |  |
+| `gear_mit_circle_hook` | Mitigation: circle hooks | circle hook, non-offset hook | 1 | KFT, PH, SW | [L190](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L190) |  |
+| `gear_mit_brd` | Mitigation: BRD / TED | bycatch reduction device, **BRD**, turtle excluder, **TED** | 1 | KFT, PH, AC, SW | [L191](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L191) | BRD, TED case-sensitive. |
+| `gear_mit_deterrent` | Mitigation: deterrents | shark deterrent, SharkGuard, shark guard, electropositive, Rare Earth, **EPM**, LED deterrent, magnetic deterrent | 1 | KFT, PH, AC, SW | [L192](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L192) | EPM case-sensitive. |
+| `gear_mit_time_area` | Mitigation: time-area closure | time-area closure, spatial closure, fishing closure, seasonal closure, **MPA** | 2 | KFT, PH, AC, SW | [L193](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L193) | MPA case-sensitive. Previously matched institutional addresses. |
+| `gear_mit_handling` | Mitigation: handling | safe release, handling practice*, live release, post-release mortality, **PRM** | 1 | KFT, WC, PH, AC, SW | [L194](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L194) | PRM case-sensitive. |
+| `gear_mit_weak_hook` | Mitigation: weak hooks | weak hook, corrodible hook, designed to straighten | 1 | KFT, PH, SW | [L196](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L196) | Added 2026-03-16 (BMIS). |
+| `gear_mit_line_weight` | Mitigation: line weighting | line weight*, weighted branchline, leaded swivel, sliding lead, lumo lead, sink rate | 1 | KFT, WC, PH, SW | [L197](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L197) | Added 2026-03-16 (BMIS). |
+| `gear_mit_setting` | Mitigation: setting practices | night set*, deep set*, deep-set buoy gear, side-set*, underwater set* | 1 | KFT, WC, PH, SW | [L198](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L198) | Added 2026-03-16 (BMIS). |
+| `gear_mit_pinger` | Mitigation: pingers | pinger, acoustic alarm, acoustic deterrent, porpoise alerting device, **PAL** | 1 | KFT, PH, AC, SW | [L199](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L199) | PAL case-sensitive. Added 2026-03-16 (BMIS). |
+| `gear_mit_illumination` | Mitigation: net illumination | illuminat* net, illuminat* gillnet, LED net, net light*, lightstick*, light attract* | 1 | KFT, WC, PH, SW | [L200](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L200) | Added 2026-03-16 (BMIS). |
+| `gear_mit_wire_leader` | Mitigation: wire leaders | wire leader, monofilament leader, wire trace, nylon leader | 1 | KFT, PH, SW | [L201](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L201) | Added 2026-03-16 (BMIS). |
+| `gear_ghost` | Ghost gear | ghost gear, ghost net, ghost fishing, **ALDFG**, abandoned gear, lost gear, derelict gear, derelict fishing | 1 | KFT, PH, AC, SW | [L204](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L204) |  |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
+*No longer keyword columns in the extractor (rows dropped from this table): `gear_mit_ghost`.*
 
 #### Extracted gear metadata
 
@@ -288,29 +295,31 @@ These columns pick a single best-guess label from the binary eco_ columns above.
 
 #### Binary columns
 
-| Column | Label | Keywords | Threshold | Anchors | Techniques | Known issues / notes |
-|--------|-------|----------|-----------|---------|------------|----------------------|
-| `imp_mortality` | Mortality | mortality, survival rate, lethality, dead on arrival, DOA, at-vessel mortality, AVM | 2 | — | KFT, PH, AC, KPC, SW | DOA, AVM case-sensitive. Proximity check enabled. |
-| `imp_post_release` | Post-release mortality | post-release mortality, PRM, delayed mortality, post-capture survival | 1 | — | KFT, PH, AC, KPC, SW | PRM case-sensitive. Proximity check enabled. CM: sometimes mentioned as importance statement only. |
-| `imp_abundance` | Abundance | abundance, population size, population decline, population trend | 2 | population, decline, increase, change, trend, status | KFT, PH, ANC, KPC, SW | Classic ambiguous term. Anchors + proximity check both required. CM: "abundance" in invertebrate context. |
-| `imp_cpue` | CPUE | CPUE, catch per unit effort, catch rate | 1 | — | KFT, PH, AC, SW | CPUE case-sensitive. |
-| `imp_biomass` | Biomass | biomass, standing stock, spawning stock biomass, SSB | 2 | — | KFT, PH, AC, KPC, SW | SSB case-sensitive. Proximity check enabled. CM: "biomass" as predictor variable, not outcome. |
-| `imp_distribution` | Distribution shift | distribution shift, range shift, range contraction, habitat shift | 1 | — | KFT, PH, SW | Specific phrases — low threshold appropriate. |
-| `imp_behaviour_change` | Behavioural change | behavioural change, behavioral change, avoidance behaviour, flight response, habituation | 2 | change, response | KFT, PH, ANC, KPC, SW | Proximity check enabled. |
-| `imp_physiology_stress` | Physiological stress | cortisol, lactate, blood chemistry, acid-base, reflex impairment, RAMP, physiological stress | 1 | — | KFT, PH, AC, SW | RAMP case-sensitive (AC: "boat ramp"). |
-| `imp_injury` | Injury | injury, hooking injury, scarring, body condition index, entanglement, entangled, gear interaction, net mark* | 2 | — | KFT, WC, PH, KPC, SW | Proximity check enabled. |
-| `imp_reproduction` | Reproductive impact | reproductive output, fecundity change, reproductive failure | 1 | — | KFT, PH, SW | |
-| `imp_growth` | Growth | growth rate, von Bertalanffy, growth curve, somatic growth, condition factor, Fulton, length-weight, stunting, growth overfishing | 2 | change, impact, decline, reduce, affect, alter, slow, decrease, increase | KFT, PH, ANC, SW | |
-| `imp_genetic` | Genetic impact | genetic diversity, effective population size, Ne\b, bottleneck, inbreeding | 2 | — | KFT, PH, RX, SW | `Ne\b` is raw regex, case-sensitive. |
-| `imp_trophic` | Trophic impact | trophic level change, dietary shift, prey depletion, mesopredator release | 1 | — | KFT, PH, SW | |
-| `imp_habitat_quality` | Habitat quality | habitat quality, habitat suitability, degradation index | 2 | — | KFT, PH, SW | |
-| `imp_contamination` | Contamination | contaminant load, bioaccumulation, biomagnification, tissue concentration | 1 | — | KFT, PH, SW | |
-| `imp_economic` | Economic impact | economic value, fishery value, tourism revenue, willingness to pay, WTP | 1 | — | KFT, PH, AC, KPC, SW | WTP case-sensitive. Proximity check enabled. CM: economic value as justification, not study topic. |
-| `imp_social` | Social impact | livelihood, food security, human dimension, attitude, perception | 3 | — | KFT, SW | High threshold — generic terms. |
-| `imp_community_composition` | Community composition | community composition, assemblage composition, species composition, community structure change, assemblage shift | 2 | change, shift, impact, alter* | KFT, PH, ANC, WC, SW | Added 2026-03-16. |
-| `imp_biodiversity` | Biodiversity | biodiversity loss, species richness change, diversity index, Shannon, Simpson, evenness change, species loss | 2 | change, loss, decline, impact | KFT, PH, ANC, SW | Added 2026-03-16. |
-| `imp_size_structure` | Size structure | size structure, length frequency, age structure, size composition, size distribution, mean length, maximum length, length at maturity shift, truncated size | 2 | change, shift, impact, decline, truncat* | KFT, PH, ANC, WC, SW | Added 2026-03-16. |
-| `imp_productivity` | Productivity | productivity, recruitment, yield per recruit, spawning potential ratio, SPR, surplus production, reproductive output | 2 | change, decline, impact, reduce, increase, affect, fishing, overfishing | KFT, PH, ANC, AC, SW | SPR case-sensitive. Added 2026-03-16. |
+| Column | Label | Keywords | Threshold | Anchors | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|---------|------------|--------|----------------------|
+| `imp_mortality` | Mortality | mortality, survival rate, lethality, dead on arrival, **DOA**, at-vessel mortality, **AVM** | 2 |  | KFT, PH, AC, KPC, SW | [L211](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L211) | DOA, AVM case-sensitive. Proximity check enabled. |
+| `imp_post_release` | Post-release mortality | post-release mortality, **PRM**, delayed mortality, post-capture survival | 1 |  | KFT, PH, AC, KPC, SW | [L212](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L212) | PRM case-sensitive. Proximity check enabled. CM: sometimes mentioned as importance statement only. |
+| `imp_abundance` | Abundance | abundance, population size, population decline, population trend | 2 | population, decline, increase, change, trend, status | KFT, PH, ANC, KPC, SW | [L213](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L213) | Classic ambiguous term. Anchors + proximity check both required. CM: "abundance" in invertebrate context. |
+| `imp_cpue` | CPUE | **CPUE**, catch per unit effort, catch rate | 1 |  | KFT, PH, AC, SW | [L214](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L214) | CPUE case-sensitive. |
+| `imp_biomass` | Biomass | biomass, standing stock, spawning stock biomass, **SSB** | 2 | change, decline, decrease, increase, shift, trend, loss, recovery, fluctuat*, depletion, rebuild* | KFT, PH, AC, ANC, KPC, SW | [L215](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L215) | SSB case-sensitive. Proximity check enabled. CM: "biomass" as predictor variable, not outcome. |
+| `imp_distribution` | Distribution shift | distribution shift, range shift, range contraction, habitat shift | 1 |  | KFT, PH, SW | [L216](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L216) | Specific phrases — low threshold appropriate. |
+| `imp_behaviour_change` | Behavioural change | behavioural change, behavioral change, avoidance behaviour, flight response, habituation | 2 | change, response | KFT, PH, ANC, KPC, SW | [L217](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L217) | Proximity check enabled. |
+| `imp_physiology_stress` | Physiological stress | cortisol, lactate, blood chemistry, acid-base, reflex impairment, **RAMP**, physiological stress | 1 |  | KFT, PH, AC, SW | [L218](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L218) | RAMP case-sensitive (AC: "boat ramp"). |
+| `imp_injury` | Injury | injury, hooking injury, scarring, body condition index, entanglement, entangled, gear interaction, net mark* | 2 |  | KFT, WC, PH, KPC, SW | [L219](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L219) | Proximity check enabled. |
+| `imp_reproduction` | Reproductive impact | reproductive output, fecundity change, reproductive failure | 1 |  | KFT, PH, SW | [L220](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L220) |  |
+| `imp_growth` | Growth | growth rate, von Bertalanffy, growth curve, somatic growth, condition factor, Fulton, length-weight, stunting, growth overfishing | 2 | change, impact, decline, reduce, affect, alter, slow, decrease, increase | KFT, PH, ANC, SW | [L221](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L221) |  |
+| `imp_genetic` | Genetic impact | genetic diversity, effective population size, bottleneck, inbreeding | 2 |  | KFT, PH, SW | [L222](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L222) | `Ne\b` is raw regex, case-sensitive. |
+| `imp_trophic` | Trophic impact | trophic level change, dietary shift, prey depletion, mesopredator release | 1 |  | KFT, PH, SW | [L223](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L223) |  |
+| `imp_habitat_quality` | Habitat quality | habitat quality, habitat suitability, degradation index | 2 |  | KFT, PH, SW | [L224](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L224) |  |
+| `imp_contamination` | Contamination | contaminant load, bioaccumulation, biomagnification, tissue concentration | 1 |  | KFT, PH, SW | [L225](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L225) |  |
+| `imp_economic` | Economic impact | economic value, fishery value, tourism revenue, willingness to pay, **WTP** | 1 |  | KFT, PH, AC, KPC, SW | [L226](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L226) | WTP case-sensitive. Proximity check enabled. CM: economic value as justification, not study topic. |
+| `imp_social` | Social impact | livelihood, food security, human dimension, attitude, perception | 3 |  | KFT, PH, SW | [L227](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L227) | High threshold — generic terms. |
+| `imp_community_composition` | Community composition | community composition, assemblage composition, species composition, community structure change, assemblage shift | 2 | chang*, shift*, impact*, alter* | KFT, PH, ANC, SW | [L229](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L229) | Added 2026-03-16. |
+| `imp_biodiversity` | Biodiversity | biodiversity loss, species richness change, diversity index, Shannon, Simpson, evenness change, species loss, extinction* | 2 | chang*, loss*, declin*, impact*, decreas*, extinct* | KFT, WC, PH, ANC, SW | [L230](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L230) | Added 2026-03-16. |
+| `imp_size_structure` | Size structure | size structure, length frequency, age structure, size composition, size distribution, mean length, maximum length, length at maturity shift, truncated size | 2 | change, shift, impact, decline, truncat* | KFT, PH, ANC, SW | [L231](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L231) | Added 2026-03-16. |
+| `imp_productivity` | Productivity | productivity, recruitment, yield per recruit, spawning potential ratio, **SPR**, surplus production, reproductive output | 2 | change, decline, impact, reduce, increase, affect, fishing, overfishing | KFT, PH, AC, ANC, SW | [L232](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L232) | SPR case-sensitive. Added 2026-03-16. |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
 
 #### Derived/extracted impact metadata
 
@@ -325,43 +334,101 @@ These columns pick a single best-guess label from the binary eco_ columns above.
 
 ### Discipline (`d_`) — 19 columns
 
-| Column | Label | Keywords | Threshold | Techniques | Known issues / notes |
-|--------|-------|----------|-----------|------------|----------------------|
-| `d_biology` | Life history / biology | life history, age and growth, growth rate, longevity, maturity, length-at-maturity, length-weight, vertebral band | 2 | KFT, PH, KPC, SW | Proximity check enabled. CM: "slow growth, late maturity" boilerplate in introductions. |
-| `d_behaviour` | Behaviour | behavio*, behavioral ecology, predator-prey, diel vertical migration, activity pattern, social behavio*, agonistic, refuging | 3 | KFT, WC, PH, KPC, SW | Proximity check enabled. CM: "behavio*" matched skipper behaviour. High threshold. |
-| `d_trophic` | Trophic ecology | trophic, diet, feeding ecology, stomach content*, prey composition, stable isotope, fatty acid, food web | 2 | KFT, WC, PH, KPC, SW | Proximity check enabled. |
-| `d_genetics` | Genetics / genomics | genetic*, genomic*, eDNA, environmental DNA, microsatellite, mitochondrial, phylogenet*, haplotype, SNP, RADseq, population genetics | 2 | KFT, WC, PH, AC, SW | eDNA, SNP case-sensitive. CM: "phylogenet*" as justification context. |
-| `d_movement` | Movement / telemetry | movement, telemetry, satellite tag*, acoustic tag*, archival tag*, home range, migration, habitat use, space use, tracking | 3 | KFT, WC, PH, KPC, SW | Proximity check enabled. CM: "movement" matched embryo movement in egg cases. High threshold. |
-| `d_fisheries` | Fisheries science | stock assessment, fisheries management, catch data, fishing mortality, maximum sustainable yield, MSY, fishery-dependent, fishery-independent | 2 | KFT, PH, AC, KPC, SW | MSY case-sensitive. Proximity check enabled. |
-| `d_conservation` | Conservation | conservation, endangered, CITES, IUCN, Red List, protected area, marine protected area, recovery plan, conservation status | 3 | KFT, PH, AC, SW | CITES, IUCN case-sensitive. High threshold — "conservation" appears widely. |
-| `d_data_science` | Data science / modelling | machine learning, deep learning, neural network, random forest, Bayesian, meta-analysis, systematic review, simulation model | 2 | KFT, PH, KPC, SW | Proximity check enabled. CM: "Bayesian" cited in passing. |
-| `d_husbandry` | Husbandry / captive | aquarium, captive, husbandry, captive breeding, ex situ, tank-held, aquaria | 2 | KFT, PH, KPC, SW | Proximity check enabled. Hit rate 4.9% — spot-check flagged. RB: "aquarium" in reference titles. |
-| `d_paleontology` | Palaeontology | fossil, paleontol*, palaeontol*, Cretaceous, Jurassic, Miocene, Pliocene, Eocene, Oligocene, Cenozoic, Mesozoic, Devonian, Carboniferous | 1 | KFT, WC, SW | Hit rate 9.6% — spot-check flagged. Geological period names are specific. |
-| `d_taxonomy` | Taxonomy | taxonom*, new species, sp. nov., new genus, morphometric*, meristic*, dichotomous key, identification key, redescription, synonymy, type specimen | 1 | KFT, WC, PH, KPC, SW | Proximity check enabled. Hit rate 22.1% — spot-check flagged. CM: "taxonom*" as context in reviews. |
-| `d_physiology` | Physiology | physiolog*, metaboli*, oxygen consumption, ventilation rate, blood gas, haematocrit, hematocrit, osmoregulat*, thermoregulat*, bioenergetic* | 2 | KFT, WC, PH, SW | CM: physiological responses cited from bibliography, not measured. |
-| `d_reproductive` | Reproductive biology | reproductive biology, fecundity, gestation, embryo*, uterine, ovipar*, vivipar*, mating, parturition, neonat*, litter size, reproductive cycle | 2 | KFT, WC, PH, SW | |
-| `d_biomechanics` | Biomechanics | biomechani*, functional morphology, locomot*, kinematics, bite force, jaw mechanics, hydrodynamic*, swimming performance | 1 | KFT, WC, PH, SW | SM: "hydrodynamic*" matched embayment hydrodynamics. |
-| `d_sensory` | Sensory biology | electrorecept*, ampullae of Lorenzini, lateral line, mechanosens*, olfact*, chemosens*, visual acuity, magnetorecept* | 1 | KFT, WC, PH, SW | Inherently elasmobranch-specific (ampullae of Lorenzini). No proximity check needed. |
-| `d_ecotourism` | Ecotourism | ecotourism, dive tourism, shark tourism, shark watching, whale shark tourism, shark encounter, provisioning | 1 | KFT, PH, SW | |
-| `d_human_dimensions` | Human dimensions | human dimension*, social science, stakeholder, perception, attitude*, willingness to pay, WTP, shark bite, shark attack, shark repellent | 2 | KFT, WC, PH, AC, SW | WTP case-sensitive. |
-| `d_immunology` | Immunology | immun*, antibod*, complement system, innate immun*, adaptive immun*, leukocyte, lymphocyte | 2 | KFT, WC, PH, SW | |
-| `d_toxicology` | Toxicology | toxicolog*, contaminant*, bioaccumulation, biomagnification, heavy metal*, mercury, methylmercury, tissue concentration | 2 | KFT, WC, PH, SW | |
+| Column | Label | Keywords | Threshold | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|------------|--------|----------------------|
+| `d_biology` | Life history / biology | life history, age and growth, growth rate, longevity, maturity, length-at-maturity, length-weight, vertebral band, vertebral count*, band pair*, gonadosomatic index, hepatosomatic index, **GSI**, **HSI**, Le Cren, Fulton's K, morphometric analysis, total length, precaudal length, disc width (GSI only with gonadosomatic index; HSI only with hepatosomatic index) | 2 | KFT, WC, PH, AC, PRE, KPC, SW |  | Proximity check enabled. CM: "slow growth, late maturity" boilerplate in introductions. |
+| `d_behaviour` | Behaviour | behavio*, behavioral ecology, predator-prey, diel vertical migration, activity pattern, social behavio*, agonistic, refuging | 3 | KFT, WC, PH, KPC, SW | [L254](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L254) | Proximity check enabled. CM: "behavio*" matched skipper behaviour. High threshold. |
+| `d_trophic` | Trophic ecology | trophic, diet, feeding ecology, stomach content*, prey composition, stable isotope, fatty acid, food web | 2 | KFT, WC, PH, KPC, SW | [L255](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L255) | Proximity check enabled. |
+| `d_genetics` | Genetics / genomics | genetic*, genomic*, **eDNA**, environmental DNA, microsatellite, mitochondrial, phylogenet*, haplotype, **SNP**, RADseq, population genetics | 2 | KFT, WC, PH, AC, SW | [L256](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L256) | eDNA, SNP case-sensitive. CM: "phylogenet*" as justification context. |
+| `d_movement` | Movement / telemetry | movement, telemetry, satellite tag*, acoustic tag*, archival tag*, home range, migration, habitat use, space use, tracking | 3 | KFT, WC, PH, KPC, SW | [L257](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L257) | Proximity check enabled. CM: "movement" matched embryo movement in egg cases. High threshold. |
+| `d_fisheries` | Fisheries science | stock assessment, fisheries management, catch data, fishing mortality, maximum sustainable yield, **MSY**, fishery-dependent, fishery-independent, bycatch, discard*, retention, non-target species, non-target catch | 2 | KFT, WC, PH, AC, KPC, SW | [L258](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L258) | MSY case-sensitive. Proximity check enabled. |
+| `d_conservation` | Conservation | conservation, endangered, **CITES**, **IUCN**, Red List, protected area, marine protected area, recovery plan, conservation status | 3 | KFT, PH, AC, SW | [L259](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L259) | CITES, IUCN case-sensitive. High threshold — "conservation" appears widely. |
+| `d_data_science` | Data science / modelling | machine learning, deep learning, neural network, random forest, Bayesian, meta-analysis, systematic review, simulation model | 2 | KFT, PH, KPC, SW | [L260](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L260) | Proximity check enabled. CM: "Bayesian" cited in passing. |
+| `d_husbandry` | Husbandry / captive | aquarium, captive, husbandry, captive breeding, ex situ, tank-held, aquaria | 2 | KFT, PH, KPC, SW | [L262](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L262) | Proximity check enabled. Hit rate 4.9% — spot-check flagged. RB: "aquarium" in reference titles. |
+| `d_paleontology` | Palaeontology | fossil, paleontol*, palaeontol*, Cretaceous, Jurassic, Miocene, Pliocene, Eocene, Oligocene, Cenozoic, Mesozoic, Devonian, Carboniferous | 1 | KFT, WC, SW | [L263](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L263) | Hit rate 9.6% — spot-check flagged. Geological period names are specific. |
+| `d_taxonomy` | Taxonomy | taxonom*, new species, sp. nov., new genus, morphometric*, meristic*, dichotomous key, identification key, redescription, synonymy, type specimen | 1 | KFT, WC, PH, KPC, SW | [L264](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L264) | Proximity check enabled. Hit rate 22.1% — spot-check flagged. CM: "taxonom*" as context in reviews. |
+| `d_physiology` | Physiology | physiolog*, metaboli*, oxygen consumption, ventilation rate, blood gas, haematocrit, hematocrit, osmoregulat*, thermoregulat*, bioenergetic*, **SMR**, **RMR**, **MMR**, aerobic scope, **Ucrit**, U crit, U-crit, critical swimming speed, heart rate, cardiac output, blood pressure, plasma osmolality, plasma cortisol, plasma lactate, urea, **TMAO**, trimethylamine N-oxide, enzyme activity, **Q10**, metabolic rate | 2 | KFT, WC, PH, AC, KPC, SW | [L265](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L265) | CM: physiological responses cited from bibliography, not measured. |
+| `d_reproductive` | Reproductive biology | reproductive biology, fecundity, gestation, embryo*, uterine, ovipar*, vivipar*, mating, parturition, neonat*, litter size, reproductive cycle | 2 | KFT, WC, PH, KPC, SW | [L266](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L266) |  |
+| `d_biomechanics` | Biomechanics | biomechani*, functional morphology, locomot*, kinematics, bite force, jaw mechanics, hydrodynamic*, swimming performance | 1 | KFT, WC, PH, KPC, SW | [L267](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L267) | SM: "hydrodynamic*" matched embayment hydrodynamics. |
+| `d_sensory` | Sensory biology | electrorecept*, ampullae of Lorenzini, lateral line, mechanosens*, olfact*, chemosens*, visual acuity, magnetorecept* | 1 | KFT, WC, PH, SW | [L268](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L268) | Inherently elasmobranch-specific (ampullae of Lorenzini). No proximity check needed. |
+| `d_ecotourism` | Ecotourism | ecotourism, dive tourism, shark tourism, shark watching, whale shark tourism, shark encounter, provisioning | 1 | KFT, PH, SW | [L269](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L269) |  |
+| `d_human_dimensions` | Human dimensions | human dimension*, social science, stakeholder, perception, attitude*, willingness to pay, WTP, shark bite, shark attack, shark repellent | 2 | KFT, WC, PH, SW | [L270](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L270) | WTP case-sensitive. |
+| `d_immunology` | Immunology | immun*, antibod*, complement system, innate immun*, adaptive immun*, leukocyte, lymphocyte | 2 | KFT, WC, PH, SW | [L271](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L271) |  |
+| `d_toxicology` | Toxicology | toxicolog*, contaminant*, bioaccumulation, biomagnification, heavy metal*, mercury, methylmercury, tissue concentration | 2 | KFT, WC, PH, SW | [L272](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L272) |  |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
 
 ---
 
 ### Ocean basin (`b_`) — 9 columns
 
-| Column | Label | Keywords | Threshold | Techniques | Known issues / notes |
-|--------|-------|----------|-----------|------------|----------------------|
-| `b_north_atlantic` | North Atlantic | North Atlantic, Northwest Atlantic, Northeast Atlantic, NW Atlantic, NE Atlantic, North Sea, Bay of Biscay, Celtic Sea, Norwegian Sea, Barents Sea, Baltic Sea, Gulf of Mexico, Sargasso Sea, Azores | 2 | KFT, PH, SW | RB: geographic terms in reference titles. |
-| `b_south_atlantic` | South Atlantic | South Atlantic, Southwest Atlantic, Southeast Atlantic, SW Atlantic, SE Atlantic, Benguela, Patagoni*, South Africa*, Namibia*, Brazilian coast | 2 | KFT, WC, PH, SW | |
-| `b_north_pacific` | North Pacific | North Pacific, Northwest Pacific, Northeast Pacific, NW Pacific, NE Pacific, Bering Sea, Sea of Japan, East China Sea, South China Sea, Yellow Sea, California Current, Kuroshio, Sea of Okhotsk, Gulf of Alaska, Hawaiian | 2 | KFT, PH, SW | |
-| `b_south_pacific` | South Pacific | South Pacific, Southwest Pacific, Southeast Pacific, SW Pacific, SE Pacific, Coral Sea, Tasman Sea, Great Barrier Reef, New Zealand*, Fiji*, French Polynesia, Humboldt Current | 2 | KFT, WC, PH, SW | |
-| `b_indian_ocean` | Indian Ocean | Indian Ocean, Bay of Bengal, Arabian Sea, Mozambique Channel, Red Sea, Persian Gulf, Andaman Sea, Madagascar, Maldives, Seychelles, Western Indian Ocean, Eastern Indian Ocean | 2 | KFT, PH, SW | |
-| `b_southern_ocean` | Southern Ocean | Southern Ocean, Antarctic, sub-Antarctic, Kerguelen, South Georgia, Patagonian shelf | 1 | KFT, PH, SW | Lower threshold — specific terms. |
-| `b_arctic_ocean` | Arctic Ocean | Arctic Ocean, Arctic, Greenland Sea, Beaufort Sea, Chukchi Sea, Canadian Arctic | 2 | KFT, PH, SW | |
-| `b_mediterranean` | Mediterranean | Mediterranean, Adriatic, Aegean, Tyrrhenian, Ionian Sea, Ligurian Sea, Alboran Sea, Strait of Gibraltar, Strait of Sicily | 1 | KFT, PH, SW | Lower threshold — sub-basin names are specific. |
-| `b_caribbean` | Caribbean | Caribbean, Gulf of Mexico, Bahamas, Belize, Mesoamerican Reef, Antilles, West Indies | 2 | KFT, PH, SW | Note: Gulf of Mexico appears in both b_north_atlantic and b_caribbean. |
+| Column | Label | Keywords | Threshold | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|------------|--------|----------------------|
+| `b_north_atlantic` | North Atlantic | North Atlantic, Northwest Atlantic, Northeast Atlantic, NW Atlantic, NE Atlantic, North Sea, Bay of Biscay, Celtic Sea, Norwegian Sea, Barents Sea, Baltic Sea, Gulf of Mexico, Sargasso Sea, Azores | 2 | KFT, PH, SW | [L278](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L278) | RB: geographic terms in reference titles. |
+| `b_south_atlantic` | South Atlantic | South Atlantic, Southwest Atlantic, Southeast Atlantic, SW Atlantic, SE Atlantic, Benguela, Patagoni*, South Africa*, Namibia*, Brazilian coast | 2 | KFT, WC, PH, SW | [L284](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L284) |  |
+| `b_north_pacific` | North Pacific | North Pacific, Northwest Pacific, Northeast Pacific, NW Pacific, NE Pacific, Bering Sea, Sea of Japan, East China Sea, South China Sea, Yellow Sea, California Current, Kuroshio, Sea of Okhotsk, Gulf of Alaska, Hawaiian | 2 | KFT, PH, SW | [L289](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L289) |  |
+| `b_south_pacific` | South Pacific | South Pacific, Southwest Pacific, Southeast Pacific, SW Pacific, SE Pacific, Coral Sea, Tasman Sea, Great Barrier Reef, New Zealand*, Fiji*, French Polynesia, Humboldt Current | 2 | KFT, WC, PH, SW | [L296](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L296) |  |
+| `b_indian_ocean` | Indian Ocean | Indian Ocean, Bay of Bengal, Arabian Sea, Mozambique Channel, Red Sea, Persian Gulf, Andaman Sea, Madagascar, Maldives, Seychelles, Western Indian Ocean, Eastern Indian Ocean | 2 | KFT, PH, SW | [L302](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L302) |  |
+| `b_southern_ocean` | Southern Ocean | Southern Ocean, Antarctic, sub-Antarctic, Kerguelen, South Georgia, Patagonian shelf | 1 | KFT, PH, SW | [L308](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L308) | Lower threshold — specific terms. |
+| `b_arctic_ocean` | Arctic Ocean | Arctic Ocean, Arctic, Greenland Sea, Beaufort Sea, Chukchi Sea, Canadian Arctic | 2 | KFT, PH, SW | [L312](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L312) |  |
+| `b_mediterranean` | Mediterranean | Mediterranean, Adriatic, Aegean, Tyrrhenian, Ionian Sea, Ligurian Sea, Alboran Sea, Strait of Gibraltar, Strait of Sicily | 1 | KFT, PH, SW | [L316](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L316) | Lower threshold — sub-basin names are specific. |
+| `b_caribbean` | Caribbean | Caribbean, Gulf of Mexico, Bahamas, Belize, Mesoamerican Reef, Antilles, West Indies | 2 | KFT, PH, SW | [L321](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L321) | Note: Gulf of Mexico appears in both b_north_atlantic and b_caribbean. |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
+
+---
+
+### Sub-basin (`sb_`) — 43 columns
+
+Forty-three named seas and regional sub-basins, one column each, matched the same way as the ocean basins. Added to the register 2026-10-06 as the geography topic *Sub-basins and seas* on the topic review pages.
+
+| Column | Label | Keywords | Threshold | Techniques | Source | Known issues / notes |
+|--------|-------|----------|-----------|------------|--------|----------------------|
+| `sb_north_sea` | North sea | North Sea | 2 | KFT, PH, SW | [L332](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L332) |  |
+| `sb_norwegian_sea` | Norwegian sea | Norwegian Sea | 2 | KFT, PH, SW | [L335](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L335) |  |
+| `sb_barents_sea` | Barents sea | Barents Sea | 2 | KFT, PH, SW | [L338](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L338) |  |
+| `sb_baltic_sea` | Baltic sea | Baltic Sea | 2 | KFT, PH, SW | [L341](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L341) |  |
+| `sb_celtic_sea` | Celtic sea | Celtic Sea | 2 | KFT, PH, SW | [L344](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L344) |  |
+| `sb_irish_sea` | Irish sea | Irish Sea | 2 | KFT, PH, SW | [L347](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L347) |  |
+| `sb_english_channel` | English channel | English Channel, La Manche | 2 | KFT, PH, SW | [L350](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L350) |  |
+| `sb_bay_of_biscay` | Bay of biscay | Bay of Biscay, Biscay | 2 | KFT, PH, SW | [L353](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L353) |  |
+| `sb_azores` | Azores | Azores | 2 | KFT, SW | [L356](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L356) |  |
+| `sb_gulf_of_maine` | Gulf of maine | Gulf of Maine | 2 | KFT, PH, SW | [L359](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L359) |  |
+| `sb_gulf_of_mexico` | Gulf of mexico | Gulf of Mexico, GoMex, **GOM** | 2 | KFT, PH, AC, SW | [L362](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L362) |  |
+| `sb_caribbean_sea` | Caribbean sea | Caribbean Sea, Caribbean, Antilles, West Indies | 2 | KFT, PH, SW | [L367](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L367) |  |
+| `sb_bahamas` | Bahamas | Bahamas, Bahamian | 2 | KFT, SW | [L371](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L371) |  |
+| `sb_sargasso_sea` | Sargasso sea | Sargasso Sea | 2 | KFT, PH, SW | [L374](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L374) |  |
+| `sb_gulf_of_guinea` | Gulf of guinea | Gulf of Guinea | 2 | KFT, PH, SW | [L377](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L377) |  |
+| `sb_benguela` | Benguela | Benguela, Benguela Current | 2 | KFT, PH, SW | [L380](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L380) |  |
+| `sb_alboran_sea` | Alboran sea | Alboran Sea, Alboran | 2 | KFT, PH, SW | [L385](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L385) |  |
+| `sb_ligurian_sea` | Ligurian sea | Ligurian Sea | 2 | KFT, PH, SW | [L388](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L388) |  |
+| `sb_tyrrhenian_sea` | Tyrrhenian sea | Tyrrhenian Sea, Tyrrhenian | 2 | KFT, PH, SW | [L391](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L391) |  |
+| `sb_adriatic_sea` | Adriatic sea | Adriatic Sea, Adriatic | 2 | KFT, PH, SW | [L394](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L394) |  |
+| `sb_ionian_sea` | Ionian sea | Ionian Sea, Ionian | 2 | KFT, PH, SW | [L397](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L397) |  |
+| `sb_aegean_sea` | Aegean sea | Aegean Sea, Aegean | 2 | KFT, PH, SW | [L400](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L400) |  |
+| `sb_black_sea` | Black sea | Black Sea | 2 | KFT, PH, SW | [L403](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L403) |  |
+| `sb_sea_of_marmara` | Sea of marmara | Sea of Marmara, Marmara | 2 | KFT, PH, SW | [L406](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L406) |  |
+| `sb_red_sea` | Red sea | Red Sea | 2 | KFT, PH, SW | [L409](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L409) |  |
+| `sb_arabian_sea` | Arabian sea | Arabian Sea | 2 | KFT, PH, SW | [L414](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L414) |  |
+| `sb_persian_gulf` | Persian gulf | Persian Gulf, Arabian Gulf | 2 | KFT, PH, SW | [L417](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L417) |  |
+| `sb_bay_of_bengal` | Bay of bengal | Bay of Bengal | 2 | KFT, PH, SW | [L420](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L420) |  |
+| `sb_andaman_sea` | Andaman sea | Andaman Sea | 2 | KFT, PH, SW | [L423](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L423) |  |
+| `sb_mozambique_channel` | Mozambique channel | Mozambique Channel | 2 | KFT, PH, SW | [L426](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L426) |  |
+| `sb_gulf_of_california` | Gulf of california | Gulf of California, Sea of Cortez, Sea of Cortés, GoCali | 2 | KFT, PH, SW | [L431](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L431) |  |
+| `sb_gulf_of_alaska` | Gulf of alaska | Gulf of Alaska | 2 | KFT, PH, SW | [L434](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L434) |  |
+| `sb_bering_sea` | Bering sea | Bering Sea | 2 | KFT, PH, SW | [L437](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L437) |  |
+| `sb_sea_of_okhotsk` | Sea of okhotsk | Sea of Okhotsk | 2 | KFT, PH, SW | [L440](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L440) |  |
+| `sb_sea_of_japan` | Sea of japan | Sea of Japan, East Sea | 2 | KFT, PH, SW | [L443](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L443) |  |
+| `sb_east_china_sea` | East china sea | East China Sea | 2 | KFT, PH, SW | [L446](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L446) |  |
+| `sb_south_china_sea` | South china sea | South China Sea | 2 | KFT, PH, SW | [L449](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L449) |  |
+| `sb_yellow_sea` | Yellow sea | Yellow Sea | 2 | KFT, PH, SW | [L452](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L452) |  |
+| `sb_philippine_sea` | Philippine sea | Philippine Sea, Philippines | 2 | KFT, PH, SW | [L455](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L455) |  |
+| `sb_coral_sea` | Coral sea | Coral Sea | 2 | KFT, PH, SW | [L458](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L458) |  |
+| `sb_tasman_sea` | Tasman sea | Tasman Sea | 2 | KFT, PH, SW | [L461](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L461) |  |
+| `sb_hawaii` | Hawaii | Hawaii, Hawaiian Island*, Hawaiian archipelago | 2 | KFT, WC, PH, SW | [L464](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L464) |  |
+| `sb_california_current` | California current | California Current | 2 | KFT, PH, SW | [L467](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/extract_schema_columns.py#L467) |  |
+
+*Case-sensitive terms in bold. Rows regenerated from the extractor; the Label and Known issues cells are hand-written and kept.*
 
 ---
 

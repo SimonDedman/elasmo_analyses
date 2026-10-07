@@ -16,6 +16,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 1086,
   "papers_in": 526,
   "margin": 199,
@@ -39,7 +42,26 @@
    "12": 5
   },
   "fable_in": 112,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 30,
+   "fp": 30,
+   "fn": 64,
+   "unreach": 42,
+   "precision": 0.5,
+   "recall": 0.3191489361702128,
+   "f1": 0.38961038961038963,
+   "top_score": 10,
+   "top_n": 10,
+   "top_in": 9,
+   "bottom_n": 17,
+   "bottom_in": 9,
+   "solo_term": "ecotourism",
+   "solo_n": 99,
+   "solo_fable_n": 11,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "pr_visual_disturbance",
@@ -58,6 +80,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 34,
   "papers_in": 25,
   "margin": 26,
@@ -68,7 +93,26 @@
    "0": 9
   },
   "fable_in": 27,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 0,
+   "fp": 7,
+   "fn": 21,
+   "unreach": 21,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": null,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "visual disturbance",
+   "solo_n": 8,
+   "solo_fable_n": 1,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "d_ecotourism",
@@ -88,6 +132,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 851,
   "papers_in": 564,
   "margin": 423,
@@ -110,6 +157,25 @@
    "12": 10
   },
   "fable_in": 89,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 37,
+   "fp": 36,
+   "fn": 40,
+   "unreach": 24,
+   "precision": 0.5068493150684932,
+   "recall": 0.4805194805194805,
+   "f1": 0.49333333333333335,
+   "top_score": 10,
+   "top_n": 7,
+   "top_in": 6,
+   "bottom_n": 14,
+   "bottom_in": 7,
+   "solo_term": "ecotourism",
+   "solo_n": 166,
+   "solo_fable_n": 19,
+   "solo_fable_in": 11
+  }
  }
 ]

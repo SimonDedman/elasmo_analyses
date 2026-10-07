@@ -24,6 +24,9 @@
   "threshold": 2,
   "n_terms": 14,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 4896,
   "papers_in": 2335,
   "margin": 856,
@@ -47,7 +50,26 @@
    "12": 41
   },
   "fable_in": 368,
-  "gold": 4
+  "gold": 4,
+  "silver": {
+   "n": 1941,
+   "tp": 166,
+   "fp": 105,
+   "fn": 178,
+   "unreach": 104,
+   "precision": 0.6125461254612546,
+   "recall": 0.48255813953488375,
+   "f1": 0.5398373983739838,
+   "top_score": 10,
+   "top_n": 76,
+   "top_in": 58,
+   "bottom_n": 48,
+   "bottom_in": 18,
+   "solo_term": "Gulf of Mexico",
+   "solo_n": 406,
+   "solo_fable_n": 42,
+   "solo_fable_in": 10
+  }
  },
  {
   "id": "b_south_atlantic",
@@ -70,6 +92,9 @@
   "threshold": 2,
   "n_terms": 10,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 4004,
   "papers_in": 1831,
   "margin": 742,
@@ -93,7 +118,26 @@
    "13": 33
   },
   "fable_in": 223,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 96,
+   "fp": 92,
+   "fn": 107,
+   "unreach": 53,
+   "precision": 0.5106382978723404,
+   "recall": 0.4729064039408867,
+   "f1": 0.49104859335038364,
+   "top_score": 10,
+   "top_n": 48,
+   "top_in": 36,
+   "bottom_n": 50,
+   "bottom_in": 20,
+   "solo_term": "South Africa*",
+   "solo_n": 749,
+   "solo_fable_n": 74,
+   "solo_fable_in": 22
+  }
  },
  {
   "id": "b_north_pacific",
@@ -121,6 +165,9 @@
   "threshold": 2,
   "n_terms": 15,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 2469,
   "papers_in": 1110,
   "margin": 439,
@@ -144,7 +191,26 @@
    "14": 12
   },
   "fable_in": 313,
-  "gold": 3
+  "gold": 3,
+  "silver": {
+   "n": 1941,
+   "tp": 87,
+   "fp": 36,
+   "fn": 205,
+   "unreach": 164,
+   "precision": 0.7073170731707317,
+   "recall": 0.2979452054794521,
+   "f1": 0.419277108433735,
+   "top_score": 10,
+   "top_n": 19,
+   "top_in": 15,
+   "bottom_n": 12,
+   "bottom_in": 7,
+   "solo_term": "North Pacific",
+   "solo_n": 168,
+   "solo_fable_n": 17,
+   "solo_fable_in": 9
+  }
  },
  {
   "id": "b_south_pacific",
@@ -169,6 +235,9 @@
   "threshold": 2,
   "n_terms": 12,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 3231,
   "papers_in": 1262,
   "margin": 577,
@@ -192,7 +261,26 @@
    "11": 21
   },
   "fable_in": 254,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 89,
+   "fp": 60,
+   "fn": 146,
+   "unreach": 98,
+   "precision": 0.5973154362416108,
+   "recall": 0.37872340425531914,
+   "f1": 0.4635416666666667,
+   "top_score": 10,
+   "top_n": 31,
+   "top_in": 25,
+   "bottom_n": 38,
+   "bottom_in": 13,
+   "solo_term": "New Zealand*",
+   "solo_n": 435,
+   "solo_fable_n": 31,
+   "solo_fable_in": 11
+  }
  },
  {
   "id": "b_indian_ocean",
@@ -217,6 +305,9 @@
   "threshold": 2,
   "n_terms": 12,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 3313,
   "papers_in": 1695,
   "margin": 550,
@@ -240,7 +331,26 @@
    "10": 47
   },
   "fable_in": 274,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 150,
+   "fp": 72,
+   "fn": 112,
+   "unreach": 58,
+   "precision": 0.6756756756756757,
+   "recall": 0.5725190839694656,
+   "f1": 0.6198347107438016,
+   "top_score": 10,
+   "top_n": 58,
+   "top_in": 55,
+   "bottom_n": 32,
+   "bottom_in": 17,
+   "solo_term": "Indian Ocean",
+   "solo_n": 226,
+   "solo_fable_n": 30,
+   "solo_fable_in": 16
+  }
  },
  {
   "id": "b_southern_ocean",
@@ -259,6 +369,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 896,
   "papers_in": 565,
   "margin": 436,
@@ -281,7 +394,26 @@
    "12": 4
   },
   "fable_in": 27,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 20,
+   "fp": 50,
+   "fn": 5,
+   "unreach": 2,
+   "precision": 0.2857142857142857,
+   "recall": 0.8,
+   "f1": 0.4210526315789473,
+   "top_score": 10,
+   "top_n": 6,
+   "top_in": 6,
+   "bottom_n": 9,
+   "bottom_in": 2,
+   "solo_term": "Antarctic",
+   "solo_n": 284,
+   "solo_fable_n": 34,
+   "solo_fable_in": 5
+  }
  },
  {
   "id": "b_arctic_ocean",
@@ -300,6 +432,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 933,
   "papers_in": 346,
   "margin": 144,
@@ -323,7 +458,26 @@
    "8": 5
   },
   "fable_in": 28,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 17,
+   "fp": 19,
+   "fn": 9,
+   "unreach": 4,
+   "precision": 0.4722222222222222,
+   "recall": 0.6538461538461539,
+   "f1": 0.5483870967741936,
+   "top_score": 10,
+   "top_n": 12,
+   "top_in": 9,
+   "bottom_n": 7,
+   "bottom_in": 2,
+   "solo_term": "Arctic",
+   "solo_n": 180,
+   "solo_fable_n": 22,
+   "solo_fable_in": 8
+  }
  },
  {
   "id": "b_mediterranean",
@@ -345,6 +499,9 @@
   "threshold": 1,
   "n_terms": 9,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 3324,
   "papers_in": 2564,
   "margin": 1177,
@@ -368,7 +525,26 @@
    "10": 40
   },
   "fable_in": 218,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 166,
+   "fp": 162,
+   "fn": 47,
+   "unreach": 28,
+   "precision": 0.5060975609756098,
+   "recall": 0.7793427230046949,
+   "f1": 0.6136783733826249,
+   "top_score": 10,
+   "top_n": 107,
+   "top_in": 102,
+   "bottom_n": 34,
+   "bottom_in": 11,
+   "solo_term": "Mediterranean",
+   "solo_n": 1487,
+   "solo_fable_n": 192,
+   "solo_fable_in": 62
+  }
  },
  {
   "id": "b_caribbean",
@@ -388,6 +564,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "b_",
+  "meaning": null,
   "papers_with_hit": 3640,
   "papers_in": 1718,
   "margin": 631,
@@ -411,6 +590,25 @@
    "14": 19
   },
   "fable_in": 182,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 115,
+   "fp": 70,
+   "fn": 57,
+   "unreach": 27,
+   "precision": 0.6216216216216216,
+   "recall": 0.6686046511627907,
+   "f1": 0.6442577030812324,
+   "top_score": 10,
+   "top_n": 67,
+   "top_in": 62,
+   "bottom_n": 35,
+   "bottom_in": 10,
+   "solo_term": "Gulf of Mexico",
+   "solo_n": 398,
+   "solo_fable_n": 37,
+   "solo_fable_in": 25
+  }
  }
 ]

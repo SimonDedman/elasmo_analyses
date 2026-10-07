@@ -18,6 +18,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 806,
   "papers_in": 312,
   "margin": 168,
@@ -41,6 +44,25 @@
    "11": 1
   },
   "fable_in": 412,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 59,
+   "fp": 6,
+   "fn": 293,
+   "unreach": 239,
+   "precision": 0.9076923076923077,
+   "recall": 0.16761363636363635,
+   "f1": 0.28297362110311747,
+   "top_score": 10,
+   "top_n": 2,
+   "top_in": 2,
+   "bottom_n": 10,
+   "bottom_in": 8,
+   "solo_term": "Bayesian",
+   "solo_n": 226,
+   "solo_fable_n": 44,
+   "solo_fable_in": 41
+  }
  }
 ]

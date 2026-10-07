@@ -13,6 +13,9 @@
   "threshold": 2,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 175,
   "papers_in": 79,
   "margin": 28,
@@ -34,7 +37,26 @@
    "12": 1
   },
   "fable_in": 19,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 10,
+   "fp": 6,
+   "fn": 7,
+   "unreach": 1,
+   "precision": 0.625,
+   "recall": 0.5882352941176471,
+   "f1": 0.6060606060606061,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 5,
+   "bottom_in": 4,
+   "solo_term": "ocean acidification",
+   "solo_n": 15,
+   "solo_fable_n": 6,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "pr_hypoxia",
@@ -51,6 +73,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 439,
   "papers_in": 397,
   "margin": 201,
@@ -74,7 +99,26 @@
    "11": 4
   },
   "fable_in": 35,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 19,
+   "fp": 44,
+   "fn": 9,
+   "unreach": 6,
+   "precision": 0.30158730158730157,
+   "recall": 0.6785714285714286,
+   "f1": 0.41758241758241754,
+   "top_score": 10,
+   "top_n": 7,
+   "top_in": 7,
+   "bottom_n": 4,
+   "bottom_in": 2,
+   "solo_term": "hypoxia",
+   "solo_n": 282,
+   "solo_fable_n": 32,
+   "solo_fable_in": 4
+  }
  },
  {
   "id": "pr_pollution_noise",
@@ -92,6 +136,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 197,
   "papers_in": 171,
   "margin": 122,
@@ -113,7 +160,26 @@
    "9": 1
   },
   "fable_in": 15,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 6,
+   "fp": 19,
+   "fn": 7,
+   "unreach": 7,
+   "precision": 0.24,
+   "recall": 0.46153846153846156,
+   "f1": 0.3157894736842105,
+   "top_score": 10,
+   "top_n": 2,
+   "top_in": 0,
+   "bottom_n": 0,
+   "bottom_in": 0,
+   "solo_term": "sonar",
+   "solo_n": 117,
+   "solo_fable_n": 10,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "pr_light",
@@ -129,6 +195,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 124,
   "papers_in": 45,
   "margin": 95,
@@ -143,7 +212,26 @@
    "4": 3
   },
   "fable_in": 5,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 2,
+   "fp": 5,
+   "fn": 0,
+   "unreach": 0,
+   "precision": 0.2857142857142857,
+   "recall": 1.0,
+   "f1": 0.4444444444444445,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "artificial light",
+   "solo_n": 20,
+   "solo_fable_n": 3,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "pr_electromagnetic",
@@ -160,6 +248,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 46,
   "papers_in": 32,
   "margin": 23,
@@ -177,7 +268,26 @@
    "7": 1
   },
   "fable_in": 10,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 5,
+   "fp": 3,
+   "fn": 4,
+   "unreach": 3,
+   "precision": 0.625,
+   "recall": 0.5555555555555556,
+   "f1": 0.5882352941176471,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 2,
+   "bottom_n": 1,
+   "bottom_in": 1,
+   "solo_term": "electromagnetic field",
+   "solo_n": 13,
+   "solo_fable_n": 2,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "imp_physiology_stress",
@@ -197,6 +307,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 757,
   "papers_in": 523,
   "margin": 322,
@@ -220,7 +333,26 @@
    "13": 2
   },
   "fable_in": 61,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 25,
+   "fp": 32,
+   "fn": 27,
+   "unreach": 21,
+   "precision": 0.43859649122807015,
+   "recall": 0.4807692307692308,
+   "f1": 0.4587155963302752,
+   "top_score": 10,
+   "top_n": 13,
+   "top_in": 11,
+   "bottom_n": 6,
+   "bottom_in": 2,
+   "solo_term": "lactate",
+   "solo_n": 145,
+   "solo_fable_n": 7,
+   "solo_fable_in": 6
+  }
  },
  {
   "id": "imp_injury",
@@ -241,6 +373,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 1177,
   "papers_in": 339,
   "margin": 156,
@@ -264,7 +399,26 @@
    "14": 1
   },
   "fable_in": 132,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 34,
+   "fp": 18,
+   "fn": 81,
+   "unreach": 57,
+   "precision": 0.6538461538461539,
+   "recall": 0.2956521739130435,
+   "f1": 0.407185628742515,
+   "top_score": 10,
+   "top_n": 10,
+   "top_in": 9,
+   "bottom_n": 30,
+   "bottom_in": 11,
+   "solo_term": "injury",
+   "solo_n": 135,
+   "solo_fable_n": 20,
+   "solo_fable_in": 12
+  }
  },
  {
   "id": "imp_growth",
@@ -296,6 +450,9 @@
   "threshold": 2,
   "n_terms": 9,
   "n_anchors": 9,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 2321,
   "papers_in": 983,
   "margin": 344,
@@ -319,7 +476,26 @@
    "12": 32
   },
   "fable_in": 124,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 66,
+   "fp": 32,
+   "fn": 55,
+   "unreach": 29,
+   "precision": 0.673469387755102,
+   "recall": 0.5454545454545454,
+   "f1": 0.6027397260273972,
+   "top_score": 10,
+   "top_n": 21,
+   "top_in": 17,
+   "bottom_n": 38,
+   "bottom_in": 1,
+   "solo_term": "growth rate",
+   "solo_n": 144,
+   "solo_fable_n": 14,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "d_physiology",
@@ -362,6 +538,9 @@
   "threshold": 2,
   "n_terms": 30,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 4614,
   "papers_in": 2143,
   "margin": 843,
@@ -385,6 +564,25 @@
    "11": 36
   },
   "fable_in": 246,
-  "gold": 3
+  "gold": 3,
+  "silver": {
+   "n": 1941,
+   "tp": 107,
+   "fp": 133,
+   "fn": 103,
+   "unreach": 55,
+   "precision": 0.44583333333333336,
+   "recall": 0.5095238095238095,
+   "f1": 0.47555555555555556,
+   "top_score": 10,
+   "top_n": 51,
+   "top_in": 47,
+   "bottom_n": 32,
+   "bottom_in": 9,
+   "solo_term": "physiolog*",
+   "solo_n": 236,
+   "solo_fable_n": 35,
+   "solo_fable_in": 9
+  }
  }
 ]

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Build every topic in data/topic_review/*.json, serially: feature pass (skipped when features.jsonl is
 # newer than the topic file and the vocabulary hash is unchanged), then pages. The shared suggestion pool
-# is rebuilt once at the end, because its exclusion list is the union of every topic's vocabulary.
+# is rebuilt once at the end, because its exclusion list is the union of every topic's vocabulary, then the
+# cross-topic rules table (docs/topic_review/rules.js).
 # Status for the monitor: outputs/topic_review/build_all_status.json ; log: outputs/topic_review/build_all.log
 # Usage: scripts/topic_review_build_all.sh [--force-features] [topic ...]
 set -u
@@ -40,5 +41,7 @@ for t in "${TOPICS[@]}"; do
 done
 status _shared pool running; s0=$(date +%s)
 if $PY scripts/build_topic_candidates.py --workers 10 >> "$LOG" 2>&1; then status _shared pool done $(( $(date +%s) - s0 )); else status _shared pool FAILED $(( $(date +%s) - s0 )); fi
+status _shared rules_table running; s0=$(date +%s)
+if $PY scripts/build_topic_review_rules_table.py >> "$LOG" 2>&1; then status _shared rules_table done $(( $(date +%s) - s0 )); else status _shared rules_table FAILED $(( $(date +%s) - s0 )); fi
 echo "=== build_all finished $(date '+%F %T')" >> "$LOG"
 status _all chain done

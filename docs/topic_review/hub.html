@@ -52,18 +52,7 @@ ol li{margin:4px 0}
 <div class="cards" id="scen"></div>
 
 <h2 class="sec">Explore existing rule performance</h2>
-<div id="fisheriesOnly">
-<h2>What the first full run found (2026-09-19, <code>d_fisheries</code>)</h2>
-<div class="kv" id="found"></div>
-<ol class="lede">
-<li><b>The top of the list is safe to assume; the bottom is not.</b> Among papers Fable has read, 96% of those scoring 10 or more are fisheries papers by its reading, but so are 37% of those scoring under 0.5. "Everything below this is OUT" would be wrong for about two papers in five, if Fable is right. The spot checks in the margin queue exist to settle that with an expert's eyes.</li>
-<li><b>The margin is wide.</b> 1,905 papers sit within half a point of the line. Read exhaustively at four a minute that is eight hours for this one column. A stratified sample of a few hundred is enough to fit and measure the rule; an exhaustive pass only makes sense where the corrected list is itself the product.</li>
-<li><b>Single keywords do real damage and the page shows which.</b> <i>retention</i> alone tips 256 papers over the line: urea retention, sperm retention, chromatographic retention time. Of the 23 Fable read, 21 are not fisheries papers. The Rule tab shows which papers each keyword alone lets through.</li>
-<li><b>The search finds a better rule in under a second.</b> On 869 Fable-labelled papers the live rule scores F1 62.5%. The proposed rule (threshold 1, proximity filter off, <i>retention</i> and <i>discard*</i> dropped, unlabelled text given weight) scores 73.8% on held-out papers. These are silver labels, so treat the size of the gain as indicative and the mechanism as proven.</li>
-<li><b>Text the section labeller cannot place is ignored entirely</b> (weight 0), which is why thousands of papers that mention fisheries keywords score 0. Raising that weight was the second-best single change the search found on the Fable labels (+4.5 points of F1).</li>
-</ol>
-
-</div>
+<div id="findings"></div>
 <h2>How it works</h2>
 <ol class="lede">
 <li>One pass over every PDF counted every candidate keyword, per section, with and without the shark-or-ray proximity filter. That table is the whole input: a rule is only a way of adding the counts up.</li>
@@ -93,7 +82,6 @@ function draw(){
   document.getElementById('h1').textContent = `${M.topic.title}: expert review by topic`;
   document.getElementById('crumbTopic').textContent = M.topic.title;
   document.getElementById('champ').innerHTML = `Topic champion: ${champ(M.topic.champion)}`;
-  document.getElementById('fisheriesOnly').style.display = TOPIC === 'fisheries' ? '' : 'none';
   document.getElementById('lede').innerHTML = `A mock-up, built ${esc(M.built)} on the real corpus. The per-author pages ask "is my paper coded correctly?". These ask the complementary question, one concept at a time: "of every paper the corpus holds, which are genuinely about <i>this</i>?" The answers become a gold-standard list per concept, tied to the expert who made it, and the rules are then fitted to the list.`;
   const R = `./review.html?topic=${TOPIC}`;
   const sc = [
@@ -112,9 +100,31 @@ function draw(){
   const ctl = Object.entries(M.control || {}), comp = ctl.reduce((a, [, v]) => a + v.compared, 0), agree = ctl.reduce((a, [, v]) => a + v.binary_agree, 0);
   const worst = ctl.filter(([, v]) => v.compared > 50).sort((a, b) => a[1].binary_agree / a[1].compared - b[1].binary_agree / b[1].compared)[0];
   document.getElementById('ctrl').innerHTML = comp ? `Positive control: the ${ctl.length} live columns were re-scored from the stored counts and compared with the production extraction, paper by paper. ${fmt(agree)} of ${fmt(comp)} decisions agree (${(100 * agree / comp).toFixed(2)}%); the weakest column is ${esc(worst[0])} at ${(100 * worst[1].binary_agree / worst[1].compared).toFixed(2)}%. The page and the extractor are doing the same sum.` : 'Positive control not run yet.';
-  document.getElementById('found').innerHTML = [['7,781', 'papers mention a d_fisheries keyword'], ['2,581', 'qualify under the live rule'], ['1,905', 'within 0.5 of the line'], ['73.7% / 54.4%', 'precision / recall against Fable silver (n = 1,602)'], ['44', 'Fable-IN papers no keyword reaches'], ['1,146', 'decisions in 40 columns that hinge on half-to-even rounding']].map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('');
+  drawFindings(M);
   drawTable();
   document.getElementById('notes').innerHTML = `Scores for proposed rules use the discipline-schema section weights and the proximity filter, which is an assumption made for the mock-up. Snippets are stored for ${M.featured.length} featured rules only; the rest open with keyword chips and counts.`;
+}
+/* The hub's findings, computed by build_topic_review_pages.py for the discipline column against Fable's
+   reading of the corpus sample (silver labels, not expert). Until 2026-10-07 these were the fisheries
+   numbers typed in by hand from the 2026-09-19 run; now every topic gets its own. */
+function drawFindings(M){
+  const disc = M.overview.find(o => o.id === M.topic.discipline) || M.overview[0], sv = disc && disc.silver, el = document.getElementById('findings');
+  if (!disc || !sv){ el.innerHTML = `<h2>What the build found</h2><p class="lede">No Fable-read papers for <code>${esc(disc ? disc.id : '')}</code>, so there is nothing to compare the rule against yet.</p>`; return; }
+  const pc = x => x === null || x === undefined ? '–' : (100 * x).toFixed(1) + '%', rate = (a, b) => b ? Math.round(100 * a / b) + '%' : '–';
+  const R = `./review.html?topic=${TOPIC}&rule=${encodeURIComponent(disc.id)}`;
+  const kv = [[fmt(disc.papers_with_hit), `papers mention a ${esc(disc.id)} keyword`], [fmt(disc.papers_in), 'qualify under the live rule'], [fmt(disc.margin), 'within 0.5 of the line'],
+    [`${pc(sv.precision)} / ${pc(sv.recall)}`, `precision / recall against Fable silver (n = ${fmt(sv.n)})`], [fmt(sv.unreach), 'Fable-IN papers no keyword reaches'],
+    [sv.solo_term ? fmt(sv.solo_n) : '–', sv.solo_term ? `qualify on <i>${esc(sv.solo_term)}</i> alone` : 'no single-keyword qualifiers']];
+  const topBad = sv.top_n && sv.top_in / sv.top_n < 0.9, botBad = sv.bottom_n && sv.bottom_in / sv.bottom_n > 0.2;
+  el.innerHTML = `<h2>What the build found (${esc(M.built)}, <code>${esc(disc.id)}</code>)</h2>
+  <div class="kv">${kv.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div>
+  <ol class="lede">
+  <li><b>${topBad ? 'Neither end of the list is safe to assume.' : botBad ? 'The top of the list is safe to assume; the bottom is not.' : 'Both ends of the list look safe to assume.'}</b> Among papers Fable has read, ${rate(sv.top_in, sv.top_n)} of the ${fmt(sv.top_n)} scoring ${sv.top_score} or more are ${esc(M.topic.title.toLowerCase())} papers by its reading, and so are ${rate(sv.bottom_in, sv.bottom_n)} of the ${fmt(sv.bottom_n)} that mention a keyword but score under 0.5. ${botBad ? '"Everything below this is OUT" would be wrong for about ' + (sv.bottom_in / sv.bottom_n < 0.3 ? 'one paper in four' : sv.bottom_in / sv.bottom_n < 0.45 ? 'two papers in five' : 'half the papers') + ', if Fable is right.' : ''} The spot checks in the margin queue exist to settle that with an expert's eyes.</li>
+  <li><b>The margin is ${disc.margin > 1000 ? 'wide' : disc.margin > 300 ? 'moderate' : 'narrow'}.</b> ${fmt(disc.margin)} papers sit within half a point of the line: read exhaustively at four a minute that is ${(disc.margin / 240).toFixed(1)} hours for this one column. ${disc.margin > 500 ? 'A stratified sample of a few hundred is enough to fit and measure the rule; an exhaustive pass only makes sense where the corrected list is itself the product.' : 'That is small enough to read in full.'}</li>
+  <li><b>Single keywords ${sv.solo_term && sv.solo_fable_n >= 5 && sv.solo_fable_in / sv.solo_fable_n < 0.5 ? 'do real damage and the page shows which' : 'are worth checking one by one'}.</b> ${sv.solo_term ? `<i>${esc(sv.solo_term)}</i> alone tips ${fmt(sv.solo_n)} papers over the line` + (sv.solo_fable_n ? `; of the ${fmt(sv.solo_fable_n)} Fable read, ${fmt(sv.solo_fable_n - sv.solo_fable_in)} are not ${esc(M.topic.title.toLowerCase())} papers` : '; Fable has read none of them') + '.' : 'No paper qualifies on one keyword alone.'} The Rule tab shows which papers each keyword alone lets through.</li>
+  <li><b>The search finds the best rule for the labels in under a second.</b> On the ${fmt(sv.n)} Fable-read papers the live rule scores F1 ${pc(sv.f1)} (precision ${pc(sv.precision)}, recall ${pc(sv.recall)}; ${fmt(sv.fp)} false positives, ${fmt(sv.fn)} false negatives of which ${fmt(sv.unreach)} never mention a keyword). The <a href="${R}&panel=opt">Optimiser tab</a> fits a rule to those labels and reports the held-out figure. These are silver labels, so treat the size of any gain as indicative and the mechanism as proven.</li>
+  <li><b>Text the section labeller cannot place is ignored entirely</b> (weight 0), which is why papers that mention keywords can still score 0. Raising that weight was the second-best single change the search found on the fisheries labels (+4.5 points of F1); the Optimiser tab tries it for this topic too.</li>
+  </ol>`;
 }
 function drawTable(){
   const M = window.TR_META, F = new Set(M.featured);
@@ -123,7 +133,7 @@ function drawTable(){
   const max = Math.max(...rows.map(r => r.papers_with_hit));
   const cols = [['label', 'rule', 0], ['threshold', 'thr', 1], ['n_terms', 'keywords', 1], ['n_anchors', 'anchors', 1], ['papers_with_hit', 'papers with a mention', 1], ['papers_in', 'qualify', 1], ['margin', 'margin', 1], ['anchor_gate_fails', 'fail anchor gate', 1], ['fable_in', 'Fable IN', 1], ['mins', 'est. minutes', 1]];
   const headRow = cs => `<tr class="hdr">${cs.map(c => `<th class="${c[2] ? 'n' : ''}" data-k="${c[0]}">${c[1]}</th>`).join('')}<th>champion</th><th>checker</th></tr>`;
-  let html = headRow(cols), g = null;
+  let html = sortKey ? headRow(cols) : '', g = null;   // grouped view: each group row is followed by its own header row
   for (const r of rows){
     if (!sortKey && r.group !== g){ g = r.group;
       html += `<tr class="grp"><td colspan="12">${esc(g)}</td></tr>` + headRow(cols); }

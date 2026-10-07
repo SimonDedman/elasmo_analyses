@@ -13,6 +13,9 @@
   "threshold": 3,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 1567,
   "papers_in": 347,
   "margin": 130,
@@ -36,7 +39,26 @@
    "7": 14
   },
   "fable_in": 159,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 64,
+   "fp": 19,
+   "fn": 62,
+   "unreach": 16,
+   "precision": 0.7710843373493976,
+   "recall": 0.5079365079365079,
+   "f1": 0.6124401913875598,
+   "top_score": 10,
+   "top_n": 31,
+   "top_in": 31,
+   "bottom_n": 30,
+   "bottom_in": 11,
+   "solo_term": "climate change",
+   "solo_n": 205,
+   "solo_fable_n": 48,
+   "solo_fable_in": 33
+  }
  },
  {
   "id": "pr_habitat_loss",
@@ -54,6 +76,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 1642,
   "papers_in": 522,
   "margin": 311,
@@ -75,7 +100,26 @@
    "10": 5
   },
   "fable_in": 105,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 30,
+   "fp": 69,
+   "fn": 60,
+   "unreach": 29,
+   "precision": 0.30303030303030304,
+   "recall": 0.3333333333333333,
+   "f1": 0.31746031746031744,
+   "top_score": 10,
+   "top_n": 5,
+   "top_in": 3,
+   "bottom_n": 20,
+   "bottom_in": 8,
+   "solo_term": "dredg*",
+   "solo_n": 153,
+   "solo_fable_n": 13,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "pr_invasive",
@@ -91,6 +135,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 205,
   "papers_in": 176,
   "margin": 128,
@@ -111,7 +158,26 @@
    "5": 3
   },
   "fable_in": 26,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 6,
+   "fp": 28,
+   "fn": 16,
+   "unreach": 13,
+   "precision": 0.17647058823529413,
+   "recall": 0.2727272727272727,
+   "f1": 0.21428571428571427,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 6,
+   "bottom_in": 2,
+   "solo_term": "invasive species",
+   "solo_n": 103,
+   "solo_fable_n": 24,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "pr_cumulative",
@@ -128,6 +194,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 246,
   "papers_in": 52,
   "margin": 34,
@@ -144,7 +213,26 @@
    "15": 1
   },
   "fable_in": 36,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 2,
+   "fp": 3,
+   "fn": 22,
+   "unreach": 18,
+   "precision": 0.4,
+   "recall": 0.08333333333333333,
+   "f1": 0.13793103448275862,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 3,
+   "bottom_in": 1,
+   "solo_term": "synergistic",
+   "solo_n": 28,
+   "solo_fable_n": 2,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "pr_seabed_disturbance",
@@ -164,6 +252,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 17,
   "papers_in": 12,
   "margin": 10,
@@ -175,7 +266,26 @@
    "2": 2
   },
   "fable_in": 20,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 2,
+   "fp": 1,
+   "fn": 14,
+   "unreach": 14,
+   "precision": 0.6666666666666666,
+   "recall": 0.125,
+   "f1": 0.21052631578947367,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "sediment resuspension",
+   "solo_n": 6,
+   "solo_fable_n": 2,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "imp_abundance",
@@ -199,6 +309,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 6,
+  "proximity": true,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 5205,
   "papers_in": 2021,
   "margin": 838,
@@ -222,7 +335,26 @@
    "12": 37
   },
   "fable_in": 355,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 150,
+   "fp": 130,
+   "fn": 180,
+   "unreach": 88,
+   "precision": 0.5357142857142857,
+   "recall": 0.45454545454545453,
+   "f1": 0.49180327868852464,
+   "top_score": 10,
+   "top_n": 43,
+   "top_in": 37,
+   "bottom_n": 129,
+   "bottom_in": 25,
+   "solo_term": "abundance",
+   "solo_n": 1486,
+   "solo_fable_n": 208,
+   "solo_fable_in": 110
+  }
  },
  {
   "id": "imp_biomass",
@@ -251,6 +383,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 11,
+  "proximity": true,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 1304,
   "papers_in": 428,
   "margin": 196,
@@ -274,7 +409,26 @@
    "13": 4
   },
   "fable_in": 81,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 32,
+   "fp": 23,
+   "fn": 44,
+   "unreach": 28,
+   "precision": 0.5818181818181818,
+   "recall": 0.42105263157894735,
+   "f1": 0.48854961832061067,
+   "top_score": 10,
+   "top_n": 12,
+   "top_in": 10,
+   "bottom_n": 35,
+   "bottom_in": 5,
+   "solo_term": "biomass",
+   "solo_n": 391,
+   "solo_fable_n": 52,
+   "solo_fable_in": 29
+  }
  },
  {
   "id": "imp_distribution",
@@ -291,6 +445,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 128,
   "papers_in": 72,
   "margin": 67,
@@ -307,7 +464,26 @@
    "11": 1
   },
   "fable_in": 196,
-  "gold": 6
+  "gold": 6,
+  "silver": {
+   "n": 1941,
+   "tp": 8,
+   "fp": 8,
+   "fn": 173,
+   "unreach": 166,
+   "precision": 0.5,
+   "recall": 0.04419889502762431,
+   "f1": 0.08121827411167512,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 5,
+   "bottom_in": 3,
+   "solo_term": "habitat shift",
+   "solo_n": 25,
+   "solo_fable_n": 8,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "imp_habitat_quality",
@@ -323,6 +499,9 @@
   "threshold": 2,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 370,
   "papers_in": 116,
   "margin": 46,
@@ -346,7 +525,26 @@
    "8": 6
   },
   "fable_in": 53,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 19,
+   "fp": 14,
+   "fn": 29,
+   "unreach": 22,
+   "precision": 0.5757575757575758,
+   "recall": 0.3958333333333333,
+   "f1": 0.4691358024691358,
+   "top_score": 10,
+   "top_n": 14,
+   "top_in": 10,
+   "bottom_n": 9,
+   "bottom_in": 4,
+   "solo_term": "habitat suitability",
+   "solo_n": 83,
+   "solo_fable_n": 25,
+   "solo_fable_in": 14
+  }
  },
  {
   "id": "imp_community_composition",
@@ -369,6 +567,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 4,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 1246,
   "papers_in": 364,
   "margin": 209,
@@ -392,7 +593,26 @@
    "10": 3
   },
   "fable_in": 148,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 41,
+   "fp": 17,
+   "fn": 99,
+   "unreach": 63,
+   "precision": 0.7068965517241379,
+   "recall": 0.29285714285714287,
+   "f1": 0.41414141414141414,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 22,
+   "bottom_in": 5,
+   "solo_term": "species composition",
+   "solo_n": 227,
+   "solo_fable_n": 27,
+   "solo_fable_in": 15
+  }
  },
  {
   "id": "imp_biodiversity",
@@ -420,6 +640,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 6,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 3569,
   "papers_in": 1070,
   "margin": 545,
@@ -443,7 +666,26 @@
    "14": 11
   },
   "fable_in": 169,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 64,
+   "fp": 131,
+   "fn": 97,
+   "unreach": 42,
+   "precision": 0.3282051282051282,
+   "recall": 0.39751552795031053,
+   "f1": 0.35955056179775274,
+   "top_score": 10,
+   "top_n": 35,
+   "top_in": 20,
+   "bottom_n": 176,
+   "bottom_in": 15,
+   "solo_term": "extinction*",
+   "solo_n": 644,
+   "solo_fable_n": 122,
+   "solo_fable_in": 27
+  }
  },
  {
   "id": "imp_size_structure",
@@ -471,6 +713,9 @@
   "threshold": 2,
   "n_terms": 9,
   "n_anchors": 5,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 2478,
   "papers_in": 685,
   "margin": 383,
@@ -494,7 +739,26 @@
    "11": 4
   },
   "fable_in": 281,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 63,
+   "fp": 18,
+   "fn": 197,
+   "unreach": 123,
+   "precision": 0.7777777777777778,
+   "recall": 0.2423076923076923,
+   "f1": 0.36950146627565983,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 3,
+   "bottom_n": 26,
+   "bottom_in": 11,
+   "solo_term": "maximum length",
+   "solo_n": 73,
+   "solo_fable_n": 9,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "imp_productivity",
@@ -523,6 +787,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 8,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 3448,
   "papers_in": 1051,
   "margin": 598,
@@ -546,7 +813,26 @@
    "10": 13
   },
   "fable_in": 67,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 28,
+   "fp": 121,
+   "fn": 28,
+   "unreach": 9,
+   "precision": 0.18791946308724833,
+   "recall": 0.5,
+   "f1": 0.2731707317073171,
+   "top_score": 10,
+   "top_n": 12,
+   "top_in": 8,
+   "bottom_n": 77,
+   "bottom_in": 7,
+   "solo_term": "productivity",
+   "solo_n": 423,
+   "solo_fable_n": 77,
+   "solo_fable_in": 5
+  }
  },
  {
   "id": "d_conservation",
@@ -568,6 +854,9 @@
   "threshold": 3,
   "n_terms": 9,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 8085,
   "papers_in": 3716,
   "margin": 897,
@@ -591,6 +880,25 @@
    "12": 105
   },
   "fable_in": 957,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 628,
+   "fp": 83,
+   "fn": 270,
+   "unreach": 76,
+   "precision": 0.8832630098452883,
+   "recall": 0.6993318485523385,
+   "f1": 0.7806090739589807,
+   "top_score": 10,
+   "top_n": 359,
+   "top_in": 347,
+   "bottom_n": 87,
+   "bottom_in": 45,
+   "solo_term": "conservation",
+   "solo_n": 469,
+   "solo_fable_n": 55,
+   "solo_fable_in": 39
+  }
  }
 ]

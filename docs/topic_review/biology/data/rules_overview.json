@@ -29,6 +29,9 @@
   "threshold": 2,
   "n_terms": 9,
   "n_anchors": 9,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 2321,
   "papers_in": 983,
   "margin": 344,
@@ -52,7 +55,26 @@
    "12": 32
   },
   "fable_in": 124,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 66,
+   "fp": 32,
+   "fn": 55,
+   "unreach": 29,
+   "precision": 0.673469387755102,
+   "recall": 0.5454545454545454,
+   "f1": 0.6027397260273972,
+   "top_score": 10,
+   "top_n": 21,
+   "top_in": 17,
+   "bottom_n": 38,
+   "bottom_in": 1,
+   "solo_term": "growth rate",
+   "solo_n": 144,
+   "solo_fable_n": 14,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "imp_size_structure",
@@ -80,6 +102,9 @@
   "threshold": 2,
   "n_terms": 9,
   "n_anchors": 5,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 2478,
   "papers_in": 685,
   "margin": 383,
@@ -103,7 +128,26 @@
    "11": 4
   },
   "fable_in": 281,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 63,
+   "fp": 18,
+   "fn": 197,
+   "unreach": 123,
+   "precision": 0.7777777777777778,
+   "recall": 0.2423076923076923,
+   "f1": 0.36950146627565983,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 3,
+   "bottom_n": 26,
+   "bottom_in": 11,
+   "solo_term": "maximum length",
+   "solo_n": 73,
+   "solo_fable_n": 9,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "d_biology",
@@ -136,6 +180,9 @@
   "threshold": 2,
   "n_terms": 20,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 7836,
   "papers_in": 3970,
   "margin": 1596,
@@ -159,6 +206,25 @@
    "11": 68
   },
   "fable_in": 617,
-  "gold": 6
+  "gold": 6,
+  "silver": {
+   "n": 1941,
+   "tp": 301,
+   "fp": 195,
+   "fn": 242,
+   "unreach": 112,
+   "precision": 0.6068548387096774,
+   "recall": 0.5543278084714549,
+   "f1": 0.5794032723772858,
+   "top_score": 10,
+   "top_n": 73,
+   "top_in": 66,
+   "bottom_n": 49,
+   "bottom_in": 21,
+   "solo_term": "total length",
+   "solo_n": 467,
+   "solo_fable_n": 68,
+   "solo_fable_in": 15
+  }
  }
 ]

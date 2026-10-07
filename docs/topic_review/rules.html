@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All rules, all topics</title>
+<style>
+:root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.10);--seq:#2a78d6;--warn:#eda100;--good:#1baf7a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500;--good:#199e70}}
+:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500;--good:#199e70}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1800px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}
+p{margin:6px 0}.lede{color:var(--ink2);max-width:960px}
+a{color:inherit}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:12px 0;font-size:13px;color:var(--ink2)}
+.bar input[type=search]{font:inherit;padding:5px 9px;border:1px solid var(--axis);border-radius:7px;background:var(--surface);color:var(--ink);min-width:260px}
+.bar select{font:inherit;padding:4px 6px;border:1px solid var(--axis);border-radius:7px;background:var(--surface);color:var(--ink)}
+.bar label{display:flex;gap:4px;align-items:center}
+.tablewrap{overflow:auto;border:1px solid var(--border);border-radius:10px;background:var(--surface);max-height:calc(100vh - 230px)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{text-align:left;padding:4px 7px;border-bottom:1px solid var(--grid);vertical-align:top}
+th{position:sticky;top:0;z-index:1;background:var(--surface);color:var(--ink2);font-weight:600;cursor:pointer;white-space:normal;vertical-align:bottom}
+th.on{color:var(--ink)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.kw{white-space:normal;min-width:260px;max-width:520px;color:var(--ink2);line-height:1.35}
+td.kw b{color:var(--ink);font-weight:600}
+td.kw .anch{color:var(--seq)}
+td.kw .mean{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+td.id{white-space:nowrap}
+td.id a{text-decoration:none}
+.chip{font-size:10.5px;border-radius:4px;padding:0 5px;background:var(--grid);color:var(--ink2);margin-left:4px;white-space:nowrap}
+.chip.disc{background:var(--seq);color:#fff}
+.chip.prop{background:var(--warn);color:#0b0b0b}
+.champ{font-weight:700;color:var(--warn)}
+tr.topic td{background:var(--page);font-weight:650;color:var(--ink2);padding-top:8px}
+tr.topic td a{text-decoration:none}
+.muted{color:var(--muted)}
+.note{font-size:13px;color:var(--ink2);border-left:3px solid var(--warn);padding:6px 10px;margin:12px 0;background:var(--surface)}
+</style>
+</head>
+<body><div class="wrap">
+<p class="lede" style="margin:0 0 6px"><a href="./index.html">Topic review</a> › All rules</p>
+<h1>Every rule in every topic</h1>
+<p class="lede">The live extraction columns and the champions' proposed rules, with the keywords and anchors each one counts, its threshold, how many papers it touches, and how far it agrees with Fable's reading of the corpus sample (silver labels, not expert). A column that belongs to several topics is listed under each; the counts are the same. The <b>Source</b> column opens the line of the extractor that defines a live column, or the workbook a proposed rule came from.</p>
+<div class="bar">
+  <input id="q" type="search" placeholder="filter: topic, rule, keyword, anchor…">
+  <label>kind <select id="kind"><option value="">all</option><option value="live">live columns</option><option value="proposed">proposed rules</option></select></label>
+  <label>schema <select id="prefix"><option value="">all</option></select></label>
+  <label><input type="checkbox" id="byTopic" checked> group by topic</label>
+  <label><input type="checkbox" id="distinct"> each column once</label>
+  <span id="count"></span>
+</div>
+<div class="tablewrap"><table id="t"></table></div>
+<p class="lede" id="gen" style="font-size:12.5px"></p>
+<script src="./topics.js"></script>
+<script src="./rules.js"></script>
+<script>
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => n === undefined || n === null ? '–' : Number(n).toLocaleString('en-GB');
+const pct = x => x === undefined || x === null ? '<span class="muted">–</span>' : (100 * x).toFixed(0) + '%';
+const champ = c => { const s = esc(c || '(unassigned)'); return /unassigned/i.test(s) ? `<span class="muted">${s}</span>` : `<span class="champ">${s}</span>`; };
+const D = window.TR_RULES || {rows: []}, ROWS = D.rows;
+const COLS = [['id', 'rule', 0], ['kw', 'keywords (anchors in blue; case-sensitive in bold)', 0], ['threshold', 'thr', 1], ['proximity', 'prox', 0],
+  ['papers_with_hit', 'papers with a mention', 1], ['papers_in', 'qualify', 1], ['margin', 'margin', 1], ['fable_in', 'Fable IN', 1],
+  ['precision', 'precision', 1], ['recall', 'recall', 1], ['f1', 'F1', 1], ['unreach', 'unreachable', 1], ['source', 'source', 0]];
+let sortKey = null, sortDir = 1;
+for (const p of [...new Set(ROWS.map(r => r.prefix))].sort()) document.getElementById('prefix').insertAdjacentHTML('beforeend', `<option value="${esc(p)}">${esc(p)}</option>`);
+const $ = s => document.querySelector(s);
+function draw(){
+  const q = $('#q').value.trim().toLowerCase(), kind = $('#kind').value, prefix = $('#prefix').value, byTopic = $('#byTopic').checked && !sortKey, distinct = $('#distinct').checked;
+  let rows = ROWS.filter(r => (!kind || r.kind === kind) && (!prefix || r.prefix === prefix)
+    && (!q || [r.topic, r.topic_title, r.id, r.label, r.meaning, ...r.terms, ...r.anchors].join(' ').toLowerCase().includes(q)));
+  if (distinct){ const seen = new Set(); rows = rows.filter(r => !seen.has(r.id) && seen.add(r.id)); }
+  rows.sort((a, b) => a.order - b.order || (a.kind === b.kind ? 0 : a.kind === 'live' ? -1 : 1) || (b.discipline - a.discipline) || a.id.localeCompare(b.id));
+  if (sortKey){ const k = sortKey; rows.sort((a, b) => { let x = a[k], y = b[k]; if (k === 'kw') { x = a.terms.join(); y = b.terms.join(); } if (k === 'source') { x = a.source.label; y = b.source.label; }
+    if (x === null || x === undefined) return 1; if (y === null || y === undefined) return -1; return (x > y ? 1 : x < y ? -1 : 0) * sortDir; }); }
+  const head = `<tr>${COLS.map(c => `<th class="${c[2] ? 'n' : ''} ${sortKey === c[0] ? 'on' : ''}" data-k="${c[0]}">${c[1]}${sortKey === c[0] ? (sortDir > 0 ? ' ▲' : ' ▼') : ''}</th>`).join('')}</tr>`;
+  let html = head, t = null;
+  for (const r of rows){
+    if (byTopic && r.topic !== t){ t = r.topic; html += `<tr class="topic"><td colspan="${COLS.length}"><a href="./hub.html?topic=${esc(r.topic)}">${esc(r.topic_title)}</a> <span class="muted">(${esc(r.group)})</span> · champion: ${champ(r.champion)}</td></tr>`; }
+    const kw = r.terms.map(x => r.cs && r.cs.includes(x) ? `<b>${esc(x)}</b>` : esc(x)).join(', ') + (r.anchors.length ? `<br><span class="anch">anchors: ${esc(r.anchors.join(', '))}</span>` : '') + (r.meaning ? `<span class="mean">${esc(r.meaning)}</span>` : '');
+    html += `<tr><td class="id"><a href="./review.html?topic=${esc(r.topic)}&rule=${encodeURIComponent(r.id)}" title="${esc(r.label)}">${esc(r.id)}</a>${r.discipline ? '<span class="chip disc">discipline</span>' : ''}${r.kind === 'proposed' ? '<span class="chip prop">proposed</span>' : ''}${r.featured ? '<span class="chip">quotations</span>' : ''}${!byTopic && !distinct ? `<span class="chip">${esc(r.topic)}</span>` : ''}</td>
+      <td class="kw">${kw}</td><td class="n">${r.threshold}</td><td>${r.proximity ? 'on' : ''}</td>
+      <td class="n">${fmt(r.papers_with_hit)}</td><td class="n">${fmt(r.papers_in)}</td><td class="n">${fmt(r.margin)}</td><td class="n">${r.kind === 'live' ? fmt(r.fable_in) : ''}</td>
+      <td class="n">${pct(r.precision)}</td><td class="n">${pct(r.recall)}</td><td class="n">${pct(r.f1)}</td><td class="n">${r.unreach === null || r.unreach === undefined ? '<span class="muted">–</span>' : fmt(r.unreach)}</td>
+      <td>${r.source && r.source.url ? `<a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.label || 'source')}</a>` : `<span class="muted">${esc(r.source && r.source.label || '')}</span>`}</td></tr>`;
+  }
+  $('#t').innerHTML = html;
+  $('#count').textContent = `${rows.length} rows of ${ROWS.length}; ${new Set(rows.map(r => r.id)).size} distinct rules`;
+  $('#t').querySelectorAll('th[data-k]').forEach(th => th.onclick = () => { const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (['id', 'kw', 'source', 'proximity'].includes(k) ? 1 : -1); sortKey = k; draw(); });
+}
+['q', 'kind', 'prefix', 'byTopic', 'distinct'].forEach(id => $('#' + id).addEventListener('input', draw));
+draw();
+document.getElementById('gen').innerHTML = `Built ${esc(D.generated)} from ${(D.topics || []).length} topics (${D.n_distinct_rules} distinct rules)` + (D.extractor_commit ? `; live-column source lines refer to extractor commit <code>${esc(D.extractor_commit)}</code>` : '') + (D.missing && D.missing.length ? `; <b>not yet built: ${esc(D.missing.join(', '))}</b>` : '') + `. Precision, recall and F1 compare the live rule with Fable's labels on the papers Fable has read; "unreachable" counts Fable-IN papers that mention no keyword of the rule at all. The full keyword reference by schema, with notes, is <a href="../schema_proposals/extraction_review_reference.html">extraction_review_reference</a>.`;
+</script>
+</div></body></html>

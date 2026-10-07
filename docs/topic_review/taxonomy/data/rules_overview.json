@@ -21,6 +21,9 @@
   "threshold": 1,
   "n_terms": 11,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 5175,
   "papers_in": 3418,
   "margin": 2475,
@@ -44,6 +47,25 @@
    "13": 12
   },
   "fable_in": 590,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 239,
+   "fp": 193,
+   "fn": 317,
+   "unreach": 215,
+   "precision": 0.5532407407407407,
+   "recall": 0.42985611510791366,
+   "f1": 0.4838056680161943,
+   "top_score": 10,
+   "top_n": 36,
+   "top_in": 34,
+   "bottom_n": 84,
+   "bottom_in": 58,
+   "solo_term": "taxonom*",
+   "solo_n": 1411,
+   "solo_fable_n": 216,
+   "solo_fable_in": 89
+  }
  }
 ]

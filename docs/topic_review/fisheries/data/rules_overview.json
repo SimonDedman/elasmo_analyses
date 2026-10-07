@@ -15,6 +15,9 @@
   "threshold": 3,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 5237,
   "papers_in": 1832,
   "margin": 598,
@@ -38,7 +41,26 @@
    "14": 20
   },
   "fable_in": 604,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 214,
+   "fp": 61,
+   "fn": 346,
+   "unreach": 164,
+   "precision": 0.7781818181818182,
+   "recall": 0.3821428571428571,
+   "f1": 0.5125748502994011,
+   "top_score": 10,
+   "top_n": 49,
+   "top_in": 43,
+   "bottom_n": 50,
+   "bottom_in": 26,
+   "solo_term": "exploitation",
+   "solo_n": 163,
+   "solo_fable_n": 12,
+   "solo_fable_in": 6
+  }
  },
  {
   "id": "pr_fishing_artisanal",
@@ -55,6 +77,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 2046,
   "papers_in": 973,
   "margin": 392,
@@ -78,7 +103,26 @@
    "13": 7
   },
   "fable_in": 302,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 166,
+   "fp": 30,
+   "fn": 125,
+   "unreach": 45,
+   "precision": 0.8469387755102041,
+   "recall": 0.570446735395189,
+   "f1": 0.6817248459958933,
+   "top_score": 10,
+   "top_n": 37,
+   "top_in": 36,
+   "bottom_n": 27,
+   "bottom_in": 18,
+   "solo_term": "artisanal",
+   "solo_n": 583,
+   "solo_fable_n": 103,
+   "solo_fable_in": 83
+  }
  },
  {
   "id": "pr_fishing_recreational",
@@ -98,6 +142,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 1729,
   "papers_in": 732,
   "margin": 293,
@@ -121,7 +168,26 @@
    "14": 8
   },
   "fable_in": 147,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 63,
+   "fp": 26,
+   "fn": 59,
+   "unreach": 28,
+   "precision": 0.7078651685393258,
+   "recall": 0.5163934426229508,
+   "f1": 0.5971563981042655,
+   "top_score": 10,
+   "top_n": 26,
+   "top_in": 24,
+   "bottom_n": 13,
+   "bottom_in": 5,
+   "solo_term": "recreational fish*",
+   "solo_n": 151,
+   "solo_fable_n": 16,
+   "solo_fable_in": 14
+  }
  },
  {
   "id": "pr_fishing_iuu",
@@ -139,6 +205,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 1232,
   "papers_in": 420,
   "margin": 194,
@@ -162,7 +231,26 @@
    "14": 2
   },
   "fable_in": 92,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 37,
+   "fp": 40,
+   "fn": 38,
+   "unreach": 18,
+   "precision": 0.4805194805194805,
+   "recall": 0.49333333333333335,
+   "f1": 0.48684210526315785,
+   "top_score": 10,
+   "top_n": 5,
+   "top_in": 3,
+   "bottom_n": 22,
+   "bottom_in": 9,
+   "solo_term": "unregulated",
+   "solo_n": 50,
+   "solo_fable_n": 12,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "pr_bycatch",
@@ -180,6 +268,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 4550,
   "papers_in": 2466,
   "margin": 860,
@@ -203,7 +294,26 @@
    "13": 28
   },
   "fable_in": 491,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 276,
+   "fp": 101,
+   "fn": 179,
+   "unreach": 79,
+   "precision": 0.7320954907161804,
+   "recall": 0.6065934065934065,
+   "f1": 0.6634615384615384,
+   "top_score": 10,
+   "top_n": 84,
+   "top_in": 82,
+   "bottom_n": 36,
+   "bottom_in": 21,
+   "solo_term": "bycatch",
+   "solo_n": 945,
+   "solo_fable_n": 179,
+   "solo_fable_in": 130
+  }
  },
  {
   "id": "pr_shark_finning",
@@ -219,6 +329,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 963,
   "papers_in": 818,
   "margin": 348,
@@ -242,7 +355,26 @@
    "11": 6
   },
   "fable_in": 114,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 68,
+   "fp": 67,
+   "fn": 35,
+   "unreach": 30,
+   "precision": 0.5037037037037037,
+   "recall": 0.6601941747572816,
+   "f1": 0.5714285714285714,
+   "top_score": 10,
+   "top_n": 23,
+   "top_in": 20,
+   "bottom_n": 7,
+   "bottom_in": 3,
+   "solo_term": "shark fin*",
+   "solo_n": 283,
+   "solo_fable_n": 42,
+   "solo_fable_in": 15
+  }
  },
  {
   "id": "pr_targeted_fishing",
@@ -258,6 +390,9 @@
   "threshold": 2,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 1350,
   "papers_in": 606,
   "margin": 234,
@@ -281,7 +416,26 @@
    "12": 3
   },
   "fable_in": 265,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 58,
+   "fp": 18,
+   "fn": 186,
+   "unreach": 155,
+   "precision": 0.7631578947368421,
+   "recall": 0.23770491803278687,
+   "f1": 0.3625,
+   "top_score": 10,
+   "top_n": 22,
+   "top_in": 20,
+   "bottom_n": 14,
+   "bottom_in": 3,
+   "solo_term": "shark fish*",
+   "solo_n": 511,
+   "solo_fable_n": 57,
+   "solo_fable_in": 42
+  }
  },
  {
   "id": "pr_discarding",
@@ -298,6 +452,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 3083,
   "papers_in": 1130,
   "margin": 550,
@@ -321,7 +478,26 @@
    "10": 24
   },
   "fable_in": 112,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 76,
+   "fp": 83,
+   "fn": 32,
+   "unreach": 12,
+   "precision": 0.4779874213836478,
+   "recall": 0.7037037037037037,
+   "f1": 0.5692883895131087,
+   "top_score": 10,
+   "top_n": 30,
+   "top_in": 27,
+   "bottom_n": 13,
+   "bottom_in": 6,
+   "solo_term": "discard*",
+   "solo_n": 1070,
+   "solo_fable_n": 149,
+   "solo_fable_in": 69
+  }
  },
  {
   "id": "gear_longline",
@@ -339,6 +515,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 2802,
   "papers_in": 1261,
   "margin": 447,
@@ -362,7 +541,26 @@
    "11": 21
   },
   "fable_in": 328,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 137,
+   "fp": 22,
+   "fn": 182,
+   "unreach": 72,
+   "precision": 0.8616352201257862,
+   "recall": 0.42946708463949845,
+   "f1": 0.5732217573221758,
+   "top_score": 10,
+   "top_n": 46,
+   "top_in": 44,
+   "bottom_n": 66,
+   "bottom_in": 28,
+   "solo_term": "longline",
+   "solo_n": 525,
+   "solo_fable_n": 67,
+   "solo_fable_in": 56
+  }
  },
  {
   "id": "gear_gillnet",
@@ -381,6 +579,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 1798,
   "papers_in": 556,
   "margin": 255,
@@ -404,7 +605,26 @@
    "8": 16
   },
   "fable_in": 319,
-  "gold": 3
+  "gold": 3,
+  "silver": {
+   "n": 1941,
+   "tp": 63,
+   "fp": 8,
+   "fn": 244,
+   "unreach": 140,
+   "precision": 0.8873239436619719,
+   "recall": 0.20521172638436483,
+   "f1": 0.33333333333333337,
+   "top_score": 10,
+   "top_n": 13,
+   "top_in": 12,
+   "bottom_n": 59,
+   "bottom_in": 34,
+   "solo_term": "gillnet",
+   "solo_n": 342,
+   "solo_fable_n": 51,
+   "solo_fable_in": 43
+  }
  },
  {
   "id": "gear_trawl",
@@ -424,6 +644,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 3436,
   "papers_in": 1689,
   "margin": 637,
@@ -447,7 +670,26 @@
    "8": 63
   },
   "fable_in": 353,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 155,
+   "fp": 25,
+   "fn": 185,
+   "unreach": 95,
+   "precision": 0.8611111111111112,
+   "recall": 0.45588235294117646,
+   "f1": 0.5961538461538461,
+   "top_score": 10,
+   "top_n": 51,
+   "top_in": 49,
+   "bottom_n": 66,
+   "bottom_in": 29,
+   "solo_term": "trawl",
+   "solo_n": 459,
+   "solo_fable_n": 58,
+   "solo_fable_in": 44
+  }
  },
  {
   "id": "gear_purse_seine",
@@ -463,6 +705,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 497,
   "papers_in": 282,
   "margin": 223,
@@ -485,7 +730,26 @@
    "7": 2
   },
   "fable_in": 76,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 36,
+   "fp": 7,
+   "fn": 36,
+   "unreach": 17,
+   "precision": 0.8372093023255814,
+   "recall": 0.5,
+   "f1": 0.6260869565217391,
+   "top_score": 10,
+   "top_n": 10,
+   "top_in": 10,
+   "bottom_n": 21,
+   "bottom_in": 9,
+   "solo_term": "purse seine",
+   "solo_n": 193,
+   "solo_fable_n": 28,
+   "solo_fable_in": 24
+  }
  },
  {
   "id": "gear_seine",
@@ -501,6 +765,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 303,
   "papers_in": 210,
   "margin": 145,
@@ -518,7 +785,26 @@
    "15": 1
   },
   "fable_in": 61,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 17,
+   "fp": 3,
+   "fn": 40,
+   "unreach": 29,
+   "precision": 0.85,
+   "recall": 0.2982456140350877,
+   "f1": 0.44155844155844154,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 9,
+   "bottom_in": 6,
+   "solo_term": "beach seine",
+   "solo_n": 88,
+   "solo_fable_n": 8,
+   "solo_fable_in": 7
+  }
  },
  {
   "id": "gear_hook_line",
@@ -537,6 +823,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 1017,
   "papers_in": 201,
   "margin": 159,
@@ -559,7 +848,26 @@
    "13": 1
   },
   "fable_in": 221,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 23,
+   "fp": 1,
+   "fn": 180,
+   "unreach": 107,
+   "precision": 0.9583333333333334,
+   "recall": 0.11330049261083744,
+   "f1": 0.2026431718061674,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 28,
+   "bottom_in": 15,
+   "solo_term": "hook and line",
+   "solo_n": 45,
+   "solo_fable_n": 4,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "gear_trap",
@@ -577,6 +885,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 994,
   "papers_in": 245,
   "margin": 118,
@@ -600,7 +911,26 @@
    "13": 7
   },
   "fable_in": 99,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 17,
+   "fp": 7,
+   "fn": 76,
+   "unreach": 51,
+   "precision": 0.7083333333333334,
+   "recall": 0.1827956989247312,
+   "f1": 0.2905982905982906,
+   "top_score": 10,
+   "top_n": 4,
+   "top_in": 4,
+   "bottom_n": 26,
+   "bottom_in": 4,
+   "solo_term": "trap",
+   "solo_n": 102,
+   "solo_fable_n": 6,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "gear_net_other",
@@ -619,6 +949,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 130,
   "papers_in": 67,
   "margin": 58,
@@ -634,7 +967,26 @@
    "15": 1
   },
   "fable_in": 64,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 5,
+   "fp": 1,
+   "fn": 48,
+   "unreach": 40,
+   "precision": 0.8333333333333334,
+   "recall": 0.09433962264150944,
+   "f1": 0.16949152542372883,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 8,
+   "bottom_in": 3,
+   "solo_term": "weir",
+   "solo_n": 21,
+   "solo_fable_n": 1,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "gear_harpoon",
@@ -650,6 +1002,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 413,
   "papers_in": 222,
   "margin": 207,
@@ -671,7 +1026,26 @@
    "14": 1
   },
   "fable_in": 59,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 11,
+   "fp": 19,
+   "fn": 38,
+   "unreach": 28,
+   "precision": 0.36666666666666664,
+   "recall": 0.22448979591836735,
+   "f1": 0.2784810126582279,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 17,
+   "bottom_in": 7,
+   "solo_term": "spearfish*",
+   "solo_n": 99,
+   "solo_fable_n": 17,
+   "solo_fable_in": 4
+  }
  },
  {
   "id": "gear_dredge",
@@ -690,6 +1064,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 235,
   "papers_in": 132,
   "margin": 127,
@@ -711,7 +1088,26 @@
    "12": 1
   },
   "fable_in": 11,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 1,
+   "fp": 17,
+   "fn": 7,
+   "unreach": 5,
+   "precision": 0.05555555555555555,
+   "recall": 0.125,
+   "f1": 0.07692307692307691,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 4,
+   "bottom_in": 1,
+   "solo_term": "dredge",
+   "solo_n": 116,
+   "solo_fable_n": 18,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "gear_trawl_beam",
@@ -726,6 +1122,9 @@
   "threshold": 1,
   "n_terms": 2,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 133,
   "papers_in": 87,
   "margin": 53,
@@ -746,7 +1145,26 @@
    "8": 1
   },
   "fable_in": 18,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 12,
+   "fp": 3,
+   "fn": 6,
+   "unreach": 5,
+   "precision": 0.8,
+   "recall": 0.6666666666666666,
+   "f1": 0.7272727272727272,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "beam trawl",
+   "solo_n": 70,
+   "solo_fable_n": 14,
+   "solo_fable_in": 12
+  }
  },
  {
   "id": "gear_trawl_otter",
@@ -761,6 +1179,9 @@
   "threshold": 1,
   "n_terms": 2,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 418,
   "papers_in": 318,
   "margin": 258,
@@ -783,7 +1204,26 @@
    "13": 1
   },
   "fable_in": 39,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 19,
+   "fp": 3,
+   "fn": 17,
+   "unreach": 12,
+   "precision": 0.8636363636363636,
+   "recall": 0.5277777777777778,
+   "f1": 0.6551724137931034,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 2,
+   "bottom_in": 1,
+   "solo_term": "otter trawl",
+   "solo_n": 287,
+   "solo_fable_n": 20,
+   "solo_fable_in": 18
+  }
  },
  {
   "id": "gear_survey",
@@ -807,6 +1247,9 @@
   "threshold": 2,
   "n_terms": 11,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 1052,
   "papers_in": 280,
   "margin": 135,
@@ -830,7 +1273,26 @@
    "14": 2
   },
   "fable_in": 431,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 46,
+   "fp": 7,
+   "fn": 369,
+   "unreach": 305,
+   "precision": 0.8679245283018868,
+   "recall": 0.1108433734939759,
+   "f1": 0.19658119658119658,
+   "top_score": 10,
+   "top_n": 16,
+   "top_in": 16,
+   "bottom_n": 21,
+   "bottom_in": 15,
+   "solo_term": "BRUVs",
+   "solo_n": 64,
+   "solo_fable_n": 14,
+   "solo_fable_in": 12
+  }
  },
  {
   "id": "gear_pelagic",
@@ -846,6 +1308,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 646,
   "papers_in": 350,
   "margin": 237,
@@ -869,7 +1334,26 @@
    "12": 3
   },
   "fable_in": 116,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 34,
+   "fp": 9,
+   "fn": 78,
+   "unreach": 57,
+   "precision": 0.7906976744186046,
+   "recall": 0.30357142857142855,
+   "f1": 0.4387096774193548,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 3,
+   "bottom_n": 26,
+   "bottom_in": 10,
+   "solo_term": "pelagic longline",
+   "solo_n": 290,
+   "solo_fable_n": 38,
+   "solo_fable_in": 29
+  }
  },
  {
   "id": "gear_demersal",
@@ -886,6 +1370,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 1508,
   "papers_in": 984,
   "margin": 651,
@@ -908,7 +1395,26 @@
    "11": 1
   },
   "fable_in": 327,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 100,
+   "fp": 12,
+   "fn": 220,
+   "unreach": 186,
+   "precision": 0.8928571428571429,
+   "recall": 0.3125,
+   "f1": 0.462962962962963,
+   "top_score": 10,
+   "top_n": 7,
+   "top_in": 7,
+   "bottom_n": 24,
+   "bottom_in": 18,
+   "solo_term": "bottom trawl",
+   "solo_n": 566,
+   "solo_fable_n": 59,
+   "solo_fable_in": 52
+  }
  },
  {
   "id": "gear_artisanal",
@@ -925,6 +1431,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 2363,
   "papers_in": 700,
   "margin": 346,
@@ -948,7 +1457,26 @@
    "11": 8
   },
   "fable_in": 236,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 111,
+   "fp": 35,
+   "fn": 116,
+   "unreach": 32,
+   "precision": 0.7602739726027398,
+   "recall": 0.4889867841409692,
+   "f1": 0.5951742627345844,
+   "top_score": 10,
+   "top_n": 13,
+   "top_in": 12,
+   "bottom_n": 122,
+   "bottom_in": 26,
+   "solo_term": "artisanal",
+   "solo_n": 313,
+   "solo_fable_n": 61,
+   "solo_fable_in": 49
+  }
  },
  {
   "id": "gear_mit_circle_hook",
@@ -963,6 +1491,9 @@
   "threshold": 1,
   "n_terms": 2,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 203,
   "papers_in": 177,
   "margin": 132,
@@ -981,7 +1512,26 @@
    "6": 1
   },
   "fable_in": 67,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 12,
+   "fp": 4,
+   "fn": 49,
+   "unreach": 47,
+   "precision": 0.75,
+   "recall": 0.19672131147540983,
+   "f1": 0.3116883116883117,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 2,
+   "bottom_in": 0,
+   "solo_term": "circle hook",
+   "solo_n": 176,
+   "solo_fable_n": 16,
+   "solo_fable_in": 12
+  }
  },
  {
   "id": "gear_mit_brd",
@@ -998,6 +1548,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 156,
   "papers_in": 74,
   "margin": 56,
@@ -1016,7 +1569,26 @@
    "7": 2
   },
   "fable_in": 31,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 10,
+   "fp": 3,
+   "fn": 17,
+   "unreach": 13,
+   "precision": 0.7692307692307693,
+   "recall": 0.37037037037037035,
+   "f1": 0.5,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 9,
+   "bottom_in": 4,
+   "solo_term": "BRD",
+   "solo_n": 14,
+   "solo_fable_n": 1,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "gear_mit_deterrent",
@@ -1037,6 +1609,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 179,
   "papers_in": 99,
   "margin": 74,
@@ -1057,7 +1632,26 @@
    "7": 1
   },
   "fable_in": 15,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 6,
+   "fp": 7,
+   "fn": 9,
+   "unreach": 8,
+   "precision": 0.46153846153846156,
+   "recall": 0.4,
+   "f1": 0.42857142857142855,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 9,
+   "bottom_in": 0,
+   "solo_term": "Rare Earth",
+   "solo_n": 44,
+   "solo_fable_n": 3,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "gear_mit_time_area",
@@ -1075,6 +1669,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 720,
   "papers_in": 316,
   "margin": 100,
@@ -1098,7 +1695,26 @@
    "13": 4
   },
   "fable_in": 160,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 27,
+   "fp": 37,
+   "fn": 111,
+   "unreach": 82,
+   "precision": 0.421875,
+   "recall": 0.1956521739130435,
+   "f1": 0.26732673267326734,
+   "top_score": 10,
+   "top_n": 24,
+   "top_in": 12,
+   "bottom_n": 33,
+   "bottom_in": 11,
+   "solo_term": "MPA",
+   "solo_n": 298,
+   "solo_fable_n": 58,
+   "solo_fable_in": 24
+  }
  },
  {
   "id": "gear_mit_handling",
@@ -1116,6 +1732,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 524,
   "papers_in": 227,
   "margin": 191,
@@ -1139,7 +1758,26 @@
    "11": 1
   },
   "fable_in": 96,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 31,
+   "fp": 24,
+   "fn": 50,
+   "unreach": 32,
+   "precision": 0.5636363636363636,
+   "recall": 0.38271604938271603,
+   "f1": 0.4558823529411764,
+   "top_score": 10,
+   "top_n": 2,
+   "top_in": 1,
+   "bottom_n": 33,
+   "bottom_in": 11,
+   "solo_term": "post-release mortality",
+   "solo_n": 79,
+   "solo_fable_n": 12,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "gear_mit_weak_hook",
@@ -1155,6 +1793,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 1,
   "papers_in": 1,
   "margin": 0,
@@ -1163,7 +1804,26 @@
    "3": 1
   },
   "fable_in": 1,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 0,
+   "fp": 0,
+   "fn": 1,
+   "unreach": 1,
+   "precision": null,
+   "recall": 0.0,
+   "f1": null,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 0,
+   "bottom_in": 0,
+   "solo_term": null,
+   "solo_n": 0,
+   "solo_fable_n": 0,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "gear_mit_line_weight",
@@ -1182,6 +1842,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 14,
   "papers_in": 12,
   "margin": 7,
@@ -1194,7 +1857,26 @@
    "3": 2
   },
   "fable_in": 3,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 1,
+   "fp": 1,
+   "fn": 2,
+   "unreach": 0,
+   "precision": 0.5,
+   "recall": 0.3333333333333333,
+   "f1": 0.4,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 1,
+   "solo_term": "line weight*",
+   "solo_n": 6,
+   "solo_fable_n": 0,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "gear_mit_setting",
@@ -1212,6 +1894,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 64,
   "papers_in": 37,
   "margin": 35,
@@ -1227,7 +1912,26 @@
    "7": 1
   },
   "fable_in": 11,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 2,
+   "fp": 4,
+   "fn": 4,
+   "unreach": 4,
+   "precision": 0.3333333333333333,
+   "recall": 0.3333333333333333,
+   "f1": 0.3333333333333333,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 3,
+   "bottom_in": 0,
+   "solo_term": "deep set*",
+   "solo_n": 14,
+   "solo_fable_n": 3,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "gear_mit_pinger",
@@ -1245,6 +1949,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 209,
   "papers_in": 113,
   "margin": 80,
@@ -1266,7 +1973,26 @@
    "5": 4
   },
   "fable_in": 2,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 2,
+   "fp": 11,
+   "fn": 0,
+   "unreach": 0,
+   "precision": 0.15384615384615385,
+   "recall": 1.0,
+   "f1": 0.2666666666666667,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 0,
+   "bottom_n": 0,
+   "bottom_in": 0,
+   "solo_term": "PAL",
+   "solo_n": 89,
+   "solo_fable_n": 10,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "gear_mit_illumination",
@@ -1285,6 +2011,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 32,
   "papers_in": 19,
   "margin": 15,
@@ -1299,7 +2028,26 @@
    "6": 2
   },
   "fable_in": 7,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 1,
+   "fp": 0,
+   "fn": 5,
+   "unreach": 4,
+   "precision": 1.0,
+   "recall": 0.16666666666666666,
+   "f1": 0.2857142857142857,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 0,
+   "bottom_in": 0,
+   "solo_term": "lightstick*",
+   "solo_n": 13,
+   "solo_fable_n": 0,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "gear_mit_wire_leader",
@@ -1316,6 +2064,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 139,
   "papers_in": 108,
   "margin": 103,
@@ -1328,7 +2079,26 @@
    "4": 1
   },
   "fable_in": 29,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 6,
+   "fp": 4,
+   "fn": 20,
+   "unreach": 16,
+   "precision": 0.6,
+   "recall": 0.23076923076923078,
+   "f1": 0.33333333333333337,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 3,
+   "bottom_in": 1,
+   "solo_term": "wire leader",
+   "solo_n": 46,
+   "solo_fable_n": 4,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "gear_ghost",
@@ -1349,6 +2119,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "gear_",
+  "meaning": null,
   "papers_with_hit": 60,
   "papers_in": 30,
   "margin": 22,
@@ -1367,7 +2140,26 @@
    "4": 1
   },
   "fable_in": 13,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 1,
+   "fp": 2,
+   "fn": 10,
+   "unreach": 7,
+   "precision": 0.3333333333333333,
+   "recall": 0.09090909090909091,
+   "f1": 0.14285714285714288,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 7,
+   "bottom_in": 3,
+   "solo_term": "ghost fishing",
+   "solo_n": 8,
+   "solo_fable_n": 0,
+   "solo_fable_in": 0
+  }
  },
  {
   "id": "imp_mortality",
@@ -1387,6 +2179,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 2788,
   "papers_in": 1050,
   "margin": 428,
@@ -1410,7 +2205,26 @@
    "14": 18
   },
   "fable_in": 221,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 91,
+   "fp": 53,
+   "fn": 108,
+   "unreach": 53,
+   "precision": 0.6319444444444444,
+   "recall": 0.457286432160804,
+   "f1": 0.5306122448979591,
+   "top_score": 10,
+   "top_n": 26,
+   "top_in": 23,
+   "bottom_n": 70,
+   "bottom_in": 18,
+   "solo_term": "mortality",
+   "solo_n": 826,
+   "solo_fable_n": 111,
+   "solo_fable_in": 67
+  }
  },
  {
   "id": "imp_post_release",
@@ -1427,6 +2241,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 319,
   "papers_in": 178,
   "margin": 162,
@@ -1446,7 +2263,26 @@
    "9": 3
   },
   "fable_in": 73,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 15,
+   "fp": 9,
+   "fn": 47,
+   "unreach": 35,
+   "precision": 0.625,
+   "recall": 0.24193548387096775,
+   "f1": 0.3488372093023256,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 3,
+   "bottom_n": 11,
+   "bottom_in": 7,
+   "solo_term": "post-release mortality",
+   "solo_n": 101,
+   "solo_fable_n": 13,
+   "solo_fable_in": 6
+  }
  },
  {
   "id": "imp_cpue",
@@ -1462,6 +2298,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 1317,
   "papers_in": 1016,
   "margin": 402,
@@ -1485,7 +2324,26 @@
    "8": 25
   },
   "fable_in": 171,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 83,
+   "fp": 28,
+   "fn": 78,
+   "unreach": 64,
+   "precision": 0.7477477477477478,
+   "recall": 0.515527950310559,
+   "f1": 0.6102941176470588,
+   "top_score": 10,
+   "top_n": 34,
+   "top_in": 32,
+   "bottom_n": 12,
+   "bottom_in": 5,
+   "solo_term": "CPUE",
+   "solo_n": 262,
+   "solo_fable_n": 31,
+   "solo_fable_in": 18
+  }
  },
  {
   "id": "d_fisheries",
@@ -1511,6 +2369,9 @@
   "threshold": 2,
   "n_terms": 13,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 5064,
   "papers_in": 2096,
   "margin": 958,
@@ -1534,7 +2395,26 @@
    "14": 28
   },
   "fable_in": 623,
-  "gold": 3
+  "gold": 3,
+  "silver": {
+   "n": 1941,
+   "tp": 261,
+   "fp": 80,
+   "fn": 322,
+   "unreach": 160,
+   "precision": 0.7653958944281525,
+   "recall": 0.44768439108061747,
+   "f1": 0.564935064935065,
+   "top_score": 10,
+   "top_n": 70,
+   "top_in": 67,
+   "bottom_n": 43,
+   "bottom_in": 28,
+   "solo_term": "bycatch",
+   "solo_n": 218,
+   "solo_fable_n": 34,
+   "solo_fable_in": 19
+  }
  },
  {
   "id": "drg_00_spatial_overlap_distribution",
@@ -1563,6 +2443,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 7,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Characterises horizontal distribution of chondrichthyan species.",
   "papers_with_hit": 12078,
   "papers_in": 6164,
   "margin": 2696,
@@ -1586,7 +2469,8 @@
    "11": 123
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_01_encounter_bathymetrical_range",
@@ -1614,6 +2498,9 @@
   "threshold": 2,
   "n_terms": 9,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Vertical distribution of chondrichthyan species.",
   "papers_with_hit": 969,
   "papers_in": 273,
   "margin": 177,
@@ -1637,7 +2524,8 @@
    "14": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_02_encounter_spatio_temporal_distribution",
@@ -1665,6 +2553,9 @@
   "threshold": 2,
   "n_terms": 10,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Spatio-temporal horizontal and/or vertical distribution of chondrichthyan species (including seasonality, diel patterns, and other timings).",
   "papers_with_hit": 620,
   "papers_in": 123,
   "margin": 108,
@@ -1685,7 +2576,8 @@
    "11": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_03_capture_cpue",
@@ -1711,6 +2603,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of catch-per-unit-effort or related fishery-dependent catch metrics as an index of interaction or capture intensity.",
   "papers_with_hit": 1589,
   "papers_in": 802,
   "margin": 210,
@@ -1734,7 +2629,8 @@
    "6": 38
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_04_capture_gear_selectivity",
@@ -1763,6 +2659,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 9,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Evidence that capture depends on gear design or configuration, determining which species or sizes are retained or excluded.",
   "papers_with_hit": 283,
   "papers_in": 50,
   "margin": 30,
@@ -1782,7 +2681,8 @@
    "10": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_05_capture_catchability",
@@ -1815,6 +2715,9 @@
   "threshold": 2,
   "n_terms": 10,
   "n_anchors": 9,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Probability that a species is caught once exposed or encountered, driven by behaviour, morphology, sensory ecology, or gear interaction.",
   "papers_with_hit": 460,
   "papers_in": 99,
   "margin": 65,
@@ -1835,7 +2738,8 @@
    "15": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_06_at_vessel_mortality_avm",
@@ -1864,6 +2768,9 @@
   "threshold": 2,
   "n_terms": 10,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Mortality occurring before release, during hauling, capture, handling, or time on deck or alongside the vessel.",
   "papers_with_hit": 139,
   "papers_in": 61,
   "margin": 21,
@@ -1886,7 +2793,8 @@
    "8": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_07_post_release_mortality_health_assessment_physical",
@@ -1920,6 +2828,9 @@
   "threshold": 2,
   "n_terms": 14,
   "n_anchors": 6,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Assessment of physical impairment at capture or release used as a proxy for subsequent survival.",
   "papers_with_hit": 2700,
   "papers_in": 814,
   "margin": 367,
@@ -1943,7 +2854,8 @@
    "11": 13
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_08_post_release_mortality_health_assessment_behavioural",
@@ -1981,6 +2893,9 @@
   "threshold": 2,
   "n_terms": 18,
   "n_anchors": 6,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Assessment of behavioural impairment at capture or release used as a proxy for subsequent survival.",
   "papers_with_hit": 3575,
   "papers_in": 1284,
   "margin": 611,
@@ -2004,7 +2919,8 @@
    "12": 23
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_09_post_release_mortality_health_assessment_physiologica",
@@ -2045,6 +2961,9 @@
   "threshold": 2,
   "n_terms": 20,
   "n_anchors": 7,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Assessment of physiological impairment at capture or release used as a proxy for subsequent survival.",
   "papers_with_hit": 2343,
   "papers_in": 827,
   "margin": 322,
@@ -2068,7 +2987,8 @@
    "14": 17
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_10_post_release_mortality_prm",
@@ -2098,6 +3018,9 @@
   "threshold": 1,
   "n_terms": 12,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Mortality occurring after release due to injury, physiological stress, predation risk, or delayed effects.",
   "papers_with_hit": 2751,
   "papers_in": 1580,
   "margin": 1153,
@@ -2121,7 +3044,8 @@
    "14": 18
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_11_area_based_tools_permanent_fisheries_restricted_areas",
@@ -2143,6 +3067,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Permanent spatial closures or restricted areas intended to avoid bycatch by excluding fishing from high-risk areas.",
   "papers_with_hit": 57,
   "papers_in": 22,
   "margin": 37,
@@ -2158,7 +3085,8 @@
    "4": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_12_area_based_tools_temporal_fisheries_restricted_areas",
@@ -2179,6 +3107,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Seasonal or temporary spatial closures applied during periods of elevated bycatch risk.",
   "papers_with_hit": 224,
   "papers_in": 104,
   "margin": 156,
@@ -2196,7 +3127,8 @@
    "9": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_13_area_based_tools_quasi_real_time_closures",
@@ -2219,6 +3151,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Rapidly updated closures based on recent observations, forecasts, or risk indicators.",
   "papers_with_hit": 3,
   "papers_in": 2,
   "margin": 3,
@@ -2228,7 +3163,8 @@
    "1": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_14_area_based_tools_move_on_rules",
@@ -2253,6 +3189,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Rules requiring vessels to leave an area after a bycatch event or threshold is reached.",
   "papers_with_hit": 42,
   "papers_in": 18,
   "margin": 34,
@@ -2262,7 +3201,8 @@
    "0": 22
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_15_area_based_tools_time_of_day_restrictions",
@@ -2289,6 +3229,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Restrictions on fishing at certain times of day or night to avoid periods of higher bycatch risk.",
   "papers_with_hit": 17,
   "papers_in": 8,
   "margin": 12,
@@ -2298,7 +3241,8 @@
    "0": 8
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_16_area_based_tools_voluntary_fleet_communication",
@@ -2321,6 +3265,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Fleet-led communication systems sharing bycatch hotspots or recent events to help vessels avoid risky areas.",
   "papers_with_hit": 2,
   "papers_in": 1,
   "margin": 0,
@@ -2330,7 +3277,8 @@
    "0": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_17_limiting_effort_vessel_entry",
@@ -2356,6 +3304,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Restrictions on the number or type of vessels allowed to participate in a fishery.",
   "papers_with_hit": 106,
   "papers_in": 53,
   "margin": 74,
@@ -2370,7 +3321,8 @@
    "5": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_18_limiting_effort_fishing_capability",
@@ -2395,6 +3347,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Limits on vessel size, engine power, hold capacity, or other attributes that determine fishing capacity.",
   "papers_with_hit": 29,
   "papers_in": 19,
   "margin": 21,
@@ -2410,7 +3365,8 @@
    "3": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_19_limiting_effort_fishing_days",
@@ -2434,6 +3390,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Limits on the number of days vessels are allowed to fish.",
   "papers_with_hit": 93,
   "papers_in": 74,
   "margin": 61,
@@ -2449,7 +3408,8 @@
    "5": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_20_limiting_effort_gear_limits",
@@ -2474,6 +3434,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Restrictions on the amount, size, or configuration of fishing gear that can be deployed.",
   "papers_with_hit": 278,
   "papers_in": 184,
   "margin": 170,
@@ -2490,7 +3453,8 @@
    "7": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_21_limiting_effort_soak_duration",
@@ -2511,6 +3475,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Limits on how long gear can remain in the water before retrieval.",
   "papers_with_hit": 361,
   "papers_in": 263,
   "margin": 215,
@@ -2530,7 +3497,8 @@
    "7": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_22_limiting_effort_number_of_fishing_operations",
@@ -2553,6 +3521,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Limits on the number of sets, hauls, or deployments over a defined period.",
   "papers_with_hit": 420,
   "papers_in": 223,
   "margin": 252,
@@ -2570,7 +3541,8 @@
    "6": 3
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_23_limiting_effort_buyback_programmes",
@@ -2592,13 +3564,17 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Programmes that reduce overall effort by purchasing vessels, licenses, or gear out of the fishery.",
   "papers_with_hit": 0,
   "papers_in": 0,
   "margin": 0,
   "anchor_gate_fails": 0,
   "hist": {},
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_24_increase_selectivity_excluder_grids",
@@ -2628,6 +3604,9 @@
   "threshold": 2,
   "n_terms": 11,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Grid devices or equivalent structures that allow non-target organisms to escape while retaining target catch.",
   "papers_with_hit": 82,
   "papers_in": 32,
   "margin": 19,
@@ -2645,7 +3624,8 @@
    "4": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_25_increase_selectivity_mesh_size",
@@ -2667,6 +3647,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Changes in mesh size to alter which species or size classes are retained or escape.",
   "papers_with_hit": 477,
   "papers_in": 113,
   "margin": 74,
@@ -2688,7 +3671,8 @@
    "12": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_26_increase_selectivity_hook_size_type",
@@ -2710,6 +3694,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Changes in hook design, size, or shape to reduce the capture of non-target species.",
   "papers_with_hit": 459,
   "papers_in": 124,
   "margin": 60,
@@ -2732,7 +3719,8 @@
    "13": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_27_increase_selectivity_weak_hooks_or_breakable_gear",
@@ -2754,6 +3742,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Gear components designed to fail or release under the force of larger non-target species.",
   "papers_with_hit": 40,
   "papers_in": 23,
   "margin": 30,
@@ -2766,7 +3757,8 @@
    "3": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_28_increase_selectivity_hook_shielding_devices",
@@ -2788,6 +3780,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Devices that physically shield hooks or bait to reduce unwanted hooking.",
   "papers_with_hit": 4,
   "papers_in": 3,
   "margin": 2,
@@ -2799,7 +3794,8 @@
    "0": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_29_sensory_deterrents_acoustic_deterrents",
@@ -2820,6 +3816,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of sound-emitting devices to deter or alert animals and reduce bycatch interactions.",
   "papers_with_hit": 46,
   "papers_in": 32,
   "margin": 24,
@@ -2835,7 +3834,8 @@
    "12": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_30_sensory_deterrents_magnetic_deterrents",
@@ -2856,6 +3856,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of magnets or electropositive materials intended to repel sensitive species such as sharks and rays.",
   "papers_with_hit": 401,
   "papers_in": 191,
   "margin": 142,
@@ -2876,7 +3879,8 @@
    "12": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_31_sensory_deterrents_electrical_deterrents",
@@ -2898,6 +3902,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of electric stimuli or electrified gear components to discourage interactions with fishing gear.",
   "papers_with_hit": 246,
   "papers_in": 87,
   "margin": 70,
@@ -2921,7 +3928,8 @@
    "14": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_32_sensory_deterrents_visual_deterrents",
@@ -2945,6 +3953,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of visual cues such as lights, colored materials, or conspicuous devices to reduce bycatch.",
   "papers_with_hit": 373,
   "papers_in": 168,
   "margin": 162,
@@ -2966,7 +3977,8 @@
    "6": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_33_sensory_deterrents_chemical_deterrents",
@@ -2987,6 +3999,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of chemical substances or scent-based deterrents to reduce attraction or contact with gear.",
   "papers_with_hit": 27,
   "papers_in": 23,
   "margin": 22,
@@ -2999,7 +4014,8 @@
    "5": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_34_reduce_attraction_bait_modification",
@@ -3024,6 +4040,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Changes in bait type, size, color, or presentation to lower attractiveness to bycatch species.",
   "papers_with_hit": 104,
   "papers_in": 78,
   "margin": 56,
@@ -3043,7 +4062,8 @@
    "7": 3
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_35_reduce_attraction_artificial_bait",
@@ -3064,6 +4084,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of artificial or alternative bait types to reduce incidental attraction of vulnerable species.",
   "papers_with_hit": 8,
   "papers_in": 5,
   "margin": 4,
@@ -3075,7 +4098,8 @@
    "6": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_36_reduce_attraction_offal_management",
@@ -3099,6 +4123,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Measures controlling offal discharge or discard practices that may attract bycatch species during fishing.",
   "papers_with_hit": 55,
   "papers_in": 27,
   "margin": 38,
@@ -3112,7 +4139,8 @@
    "4": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_37_reduce_attraction_light_or_stimulus_restrictions",
@@ -3135,6 +4163,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Restrictions on lightsticks, lights, or other stimuli that can attract bycatch species.",
   "papers_with_hit": 19,
   "papers_in": 12,
   "margin": 8,
@@ -3148,7 +4179,8 @@
    "8": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_38_gear_detectability_gear_detectability",
@@ -3181,6 +4213,9 @@
   "threshold": 1,
   "n_terms": 16,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Modifications that make gear more detectable to non-target species, improving avoidance, or modifications that reduce sensory cues that attract or expose gear to non-target species.",
   "papers_with_hit": 105,
   "papers_in": 63,
   "margin": 43,
@@ -3197,7 +4232,8 @@
    "13": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_39_reduce_encounter_fishing_depth_changes",
@@ -3220,6 +4256,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Adjustments in fishing depth to reduce overlap with the vertical distribution of bycatch species.",
   "papers_with_hit": 87,
   "papers_in": 13,
   "margin": 9,
@@ -3232,7 +4271,8 @@
    "6": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_40_reduce_encounter_gear_profile_or_configuration",
@@ -3257,6 +4297,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Changes in gear profile, hanging ratio, height, or configuration that reduce contact with bycatch species.",
   "papers_with_hit": 65,
   "papers_in": 44,
   "margin": 50,
@@ -3270,7 +4313,8 @@
    "4": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_41_reduce_encounter_deployment_timing",
@@ -3294,6 +4338,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 2,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Adjustments in set or haul timing to avoid periods when bycatch species are more likely to encounter gear.",
   "papers_with_hit": 134,
   "papers_in": 23,
   "margin": 21,
@@ -3308,7 +4355,8 @@
    "13": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_42_reduce_stress_immediate_release",
@@ -3329,6 +4377,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Rapid release of live bycatch to reduce handling time and stress exposure.",
   "papers_with_hit": 40,
   "papers_in": 17,
   "margin": 29,
@@ -3339,7 +4390,8 @@
    "2": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_43_reduce_stress_improved_handling",
@@ -3362,6 +4414,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Handling protocols designed to minimize injury, stress, and physiological impairment.",
   "papers_with_hit": 211,
   "papers_in": 106,
   "margin": 134,
@@ -3379,7 +4434,8 @@
    "7": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_44_reduce_stress_improved_deck_condition",
@@ -3403,6 +4459,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "On-deck measures such as shade, water, ventilation, or soft surfaces that reduce stress while animals are aboard.",
   "papers_with_hit": 2,
   "papers_in": 2,
   "margin": 2,
@@ -3411,7 +4470,8 @@
    "1": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_45_reduce_stress_reduced_air_exposure",
@@ -3433,6 +4493,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Measures specifically aimed at minimizing time exposed to air before release.",
   "papers_with_hit": 117,
   "papers_in": 76,
   "margin": 50,
@@ -3452,7 +4515,8 @@
    "14": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_46_reduce_retention_retention_limits",
@@ -3476,6 +4540,9 @@
   "threshold": 1,
   "n_terms": 7,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Limits on the number or amount of bycatch individuals or species that may be retained.",
   "papers_with_hit": 291,
   "papers_in": 165,
   "margin": 149,
@@ -3498,7 +4565,8 @@
    "11": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_47_reduce_retention_retention_ban",
@@ -3521,6 +4589,9 @@
   "threshold": 1,
   "n_terms": 6,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Rules prohibiting retention of specified bycatch species.",
   "papers_with_hit": 77,
   "papers_in": 40,
   "margin": 49,
@@ -3537,7 +4608,8 @@
    "7": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_48_reduce_retention_shark_finning_ban",
@@ -3559,6 +4631,9 @@
   "threshold": 3,
   "n_terms": 5,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Rules prohibiting finning or requiring sharks to be landed with fins naturally attached.",
   "papers_with_hit": 199,
   "papers_in": 35,
   "margin": 16,
@@ -3578,7 +4653,8 @@
    "8": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_49_reduce_retention_trade_ban",
@@ -3600,6 +4676,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Restrictions or bans on the sale or trade of species or products to discourage retention.",
   "papers_with_hit": 63,
   "papers_in": 28,
   "margin": 46,
@@ -3614,7 +4693,8 @@
    "6": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_50_reduce_retention_cites_restrictions",
@@ -3631,6 +4711,9 @@
   "threshold": 3,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Trade controls linked to CITES listings that may reduce incentives to retain vulnerable species.",
   "papers_with_hit": 910,
   "papers_in": 274,
   "margin": 77,
@@ -3654,7 +4737,8 @@
    "14": 6
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_51_offsets_direct_offsets",
@@ -3670,6 +4754,9 @@
   "threshold": 2,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Compensatory conservation actions implemented directly by the entity responsible for residual bycatch impacts.",
   "papers_with_hit": 1,
   "papers_in": 0,
   "margin": 0,
@@ -3678,7 +4765,8 @@
    "1": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_52_offsets_offset_funding",
@@ -3696,6 +4784,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Compensatory mitigation payments to a public or private body that implements offset conservation actions.",
   "papers_with_hit": 1,
   "papers_in": 0,
   "margin": 0,
@@ -3704,7 +4795,8 @@
    "1": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_53_offsets_conservation_banking",
@@ -3721,6 +4813,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of biodiversity or conservation credits generated in advance to compensate residual bycatch impacts.",
   "papers_with_hit": 1,
   "papers_in": 0,
   "margin": 0,
@@ -3729,7 +4824,8 @@
    "1": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_54_distribution_technology_biologging",
@@ -3755,6 +4851,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Animal-borne tags or sensors used to quantify movement, habitat use, and overlap relevant to bycatch.",
   "papers_with_hit": 1644,
   "papers_in": 1144,
   "margin": 669,
@@ -3778,7 +4877,8 @@
    "13": 10
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_55_distribution_technology_environmental_dna",
@@ -3795,6 +4895,9 @@
   "threshold": 3,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Use of eDNA to detect presence, habitat use, or distribution of species relevant to bycatch risk.",
   "papers_with_hit": 206,
   "papers_in": 93,
   "margin": 11,
@@ -3816,7 +4919,8 @@
    "10": 3
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_56_fishing_effort_data_sources_vessel_tracking",
@@ -3844,6 +4948,9 @@
   "threshold": 3,
   "n_terms": 8,
   "n_anchors": 6,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Automatic Identification System or Vessel Monitoring System vessel tracking data used to infer fishing effort and overlap with bycatch risk.",
   "papers_with_hit": 893,
   "papers_in": 149,
   "margin": 62,
@@ -3867,7 +4974,8 @@
    "12": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_57_gear_based_sensing_on_gear_cameras",
@@ -3888,6 +4996,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Cameras attached to gear or deployed near gear to document interactions and bycatch behaviour.",
   "papers_with_hit": 65,
   "papers_in": 28,
   "margin": 42,
@@ -3900,7 +5011,8 @@
    "5": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_58_gear_based_sensing_on_gear_sensors",
@@ -3932,6 +5044,9 @@
   "threshold": 1,
   "n_terms": 9,
   "n_anchors": 9,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Sensors mounted on or integrated with fishing gear to detect gear behaviour, catch events, or potential bycatch interactions.",
   "papers_with_hit": 204,
   "papers_in": 140,
   "margin": 98,
@@ -3953,7 +5068,8 @@
    "9": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_59_gear_based_sensing_ai_species_detection",
@@ -3976,6 +5092,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Artificial intelligence systems used to detect, classify, or respond to bycatch species in near real time.",
   "papers_with_hit": 9,
   "papers_in": 6,
   "margin": 3,
@@ -3989,7 +5108,8 @@
    "0": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_60_decision_support_systems_dynamic_risk_forecasting",
@@ -4013,13 +5133,17 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Systems that combine recent data and models to forecast bycatch risk and guide short-term decisions.",
   "papers_with_hit": 0,
   "papers_in": 0,
   "margin": 0,
   "anchor_gate_fails": 0,
   "hist": {},
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_61_decision_support_systems_onboard_decision_support",
@@ -4042,13 +5166,17 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Tools that integrate monitoring, risk information, and regulations to support real-time skipper decisions.",
   "papers_with_hit": 0,
   "papers_in": 0,
   "margin": 0,
   "anchor_gate_fails": 0,
   "hist": {},
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_62_distribution_methods_species_distribution_models",
@@ -4073,6 +5201,9 @@
   "threshold": 1,
   "n_terms": 8,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Models estimating species distribution using non-fisheries data, such as surveys, telemetry, or environmental observations.",
   "papers_with_hit": 199,
   "papers_in": 160,
   "margin": 78,
@@ -4094,7 +5225,8 @@
    "11": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_63_distribution_methods_bycatch_risk_models",
@@ -4118,6 +5250,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 5,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Models estimating spatial or spatio-temporal bycatch risk using fisheries-dependent data, alone or integrated with environmental predictors.",
   "papers_with_hit": 2,
   "papers_in": 2,
   "margin": 2,
@@ -4126,7 +5261,8 @@
    "1": 2
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_64_risk_assessment_risk_assessment_frameworks",
@@ -4150,6 +5286,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 3,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Frameworks evaluating vulnerability or risk of bycatch at species, population, or fishery level, including PSA, ByRA, and overlap-based risk metrics.",
   "papers_with_hit": 1966,
   "papers_in": 375,
   "margin": 254,
@@ -4173,7 +5312,8 @@
    "9": 7
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  },
  {
   "id": "drg_65_management_strategy_evaluation_management_strategy_ev",
@@ -4196,6 +5336,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 4,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": "Simulation-based approaches used to evaluate alternative management scenarios, trade-offs, and expected bycatch outcomes.",
   "papers_with_hit": 46,
   "papers_in": 24,
   "margin": 28,
@@ -4209,6 +5352,7 @@
    "10": 1
   },
   "fable_in": 0,
-  "gold": 0
+  "gold": 0,
+  "silver": null
  }
 ]

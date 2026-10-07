@@ -14,6 +14,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 867,
   "papers_in": 380,
   "margin": 115,
@@ -37,7 +40,26 @@
    "12": 7
   },
   "fable_in": 46,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 31,
+   "fp": 13,
+   "fn": 13,
+   "unreach": 4,
+   "precision": 0.7045454545454546,
+   "recall": 0.7045454545454546,
+   "f1": 0.7045454545454546,
+   "top_score": 10,
+   "top_n": 15,
+   "top_in": 14,
+   "bottom_n": 22,
+   "bottom_in": 2,
+   "solo_term": "genetic diversity",
+   "solo_n": 81,
+   "solo_fable_n": 12,
+   "solo_fable_in": 5
+  }
  },
  {
   "id": "d_genetics",
@@ -61,6 +83,9 @@
   "threshold": 2,
   "n_terms": 11,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 6498,
   "papers_in": 3347,
   "margin": 966,
@@ -84,6 +109,25 @@
    "12": 86
   },
   "fable_in": 339,
-  "gold": 4
+  "gold": 4,
+  "silver": {
+   "n": 1941,
+   "tp": 259,
+   "fp": 172,
+   "fn": 65,
+   "unreach": 23,
+   "precision": 0.6009280742459396,
+   "recall": 0.7993827160493827,
+   "f1": 0.6860927152317882,
+   "top_score": 10,
+   "top_n": 201,
+   "top_in": 178,
+   "bottom_n": 61,
+   "bottom_in": 8,
+   "solo_term": "phylogenet*",
+   "solo_n": 574,
+   "solo_fable_n": 55,
+   "solo_fable_in": 16
+  }
  }
 ]

@@ -15,6 +15,9 @@
   "threshold": 3,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "pr_",
+  "meaning": null,
   "papers_with_hit": 2459,
   "papers_in": 911,
   "margin": 225,
@@ -38,7 +41,26 @@
    "14": 21
   },
   "fable_in": 106,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 50,
+   "fp": 36,
+   "fn": 48,
+   "unreach": 19,
+   "precision": 0.5813953488372093,
+   "recall": 0.5102040816326531,
+   "f1": 0.5434782608695652,
+   "top_score": 10,
+   "top_n": 33,
+   "top_in": 24,
+   "bottom_n": 17,
+   "bottom_in": 1,
+   "solo_term": "parasite",
+   "solo_n": 152,
+   "solo_fable_n": 9,
+   "solo_fable_in": 7
+  }
  },
  {
   "id": "d_immunology",
@@ -58,6 +80,9 @@
   "threshold": 2,
   "n_terms": 7,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 1960,
   "papers_in": 1145,
   "margin": 241,
@@ -81,6 +106,25 @@
    "4": 69
   },
   "fable_in": 45,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 36,
+   "fp": 76,
+   "fn": 5,
+   "unreach": 3,
+   "precision": 0.32142857142857145,
+   "recall": 0.8780487804878049,
+   "f1": 0.47058823529411764,
+   "top_score": 10,
+   "top_n": 54,
+   "top_in": 24,
+   "bottom_n": 4,
+   "bottom_in": 0,
+   "solo_term": "immun*",
+   "solo_n": 233,
+   "solo_fable_n": 31,
+   "solo_fable_in": 3
+  }
  }
 ]

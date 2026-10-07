@@ -14,6 +14,9 @@
   "threshold": 3,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 16230,
   "papers_in": 10431,
   "margin": 1515,
@@ -37,7 +40,26 @@
    "6": 664
   },
   "fable_in": 1649,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 1200,
+   "fp": 81,
+   "fn": 410,
+   "unreach": 139,
+   "precision": 0.936768149882904,
+   "recall": 0.7453416149068323,
+   "f1": 0.8301625735039779,
+   "top_score": 10,
+   "top_n": 800,
+   "top_in": 772,
+   "bottom_n": 113,
+   "bottom_in": 82,
+   "solo_term": "marine",
+   "solo_n": 812,
+   "solo_fable_n": 85,
+   "solo_fable_in": 72
+  }
  },
  {
   "id": "eco_freshwater",
@@ -59,6 +81,9 @@
   "threshold": 3,
   "n_terms": 9,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 5328,
   "papers_in": 2272,
   "margin": 523,
@@ -82,7 +107,26 @@
    "11": 57
   },
   "fable_in": 158,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 104,
+   "fp": 164,
+   "fn": 27,
+   "unreach": 9,
+   "precision": 0.3880597014925373,
+   "recall": 0.7938931297709924,
+   "f1": 0.5213032581453634,
+   "top_score": 10,
+   "top_n": 81,
+   "top_in": 60,
+   "bottom_n": 87,
+   "bottom_in": 5,
+   "solo_term": "freshwater",
+   "solo_n": 505,
+   "solo_fable_n": 61,
+   "solo_fable_in": 19
+  }
  },
  {
   "id": "eco_brackish",
@@ -99,6 +143,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 4250,
   "papers_in": 2086,
   "margin": 782,
@@ -122,7 +169,26 @@
    "12": 29
   },
   "fable_in": 281,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 160,
+   "fp": 102,
+   "fn": 73,
+   "unreach": 23,
+   "precision": 0.6106870229007634,
+   "recall": 0.6866952789699571,
+   "f1": 0.6464646464646465,
+   "top_score": 10,
+   "top_n": 57,
+   "top_in": 49,
+   "bottom_n": 26,
+   "bottom_in": 10,
+   "solo_term": "estuar*",
+   "solo_n": 653,
+   "solo_fable_n": 84,
+   "solo_fable_in": 40
+  }
  },
  {
   "id": "eco_pelagic",
@@ -141,6 +207,9 @@
   "threshold": 2,
   "n_terms": 6,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 5597,
   "papers_in": 2754,
   "margin": 1204,
@@ -164,7 +233,26 @@
    "11": 53
   },
   "fable_in": 514,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 278,
+   "fp": 115,
+   "fn": 188,
+   "unreach": 73,
+   "precision": 0.7073791348600509,
+   "recall": 0.5965665236051502,
+   "f1": 0.6472642607683352,
+   "top_score": 10,
+   "top_n": 94,
+   "top_in": 86,
+   "bottom_n": 57,
+   "bottom_in": 23,
+   "solo_term": "pelagic",
+   "solo_n": 736,
+   "solo_fable_n": 100,
+   "solo_fable_in": 66
+  }
  },
  {
   "id": "eco_coastal",
@@ -182,6 +270,9 @@
   "threshold": 3,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 9022,
   "papers_in": 3920,
   "margin": 1096,
@@ -205,7 +296,26 @@
    "11": 117
   },
   "fable_in": 1121,
-  "gold": 4
+  "gold": 4,
+  "silver": {
+   "n": 1941,
+   "tp": 505,
+   "fp": 55,
+   "fn": 573,
+   "unreach": 203,
+   "precision": 0.9017857142857143,
+   "recall": 0.4684601113172542,
+   "f1": 0.6166056166056166,
+   "top_score": 10,
+   "top_n": 189,
+   "top_in": 181,
+   "bottom_n": 81,
+   "bottom_in": 48,
+   "solo_term": "coastal",
+   "solo_n": 1059,
+   "solo_fable_n": 169,
+   "solo_fable_in": 145
+  }
  },
  {
   "id": "eco_demersal",
@@ -223,6 +333,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 5625,
   "papers_in": 2666,
   "margin": 1171,
@@ -246,7 +359,26 @@
    "9": 61
   },
   "fable_in": 653,
-  "gold": 3
+  "gold": 3,
+  "silver": {
+   "n": 1941,
+   "tp": 296,
+   "fp": 71,
+   "fn": 312,
+   "unreach": 127,
+   "precision": 0.8065395095367848,
+   "recall": 0.4868421052631579,
+   "f1": 0.6071794871794872,
+   "top_score": 10,
+   "top_n": 59,
+   "top_in": 57,
+   "bottom_n": 41,
+   "bottom_in": 25,
+   "solo_term": "benthic",
+   "solo_n": 654,
+   "solo_fable_n": 91,
+   "solo_fable_in": 58
+  }
  },
  {
   "id": "eco_reef",
@@ -262,6 +394,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 1278,
   "papers_in": 904,
   "margin": 682,
@@ -285,7 +420,26 @@
    "14": 3
   },
   "fable_in": 336,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 119,
+   "fp": 31,
+   "fn": 179,
+   "unreach": 157,
+   "precision": 0.7933333333333333,
+   "recall": 0.39932885906040266,
+   "f1": 0.53125,
+   "top_score": 10,
+   "top_n": 10,
+   "top_in": 10,
+   "bottom_n": 14,
+   "bottom_in": 8,
+   "solo_term": "coral reef",
+   "solo_n": 473,
+   "solo_fable_n": 77,
+   "solo_fable_in": 59
+  }
  },
  {
   "id": "eco_deepwater",
@@ -306,6 +460,9 @@
   "threshold": 2,
   "n_terms": 8,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 3743,
   "papers_in": 1700,
   "margin": 674,
@@ -329,7 +486,26 @@
    "9": 48
   },
   "fable_in": 341,
-  "gold": 2
+  "gold": 2,
+  "silver": {
+   "n": 1941,
+   "tp": 158,
+   "fp": 35,
+   "fn": 139,
+   "unreach": 70,
+   "precision": 0.8186528497409327,
+   "recall": 0.531986531986532,
+   "f1": 0.6448979591836734,
+   "top_score": 10,
+   "top_n": 52,
+   "top_in": 50,
+   "bottom_n": 26,
+   "bottom_in": 11,
+   "solo_term": "deep-sea",
+   "solo_n": 200,
+   "solo_fable_n": 23,
+   "solo_fable_in": 15
+  }
  },
  {
   "id": "eco_intertidal",
@@ -345,6 +521,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 1220,
   "papers_in": 793,
   "margin": 685,
@@ -368,7 +547,26 @@
    "14": 2
   },
   "fable_in": 67,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 37,
+   "fp": 48,
+   "fn": 17,
+   "unreach": 8,
+   "precision": 0.43529411764705883,
+   "recall": 0.6851851851851852,
+   "f1": 0.5323741007194245,
+   "top_score": 10,
+   "top_n": 4,
+   "top_in": 3,
+   "bottom_n": 11,
+   "bottom_in": 3,
+   "solo_term": "intertidal",
+   "solo_n": 404,
+   "solo_fable_n": 53,
+   "solo_fable_in": 30
+  }
  },
  {
   "id": "eco_mangrove",
@@ -382,6 +580,9 @@
   "threshold": 2,
   "n_terms": 1,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 815,
   "papers_in": 312,
   "margin": 146,
@@ -405,7 +606,26 @@
    "9": 7
   },
   "fable_in": 107,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 43,
+   "fp": 7,
+   "fn": 50,
+   "unreach": 25,
+   "precision": 0.86,
+   "recall": 0.46236559139784944,
+   "f1": 0.6013986013986014,
+   "top_score": 10,
+   "top_n": 6,
+   "top_in": 5,
+   "bottom_n": 4,
+   "bottom_in": 3,
+   "solo_term": "mangrove",
+   "solo_n": 312,
+   "solo_fable_n": 50,
+   "solo_fable_in": 43
+  }
  },
  {
   "id": "eco_seagrass",
@@ -423,6 +643,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 1020,
   "papers_in": 786,
   "margin": 507,
@@ -446,7 +669,26 @@
    "14": 3
   },
   "fable_in": 106,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 65,
+   "fp": 45,
+   "fn": 27,
+   "unreach": 14,
+   "precision": 0.5909090909090909,
+   "recall": 0.7065217391304348,
+   "f1": 0.6435643564356436,
+   "top_score": 10,
+   "top_n": 5,
+   "top_in": 5,
+   "bottom_n": 16,
+   "bottom_in": 6,
+   "solo_term": "seagrass",
+   "solo_n": 522,
+   "solo_fable_n": 79,
+   "solo_fable_in": 41
+  }
  },
  {
   "id": "eco_kelp",
@@ -462,6 +704,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 102,
   "papers_in": 68,
   "margin": 69,
@@ -478,7 +723,26 @@
    "3": 3
   },
   "fable_in": 23,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 7,
+   "fp": 3,
+   "fn": 9,
+   "unreach": 8,
+   "precision": 0.7,
+   "recall": 0.4375,
+   "f1": 0.5384615384615384,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 2,
+   "bottom_in": 1,
+   "solo_term": "macroalgal",
+   "solo_n": 38,
+   "solo_fable_n": 4,
+   "solo_fable_in": 2
+  }
  },
  {
   "id": "eco_polar",
@@ -496,6 +760,9 @@
   "threshold": 2,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 2045,
   "papers_in": 756,
   "margin": 362,
@@ -519,7 +786,26 @@
    "13": 12
   },
   "fable_in": 47,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 35,
+   "fp": 42,
+   "fn": 9,
+   "unreach": 3,
+   "precision": 0.45454545454545453,
+   "recall": 0.7954545454545454,
+   "f1": 0.5785123966942148,
+   "top_score": 10,
+   "top_n": 19,
+   "top_in": 14,
+   "bottom_n": 17,
+   "bottom_in": 3,
+   "solo_term": "polar",
+   "solo_n": 168,
+   "solo_fable_n": 10,
+   "solo_fable_in": 1
+  }
  },
  {
   "id": "eco_riverine",
@@ -535,6 +821,9 @@
   "threshold": 1,
   "n_terms": 3,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 365,
   "papers_in": 256,
   "margin": 159,
@@ -557,7 +846,26 @@
    "12": 1
   },
   "fable_in": 66,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 23,
+   "fp": 11,
+   "fn": 36,
+   "unreach": 29,
+   "precision": 0.6764705882352942,
+   "recall": 0.3898305084745763,
+   "f1": 0.49462365591397844,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "freshwater stingray",
+   "solo_n": 202,
+   "solo_fable_n": 26,
+   "solo_fable_in": 17
+  }
  },
  {
   "id": "eco_nursery",
@@ -575,6 +883,9 @@
   "threshold": 1,
   "n_terms": 5,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 1248,
   "papers_in": 843,
   "margin": 774,
@@ -598,7 +909,26 @@
    "12": 2
   },
   "fable_in": 262,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 93,
+   "fp": 37,
+   "fn": 131,
+   "unreach": 100,
+   "precision": 0.7153846153846154,
+   "recall": 0.41517857142857145,
+   "f1": 0.5254237288135593,
+   "top_score": 10,
+   "top_n": 6,
+   "top_in": 6,
+   "bottom_n": 12,
+   "bottom_in": 8,
+   "solo_term": "nursery area",
+   "solo_n": 319,
+   "solo_fable_n": 46,
+   "solo_fable_in": 28
+  }
  },
  {
   "id": "eco_pupping",
@@ -615,6 +945,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 146,
   "papers_in": 83,
   "margin": 115,
@@ -632,7 +965,26 @@
    "5": 1
   },
   "fable_in": 101,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 7,
+   "fp": 1,
+   "fn": 77,
+   "unreach": 71,
+   "precision": 0.875,
+   "recall": 0.08333333333333333,
+   "f1": 0.15217391304347824,
+   "top_score": 10,
+   "top_n": 0,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 1,
+   "solo_term": "pupping ground",
+   "solo_n": 42,
+   "solo_fable_n": 7,
+   "solo_fable_in": 6
+  }
  },
  {
   "id": "eco_epipelagic",
@@ -649,6 +1001,9 @@
   "threshold": 2,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 1465,
   "papers_in": 364,
   "margin": 261,
@@ -672,7 +1027,26 @@
    "14": 1
   },
   "fable_in": 131,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 33,
+   "fp": 16,
+   "fn": 78,
+   "unreach": 29,
+   "precision": 0.673469387755102,
+   "recall": 0.2972972972972973,
+   "f1": 0.41250000000000003,
+   "top_score": 10,
+   "top_n": 2,
+   "top_in": 2,
+   "bottom_n": 16,
+   "bottom_in": 5,
+   "solo_term": "epipelagic",
+   "solo_n": 142,
+   "solo_fable_n": 22,
+   "solo_fable_in": 16
+  }
  },
  {
   "id": "eco_mesopelagic",
@@ -687,6 +1061,9 @@
   "threshold": 1,
   "n_terms": 2,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 700,
   "papers_in": 476,
   "margin": 389,
@@ -709,7 +1086,26 @@
    "11": 2
   },
   "fable_in": 62,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 41,
+   "fp": 23,
+   "fn": 12,
+   "unreach": 6,
+   "precision": 0.640625,
+   "recall": 0.7735849056603774,
+   "f1": 0.7008547008547009,
+   "top_score": 10,
+   "top_n": 3,
+   "top_in": 3,
+   "bottom_n": 4,
+   "bottom_in": 0,
+   "solo_term": "mesopelagic",
+   "solo_n": 453,
+   "solo_fable_n": 59,
+   "solo_fable_in": 37
+  }
  },
  {
   "id": "eco_bathypelagic",
@@ -724,6 +1120,9 @@
   "threshold": 1,
   "n_terms": 2,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 358,
   "papers_in": 231,
   "margin": 229,
@@ -745,7 +1144,26 @@
    "13": 1
   },
   "fable_in": 21,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 14,
+   "fp": 13,
+   "fn": 3,
+   "unreach": 1,
+   "precision": 0.5185185185185185,
+   "recall": 0.8235294117647058,
+   "f1": 0.6363636363636364,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 3,
+   "bottom_in": 1,
+   "solo_term": "bathypelagic",
+   "solo_n": 184,
+   "solo_fable_n": 21,
+   "solo_fable_in": 11
+  }
  },
  {
   "id": "eco_abyssal",
@@ -760,6 +1178,9 @@
   "threshold": 1,
   "n_terms": 2,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "eco_",
+  "meaning": null,
   "papers_with_hit": 288,
   "papers_in": 200,
   "margin": 187,
@@ -782,6 +1203,25 @@
    "7": 1
   },
   "fable_in": 17,
-  "gold": 0
+  "gold": 0,
+  "silver": {
+   "n": 1941,
+   "tp": 9,
+   "fp": 16,
+   "fn": 1,
+   "unreach": 0,
+   "precision": 0.36,
+   "recall": 0.9,
+   "f1": 0.5142857142857143,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 0,
+   "bottom_n": 1,
+   "bottom_in": 0,
+   "solo_term": "abyssal",
+   "solo_n": 182,
+   "solo_fable_n": 24,
+   "solo_fable_in": 9
+  }
  }
 ]

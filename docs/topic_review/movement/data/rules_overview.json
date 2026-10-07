@@ -14,6 +14,9 @@
   "threshold": 1,
   "n_terms": 4,
   "n_anchors": 0,
+  "proximity": false,
+  "prefix": "imp_",
+  "meaning": null,
   "papers_with_hit": 128,
   "papers_in": 72,
   "margin": 67,
@@ -30,7 +33,26 @@
    "11": 1
   },
   "fable_in": 196,
-  "gold": 6
+  "gold": 6,
+  "silver": {
+   "n": 1941,
+   "tp": 8,
+   "fp": 8,
+   "fn": 173,
+   "unreach": 166,
+   "precision": 0.5,
+   "recall": 0.04419889502762431,
+   "f1": 0.08121827411167512,
+   "top_score": 10,
+   "top_n": 1,
+   "top_in": 1,
+   "bottom_n": 5,
+   "bottom_in": 3,
+   "solo_term": "habitat shift",
+   "solo_n": 25,
+   "solo_fable_n": 8,
+   "solo_fable_in": 3
+  }
  },
  {
   "id": "d_movement",
@@ -53,6 +75,9 @@
   "threshold": 3,
   "n_terms": 10,
   "n_anchors": 0,
+  "proximity": true,
+  "prefix": "d_",
+  "meaning": null,
   "papers_with_hit": 5035,
   "papers_in": 1828,
   "margin": 477,
@@ -76,6 +101,25 @@
    "13": 41
   },
   "fable_in": 409,
-  "gold": 1
+  "gold": 1,
+  "silver": {
+   "n": 1941,
+   "tp": 197,
+   "fp": 84,
+   "fn": 173,
+   "unreach": 76,
+   "precision": 0.701067615658363,
+   "recall": 0.5324324324324324,
+   "f1": 0.6052227342549923,
+   "top_score": 10,
+   "top_n": 111,
+   "top_in": 106,
+   "bottom_n": 39,
+   "bottom_in": 12,
+   "solo_term": "movement",
+   "solo_n": 103,
+   "solo_fable_n": 15,
+   "solo_fable_in": 2
+  }
  }
 ]
