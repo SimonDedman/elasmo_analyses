@@ -24,6 +24,8 @@ The work began as a panel session at the **European Elasmobranch Association (EE
 
 **Want the tour?** The [slide deck with speaker notes](https://simondedman.github.io/elasmo_analyses/slides/elasmo_analyses_slides.pdf) walks through the whole project in 17 slides, each with the notes spoken alongside it, so the argument reads end to end without the talk.
 
+**EEA 2026 workshop.** The [workshop slides](https://simondedman.github.io/elasmo_analyses/slides/EEA_2026_workshop_slides.pdf) (PDF, 64 slides) are from the online elasmo_analyses workshop at the **European Elasmobranch Association Conference 2026** (8 October 2026): the team, the tools (Shark Oracle, the abstracts browser, the Author Atlas, the validation pages), and the draft figures for each planned paper, up for review.
+
 ---
 
 ## The corpus at a glance
