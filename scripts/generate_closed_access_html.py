@@ -203,8 +203,8 @@ CSS_EXTRA = """
     .paper.nope { border-left-color: #c0392b; }
     .paper.lapsed { border-left-color: #f39c12; background: #fffdf6; }
     .paper.nope .title::after { content: "  (you couldn't get this)"; font-weight: normal; color: #922b21; font-size: 0.85em; }
-    .toc { background: #fff; padding: 10px 15px; border-radius: 8px; margin: 12px 0; font-size: 0.9em; line-height: 1.8; }
-    .toc a { color: #1f618d; margin-right: 12px; white-space: nowrap; }
+    .toc { background: #fff; padding: 10px 15px; border-radius: 8px; margin: 12px 0; font-size: 0.9em; line-height: 1.8; max-width: 100%; box-sizing: border-box; overflow-wrap: anywhere; }
+    .toc a { color: #1f618d; margin-right: 12px; white-space: normal; display: inline-block; }
     .hidebar { font-size: 0.85em; margin-left: 16px; font-weight: normal; color: #2c3e50; }
     .back { font-size: 0.9em; }
 """

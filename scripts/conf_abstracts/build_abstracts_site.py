@@ -158,15 +158,17 @@ def main():
                 if head[j] == "EEA" and int(y) == 2020:
                     continue  # no meeting (covid); the workbook on disk predates that correction
                 grid[(head[j], int(y))] = [m.group(1), "" if loc in ("?", "none") else loc]
-        used = sorted({s for (s, y), v in grid.items() if y >= 1985 and v[0] != "Missing"} | set(MAIN),
-                      key=lambda s: (MAIN.index(s) if s in MAIN else 99, s))
+        START = 1983  # the matrix figure's first year (AES); the workbook runs to 1916 but only ASIH/JMIH is populated before 1973
+        used = sorted({s for (s, y) in grid if y >= START} | set(MAIN),
+                      key=lambda s: (MAIN.index(s) if s in MAIN else 99, head.index(s) if s in head else 999))
         cov["series"] = used
-        cov["years"] = sorted({y for (s, y) in grid if y >= 1985 and s in used})
+        cov["start"] = START
+        cov["years"] = sorted({y for (s, y) in grid if y >= START and s in used})
         for (s, y), v in grid.items():
-            if s in used and y >= 1985:
+            if s in used and y >= START:
                 cov["cells"].setdefault(s, {})[y] = v
         for s in MAIN:
-            cov["gaps"][s] = sorted(y for (ss, y), v in grid.items() if ss == s and y >= 1985 and v[0] in GAP)
+            cov["gaps"][s] = sorted(y for (ss, y), v in grid.items() if ss == s and y >= START and v[0] in GAP)
     except Exception as e:  # coverage is optional
         print("coverage skipped:", e)
     leg = json.loads(LEGEND.read_text())

@@ -142,6 +142,29 @@
     return key;  /* safe fallback — key identifies the message */
   }
 
+  /* Inline status line under the Submit button (created on first use). */
+  function setStatus(text, kind) {
+    var el = document.getElementById('submit-status');
+    if (!el) {
+      var b = document.getElementById('btn-submit');
+      if (!b || !b.parentNode) { return; }
+      el = document.createElement('div');
+      el.id = 'submit-status';
+      el.setAttribute('role', 'status');
+      el.setAttribute('aria-live', 'polite');
+      el.style.cssText = 'flex-basis:100%;width:100%;margin-top:6px;font-size:0.9em;line-height:1.35;';
+      b.parentNode.insertBefore(el, b.nextSibling);
+    }
+    el.textContent = text;
+    el.style.color = kind === 'ok' ? '#1a7f37' : (kind === 'err' ? '#b3261e' : 'inherit');
+    el.style.fontWeight = kind === 'ok' ? '600' : 'normal';
+  }
+
+  function hhmm() {
+    var d = new Date();
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+  }
+
   function submitValidation() {
     var json = buildJSON();
 
@@ -155,6 +178,7 @@
       btn.disabled     = true;
       btn.textContent  = _t('submitting');
     }
+    setStatus('Submitting\u2026', 'busy');
 
     var config       = window.SUBMIT_CONFIG || {};
     var proxyUrl     = config.PROXY_URL     || null;
@@ -162,7 +186,8 @@
 
     if (!proxyUrl) {
       /* No endpoint configured — use download as the delivery mechanism. */
-      alert(_t('submit_no_endpoint'));
+      setStatus('Submission failed (no endpoint configured). Your answers are saved in this browser ' +
+                'and in the downloaded JSON; email them to simondedman@gmail.com.', 'err');
       downloadJSON();
       if (btn) {
         btn.disabled    = false;
@@ -183,13 +208,17 @@
 
     xhr.onload = function () {
       if (xhr.status >= 200 && xhr.status < 300) {
-        alert(_t('submit_success'));
+        var rid = '';
+        try { var r = JSON.parse(xhr.responseText); if (r && r.id) { rid = ' (reference ' + r.id + ')'; } } catch (e) {}
+        setStatus('Submitted: received by the server at ' + hhmm() + rid +
+                  '. Your changes will appear in the repository after review.', 'ok');
         if (btn) {
           btn.disabled    = true;
           btn.textContent = _t('submitted_check');
         }
       } else {
-        alert(_t('submit_failed', { status: xhr.status }));
+        setStatus('Submission failed (HTTP ' + xhr.status + '). Your answers are saved in this browser ' +
+                  'and in the downloaded JSON; email them to simondedman@gmail.com.', 'err');
         downloadJSON();
         if (btn) {
           btn.disabled    = false;
@@ -199,7 +228,8 @@
     };
 
     xhr.onerror = function () {
-      alert(_t('submit_network_error'));
+      setStatus('Submission failed (no response from the server). Your answers are saved in this browser ' +
+                'and in the downloaded JSON; email them to simondedman@gmail.com.', 'err');
       downloadJSON();
       if (btn) {
         btn.disabled    = false;

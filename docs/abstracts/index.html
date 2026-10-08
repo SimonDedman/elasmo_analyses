@@ -106,6 +106,7 @@ table.cov td.y{background:var(--surface);color:var(--ink);font-weight:600;positi
 
 <h2 id="coverage">Coverage: what we hold</h2>
 <p class="lede">Each cell is one meeting. Colours run from nothing known (red) to fully ingested (green). Blank means no meeting that year for that series.</p>
+<p class="small" style="margin:6px 0">Series with no abstracts yet appear in the grid but not in the search filters.</p>
 <div class="legend" id="legend"></div>
 <div class="help" id="help"></div>
 <div class="covscroll"><table class="cov" id="cov"></table></div>
@@ -309,7 +310,7 @@ async function loadCoverage() {
   let c; try { c = await getJSON('coverage.json'); } catch (e) { $('cov').outerHTML = '<p class="small">Coverage grid unavailable.</p>'; return; }
   $('legend').innerHTML = Object.entries(c.legend).map(([k, v]) => `<span title="${esc(v.text)}"><i style="background:${v.colour}"></i>${esc(k)}</span>`).join('');
   const gaps = Object.entries(c.gaps).filter(([, y]) => y.length);
-  $('help').innerHTML = '<p><b>Help us fill the gaps.</b> Do you have an abstract book, programme, or newsletter from one of these meetings, on paper or as a file? We would like a scan or a photo of the abstract pages. Years with no abstract book in our hands (1985 onward):</p>' +
+  $('help').innerHTML = `<p><b>Help us fill the gaps.</b> Do you have an abstract book, programme, or newsletter from one of these meetings, on paper or as a file? We would like a scan or a photo of the abstract pages. Years with no abstract book in our hands (${c.start} onward):</p>` +
     gaps.map(([s, y]) => `<p><b>${esc(s)}</b>: ${y.join(', ')}</p>`).join('');
   $('cov').innerHTML = '<thead><tr><th>Year</th>' + c.series.map(s => `<th>${esc(s)}</th>`).join('') + '</tr></thead><tbody>' +
     [...c.years].reverse().map(y => `<tr><td class="y">${y}</td>` + c.series.map(s => {
