@@ -33,7 +33,7 @@ if (dir.exists(local_root)) {
 }
 # Otherwise assume we are already at the repo root (e.g. GitHub Actions
 # runner), where relative paths like outputs/... resolve correctly.
-OUT_DIR <- "outputs/author_atlas"
+OUT_DIR <- Sys.getenv("ATLAS_OUT_DIR", "outputs/author_atlas")  # override for test builds
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
 cat("Loading source data...\n")
@@ -135,6 +135,10 @@ if (file.exists(ns_ov_path)) {
   cat(sprintf("  Applied %d NamSor overrides\n", nrow(ns_ov)))
 }
 
+# Genderize was retired; its `gender` column is no longer in openalex_unique_authors.csv.
+# NamSor gender comes first in the case_when below, so an absent fallback is harmless.
+if (!"gender" %in% names(authors)) authors$gender <- NA_character_
+
 author_meta <- authors |>
   mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/")) |>
   left_join(namsor_clean, by = "openalex_author_id") |>
@@ -230,14 +234,17 @@ coauthor_edges <- paper_author_clean |>
   count(from, to, name = "weight")
 
 # --- Focal network: authors with >=3 papers, edges weight >=1 -------------
-MIN_PAPERS <- 3
+# ATLAS_MIN_PAPERS / ATLAS_REQUIRE_COAUTHOR let a test build include everyone with a location
+# (e.g. ATLAS_MIN_PAPERS=1 ATLAS_REQUIRE_COAUTHOR=0); the published map uses 3 and TRUE.
+MIN_PAPERS <- as.integer(Sys.getenv("ATLAS_MIN_PAPERS", "3"))
+REQUIRE_COAUTHOR <- Sys.getenv("ATLAS_REQUIRE_COAUTHOR", "1") != "0"
 focal_authors <- author_meta |> filter(paper_count >= MIN_PAPERS)
 focal_ids <- focal_authors$openalex_author_id
 edges_focal <- coauthor_edges |>
   filter(from %in% focal_ids & to %in% focal_ids)
 
 connected_ids <- unique(c(edges_focal$from, edges_focal$to))
-nodes_focal <- focal_authors |> filter(openalex_author_id %in% connected_ids)
+nodes_focal <- if (REQUIRE_COAUTHOR) focal_authors |> filter(openalex_author_id %in% connected_ids) else focal_authors
 
 cat(sprintf("Focal network: %d authors, %d edges\n",
             nrow(nodes_focal), nrow(edges_focal)))
