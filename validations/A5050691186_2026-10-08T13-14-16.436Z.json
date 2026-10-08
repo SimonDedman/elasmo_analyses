@@ -1,0 +1,467 @@
+{
+  "author_name": "A.F. Sobral",
+  "openalex_id": "A5050691186",
+  "page_version": "2026-04-18",
+  "papers": {
+    "21785": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [
+          "b_mediterranean"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [
+          "d_behaviour"
+        ],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [
+          "eco_pelagic",
+          "eco_marine"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "incorrect",
+        "removed": [
+          "gear_target_species"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_distribution"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [
+          "imp_confidence",
+          "imp_quantified",
+          "imp_direction"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [
+          "sp_mobula_birostris"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "28768": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "31421": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    }
+  },
+  "papers_reviewed": 1,
+  "papers_total": 0,
+  "timestamp": "2026-10-08T13:14:16.436Z"
+}
