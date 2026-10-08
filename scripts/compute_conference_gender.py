@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Compute female-presenter proportions for two 2026 conference reference
-points (AES2026, SI2026), for overlay on the D6 gender-trend figure
+Compute female-presenter proportions for three 2026 conference reference
+points (AES2026, SI2026, EEA2026), for overlay on the D6 gender-trend figure
 (``outputs/figures/SI_D6_gender_trend.png``).
 
 AES2026
@@ -25,6 +25,18 @@ gender split from
 produced the diamonds already baked into SI_D6_gender_trend.png back
 on 2026-04-14): filter to ``Is First Author == True``, gender from
 NamSor Gender first, OpenAlex Gender as fallback.
+
+EEA2026
+-------
+Presenters of the EEA 2026 (online, 6-8 Oct) DRAFT schedule 4, as parsed by
+the Shark Network project into ``data/eea2026_talks.csv`` (one row per
+programme slot). Regular talks and speed talks are counted, one per
+presentation; the panel and the side-event convener rows are not. Gender
+is inferred exactly as for AES2026, then corrected from
+``outputs/conference_gender_overrides.csv`` (columns conference, full_name,
+gender) where a presenter is known to be misclassified by their first name.
+That file is git-ignored with the rest of ``outputs/``: named, inferred
+gender stays out of the public repository.
 
 Output: outputs/conference_gender.csv with columns
     conference, year, gender, n, total, pct, unknown, unknown_pct
@@ -50,6 +62,11 @@ SI_AUTHORS_XLSX = Path(
     "/home/simon/Documents/Si Work/PostDoc Work/SI/2026 Sri Lanka/Sessions info/"
     "SI2026_authors_long.xlsx"
 )
+EEA_TALKS_CSV = Path(
+    "/home/simon/Documents/Si Work/PostDoc Work/Shark Network/data/eea2026_talks.csv"
+)
+EEA_TALK_ROLES = ("speaker", "speed_talk")
+OVERRIDES_CSV = PROJECT_BASE / "outputs/conference_gender_overrides.csv"
 GENDERIZE_CACHE = PROJECT_BASE / "outputs/.genderize_cache.json"
 OUT_CSV = PROJECT_BASE / "outputs/conference_gender.csv"
 
@@ -137,6 +154,38 @@ def compute_aes2026() -> pd.DataFrame:
     return df
 
 
+def compute_eea2026() -> pd.DataFrame:
+    talks = pd.read_csv(EEA_TALKS_CSV)
+    talks = talks[talks["role"].isin(EEA_TALK_ROLES)]
+    print(f"EEA2026: {len(talks)} talk / speed-talk slots in the draft schedule")
+
+    cache = json.loads(GENDERIZE_CACHE.read_text(encoding="utf-8"))
+    detector = gender_detector.Detector()
+
+    rows = []
+    for full_name in talks["speaker"]:
+        first = extract_first_name(full_name)
+        gender = infer_gender_layered(first, cache, detector) if first else "unknown"
+        rows.append({"full_name": full_name, "first_name": first, "gender": gender})
+    df = pd.DataFrame(rows)
+    print("  inferred:", df["gender"].value_counts(dropna=False).to_dict())
+
+    if OVERRIDES_CSV.exists():
+        ov = pd.read_csv(OVERRIDES_CSV)
+        ov = ov[ov["conference"] == "EEA2026"].set_index("full_name")["gender"]
+        hit = df["full_name"].isin(ov.index)
+        df.loc[hit, "gender"] = df.loc[hit, "full_name"].map(ov)
+        print(f"  {hit.sum()} rows corrected from {OVERRIDES_CSV.name}"
+              f" ({len(ov) - df.loc[hit, 'full_name'].nunique()} override names unmatched)")
+        print("  corrected:", df["gender"].value_counts(dropna=False).to_dict())
+
+    unresolved = df[df["gender"] == "unknown"]
+    if len(unresolved):
+        print(f"  {len(unresolved)} unresolved first names:",
+              list(unresolved["first_name"].dropna().unique()))
+    return df
+
+
 def summarise(df: pd.DataFrame, conference: str, year: int) -> pd.DataFrame:
     total = len(df)
     known = df[df["gender"].isin(["male", "female"])]
@@ -192,7 +241,10 @@ def main() -> None:
     si_df = compute_si2026()
     si_summary = summarise(si_df, "SI2026", 2026)
 
-    combined = pd.concat([aes_summary, si_summary], ignore_index=True)
+    eea_df = compute_eea2026()
+    eea_summary = summarise(eea_df, "EEA2026", 2026)
+
+    combined = pd.concat([aes_summary, si_summary, eea_summary], ignore_index=True)
     combined.to_csv(OUT_CSV, index=False)
     print(f"\nWrote {OUT_CSV}")
     print(combined.to_string(index=False))

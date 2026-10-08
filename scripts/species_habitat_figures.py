@@ -382,7 +382,7 @@ save(fig, "habitat_barplot")
 # Figure 7: Habitat co-occurrence heatmap
 # ===================================================================
 print("Figure 7: Habitat co-occurrence heatmap...")
-eco_binary = (df[eco_cols] > 0).astype(int)
+eco_binary = (df[eco_cols] > 0).fillna(False).astype(int)
 cooc = eco_binary.T.dot(eco_binary)
 cooc_labels = [c.replace("eco_", "").replace("_", " ").capitalize() for c in eco_cols]
 cooc.index = cooc_labels

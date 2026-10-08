@@ -1,6 +1,13 @@
 #!/usr/bin/env Rscript
 # Generate geographic maps for shark research papers
-# Uses paper_geography table (6,183 papers with author country data)
+# Paper = one literature_id, country = FIRST author's institution country.
+#
+# Source (env GEO_SOURCE, default "openalex"):
+#   openalex   outputs/openalex_paper_authors.csv (14,434 papers, 135 countries
+#              on 2026-09-30). The default since 2026-09-30.
+#   taxonomy   paper_geography table in database/technique_taxonomy.db, a
+#              Nov 2025 snapshot of 6,183 papers. Kept for reproducing the
+#              SI/AES 2026 figures ("87% Global North"); OpenAlex gives 74%.
 
 library(ggplot2)
 library(sf)
@@ -11,32 +18,55 @@ library(dplyr)
 library(ggrepel)
 library(shadowtext)
 
-# Connect to database
-conn <- dbConnect(SQLite(), "database/technique_taxonomy.db")
-
-# Get papers per country
-papers_df <- dbGetQuery(conn, "
-  SELECT first_author_country as country, COUNT(*) as papers
-  FROM paper_geography
-  WHERE has_author_country = 1 AND first_author_country IS NOT NULL
-  GROUP BY first_author_country
-")
-dbDisconnect(conn)
-
-cat("Papers per country loaded:", nrow(papers_df), "countries\n")
-cat("Total papers:", sum(papers_df$papers), "\n\n")
+geo_source <- Sys.getenv("GEO_SOURCE", "openalex")
 
 # Get world map
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
-# Country name mapping for mismatches
+if (geo_source == "taxonomy") {
+  conn <- dbConnect(SQLite(), "database/technique_taxonomy.db")
+  papers_df <- dbGetQuery(conn, "
+    SELECT first_author_country as country, COUNT(*) as papers
+    FROM paper_geography
+    WHERE has_author_country = 1 AND first_author_country IS NOT NULL
+    GROUP BY first_author_country
+  ")
+  dbDisconnect(conn)
+  source_caption <- "Source: shark-references.com database"
+} else {
+  oa <- read.csv("outputs/openalex_paper_authors.csv", colClasses = "character",
+                 na.strings = c("", "NA"))
+  oa <- oa[oa$author_position == "first" & !is.na(oa$institution_country), ]
+  oa <- oa[!duplicated(oa$literature_id), ]
+  # ISO codes with no polygon of their own in Natural Earth: count them with
+  # the state they belong to (French overseas departments, Bonaire, Gibraltar).
+  iso_fold <- c(RE = "FR", GP = "FR", MQ = "FR", GF = "FR", YT = "FR",
+                BQ = "NL", GI = "GB")
+  fold <- oa$institution_country %in% names(iso_fold)
+  oa$institution_country[fold] <- iso_fold[oa$institution_country[fold]]
+  iso_to_name <- setNames(world$name, world$iso_a2_eh)
+  oa$ne_name <- unname(iso_to_name[oa$institution_country])
+  cat("OpenAlex first-author papers:", nrow(oa), "| ISO codes without a map polygon:",
+      sum(is.na(oa$ne_name)), "\n")
+  oa <- oa[!is.na(oa$ne_name), ]
+  # The rest of this script keys on the short names the taxonomy table used.
+  ne_to_short <- c("United States of America" = "USA", "United Kingdom" = "UK",
+                   "Czechia" = "Czech Republic")
+  short <- ifelse(oa$ne_name %in% names(ne_to_short), ne_to_short[oa$ne_name], oa$ne_name)
+  papers_df <- as.data.frame(table(country = short), responseName = "papers",
+                             stringsAsFactors = FALSE)
+  source_caption <- "Source: shark-references.com papers; first-author institution country from OpenAlex"
+}
+
+cat("Papers per country loaded:", nrow(papers_df), "countries\n")
+cat("Total papers:", sum(papers_df$papers), "\n\n")
+
+# Country name mapping for mismatches (short name -> Natural Earth `name`,
+# which is what the join below uses). Russia, South Korea, and Iran already
+# match Natural Earth; mapping them to their UN long names left them grey.
 country_mapping <- c(
   "USA" = "United States of America",
   "UK" = "United Kingdom",
-  "Russia" = "Russian Federation",
-  "Taiwan" = "Taiwan",
-  "South Korea" = "Republic of Korea",
-  "Iran" = "Iran (Islamic Republic of)",
   "Czech Republic" = "Czechia",
   "UAE" = "United Arab Emirates"
 )
@@ -45,9 +75,7 @@ country_mapping <- c(
 country_short_names <- c(
   "United States of America" = "USA",
   "United Kingdom" = "UK",
-  "Russian Federation" = "Russia",
-  "Republic of Korea" = "S. Korea",
-  "Iran (Islamic Republic of)" = "Iran",
+  "South Korea" = "S. Korea",
   "Czechia" = "Czech Rep.",
   "United Arab Emirates" = "UAE",
   "New Zealand" = "NZ",
@@ -61,7 +89,7 @@ large_countries <- c(
 
 "Russia", "India", "Argentina", "Mexico", "Indonesia", "South Africa",
   "Japan", "France", "Spain", "Germany", "Italy", "United Kingdom",
-  "Sweden", "Norway", "Finland", "Poland", "Turkey", "Iran (Islamic Republic of)",
+  "Sweden", "Norway", "Finland", "Poland", "Turkey", "Iran",
   "Saudi Arabia", "Egypt", "Algeria", "Libya", "Peru", "Chile", "Colombia",
   "Venezuela", "New Zealand", "Philippines", "Thailand", "Malaysia", "Vietnam",
   "Pakistan", "Bangladesh", "Myanmar", "Kazakhstan", "Mongolia", "Ukraine",
@@ -292,7 +320,7 @@ p_world <- ggplot(data = world_data) +
   labs(
     title = "Shark Research Papers by Author Country (1950-2025)",
     subtitle = paste0("Total: ", format(sum(papers_df$papers), big.mark=","), " papers from ", nrow(papers_df), " countries | Grey = no papers"),
-    caption = "Source: shark-references.com database (n = 6,183 papers with author country data)"
+    caption = paste0(source_caption, " (n = ", format(sum(papers_df$papers), big.mark = ","), " papers)")
   ) +
   theme_minimal() +
   theme(
@@ -376,7 +404,7 @@ p_europe <- ggplot(data = world_data) +
   labs(
     title = "Shark Research Papers by Author Country - Europe",
     subtitle = "European institutions leading shark research | Grey = no papers",
-    caption = "Source: shark-references.com database"
+    caption = paste0(source_caption, " (n = ", format(sum(papers_df$papers), big.mark = ","), " papers)")
   ) +
   theme_minimal() +
   theme(
@@ -479,7 +507,7 @@ p_regional <- ggplot(data = world_data) +
                      " papers (", region_summary$pct[region_summary$region == "Global North"], "%) | ",
                      "Global South: ", region_summary$papers[region_summary$region == "Global South"],
                      " papers (", region_summary$pct[region_summary$region == "Global South"], "%) | Grey = no papers"),
-    caption = "Source: shark-references.com database (n = 6,183 papers)"
+    caption = paste0(source_caption, " (n = ", format(sum(papers_df$papers), big.mark = ","), " papers)")
   ) +
   # Single-row legend along the bottom, pulled tight to the plot.
   guides(fill = guide_legend(nrow = 1, label.position = "right")) +

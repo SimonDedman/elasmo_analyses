@@ -4,12 +4,16 @@ Extract species and analytical technique mentions from full PDF text,
 with frequency counting and evidence context. Also extracts depth
 evidence sentences.
 
-Reuses the PDF-to-paper mapping from extract_schema_columns.py.
+PDFs are resolved by literature_id through outputs/pdf_id_map.csv (the map
+extract_schema_columns.py uses; rebuild it with build_pdf_id_map.py after a
+filing batch). Until 2026-09-30 this script matched PDFs by surname + year,
+the matcher that filed ~5% of papers under the wrong PDF.
 
 Usage:
     python scripts/extract_species_techniques_from_pdfs.py             # full run
     python scripts/extract_species_techniques_from_pdfs.py --limit 50  # test
     python scripts/extract_species_techniques_from_pdfs.py --resume    # continue
+    ... --workers 8                                                    # parallel text extraction
 """
 
 import argparse
@@ -45,11 +49,10 @@ TECH_DB = PROJECT_ROOT / "database" / "technique_taxonomy.db"
 
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from extract_schema_columns import (
-    build_pdf_index,
-    _first_surname,
-    _pick_best_pdf,
     extract_text_from_pdf,
+    load_pdf_id_map,
 )
+from multiprocessing import Pool
 
 
 # ---------------------------------------------------------------------------
@@ -268,20 +271,36 @@ def process_paper(
 # Main
 # ---------------------------------------------------------------------------
 
+_SPECIES: list = []
+_TECHNIQUES: list = []
+
+
+def _work(item):
+    global _SPECIES, _TECHNIQUES
+    if not _SPECIES:                       # a spawned/forkserver worker starts empty
+        _SPECIES, _TECHNIQUES = load_species_patterns(), load_technique_patterns()
+    lit_id, pdf_path, title = item
+    text = extract_text_from_pdf(pdf_path)
+    if not text or len(text) < 100:
+        return lit_id, None
+    return lit_id, process_paper(lit_id, text, _SPECIES, _TECHNIQUES)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, help="Process first N papers only")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
 
     species = load_species_patterns()
     techniques = load_technique_patterns()
     print(f"Loaded {len(species)} species, {len(techniques)} techniques")
 
-    # Build PDF index (same as extract_schema_columns.py)
-    print("Building PDF index...")
-    pdf_index = build_pdf_index(PDF_DIR)
-    print(f"  {sum(len(v) for v in pdf_index.values())} PDFs indexed")
+    pdf_by_id = load_pdf_id_map()
+    if not pdf_by_id:
+        sys.exit("outputs/pdf_id_map.csv is missing or empty: run build_pdf_id_map.py first")
+    print(f"  {len(pdf_by_id)} PDFs mapped by literature_id")
 
     # Load parquet
     print("Loading parquet...")
@@ -305,21 +324,10 @@ def main():
         if lit_id in processed:
             continue
 
-        authors = row.get("authors")
-        year_raw = row.get("year")
         title = row.get("title") or ""
-        if not authors or pd.isna(year_raw):
-            continue
-
-        year = int(year_raw)
-        surname = _first_surname(authors)
-        if not surname:
-            continue
-
-        candidates = pdf_index.get((surname, year), [])
-        best_pdf = _pick_best_pdf(candidates, title)
+        best_pdf = pdf_by_id.get(lit_id)
         if best_pdf:
-            paper_pdfs.append((lit_id, best_pdf, title))
+            paper_pdfs.append((lit_id, Path(best_pdf), title))
 
     print(f"  {len(paper_pdfs)} papers with PDFs to process")
     if args.limit:
@@ -331,12 +339,18 @@ def main():
     all_evidence: list[dict] = []
     count = 0
 
-    for lit_id, pdf_path, title in paper_pdfs:
-        text = extract_text_from_pdf(pdf_path)
-        if not text or len(text) < 100:
+    global _SPECIES, _TECHNIQUES
+    _SPECIES, _TECHNIQUES = species, techniques
+    if args.workers > 1:
+        import multiprocessing as mp
+        pool = mp.get_context("fork").Pool(args.workers)   # inherit the compiled patterns
+        results = pool.imap(_work, paper_pdfs, chunksize=8)
+    else:
+        results = map(_work, paper_pdfs)
+    for lit_id, result in results:
+        if result is None:
+            processed.add(lit_id)          # no usable text: counted as seen
             continue
-
-        result = process_paper(lit_id, text, species, techniques)
         all_sp[lit_id] = result["species"]
         all_tech[lit_id] = result["techniques"]
         all_evidence.extend(result["sp_evidence"])

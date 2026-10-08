@@ -109,7 +109,7 @@ p_d6b <- ggplot(trend, aes(x = year_bin, y = pct, colour = gender, group = gende
             show.legend = FALSE) +
   scale_colour_manual(values = gender_cols) +
   scale_size_continuous(range = c(1.5, 5), name = "Papers") +
-  scale_x_continuous(breaks = seq(1950, 2030, 10), limits = c(NA, 2033)) +
+  scale_x_continuous(breaks = seq(1950, 2030, 10), limits = c(NA, 2032.5)) +
   scale_y_continuous(labels = scales::percent_format(scale = 1)) +
   labs(title = "Trend over time", x = "Year (5-year bins)",
        y = "% first author") +
@@ -117,7 +117,7 @@ p_d6b <- ggplot(trend, aes(x = year_bin, y = pct, colour = gender, group = gende
   guides(colour = guide_legend(title = "Gender"))
 
 # --------------------------------------------------------------------------
-# Overlay: 2026 conference-attendance reference points (AES2026, SI2026)
+# Overlay: 2026 conference-attendance reference points (AES2026, SI2026, EEA2026)
 # Data-driven from outputs/conference_gender.csv, produced by
 # scripts/compute_conference_gender.py (AES: parsed JMIH agenda "Speaker:"
 # lines, gender via genderize cache + infer_author_gender.py; SI2026:
@@ -127,27 +127,44 @@ conf_gender_path <- file.path(base_dir, "outputs/conference_gender.csv")
 if (file.exists(conf_gender_path)) {
   conf_gender <- read_csv(conf_gender_path, show_col_types = FALSE)
 
-  # AES2026 and SI2026 are both ~2026 and only ~2 months apart, so at the
-  # true x = 2026 the two conferences' dots sit on top of each other. Dodge
-  # AES2026 to the right so it reads as its own independent point; SI2026
-  # keeps its true x = 2026.
+  # The three 2026 conferences are dodged to 2027 / 2029 / 2031 (in date
+  # order: SI May, AES July, EEA October) so their points can be told apart;
+  # at their true x they sit on top of each other. Each conference's label
+  # sits at 50 % in the empty band between the two trend lines and is joined
+  # to its female and male points by two lines, one linetype per conference.
   conf_gender <- conf_gender |>
-    mutate(year_plot = if_else(conference == "AES2026", year + 3, year))
+    mutate(year_plot = case_when(conference == "SI2026"  ~ 2027,
+                                 conference == "AES2026" ~ 2029,
+                                 conference == "EEA2026" ~ 2031,
+                                 TRUE ~ year),
+           month = c(SI2026 = "May", AES2026 = "Jul", EEA2026 = "Oct")[conference])
 
-  conf_shapes <- c(AES2026 = 17, SI2026 = 18)  # filled triangle / diamond
+  # filled triangle / square / diamond
+  conf_shapes <- c(AES2026 = 17, EEA2026 = 15, SI2026 = 18)
   # Filled diamond (pch 18) reads visually smaller than filled triangle
   # (pch 17) at the same ggplot `size`, so the diamond is up-sized here to
   # area-match the triangle rather than mapping size to data.
-  conf_point_size <- c(AES2026 = 5, SI2026 = 6.5)
+  conf_point_size <- c(AES2026 = 4, EEA2026 = 4, SI2026 = 5.2)
 
-  conf_female_labels <- conf_gender |>
+  conf_labels <- conf_gender |>
     filter(gender == "Female") |>
-    mutate(label = sprintf("%s presenters: %.1f%% F (n=%d)", conference, pct, n_known))
+    mutate(label = sprintf("%s (%s 2026)\n%.1f%% women, n=%d", sub("2026", "", conference), month, pct, n_known),
+           x_lab = c(SI2026 = 1963, AES2026 = 1983, EEA2026 = 2003)[conference],
+           y_lab = c(SI2026 = 58, AES2026 = 50, EEA2026 = 42)[conference],   # staggered so no line crosses a label
+           lty   = c(SI2026 = "solid", AES2026 = "dashed", EEA2026 = "dotted")[conference])
+  conf_lines <- conf_gender |>
+    filter(gender %in% c("Female", "Male")) |>
+    left_join(select(conf_labels, conference, x_lab, y_lab, lty), by = "conference") |>
+    mutate(x0 = x_lab + 8.6)                # label half-width, so the line starts at its right edge
 
   p_d6b <- p_d6b +
     geom_point(data = filter(conf_gender, conference == "AES2026"),
                aes(x = year_plot, y = pct, colour = gender, shape = conference),
                size = conf_point_size[["AES2026"]], stroke = 1,
+               show.legend = c(shape = TRUE, colour = FALSE)) +
+    geom_point(data = filter(conf_gender, conference == "EEA2026"),
+               aes(x = year_plot, y = pct, colour = gender, shape = conference),
+               size = conf_point_size[["EEA2026"]], stroke = 1,
                show.legend = c(shape = TRUE, colour = FALSE)) +
     geom_point(data = filter(conf_gender, conference == "SI2026"),
                aes(x = year_plot, y = pct, colour = gender, shape = conference),
@@ -158,15 +175,18 @@ if (file.exists(conf_gender_path)) {
     # match the triangle). The shape legend ignores those per-geom sizes and
     # drew both keys at one size, so the pch-17 triangle read larger than the
     # pch-18 diamond. Re-apply the same area-matched sizes to the legend keys
-    # (breaks are alphabetical: AES2026 then SI2026) so the two glyphs match.
+    # (breaks are alphabetical) so the two glyphs match.
     guides(shape = guide_legend(override.aes = list(
-      size = c(conf_point_size[["AES2026"]], conf_point_size[["SI2026"]])))) +
-    ggrepel::geom_text_repel(
-      data = conf_female_labels,
-      aes(x = year_plot, y = pct, label = label),
-      inherit.aes = FALSE, colour = "grey20", fontface = "bold", size = 3,
-      nudge_x = -6, direction = "y", segment.size = 0.3, seed = 1
-    )
+      size = unname(conf_point_size[sort(names(conf_point_size))])))) +
+    # two lines per conference, label to its female and male points
+    geom_segment(data = conf_lines,
+                 aes(x = x0, y = y_lab, xend = year_plot, yend = pct, linetype = lty),
+                 inherit.aes = FALSE, colour = "grey35", linewidth = 0.4, show.legend = FALSE) +
+    scale_linetype_identity() +
+    geom_label(data = conf_labels,
+               aes(x = x_lab, y = y_lab, label = label),
+               inherit.aes = FALSE, colour = "grey15", fill = "white", fontface = "bold",
+               size = 3, lineheight = 0.9, label.size = 0) +
 
   cat("\n  Overlaid conference gender dots:\n")
   print(conf_gender |> select(conference, gender, n, n_known, pct))
