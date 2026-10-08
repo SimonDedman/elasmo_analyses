@@ -67,10 +67,12 @@ FAMILY_SPECS: list[FamilySpec] = [
                note="Global North or Global South, from the first author's country."),
     FamilySpec("country_record", "Country (record field)", "categorical", "multiselect",
                column="country", sorts=("freq", "az"),
-               note="The place Shark-References itself filed the paper under "
+               note="Countries only; seas and regions are under Ocean basin and Sub-basin. "
+                    "The place Shark-References itself filed the paper under "
                     "(last element of its 'keyword place' field), not something we "
-                    "extracted. It mixes countries with US states, regions and seas "
-                    "(for example Kansas, Mediterranean), and ~85% of papers have none."),
+                    "extracted. US states, regions, seas and territories in that field "
+                    "(for example Kansas, Mediterranean) are not offered, and ~85% of "
+                    "papers have no value."),
     # REMOVED "superregion" (column `superregion`): it is parsed from the same
     # Shark-References keyword-place field as Country, and its values include
     # countries and US states, so it is not a super-region field. 2026-10-08.
@@ -114,8 +116,41 @@ FLAG_LABELS = {
         "Parachute research (first author's country differs from the study country)",
 }
 
+# Real countries only, for the "country_record" family (applied in serve.py's
+# filters payload; the parquet is untouched). Sovereign states plus Taiwan, as in
+# the study/first-author country families. Aliases map a raw spelling to the
+# canonical name; a raw value is kept when its canonical form is in COUNTRIES.
+# Deliberately absent: Georgia (a US state in this field), Antarctica, Greenland,
+# Puerto Rico, French Guiana and other territories, continents, seas, US states
+# and Canadian provinces. INFERRED: curated list, 2026-10-08.
+COUNTRIES = frozenset(n.replace("~", " ") for n in """
+Afghanistan Albania Algeria Angola Argentina Armenia Australia Austria Azerbaijan Bahamas Bahrain Ba
+ngladesh Barbados Belarus Belgium Belize Benin Bhutan Bolivia Bosnia Botswana Brazil Brunei Bulgaria
+ Burkina~Faso Burundi Cambodia Cameroon Canada Chad Chile China Colombia Comoros Congo Costa~Rica Cr
+oatia Cuba Cyprus Czech~Republic Denmark Djibouti Dominican~Republic Ecuador Egypt El~Salvador Eritr
+ea Estonia Ethiopia Fiji Finland France Gabon Gambia Germany Ghana Greece Guatemala Guinea Guyana Ha
+iti Honduras Hungary Iceland India Indonesia Iran Iraq Ireland Israel Italy Jamaica Japan Jordan Kaz
+akhstan Kenya Kuwait Kyrgyzstan Laos Latvia Lebanon Liberia Libya Lithuania Luxembourg Madagascar Ma
+lawi Malaysia Maldives Mali Malta Mauritania Mauritius Mexico Micronesia Moldova Monaco Mongolia Mon
+tenegro Morocco Mozambique Myanmar Namibia Nepal Netherlands New~Zealand Nicaragua Niger Nigeria Nor
+th~Korea North~Macedonia Norway Oman Pakistan Palau Panama Papua~New~Guinea Paraguay Peru Philippine
+s Poland Portugal Qatar Romania Russia Rwanda Samoa Saudi~Arabia Senegal Serbia Seychelles Sierra~Le
+one Singapore Slovakia Slovenia Somalia South~Africa South~Korea South~Sudan Spain Sri~Lanka Sudan S
+uriname Sweden Switzerland Syria Taiwan Tajikistan Tanzania Thailand Togo Tonga Trinidad Tunisia Tur
+key Turkmenistan Uganda Ukraine United~Arab~Emirates United~Kingdom United~States Uruguay Uzbekistan
+ Vanuatu Venezuela Vietnam Yemen Zambia Zimbabwe
+""".split())
+COUNTRY_ALIASES = {"UK": "United Kingdom", "USA": "United States", "US": "United States",
+                   "Tunesia": "Tunisia", "Quatar": "Qatar", "Latvian": "Latvia"}
+
+
+def is_country(v: str) -> bool:
+    return COUNTRY_ALIASES.get(v, v) in COUNTRIES
+
+
 # Display labels for categorical values whose raw text is a machine token.
 VALUE_LABELS = {
+    "country_record": {"Tunesia": "Tunisia", "Quatar": "Qatar", "Latvian": "Latvia"},
     "data_source": {"shark-references.com": "Shark-References database",
                     "coauthor_contribution": "Coauthor-contributed library"},
 }

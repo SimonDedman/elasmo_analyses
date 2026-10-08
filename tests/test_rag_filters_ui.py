@@ -94,3 +94,17 @@ def test_papers_author_filter_sorted(client):
 
 def test_papers_no_filters_400(client):
     assert client.post("/api/papers", json={"filters": {}}).status_code == 400
+
+
+def test_country_record_only_real_countries(client):
+    fams = {f["key"]: f for f in client.get("/api/filters").json()["families"]}
+    fam = fams["country_record"]
+    vals = {o["value"] for o in fam["options"]}
+    for bad in ("Mediterranean", "North America", "Kansas", "Europe", "Antarctica", "Georgia", "Alberta"):
+        assert bad not in vals
+    for good in ("Germany", "United Kingdom", "Japan"):
+        assert good in vals
+    from filter_config import is_country
+    assert all(is_country(v) for v in vals)
+    assert "Countries only" in fam["note"] and "Sub-basin" in fam["note"]
+    assert {o["label"] for o in fam["options"]} >= {"Tunisia"}

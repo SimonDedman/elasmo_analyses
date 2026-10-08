@@ -33,6 +33,11 @@ export default function FilterPanel({
 
   return (
     <div className="filter-panel">
+      <img
+        src={`${import.meta.env.BASE_URL}shark_oracle_lockup_text_right.svg`}
+        alt="Shark Oracle"
+        style={{ display: 'block', width: '100%', maxWidth: 260, height: 'auto', background: '#fff', borderRadius: 6, marginBottom: 8 }}
+      />
       <h1>
         Elasmobranch Author Atlas{' '}
         <span className="tag">

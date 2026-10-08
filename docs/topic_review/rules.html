@@ -36,6 +36,7 @@ td.id a{text-decoration:none}
 .champ{font-weight:700;color:var(--warn)}
 tr.topic td{background:var(--page);font-weight:650;color:var(--ink2);padding-top:8px}
 tr.topic td a{text-decoration:none}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 10px}.chips button{font:inherit;font-size:12px;padding:2px 9px;border:1px solid var(--axis);border-radius:12px;background:var(--surface);color:var(--ink2);cursor:pointer}.chips button.on{background:var(--seq);color:#fff;border-color:var(--seq)}
 .muted{color:var(--muted)}
 .note{font-size:13px;color:var(--ink2);border-left:3px solid var(--warn);padding:6px 10px;margin:12px 0;background:var(--surface)}
 </style>
@@ -46,12 +47,14 @@ tr.topic td a{text-decoration:none}
 <p class="lede">The live extraction columns and the champions' proposed rules, with the keywords and anchors each one counts, its threshold, how many papers it touches, and how far it agrees with Fable's reading of the corpus sample (silver labels, not expert). A column that belongs to several topics is listed under each; the counts are the same. The <b>Source</b> column opens the line of the extractor that defines a live column, or the workbook a proposed rule came from.</p>
 <div class="bar">
   <input id="q" type="search" placeholder="filter: topic, rule, keyword, anchor…">
+  <label>topic <select id="topic"><option value="">all topics</option></select></label>
   <label>kind <select id="kind"><option value="">all</option><option value="live">live columns</option><option value="proposed">proposed rules</option></select></label>
   <label>schema <select id="prefix"><option value="">all</option></select></label>
   <label><input type="checkbox" id="byTopic" checked> group by topic</label>
   <label><input type="checkbox" id="distinct"> each column once</label>
   <span id="count"></span>
 </div>
+<div class="chips" id="chips"></div>
 <div class="tablewrap"><table id="t"></table></div>
 <p class="lede" id="gen" style="font-size:12.5px"></p>
 <script src="./topics.js"></script>
@@ -68,9 +71,15 @@ const COLS = [['id', 'rule', 0], ['kw', 'keywords (anchors in blue; case-sensiti
 let sortKey = null, sortDir = 1;
 for (const p of [...new Set(ROWS.map(r => r.prefix))].sort()) document.getElementById('prefix').insertAdjacentHTML('beforeend', `<option value="${esc(p)}">${esc(p)}</option>`);
 const $ = s => document.querySelector(s);
+const TOPICS = [...new Map(ROWS.sort((a, b) => a.order - b.order).map(r => [r.topic, r])).values()];
+const NBY = {}; ROWS.forEach(r => NBY[r.topic] = (NBY[r.topic] || 0) + 1);
+for (const r of TOPICS) $('#topic').insertAdjacentHTML('beforeend', `<option value="${esc(r.topic)}">${esc(r.topic_title)} (${NBY[r.topic]})</option>`);
+const qt = new URLSearchParams(location.search).get('topic'); if (qt && NBY[qt]) $('#topic').value = qt;
+function drawChips(){ $('#chips').innerHTML = `<button data-t="" class="${$('#topic').value ? '' : 'on'}">all ${TOPICS.length} topics (${ROWS.length})</button>` + TOPICS.map(r => `<button data-t="${esc(r.topic)}" class="${$('#topic').value === r.topic ? 'on' : ''}">${esc(r.topic_title)} ${NBY[r.topic]}</button>`).join('');
+  $('#chips').querySelectorAll('button').forEach(b => b.onclick = () => { $('#topic').value = b.dataset.t; draw(); }); }
 function draw(){
-  const q = $('#q').value.trim().toLowerCase(), kind = $('#kind').value, prefix = $('#prefix').value, byTopic = $('#byTopic').checked && !sortKey, distinct = $('#distinct').checked;
-  let rows = ROWS.filter(r => (!kind || r.kind === kind) && (!prefix || r.prefix === prefix)
+  const q = $('#q').value.trim().toLowerCase(), kind = $('#kind').value, prefix = $('#prefix').value, topicSel = $('#topic').value, byTopic = $('#byTopic').checked && !sortKey, distinct = $('#distinct').checked;
+  let rows = ROWS.filter(r => (!kind || r.kind === kind) && (!prefix || r.prefix === prefix) && (!topicSel || r.topic === topicSel)
     && (!q || [r.topic, r.topic_title, r.id, r.label, r.meaning, ...r.terms, ...r.anchors].join(' ').toLowerCase().includes(q)));
   if (distinct){ const seen = new Set(); rows = rows.filter(r => !seen.has(r.id) && seen.add(r.id)); }
   rows.sort((a, b) => a.order - b.order || (a.kind === b.kind ? 0 : a.kind === 'live' ? -1 : 1) || (b.discipline - a.discipline) || a.id.localeCompare(b.id));
@@ -87,11 +96,12 @@ function draw(){
       <td class="n">${pct(r.precision)}</td><td class="n">${pct(r.recall)}</td><td class="n">${pct(r.f1)}</td><td class="n">${r.unreach === null || r.unreach === undefined ? '<span class="muted">–</span>' : fmt(r.unreach)}</td>
       <td>${r.source && r.source.url ? `<a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.label || 'source')}</a>` : `<span class="muted">${esc(r.source && r.source.label || '')}</span>`}</td></tr>`;
   }
-  $('#t').innerHTML = html;
+  $('#t').innerHTML = html; drawChips();
+  try { const u = new URL(location.href); topicSel ? u.searchParams.set('topic', topicSel) : u.searchParams.delete('topic'); history.replaceState(null, '', u); } catch (e) {}
   $('#count').textContent = `${rows.length} rows of ${ROWS.length}; ${new Set(rows.map(r => r.id)).size} distinct rules`;
   $('#t').querySelectorAll('th[data-k]').forEach(th => th.onclick = () => { const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : (['id', 'kw', 'source', 'proximity'].includes(k) ? 1 : -1); sortKey = k; draw(); });
 }
-['q', 'kind', 'prefix', 'byTopic', 'distinct'].forEach(id => $('#' + id).addEventListener('input', draw));
+['q', 'topic', 'kind', 'prefix', 'byTopic', 'distinct'].forEach(id => $('#' + id).addEventListener('input', draw));
 draw();
 document.getElementById('gen').innerHTML = `Built ${esc(D.generated)} from ${(D.topics || []).length} topics (${D.n_distinct_rules} distinct rules)` + (D.extractor_commit ? `; live-column source lines refer to extractor commit <code>${esc(D.extractor_commit)}</code>` : '') + (D.missing && D.missing.length ? `; <b>not yet built: ${esc(D.missing.join(', '))}</b>` : '') + `. Precision, recall and F1 compare the live rule with Fable's labels on the papers Fable has read; "unreachable" counts Fable-IN papers that mention no keyword of the rule at all. The full keyword reference by schema, with notes, is <a href="../schema_proposals/extraction_review_reference.html">extraction_review_reference</a>.`;
 </script>

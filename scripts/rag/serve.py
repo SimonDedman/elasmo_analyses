@@ -42,7 +42,7 @@ sys.path.insert(0, str(HERE))
 from common import (  # noqa: E402
     BGE_QUERY_PREFIX, CHUNKS_JSONL, EMBED_MODEL_NAME, FAISS_INDEX_PATH, RAG_OUT_DIR,
 )
-from filter_config import EXCLUDE, FLAG_LABELS, VALUE_LABELS, resolve_families  # noqa: E402
+from filter_config import EXCLUDE, is_country, FLAG_LABELS, VALUE_LABELS, resolve_families  # noqa: E402
 import labels  # noqa: E402
 from retrieval import (  # noqa: E402
     build_author_map, build_position_map, positions_for_ids,
@@ -136,6 +136,8 @@ def _build_filters_payload() -> dict:
         elif spec.kind == "categorical":
             col = pf[spec.column].astype(str)
             col = col[~col.map(labels.is_blank)]
+            if spec.key == "country_record":   # countries only; the rest is under the basin families
+                col = col[col.map(is_country)]
             vc = col.value_counts()
             limit = 1200 if spec.widget == "search-multiselect" else 400
             opts = []
