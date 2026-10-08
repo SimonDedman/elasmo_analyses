@@ -1,4 +1,4 @@
-export default function Legend({ colorBy, palettes }) {
+export default function Legend({ colorBy, palettes, muted }) {
   const pal = palettes[colorBy] ?? {};
   const entries = Object.entries(pal);
   if (entries.length === 0) return null;
@@ -27,7 +27,7 @@ export default function Legend({ colorBy, palettes }) {
                 opacity: (rgba[3] ?? 255) / 255,
               }}
             />
-            <span className="label">{key}</span>
+            <span className="label" style={muted && muted.has(key) ? { fontStyle: 'italic', color: '#888' } : undefined}>{key}</span>
           </div>
         ))}
         {!hasCatchAll && (

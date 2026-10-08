@@ -224,11 +224,26 @@ export default function App() {
   }, [authors]);
   const disciplinePalette = useMemo(() => buildDisciplinePalette(discCounts), [discCounts]);
 
+  // When the colour attribute is also being filtered (main discipline), disciplines not in the
+  // filter go grey on the map and grey + italic in the legend; adding one back restores its colour.
+  const MUTED = [200, 200, 200, 200];
+  const mutedKeys = useMemo(() => {
+    if (colorBy !== 'disc_main' || !filters.disc?.length) return null;
+    const keep = new Set(filters.disc);
+    return new Set(Object.keys(disciplinePalette).filter(k => !keep.has(k)));
+  }, [colorBy, filters.disc, disciplinePalette]);
+  const discPaletteShown = useMemo(() => {
+    if (!mutedKeys) return disciplinePalette;
+    const out = {};
+    Object.entries(disciplinePalette).forEach(([k, v]) => { out[k] = mutedKeys.has(k) ? MUTED : v; });
+    return out;
+  }, [disciplinePalette, mutedKeys]);
+
   const palettes = useMemo(() => ({
     gender:        GENDER_PALETTE,
     country:       countryPalette,
-    disc_main:     disciplinePalette,
-  }), [countryPalette, disciplinePalette]);
+    disc_main:     discPaletteShown,
+  }), [countryPalette, discPaletteShown]);
 
   // Research filters: an author matches when ANY of their papers carries a selected value
   // (OR within a filter, AND across filters). Full membership lives in dx/tx/sx (vocab indices);
@@ -954,7 +969,7 @@ export default function App() {
           }));
         },
         updateTriggers: {
-          getIcon: [filterSig, colorBy],
+          getIcon: [filterSig, colorBy, palettes],
           getSize: [filterSig],
           getPosition: [filterSig],
         },
@@ -1262,6 +1277,7 @@ export default function App() {
       {authorsFC && (
         <FilterPanel
           filters={filters} setFilters={setFilters}
+          mutedKeys={mutedKeys}
           colorBy={colorBy} setColorBy={setColorBy}
           shapeBy={shapeBy} setShapeBy={setShapeBy}
           showEdges={showEdges} setShowEdges={setShowEdges}

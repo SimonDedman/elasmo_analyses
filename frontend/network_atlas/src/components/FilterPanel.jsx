@@ -17,7 +17,7 @@ export default function FilterPanel({
   selectedAuthor, onClearSelection,
   stats, authorCount, totalAuthors, edgeCount,
   institutionCount,
-  vocab, palettes,
+  vocab, palettes, mutedKeys,
   authorNames,
   genderCounts,                   // {key: n, …}
   shapeByMatrix,                  // [{attr, n_categories, top}, …]
@@ -214,7 +214,7 @@ export default function FilterPanel({
             </label>
           </div>
 
-          <Legend colorBy={colorBy} palettes={palettes} />
+          <Legend colorBy={colorBy} palettes={palettes} muted={mutedKeys} />
         </>
       )}
 
