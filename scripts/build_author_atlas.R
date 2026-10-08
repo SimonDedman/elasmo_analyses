@@ -335,10 +335,21 @@ bin <- function(prefix) {
   m <- as.matrix(as.data.frame(lapply(pq[cols], function(v) { v <- as.numeric(v); v[is.na(v)] <- 0; v > 0 })))
   storage.mode(m) <- "numeric"; colnames(m) <- cols; Matrix(m, sparse = TRUE)
 }
+# Species are mention COUNTS. Most papers name a species in passing (1,773 of the 2,629 papers
+# mentioning white shark do so once), so "any mention" made the Species filter match 41% of
+# authors. A species counts as a paper's FOCUS when it is mentioned >= 3 times and >= 25% as often
+# as that paper's most-mentioned species, or is the paper's top species with >= 2 mentions.
+sp_focus <- function() {
+  cols <- grep("^sp_", names(pq), value = TRUE)
+  m <- as.matrix(as.data.frame(lapply(pq[cols], function(v) { v <- as.numeric(v); v[is.na(v)] <- 0; v })))
+  top <- apply(m, 1, max)
+  f <- (m >= 3 & m >= 0.25 * top) | (m == top & m >= 2)
+  storage.mode(f) <- "numeric"; colnames(f) <- cols; Matrix(f, sparse = TRUE)
+}
 FAM <- list(
   disc = list(M = bin("d_"),  lab = function(c) title_case(sub("^d_", "", c))),
   tech = list(M = bin("a_"),  lab = tech_label),
-  sp   = list(M = bin("sp_"), lab = sp_label),
+  sp   = list(M = sp_focus(), lab = sp_label),
   ob   = list(M = bin("ob_"), lab = function(c) title_case(sub("^ob_", "", c)))
 )
 # study country as one-hot
@@ -403,14 +414,17 @@ profile <- profile |> left_join(nco, by = c("openalex_author_id" = "id")) |> mut
 # Vocabulary (author counts, over mapped authors) for the front-end filters; called after authors_geo exists
 # Full (not top-N) membership as 0-based indices into the vocab arrays, so the filters match
 # "any of the author's papers carries X" rather than only the displayed top few.
-idx_lists <- function(fam_M) {
-  R <- as(AP %*% fam_M > 0, "RsparseMatrix")
+# Species also need to RECUR for an author (>= 2 focus papers, or >= 20% of their papers), so one
+# co-authored paper on a species does not file a prolific author under it.
+sp_member <- function(M) { C <- AP %*% M; (C >= 2) | (C >= 0.2 * pmax(n_prof_papers, 1) & C > 0) }
+idx_lists <- function(fam_M, member = function(M) AP %*% M > 0) {
+  R <- as(member(fam_M), "RsparseMatrix")
   lapply(seq_len(nrow(R)), function(r) { st <- R@p[r] + 1; en <- R@p[r + 1]
     if (en < st) I(integer(0)) else I(as.integer(R@j[st:en])) })   # I(): keep length-1 as a JSON array
 }
 profile$dx <- idx_lists(FAM$disc$M)
 profile$tx <- idx_lists(FAM$tech$M)
-profile$sx <- idx_lists(FAM$sp$M)
+profile$sx <- idx_lists(FAM$sp$M, sp_member)
 # Vocabulary in fixed column order (array position = the index above); `authors` counts the mapped
 # authors only, so the front end can hide zero-count entries and sort by count.
 make_vocab <- function(mask) {
@@ -418,7 +432,8 @@ make_vocab <- function(mask) {
     tibble(label = labs, authors = as.integer(colSums((AP[mask, , drop = FALSE] %*% fam_M) > 0)))
   list(disciplines = vocab_of(FAM$disc$M, FAM$disc$lab(colnames(FAM$disc$M))),
        techniques  = vocab_of(FAM$tech$M, FAM$tech$lab(colnames(FAM$tech$M))),
-       species     = vocab_of(FAM$sp$M,   FAM$sp$lab(colnames(FAM$sp$M))),
+       species     = tibble(label = FAM$sp$lab(colnames(FAM$sp$M)),
+                            authors = as.integer(colSums(sp_member(FAM$sp$M)[mask, , drop = FALSE]))),
        basins      = vocab_of(FAM$ob$M,   FAM$ob$lab(colnames(FAM$ob$M))))
 }
 cat(sprintf("  Profiles for %d authors\n", nrow(profile)))
