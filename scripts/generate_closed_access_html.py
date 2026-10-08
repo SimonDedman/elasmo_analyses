@@ -403,7 +403,7 @@ def build_page(heading, subtitle, papers, kind):
               "citation line under the title, it gives the volume and pages as Shark-References records them.")
     head = f"""<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download helper: {esc(heading)}</title><style>{CSS}{CSS_EXTRA}</style></head><body>
+<title>Download helper: {esc(heading)}</title><style>{CSS}{CSS_EXTRA}</style><script src="../assets/theme-toggle.js"></script></head><body>
 <p class="back"><a href="index.html">&larr; All download helpers</a> &nbsp;|&nbsp; <a href="{HUB}">Downloading hub</a></p>
 <h1>Download helper: {esc(heading)}</h1>
 <div class="stats">{subtitle}<br><strong>{n}</strong> papers across {len(journals)} journal(s). Generated {datetime.now().strftime('%Y-%m-%d %H:%M')}; papers filed since then still appear until the next rebuild.</div>
@@ -522,7 +522,7 @@ def main():
     n_doi, n_nodoi = sum(x[1] for x in index_doi), sum(x[1] for x in index_nodoi)
     (OUT / "index.html").write_text(f"""<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download helpers</title><style>{CSS}{CSS_EXTRA}</style></head><body>
+<title>Download helpers</title><style>{CSS}{CSS_EXTRA}</style><script src="../assets/theme-toggle.js"></script></head><body>
 <p class="back"><a href="{HUB}">&larr; Downloading hub</a></p>
 <h1>Download helpers</h1>
 <div class="stats">Every paper still to get, {n_doi + n_nodoi:,} in all, laid out for working through: one card per paper with

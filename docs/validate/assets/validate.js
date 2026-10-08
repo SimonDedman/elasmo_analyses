@@ -6,6 +6,17 @@
  *
  * No ES6 modules; IIFE; var for broad compatibility.
  */
+/* Light/dark toggle: pages are generated in bulk, so the shared script is injected from here
+   (docs/validate/assets/ -> docs/assets/theme-toggle.js). */
+(function () {
+  try {
+    if (window.__soThemeToggle || !document.currentScript) return;
+    var t = document.createElement('script');
+    t.src = new URL('../../assets/theme-toggle.js', document.currentScript.src).href;
+    document.head.appendChild(t);
+  } catch (e) {}
+})();
+
 (function () {
   'use strict';
 

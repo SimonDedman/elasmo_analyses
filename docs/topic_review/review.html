@@ -29,7 +29,7 @@ button.primary{background:var(--ink);color:var(--page);border-color:var(--ink)}
 button[disabled]{opacity:.45;cursor:not-allowed}
 select,input[type=text],input[type=number],input[type=search]{background:var(--surface);border:1px solid var(--axis);border-radius:6px;padding:4px 6px}
 kbd{font:11px ui-monospace,monospace;border:1px solid var(--axis);border-bottom-width:2px;border-radius:4px;padding:0 4px;background:var(--surface)}
-header{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+header{padding:10px 56px 10px 16px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 header h1{font-size:16px;margin:0;font-weight:650}
 header .crumb{color:var(--ink2)}
 header .grow{flex:1}
@@ -140,6 +140,7 @@ b.yes{color:var(--in)}b.no{color:var(--out)}
 svg text{fill:var(--ink2);font-size:10.5px}
 @media (max-width:900px){main{flex-direction:column}#right{max-width:none;flex:0 0 46%;min-width:0}#left{border-right:0;border-bottom:1px solid var(--border)}.row .meta{display:none}}
 </style>
+<script src="../assets/theme-toggle.js"></script>
 </head>
 <body>
 <div id="sandboxBar" hidden>Sandbox: ten papers, and nothing you do here is saved or sent anywhere. Label them, change the rule, run the search, it all disappears when you close the tab. <a id="sandboxOut" href="#">Leave the sandbox and work on the real list</a></div>

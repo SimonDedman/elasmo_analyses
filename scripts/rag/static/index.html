@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-so-native-dark>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,10 +11,21 @@
     --ink:#e6edf3; --dim:#9aa7b4; --accent:#3fb6d3; --accent2:#2b7fa6;
     --green:#2ea043; --amber:#d29922; --grey:#6e7681; --red:#da3633;
   }
+  /* Light palette (toggle in the top-right corner; dark is the default). */
+  :root[data-theme=light] {
+    --bg:#f6f8fa; --panel:#ffffff; --panel2:#eef2f6; --line:#d0d7de;
+    --ink:#1f2328; --dim:#59636e; --accent:#0e7490; --accent2:#2b7fa6;
+    --green:#1a7f37; --amber:#9a6700; --grey:#6e7681; --red:#cf222e;
+  }
+  :root[data-theme=light] .qbar button:not(.alt) { color:#fff; }
+  :root[data-theme=light] .src .prev, :root[data-theme=light] .why .row, :root[data-theme=light] .why .box { color:#424a53; }
+  :root[data-theme=light] .toast { color:#fff; }
+  :root[data-theme=light] .why mark { background:#fae17d; }
+  :root[data-theme=light] .nomatch { background:#fff8c5; border-color:#d4a72c; }
   * { box-sizing:border-box; }
   body { margin:0; font:14px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
          background:var(--bg); color:var(--ink); }
-  header { display:flex; align-items:center; gap:16px; padding:12px 20px;
+  header { display:flex; align-items:center; gap:16px; padding:12px 56px 12px 20px;
            background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
   header .logo { height:52px; width:auto; background:#fff; border-radius:6px; padding:3px 6px; display:block; }
   header h1 { font-size:16px; margin:0; font-weight:650; letter-spacing:.2px; }
@@ -114,6 +125,7 @@
   .toast.on { opacity:1; }
   @keyframes sp { to { transform:rotate(360deg); } }
 </style>
+<script src="/static/theme-toggle.js"></script>
 </head>
 <body>
 <header>

@@ -120,6 +120,7 @@ table.dataTable {{ font-size:0.85rem; }}
 .type-empirical {{ background:#95a5a6; }}
 .updated {{ color:#999; font-size:0.75rem; margin-top:8px; }}
 </style>
+<script src="assets/theme-toggle.js"></script>
 </head><body>
 <h1>Study-type classifier audit</h1>
 <p class="subtitle">Papers with a PDF (no-PDF papers excluded). Default filter: <code>type != empirical</code>. Clear the type search box to see all rows.</p>
