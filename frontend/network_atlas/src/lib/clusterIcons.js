@@ -69,12 +69,16 @@ export function getClusterIcon(m, u, f) {
 // first, each in its palette colour (grey for values without one).
 // `parts` = [[rgbArray, count], ...]. Cached on 5 % buckets.
 export function getCategoryClusterIcon(parts) {
-  const total = parts.reduce((a, [, n]) => a + n, 0) || 1;
-  const sorted = parts.filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]);
-  const top = sorted.slice(0, 5);
-  const rest = sorted.slice(5).reduce((a, [, n]) => a + n, 0);
-  if (rest) top.push([[150, 150, 150], rest]);
-  const bands = top.map(([c, n]) => [c, Math.max(1, Math.round((n / total) * 20))]);
+  // Parts that share a colour are one category on screen (all greyed-out disciplines, or
+  // Unclassified + missing values), so merge them into a single band. Every real category
+  // keeps its own band (no grey "rest" lump that reads as unknown); greys go last.
+  const merged = new Map();
+  parts.forEach(([c, n]) => { if (n > 0) { const k = c.slice(0, 3).join('.'); const e = merged.get(k);
+    if (e) e[1] += n; else merged.set(k, [c, n]); } });
+  const isGrey = c => c[0] === c[1] && c[1] === c[2];
+  const sorted = [...merged.values()].sort((a, b) => (isGrey(a[0]) - isGrey(b[0])) || (b[1] - a[1]));
+  const total = sorted.reduce((a, [, n]) => a + n, 0) || 1;
+  const bands = sorted.map(([c, n]) => [c, Math.max(1, Math.round((n / total) * 20))]);
   const key = 'cat:' + bands.map(([c, b]) => c.slice(0, 3).join('.') + 'x' + b).join('|');
   let url = CACHE.get(key);
   if (!url) {

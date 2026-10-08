@@ -12,7 +12,7 @@ export default function Legend({ colorBy, palettes, muted }) {
   // If the palette already includes an Unknown/Other entry, skip the
   // generic catch-all row — avoids the duplicate "Unknown / other/unknown".
   const hasCatchAll = entries.some(([k]) =>
-    /^(unknown|other)$/i.test(k));
+    /^(unknown|other|unclassified)$/i.test(k));
 
   return (
     <div className="legend">
@@ -27,7 +27,7 @@ export default function Legend({ colorBy, palettes, muted }) {
                 opacity: (rgba[3] ?? 255) / 255,
               }}
             />
-            <span className="label" style={muted && muted.has(key) ? { fontStyle: 'italic', color: '#888' } : undefined}>{key}</span>
+            <span className="label" style={muted && muted.has(key) ? { fontStyle: 'italic', color: '#888' } : undefined}>{key === 'Unclassified' ? 'Unclassified / unknown' : key}</span>
           </div>
         ))}
         {!hasCatchAll && (
