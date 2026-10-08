@@ -9,19 +9,20 @@ import Supercluster from 'supercluster';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import FilterPanel from './components/FilterPanel.jsx';
+import ProfileCard from './components/ProfileCard.jsx';
 import {
-  GENDER_PALETTE, REGION_PALETTE,
-  buildCountryPalette, pickColour,
+  GENDER_PALETTE,
+  buildCountryPalette, buildDisciplinePalette, pickColour,
 } from './lib/palettes.js';
 import {
-  loadAuthors, loadEdges, loadStats, loadInstitutions,
+  loadAuthors, loadEdges, loadStats, loadInstitutions, loadVocab,
 } from './lib/dataLoaders.js';
 import { BASEMAPS, DEFAULT_BASEMAP } from './lib/basemaps.js';
 import './App.css';
 
 // Bump on each push so the header shows a fresh build number and the
 // user can confirm they're looking at the latest code (cache bust aid).
-const VERSION = '2.7';
+const VERSION = '3.0';
 
 const INITIAL_VIEW_STATE = {
   longitude: -30, latitude: 30, zoom: 1.6, pitch: 0, bearing: 0,
@@ -128,14 +129,16 @@ export default function App() {
   const [institutionsFC, setInstitutionsFC] = useState(null);
   const [edgesList, setEdgesList]         = useState(null);
   const [stats, setStats]                 = useState(null);
+  const [vocab, setVocab]                 = useState(null);
   const [error, setError]                 = useState(null);
 
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [filters, setFilters] = useState({
-    country: '', gender: '', origin_region: '', minEdgeWeight: 2,
+    country: '', gender: '', minEdgeWeight: 2,
+    disc: [], tech: [], species: [], basin: [],   // multi-select research filters (labels)
     yearMin: null, yearMax: null,   // null = no filter (uses dataset range)
   });
-  const [colorBy, setColorBy]           = useState('gender');
+  const [colorBy, setColorBy]           = useState('disc_main');
   const [shapeBy, setShapeBy]           = useState('none');
   const [showEdges, setShowEdges]       = useState(true);
   const [showClusters, setShowClusters] = useState(true);
@@ -172,8 +175,9 @@ export default function App() {
   });
 
   useEffect(() => {
-    Promise.all([loadAuthors(), loadEdges(), loadStats(), loadInstitutions()])
-      .then(([a, e, s, i]) => {
+    Promise.all([loadAuthors(), loadEdges(), loadStats(), loadInstitutions(), loadVocab().catch(() => null)])
+      .then(([a, e, s, i, v]) => {
+        setVocab(v);
         // Authors keep their TRUE institution coordinate — co-located
         // authors share the exact same point. Supercluster clusters them
         // into one node per institution below CLUSTER_MAX_ZOOM; above it,
@@ -213,35 +217,49 @@ export default function App() {
     return buildCountryPalette(Object.keys(stats.by_country));
   }, [stats]);
 
-  const originRegions = useMemo(() => {
-    const s = new Set();
-    authors.forEach(f => { if (f.properties.origin_region) s.add(f.properties.origin_region); });
-    return Array.from(s).sort();
+  const discCounts = useMemo(() => {
+    const c = {};
+    authors.forEach(f => { const d = f.properties.disc_main; if (d) c[d] = (c[d] ?? 0) + 1; });
+    return c;
   }, [authors]);
-
-  // Region palette limited to the values actually in the data (NamSor gives only a
-  // coarse continent here, e.g. Europe / Asia / Africa), so the legend never lists
-  // categories that no author has. Values missing from REGION_PALETTE get a fallback.
-  const regionPalette = useMemo(() => {
-    const fallback = [[152, 78, 163, 220], [255, 127, 0, 220], [166, 86, 40, 220], [23, 190, 207, 220]];
-    const pal = {}; let i = 0;
-    originRegions.forEach(r => { pal[r] = REGION_PALETTE[r] || fallback[i++ % fallback.length]; });
-    pal.Unknown = REGION_PALETTE.Unknown;
-    return pal;
-  }, [originRegions]);
+  const disciplinePalette = useMemo(() => buildDisciplinePalette(discCounts), [discCounts]);
 
   const palettes = useMemo(() => ({
     gender:        GENDER_PALETTE,
-    origin_region: regionPalette,
     country:       countryPalette,
-  }), [countryPalette, regionPalette]);
+    disc_main:     disciplinePalette,
+  }), [countryPalette, disciplinePalette]);
+
+  // Research filters: an author matches when ANY of their papers carries a selected value
+  // (OR within a filter, AND across filters). Full membership lives in dx/tx/sx (vocab indices);
+  // basins are in bs as [label, n] pairs.
+  const researchMatcher = useMemo(() => {
+    const idxSet = (sel, list) => {
+      if (!sel.length || !list) return null;
+      const want = new Set(sel);
+      const s = new Set();
+      list.forEach(([label], i) => { if (want.has(label)) s.add(i); });
+      return s;
+    };
+    const d = idxSet(filters.disc, vocab?.disciplines);
+    const t = idxSet(filters.tech, vocab?.techniques);
+    const sp = idxSet(filters.species, vocab?.species);
+    const b = filters.basin.length ? new Set(filters.basin) : null;
+    const any = (arr, set) => arr != null && [].concat(arr).some(i => set.has(i));
+    return p =>
+      (!d  || any(p.dx, d)) &&
+      (!t  || any(p.tx, t)) &&
+      (!sp || any(p.sx, sp)) &&
+      (!b  || (p.bs ?? []).some(([label]) => b.has(label)));
+  }, [filters.disc, filters.tech, filters.species, filters.basin, vocab]);
+  const researchSig = JSON.stringify([filters.disc, filters.tech, filters.species, filters.basin]);
 
   // Counts for dropdown labels (post-filter so (N) reflects the remaining set)
   const filterSample = authors.filter(f => {
     const p = f.properties;
     if (filters.country       && p.country       !== filters.country) return false;
     if (filters.gender        && p.gender        !== filters.gender) return false;
-    if (filters.origin_region && p.origin_region !== filters.origin_region) return false;
+    if (!researchMatcher(p)) return false;
     return true;
   });
   const genderCounts = useMemo(() => {
@@ -252,22 +270,13 @@ export default function App() {
     });
     return c;
   }, [filterSample]);
-  const regionCounts = useMemo(() => {
-    const c = {};
-    filterSample.forEach(f => {
-      const r = f.properties.origin_region ?? 'Unknown';
-      c[r] = (c[r] ?? 0) + 1;
-    });
-    return c;
-  }, [filterSample]);
-
   // Shape-by matrix: count distinct categories for each attribute within
   // the current filter. Fewer categories → better candidate for shape-by
   // (currently only 'gender' is actually wired in shapes.js, but we show
   // the matrix so the user can see which attribute would map cleanly).
   const shapeByMatrix = useMemo(() => {
     if (filterSample.length === 0) return [];
-    const attrs = ['gender', 'origin_region', 'country'];
+    const attrs = ['gender', 'disc_main', 'country'];
     return attrs.map(attr => {
       const counts = {};
       filterSample.forEach(f => {
@@ -306,13 +315,13 @@ export default function App() {
     const p = f.properties;
     if (filters.country       && p.country       !== filters.country) return false;
     if (filters.gender        && p.gender        !== filters.gender) return false;
-    if (filters.origin_region && p.origin_region !== filters.origin_region) return false;
+    if (!researchMatcher(p)) return false;
     // Year filter: keep if the author's active range overlaps the slider
     // window. (author.year_max >= filter.yearMin AND author.year_min <= filter.yearMax)
     if (filters.yearMin != null && p.year_max != null && p.year_max < filters.yearMin) return false;
     if (filters.yearMax != null && p.year_min != null && p.year_min > filters.yearMax) return false;
     return true;
-  }), [authors, filters.country, filters.gender, filters.origin_region,
+  }), [authors, filters.country, filters.gender, researchMatcher,
        filters.yearMin, filters.yearMax]);
 
   const filteredIdSet = useMemo(
@@ -918,7 +927,7 @@ export default function App() {
       // re-runs icon / size / text accessors when filters change, even if
       // the cluster count stays the same (e.g. same 3 blobs, different
       // M/F/U composition).
-      const filterSig = `${filters.country}|${filters.gender}|${filters.origin_region}|${filters.yearMin}|${filters.yearMax}`;
+      const filterSig = `${filters.country}|${filters.gender}|${researchSig}|${filters.yearMin}|${filters.yearMax}`;
 
       // Single IconLayer. Each icon is a canvas-rendered circle with
       // horizontal M | U | F bands proportional to count. Cached by
@@ -1175,9 +1184,11 @@ export default function App() {
         `<strong>${p.name}</strong><br/>` +
         `${p.institution ?? '—'}<br/>` +
         `${[p.city, p.region, p.country].filter(Boolean).join(', ')}<br/>` +
-        `<em>${p.papers} papers</em> · ${p.gender}${
-          p.origin_region ? ` · origin ${p.origin_region}` : ''
-        }`,
+        `<em>${p.papers} papers</em>${p.year_min ? ` · ${p.year_min}–${p.year_max}` : ''}` +
+        (p.disc_main ? `<br/>Main: ${p.disc_main}` : '') +
+        (p.tt?.length ? `<br/>Techniques: ${p.tt.slice(0, 3).map(t => t[0]).join(', ')}` : '') +
+        (p.st?.length ? `<br/>Species: ${p.st.slice(0, 3).map(t => `<i>${t[0]}</i>`).join(', ')}` : '') +
+        `<br/><span style="opacity:.7">click for profile</span>`,
       style: { ...tipBase, maxWidth: '280px' },
     };
   };
@@ -1238,6 +1249,11 @@ export default function App() {
         <MapLibreMap reuseMaps mapStyle={BASEMAPS[basemap].url} />
       </DeckGL>
 
+      {selectedAuthor && (
+        <ProfileCard author={selectedAuthor.properties} palette={disciplinePalette}
+                     onClose={() => setSelectedId(null)} />
+      )}
+
       {!authorsFC && !error && (
         <div className="overlay">Loading authors…</div>
       )}
@@ -1264,11 +1280,10 @@ export default function App() {
           totalAuthors={authors.length}
           edgeCount={filteredEdges.length}
           institutionCount={institutions.length}
-          originRegions={originRegions}
+          vocab={vocab}
           palettes={palettes}
           authorNames={authorNames}
           genderCounts={genderCounts}
-          regionCounts={regionCounts}
           shapeByMatrix={shapeByMatrix}
           zoomLevel={viewState.zoom}
           version={VERSION}

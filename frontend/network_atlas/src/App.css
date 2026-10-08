@@ -195,3 +195,36 @@ html, body, #root {
 .filter-panel button.reset:hover {
   background: #2d3748;
 }
+
+/* --- multi-select filters ------------------------------------------------ */
+.multisel { position: relative; }
+.chips { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 3px; }
+.chip {
+  background: #e6eef8; color: #081E3F; border-radius: 10px; padding: 1px 7px;
+  font-size: 0.72rem; cursor: pointer;
+}
+.chip:hover { background: #cfdcee; }
+.ms-list {
+  position: absolute; left: 0; right: 0; z-index: 30; max-height: 220px; overflow-y: auto;
+  background: #fff; border: 1px solid #d0d7de; border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+.ms-opt { padding: 3px 7px; font-size: 0.8rem; cursor: pointer; }
+.ms-opt:hover { background: #eef3fa; }
+
+/* --- profile card -------------------------------------------------------- */
+.profile-card {
+  position: absolute; top: 1rem; right: 1rem; width: 330px; z-index: 11;
+  max-height: calc(100vh - 2rem); overflow-y: auto;
+  background: rgba(255,255,255,0.97); border-radius: 6px; padding: 0.8rem 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25); font-size: 0.82rem; color: #1a1a1a;
+}
+.profile-card .muted { color: #777; font-size: 0.74rem; }
+.pc-name { font-size: 1.05rem; font-weight: 600; color: #081E3F; padding-right: 1.4rem; }
+.pc-close { position: absolute; top: 4px; right: 8px; border: 0; background: none; font-size: 1.3rem; cursor: pointer; color: #666; }
+.pc-main { margin: 0.5rem 0 0.3rem; }
+.pc-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.pc-row { margin-top: 0.4rem; }
+.pc-t { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: #555; }
+.pc-link { margin-top: 0.6rem; }
+.pc-link a { color: #1b5fa7; font-weight: 600; }

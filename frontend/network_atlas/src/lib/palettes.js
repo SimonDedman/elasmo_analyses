@@ -48,3 +48,38 @@ export function pickColour(props, colorBy, palettes) {
   if (pal && pal[key]) return pal[key];
   return [150, 150, 150, 180];
 }
+
+// 19 research disciplines + Unclassified. Distinct hues (Tableau-20 style) so adjacent
+// bubbles in a cluster remain separable; 'Unclassified' is neutral grey.
+export const DISCIPLINE_COLOURS = {
+  'Conservation':     [44, 160, 44],
+  'Biology':          [31, 119, 180],
+  'Genetics':         [148, 103, 189],
+  'Paleontology':     [140, 86, 75],
+  'Taxonomy':         [188, 189, 34],
+  'Physiology':       [214, 39, 40],
+  'Immunology':       [227, 119, 194],
+  'Reproductive':     [255, 152, 150],
+  'Movement':         [23, 190, 207],
+  'Trophic':          [255, 127, 14],
+  'Behaviour':        [174, 199, 232],
+  'Fisheries':        [0, 90, 120],
+  'Sensory':          [197, 176, 213],
+  'Toxicology':       [127, 127, 0],
+  'Biomechanics':     [152, 223, 138],
+  'Husbandry':        [196, 156, 148],
+  'Ecotourism':       [255, 215, 0],
+  'Human Dimensions': [100, 60, 160],
+  'Data Science':     [60, 60, 60],
+};
+
+// Palette limited to the disciplines present, most common first.
+export function buildDisciplinePalette(counts) {
+  const pal = {};
+  Object.entries(counts).sort((a, b) => b[1] - a[1]).forEach(([k]) => {
+    if (k === 'Unclassified') return;
+    pal[k] = [...(DISCIPLINE_COLOURS[k] ?? [120, 120, 120]), 225];
+  });
+  if (counts.Unclassified) pal.Unclassified = [150, 150, 150, 180];
+  return pal;
+}

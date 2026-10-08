@@ -284,12 +284,152 @@ year_ranges <- tryCatch({
 })
 cat(sprintf("  Year ranges for %d authors\n", nrow(year_ranges)))
 
+# --- Per-author research profiles ------------------------------------------
+# Joins author -> paper (alias-merged paper_authors) -> binary classification columns of the
+# enriched parquet. Present = value > 0 (NA = 0). Counts are papers, not mentions.
+cat("Computing per-author research profiles...\n")
+suppressPackageStartupMessages(library(Matrix))
+
+humanise <- function(core) {
+  w <- strsplit(core, "_")[[1]]
+  paste(c(toupper(substring(w[1], 1, 1)) |> paste0(substring(w[1], 2)), w[-1]), collapse = " ")
+}
+ACR <- c("AKDE","CPUE","BRUV","BRUVS","eDNA","GLM","GAM","GLMM","BRT","SDM","MaxEnt","PIT","DNA","RNA",
+         "SNP","mtDNA","PCR","ROV","AUV","UAV","DIDSON","MPA","IUCN","CITES","FAO","EEZ","SST","ENSO",
+         "PSAT","SPOT","VHF","UV","IUU","BRD")
+EXP <- c(akde="autocorrelated kernel density estimation", cpue="catch per unit effort",
+         bruv="baited remote underwater video", bruvs="baited remote underwater video system",
+         sdm="species distribution model", glm="generalised linear model",
+         gam="generalised additive model", glmm="generalised linear mixed model",
+         brt="boosted regression trees", psat="pop-up satellite archival tag",
+         edna="environmental DNA", pit="passive integrated transponder",
+         rov="remotely operated vehicle", auv="autonomous underwater vehicle",
+         uav="unmanned aerial vehicle", snp="single-nucleotide polymorphism",
+         mpa="marine protected area", eez="exclusive economic zone", sst="sea surface temperature",
+         iuu="illegal, unreported and unregulated", brd="bycatch reduction device")
+decorate <- function(label) {
+  k <- tolower(trimws(label)); acr <- ACR[match(k, tolower(ACR))]
+  if (!is.na(acr)) { e <- EXP[k]; return(if (!is.na(e)) sprintf("%s (%s)", acr, e) else acr) }
+  w <- strsplit(label, " ")[[1]]; a <- ACR[match(tolower(w), tolower(ACR))]
+  paste(ifelse(is.na(a), w, a), collapse = " ")
+}
+# Same mapping as scripts/rag/labels.py::label_for for a_ columns
+slug <- function(n) paste0("a_", gsub("^_+|_+$", "", gsub("[^a-z0-9&/]+", "_", tolower(n))))
+tech_names <- read_csv("data/master_techniques.csv", show_col_types = FALSE) |>
+  filter(!is.na(technique_name)) |> mutate(col = slug(technique_name))
+tech_label <- function(cols) vapply(cols, function(cn) {
+  nm <- tech_names$technique_name[match(cn, tech_names$col)]
+  decorate(if (is.na(nm)) humanise(sub("^a_", "", cn)) else trimws(nm))
+}, character(1))
+title_case <- function(x) vapply(strsplit(gsub("_", " ", x), " "), function(w)
+  paste(ifelse(seq_along(w) > 1 & w %in% c("of","the","and","in"), w,
+               paste0(toupper(substring(w, 1, 1)), substring(w, 2))), collapse = " "), character(1))
+sp_label <- function(cols) vapply(strsplit(sub("^sp_", "", cols), "_"), function(w)
+  paste(c(paste0(toupper(substring(w[1], 1, 1)), substring(w[1], 2)), w[-1]), collapse = " "), character(1))
+
+pq <- read_parquet("outputs/literature_review_enriched.parquet")
+pq$literature_id <- as.character(pq$literature_id)
+pq <- pq[!duplicated(pq$literature_id), ]
+bin <- function(prefix) {
+  cols <- grep(paste0("^", prefix), names(pq), value = TRUE)
+  m <- as.matrix(as.data.frame(lapply(pq[cols], function(v) { v <- as.numeric(v); v[is.na(v)] <- 0; v > 0 })))
+  storage.mode(m) <- "numeric"; colnames(m) <- cols; Matrix(m, sparse = TRUE)
+}
+FAM <- list(
+  disc = list(M = bin("d_"),  lab = function(c) title_case(sub("^d_", "", c))),
+  tech = list(M = bin("a_"),  lab = tech_label),
+  sp   = list(M = bin("sp_"), lab = sp_label),
+  ob   = list(M = bin("ob_"), lab = function(c) title_case(sub("^ob_", "", c)))
+)
+# study country as one-hot
+ctry <- pq$geo_study_country; ctry[is.na(ctry) | ctry == ""] <- NA
+cl <- sort(unique(na.omit(ctry)))
+CM <- sparseMatrix(i = which(!is.na(ctry)), j = match(ctry[!is.na(ctry)], cl), x = 1,
+                   dims = c(nrow(pq), length(cl)), dimnames = list(NULL, cl))
+dec <- floor(suppressWarnings(as.numeric(pq$year)) / 10) * 10
+dl <- sort(unique(na.omit(dec[dec >= 1900 & dec <= 2020])))
+DM <- sparseMatrix(i = which(!is.na(dec) & dec %in% dl), j = match(dec[!is.na(dec) & dec %in% dl], dl), x = 1,
+                   dims = c(nrow(pq), length(dl)), dimnames = list(NULL, as.character(dl)))
+
+ap <- paper_authors |>
+  mutate(literature_id = as.character(literature_id)) |>
+  filter(!is.na(literature_id), !is.na(openalex_author_id), literature_id %in% pq$literature_id)
+ap_pos <- ap |> group_by(openalex_author_id, literature_id) |>
+  summarise(first = any(author_position == "first"), last = any(author_position == "last"), .groups = "drop")
+prof_ids <- unique(nodes_focal$openalex_author_id)
+ap_pos <- ap_pos |> filter(openalex_author_id %in% prof_ids)
+ai <- match(ap_pos$openalex_author_id, prof_ids); pi_ <- match(ap_pos$literature_id, pq$literature_id)
+AP <- sparseMatrix(i = ai, j = pi_, x = 1, dims = c(length(prof_ids), nrow(pq)))
+n_prof_papers <- as.numeric(rowSums(AP))
+share <- function(flag) { s <- sparseMatrix(i = ai[flag], j = seq_along(ai)[flag], x = 1, dims = c(length(prof_ids), length(ai)))
+  as.numeric(rowSums(s)) }
+first_n <- tabulate(ai[ap_pos$first], length(prof_ids)); last_n <- tabulate(ai[ap_pos$last], length(prof_ids))
+
+top_pairs <- function(CNT, labels, k) {   # CNT: authors x features (sparse); returns list of list(list(label,n),...)
+  CNT <- as(CNT, "RsparseMatrix")
+  lapply(seq_len(nrow(CNT)), function(r) {
+    st <- CNT@p[r] + 1; en <- CNT@p[r + 1]
+    if (en < st) return(list())
+    j <- CNT@j[st:en] + 1; x <- CNT@x[st:en]
+    o <- order(-x, labels[j])[seq_len(min(k, length(j)))]
+    lapply(o, function(q) list(labels[j[q]], as.integer(x[q])))
+  })
+}
+paper_cnt <- colSums(FAM$disc$M)
+disc_lab <- FAM$disc$lab(colnames(FAM$disc$M))
+CD <- AP %*% FAM$disc$M
+disc_main <- vapply(seq_len(nrow(CD)), function(r) {
+  v <- CD[r, ]; if (all(v == 0)) return("Unclassified")
+  cand <- which(v == max(v)); disc_lab[cand[which.max(paper_cnt[cand])]]
+}, character(1))
+profile <- tibble(
+  openalex_author_id = prof_ids,
+  disc_main = disc_main,
+  dt = top_pairs(CD, disc_lab, 3),
+  tt = top_pairs(AP %*% FAM$tech$M, FAM$tech$lab(colnames(FAM$tech$M)), 5),
+  st = top_pairs(AP %*% FAM$sp$M,   FAM$sp$lab(colnames(FAM$sp$M)), 5),
+  bs = top_pairs(AP %*% FAM$ob$M,   FAM$ob$lab(colnames(FAM$ob$M)), 9),
+  sc = top_pairs(AP %*% CM, cl, 5),
+  dc = top_pairs(AP %*% DM, as.character(dl), 12),
+  fs = round(first_n / pmax(n_prof_papers, 1), 3),
+  ls = round(last_n  / pmax(n_prof_papers, 1), 3)
+)
+# Within-author lists are sorted by count; decades chronologically
+profile$dc <- lapply(profile$dc, function(l) l[order(vapply(l, function(z) z[[1]], ""))])
+nco <- bind_rows(coauthor_edges |> transmute(id = from, o = to), coauthor_edges |> transmute(id = to, o = from)) |>
+  count(id, name = "nc")
+profile <- profile |> left_join(nco, by = c("openalex_author_id" = "id")) |> mutate(nc = coalesce(nc, 0L))
+
+# Vocabulary (author counts, over mapped authors) for the front-end filters; called after authors_geo exists
+# Full (not top-N) membership as 0-based indices into the vocab arrays, so the filters match
+# "any of the author's papers carries X" rather than only the displayed top few.
+idx_lists <- function(fam_M) {
+  R <- as(AP %*% fam_M > 0, "RsparseMatrix")
+  lapply(seq_len(nrow(R)), function(r) { st <- R@p[r] + 1; en <- R@p[r + 1]
+    if (en < st) I(integer(0)) else I(as.integer(R@j[st:en])) })   # I(): keep length-1 as a JSON array
+}
+profile$dx <- idx_lists(FAM$disc$M)
+profile$tx <- idx_lists(FAM$tech$M)
+profile$sx <- idx_lists(FAM$sp$M)
+# Vocabulary in fixed column order (array position = the index above); `authors` counts the mapped
+# authors only, so the front end can hide zero-count entries and sort by count.
+make_vocab <- function(mask) {
+  vocab_of <- function(fam_M, labs)
+    tibble(label = labs, authors = as.integer(colSums((AP[mask, , drop = FALSE] %*% fam_M) > 0)))
+  list(disciplines = vocab_of(FAM$disc$M, FAM$disc$lab(colnames(FAM$disc$M))),
+       techniques  = vocab_of(FAM$tech$M, FAM$tech$lab(colnames(FAM$tech$M))),
+       species     = vocab_of(FAM$sp$M,   FAM$sp$lab(colnames(FAM$sp$M))),
+       basins      = vocab_of(FAM$ob$M,   FAM$ob$lab(colnames(FAM$ob$M))))
+}
+cat(sprintf("  Profiles for %d authors\n", nrow(profile)))
+
 # --- GeoJSON: authors -----------------------------------------------------
 # One Point feature per author with coordinates. Drop authors without
 # institution coordinates (they have no place on a map).
 authors_geo <- nodes_focal |>
   filter(!is.na(inst_lon), !is.na(inst_lat)) |>
   left_join(year_ranges, by = "openalex_author_id") |>
+  left_join(profile, by = "openalex_author_id") |>
   transmute(
     id = openalex_author_id,
     name = display_name,
@@ -304,6 +444,7 @@ authors_geo <- nodes_focal |>
     ethnicity      = namsor_ethnicity,
     year_min = year_min,
     year_max = year_max,
+    disc_main, dt, tt, st, bs, sc, dc, fs, ls, nc, dx, tx, sx,
     lon = inst_lon,
     lat = inst_lat
   )
@@ -320,7 +461,11 @@ build_feature_collection <- function(df, lon_col = "lon", lat_col = "lat") {
     feats[[i]] <- list(
       type = "Feature",
       geometry = list(type = "Point", coordinates = c(lon[i], lat[i])),
-      properties = as.list(prop_df[i, ])
+      properties = {
+        p <- as.list(prop_df[i, ])
+        for (k in names(p)) if (is.list(p[[k]])) p[[k]] <- p[[k]][[1]]   # unwrap list-columns
+        p
+      }
     )
   }
   list(type = "FeatureCollection", features = feats)
@@ -368,6 +513,11 @@ edges_out <- edges_focal |>
 write(toJSON(edges_out, auto_unbox = TRUE, na = "null"),
       file = file.path(OUT_DIR, "edges.json"))
 cat(sprintf("Wrote %s/edges.json (%d edges)\n", OUT_DIR, nrow(edges_out)))
+
+vocab <- make_vocab(prof_ids %in% authors_geo$id)
+write(toJSON(lapply(vocab, function(d) lapply(seq_len(nrow(d)), function(i) list(d$label[i], d$authors[i]))),
+             auto_unbox = TRUE), file = file.path(OUT_DIR, "vocab.json"))
+cat(sprintf("Wrote %s/vocab.json\n", OUT_DIR))
 
 # --- Summary stats --------------------------------------------------------
 stats <- list(

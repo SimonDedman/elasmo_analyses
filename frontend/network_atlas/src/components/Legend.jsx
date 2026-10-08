@@ -6,7 +6,7 @@ export default function Legend({ colorBy, palettes }) {
   const label = {
     gender: 'Gender',
     country: 'Country',
-    origin_region: 'Origin region (NamSor)',
+    disc_main: 'Main discipline',
   }[colorBy];
 
   // If the palette already includes an Unknown/Other entry, skip the

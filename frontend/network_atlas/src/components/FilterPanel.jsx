@@ -1,4 +1,5 @@
 import Legend from './Legend.jsx';
+import MultiSelect from './MultiSelect.jsx';
 import { BASEMAPS } from '../lib/basemaps.js';
 
 export default function FilterPanel({
@@ -16,9 +17,9 @@ export default function FilterPanel({
   selectedAuthor, onClearSelection,
   stats, authorCount, totalAuthors, edgeCount,
   institutionCount,
-  originRegions, palettes,
+  vocab, palettes,
   authorNames,
-  genderCounts, regionCounts,     // {key: n, …}
+  genderCounts,                   // {key: n, …}
   shapeByMatrix,                  // [{attr, n_categories, top}, …]
   zoomLevel,
   version,
@@ -28,6 +29,8 @@ export default function FilterPanel({
     keys
       .map(k => [k, obj[k] ?? 0])
       .sort((a, b) => b[1] - a[1]);
+  // vocab entries are [label, authors]; hide zero-count entries, most authors first
+  const opts = list => (list ?? []).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]);
   const update = (k, v) => setFilters(prev => ({ ...prev, [k]: v }));
   const topCountries = Object.entries(stats?.by_country ?? {});
 
@@ -117,13 +120,14 @@ export default function FilterPanel({
               ))}
           </select>
 
-          <label>Origin region (NamSor)</label>
-          <select value={filters.origin_region} onChange={e => update('origin_region', e.target.value)}>
-            <option value="">All</option>
-            {sortedWithCounts(regionCounts ?? {}, originRegions).map(([r, n]) => (
-              <option key={r} value={r}>{r} ({n.toLocaleString()})</option>
-            ))}
-          </select>
+          <MultiSelect label="Discipline" options={opts(vocab?.disciplines)}
+                       selected={filters.disc} onChange={v => update('disc', v)} />
+          <MultiSelect label="Technique" options={opts(vocab?.techniques)}
+                       selected={filters.tech} onChange={v => update('tech', v)} />
+          <MultiSelect label="Species" options={opts(vocab?.species)} italic
+                       selected={filters.species} onChange={v => update('species', v)} />
+          <MultiSelect label="Ocean basin" options={opts(vocab?.basins)}
+                       selected={filters.basin} onChange={v => update('basin', v)} />
 
           <label>
             Min edge weight: <strong>{filters.minEdgeWeight}</strong>
@@ -168,9 +172,9 @@ export default function FilterPanel({
 
           <label>Colour by</label>
           <select value={colorBy} onChange={e => setColorBy(e.target.value)}>
+            <option value="disc_main">Main discipline</option>
             <option value="gender">Gender</option>
             <option value="country">Country (top 20)</option>
-            <option value="origin_region">Origin region</option>
           </select>
 
           <label>Shape by</label>
@@ -214,21 +218,11 @@ export default function FilterPanel({
         </>
       )}
 
-      {selectedAuthor && (
-        <div className="selected-info">
-          <div><strong>{selectedAuthor.properties.name}</strong></div>
-          <div className="muted">{selectedAuthor.properties.institution ?? '—'}</div>
-          <div className="muted">
-            {selectedAuthor.properties.papers} papers · {selectedAuthor.properties.gender}
-          </div>
-          <button className="clear" onClick={onClearSelection}>Clear selection</button>
-        </div>
-      )}
-
       <button
         className="reset"
         onClick={() => {
-          setFilters({ country: '', gender: '', origin_region: '', minEdgeWeight: 2,
+          setFilters({ country: '', gender: '', minEdgeWeight: 2,
+                       disc: [], tech: [], species: [], basin: [],
                        yearMin: null, yearMax: null });
           setSearchQuery('');
           onClearSelection();
