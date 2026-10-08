@@ -1750,7 +1750,12 @@
   // Author enrichment rendering (editable NamSor fields)
   // ---------------------------------------------------------------------------
 
+  // 2026-10-08: the institution / gender / origin / ethnicity bar is hidden on public pages while the
+  // diversity-data concern is open (inferred attributes on named individuals). Set to true to restore.
+  var SHOW_AUTHOR_ATTRIBUTES = false;
+
   function _renderAuthorEnrichment(enrichEl, ns) {
+    if (!SHOW_AUTHOR_ATTRIBUTES) { enrichEl.innerHTML = ''; enrichEl.style.display = 'none'; return; }
     var ac = _getAuthorCorrections();
     var ci = _pageData.current_institution || {};
     var ehtml = '<div class="namsor-fields" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;">';
