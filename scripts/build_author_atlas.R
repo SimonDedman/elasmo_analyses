@@ -33,6 +33,7 @@ if (dir.exists(local_root)) {
 }
 # Otherwise assume we are already at the repo root (e.g. GitHub Actions
 # runner), where relative paths like outputs/... resolve correctly.
+`%||%` <- function(a, b) if (is.null(a)) b else a
 OUT_DIR <- Sys.getenv("ATLAS_OUT_DIR", "outputs/author_atlas")  # override for test builds
 dir.create(OUT_DIR, recursive = TRUE, showWarnings = FALSE)
 
@@ -139,16 +140,29 @@ if (file.exists(ns_ov_path)) {
 # NamSor gender comes first in the case_when below, so an absent fallback is harmless.
 if (!"gender" %in% names(authors)) authors$gender <- NA_character_
 
+# Last-resort gender: the Genderize/gender-guesser cache, keyed on the exact first_name string
+# ("Demian D.", "M. B."), which recovers names gender_guesser alone cannot parse.
+gz_path <- "outputs/.genderize_cache.json"
+gz <- if (file.exists(gz_path)) {
+  raw <- jsonlite::fromJSON(gz_path, simplifyVector = FALSE)
+  tibble(first_name = names(raw),
+         gz_gender = vapply(raw, function(v) if (is.list(v)) (v$gender %||% NA_character_) else as.character(v %||% NA), character(1)))
+} else tibble(first_name = character(), gz_gender = character())
+
 author_meta <- authors |>
   mutate(openalex_author_id = str_remove(openalex_author_id, "https://openalex.org/")) |>
   left_join(namsor_clean, by = "openalex_author_id") |>
+  left_join(gz, by = "first_name") |>
   mutate(gender_final = case_when(
     namsor_gender %in% c("M", "male")   ~ "M",
     namsor_gender %in% c("F", "female") ~ "F",
     gender %in% c("male")               ~ "M",
     gender %in% c("female")             ~ "F",
+    gz_gender %in% c("male")            ~ "M",
+    gz_gender %in% c("female")          ~ "F",
     TRUE                                 ~ "Unknown"
-  ))
+  )) |>
+  select(-gz_gender)
 
 if (!is.null(last_inst)) {
   author_meta <- author_meta |>
