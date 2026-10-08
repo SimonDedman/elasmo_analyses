@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conference abstracts</title>
+<link rel="icon" href="../assets/logo/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+<link rel="apple-touch-icon" href="../assets/logo/apple-touch-icon.png">
+<style>
+:root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.10);--seq:#2a78d6;--warn:#eda100;--good:#1baf7a;--hit:#fff2b8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--warn:#c98500;--good:#199e70;--hit:#4d4310}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+#lead{flex:1;min-width:0}
+#logo{flex:none;height:150px;width:auto;background:#fff;border-radius:10px;padding:8px}
+h1{font-size:26px;margin:0 0 2px}h2{font-size:18px;margin:34px 0 8px}
+p{margin:8px 0}.lede{color:var(--ink2);max-width:860px}
+a{color:var(--seq)}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:8px 14px;min-width:120px}
+.stat b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat span{font-size:12.5px;color:var(--ink2)}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;position:relative;z-index:5}
+.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.fields input{width:100%;font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--axis);border-radius:8px;background:var(--page);color:var(--ink)}
+.fields input:focus{outline:2px solid var(--seq);border-color:var(--seq)}
+.fields label{display:flex;flex-direction:column;gap:2px;font-size:12.5px;color:var(--ink2)}
+.ms{position:relative}
+.msb{font:inherit;font-size:14px;padding:5px 8px;border:1px solid var(--axis);border-radius:6px;background:var(--page);color:var(--ink);cursor:pointer;text-align:left;min-width:130px;max-width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.msb.on{border-color:var(--seq);box-shadow:inset 0 0 0 1px var(--seq)}
+.msp{position:absolute;top:100%;left:0;z-index:20;margin-top:2px;background:var(--surface);border:1px solid var(--axis);border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.18);padding:6px;max-height:300px;overflow:auto;min-width:220px;font-size:14px;color:var(--ink)}
+.msp[hidden]{display:none}
+.filters .msp label{flex-direction:row;align-items:center;gap:8px;padding:3px 6px;border-radius:4px;white-space:nowrap;cursor:pointer;color:var(--ink);font-size:14px}
+.filters .msp label:hover{background:var(--grid)}
+.msp .clr{font:inherit;font-size:12.5px;border:0;background:none;color:var(--seq);cursor:pointer;padding:2px 6px}
+.sub{margin-top:6px;font-size:12.5px;color:var(--muted)}
+#q{width:100%;font:inherit;font-size:17px;padding:10px 12px;border:1px solid var(--axis);border-radius:8px;background:var(--page);color:var(--ink)}
+#q:focus{outline:2px solid var(--seq);border-color:var(--seq)}
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-top:10px;font-size:13px;color:var(--ink2)}
+.filters label{display:flex;flex-direction:column;gap:2px}
+select,input[type=number]{font:inherit;font-size:14px;padding:5px 6px;border:1px solid var(--axis);border-radius:6px;background:var(--page);color:var(--ink)}
+input[type=number]{width:84px}
+.tog{flex-direction:row!important;align-items:center;gap:6px!important;font-size:14px;color:var(--ink)}
+#status{margin:12px 2px 6px;font-size:13.5px;color:var(--ink2)}
+.res{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin:8px 0}
+.res>summary{list-style:none;cursor:pointer;padding:10px 14px}
+.res>summary::-webkit-details-marker{display:none}
+.res>summary:hover{background:var(--grid)}
+.t{font-weight:600}.m{font-size:13px;color:var(--ink2);margin-top:2px}
+.chip{font-size:11px;border-radius:4px;padding:1px 6px;background:var(--grid);color:var(--ink2);margin-left:6px;white-space:nowrap}
+.chip.e{background:var(--good);color:#fff}
+.body{padding:2px 14px 14px;border-top:1px solid var(--border)}
+.body h4{margin:12px 0 4px;font-size:13px;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em}
+.abs{white-space:pre-wrap;max-width:860px}
+.au{margin:0;padding-left:18px;font-size:14px}.au .pr{font-weight:600}
+mark{background:var(--hit);color:inherit;border-radius:2px}
+button.more{font:inherit;padding:8px 18px;border-radius:8px;border:1px solid var(--axis);background:var(--surface);color:var(--ink);cursor:pointer;margin:10px 0}
+.covscroll{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+table.cov{border-collapse:collapse;font-size:12.5px;width:100%}
+table.cov th{background:var(--surface);padding:5px 8px;border-bottom:1px solid var(--axis);text-align:center;white-space:nowrap}
+table.cov td{padding:3px 6px;border:1px solid var(--grid);text-align:center;color:#0b0b0b;white-space:nowrap}
+table.cov td.y{background:var(--surface);color:var(--ink);font-weight:600;position:sticky;left:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0;font-size:13px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.legend i{width:14px;height:14px;border-radius:3px;display:inline-block;border:1px solid var(--border)}
+.help{border-left:3px solid var(--warn);background:var(--surface);padding:8px 12px;margin:14px 0;font-size:14px}
+.help p{margin:4px 0}
+.small{font-size:12.5px;color:var(--muted)}
+@media (max-width:700px){header{flex-direction:column-reverse;align-items:stretch}#logo{height:64px!important;align-self:flex-end}h1{font-size:22px}.stat{min-width:calc(50% - 6px)}.fields{grid-template-columns:1fr}.msb{max-width:none}}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+<div id="lead">
+<h1>Conference abstracts</h1>
+<p class="lede" style="margin:0">Every abstract we hold from shark, ray, and chimaera meetings (and the general fish meetings that carry them), searchable by title, author, or any word in the abstract. Missing a book from your own shelves? <a href="#coverage">See what we lack</a>.</p>
+<div class="stats" id="stats"></div>
+</div>
+<img id="logo" src="../assets/logo/shark_oracle_logo_stacked.svg" alt="Shark Oracle">
+</header>
+
+<div class="panel" id="panel">
+<input id="q" type="search" placeholder="Search titles, authors, and abstract text (try: hammerhead, Compagno, telemetry)" autocomplete="off" aria-label="Search everything">
+<div class="fields">
+<label>Author<input id="q-au" type="search" placeholder="e.g. Heithaus" autocomplete="off"></label>
+<label>Title<input id="q-ti" type="search" placeholder="e.g. juvenile white shark" autocomplete="off"></label>
+<label>Abstract text<input id="q-ab" type="search" placeholder="e.g. acoustic telemetry" autocomplete="off"></label>
+</div>
+<div class="filters">
+<label>Meeting series<span class="ms" id="ms-series"></span></label>
+<label>Presentation type<span class="ms" id="ms-type"></span></label>
+<label>Year from<input type="number" id="f-y0"></label>
+<label>to<input type="number" id="f-y1"></label>
+<label>Sort by<select id="f-sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="relevance">Relevance</option><option value="title">Title A-Z</option></select></label>
+<label class="tog"><input type="checkbox" id="f-elasmo" checked> Elasmobranch abstracts only</label>
+</div>
+<div class="filters" id="meetrow" style="margin-top:8px"></div>
+<div class="sub">Leave a list empty to include everything. Several boxes narrow the results together.</div>
+</div>
+<div id="status" aria-live="polite">Loading…</div>
+<div id="results"></div>
+<div id="morewrap"></div>
+
+<h2 id="coverage">Coverage: what we hold</h2>
+<p class="lede">Each cell is one meeting. Colours run from nothing known (red) to fully ingested (green). Blank means no meeting that year for that series.</p>
+<div class="legend" id="legend"></div>
+<div class="help" id="help"></div>
+<div class="covscroll"><table class="cov" id="cov"></table></div>
+<p class="small" id="foot"></p>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => Number(n).toLocaleString('en-GB');
+const norm = s => (s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const toks = s => norm(s).match(/[a-z0-9]+/g) || [];
+const STOP = new Set('the and of in a for with from to on by is are was were an at as or'.split(' '));
+const PAGE = 50;
+let META, IDX = [], shardCache = {}, searchCache = {}, shown = 0, view = [], T = {m: [], ti: [], au: [], ab: []}, seq = 0, MKEY = [];
+const MAINS = ['SI', 'EEA', 'AES', 'OCS'];
+const MS = {};
+
+async function getJSON(n) { const r = await fetch('data/' + n); if (!r.ok) throw new Error(n + ' ' + r.status); return r.json(); }
+function cached(cache, key, fn) { return cache[key] || (cache[key] = fn()); }
+
+// Multi-select dropdown: a button that opens a checkbox list. get() returns the ticked values; none ticked = no filter.
+function makeMS(host, label, items, onchange) {
+  host.innerHTML = '<button type="button" class="msb"></button><div class="msp" hidden></div>';
+  const btn = host.firstChild, pan = host.lastChild, boxes = [];
+  const clr = document.createElement('button'); clr.type = 'button'; clr.className = 'clr'; clr.textContent = 'Clear';
+  pan.appendChild(clr);
+  for (const it of items) {
+    const l = document.createElement('label'), cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.value = it.v; l.append(cb, ' ' + it.text); pan.appendChild(l); boxes.push(cb);
+  }
+  const get = () => boxes.filter(b => b.checked).map(b => b.value);
+  const paint = () => { const g = get(); btn.textContent = (g.length === 0 ? 'All' : g.length === 1 ? items.find(i => i.v === g[0]).text : g.length + ' selected'); btn.classList.toggle('on', g.length > 0); btn.title = label; };
+  btn.onclick = e => { e.stopPropagation(); const open = pan.hidden; document.querySelectorAll('.msp').forEach(p => p.hidden = true); pan.hidden = !open; };
+  pan.onclick = e => e.stopPropagation();
+  pan.addEventListener('change', () => { paint(); onchange(); });
+  clr.onclick = () => { boxes.forEach(b => b.checked = false); paint(); onchange(); };
+  paint();
+  return { get, set: vals => { boxes.forEach(b => b.checked = vals.includes(b.value)); paint(); } };
+}
+document.addEventListener('click', () => document.querySelectorAll('.msp').forEach(p => p.hidden = true));
+
+async function init() {
+  META = await getJSON('meta.json');
+  const parts = await Promise.all(META.index_files.map(getJSON));
+  IDX = parts.flat();
+  MKEY = META.meetings.map(m => m[0] + '-' + m[1]);
+  const c = META.counts;
+  $('stats').innerHTML = [[c.meetings, 'meetings'], [c.abstracts, 'abstracts'], [c.elasmo, 'elasmobranch abstracts'], [c.authors, 'distinct author names']]
+    .map(([n, l]) => `<div class="stat"><b>${fmt(n)}</b><span>${l}</span></div>`).join('');
+  let t; const deb = () => { clearTimeout(t); t = setTimeout(run, 220); };
+  MS.series = makeMS($('ms-series'), 'Meeting series', META.series.map(s => ({ v: s, text: s })), run);
+  MS.type = makeMS($('ms-type'), 'Presentation type', META.ptypes.map(p => ({ v: p, text: p })), run);
+  // one "YYYY (Location)" dropdown per main series; a year with two records at different places shows both
+  const row = $('meetrow');
+  for (const s of MAINS.filter(s => META.series.includes(s))) {
+    const byYear = new Map();
+    META.meetings.forEach((m, i) => {
+      if (m[0] !== s) return;
+      const loc = m[3] || m[2].replace(/^.*?\d{4}\s*/, '').replace(/\s*\(.*\)\s*$/, '') || '';
+      const e = byYear.get(m[1]) || byYear.set(m[1], []).get(m[1]);
+      if (loc && !e.includes(loc)) e.push(loc);
+    });
+    const items = [...byYear.keys()].sort((a, b) => b - a).map(y => ({ v: s + '-' + y, text: y + (byYear.get(y).length ? ' (' + byYear.get(y).join(' / ') + ')' : '') }));
+    const lab = document.createElement('label'); lab.append(s + ' meeting');
+    const host = document.createElement('span'); host.className = 'ms'; lab.appendChild(host); row.appendChild(lab);
+    MS['m_' + s] = makeMS(host, s + ' meeting', items, run);
+  }
+  $('f-y0').placeholder = META.years[0]; $('f-y1').placeholder = META.years[1];
+  const p = new URLSearchParams(location.search);
+  if (p.get('q')) $('q').value = p.get('q');
+  ['au', 'ti', 'ab'].forEach(k => { if (p.get(k)) $('q-' + k).value = p.get(k); });
+  if (p.get('elasmo') === '0') $('f-elasmo').checked = false;
+  if (p.get('series')) MS.series.set(p.get('series').split(','));
+  if (p.get('type')) MS.type.set(p.get('type').split('|'));
+  if (p.get('meet')) { const ms = p.get('meet').split(','); MAINS.forEach(s => MS['m_' + s] && MS['m_' + s].set(ms)); }
+  if (p.get('y0')) $('f-y0').value = p.get('y0');
+  if (p.get('y1')) $('f-y1').value = p.get('y1');
+  if (['newest', 'oldest', 'relevance', 'title'].includes(p.get('sort'))) $('f-sort').value = p.get('sort');
+  ['q', 'q-au', 'q-ti', 'q-ab'].forEach(i => $(i).addEventListener('input', deb));
+  ['f-elasmo', 'f-sort'].forEach(i => $(i).addEventListener('change', run));
+  ['f-y0', 'f-y1'].forEach(i => $(i).addEventListener('input', deb));
+  sizeLogo(); addEventListener('resize', sizeLogo);
+  run();
+  loadCoverage();
+}
+
+// logo height = from the top of the title to the top of the search panel
+function sizeLogo() {
+  const img = $('logo');
+  if (matchMedia('(max-width:700px)').matches) { img.style.height = ''; return; }
+  const h = $('panel').getBoundingClientRect().top - $('lead').getBoundingClientRect().top - 16 - 0;
+  img.style.height = '';
+  const want = $('lead').offsetHeight - parseFloat(getComputedStyle($('stats')).marginBottom || 0);
+  img.style.height = Math.max(90, Math.min(want, h)) + 'px';
+}
+
+// field: 't','a','b' are the inverted-index shards (title, authors, abstract); a term set is the union over the fields given
+async function termIds(tok, prefix, fields) {
+  const out = new Set();
+  const add = enc => { let a = 0; for (const d of enc.split(',')) { a += +d; out.add(a); } };
+  for (const f of fields) {
+    const file = (META.search[f] || {})[tok.slice(0, 2)];
+    if (!file) continue;
+    const sh = await cached(searchCache, file, () => getJSON(file));
+    if (prefix) { for (const w in sh) if (w.startsWith(tok)) add(sh[w]); }
+    else if (sh[tok]) add(sh[tok]);
+  }
+  return out;
+}
+const keepTerms = q => { const all = toks(q); return all.filter(t => !(STOP.has(t) || t.length < 2 && all.length > 1)); };
+
+async function run() {
+  const my = ++seq;
+  const q = $('q').value.trim(), qa = $('q-au').value.trim(), qt = $('q-ti').value.trim(), qb = $('q-ab').value.trim();
+  T = { m: keepTerms(q), au: keepTerms(qa), ti: keepTerms(qt), ab: keepTerms(qb) };
+  const ser = new Set(MS.series.get()), typ = new Set(MS.type.get());
+  const meet = new Set(MAINS.flatMap(s => MS['m_' + s] ? MS['m_' + s].get() : []));
+  const el = $('f-elasmo').checked, sort = $('f-sort').value;
+  const y0 = +$('f-y0').value || -1e9, y1 = +$('f-y1').value || 1e9;
+  const keep = r => (!el || r[8]) && (!ser.size || ser.has(META.meetings[r[2]][0])) && (!meet.size || meet.has(MKEY[r[2]])) &&
+    r[3] >= y0 && r[3] <= y1 && (!typ.size || typ.has(META.ptypes[r[9]]));
+  const sp = new URLSearchParams();
+  if (q) sp.set('q', q); if (qa) sp.set('au', qa); if (qt) sp.set('ti', qt); if (qb) sp.set('ab', qb);
+  if (!el) sp.set('elasmo', '0'); if (ser.size) sp.set('series', [...ser].join(',')); if (typ.size) sp.set('type', [...typ].join('|'));
+  if (meet.size) sp.set('meet', [...meet].join(','));
+  if ($('f-y0').value) sp.set('y0', $('f-y0').value); if ($('f-y1').value) sp.set('y1', $('f-y1').value);
+  if (sort !== 'newest') sp.set('sort', sort);
+  try { history.replaceState(null, '', sp.toString() ? '?' + sp : location.pathname); } catch (e) {}
+  const groups = [[T.m, 'tab'], [T.au, 'a'], [T.ti, 't'], [T.ab, 'b']];
+  const nterms = groups.reduce((a, g) => a + g[0].length, 0);
+  let cand;
+  if (!nterms) cand = IDX.filter(keep);
+  else {
+    $('status').textContent = 'Searching…';
+    let acc = null;
+    outer: for (const [list, fields] of groups) {
+      for (let i = 0; i < list.length; i++) {
+        const s = await termIds(list[i], i === list.length - 1 || list[i].length < 4, fields);
+        if (my !== seq) return;
+        if (s.size === 0) { acc = new Set(); break outer; }
+        acc = acc ? new Set([...acc].filter(x => s.has(x))) : s;
+      }
+    }
+    cand = [];
+    for (const id of acc) { const r = IDX[id]; if (r && keep(r)) cand.push(r); }
+  }
+  const allT = [...T.m, ...T.au, ...T.ti, ...T.ab];
+  if (sort === 'relevance' && allT.length) {
+    const score = r => { const ti = norm(r[4]), au = norm(r[5] + ' ' + r[6]); return allT.reduce((a, t) => a + (ti.includes(t) ? 2 : 0) + (au.includes(t) ? 1 : 0), 0); };
+    cand.forEach(r => r._s = score(r));
+    cand.sort((a, b) => b._s - a._s || a[0] - b[0]);
+  } else if (sort === 'oldest') cand.sort((a, b) => a[3] - b[3] || a[2] - b[2] || a[0] - b[0]);
+  else if (sort === 'title') {
+    cand.forEach(r => r._k = norm(r[4]).replace(/^[^a-z0-9]+/, '') || '￿');
+    cand.sort((a, b) => a._k < b._k ? -1 : a._k > b._k ? 1 : a[0] - b[0]);
+  } else cand.sort((a, b) => a[0] - b[0]);   // index order is already year desc, meeting, programme order
+  view = cand; shown = 0; $('results').innerHTML = '';
+  const bits = [q && `"${q}"`, qa && `author "${qa}"`, qt && `title "${qt}"`, qb && `abstract "${qb}"`].filter(Boolean);
+  $('status').textContent = `${fmt(cand.length)} abstract${cand.length === 1 ? '' : 's'}` + (el ? ' (elasmobranch only; untick to include all fish)' : '') + (bits.length ? ' matching ' + bits.join(' and ') : '');
+  more();
+}
+
+// highlight the mixed-box terms plus those typed in the box for this field ('au', 'ti', 'ab')
+function hl(text, field) {
+  let h = esc(text);
+  for (const t of new Set([...T.m, ...(T[field] || [])])) { if (t.length < 2) continue; h = h.replace(new RegExp('(?<![\\p{L}\\p{N}])(' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[\\p{L}\\p{N}]*)', 'giu'), '<mark>$1</mark>'); }
+  return h;
+}
+
+function more() {
+  const m = $('morewrap'); const part = view.slice(shown, shown + PAGE); shown += part.length;
+  const frag = document.createDocumentFragment();
+  for (const r of part) {
+    const mt = META.meetings[r[2]];
+    const d = document.createElement('details'); d.className = 'res';
+    d.innerHTML = `<summary><div class="t">${hl(r[4] || '(untitled)', 'ti')}${r[8] ? '<span class="chip e">elasmo</span>' : ''}</div>
+      <div class="m">${esc(mt[0])} ${mt[1]} · ${hl(r[5] || 'no authors listed', 'au')}${r[7] > 1 ? ' + ' + (r[7] - 1) + ' more' : ''}${r[6] && r[6] !== r[5] ? ' · presenter ' + esc(r[6]) : ''}${META.ptypes[r[9]] !== 'unspecified' ? '<span class="chip">' + esc(META.ptypes[r[9]]) + '</span>' : ''}</div></summary><div class="body">Loading…</div>`;
+    d.addEventListener('toggle', () => d.open && fill(d, r), { once: true });
+    frag.appendChild(d);
+  }
+  $('results').appendChild(frag);
+  m.innerHTML = shown < view.length ? `<button class="more" id="more">Show ${Math.min(PAGE, view.length - shown)} more (${fmt(view.length - shown)} left)</button>` : '';
+  if ($('more')) $('more').onclick = more;
+  if (!view.length) $('results').innerHTML = '<p class="lede">Nothing matches. Try fewer words, clear a filter, or untick "Elasmobranch only".</p>';
+}
+
+async function fill(d, r) {
+  const sh = Math.floor(r[0] / META.shard);
+  let data;
+  try { data = await cached(shardCache, sh, () => getJSON('abs_' + sh + '.json')); } catch (e) { d.querySelector('.body').textContent = 'Could not load this abstract.'; return; }
+  const [text, session, prog, dt, basis, au] = data[r[0]];
+  const mt = META.meetings[r[2]];
+  d.querySelector('.body').innerHTML =
+    `<h4>Meeting</h4><div>${esc(mt[0])} ${mt[1]}${mt[2] ? ' · ' + esc(mt[2]) : ''}${mt[3] ? ' · ' + esc(mt[3]) : ''}${session ? '<br>Session: ' + esc(session) : ''}${prog ? ' · programme no. ' + esc(prog) : ''}${dt ? ' · ' + esc(dt) : ''}</div>
+    <h4>Authors</h4>${au.length ? '<ol class="au">' + au.map(a => `<li><span class="${a[3] ? 'pr' : ''}">${hl(a[0], 'au')}</span>${a[1] ? ', ' + esc(a[1]) : ''}${a[2] && !(a[1] || '').includes(a[2]) ? ' (' + esc(a[2]) + ')' : ''}${a[3] ? ' <span class="chip">presenter</span>' : ''}</li>`).join('') + '</ol>' : '<div class="small">No authors recorded.</div>'}
+    <h4>Abstract</h4>${text ? `<div class="abs">${hl(text, 'ab')}</div>` : '<div class="small">No abstract text: this meeting is held as a programme (titles and authors only).</div>'}
+    <div class="small" style="margin-top:8px">Abstract ID ${esc(r[1])}</div>`;
+}
+
+async function loadCoverage() {
+  let c; try { c = await getJSON('coverage.json'); } catch (e) { $('cov').outerHTML = '<p class="small">Coverage grid unavailable.</p>'; return; }
+  $('legend').innerHTML = Object.entries(c.legend).map(([k, v]) => `<span title="${esc(v.text)}"><i style="background:${v.colour}"></i>${esc(k)}</span>`).join('');
+  const gaps = Object.entries(c.gaps).filter(([, y]) => y.length);
+  $('help').innerHTML = '<p><b>Help us fill the gaps.</b> Do you have an abstract book, programme, or newsletter from one of these meetings, on paper or as a file? We would like a scan or a photo of the abstract pages. Years with no abstract book in our hands (1985 onward):</p>' +
+    gaps.map(([s, y]) => `<p><b>${esc(s)}</b>: ${y.join(', ')}</p>`).join('');
+  $('cov').innerHTML = '<thead><tr><th>Year</th>' + c.series.map(s => `<th>${esc(s)}</th>`).join('') + '</tr></thead><tbody>' +
+    [...c.years].reverse().map(y => `<tr><td class="y">${y}</td>` + c.series.map(s => {
+      const v = (c.cells[s] || {})[y];
+      if (!v) return '<td></td>';
+      const col = c.legend[v[0]]?.colour || '#fff';
+      return `<td style="background:${col}" title="${esc(s)} ${y}${v[1] ? ', ' + esc(v[1]) : ''}: ${esc(v[0])}">${esc(v[1] ? v[1].split(',')[0] : '')}${v[1] ? '' : ''}<div style="font-size:10px;opacity:.75">${esc(v[0])}</div></td>`;
+    }).join('') + '</tr>').join('') + '</tbody>';
+  $('foot').textContent = 'ASIH, JMIH, HL, SSAR, and NIA share one source book and appear as one column. Hover a cell for the host city and status.';
+}
+init().catch(e => { $('status').textContent = 'Could not load the data (' + e.message + '). Open this page through a web server or GitHub Pages, not file://, if your browser blocks local fetches.'; });
+</script>
+</div></body></html>

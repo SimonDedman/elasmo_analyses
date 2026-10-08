@@ -33,7 +33,7 @@ MAX_SENTENCES = 8
 MAX_CHUNKS = 8
 MAX_CHUNK_CHARS = 1500
 P_ENTAIL = 0.5      # INFERRED: p(entailment) at or above this counts as entailed
-P_CONTRA = 0.9      # INFERRED: strict, xsmall over-calls contradiction (0.81-0.83 false hits seen on the Q1 probe, 2026-10-07)
+P_CONTRA = 0.95     # INFERRED: strict, xsmall over-calls contradiction (0.81-0.83 false hits on the Q1 probe; 0.948 on a 'growth bands' sentence vs a chunk describing the same banding, full index, 2026-10-07)
 MIN_SHARED_TOKENS = 3  # INFERRED: a contradicting chunk must share this many content words with the sentence
 CE_FLOOR = 0.0      # same relevance floor as query.CE_FLOOR
 MIN_PAPERS_WELL = 3
@@ -196,6 +196,11 @@ def score_sentences(sentences: list[dict], hits: list[dict]) -> list[dict]:
         entail_ids = sorted({p["literature_id"] for p in plist
                              if p.get("entailment", 0) >= P_ENTAIL})
         attributed = False
+        # "contested" means two retrieved sources disagree about the claim: one must
+        # entail the sentence as well. A contradiction with no support anywhere is a
+        # sentence the corpus does not back, which is "neutral", not a dispute.
+        if contra and not entail_ids:
+            contra = []
         if contra:
             support = "contradicted"
         elif ent:

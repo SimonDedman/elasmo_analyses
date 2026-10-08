@@ -80,7 +80,8 @@ class AnthropicBackend:
         import anthropic
         try:
             msg = self._client.messages.create(
-                model=self.model, max_tokens=max_tokens, temperature=0,
+                model=self.model, max_tokens=max_tokens,
+                # anthropic SDK 1.5 (Claude 5 family) has no temperature parameter; decoding is deterministic enough for a demo
                 system=system,
                 messages=[{"role": "user", "content": prompt}],
             )

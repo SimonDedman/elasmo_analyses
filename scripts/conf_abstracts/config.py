@@ -27,6 +27,21 @@ FABLE_SKIP_KEYS = {
     "OCS2025": "parse_ocs_labelled.py: 94/94 blocks, 94 complete",
     "JMIH2026": "parse_jmih_a5.py: 1,051 records, 1,048 with bodies — the "
                 "born-digital book needs no LLM",
+    "EEA2026": "parse_eea.ingest_eea2026: 83 of the 84 agenda talks, anchored on the "
+               "booklet's own agenda (the 84th, Kingma, has no abstract printed)",
+}
+
+# EEA books loaded by a deterministic parser instead of Fable. Keyed by
+# source_pdf stem -> the meeting row it creates. run_pipeline routes these to
+# parse_eea.ingest_eea2026, and merge_fable_into_main must NOT delete them in
+# its "replace every EEA meeting with the Fable set" sweep (they are not in
+# the Fable DB, so a re-merge would silently drop them).
+EEA_STRUCTURED_FILES = {
+    "2026_EEA_AbstractBook": dict(
+        meeting="EEA", year=2026,
+        name="European Elasmobranch Association Annual Scientific Conference 2026 (online)",
+        location="online", dates="6-8 October 2026", doc_type="abstract_book",
+        page_count=56, is_ocr=0, parse_status="ok"),
 }
 
 # General-ichthyology volumes where Fable reads only the elasmobranch pages.

@@ -78,6 +78,32 @@
              border-radius:6px; cursor:pointer; color:var(--ink); }
   .hist .h:hover { border-color:var(--accent); color:var(--accent); }
   .hist .h small { color:var(--dim); margin-left:6px; }
+  .why { margin-top:8px; border-top:1px dashed var(--line); padding-top:6px; font-size:12.5px; }
+  .why > summary { cursor:pointer; color:var(--accent); font-weight:600; }
+  .why .row { margin:5px 0; color:#c4cfda; }
+  .why .row b { color:var(--ink); }
+  .why .tag { display:inline-block; padding:0 8px; border-radius:10px; font-size:11.5px; font-weight:650;
+              background:var(--accent2); color:#fff; margin-right:4px; }
+  .why .tag.kw { background:var(--green); } .why .tag.vec { background:var(--accent2); }
+  .why .warn { color:var(--amber); }
+  .why dl { margin:4px 0 0; display:grid; grid-template-columns:auto 1fr; gap:2px 10px; color:var(--dim); }
+  .why dt { color:var(--ink); } .why dd { margin:0; }
+  .why .full { white-space:pre-wrap; background:var(--bg); border:1px solid var(--line); border-radius:6px;
+               padding:8px 10px; margin-top:4px; max-height:320px; overflow-y:auto; color:#c4cfda; }
+  .why mark { background:#d2992266; color:var(--ink); border-radius:3px; padding:0 1px; }
+  .nomatch { background:#d2992218; border:1px solid #d2992255; color:var(--amber); border-radius:8px;
+             padding:8px 12px; font-size:12.5px; margin:-8px 0 16px; }
+  .xbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:6px 0 10px; padding:8px 10px;
+          background:var(--panel2); border:1px solid var(--line); border-radius:8px; font-size:12.5px; }
+  .xbar select, .xbar button { background:var(--bg); color:var(--ink); border:1px solid var(--line);
+          border-radius:6px; padding:5px 10px; font-size:12.5px; cursor:pointer; }
+  .xbar button:hover { border-color:var(--accent); color:var(--accent); }
+  .xbar .sp { margin-left:auto; }
+  .src .pick { float:left; margin:3px 8px 0 0; }
+  .toast { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--accent);
+           color:#04222c; padding:8px 18px; border-radius:20px; font-weight:650; font-size:13px;
+           opacity:0; pointer-events:none; transition:opacity .25s; z-index:20; }
+  .toast.on { opacity:1; }
   @keyframes sp { to { transform:rotate(360deg); } }
 </style>
 </head>
@@ -100,6 +126,7 @@
     <div id="results"><div class="empty">Ask a question to search the corpus. Add filters on the left to narrow it.</div></div>
   </main>
 </div>
+<div class="toast" id="toast"></div>
 <script>
 const $ = s => document.querySelector(s);
 const state = { families:[], sel:{}, authors:{} };  // sel[key] -> Set or {min,max}; authors[id]=name
@@ -280,6 +307,67 @@ async function loadHistory(){
   } catch(e){}
 }
 
+
+const EXP_FORMATS=[['bibtex','BibTeX'],['ris','RIS (EndNote, Zotero, Mendeley)'],['apa','APA 7'],['harvard','Harvard'],
+  ['vancouver','Vancouver'],['chicago','Chicago (author-date)'],['mla','MLA'],['csv','CSV'],['json','JSON']];
+const STYLE_FMTS=['apa','harvard','vancouver','chicago','mla'];
+let LAST={answer:null};
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toast.t);
+  toast.t=setTimeout(()=>t.classList.remove('on'),1800); }
+function selectedIds(){ return [...document.querySelectorAll('.pick:checked')].map(c=>c.value); }
+async function fetchRefs(fmt){
+  const ids=selectedIds(); if(!ids.length){ toast('Select at least one source'); return null; }
+  const r=await apiFetch('/api/export?ids='+ids.join(',')+'&fmt='+fmt);
+  if(!r.ok){ toast('Export failed ('+r.status+')'); return null; }
+  return r.text();
+}
+async function copyText(t){
+  try { await navigator.clipboard.writeText(t); }
+  catch(e){ const a=document.createElement('textarea'); a.value=t; document.body.appendChild(a); a.select();
+            document.execCommand('copy'); a.remove(); }
+}
+async function exportCopy(){ const t=await fetchRefs($('#xfmt').value); if(t==null) return;
+  await copyText(t); toast('Copied '+selectedIds().length+' references'); }
+async function exportDownload(){ const fmt=$('#xfmt').value; const t=await fetchRefs(fmt); if(t==null) return;
+  const ext={bibtex:'bib',ris:'ris',csv:'csv',json:'json'}[fmt]||'txt';
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));
+  a.download='shark_oracle_references_'+fmt+'.'+ext; document.body.appendChild(a); a.click(); a.remove(); }
+async function exportAnswer(){
+  const fmt=STYLE_FMTS.includes($('#xfmt').value)?$('#xfmt').value:'apa';
+  const refs=await fetchRefs(fmt); if(refs==null) return;
+  const ans=(LAST.answer||'').trim();
+  await copyText((ans?ans+'\n\n':'')+'References ('+fmt.toUpperCase()+')\n'+refs.trim());
+  toast('Copied answer with references'+(STYLE_FMTS.includes($('#xfmt').value)?'':' (APA)')); }
+function termRegex(terms){
+  const stem=w=>{ w=w.toLowerCase(); for(const suf of ['ing','ed','es','s']) if(w.endsWith(suf)&&w.length-suf.length>=3) return w.slice(0,-suf.length); return w; };
+  const parts=(terms||[]).map(t=>t.split(/\W+/).filter(Boolean).map(w=>'\\b'+stem(w).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\w*').join('\\W+')).filter(Boolean);
+  return parts.length?new RegExp('('+parts.join('|')+')','gi'):null;
+}
+function highlight(text, terms){
+  const re=termRegex(terms); const e=esc(text); if(!re) return e;
+  return e.replace(re,'<mark>$1</mark>');
+}
+function whyHtml(s){
+  const w=s.why; if(!w) return '';
+  const ch=w.channels||[]; const kw=ch.includes('fts'), vec=ch.includes('vector');
+  const chTxt=(kw?'<span class="tag kw">keyword match</span>':'')+(vec?'<span class="tag vec">semantic similarity</span>':'');
+  const how = kw&&vec?'found by both channels':kw?'found by the keyword search only':'found by meaning only (no keyword hit)';
+  const terms=w.matched_terms||[];
+  const termRow = terms.length
+    ? `Query words in this passage: ${terms.map(t=>'<mark>'+esc(t)+'</mark>').join(', ')}`
+    : `<span class="warn">No query word occurs in this passage: matched on meaning only.</span>`;
+  const ce=s.ce_score;
+  const ceNote= ce==null?'':(ce<0?' <span class="warn">negative: the re-ranker thinks this passage is off-topic for the question</span>':'');
+  return `<details class="why"><summary>Why this paper?</summary>
+    <div class="row"><b>Channel:</b> ${chTxt} ${how}${w.retrieval==='vector'?' (keyword index unavailable)':''}</div>
+    <div class="row">${termRow}</div>
+    <dl><dt>cosine ${s.cosine_score}</dt><dd>semantic similarity between question and passage, 0 to 1 (higher is closer)</dd>
+      ${ce!=null?`<dt>relevance ${ce}</dt><dd>cross-encoder score on question and passage together${ceNote}</dd>`:''}
+      ${w.fused_rank!=null?`<dt>fused rank ${w.fused_rank}</dt><dd>position after combining keyword and semantic rankings, before re-ranking${w.fts_score!=null?'; keyword (BM25) score '+w.fts_score:''}</dd>`:''}</dl>
+    <details style="margin-top:6px"><summary style="cursor:pointer;color:var(--dim)">Show the retrieved passage in full</summary>
+      <div class="full">${highlight(w.passage||'',terms)}</div></details></details>`;
+}
+
 async function ask(){
   const question=$('#q').value.trim(); if(!question) return;
   $('#go').disabled=true;
@@ -306,20 +394,43 @@ async function ask(){
           (The index is still growing — try again shortly, or loosen filters.)</div>`;
   } else {
     if(r.answer) html+=`<div class="answer">${(r.sentences&&r.sentences.length)?renderSentences(r.sentences,srcById):linkifyCitations(r.answer,srcById)}</div>`;
+    const isNLI = cs.basis==='entailment';
     html+=`<div class="strength" style="background:${col}22;color:${col};border:1px solid ${col}55">
              <span class="dot" style="background:${col}"></span>
-             ${(cs.label||'').toUpperCase()} — ${cs.reason||''}</div>`;
+             ${isNLI?'Sentence check (experimental): ':''}${(cs.label||'').toUpperCase()} — ${cs.reason||''}</div>`;
+    const ct=r.claim_strength_topic;
+    if(isNLI && ct && ct.label){
+      const tcol=`var(${STR[ct.label]||'--grey'})`;
+      html+=`<div class="strength" style="background:${tcol}22;color:${tcol};border:1px solid ${tcol}55;margin-top:6px">
+               <span class="dot" style="background:${tcol}"></span>
+               Topic coverage: ${ct.label.toUpperCase()} — ${ct.n_distinct_papers_retrieved||0} papers retrieved, ${ct.n_concordant_papers||0} strongly relevant</div>`;
+    }
     const seen=new Set();
     const uniqSrc=(r.retrieved||[]).filter(s=>{ if(seen.has(s.literature_id))return false; seen.add(s.literature_id); return true; });
-    html+=`<div class="meta">${uniqSrc.length} source papers</div><div>`+ uniqSrc.map(s=>`
+    LAST.answer=r.answer||null;
+    const anyKw=uniqSrc.some(s=>((s.why||{}).matched_terms||[]).length);
+    const ces=uniqSrc.map(s=>s.ce_score).filter(v=>v!=null);
+    if(uniqSrc.length && !anyKw){
+      const best=ces.length?Math.max(...ces):null;
+      html+=`<div class="nomatch">None of your query words occur in any retrieved passage; these papers were matched on meaning only`+
+            (best!=null&&best<0?`, and every relevance score is negative (best ${best.toFixed(2)}), so the re-ranker judges them off-topic. The corpus probably has nothing on this.`:'.')+`</div>`;
+    }
+    html+=`<div class="meta">${uniqSrc.length} source papers</div>
+      <div class="xbar"><span>Export</span>
+        <select id="xfmt">${EXP_FORMATS.map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('')}</select>
+        <button id="xcopy">Copy to clipboard</button><button id="xdl">Download</button>
+        <button class="sp" id="xans">Copy answer with references</button></div><div>`+ uniqSrc.map(s=>`
       <div class="src" id="src-${s.literature_id}">
+        <input type="checkbox" class="pick" value="${s.literature_id}" checked title="include in export">
         <span class="scores">cos ${s.cosine_score}${s.ce_score!=null?' · rel '+s.ce_score:''}</span>
         <h4>[${s.literature_id}] ${s.title||''}</h4>
         <div class="sm">${(s.authors||'').replace(/\s*&\s*/g,', ')} · ${s.year||''} · ${s.journal||''}</div>
         <div class="prev">${s.text_preview||''}</div>
+        ${whyHtml(s)}
       </div>`).join('') + '</div>';
   }
   $('#results').innerHTML=html;
+  if($('#xcopy')){ $('#xcopy').onclick=exportCopy; $('#xdl').onclick=exportDownload; $('#xans').onclick=exportAnswer; }
   $('#go').disabled=false;
   loadHistory();
 }
@@ -342,6 +453,11 @@ function renderExamples(){
   });
 }
 
+// ?q=<question> asks on load (bookmarkable demo links; also used for screenshots)
+function askFromUrl(){
+  try { const q=new URLSearchParams(location.search).get('q'); if(q){ $('#q').value=q; ask(); } } catch(e){}
+}
+
 (async function init(){
   renderExamples();
   loadHistory();
@@ -349,6 +465,7 @@ function renderExamples(){
   try { const f=await (await fetch('/api/filters')).json(); renderFilters(f.families); }
   catch(e){ $('#filters').innerHTML='<div class="empty">filters unavailable</div>'; }
   setInterval(loadStatus, 20000);
+  askFromUrl();
 })();
 </script>
 </body>

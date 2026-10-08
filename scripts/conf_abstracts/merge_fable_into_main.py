@@ -82,8 +82,13 @@ def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True, only_books=Non
         old = main.execute("SELECT meeting_id FROM meetings WHERE source_pdf IN (%s)"
                            % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
     else:
-        old = main.execute("SELECT meeting_id FROM meetings WHERE meeting='EEA' OR source_pdf IN (%s)"
-                           % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
+        # ...except EEA books loaded by a deterministic parser (config.
+        # EEA_STRUCTURED_FILES, e.g. EEA 2026): they are not in the Fable DB,
+        # so the blanket sweep would delete them with nothing to replace them.
+        old = [(mid,) for mid, mtg, src in main.execute(
+                   "SELECT meeting_id, meeting, source_pdf FROM meetings WHERE meeting='EEA' OR source_pdf IN (%s)"
+                   % ",".join("?" * len(fab_srcs)), fab_srcs).fetchall()
+               if src in fab_srcs or Path(src or "").stem not in C.EEA_STRUCTURED_FILES]
 
     # A flatbed rescan SUPERSEDES the phone scan of the same meeting, but the two
     # have different filenames (..._phonescan.pdf), so matching on source_pdf

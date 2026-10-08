@@ -277,3 +277,342 @@ def ingest_eea(con, text, meeting_meta):
     con.execute("UPDATE meetings SET n_abstracts=? WHERE meeting_id=?", (n, mid))
     con.commit()
     return n
+
+
+# ---------------------------------------------------------------------------
+# EEA 2026 (online, Shark Trust; Canva-built, born-digital booklet).
+# The generic prose-gap parser above plateaus on titles, and this book's
+# author lines vary too much (superscripts, none, two-column affiliations) for
+# a purely structural split. But the booklet opens with its own 7-page agenda,
+# which names every talk, so each abstract is ANCHORED on its agenda title.
+# Earlier years are untouched: nothing above calls this.
+# Per-abstract layout (pdftotext -layout):
+#   [DAY n — SESSION n (Name)]   session header, sometimes after a photo page
+#   TITLE      1-3 lines              AUTHORS   names, superscript affil numbers
+#   AFFILS     "1" line + text, "¹Text", or two columns   BODY   prose
+#   KEYWORDS   one unlabelled comma/semicolon line
+# ---------------------------------------------------------------------------
+_SUP = "¹²³⁴⁵⁶⁷⁸⁹⁰"
+_SUP_MAP = str.maketrans(_SUP + "˒", "1234567890,")
+_E26_SESSION = re.compile(r"^DAY\s+(\d)\s*[—–-]\s*SESSION\s+(\d)\s*\((.+)\)\s*$")
+_E26_TIME = re.compile(r"^\d{2}:\d{2}$")
+_E26_NOTTALK = re.compile(r"(?i)session introduction|q&a|^break|welcome|close of day|"
+                          r"closing remarks|panel discussion")
+# an author name carrying an affiliation superscript: letter, then digits
+_E26_AUTHSUP = re.compile(r"[A-Za-zÀ-ÿ.)*]\s?(?:\d{1,2}|[" + _SUP + r"]+)(?:,\s?\d{1,2})*\s*(?:[;,&]|$)")
+# an affiliation marker line: a bare number (or two, for two-column layouts),
+# a number glued to the text ("1Institute"), or a unicode superscript. A body
+# line opening "24, 36, 48 hours" must NOT match.
+_E26_MARK = re.compile(r"^(?:\d{1,2}(?:\s{2,}\d{1,2})?\s*$|\d{1,2}(?=[A-Za-zÀ-ÿ])|[" + _SUP + r"]+)")
+
+
+def _e26_norm(s):
+    return re.sub(r"[^a-z0-9]", "", (s or "").lower())
+
+
+def parse_eea2026_agenda(raw_text):
+    """Talks from the agenda pages of the RAW (non-layout) pdftotext output:
+    [dict(day, time_uk, minutes, speaker, title)], in programme order.
+    Time is the agenda's 'UTC +1' column (UK, BST); minutes = slot length,
+    5 = speed talk, 10 = regular talk."""
+    pages = raw_text.split("\f")
+    rows, day = [], 0
+    for pg in pages[1:8]:
+        if "EEA Agenda" in pg:
+            day += 1
+        if not day:
+            continue
+        paras = [re.sub(r"\n\d{1,2}\n", "\n", p.strip()) for p in re.split(r"\n\s*\n", pg) if p.strip()]
+        i = 0
+        while i < len(paras):
+            if _E26_TIME.match(paras[i]):
+                times = [paras[i]]
+                while i + 1 < len(paras) and _E26_TIME.match(paras[i + 1]) and len(times) < 3:
+                    i += 1
+                    times.append(paras[i])
+                rest = paras[i + 1:i + 3] + ["", ""]
+                rows.append(dict(day=day, time_uk=times[-1],
+                                 speaker=re.sub(r"\s+", " ", rest[0]).strip(),
+                                 title=re.sub(r"\s+", " ", re.sub(r"\s\d{1,2}(?=\s)", " ", rest[1])).strip()))
+            i += 1
+    for k, r in enumerate(rows):          # slot length = gap to the next row
+        if k + 1 < len(rows) and rows[k + 1]["day"] == r["day"]:
+            h1, m1 = map(int, r["time_uk"].split(":"))
+            h2, m2 = map(int, rows[k + 1]["time_uk"].split(":"))
+            r["minutes"] = (h2 * 60 + m2) - (h1 * 60 + m1)
+        else:
+            r["minutes"] = None
+    return [r for r in rows if r["title"] and not _E26_NOTTALK.search(r["title"])
+            and not _E26_NOTTALK.search(r["speaker"]) and not r["speaker"].startswith("Chair")]
+
+
+def _e26_split_authors(raw):
+    """'A B1; C D2,3, E F1' -> [[name, ['1'], followed_by_semicolon], ...]."""
+    raw = raw.translate(_SUP_MAP)
+    raw = re.sub(r"\s+(?:and|&)\s+", ", ", raw)
+    raw = re.sub(r"\((?:Ph\.?D\.?|PhD)\)", "", raw)
+    out = []
+    for m in re.finditer(r"([^,;\d]+?)\s*\*?\s*((?:\d{1,2})(?:\s?,\s?\d{1,2}(?=\s*(?:,|;|$)|\s?,\s?\d))*)?\s*\*?\s*([;,]|$)", raw):
+        name = re.sub(r"^(?:Dr\.?|Prof\.?)\s+", "", m.group(1).strip(" *"))
+        if not name:
+            continue
+        nums = [n.strip() for n in (m.group(2) or "").split(",") if n.strip()]
+        if re.fullmatch(r"(?:[A-Z]\.?){1,3}", name) and out:
+            out[-1][0] = f"{name.rstrip('.')}. {out[-1][0]}"     # "Meyers, E.K.M."
+            out[-1][1] += nums
+            continue
+        sm = re.fullmatch(r"([A-ZÀ-Ý][\w'À-ÿ-]+(?:\s[A-ZÀ-Ý][\w'À-ÿ-]+)?)\s((?:[A-Z]\.?){1,4})", name)
+        if sm and sm.group(2).replace(".", "").isupper() and len(sm.group(2).replace(".", "")) <= 4 \
+                and not re.search(r"[a-z]", sm.group(2)):
+            ini = sm.group(2) if sm.group(2).endswith(".") else sm.group(2) + "."
+            name = f"{ini} {sm.group(1)}"                       # "Toledo-Padilla H" -> "H. Toledo-Padilla"
+        out.append([name, nums, m.group(3) == ";"])
+    return out
+
+
+def _e26_layout_lines(layout_text):
+    """[(page, line)] with trailing page numbers and photo credits removed."""
+    out = []
+    for p, page in enumerate(layout_text.split("\f"), start=1):
+        lines = page.splitlines()
+        # the page number sits among the last non-blank lines (a photo credit
+        # can follow it), alone or after a wide gap
+        tail = [k for k, l in enumerate(lines) if l.strip()][-3:]
+        for k, ln in enumerate(lines):
+            if k in tail:
+                ln = re.sub(r"\s{3,}\d{1,3}\s*$", "", ln)
+                if re.fullmatch(r"\s*\d{1,3}\s*", ln):
+                    ln = ""
+            ln = ln.replace("\u00ad", "").strip()
+            if ln.startswith("©"):
+                ln = ""
+            out.append((p, ln))
+    return out
+
+
+def _e26_find_title(lines, title, start):
+    """Index of the line where `title` starts (first 30 normalised chars
+    matched across up to 3 joined lines), searching from `start`."""
+    want = _e26_norm(title)[:30]
+    for i in range(start, len(lines)):
+        if not lines[i][1] or _E26_SESSION.match(lines[i][1]):
+            continue
+        joined = "".join(_e26_norm(lines[j][1]) for j in range(i, min(i + 3, len(lines))))
+        if joined.startswith(want) and _e26_norm(lines[i][1])[:12] == want[:12]:
+            return i
+    return None
+
+
+def parse_eea2026_blocks(layout_text, raw_text):
+    """One dict per agenda talk (abstract found or not): agenda fields plus
+    title (booklet spelling), authors, affiliations, abstract_text, keywords,
+    session, page, found."""
+    agenda = parse_eea2026_agenda(raw_text)
+    lines = _e26_layout_lines(layout_text)
+    first = next(i for i, (_, l) in enumerate(lines) if _E26_SESSION.match(l))
+    sessions = [(i, f"Day {m.group(1)} Session {m.group(2)}: {m.group(3).strip()}")
+                for i, (_, l) in enumerate(lines) if (m := _E26_SESSION.match(l))]
+    for a in agenda:
+        a["_at"] = _e26_find_title(lines, a["title"], first)
+    starts = sorted(a["_at"] for a in agenda if a["_at"] is not None)
+    out = []
+    for a in agenda:
+        ti = a.pop("_at")
+        rec = dict(a, found=ti is not None)
+        if ti is None:
+            out.append(rec)
+            continue
+        end = next((s for s in starts if s > ti), len(lines))
+        # title: lines until the normalised agenda title is covered
+        want, got, x = _e26_norm(a["title"]), "", ti
+        while x < end and lines[x][1] and len(got) < len(want) - 1:
+            if len(got) >= 0.8 * len(want) and _E26_AUTHSUP.search(lines[x][1]):
+                break           # booklet title shorter than the agenda's
+            got += _e26_norm(lines[x][1])
+            x += 1
+        title = re.sub(r"\s+", " ", " ".join(lines[y][1] for y in range(ti, x))).strip()
+        # authors: first line after the title, plus continuation lines
+        while x < end and not lines[x][1]:
+            x += 1
+        auth = [lines[x][1]] if x < end else []
+        x += 1
+        def namelist(l):        # unnumbered continuation: "Booth, Demian Chapman, Luke"
+            chunks = [c.strip() for c in re.split(r"[,;]", l) if c.strip()]
+            return (l.count(",") + l.count(";") >= 2 and not _looks_affil(l)
+                    and all(len(c.split()) <= 4 for c in chunks))
+        while x < end and lines[x][1] and not _E26_MARK.match(lines[x][1]) and (
+                auth[-1].rstrip().endswith((",", ";", "-")) or namelist(lines[x][1]) or
+                (_E26_AUTHSUP.search(lines[x][1]) and ("," in lines[x][1] or re.search(r"\d$", lines[x][1])))):
+            auth.append(lines[x][1])
+            x += 1
+        author_raw = re.sub(r"(\w)-\s+(?=[A-ZÀ-Ý])", r"\1-", " ".join(auth))
+        # paragraphs after the authors; the body starts at the first prose
+        # paragraph that holds no affiliation marker
+        paras, cur = [], []
+        for y in range(x, end):
+            s = lines[y][1]
+            if _E26_SESSION.match(s):
+                continue
+            if s:
+                cur.append(s)
+            elif cur:
+                paras.append(cur)
+                cur = []
+        if cur:
+            paras.append(cur)
+
+        def is_body(p):
+            txt = " ".join(p)
+            if any(_E26_MARK.match(l) for l in p):
+                return False
+            return (len(p) >= 2 and sum(map(len, p)) / len(p) >= 60) or (len(txt) >= 200 and txt.endswith("."))
+        b0 = next((k for k, p in enumerate(paras) if is_body(p)), len(paras))
+        aff_lines = [l for p in paras[:b0] for l in p]
+        body_paras = paras[b0:]
+        keywords = None
+        if len(body_paras) >= 2:
+            kw = re.sub(r"\s+", " ", " ".join(body_paras[-1])).strip()
+            if len(kw) < 250 and len(body_paras[-1]) <= 2 and not re.search(r"\.\s+[A-Z]", kw) and (
+                    not kw.endswith(".") or (len(kw.split()) <= 15 and re.search(r"[,;]", kw))):
+                keywords = kw
+                body_paras.pop()
+        body = "\n\n".join(re.sub(r"\s+", " ", " ".join(p)) for p in body_paras)
+        body = re.sub(r"(\w)- (\w)", r"\1-\2", body).strip()
+        # affiliations: numbered when every marker line carries ONE number;
+        # two-column layouts (two numbers on a line) cannot be paired reliably
+        affs, two_col, num = {}, False, None
+        for l in aff_lines:
+            m = _E26_MARK.match(l)
+            if m:
+                nums = re.findall(r"\d{1,2}", m.group(0).translate(_SUP_MAP))
+                if len(nums) > 1:
+                    two_col = True
+                num = nums[0] if nums else None
+                rest = l[m.end():].strip()
+                affs[num] = rest
+            elif num is not None:
+                affs[num] = (affs[num] + " " + l).strip()
+            else:
+                affs["0"] = (affs.get("0", "") + " " + l).strip()
+        if two_col:
+            affs = {"raw": re.sub(r"\s{2,}", " | ", " ".join(aff_lines))}
+        sess = None
+        for si, name in sessions:
+            if si <= ti:
+                sess = name
+        authors, seen = [], set()
+        for au in _e26_split_authors(author_raw):     # a name printed twice
+            if au[0] not in seen:                      # (Klangnurak) is one author
+                seen.add(au[0])
+                authors.append(au)
+        rec.update(title=title or a["title"], author_raw=author_raw,
+                   authors=authors,
+                   affiliations={k: v.strip(" ;,") for k, v in affs.items()},
+                   two_column_affils=two_col, abstract_text=body,
+                   keywords=keywords, session=sess, page=lines[ti][0])
+        out.append(rec)
+    return out
+
+
+def _e26_tokens(name):
+    import unicodedata
+    n = unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()
+    return {t for t in re.split(r"[\s.\-]+", n) if len(t) >= 3}
+
+
+def ingest_eea2026(con, layout_text, raw_text, meeting_meta):
+    """Load the EEA 2026 booklet. Presenters come from the agenda's speaker
+    column (a talk with two named speakers, e.g. Dedman & Tiktak, flags both);
+    slot length gives presentation_type (5 min = 'lightning', else 'talk').
+    Returns (n_inserted, blocks)."""
+    from conf_abstracts import load, tag, names
+    meta = dict(meeting_meta)
+    meta.setdefault("meeting", "EEA")
+    meta.setdefault("doc_type", "abstract_book")
+    meta.setdefault("parse_status", "ok")
+    mid = load.upsert_meeting(con, meta)
+    blocks = parse_eea2026_blocks(layout_text, raw_text)
+    days = {1: "Tuesday 6 October 2026", 2: "Wednesday 7 October 2026",
+            3: "Thursday 8 October 2026"}
+    bodies = {}
+    n = 0
+    for b in blocks:
+        if not b["found"] or not b.get("abstract_text"):
+            continue
+        speakers = [s.strip() for s in re.split(r"\s*(?:&|,| and )\s*", b["speaker"]) if s.strip()]
+        pres = set()
+        for sp in speakers:
+            st = _e26_tokens(sp)
+            best = max(range(len(b["authors"])), key=lambda k: len(st & _e26_tokens(b["authors"][k][0])),
+                       default=None)
+            if best is not None and len(st & _e26_tokens(b["authors"][best][0])) >= min(2, len(st)):
+                pres.add(best)
+        inferred = not pres
+        if inferred and b["authors"]:
+            pres = {0}
+        affs = b["affiliations"]
+        authors = []
+        for k, (name, nums, _semi) in enumerate(b["authors"], start=1):
+            if "raw" in affs:
+                aff = None                       # two-column block: pairing unreliable
+            elif nums:
+                aff = "; ".join(affs[x] for x in nums if affs.get(x)) or None
+            else:
+                aff = affs.get("0") if len(affs) == 1 else None
+            authors.append(dict(full_name=names.normalise(name), position=k,
+                                is_presenter=int(k - 1 in pres),
+                                presenter_inferred=int(inferred and k - 1 in pres),
+                                affiliation=aff, raw_author_string=b["author_raw"]))
+        key = re.sub(r"\W+", "", b["abstract_text"].lower())[:400]
+        dup_body = key in bodies
+        bodies.setdefault(key, b["title"])
+        rec = dict(title=b["title"],
+                   presentation_type="lightning" if b.get("minutes") == 5 else "talk",
+                   session_name=b["session"],
+                   session_datetime=f"{days.get(b['day'], '')} {b['time_uk']} (UK, UTC+1)".strip(),
+                   abstract_text=b["abstract_text"], keywords=b["keywords"],
+                   authors=authors, society="AES", society_basis="meeting",
+                   societies_explicit=None, source_page=b["page"],
+                   needs_review=int(dup_body or "raw" in affs))
+        rec = tag.resolve(rec, "EEA", 2026)   # EEA -> is_elasmo=1, basis=meeting
+        rec.update(society="AES", society_basis="meeting")   # house convention for EEA rows
+        if load.insert_abstract(con, mid, rec):
+            n += 1
+    con.execute("UPDATE meetings SET n_abstracts=(SELECT COUNT(*) FROM abstracts "
+                "WHERE meeting_id=?) WHERE meeting_id=?", (mid, mid))
+    con.commit()
+    return n, blocks
+
+
+def eea2026_texts(pdf):
+    import subprocess
+    lay = subprocess.run(["pdftotext", "-layout", str(pdf), "-"], capture_output=True,
+                         text=True, check=True).stdout
+    raw = subprocess.run(["pdftotext", str(pdf), "-"], capture_output=True,
+                         text=True, check=True).stdout
+    return lay, raw
+
+
+if __name__ == "__main__":
+    # cd scripts && ../venv/bin/python -m conf_abstracts.parse_eea --eea2026 [--dry-run]
+    # (idempotent: insert_abstract skips titles already in the meeting)
+    import argparse
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from conf_abstracts import config as C, schema
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--eea2026", action="store_true", required=True)
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--db", default=str(C.DB_PATH))
+    a = ap.parse_args()
+    pdf = C.CONFERENCES / "2026" / "2026_EEA_AbstractBook.pdf"
+    lay, raw = eea2026_texts(pdf)
+    if a.dry_run:
+        bl = parse_eea2026_blocks(lay, raw)
+        print(f"{len(bl)} agenda talks, {sum(x['found'] for x in bl)} abstracts found")
+        raise SystemExit(0)
+    con = schema.create_db(a.db)
+    n, bl = ingest_eea2026(con, lay, raw, C.EEA_STRUCTURED_FILES["2026_EEA_AbstractBook"] | dict(source_pdf=str(pdf)))
+    print(f"inserted {n} abstracts; {len(bl)} agenda talks, "
+          f"{sum(x['found'] for x in bl)} with an abstract in the booklet")

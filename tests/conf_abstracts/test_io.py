@@ -510,3 +510,30 @@ def test_ocs_labelled_2025_header():
     assert "Presented by" not in b[0]["author_raw"]
     assert b[0]["affiliation"].startswith("1. University")
     assert b[0]["abstract_text"].startswith("Walking sharks")
+
+
+def test_eea2026_agenda_anchored_parse():
+    """EEA 2026 booklet: every agenda talk is located by its title; 83 of 84
+    have an abstract (Kingma's is not printed). Also an in-memory ingest:
+    presenters come from the agenda speaker, and Dedman & Tiktak flags both.
+    Skipped when the library PDF is not mounted."""
+    from conf_abstracts import parse_eea, config as C
+    pdf = C.CONFERENCES / "2026" / "2026_EEA_AbstractBook.pdf"
+    if not pdf.exists():
+        return
+    lay, raw = parse_eea.eea2026_texts(pdf)
+    bl = parse_eea.parse_eea2026_blocks(lay, raw)
+    assert len(bl) == 84 and sum(b["found"] for b in bl) == 83
+    assert [b["speaker"] for b in bl if not b["found"]] == ["Irene Kingma"]
+    first = bl[0]
+    assert first["title"].startswith("Post-release survival of silky sharks")
+    assert first["authors"][0][0] == "Leire Lopetegui Eguren" and first["keywords"]
+    assert all(b["abstract_text"] and b["keywords"] for b in bl if b["found"])
+    con = schema.create_db(":memory:")
+    n, _ = parse_eea.ingest_eea2026(con, lay, raw, dict(C.EEA_STRUCTURED_FILES["2026_EEA_AbstractBook"], source_pdf=str(pdf)))
+    assert n == 83
+    assert con.execute("SELECT COUNT(*) FROM abstracts WHERE is_elasmo=1").fetchone()[0] == 83
+    pres = {r[0] for r in con.execute(
+        "SELECT u.full_name FROM authors u JOIN abstracts a USING(abstract_id) "
+        "WHERE a.title LIKE 'Shark Oracle%' AND u.is_presenter=1")}
+    assert pres == {"Simon Dedman", "Guuske Tiktak"}

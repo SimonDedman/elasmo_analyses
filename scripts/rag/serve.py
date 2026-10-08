@@ -18,6 +18,7 @@ Endpoints:
     GET  /api/authors?q=  -> author autocomplete suggestions
     POST /api/query       -> {question, filters, top_k, retrieve_n, generate}
     GET  /api/history?limit= -> the caller's own recent queries
+    GET  /api/export?ids=1,2&fmt= -> references (bibtex|ris|csv|json|apa|harvard|vancouver|chicago|mla)
 """
 
 from __future__ import annotations
@@ -31,8 +32,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from fastapi import Depends, FastAPI
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import BaseModel
 
 HERE = Path(__file__).resolve().parent
@@ -213,6 +214,62 @@ def run_query(body: QueryBody, client: str = Depends(require_access)):
     return resp
 
 
+def _why(h: dict, question: str, retrieval_mode: str, fused_rank: dict) -> dict:
+    """Per-source explanation: which channel(s) found the chunk, which query
+    terms occur in it, the full passage, and the raw scores."""
+    from hybrid import matched_terms
+    chans = h.get("channels") or ["vector"]
+    return {
+        "channels": chans,
+        "retrieval": retrieval_mode,
+        "matched_terms": matched_terms(question, h["text"]),
+        "passage": h["text"],
+        "chunk_id": h.get("pos"),
+        "fts_score": round(h["fts_score"], 3) if h.get("fts_score") is not None else None,
+        "fused_score": round(h["fused_score"], 4) if h.get("fused_score") is not None else None,
+        "fused_rank": fused_rank.get(h.get("pos")),
+    }
+
+
+EXPORT_COLS = ("literature_id", "title", "authors", "year", "doi", "journal", "volume",
+               "issue", "pages", "abstract", "pdf_url")
+
+
+def _export_meta() -> pd.DataFrame:
+    if "export_meta" not in S:
+        import pyarrow.parquet as pq
+        from common import PARQUET_PATH
+        have = set(pq.ParquetFile(PARQUET_PATH).schema.names)
+        df = pd.read_parquet(PARQUET_PATH, columns=[c for c in EXPORT_COLS if c in have])
+        df["literature_id"] = df["literature_id"].astype(str)
+        S["export_meta"] = df.drop_duplicates("literature_id").set_index("literature_id", drop=False)
+    return S["export_meta"]
+
+
+@app.get("/api/export")
+def api_export(ids: str = "", fmt: str = "bibtex", client: str = Depends(require_access)):
+    """Reference export for the given literature_ids (order kept, unknown ids
+    skipped). 400 on empty ids or unknown format, 404 when no id is known."""
+    import export_refs as ex
+    want = [i.strip() for i in ids.split(",") if i.strip()]
+    if not want:
+        raise HTTPException(400, "ids is required (comma-separated literature_ids)")
+    fmt = fmt.lower()
+    if fmt not in ex.FORMATS:
+        raise HTTPException(400, f"fmt must be one of {', '.join(ex.FORMATS)}")
+    meta = _export_meta()
+    seen, rows = set(), []
+    for i in want:
+        if i in meta.index and i not in seen:
+            seen.add(i)
+            rows.append(meta.loc[i].to_dict())
+    if not rows:
+        raise HTTPException(404, "none of the ids are in the corpus")
+    mime, ext = ex.MEDIA.get(fmt, ("text/plain", "txt"))
+    return Response(ex.render(rows, fmt), media_type=mime + "; charset=utf-8",
+                    headers={"Content-Disposition": f'attachment; filename="shark_oracle_references_{fmt}.{ext}"'})
+
+
 def _run_query(body: QueryBody):
     _reload_index_if_stale()
     pf = S["paper_filters"]
@@ -246,6 +303,7 @@ def _run_query(body: QueryBody):
             S["index"], S["chunks"], S["embedder"], body.question,
             retrieve_n, positions, BGE_QUERY_PREFIX,
         )
+    fused_rank = {c.get("pos"): i for i, c in enumerate(candidates, start=1)}
     hits = cross_encode_rerank(body.question, candidates, body.top_k)
     strength = q.claim_strength(hits)
 
@@ -276,7 +334,8 @@ def _run_query(body: QueryBody):
              "authors": h["authors"], "year": h["year"], "journal": h.get("journal"),
              "cosine_score": round(h["score"], 3),
              "ce_score": round(h["ce_score"], 3) if h.get("ce_score") is not None else None,
-             "text_preview": h["text"][:260].replace("\n", " ") + "..."}
+             "text_preview": h["text"][:260].replace("\n", " ") + "...",
+             "why": _why(h, body.question, retrieval_mode, fused_rank)}
             for h in hits
         ],
     }

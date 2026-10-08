@@ -144,3 +144,41 @@ def rrf_fuse(vector_hits: list[tuple[int, float]],
             chans.setdefault(pos, []).append(name)
     order = sorted(fused, key=lambda p: (-fused[p], p))[:n]
     return [(p, fused[p], chans[p]) for p in order]
+
+
+_QTERM = re.compile(r'"((?:[^"]|"")*)"(\*?)')
+
+
+def _stem(w: str) -> str:
+    """Crude stem approximating FTS5's porter tokenizer, for display only."""
+    w = w.lower()
+    for suf in ("ing", "ed", "es", "s"):
+        if w.endswith(suf) and len(w) - len(suf) >= 3:
+            return w[: -len(suf)]
+    return w
+
+
+def matched_terms(question: str, text: str) -> list[str]:
+    """Query terms from the FTS expression that occur in `text` (case- and
+    accent-insensitive, stem-tolerant like the porter tokenizer). Returns the
+    query-side terms, e.g. ['bull shark', 'Chennai']. Display helper only; it
+    never affects ranking."""
+    import unicodedata
+
+    def fold(s: str) -> str:
+        return "".join(c for c in unicodedata.normalize("NFKD", s)
+                       if not unicodedata.combining(c)).lower()
+
+    expr = fts_query_from_question(question)
+    body = fold(text or "")
+    found: list[str] = []
+    for m in _QTERM.finditer(expr):
+        term = m.group(1).replace('""', '"')
+        words = [fold(w) for w in _WORD.findall(term)]
+        if not words:
+            continue
+        parts = [r"\b" + re.escape(_stem(w)) + r"\w*"
+                 for i, w in enumerate(words)]
+        if re.search(r"\W+".join(parts), body) and term not in found:
+            found.append(term)
+    return found

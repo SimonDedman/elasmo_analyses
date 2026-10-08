@@ -117,6 +117,16 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a5_parser",
                         blocks=n, inserted=n, status="ok")
 
+    # EEA books with a deterministic parser (EEA 2026: anchored on its agenda).
+    for frag, emeta in config.EEA_STRUCTURED_FILES.items():
+        if frag in path.name:
+            from conf_abstracts import parse_eea
+            smeta = dict(emeta, source_pdf=str(path))
+            lay, raw = parse_eea.eea2026_texts(path)
+            n, _ = parse_eea.ingest_eea2026(con, lay, raw, smeta)
+            return dict(pdf=path.name, meeting=emeta["meeting"], year=emeta["year"],
+                        doc_type="eea_structured", blocks=n, inserted=n, status="ok")
+
     # Numbered born-digital OCS abstract books (sequential number per abstract).
     for frag, (mtg, yr) in config.OCS_NUMBERED_FILES.items():
         if frag in path.name:

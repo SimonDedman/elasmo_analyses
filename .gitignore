@@ -214,3 +214,7 @@ outputs/altmetric_refresh_*/
 # Logo working folder: sources, build scripts, and finals stay local (Simon, 2026-09-29).
 # The published copy lives in docs/assets/logo/.
 /logo/
+
+# the public conference-abstracts browser ships its own data shards (2026-10-07)
+!docs/abstracts/
+!docs/abstracts/**
