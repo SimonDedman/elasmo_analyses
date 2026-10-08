@@ -4,7 +4,7 @@ import DeckGL from '@deck.gl/react';
 import { LineLayer, TextLayer, IconLayer, ScatterplotLayer } from '@deck.gl/layers';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { getIconAtlas, ICON_MAPPING, pickShape } from './lib/shapes.js';
-import { getClusterIcon } from './lib/clusterIcons.js';
+import { getClusterIcon, getCategoryClusterIcon } from './lib/clusterIcons.js';
 import Supercluster from 'supercluster';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
@@ -213,17 +213,28 @@ export default function App() {
     return buildCountryPalette(Object.keys(stats.by_country));
   }, [stats]);
 
-  const palettes = useMemo(() => ({
-    gender:        GENDER_PALETTE,
-    origin_region: REGION_PALETTE,
-    country:       countryPalette,
-  }), [countryPalette]);
-
   const originRegions = useMemo(() => {
     const s = new Set();
     authors.forEach(f => { if (f.properties.origin_region) s.add(f.properties.origin_region); });
     return Array.from(s).sort();
   }, [authors]);
+
+  // Region palette limited to the values actually in the data (NamSor gives only a
+  // coarse continent here, e.g. Europe / Asia / Africa), so the legend never lists
+  // categories that no author has. Values missing from REGION_PALETTE get a fallback.
+  const regionPalette = useMemo(() => {
+    const fallback = [[152, 78, 163, 220], [255, 127, 0, 220], [166, 86, 40, 220], [23, 190, 207, 220]];
+    const pal = {}; let i = 0;
+    originRegions.forEach(r => { pal[r] = REGION_PALETTE[r] || fallback[i++ % fallback.length]; });
+    pal.Unknown = REGION_PALETTE.Unknown;
+    return pal;
+  }, [originRegions]);
+
+  const palettes = useMemo(() => ({
+    gender:        GENDER_PALETTE,
+    origin_region: regionPalette,
+    country:       countryPalette,
+  }), [countryPalette, regionPalette]);
 
   // Counts for dropdown labels (post-filter so (N) reflects the remaining set)
   const filterSample = authors.filter(f => {
@@ -886,13 +897,20 @@ export default function App() {
       const clusterStats = clusterPoints.map(c => {
         const leaves = clusterIndex.getLeaves(c.id, Infinity);
         let m = 0, f = 0, u = 0;
+        const cat = new Map();
         leaves.forEach(l => {
           const g = l.properties.gender;
           if (g === 'M') m++;
           else if (g === 'F') f++;
           else u++;
+          if (colorBy !== 'gender') {
+            const k = l.properties[colorBy] ?? 'Unknown';
+            cat.set(k, (cat.get(k) || 0) + 1);
+          }
         });
-        return { cluster: c, m, f, u };
+        const parts = colorBy === 'gender' ? null
+          : Array.from(cat.entries()).map(([k, n]) => [pickColour({ [colorBy]: k }, colorBy, palettes), n]);
+        return { cluster: c, m, f, u, parts };
       });
 
       // Signature of filter state — changes any time the cluster input
@@ -913,7 +931,7 @@ export default function App() {
         sizeMinPixels: 30,
         sizeMaxPixels: 92,
         getPosition: d => d.cluster.geometry.coordinates,
-        getIcon:     d => getClusterIcon(d.m, d.u, d.f),
+        getIcon:     d => d.parts ? getCategoryClusterIcon(d.parts) : getClusterIcon(d.m, d.u, d.f),
         getSize:     d => clusterBubbleDiameter(d.cluster.properties.point_count),
         onClick: info => {
           if (!info.object || !clusterIndex) return;
@@ -927,7 +945,7 @@ export default function App() {
           }));
         },
         updateTriggers: {
-          getIcon: [filterSig],
+          getIcon: [filterSig, colorBy],
           getSize: [filterSig],
           getPosition: [filterSig],
         },

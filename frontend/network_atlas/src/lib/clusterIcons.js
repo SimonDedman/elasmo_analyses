@@ -64,3 +64,28 @@ export function getClusterIcon(m, u, f) {
   }
   return { url, width: SIZE, height: SIZE, anchorX: SIZE / 2, anchorY: SIZE / 2 };
 }
+
+// Generic cluster icon for any colour-by mode: vertical bands, largest share
+// first, each in its palette colour (grey for values without one).
+// `parts` = [[rgbArray, count], ...]. Cached on 5 % buckets.
+export function getCategoryClusterIcon(parts) {
+  const total = parts.reduce((a, [, n]) => a + n, 0) || 1;
+  const sorted = parts.filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]);
+  const top = sorted.slice(0, 5);
+  const rest = sorted.slice(5).reduce((a, [, n]) => a + n, 0);
+  if (rest) top.push([[150, 150, 150], rest]);
+  const bands = top.map(([c, n]) => [c, Math.max(1, Math.round((n / total) * 20))]);
+  const key = 'cat:' + bands.map(([c, b]) => c.slice(0, 3).join('.') + 'x' + b).join('|');
+  let url = CACHE.get(key);
+  if (!url) {
+    const canvas = document.createElement('canvas'); canvas.width = SIZE; canvas.height = SIZE;
+    const ctx = canvas.getContext('2d'); const R = SIZE / 2 - 3, cx = SIZE / 2, cy = SIZE / 2;
+    ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.clip();
+    const sum = bands.reduce((a, [, b]) => a + b, 0); let x = cx - R;
+    bands.forEach(([c, b]) => { const w = 2 * R * b / sum; ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; ctx.fillRect(x, cy - R, w + 0.5, 2 * R); x += w; });
+    ctx.restore(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'rgba(255,255,255,0.95)'; ctx.lineWidth = 2; ctx.stroke();
+    url = canvas.toDataURL('image/png'); CACHE.set(key, url);
+  }
+  return { url, width: SIZE, height: SIZE, anchorX: SIZE / 2, anchorY: SIZE / 2 };
+}
