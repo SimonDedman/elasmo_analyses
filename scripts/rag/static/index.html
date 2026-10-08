@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SharkOracle</title>
+<link rel="icon" type="image/png" href="/static/favicon-32.png">
 <style>
   :root {
     --bg:#0e1116; --panel:#161b22; --panel2:#1c232d; --line:#2a333f;
@@ -15,6 +16,7 @@
          background:var(--bg); color:var(--ink); }
   header { display:flex; align-items:center; gap:16px; padding:12px 20px;
            background:var(--panel); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+  header .logo { height:36px; width:auto; background:#fff; border-radius:6px; padding:3px 6px; display:block; }
   header h1 { font-size:16px; margin:0; font-weight:650; letter-spacing:.2px; }
   header h1 span { color:var(--accent); }
   .status { margin-left:auto; font-size:12px; color:var(--dim); text-align:right; min-width:230px; }
@@ -100,6 +102,12 @@
   .xbar button:hover { border-color:var(--accent); color:var(--accent); }
   .xbar .sp { margin-left:auto; }
   .src .pick { float:left; margin:3px 8px 0 0; }
+  .sortbar { font-size:11.5px; color:var(--dim); margin:2px 0 6px; }
+  .sortbar select { background:var(--bg); color:var(--ink); border:1px solid var(--line); border-radius:5px; font-size:11.5px; padding:1px 4px; }
+  .qbar button.alt { background:var(--panel2); color:var(--ink); border:1px solid var(--line); font-size:13px; padding:0 14px; }
+  .pager { display:flex; gap:10px; align-items:center; margin:10px 0; font-size:12.5px; }
+  .pager button { background:var(--bg); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:5px 12px; cursor:pointer; }
+  .pager button:disabled { opacity:.4; cursor:default; }
   .toast { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--accent);
            color:#04222c; padding:8px 18px; border-radius:20px; font-weight:650; font-size:13px;
            opacity:0; pointer-events:none; transition:opacity .25s; z-index:20; }
@@ -109,16 +117,16 @@
 </head>
 <body>
 <header>
-  <h1>🦈 Shark<span>Oracle</span></h1>
+  <img class="logo" src="/static/shark_oracle_logo_stacked.svg" alt="Shark Oracle" title="Shark Oracle">
   <div class="status" id="status">connecting…<div class="bar"><i id="barfill"></i></div></div>
 </header>
 <div class="layout">
   <aside id="filters"><div class="empty">loading filters…</div></aside>
   <main>
     <div class="qbar">
-      <input id="q" placeholder="Ask a question about elasmobranch science…"
+      <input id="q" placeholder="Ask a question, or leave blank and choose filters to list papers…"
              value="What techniques are used to determine age and growth in sharks?">
-      <button id="go">Ask</button>
+      <button id="go">Ask</button><button id="list" class="alt" title="List the papers matching the filters, no question needed">List papers</button>
     </div>
     <div class="examples" id="examples"></div>
     <details class="hist" id="hist"><summary>Recent questions</summary><div id="histlist"></div></details>
@@ -161,7 +169,9 @@ function renderFilters(fams){
     d.innerHTML = `<summary><span class="chev">▸</span>${f.label}
         <span class="badge" id="badge-${f.key}"></span></summary><div class="body"></div>`;
     const body=d.querySelector('.body');
-    if(f.note) body.insertAdjacentHTML('beforeend',`<div class="note">${f.note}</div>`);
+    if(f.note) body.insertAdjacentHTML('beforeend',`<div class="note">${esc(f.note)}</div>`);
+    if(f.sorts && f.sorts.length>1) body.insertAdjacentHTML('beforeend',
+      `<div class="sortbar">sort: <select data-sort="${f.key}">${f.sorts.map(x=>`<option value="${x.id}"${x.id===f.default_sort?' selected':''}>${x.label}</option>`).join('')}</select></div>`);
 
     if(f.kind==='author'){
       body.insertAdjacentHTML('beforeend',
@@ -183,13 +193,29 @@ function renderFilters(fams){
         wrap.appendChild(l);
       });
       body.appendChild(wrap);
+      if(f.sorts) sortOpts(f.key, f.default_sort);
     }
     host.appendChild(d);
   });
   wireFilters();
 }
 
+function sortOpts(key, mode){
+  const f=state.families.find(x=>x.key===key), wrap=document.getElementById('opts-'+key); if(!wrap||!f) return;
+  const info={}; (f.options||[]).forEach(o=>info[o.value]=o);
+  const rows=[...wrap.children];
+  const val=l=>l.querySelector('input').value;
+  const az=(a,b)=>(info[val(a)].label).localeCompare(info[val(b)].label);
+  rows.sort((a,b)=>{ const A=info[val(a)], B=info[val(b)];
+    if(mode==='az') return az(a,b);
+    if(mode==='geo'||mode==='best') return (A.rank-B.rank)||az(a,b);
+    return (B.count-A.count)||az(a,b); });
+  rows.forEach(r=>wrap.appendChild(r));
+}
 function wireFilters(){
+  $('#filters').addEventListener('change', e=>{
+    if(e.target.matches('select[data-sort]')) sortOpts(e.target.dataset.sort, e.target.value);
+  });
   $('#filters').addEventListener('change', e=>{
     const cb=e.target;
     if(cb.matches('.opts input[type=checkbox]')){
@@ -368,8 +394,49 @@ function whyHtml(s){
       <div class="full">${highlight(w.passage||'',terms)}</div></details></details>`;
 }
 
+function hasFilters(){ return Object.keys(collectFilters()).length>0; }
+function exportBarHtml(){
+  return `<div class="xbar"><span>Export</span>
+        <select id="xfmt">${EXP_FORMATS.map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('')}</select>
+        <button id="xcopy">Copy to clipboard</button><button id="xdl">Download</button>
+        <label style="margin-left:8px"><input type="checkbox" id="selall" checked> select all on this page</label>
+        <button class="sp" id="xans">Copy answer with references</button></div>`;
+}
+function wireExport(){
+  if($('#xcopy')){ $('#xcopy').onclick=exportCopy; $('#xdl').onclick=exportDownload; $('#xans').onclick=exportAnswer; }
+  if($('#selall')) $('#selall').onchange=e=>document.querySelectorAll('.pick').forEach(c=>c.checked=e.target.checked);
+}
+const BROWSE={page:1,sort:'year_desc'};
+async function browse(page){
+  if(!hasFilters()){ $('#qmeta').textContent='';
+    $('#results').innerHTML='<div class="empty">Choose at least one filter on the left (or type a question) to list papers.</div>'; return; }
+  BROWSE.page=page||1; LAST.answer=null;
+  $('#go').disabled=true; $('#list').disabled=true;
+  $('#results').innerHTML='<div class="empty"><span class="spin"></span> listing papers…</div>';
+  let d;
+  try { const resp=await apiFetch('/api/papers',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({filters:collectFilters(),page:BROWSE.page,page_size:50,sort:BROWSE.sort})});
+        if(!resp.ok){ $('#results').innerHTML='<div class="empty">Could not list papers ('+resp.status+')</div>'; return; }
+        d=await resp.json(); }
+  catch(e){ $('#results').innerHTML='<div class="empty">request failed</div>'; return; }
+  finally { $('#go').disabled=false; $('#list').disabled=false; }
+  $('#qmeta').textContent='';
+  const pager=`<div class="pager"><button class="pg" data-p="${d.page-1}"${d.page<=1?' disabled':''}>Previous</button>
+      <span>page ${d.page} of ${d.pages}</span><button class="pg" data-p="${d.page+1}"${d.page>=d.pages?' disabled':''}>Next</button>
+      <span style="margin-left:auto">sort: <select id="bsort">${[['year_desc','newest first'],['year_asc','oldest first'],['title','title A-Z']].map(x=>`<option value="${x[0]}"${x[0]===BROWSE.sort?' selected':''}>${x[1]}</option>`).join('')}</select></span></div>`;
+  let html=`<div class="meta">${d.total.toLocaleString()} papers match these filters</div>`+exportBarHtml()+pager;
+  html+=d.papers.map(s=>`<div class="src" id="src-${s.literature_id}">
+      <input type="checkbox" class="pick" value="${s.literature_id}" checked title="include in export">
+      <h4>[${s.literature_id}] ${esc(s.title||'(no title)')}</h4>
+      <div class="sm">${esc((s.authors||'').replace(/\s*&\s*/g,', '))} · ${s.year||''} · ${esc(s.journal||'')}${s.doi?` · <a href="https://doi.org/${encodeURI(s.doi)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(s.doi)}</a>`:''}</div></div>`).join('')
+      + (d.papers.length?pager:'');
+  $('#results').innerHTML=html; wireExport();
+  document.querySelectorAll('.pg').forEach(b=>b.onclick=()=>browse(parseInt(b.dataset.p)));
+  document.querySelectorAll('#bsort').forEach(sel=>sel.onchange=()=>{ BROWSE.sort=sel.value; browse(1); });
+}
 async function ask(){
-  const question=$('#q').value.trim(); if(!question) return;
+  const question=$('#q').value.trim();
+  if(!question){ return browse(1); }
   $('#go').disabled=true;
   $('#results').innerHTML='<div class="empty"><span class="spin"></span> searching & generating…</div>';
   $('#qmeta').textContent='';
@@ -436,6 +503,7 @@ async function ask(){
 }
 
 $('#go').onclick=ask;
+$('#list').onclick=()=>browse(1);
 $('#q').addEventListener('keydown',e=>{ if(e.key==='Enter') ask(); });
 
 const EXAMPLES = [

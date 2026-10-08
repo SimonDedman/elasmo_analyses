@@ -119,6 +119,37 @@ def resolve_filter_ids(
     return result if result is not None else None
 
 
+def page_papers(ids: set[str], meta: pd.DataFrame, sort: str,
+                page: int, page_size: int) -> dict:
+    """One page of paper metadata for a set of literature_ids. `meta` is
+    common.load_metadata() indexed by literature_id. Ids absent from the
+    metadata are counted in `total` but cannot be shown (reported as missing)."""
+    sub = meta.loc[meta.index.intersection(list(ids))].reset_index(drop=True)
+    if sort == "title":
+        sub = sub.assign(_k=sub["title"].fillna("").str.lower()).sort_values(
+            ["_k"], kind="stable")
+    else:
+        asc = sort == "year_asc"
+        sub = sub.assign(_y=pd.to_numeric(sub["year_int"], errors="coerce")).sort_values(
+            ["_y", "literature_id"], ascending=[asc, True], na_position="last",
+            kind="stable")
+    total = len(sub)
+    pages = max(1, -(-total // page_size))
+    page = min(max(page, 1), pages)
+    chunk = sub.iloc[(page - 1) * page_size: page * page_size]
+
+    def val(v):
+        return None if v is None or (isinstance(v, float) and v != v) else v
+
+    papers = [{"literature_id": r.literature_id, "title": val(r.title),
+               "authors": val(r.authors),
+               "year": None if pd.isna(r.year_int) else int(r.year_int),
+               "journal": val(r.journal), "doi": val(r.doi)}
+              for r in chunk.itertuples()]
+    return {"total": total, "n_matching": len(ids), "page": page, "pages": pages,
+            "page_size": page_size, "sort": sort, "papers": papers}
+
+
 def positions_for_ids(
     allowed_ids: set[str] | None, position_map: dict[str, list[int]]
 ) -> np.ndarray | None:

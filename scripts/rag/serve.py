@@ -34,6 +34,7 @@ import numpy as np
 import pandas as pd
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse, JSONResponse, Response
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 HERE = Path(__file__).resolve().parent
@@ -41,10 +42,11 @@ sys.path.insert(0, str(HERE))
 from common import (  # noqa: E402
     BGE_QUERY_PREFIX, CHUNKS_JSONL, EMBED_MODEL_NAME, FAISS_INDEX_PATH, RAG_OUT_DIR,
 )
-from filter_config import EXCLUDE, resolve_families  # noqa: E402
+from filter_config import EXCLUDE, FLAG_LABELS, VALUE_LABELS, resolve_families  # noqa: E402
+import labels  # noqa: E402
 from retrieval import (  # noqa: E402
     build_author_map, build_position_map, positions_for_ids,
-    resolve_filter_ids, search_preloaded,
+    page_papers, resolve_filter_ids, search_preloaded,
 )
 import history  # noqa: E402
 from auth import require_access  # noqa: E402
@@ -85,6 +87,25 @@ def _reload_index_if_stale() -> None:
         S["n_chunks"] = len(chunks)
 
 
+SORT_LABELS = {"freq": "frequency", "az": "A-Z", "geo": "geological time", "best": "best to worst"}
+
+
+def _count_true(series: pd.Series) -> int:
+    return int((pd.to_numeric(series, errors="coerce").fillna(0) > 0).sum())
+
+
+def _value_label(spec, v: str) -> str:
+    if spec.key in VALUE_LABELS:
+        return VALUE_LABELS[spec.key].get(v, v)
+    if spec.key == "epoch":
+        return labels.epoch_label(v)
+    if spec.key == "oa_status":
+        return v[:1].upper() + v[1:]
+    if spec.key in ("study_basin",):
+        return labels.title_case(v)
+    return v
+
+
 def _build_filters_payload() -> dict:
     """Precompute the /api/filters response from the sidecar + registry."""
     pf: pd.DataFrame = S["paper_filters"]
@@ -92,27 +113,40 @@ def _build_filters_payload() -> dict:
     for spec in resolve_families(set(pf.columns) | {"author"}):
         entry = {"key": spec.key, "label": spec.label, "kind": spec.kind,
                  "widget": spec.widget, "note": spec.note}
+        if spec.sorts:
+            entry["sorts"] = [{"id": i, "label": SORT_LABELS[i]} for i in spec.sorts]
+            entry["default_sort"] = spec.default_sort
         if spec.kind == "author":
             pass
         elif spec.kind == "bool_prefix":
             cols = sorted(c for c in pf.columns
                           if c.startswith(spec.prefix) and c not in EXCLUDE)
-            entry["options"] = [
-                {"value": c, "label": c[len(spec.prefix):].replace("_", " ").capitalize(),
-                 "count": int((pd.to_numeric(pf[c], errors="coerce").fillna(0) > 0).sum())}
-                for c in cols
-            ]
+            opts = [{"value": c, "label": labels.label_for(c), "count": _count_true(pf[c])}
+                    for c in cols]
+            # Drop options that can never match (non-boolean columns such as
+            # imp_direction coerce to all-zero).
+            entry["options"] = sorted((o for o in opts if o["count"] > 0),
+                                      key=lambda o: o["label"].lower())
         elif spec.kind == "bool_cols":
             entry["options"] = [
-                {"value": c, "label": c.replace("geo_", "").replace("_", " ").capitalize(),
-                 "count": int((pd.to_numeric(pf[c], errors="coerce").fillna(0) > 0).sum())}
+                {"value": c, "label": FLAG_LABELS.get(c) or labels.label_for(c.replace("geo_", "")),
+                 "count": _count_true(pf[c])}
                 for c in spec.columns if c in pf.columns
             ]
         elif spec.kind == "categorical":
-            vc = pf[spec.column].astype(str).replace({"nan": None}).dropna().value_counts()
+            col = pf[spec.column].astype(str)
+            col = col[~col.map(labels.is_blank)]
+            vc = col.value_counts()
             limit = 1200 if spec.widget == "search-multiselect" else 400
-            entry["options"] = [{"value": v, "label": v, "count": int(n)}
-                                for v, n in vc.head(limit).items()]
+            opts = []
+            for v, n in vc.head(limit).items():
+                o = {"value": v, "label": _value_label(spec, v), "count": int(n)}
+                if spec.key == "epoch":
+                    o["rank"] = labels.epoch_rank(v)
+                elif spec.key == "oa_status":
+                    o["rank"] = labels.oa_rank(v)
+                opts.append(o)
+            entry["options"] = opts
         elif spec.kind == "range":
             vals = pd.to_numeric(pf[spec.column], errors="coerce")
             entry["min"] = None if vals.min() != vals.min() else float(vals.min())
@@ -144,6 +178,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="SharkPapers RAG", lifespan=lifespan)
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 class QueryBody(BaseModel):
@@ -152,6 +187,29 @@ class QueryBody(BaseModel):
     top_k: int = 8
     retrieve_n: int = 30
     generate: bool = True
+
+
+class PapersBody(BaseModel):
+    filters: dict = {}
+    page: int = 1
+    page_size: int = 50
+    sort: str = "year_desc"   # year_desc | year_asc | title
+
+
+@app.post("/api/papers")
+def api_papers(body: PapersBody):
+    """Browse without a question: metadata of every paper matching the filters
+    (no retrieval, no LLM). 400 when no filter is active."""
+    if body.sort not in ("year_desc", "year_asc", "title"):
+        raise HTTPException(400, "sort must be year_desc, year_asc or title")
+    ids = resolve_filter_ids(body.filters, S["paper_filters"], S["author_map"])
+    if ids is None:
+        raise HTTPException(400, "choose at least one filter to list papers")
+    if "meta" not in S:
+        import common
+        S["meta"] = common.load_metadata().drop_duplicates("literature_id").set_index(
+            "literature_id", drop=False)
+    return page_papers(ids, S["meta"], body.sort, body.page, min(max(body.page_size, 1), 200))
 
 
 @app.get("/")
