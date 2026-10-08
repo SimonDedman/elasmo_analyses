@@ -62,6 +62,7 @@ literature_id,column,human_value,reviewer,group_rating
 34654,eco_demersal,1,A5009396914,partially_correct
 34654,gear_demersal,1,A5009396914,partially_correct
 34654,imp_confidence,0,A5009396914,partially_correct
+34654,sb_yellow_sea,1,A5009396914,partially_correct
 34654,sp_centroscymnus_coelolepis,0,A5009396914,correct
 32524,gear_demersal,0,A5027778174,correct
 32524,gear_target_species,0,A5027778174,correct
@@ -189,3 +190,17 @@ literature_id,column,human_value,reviewer,group_rating
 34379,sp_sphyrna_lewini,0,A5078322786,partially_correct
 34379,sp_triakis_semifasciata,0,A5078322786,partially_correct
 34379,sp_urobatis_halleri,0,A5078322786,partially_correct
+34660,a_permanova,0,A5118273695,partially_correct
+34660,b_caribbean,0,A5118273695,partially_correct
+34660,d_movement,1,A5118273695,partially_correct
+34660,d_taxonomy,0,A5118273695,partially_correct
+34660,d_husbandry,0,A5118273695,partially_correct
+34660,eco_reef,1,A5118273695,partially_correct
+34660,gear_survey,1,A5118273695,partially_correct
+34660,imp_trophic,1,A5118273695,partially_correct
+34660,imp_behaviour_change,1,A5118273695,partially_correct
+34660,imp_is_bycatch,0,A5118273695,partially_correct
+34660,ob_north_atlantic_ocean,1,A5118273695,partially_correct
+34660,pr_depredation,0,A5118273695,partially_correct
+34660,sb_bahamas,0,A5118273695,incorrect
+34660,sb_persian_gulf,0,A5118273695,incorrect

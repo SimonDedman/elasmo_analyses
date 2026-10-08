@@ -22,12 +22,23 @@ def _json_on_branch(branch):
             return json.loads(blob)
     return None
 
-def load_gold_triples() -> pd.DataFrame:
-    rows = []
+def _payloads():
+    """Every submission: the April per-author validation/A50* branches, then the files the
+    receive-validation workflow commits straight to main (validations/<id>_<timestamp>.json,
+    since July 2026), oldest first so a later submission by the same reviewer wins."""
     for br in _branches():
         payload = _json_on_branch(br)
-        if not payload:
+        if payload:
+            yield payload
+    for f in sorted((ROOT / "validations").glob("*.json")):
+        try:
+            yield json.loads(f.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
             continue
+
+def load_gold_triples() -> pd.DataFrame:
+    rows = []
+    for payload in _payloads():
         reviewer = payload.get("openalex_id", "").rsplit("/", 1)[-1]
         for lit, sections in (payload.get("papers") or {}).items():
             lit = str(int(float(lit)))
