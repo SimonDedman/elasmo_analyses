@@ -408,6 +408,20 @@ def merge_to_combined(gender_results, origin_results, diaspora_results) -> pd.Da
     return combined
 
 
+def rebuild_from_cache() -> None:
+    """Regenerate every NamSor CSV from the cache. Added 2026-10-08: an incremental run on
+    2026-09-17 merged only that run's new answers, leaving 2,700 cached genders blank in
+    namsor_enrichment.csv. The cache is the record of what NamSor returned; the CSVs derive from it."""
+    cache = load_cache()
+    g = list(cache.get("gender", {}).values()); o = list(cache.get("origin", {}).values()); d = list(cache.get("diaspora", {}).values())
+    pd.DataFrame(g).to_csv(NAMSOR_GENDER_CSV, index=False)
+    pd.DataFrame(o).to_csv(NAMSOR_ORIGIN_CSV, index=False)
+    pd.DataFrame(d).to_csv(NAMSOR_DIASPORA_CSV, index=False)
+    combined = merge_to_combined(g, o, d)
+    combined.to_csv(NAMSOR_COMBINED_CSV, index=False)
+    logger.info("Rebuilt from cache: gender %d, origin %d, diaspora %d, combined %d rows", len(g), len(o), len(d), len(combined))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="NamSor author enrichment")
     parser.add_argument(
@@ -420,7 +434,12 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=0, help="Cap total names (0=unlimited)")
     parser.add_argument("--resume", action="store_true", help="Skip already-cached authors")
     parser.add_argument("--check-credits", action="store_true", help="Check credit balance and exit")
+    parser.add_argument("--rebuild-from-cache", action="store_true",
+                        help="Rewrite the per-endpoint and combined CSVs from .namsor_cache.json (no API calls)")
     args = parser.parse_args()
+    if args.rebuild_from_cache:
+        rebuild_from_cache()
+        return
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     today = datetime.now().strftime("%Y-%m-%d")

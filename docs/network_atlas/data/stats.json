@@ -1,5 +1,5 @@
 {
-  "build_timestamp": "2026-10-08 04:46:02 PDT",
+  "build_timestamp": "2026-10-08 04:50:45 PDT",
   "total_authors": 5435,
   "total_institutions": 2055,
   "total_edges": 69229,
@@ -26,9 +26,9 @@
     "IE": 38
   },
   "by_gender": {
-    "F": 1674,
-    "M": 3430,
-    "Unknown": 331
+    "F": 1782,
+    "M": 3651,
+    "Unknown": 2
   },
   "min_papers": 3,
   "year_min": 1950,
