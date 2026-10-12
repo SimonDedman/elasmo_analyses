@@ -46,6 +46,10 @@ changed = {r["literature_id"] for r in csv.DictReader(open("outputs/pdf_id_map_c
 import os
 if os.path.exists("outputs/pdf_id_map_changes_backfill.csv"):
     changed |= {r["literature_id"] for r in csv.DictReader(open("outputs/pdf_id_map_changes_backfill.csv"))}
+# an earlier map rebuild (daily_drop_ingest.py rebuilds it to verify filings before
+# publishing) saved its diff here, so this run does not see an empty diff and skip extraction
+if os.path.exists("outputs/pdf_id_map_changes_pending.csv"):
+    changed |= {r["literature_id"] for r in csv.DictReader(open("outputs/pdf_id_map_changes_pending.csv"))}
 corpus = {str(v).split(".")[0] for v in
           pd.read_parquet(X.INPUT_PARQUET, columns=["literature_id"]).literature_id}
 todo = sorted(changed & corpus)
@@ -61,6 +65,7 @@ else
   echo "nothing to re-extract"
 fi
 
+rm -f outputs/pdf_id_map_changes_pending.csv   # consumed: its rows were re-extracted above
 python3 scripts/report_corpus_stats.py --json-only
 
 echo "== 4/4 syncing the RAG index to the library =="

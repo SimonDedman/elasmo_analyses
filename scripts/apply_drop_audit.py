@@ -60,6 +60,7 @@ README = {
     "_partial-pages-missing": "Some pages of the paper are missing; a complete copy is still needed.",
     "_ambiguous-several-records": "Two or more records pass the identity test (shared DOI or same title); pick the right one.",
     "_not-elasmo": "Not about elasmobranchs.",
+    "_verify-failed": "Filed, but the library copy failed verification (see verify.csv in the ingest folder). Check the library file and the record.",
 }
 
 
@@ -82,12 +83,16 @@ def load_rows(audit: Path, overrides: Path | None) -> list[dict]:
     return rows
 
 
+TAG = ""   # set by --tag: keeps two folders of one person apart on the same day (local + NAS)
+
+
 def work_dir(person: str) -> Path:
-    return PROJECT / f"outputs/ingest_{date.today():%Y-%m-%d}_{person}"
+    return PROJECT / f"outputs/ingest_{date.today():%Y-%m-%d}_{person}{'_' + TAG if TAG else ''}"
 
 
 def stage(rows, folder: Path, person: str) -> None:
     wd = work_dir(person)
+    wd.mkdir(parents=True, exist_ok=True)   # a delivery with nothing to file still gets a manifest
     manifest = []
     for r in rows:
         # records not on the queue but holding no PDF are filed too (recent SR adds)
@@ -119,6 +124,7 @@ def stage(rows, folder: Path, person: str) -> None:
 
 def file_staged(person: str) -> None:
     wd = work_dir(person)
+    wd.mkdir(parents=True, exist_ok=True)
     shutil.copy2(PROJECT / "docs/papers_data.json", wd / "papers_data.before.json")
     for sub, extra in (("papers", []), ("books", ["--include-books"])):
         d = wd / sub
@@ -173,7 +179,7 @@ def verify(person: str) -> list[dict]:
                     "problems": "; ".join(problems)})
     unexpected = sorted(before - queue - {m["lid"] for m in manifest})
     with open(wd / "verify.csv", "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=sorted({k for o in out for k in o}))
+        w = csv.DictWriter(f, fieldnames=sorted({k for o in out for k in o}) or ["lid", "verified"])
         w.writeheader()
         w.writerows(out)
     (wd / "verify_summary.json").write_text(json.dumps({
@@ -184,6 +190,19 @@ def verify(person: str) -> list[dict]:
     return out
 
 
+def _problem_dir(src: Path, name: str) -> Path:
+    """The `_name` subfolder at the top of the drop folder that holds src."""
+    top = src.parent
+    while top.parent.name not in ("others_libraries", "MarineScience") and top.parent != top:
+        top = top.parent
+    d = top / name
+    d.mkdir(exist_ok=True)
+    readme = d / "README.txt"
+    if not readme.exists():
+        readme.write_text(README.get(name, "") + "\n")
+    return d
+
+
 def credit_and_clean(person: str) -> None:
     wd = work_dir(person)
     with open(wd / "verify.csv", newline="", encoding="utf-8") as f:
@@ -191,8 +210,17 @@ def credit_and_clean(person: str) -> None:
     state = json.loads(STATE_FILE.read_text())
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     deleted = []
+    failed_dir = None
     for v in ver:
         if v["verified"] != "True":
+            # Filed but not proven right: never leave it where tomorrow's audit would call
+            # it a duplicate and delete it. A person must look.
+            src = Path(v["src"])
+            if src.exists():
+                failed_dir = failed_dir or _problem_dir(src, "_verify-failed")
+                shutil.move(str(src), str(failed_dir / src.name))
+                state["seen"][str(failed_dir / src.name)] = {"person": person, "at": now,
+                    "held": f"verify_failed: lid {v['lid']}: {v['problems']}", "candidate_id": v["lid"]}
             continue
         state["seen"][v["src"]] = {"person": person, "at": now, "literature_id": v["lid"],
                                    "note": f"filed {date.today()} via drop audit + lid-named staging; source deleted"}
@@ -226,7 +254,7 @@ def sort_problems(rows, folder: Path, person: str) -> None:
         readme = d / "README.txt"
         if not readme.exists():
             readme.write_text(README.get(sub, "Record exists but is not on the todo list; review before filing.") + "\n")
-        dst = d / r["filename"]
+        dst = d / Path(r["filename"]).name
         shutil.move(str(src), str(dst))
         state["seen"][str(dst)] = {"person": person, "at": now, "held": f"{r['bucket']}: {r['reason']}",
                                    **({"candidate_id": r["literature_id"]} if r["literature_id"] else {})}
@@ -339,11 +367,14 @@ def main() -> int:
     ap.add_argument("--folder", required=True, type=Path)
     ap.add_argument("--person", required=True)
     ap.add_argument("--overrides", type=Path)
+    ap.add_argument("--tag", default="", help="suffix for the work folder, e.g. nas or lib")
     ap.add_argument("--ledger-notes", type=Path,
                     help="CSV filename,cause,cause_owner,evidence,action_taken,report_to overriding the traced values")
     for f in ("stage", "file", "verify", "credit", "sort", "ledger", "tidy"):
         ap.add_argument(f"--{f}", action="store_true")
     a = ap.parse_args()
+    global TAG
+    TAG = a.tag
     rows = load_rows(a.audit, a.overrides)
     if a.stage:
         stage(rows, a.folder, a.person)

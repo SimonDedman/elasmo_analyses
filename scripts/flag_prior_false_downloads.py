@@ -71,6 +71,32 @@ FLAGS = {
 }
 
 
+# Rows of data/acquisition_feedback_ledger.csv (written by apply_drop_audit.py --ledger)
+# whose target is still wanted get a generated warning, so the daily automated ingest
+# flags them without anyone editing FLAGS. A FLAGS entry, written by a person, wins.
+LEDGER = Path(__file__).resolve().parent.parent / "data/acquisition_feedback_ledger.csv"
+AUTO_TEXT = {
+    "review_comment": "a review or comment about this work was sent; we need the work itself",
+    "correction": "a correction notice was sent; we need the article itself",
+    "supplement": "the supplementary material was sent; we need the article itself",
+    "abstract_only": "an abstract (or abstracting-journal entry) was sent; we need the full paper",
+    "partial": "an incomplete copy was sent (pages missing); we need the whole paper",
+    "wrong_paper": "a different paper was sent under this reference; check the title and authors",
+}
+
+
+def ledger_flags() -> dict[str, str]:
+    import csv
+    out = {}
+    if LEDGER.exists():
+        with open(LEDGER, newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                text = AUTO_TEXT.get(r.get("bucket", ""))
+                if text and r.get("literature_id"):
+                    out[str(r["literature_id"])] = text
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -85,18 +111,19 @@ def main() -> int:
         print("[dry run] re-run with --apply")
         return 0
 
+    flags = {**ledger_flags(), **FLAGS}
     set_n = cleared = 0
     with papers_data_io.mutate() as data:
         for e in data:
             lid = str(e.get("literature_id"))
-            if lid in FLAGS:
-                if e.get("prior_false_dl") != FLAGS[lid]:
-                    e["prior_false_dl"] = FLAGS[lid]
+            if lid in flags:
+                if e.get("prior_false_dl") != flags[lid]:
+                    e["prior_false_dl"] = flags[lid]
                 set_n += 1
             elif "prior_false_dl" in e:
                 del e["prior_false_dl"]
                 cleared += 1
-    print(f"flagged {set_n} rows (of {len(FLAGS)} defined); cleared {cleared} stale flags")
+    print(f"flagged {set_n} rows (of {len(flags)} defined, {len(FLAGS)} by hand); cleared {cleared} stale flags")
     return 0
 
 

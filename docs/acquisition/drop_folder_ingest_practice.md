@@ -5,6 +5,24 @@ must act on, every problem file gets a traced cause, splits and language re-OCR 
 Simon's proposal, extended with the subfolders that previous deliveries needed. Applies to every coauthor delivery: `database/others_libraries/<Person>/` and the NAS
 drop folders (`smb://nas.local/homes/MarineScience/<Person>/`).
 
+## Runs by itself every day (16:00)
+
+`scripts/coauthor_scan_cron.sh` runs `scripts/daily_drop_ingest.py`: every drop folder
+(`database/others_libraries/<Person>/` and the NAS folders, subfolders included) is audited,
+filed, verified, credited, and its problems sorted with a traced cause; then the todo list,
+helper pages, and dashboard are rebuilt, **committed, merged to main, and pushed**
+(`scripts/publish_todo_list.sh`), and extraction + the RAG sync run last. Summary:
+`outputs/daily_ingest_<date>.json`; log: `logs/coauthor_scan_cron.log`.
+
+**Every ingest ends with a publish, manual runs included** (Simon, 2026-10-12): GitHub Pages
+serves main, so a row closed only on this machine is still on the team's list. The publish
+commits only `docs/papers_data.json`, `docs/closed_access/`, and
+`docs/acquisition/remaining_papers.html`, and updates main without touching the working tree.
+
+Not scanned: `SharkRefsExport`, the conference-abstract inboxes (Brit, Cat, SOMEPEC), programme
+folders, conference books, and `_*` problem subfolders. An unmounted NAS is reported in the
+summary, never skipped silently.
+
 ## The two scripts
 
 ```
@@ -38,7 +56,9 @@ go in `overrides.csv` (`filename,bucket,literature_id,source_override,queue_stat
    and passes the identity test. Zero unexpected queue removals.
 5. `--credit`: scan-state entry with `literature_id` (leaderboard credit), source deleted from
    the drop folder, staging copy deleted.
-6. Dashboard rebuilt (`scripts/build_remaining_papers_dashboard.py`).
+6. Dashboard rebuilt (`scripts/build_remaining_papers_dashboard.py --out docs/acquisition/remaining_papers.html`;
+   without `--out` it writes to `outputs/` and the public dashboard does not change).
+7. Published: `sh scripts/publish_todo_list.sh "<message>"`.
 
 ## Outcome 2: a problem, sorted into a named subfolder
 
@@ -65,6 +85,7 @@ is fully handled, the drop folder is empty.
 | `_unreadable-scan` | No text after OCR in EVERY installed language | none | read by eye |
 | `_ambiguous-several-records` | Two or more records pass the identity test (shared DOI or same title) | none | pick the record |
 | `_not-elasmo` | Not about elasmobranchs | pipeline: ledger row (why was it fetched?) | delete |
+| `_verify-failed` | Filed, but the library copy failed verification | none: never deleted automatically | check the library file and the record |
 
 Every target-still-needed row also gets a `prior_false_dl` flag (`scripts/flag_prior_false_downloads.py`
 FLAGS), so the next downloader sees the warning on the hub.

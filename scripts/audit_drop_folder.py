@@ -353,12 +353,32 @@ FIELDS = ["filename", "size", "surname", "year", "doi_in_name", "literature_id",
           "sha256", "bucket", "reason", "candidates"]
 
 
+def list_pdfs(folder: Path, recursive: bool) -> list[Path]:
+    """The delivery's PDFs. `_*` subfolders hold already-sorted problems and are never
+    re-read; conference abstract books belong to the conference-abstracts pipeline."""
+    import scan_coauthor_libraries as scan
+    it = folder.rglob("*") if recursive else folder.iterdir()
+    out = []
+    for p in it:
+        if not (p.is_file() and p.suffix.lower() == ".pdf"):
+            continue
+        parts = p.relative_to(folder).parts[:-1]
+        if any(x.startswith("_") or x.lower() in scan.SKIP_SUBDIRS for x in parts):
+            continue
+        if scan.is_conference_book(p):
+            continue
+        out.append(p)
+    return sorted(out)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--folder", required=True, type=Path)
     ap.add_argument("--person", required=True)
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--out", type=Path)
+    ap.add_argument("--recursive", action="store_true",
+                    help="include subfolders (never `_*` problem subfolders, programme folders or conference books)")
     a = ap.parse_args()
     out = a.out or PROJECT / f"outputs/dropaudit_{a.person}_{date.today():%Y-%m-%d}"
     out.mkdir(parents=True, exist_ok=True)
@@ -367,8 +387,9 @@ def main() -> int:
     if csv_path.exists():
         with open(csv_path, newline="", encoding="utf-8") as f:
             done = {(r["filename"], r["size"]): r for r in csv.DictReader(f)}
-    pdfs = sorted(p for p in a.folder.iterdir() if p.is_file() and p.suffix.lower() == ".pdf")
-    todo = [p for p in pdfs if (p.name, str(p.stat().st_size)) not in done]
+    pdfs = list_pdfs(a.folder, a.recursive)
+    rel = {p: str(p.relative_to(a.folder)) for p in pdfs}
+    todo = [p for p in pdfs if (rel[p], str(p.stat().st_size)) not in done]
     print(f"{len(pdfs)} PDFs, {len(done)} already audited, {len(todo)} to do", flush=True)
     new_file = not csv_path.exists()
     with open(csv_path, "a", newline="", encoding="utf-8") as f:
@@ -383,6 +404,7 @@ def main() -> int:
                 except Exception as e:  # noqa: BLE001
                     r = {"filename": futs[fu].name, "size": futs[fu].stat().st_size,
                          "bucket": "unreadable", "reason": f"worker error: {e}"}
+                r["filename"] = rel[futs[fu]]   # relative path: a delivery may use subfolders
                 w.writerow(r)
                 f.flush()
                 print(f"[{i}/{len(todo)}] {r.get('bucket')}: {r['filename']}", flush=True)
