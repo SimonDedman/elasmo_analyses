@@ -1592,6 +1592,8 @@ def ingest_source(label: str, pdf_paths: list[Path],
     print(f"  PDFs: {len(pdf_paths)}")
     print(f"{'=' * 70}")
 
+    filed_this_run: dict[str, str] = {}
+
     def _file_one(pdf_src: Path, row: dict, method: str):
         """Copy a single matched PDF into the library. Returns True if new copy."""
         nonlocal copied, skipped_exists, errors
@@ -1612,7 +1614,11 @@ def ingest_source(label: str, pdf_paths: list[Path],
         # path, so ask it, and step aside to the id-suffixed name when the answer
         # is somebody else.
         if target.exists():
-            owner = _pdf_owner().get(str(target))
+            # The id map is only rebuilt after the batch, so a name filed earlier in
+            # THIS run is invisible to it: two Science "Response to Comment" papers
+            # (30360, 30362) with one title collided on 2026-10-12 and the second was
+            # closed on the queue without being filed. Ask this run's own record first.
+            owner = filed_this_run.get(str(target)) or _pdf_owner().get(str(target))
             if owner is not None and owner != str(lit_id).split(".")[0]:
                 target = year_dir / build_filename(row, disambiguate=True)
                 print(f"    name taken by literature_id {owner}; filing as {target.name}")
@@ -1622,7 +1628,7 @@ def ingest_source(label: str, pdf_paths: list[Path],
             copied_ids.add(lit_id)
             if row.get("doi"):
                 copied_dois.add(row["doi"])
-            pdf_names[lit_id] = f"{year_str}/{new_name}"
+            pdf_names[lit_id] = f"{year_str}/{target.name}"
             log_lines.append(f"EXISTS: {year_str}/{new_name} (from {pdf_src.name}) [{method}]")
             print(f"  EXISTS: {pdf_src.name} → {year_str}/{new_name}")
             return False
@@ -1630,11 +1636,12 @@ def ingest_source(label: str, pdf_paths: list[Path],
         try:
             year_dir.mkdir(parents=True, exist_ok=True)
             shutil.copy2(pdf_src, target)
+            filed_this_run[str(target)] = str(lit_id).split(".")[0]
             copied += 1
             copied_ids.add(lit_id)
             if row.get("doi"):
                 copied_dois.add(row["doi"])
-            pdf_names[lit_id] = f"{year_str}/{new_name}"
+            pdf_names[lit_id] = f"{year_str}/{target.name}"
             log_lines.append(f"COPIED: {pdf_src.name} → {year_str}/{new_name} [{method}]")
             print(f"  COPIED: {pdf_src.name}")
             print(f"      → {year_str}/{new_name}")

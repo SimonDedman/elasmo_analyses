@@ -50,6 +50,23 @@ FLAGS = {
     "3118": "Delsate & Duffin 1993 (Sinemurien de Belgique) was sent; we need Duffin 1993 (Late Jurassic teeth, southern Germany)",
     "500660": "a 2026 Steinkern article on chimaera egg capsules was sent; we need Stehmann 2006",
     "28090": "a 2023 Schwaebische Heimat article was sent; we need the 2001 book",
+    # 2026-10-12, Andrew's NAS delivery (outputs/dropaudit_Andrew_2026-10-12/)
+    "22240": "a 2026 catshark neural-crest paper (Escamilla-Vega et al.) was sent; we need Bone & Moore, Biology of Fishes",
+    "26666": "Oates' Fauna of British India BIRDS vol. 1 was sent; we need Day's FISHES volumes",
+    "11838": "Bleeker's Dertiende bijdrage (Borneo, already filed) was sent; we need the Elfde bijdrage (Amboina)",
+    "4088": "a Geological Magazine review of Karpinsky's work was sent; we need Karpinsky's paper",
+    "34847": "a Journal of Geology review notice was sent; we need Wurm's 1911 paper",
+    "3586": "a Deep-Sea Research 'Oceanographic Abstracts' entry was sent; we need Krefft's paper",
+    "502086": "pp. 235-240 only were sent; the start of the article is missing",
+    "501417": "a one-page book review was sent; we need Schmidt-Nielsen's book",
+    "27970": "the whole 328-page volume was sent; Chapter XIII (vol. 1 pp. 264-294) still needs splitting out",
+    "34442": "the whole 220-page volume was sent; the Fischueberreste section still needs splitting out",
+    "4091": "a 2,122-page bound set of the catalogue was sent; Part II still needs splitting out",
+    "11947": "the whole 390-page work was sent; Part I (pp. 1-76) still needs splitting out",
+    "26692": "the 230-page Australian Zoological Handbook was sent; pp. 217-227 still need splitting out",
+    "13564": "Davies' 1960 Copeia note (April 1960 attack) was sent via a wrong DOI; we need the ORI Investigational Report",
+    "9182": "the Copeia paper (Bathyraja mariposa, record 3680) was sent via a shared DOI; we need the AES abstract",
+    "32563": "the 2023 Zoosystema paper (record 32371) was sent via a wrong DOI; we need the Ocean Past News piece",
 }
 
 
