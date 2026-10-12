@@ -68,8 +68,25 @@ def run(cmd: list[str], failures: list, what: str) -> bool:
     return r.returncode == 0
 
 
+def mount_nas() -> str:
+    """The NAS is a gvfs mount, not in fstab: after a reboot it exists only once someone
+    opens it. Try to mount it with the password saved in the keyring (no prompt: stdin is
+    closed). Returns "" on success, else the reason."""
+    if NAS.is_dir():
+        return ""
+    try:
+        r = subprocess.run(["gio", "mount", "smb://nas.local/homes/"], stdin=subprocess.DEVNULL,
+                           capture_output=True, text=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        return f"gio mount failed ({e})"
+    if NAS.is_dir():
+        return ""
+    return f"gio mount failed: {(r.stderr or r.stdout).strip()[:200] or 'no password saved in the keyring?'}"
+
+
 def folders() -> tuple[list[tuple[str, str, Path]], list[str]]:
     out, notes = [], []
+    why = mount_nas()
     for d in sorted(LOCAL.iterdir()):
         if (d.is_dir() and d.name not in scan.SKIP_DIRS | CONFERENCE_INBOXES
                 and not d.name.startswith((".", "_"))):
@@ -79,7 +96,7 @@ def folders() -> tuple[list[tuple[str, str, Path]], list[str]]:
             if d.is_dir() and not d.name.startswith(("#", ".", "_")):
                 out.append((d.name, "nas", d))
     else:
-        notes.append(f"NAS NOT MOUNTED ({NAS}): its drop folders were NOT scanned")
+        notes.append(f"NAS NOT MOUNTED ({NAS}; {why}): its drop folders were NOT scanned")
     return out, notes
 
 
