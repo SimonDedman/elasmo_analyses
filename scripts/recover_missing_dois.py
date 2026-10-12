@@ -53,6 +53,8 @@ PAPERS = ROOT / "docs/papers_data.json"
 CACHE = ROOT / "outputs/.doi_recovery_cache.json"
 REVIEW = ROOT / f"outputs/doi_recovery_review_{date.today():%Y-%m-%d}.csv"
 COVERAGE = ROOT / f"outputs/doi_recovery_coverage_{date.today():%Y-%m-%d}.json"
+QUARANTINE = ROOT / "outputs/sr_doi_quarantine.csv"
+RECHECK = ROOT / f"outputs/doi_recovery_recheck_{date.today():%Y-%m-%d}.csv"
 
 API = "https://api.crossref.org/works"
 MAILTO = "simondedman@gmail.com"
@@ -104,6 +106,58 @@ def is_article(journal: str) -> bool:
     if len(j.split()) == 1 and j.istitle():
         return False
     return True
+
+
+# Red flags that veto a title match, found 2026-10-12 when a team member's
+# downloads exposed recovered DOIs pointing at the wrong document: a Geological
+# Magazine review whose title quotes the work and names "By A. Karpinsky", a
+# Journal of Geology notice ending "Adolf Wurm", a "Deep Sea Research and
+# Oceanographic Abstracts" entry, and one 1960 Copeia note assigned to four ORI
+# reports on four different attacks (the dates in the titles disagree).
+# NOT roman numerals: Ann. Mag. Nat. Hist. numbers every article "XLII.—".
+REVIEW_TITLE = re.compile(r"^\s*(reviews?\b|notices?\b|correction to|erratum|corrigendum)", re.I)
+REVIEW_DOI = re.compile(r"/review\d*$|/v\d+/review", re.I)
+# BHL titles append a statement of responsibility ("/ by F. M. Balfour").
+BY_LINE = re.compile(r"/\s*(by|von|di|par|de|door|af)\b", re.I)
+MONTHS = ("january february march april may june july august september "
+          "october november december").split()
+
+
+def _months(title: str) -> set:
+    t = (title or "").lower()
+    return {m for m in MONTHS if re.search(rf"\b{m}\b", t)}
+
+
+def red_flags(our_title: str, want_surname: str, cand: dict) -> list[str]:
+    """Reasons a candidate is a document ABOUT the paper, not the paper."""
+    flags = []
+    ct = re.sub(r"<[^>]+>", " ", cand.get("title") or "")
+    sn = (want_surname or "").strip().lower()
+    if (len(sn) >= 3 and re.search(rf"\b{re.escape(sn)}\b", ct.lower())
+            and not re.search(rf"\b{re.escape(sn)}\b", (our_title or "").lower())
+            and not BY_LINE.search(ct)):
+        flags.append(f"candidate title names the author ({sn}): a review or notice")
+    if REVIEW_TITLE.search(ct) and not REVIEW_TITLE.search(our_title or ""):
+        flags.append("candidate is a review/correction of the paper, not the paper")
+    if REVIEW_DOI.search(cand.get("doi") or ""):
+        flags.append("peer-review report DOI")
+    if re.search(r"abstracts?\b", cand.get("journal") or "", re.I):
+        flags.append(f"abstracting journal ({cand.get('journal')})")
+    ma, mb = _months(our_title), _months(ct)
+    if ma and mb and not (ma & mb):
+        flags.append(f"dates in the titles disagree ({'/'.join(sorted(ma))} vs {'/'.join(sorted(mb))})")
+    return flags
+
+
+def load_quarantine() -> set[tuple[str, str]]:
+    """(literature_id, doi) pairs already rejected: never re-apply them."""
+    import csv
+    out = set()
+    if QUARANTINE.exists():
+        with QUARANTINE.open(newline="", encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                out.add((str(r.get("literature_id") or ""), (r.get("rejected_doi") or "").lower()))
+    return out
 
 
 def year_of(v):
@@ -164,7 +218,10 @@ def lookup(session, p: dict):
                "journal": (it.get("container-title") or [""])[0][:80]}
         accepted, why = title_ok(title, cand_title, sim, author_ok)
         rec["why"] = why
-        if year_ok and accepted:
+        flags = red_flags(title, want_surname, rec)
+        if flags:
+            rec["flags"] = flags
+        if year_ok and accepted and not flags:
             return "hit", rec
         # Would have passed the probe's looser gate: hold for review.
         if year_ok and sim >= TITLE_LOOSE and best is None:
@@ -172,12 +229,85 @@ def lookup(session, p: dict):
     return ("near", best) if best else ("rejected", None)
 
 
+def recheck(apply: bool) -> None:
+    """Re-judge every DOI this pipeline already put on the queue with today's gates.
+
+    A recovered DOI that now raises a red flag, or that sits on two or more
+    queue rows, is blanked (with --apply) and appended to the quarantine so no
+    later pass re-applies it. DOIs from other sources that are shared between
+    rows are reported only: which row owns the DOI needs a human.
+    """
+    import csv
+    cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
+    papers = json.loads(PAPERS.read_text())
+    holders = Counter((p.get("doi") or "").strip().lower() for p in papers if (p.get("doi") or "").strip())
+    out = []
+    for p in papers:
+        doi = (p.get("doi") or "").strip().lower()
+        if not doi:
+            continue
+        lid = str(p.get("literature_id", "")).replace(".0", "")
+        m = (cache.get(lid) or {}).get("match") or {}
+        recovered = (m.get("doi") or "").lower() == doi
+        flags = red_flags(p.get("title", ""), surname(p.get("authors", "")), m) if recovered else []
+        shared = holders[doi] > 1
+        if flags and shared:
+            flags.append(f"DOI on {holders[doi]} queue rows")
+        elif shared:
+            # One holder is usually right (a chapter and a duplicate [Abstract]
+            # record): report, never blank on this alone.
+            out.append({"literature_id": lid, "year": p.get("year"), "authors": (p.get("authors") or "")[:60],
+                        "title": (p.get("title") or "")[:120], "doi": doi,
+                        "source": "our recovery" if recovered else "other (SR or earlier work)",
+                        "candidate_title": (m.get("title") or "")[:120], "candidate_journal": m.get("journal", ""),
+                        "flags": f"DOI on {holders[doi]} queue rows", "action": "report only"})
+            continue
+        if flags:
+            out.append({"literature_id": lid, "year": p.get("year"), "authors": (p.get("authors") or "")[:60],
+                        "title": (p.get("title") or "")[:120], "doi": doi,
+                        "source": "our recovery" if recovered else "other (SR or earlier work)",
+                        "candidate_title": (m.get("title") or "")[:120], "candidate_journal": m.get("journal", ""),
+                        "flags": "; ".join(flags),
+                        "action": "blank + quarantine" if recovered else "report only"})
+    with RECHECK.open("w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=list(out[0]) if out else ["literature_id"])
+        w.writeheader()
+        w.writerows(out)
+    blank = {r["literature_id"]: r for r in out if r["action"] == "blank + quarantine"}
+    print(f"rechecked {sum(1 for v in holders.values())} queue DOIs: {len(out)} flagged, "
+          f"{len(blank)} from our recovery -> {RECHECK.name}")
+    if not apply or not blank:
+        return
+    from lib.papers_data_io import mutate
+    with mutate() as rows:
+        for p in rows:
+            lid = str(p.get("literature_id", "")).replace(".0", "")
+            if lid in blank and (p.get("doi") or "").strip().lower() == blank[lid]["doi"]:
+                p["doi"] = ""
+                p.pop("doi_source", None)
+    known = load_quarantine()
+    with QUARANTINE.open("a", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        for lid, r in blank.items():
+            if (lid, r["doi"]) in known:
+                continue
+            w.writerow([date.today().isoformat(), lid, r["year"], r["authors"], r["title"], "",
+                        r["doi"], r["candidate_title"], r["candidate_journal"], "",
+                        f"OUR Crossref DOI recovery, not shark-references: {r['flags']}", ""])
+    print(f"blanked {len(blank)} DOIs and quarantined them")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--apply", action="store_true",
                     help="write recovered DOIs into papers_data.json")
+    ap.add_argument("--recheck", action="store_true",
+                    help="re-judge DOIs already on the queue (with --apply: blank + quarantine bad ones)")
     args = ap.parse_args()
+    if args.recheck:
+        recheck(args.apply)
+        return
 
     papers = json.loads(PAPERS.read_text())
     pool = [p for p in papers
@@ -204,7 +334,12 @@ def main() -> None:
             rec = cache[key]
             outcomes[rec["outcome"]] += 1
             if rec["outcome"] == "hit":
-                hits[key] = rec["match"]
+                # Cached before the red-flag gate existed: re-judge it.
+                flags = red_flags(p.get("title", ""), surname(p.get("authors", "")), rec["match"])
+                if flags:
+                    nears.append((p, {**rec["match"], "flags": flags}))
+                else:
+                    hits[key] = rec["match"]
             elif rec["outcome"] == "near":
                 nears.append((p, rec["match"]))
             continue
@@ -232,6 +367,19 @@ def main() -> None:
 
     CACHE.write_text(json.dumps(cache))
 
+    # Never re-apply a DOI already rejected for this record.
+    rejected = load_quarantine()
+    for key in [k for k, m in hits.items() if (k, m["doi"].lower()) in rejected]:
+        del hits[key]
+    # One DOI won by two or more records is at most one of them (four ORI shark
+    # attack reports all "recovered" the same Copeia note): hold them all.
+    by_doi = Counter(m["doi"].lower() for m in hits.values())
+    pool_by_key = {str(p.get("literature_id", "")).replace(".0", "") or (p.get("title") or "")[:80]: p
+                   for p in pool}
+    for key in [k for k, m in hits.items() if by_doi[m["doi"].lower()] > 1]:
+        nears.append((pool_by_key.get(key, {"literature_id": key}),
+                      {**hits.pop(key), "flags": ["DOI won by more than one record"]}))
+
     ok = sum(v for k, v in outcomes.items() if k != "error")
     print("\n" + "=" * 62)
     for k, v in outcomes.most_common():
@@ -252,12 +400,13 @@ def main() -> None:
             w = csv.writer(f)
             w.writerow(["literature_id", "year", "authors", "title",
                         "candidate_doi", "candidate_title", "candidate_year",
-                        "title_sim", "author_match", "decision"])
+                        "title_sim", "author_match", "red_flags", "decision"])
             for p, m in nears:
                 w.writerow([p.get("literature_id"), p.get("year"),
                             (p.get("authors") or "")[:80],
                             (p.get("title") or "")[:140], m["doi"], m["title"],
-                            m["year"], m["sim"], m["author_ok"], ""])
+                            m["year"], m["sim"], m["author_ok"],
+                            "; ".join(m.get("flags", [])), ""])
         print(f"near-misses held for review: {len(nears):,} -> {REVIEW.name}")
         # The CSV is an intermediate. A review artefact is always a formatted
         # workbook, so build it here rather than leaving it as a manual step.

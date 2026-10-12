@@ -467,6 +467,18 @@ def append_to_master_csv(new_rows: list[dict], log_lines: list[str]) -> Path:
 # Public API (also called from sync_shark_references.py Phase 0)
 # ---------------------------------------------------------------------------
 
+def _with_master_url_dois(all_rows: list[dict], doi_lookup: dict) -> dict:
+    """Add DOIs that shark-references put in pdf_url with `doi` blank (2026-10-12:
+    record 35862 looked absent and was nearly duplicated as a new 600000+ record)."""
+    import audit_drop_folder as adf
+    by_id = {str(r.get("literature_id", "")).split(".")[0]: r for r in all_rows}
+    for lid, d in adf.sr_url_dois().items():
+        nd = normalise_doi(d)
+        if nd and nd not in doi_lookup and lid in by_id:
+            doi_lookup[nd] = by_id[lid]
+    return doi_lookup
+
+
 def stage_pdfs(pdf_paths: list[Path], no_network: bool = False) -> dict:
     """Stage a list of orphan PDFs end-to-end. Returns a stats dict.
 
@@ -485,6 +497,7 @@ def stage_pdfs(pdf_paths: list[Path], no_network: bool = False) -> dict:
         return stats
 
     all_rows, doi_lookup, _ = load_database()
+    doi_lookup = _with_master_url_dois(all_rows, doi_lookup)
     existing_orphan_ids = load_existing_orphan_ids()
 
     staged_rows: list[dict] = []
@@ -584,6 +597,7 @@ def main() -> int:
 
     print(f"Loading database from viz_data.csv...")
     all_rows, doi_lookup, _author_year_lookup = load_database()
+    doi_lookup = _with_master_url_dois(all_rows, doi_lookup)
     print(f"  {len(all_rows):,} papers loaded, {len(doi_lookup):,} with DOIs")
 
     existing_orphan_ids = load_existing_orphan_ids()

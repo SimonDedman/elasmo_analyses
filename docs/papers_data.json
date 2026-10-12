@@ -1242,7 +1242,7 @@
   "authors": "Clinton, J.M.Visaggi, C.C. & Perez, V.J. & Tweet, J.S. & Santucci, V.L. (2023)",
   "title": "Fossil chondrichthyans and other new paleontological resources at gulf islands national seashore.",
   "journal": "New Mexico Museum of Natural History and Science Bulletin",
-  "doi": "10.1130/abs/2022am-382204",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -1254,8 +1254,7 @@
   "publisher": "Geological Society of America",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "New Mexico Museum of Natural History and Science Bulletin, 94, 143–154",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "New Mexico Museum of Natural History and Science Bulletin, 94, 143–154"
  },
  {
   "id": 201,
@@ -8832,7 +8831,7 @@
   "authors": "Fieman, D.M. (2016)",
   "title": "Comparing body size of the sand tiger shark Striatolamia macrota from Eocene localities in the Eureka Sound Formation, Banks Island, northern Canada, and the Tuscahoma Formation, Meridian, Mississippi.",
   "journal": "Undergraduate Honors Theses. Paper",
-  "doi": "10.1130/abs/2016am-287498",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -8844,8 +8843,7 @@
   "publisher": "Geological Society of America",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Undergraduate Honors Theses. Paper 1050, University of Colorado, Boulder",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "Undergraduate Honors Theses. Paper 1050, University of Colorado, Boulder"
  },
  {
   "id": 862,
@@ -8940,7 +8938,7 @@
   "authors": "Jacquemin, S.J. & Cicimurri, D.J. & Ebersole, J.A. & Jones, M. & Whetstone, Z. & Ciampaglio, C.N. (2016)",
   "title": "Quantifying heterodonty in the late Devonian (Upper Famennian) sharks Cladoselache and Ctenacanthus from the Ohio Shale, USA.",
   "journal": "PalArch’s Journal of Vertebrate Palaeontology",
-  "doi": "10.1130/abs/2016nc-274783",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -8952,8 +8950,7 @@
   "publisher": "Geological Society of America",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "PalArch’s Journal of Vertebrate Palaeontology 13(1), 1–20",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "PalArch’s Journal of Vertebrate Palaeontology 13(1), 1–20"
  },
  {
   "id": 871,
@@ -81305,7 +81302,7 @@
   "authors": "Fairfax, D. (1998)",
   "title": "The basking shark in Scotland. Natural history, fisheries and conservation.",
   "journal": "Tuckwell Press",
-  "doi": "10.3366/nor.1999.0026",
+  "doi": "",
   "priority_group": 1,
   "last_status": "needs_library",
   "notes": "",
@@ -81316,8 +81313,7 @@
   "journal_clean": "Tuckwell Press",
   "publisher": "Edinburgh University Press",
   "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "doi_source": "crossref_nearmiss_review_2026-09-14"
+  "cascade_checked": true
  },
  {
   "id": 4964,
@@ -85048,26 +85044,6 @@
   "journal_clean": "Revue Française d'Aquariologie",
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
-  "cascade_checked": true
- },
- {
-  "id": 5173,
-  "literature_id": "501062",
-  "year": 1997,
-  "authors": "Ices Demersal Fish Committee (1997)",
-  "title": "Report of the Study Group on Elasmobranchs.",
-  "journal": "ICES CM /G:",
-  "doi": "",
-  "priority_group": 1,
-  "last_status": "needs_library",
-  "notes": "repaired 2026-09-17 spec check: PDF refiled onto this record (finalize had matched the staged file to another paper) | 2026-09-18: status said acquired_oa but no PDF exists in staging or the library; returned to the wanted list.",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "ICES CM /G:",
-  "publisher": "Unknown publisher",
-  "cascade_stage": "download_push_2026-09-17 repair",
   "cascade_checked": true
  },
  {
@@ -148066,7 +148042,7 @@
   "authors": "Casier, E. (1966)",
   "title": "Faune ichthyologique du London Clay.",
   "journal": "Trustees of the British Museum:",
-  "doi": "10.1086/405419",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -148078,8 +148054,7 @@
   "publisher": "University of Chicago Press",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Trustees of the British Museum: 496 pp., 82 fig., 68 pl.",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "Trustees of the British Museum: 496 pp., 82 fig., 68 pl."
  },
  {
   "id": 8829,
@@ -148792,7 +148767,7 @@
   "authors": "Krefft, G. (1965)",
   "title": "Die ichthyologische Ausbeute der ersten Westafrika-Fahrt des fishereitechnischen Forschungsschiffes 'Walther Herwig'. I. Raja herwigi spec. nov., eine neue Rochenart aus dem Seegebiet der Kapverden.",
   "journal": "Archiv für Fischereiwissenschaft",
-  "doi": "10.1016/0011-7471(66)90089-1",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -148805,7 +148780,6 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Archiv für Fischereiwissenschaft, 15(3), 209–216",
-  "doi_source": "crossref_nearmiss_review_2026-09-14",
   "prior_false_dl": "a Deep-Sea Research 'Oceanographic Abstracts' entry was sent; we need Krefft's paper"
  },
  {
@@ -151931,7 +151905,7 @@
   "authors": "Davies, D.H. & d'Aubrey, J.D. (1961)",
   "title": "Shark attack off the East Coast of South Africa, 6 January 1961.",
   "journal": "Investigational Report Oceanographic Research Institute",
-  "doi": "10.2307/1439765",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -151943,8 +151917,7 @@
   "publisher": "JSTOR",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Investigational Report Oceanographic Research Institute, 3, 1–6",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "Investigational Report Oceanographic Research Institute, 3, 1–6"
  },
  {
   "id": 9073,
@@ -151953,7 +151926,7 @@
   "authors": "Davies, D.H. (1961)",
   "title": "Shark attack off the East Coast of South Africa, 22nd January, 1961.",
   "journal": "Investigational Report Oceanographic Research Institute",
-  "doi": "10.2307/1439765",
+  "doi": "",
   "priority_group": 4,
   "last_status": "needs_library",
   "notes": "",
@@ -151965,8 +151938,7 @@
   "publisher": "JSTOR",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Investigational Report Oceanographic Research Institute, 4, 1–5",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "Investigational Report Oceanographic Research Institute, 4, 1–5"
  },
  {
   "id": 9074,
@@ -162455,7 +162427,8 @@
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "Bulletin de la Société de l'industrie minérale, 3. sér., 2: 1–120"
+  "findspot_raw": "Bulletin de la Société de l'industrie minérale, 3. sér., 2: 1–120",
+  "prior_false_dl": "Brongniart's insect part (Faune entomologique, 1893) was sent; we need Sauvage's FISH part (Faune ichthyologique)"
  },
  {
   "id": 9720,
@@ -162773,7 +162746,7 @@
   "findspot_raw": "Vol 1 (pp. 264-294) and 2, London, Pickering,1836",
   "doi_source": "crossref_recovery_2026-09",
   "acquisition_route": "bhl",
-  "prior_false_dl": "the whole 328-page volume was sent; Chapter XIII (vol. 1 pp. 264-294) still needs splitting out"
+  "prior_false_dl": "volume 2 (plates) was sent; Chapter XIII is in VOLUME 1, pp. 264-294"
  },
  {
   "id": 9736,
@@ -165468,7 +165441,7 @@
   "authors": "Day, F. (1889)",
   "title": "The Fauna of British India, including Ceylon and Burma. Fishes.",
   "journal": "London, 1, i-xviii, 1-548, figs. 1-164; 2, pp. i-xiv, 1-509, figs. 1-177",
-  "doi": "10.5962/bhl.title.8366",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
   "notes": "Added by SR sync. PDF URL: https://www.biodiversitylibrary.org/item/59334#page/5/mode/1up",
@@ -168626,27 +168599,6 @@
   "findspot_raw": "Notulae Naturae, 187, 1–16"
  },
  {
-  "id": 10167,
-  "literature_id": "10468",
-  "year": 1873,
-  "authors": "Fox, C. (1873)",
-  "title": "Squalus spinosus.",
-  "journal": "Nature, 9(212), 42",
-  "doi": "10.1038/009042a0",
-  "priority_group": 3,
-  "last_status": "acquired_oa",
-  "notes": "Added by SR sync. PDF URL: ",
-  "oa_status": "bronze",
-  "oa_url": "https://www.nature.com/articles/009042a0.pdf",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Springer",
-  "cascade_stage": "unpaywall",
-  "cascade_checked": true,
-  "findspot_raw": "Nature, 9(212), 42"
- },
- {
   "id": 10168,
   "literature_id": "3196",
   "year": 1895,
@@ -169423,29 +169375,6 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "In Description de l'Egypte ou recueil des observations et des recherches qui ont été faites en Égypte pendant l'expedition de l'Armée français, publié par les ordres de sa Majesté–L'Empereur Napoléon le Grand., pl. 18–27."
- },
- {
-  "id": 10225,
-  "literature_id": "34442",
-  "year": 1844,
-  "authors": "Germar, E.F. (1844)",
-  "title": "Fischüberreste [Piscium reliquiae].",
-  "journal": "In Germar EF Die Versteinerungen des Steinkohlengebirges von Wettin und Löbejün im Saalkreise. Heft [Fasciculus] 1: 1–3. [Petrificata Stratorum Lithanthracum Wettini et Lobejuni in Circulo Salae.] [C.A. Schwetschke und Sohn, Halle.]",
-  "doi": "10.5962/bhl.title.169070",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: https://www.biodiversitylibrary.org/item/280875#page/9/mode/thumb",
-  "oa_status": "gold",
-  "oa_url": "https://www.biodiversitylibrary.org/itempdf/280875",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Biodiversity Heritage Library",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "In Germar EF Die Versteinerungen des Steinkohlengebirges von Wettin und Löbejün im Saalkreise. Heft [Fasciculus] 1: 1–3. [Petrificata Stratorum Lithanthracum Wettini et Lobejuni in Circulo Salae.] [C.A. Schwetschke und Sohn, Halle.]",
-  "acquisition_route": "bhl",
-  "prior_false_dl": "the whole 220-page volume was sent; the Fischueberreste section still needs splitting out"
  },
  {
   "id": 10226,
@@ -170927,30 +170856,6 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Zoologischer Anzeiger, 1(7–8), 144–148, 167–172"
- },
- {
-  "id": 10344,
-  "literature_id": "11947",
-  "year": 1879,
-  "authors": "Hasse, C. (1879)",
-  "title": "Das natürliche System der Elasmobranchier auf Grundlage des Baues und der Entwicklung ihrer Wirbelsäule. Eine morphologische und paläontologische Studie.",
-  "journal": "I. Allgemeiner Theil: 1–76",
-  "doi": "10.5962/bhl.title.8431",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: https://www.archive.org/details/dasnturliche00hass",
-  "oa_status": "bronze",
-  "oa_url": "https://www.biodiversitylibrary.org/itempdf/34919",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Biodiversity Heritage Library",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "I. Allgemeiner Theil: 1–76",
-  "doi_source": "crossref_recovery_2026-09",
-  "acquisition_route": "bhl",
-  "prior_false_dl": "the whole 390-page work was sent; Part I (pp. 1-76) still needs splitting out"
  },
  {
   "id": 10345,
@@ -173090,7 +172995,7 @@
   "authors": "Karpinsky, A.P. (1899)",
   "title": "Ueber die Reste von Edestiden und die neue Gattung Helicoprion.",
   "journal": "Verhandlungen der Kaiserlichen Russischen Mineralogischen Gesesllschaft zu St. Petersburg, 36(2): 1–111",
-  "doi": "10.1017/s0016756800159886",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
   "notes": "Added by SR sync. PDF URL: ",
@@ -173103,7 +173008,6 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Verhandlungen der Kaiserlichen Russischen Mineralogischen Gesesllschaft zu St. Petersburg, 36(2): 1–111",
-  "doi_source": "crossref_recovery_2026-09",
   "prior_false_dl": "a Geological Magazine review of Karpinsky's work was sent; we need Karpinsky's paper"
  },
  {
@@ -177033,29 +176937,6 @@
   "findspot_raw": "Australian Museum Magazine, 1(3), 89"
  },
  {
-  "id": 10757,
-  "literature_id": "26692",
-  "year": 1922,
-  "authors": "McCulloch, A.R. (1922)",
-  "title": "Check List of the Fishes and Fish-Like Animals of New South Wales, Sydney.",
-  "journal": "Royal Zoological Society of New South Wales, 1: 217-227",
-  "doi": "10.5962/bhl.title.21645",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: https://www.biodiversitylibrary.org/item/119055",
-  "oa_status": "bronze",
-  "oa_url": "https://www.biodiversitylibrary.org/itempdf/62060",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Biodiversity Heritage Library",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "Royal Zoological Society of New South Wales, 1: 217-227",
-  "acquisition_route": "bhl",
-  "prior_false_dl": "the 230-page Australian Zoological Handbook was sent; pp. 217-227 still need splitting out"
- },
- {
   "id": 10760,
   "literature_id": "35334",
   "year": 2025,
@@ -178892,27 +178773,6 @@
   "cascade_checked": true,
   "findspot_raw": "Biochemical Journal, 43(1), 18–24",
   "doi_source": "crossref_recovery_2026-09"
- },
- {
-  "id": 10889,
-  "literature_id": "4798",
-  "year": 1936,
-  "authors": "Oliver-Schneider, C. (1936)",
-  "title": "Comentarios sobre los peces fosiles de Chile.",
-  "journal": "Revista Chilena de Historia Natural, 40, 306–323",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL:  Was literature_id 34434; merged into 4798 2026-10-05.",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Unknown publisher",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "Revista Chilena de Historia Natural, 40, 306–323"
  },
  {
   "id": 10890,
@@ -181786,7 +181646,7 @@
   "authors": "Ripley, W.E. (1946)",
   "title": "The biology of the soupfin Galeorhinus zyopterus and biochemical studies of the liver.",
   "journal": "California Fish and Game Bulletin, 64, 1–93",
-  "doi": "10.1086/395738",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
   "notes": "Added by SR sync. PDF URL: https://content.cdlib.org/view?docId=kt3b69n668&brand=calisphere&doc.view=entire_text",
@@ -181798,8 +181658,7 @@
   "publisher": "University of Chicago Press",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "California Fish and Game Bulletin, 64, 1–93",
-  "doi_source": "crossref_recovery_2026-09"
+  "findspot_raw": "California Fish and Game Bulletin, 64, 1–93"
  },
  {
   "id": 11095,
@@ -189726,30 +189585,6 @@
   "findspot_raw": "Annals and Magazine of Natural History, (Series 6), 4, 275–280"
  },
  {
-  "id": 11608,
-  "literature_id": "4091",
-  "year": 1891,
-  "authors": "Woodward, A.S. (1891)",
-  "title": "Catalogue of the fossil fishes in the British Museum (Natural History). Part II. containing the Elasmobranchii (Acanthodii). Holocephali, Ichthyodorulites, Ostracodermi, Dipnoi, and Teleostomi (Crossopterygii and chondrostean Actinopterygii).",
-  "journal": "XLIV + 567 pp.(Taylor & Francis), London.",
-  "doi": "10.5962/bhl.title.162355",
-  "priority_group": 3,
-  "last_status": "needs_library",
-  "notes": "Added by SR sync. PDF URL: https://www.biodiversitylibrary.org/item/125733#page/7/mode/1up",
-  "oa_status": "hybrid",
-  "oa_url": "https://www.biodiversitylibrary.org/itempdf/271582",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Biodiversity Heritage Library",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true,
-  "findspot_raw": "XLIV + 567 pp.(Taylor & Francis), London.",
-  "doi_source": "crossref_nearmiss_review_2026-09-14",
-  "acquisition_route": "bhl",
-  "prior_false_dl": "a 2,122-page bound set of the catalogue was sent; Part II still needs splitting out"
- },
- {
   "id": 11612,
   "literature_id": "31511",
   "year": 1893,
@@ -190163,7 +189998,7 @@
   "authors": "Wurm, A. (1911)",
   "title": "Untersuchungen über den geologischen Bau und die Trias von Aragonien.",
   "journal": "Zeitschrift der Deutschen Geologischen Gesellschaft, 63(1911), 38–174",
-  "doi": "10.1086/622008",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
   "notes": "Added by SR sync. PDF URL: https://www.biodiversitylibrary.org/bibliography/8940",
@@ -190176,7 +190011,6 @@
   "cascade_stage": "needs_library",
   "cascade_checked": true,
   "findspot_raw": "Zeitschrift der Deutschen Geologischen Gesellschaft, 63(1911), 38–174",
-  "doi_source": "crossref_recovery_2026-09",
   "prior_false_dl": "a Journal of Geology review notice was sent; we need Wurm's 1911 paper"
  },
  {
@@ -191855,27 +191689,6 @@
   "cascade_checked": true
  },
  {
-  "id": 11895,
-  "literature_id": "10430",
-  "year": 1934,
-  "authors": "Barnard, K.H. (1934)",
-  "title": "Second Occurrence of the Whale-Shark (Rhineodon typus) in South Africa.",
-  "journal": "Nature, 134(3376), 66",
-  "doi": "10.1038/134066c0",
-  "priority_group": 3,
-  "last_status": "acquired_oa",
-  "notes": "Added by SR sync. PDF URL: ",
-  "oa_status": "bronze",
-  "oa_url": "https://www.nature.com/articles/134066c0.pdf",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": "Springer",
-  "findspot_raw": "Nature, 134(3376), 66",
-  "cascade_stage": "unpaywall",
-  "cascade_checked": true
- },
- {
   "id": 11899,
   "literature_id": "32981",
   "year": 1901,
@@ -193005,7 +192818,7 @@
   "authors": "Manzanares, E. & Johanson, Z. & Najorka, J. & Hollis, J.R. & Underwood, C.J. & Twitchett, R.J. (2026)",
   "title": "First report of the biomineral whitlockite from the fossil record of holocephalans.",
   "journal": "Royal Society Open Science, 13(6), Article 252478",
-  "doi": "10.1098/rsos.252478/v1/review1",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
   "notes": "Added by SR sync. PDF URL: https://doi.org/10.1098/rsos.252478",
@@ -193016,7 +192829,6 @@
   "journal_clean": "",
   "publisher": "Royal Society",
   "findspot_raw": "Royal Society Open Science, 13(6), Article 252478",
-  "doi_source": "crossref_recovery_2026-09",
   "cascade_stage": "needs_library",
   "cascade_checked": true
  },
@@ -193701,7 +193513,7 @@
   "authors": "Walker, J.K. & Meeuwig, J.J. & Thompson, C.D.H. (2026)",
   "title": "Environmental and Protection Effects of Shark-Companion Associations Across Three Ocean Basins.",
   "journal": "Ecology and Evolution, 16(6), Article e73823",
-  "doi": "10.1002/ece3.73961",
+  "doi": "",
   "priority_group": 3,
   "last_status": "needs_library",
   "notes": "Added by SR sync. PDF URL: https://doi.org/10.1002/ece3.73823",
@@ -193712,7 +193524,6 @@
   "journal_clean": "",
   "publisher": "Wiley",
   "findspot_raw": "Ecology and Evolution, 16(6), Article e73823",
-  "doi_source": "crossref_recovery_2026-09",
   "cascade_stage": "needs_library",
   "cascade_checked": true
  },
@@ -194487,17 +194298,6 @@
   "cascade_stage": "bhl",
   "cascade_checked": true,
   "findspot_raw": "C. W. Kreidel's Verlag, Wiesbaden: 149, 195–198, 204–205"
- },
- {
-  "literature_id": "21413",
-  "id": 12285,
-  "title": "Amplificación cruzada de diez loci microsatelitales en el tiburón martillo (Sphyrna lewini) [Abstract].",
-  "authors": "Isaac Vissuet, E.F. & García-De-León, F.J. & Galván-Magaña, F. & McCoy, M. (2008)",
-  "year": 2008,
-  "doi": "",
-  "journal": "In III Simposion Nacioinal de Tiburones y Rayas. Facultad de Ciencias UNAM",
-  "notes": "re-added 2026-09-19: PDF was misfiled and has been renamed onto its real paper",
-  "last_status": "needs_pdf"
  },
  {
   "literature_id": "26768",

@@ -80,6 +80,25 @@ def parse_name(fn: str) -> dict:
     return out
 
 
+def sr_url_dois() -> dict[str, str]:
+    """literature_id -> DOI taken from the master CSV's doi OR pdf_url (doi.org link)."""
+    import glob
+    csv.field_size_limit(10**9)
+    files = sorted(glob.glob(str(PROJECT / "outputs/shark_references_bulk/shark_references_complete_*.csv")))
+    out = {}
+    if not files:
+        return out
+    with open(files[-1], newline="", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            d = (r.get("doi") or "").strip()
+            if not d:
+                m = re.search(r"doi\.org/(10\.\d{4,9}/\S+)", r.get("pdf_url") or "", re.I)
+                d = m.group(1) if m else ""
+            if d:
+                out[str(r.get("literature_id") or "").split(".")[0]] = d
+    return out
+
+
 def load_indexes() -> dict:
     rows, _doi_lookup, ay_lookup = ing.load_database()
     queue = json.loads(QUEUE_JSON.read_text())
@@ -96,6 +115,12 @@ def load_indexes() -> dict:
         sq = squash(ing.normalise_doi(r.get("doi") or ""))
         if sq:
             by_doi.setdefault(sq, []).append(lid)
+    # shark-references sometimes leaves `doi` blank and puts the DOI in `pdf_url`
+    # (https://doi.org/...). Missed on 2026-10-12: record 35862 looked absent, and a
+    # duplicate record was nearly created for a paper filed five days earlier.
+    for lid, d in sr_url_dois().items():
+        if lid in by_id and lid not in by_doi.get(squash(d), []):
+            by_doi.setdefault(squash(d), []).append(lid)
     pdfmap: dict[str, str] = {}
     with open(PDF_MAP, newline="", encoding="utf-8") as f:
         for r in csv.DictReader(f):
@@ -185,6 +210,37 @@ def candidates(info: dict) -> list[tuple[str, str]]:
     return out
 
 
+# Tried in turn when the standard OCR (ingest_pdfs.OCR_LANGS, six Latin-script
+# languages) leaves a scan with no usable text. The best-scoring pass wins, so a
+# Fraktur, Cyrillic or CJK scan is read and audited like any other file, and
+# `_unreadable-scan` only ever holds files no installed language can read.
+RELANG_SETS = ["Fraktur+deu", "rus+eng", "jpn+eng", "chi_sim+chi_tra+eng", "kor+eng", "nld+eng"]
+
+
+def relang_ocr(p: Path) -> tuple[Path | None, str]:
+    import subprocess
+    best, best_alpha, best_lang = None, 0, ""
+    for langs in RELANG_SETS:
+        out = ing.OCR_CACHE / f"{sha256(p)[:16]}.{langs.replace('+', '_')}.pdf"
+        if not out.exists():
+            out.parent.mkdir(parents=True, exist_ok=True)
+            r = subprocess.run(["ocrmypdf", "--force-ocr", "--output-type", "pdf", "--language", langs,
+                                "--quiet", "--pages", "1-5", str(p), str(out)], capture_output=True)
+            if r.returncode != 0 or not out.exists():
+                continue
+        text, _ = page_text(out, 5)
+        # Score clean words, not letters: a wrong language pack emits plenty of
+        # letters as noise (a CJK pack read a German page with more letters than
+        # the Fraktur pack did). CJK text has no spaces, so count its characters.
+        toks = text.split()
+        clean = sum(1 for t in toks if re.fullmatch(r"[^\W\d_]{3,}[.,;:]?", t))
+        cjk = sum(1 for c in text if "\u3040" <= c <= "\u9fff" or "\uac00" <= c <= "\ud7af")
+        score = clean * (clean / max(len(toks), 1)) + cjk / 2
+        if score > best_alpha:
+            best, best_alpha, best_lang = out, score, langs
+    return (best, best_lang) if best_alpha >= 40 else (None, "")
+
+
 def audit_one(path_str: str) -> dict:
     p = Path(path_str)
     info = parse_name(p.name)
@@ -203,6 +259,11 @@ def audit_one(path_str: str) -> dict:
     except Exception as e:  # noqa: BLE001
         row.update(bucket="unreadable", reason=f"open failed: {e}")
         return row
+    if sum(c.isalpha() for c in text) < 200:
+        tp2, langs = relang_ocr(p)
+        if tp2:
+            text, _ = page_text(tp2, 5)
+            row["ocr"] = f"relang {langs}"
     first = " ".join(text.split())[:160]
     row["first_line"] = first
     alpha = sum(c.isalpha() for c in text)
@@ -231,7 +292,7 @@ def audit_one(path_str: str) -> dict:
         scored.sort(reverse=True)
 
     if alpha < 200:
-        row.update(bucket="unreadable", reason="no text layer after OCR")
+        row.update(bucket="unreadable", reason="no text after OCR in every installed language")
         if scored:
             row["literature_id"] = scored[0][3]
         return row

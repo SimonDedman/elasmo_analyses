@@ -14,6 +14,12 @@ Steps, each its own flag so a run can stop and resume between them:
              copy deleted. Unverified files are left in place and listed.
   --sort     every other bucket is moved into its named subfolder of the drop folder
              (audit_drop_folder.SUBFOLDERS), with a README.txt per subfolder.
+  --ledger   trace WHY each problem file was downloaded and append one row per file to
+             data/acquisition_feedback_ledger.csv (cause, who owns the fix, what to report
+             to whom). Run after --sort. The ledger feeds the Shark References and
+             publisher feedback packages and the note back to the downloader.
+  --tidy     remove subfolders left empty once their files have been dealt with, so a
+             subfolder exists only while it holds something a person must act on.
 
 --overrides CSV (filename,bucket[,literature_id]) re-buckets files after human review.
 """
@@ -22,6 +28,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -34,6 +41,9 @@ import ingest_pdfs as ing  # noqa: E402
 
 PROJECT = ing.PROJECT
 STATE_FILE = PROJECT / "outputs/.coauthor_scan_state.json"
+LEDGER = PROJECT / "data/acquisition_feedback_ledger.csv"
+LEDGER_FIELDS = ["date", "person", "filename", "literature_id", "bucket", "cause", "cause_owner",
+                 "evidence", "action_taken", "report_to", "reported_on"]
 OUTSTANDING = {"needs_library", "needs_pdf", "sr_sync_new", "acquired_bhl", "acquired_oa"}
 
 README = {
@@ -231,13 +241,107 @@ def sort_problems(rows, folder: Path, person: str) -> None:
     print(f"moved {len(moved)} files into problem subfolders")
 
 
+def _doi_from_name(name: str) -> str:
+    """Surname_Year_10.xxxx-yyy.pdf -> 10.xxxx/yyy (first dash after the prefix is the slash)."""
+    m = re.search(r"_(10\.\d{4,9})-(.+?)\.pdf$", name, re.I)
+    return f"{m.group(1)}/{m.group(2)}".lower() if m else ""
+
+
+def trace_cause(r: dict, queue: dict, state: dict, recovery: dict, person: str) -> dict:
+    """Why was this file downloaded, and whose fix is it? One row of the feedback ledger."""
+    lid, bucket = r.get("literature_id") or "", r["bucket"]
+    q = queue.get(lid, {})
+    name_doi = _doi_from_name(r["filename"])
+    list_doi = (q.get("doi") or "").lower()
+    rec_doi = (((recovery.get(lid) or {}).get("match") or {}).get("doi") or "").lower()
+    out = {"bucket": bucket, "literature_id": lid}
+    if bucket in ("duplicate_identical", "already_filed"):
+        filers = [v for v in state.values() if isinstance(v, dict) and str(v.get("literature_id")) == lid]
+        first = min(filers, key=lambda v: v.get("at", "")) if filers else None
+        if first and first.get("person") == person:
+            out.update(cause="re-download of the downloader's own earlier delivery (worked from an old copy of the list)",
+                       cause_owner="downloader + list publishing lag", report_to=person)
+        elif first:
+            out.update(cause=f"downloaded in parallel with {first.get('person')} (filed {first.get('at', '')[:10]})",
+                       cause_owner="no claim visible between contributors", report_to=person)
+        else:
+            out.update(cause="todo row stayed open although the library already held the PDF",
+                       cause_owner="our queue/library reconciliation", report_to="")
+        out["evidence"] = f"library: {Path(r.get('lib_pdf') or '').name}"
+    elif bucket in ("whole_volume",):
+        out.update(cause="the list's DOI or link is the whole volume" if "bhl.title" in list_doi
+                   else "a whole volume was fetched for one article",
+                   cause_owner="expected: split in the pipeline", report_to="",
+                   evidence=f"list DOI {list_doi or '-'}")
+    elif bucket == "no_record":
+        out.update(cause="no record for this paper (new paper, or a sibling of one we need)",
+                   cause_owner="check: add as a new record if in scope", report_to="",
+                   evidence=f"file DOI {name_doi or '-'}")
+    else:
+        if name_doi and list_doi and adf.squash(name_doi) == adf.squash(list_doi):
+            owner = "our Crossref DOI recovery" if adf.squash(rec_doi) == adf.squash(list_doi) else "shark-references (DOI on their record)"
+            out.update(cause=f"our todo list's DOI resolves to this {bucket.replace('_', ' ')}, not the paper",
+                       cause_owner=owner,
+                       report_to="fix recover_missing_dois gates" if owner.startswith("our") else "shark-references")
+        elif name_doi:
+            out.update(cause="the downloader's DOI differs from the list's (search or download tool picked the wrong item)",
+                       cause_owner="downloader tool / publisher landing page", report_to=person)
+        else:
+            out.update(cause="title search returned the wrong item (no DOI on the list)",
+                       cause_owner="downloader search", report_to=person)
+        out["evidence"] = f"file DOI {name_doi or '-'}; list DOI {list_doi or '-'}"
+    return out
+
+
+def write_ledger(rows, person: str, notes: dict) -> None:
+    queue = {}
+    for f in (work_dir(person) / "papers_data.before.json", PROJECT / "docs/papers_data.json"):
+        if f.exists():
+            for e in json.loads(f.read_text()):
+                queue.setdefault(str(e["literature_id"]), e)
+    state = json.loads(STATE_FILE.read_text())["seen"]
+    rc = PROJECT / "outputs/.doi_recovery_cache.json"
+    recovery = json.loads(rc.read_text()) if rc.exists() else {}
+    done = set()
+    if LEDGER.exists():
+        with open(LEDGER, newline="", encoding="utf-8") as f:
+            done = {(x["person"], x["filename"]) for x in csv.DictReader(f)}
+    new = []
+    for r in rows:
+        if r["bucket"] == "ingest" or (person, r["filename"]) in done:
+            continue
+        t = trace_cause(r, queue, state, recovery, person)
+        t.update({k: v for k, v in notes.get(r["filename"], {}).items() if v})
+        new.append({"date": str(date.today()), "person": person, "filename": r["filename"],
+                    "action_taken": "", "reported_on": "", **t})
+    LEDGER.parent.mkdir(exist_ok=True)
+    fresh = not LEDGER.exists()
+    with open(LEDGER, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=LEDGER_FIELDS, extrasaction="ignore")
+        if fresh:
+            w.writeheader()
+        w.writerows(new)
+    print(f"ledger: {len(new)} rows appended to {LEDGER}")
+
+
+def tidy(folder: Path) -> None:
+    for d in sorted(folder.glob("_*")):
+        if d.is_dir() and not [p for p in d.iterdir() if p.name != "README.txt"]:
+            for p in d.iterdir():
+                p.unlink()
+            d.rmdir()
+            print(f"removed empty {d.name}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--audit", required=True, type=Path)
     ap.add_argument("--folder", required=True, type=Path)
     ap.add_argument("--person", required=True)
     ap.add_argument("--overrides", type=Path)
-    for f in ("stage", "file", "verify", "credit", "sort"):
+    ap.add_argument("--ledger-notes", type=Path,
+                    help="CSV filename,cause,cause_owner,evidence,action_taken,report_to overriding the traced values")
+    for f in ("stage", "file", "verify", "credit", "sort", "ledger", "tidy"):
         ap.add_argument(f"--{f}", action="store_true")
     a = ap.parse_args()
     rows = load_rows(a.audit, a.overrides)
@@ -251,6 +355,14 @@ def main() -> int:
         credit_and_clean(a.person)
     if a.sort:
         sort_problems(rows, a.folder, a.person)
+    if a.ledger:
+        notes = {}
+        if a.ledger_notes and a.ledger_notes.exists():
+            with open(a.ledger_notes, newline="", encoding="utf-8") as f:
+                notes = {x["filename"]: x for x in csv.DictReader(f)}
+        write_ledger(rows, a.person, notes)
+    if a.tidy:
+        tidy(a.folder)
     return 0
 
 

@@ -58,7 +58,7 @@ d <- d[order(d$rank, -d$two_sided), ]
 cols <- c("assessment", "literature_id", "year", "authors", "title",
           "candidate_doi", "candidate_title", "candidate_year",
           "title_sim", "two_sided", "author_match", "our_tokens",
-          "cand_tokens", "decision", "notes")
+          "cand_tokens", "red_flags", "decision", "notes")
 d <- d[, cols[cols %in% names(d)]]
 
 summ <- as.data.frame(table(assessment = d$assessment), responseName = "rows")

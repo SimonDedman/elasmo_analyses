@@ -177,7 +177,7 @@
             <tbody></tbody>
         </table>
 
-        <p class="updated">Updated: 2026-07-24 | <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub</a> | <a href="papers_data.json">JSON</a></p>
+        <p class="updated">List last published: <span id="listUpdated">checking…</span>. Reload this page (or re-fetch the JSON) before each download session: a saved CSV or list goes stale as soon as papers are filed, and on 2026-10-12 31 papers were downloaded a second time from an old list. | <a href="https://github.com/SimonDedman/elasmo_analyses">GitHub</a> | <a href="papers_data.json">JSON</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -265,6 +265,11 @@
         $('#userName').on('change',function(){localStorage.setItem('eea_username',$(this).val());});
         $('#hideClicked').on('change',function(){applyHideFilter();});
 
+        // The list's real age, from the server's Last-Modified header (never a hard-coded date).
+        $.ajax({url:'papers_data.json',type:'HEAD',cache:false}).done(function(d,st,x){
+            var lm=x.getResponseHeader('Last-Modified');
+            $('#listUpdated').text(lm?new Date(lm).toLocaleString():'unknown');
+        }).fail(function(){$('#listUpdated').text('unknown');});
         $.getJSON('papers_data.json',function(data){
             // ONE definition of "remaining", shared with scripts/build_remaining_papers_dashboard.py
             // (OUTSTANDING = needs_library, needs_pdf, sr_sync_new). Rows with any other status

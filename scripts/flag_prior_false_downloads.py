@@ -59,13 +59,14 @@ FLAGS = {
     "3586": "a Deep-Sea Research 'Oceanographic Abstracts' entry was sent; we need Krefft's paper",
     "502086": "pp. 235-240 only were sent; the start of the article is missing",
     "501417": "a one-page book review was sent; we need Schmidt-Nielsen's book",
-    "27970": "the whole 328-page volume was sent; Chapter XIII (vol. 1 pp. 264-294) still needs splitting out",
+    "27970": "volume 2 (plates) was sent; Chapter XIII is in VOLUME 1, pp. 264-294",
     "34442": "the whole 220-page volume was sent; the Fischueberreste section still needs splitting out",
     "4091": "a 2,122-page bound set of the catalogue was sent; Part II still needs splitting out",
     "11947": "the whole 390-page work was sent; Part I (pp. 1-76) still needs splitting out",
     "26692": "the 230-page Australian Zoological Handbook was sent; pp. 217-227 still need splitting out",
     "13564": "Davies' 1960 Copeia note (April 1960 attack) was sent via a wrong DOI; we need the ORI Investigational Report",
     "9182": "the Copeia paper (Bathyraja mariposa, record 3680) was sent via a shared DOI; we need the AES abstract",
+    "9225": "Brongniart's insect part (Faune entomologique, 1893) was sent; we need Sauvage's FISH part (Faune ichthyologique)",
     "32563": "the 2023 Zoosystema paper (record 32371) was sent via a wrong DOI; we need the Ocean Past News piece",
 }
 

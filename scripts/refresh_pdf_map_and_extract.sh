@@ -27,6 +27,10 @@ echo "== 1/4 rebuilding the id -> PDF map =="
 echo "STEP 1/4 map $(date '+%H:%M:%S %Z')" >> "$MARK"
 python3 scripts/build_pdf_id_map.py --verify 200
 
+echo "== 1b/4 closing todo rows whose PDF is already in the library =="
+# identity-tested; rows that fail stay open and are listed in outputs/queue_reconcile_<date>.csv
+python3 scripts/reconcile_queue_with_library.py --apply
+
 echo "== 2/4 listing rows whose PDF assignment moved =="
 echo "STEP 2/4 diff $(date '+%H:%M:%S %Z')" >> "$MARK"
 python3 - "$STAMP" <<'PYEOF'
