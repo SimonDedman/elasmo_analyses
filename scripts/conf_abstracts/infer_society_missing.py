@@ -12,6 +12,35 @@ from conf_abstracts import config as C, llm
 
 LOG = C.REPO / "logs" / "infer_society_missing.log"
 
+# Which societies did NOT meet, per JMIH year, from the books themselves
+# (2026-10-13). The model cannot tell HL from SSAR, or ASIH from NIA, by content
+# ("HL|SSAR"), and at temperature 0 it still flips between "HL" and "HL|SSAR"
+# on the same row, so only its fish/herp split is trusted. Where one of the
+# pair was absent, the other is the answer.
+#   2001: running head "ASIH/AES Joint Meetings 2001", no HL/SSAR/NIA anywhere.
+#   2015: title page lists AES, ASIH, HL only.
+#   1997-1999, 2005, 2008: the books label sessions by society (SSAR/HL 24-186
+#   mentions each) and NIA never appears. A zero in a book that does NOT label
+#   sessions (2006, 2007, 2012, 2023, 2024) proves nothing, so those are absent here.
+ABSENT = {1997: {"NIA"}, 1998: {"NIA"}, 1999: {"NIA"}, 2001: {"HL", "SSAR", "NIA"},
+          2005: {"NIA"}, 2008: {"NIA"}, 2015: {"SSAR", "NIA"}}
+FISH, HERP = ("ASIH", "NIA"), ("HL", "SSAR")
+
+
+def by_membership(answer, year):
+    """Resolve a hedge (or a single answer) using who met that year."""
+    absent = ABSENT.get(year)
+    if not absent or not answer:
+        return None
+    parts = set(answer.split("|"))
+    for group in (FISH, HERP):
+        if parts and parts <= set(group):
+            left = [g for g in group if g not in absent]
+            if not left:
+                return "ASIH"     # neither met: ASIH is Ichthyologists AND Herpetologists
+            return left[0] if len(left) == 1 else None
+    return None
+
 def main():
     # A book still awaiting its Fable re-extraction is worth excluding: its
     # regex records are title stubs ("Pennsylvania", "of Campinas (UNICAMP)"),
@@ -26,7 +55,7 @@ def main():
         print("Ollama not available at", C.OLLAMA_HOST); return 2
     con = sqlite3.connect(str(C.DB_PATH))
     skip = args.exclude_year
-    rows = con.execute(f"""SELECT a.abstract_id, a.title, a.abstract_text, a.is_elasmo
+    rows = con.execute(f"""SELECT a.abstract_id, a.title, a.abstract_text, a.is_elasmo, m.year
                           FROM abstracts a JOIN meetings m USING(meeting_id)
                           WHERE m.meeting IN ('JMIH','ASIH') AND a.society IS NULL
                             AND a.abstract_text IS NOT NULL AND length(a.abstract_text) > 50
@@ -49,13 +78,16 @@ def main():
     answers = {}
     with open(LOG, "a") as fh:
         fh.write(f"START {time.strftime('%F %T')} {total} rows\n")
-        for aid, title, body, is_el in rows:
+        for aid, title, body, is_el, year in rows:
             if is_el:
                 soc = "AES"; conf = 1.0
             else:
                 out = llm.infer_society(title or "", body or "")
                 soc = out.get("society"); conf = out.get("confidence")
                 answers[soc] = answers.get(soc, 0) + 1
+                member = by_membership(soc, year)
+                if member:
+                    soc = member
                 if not out:
                     errors += 1; soc = None
                     if errors >= 20 and errors > 0.5 * done:

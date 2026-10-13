@@ -37,3 +37,13 @@ def test_matrix_cell_note_prepends_and_retires():
     assert ws["B2"].value == "Guelph, ON; Ingested — Fable-merged 2026-09-17"
     assert ws["C2"].value == "x; Ingested — Fable extraction 2026-09-17, 44 abstracts"
     assert ws["B3"].value == "University Park, PA; OCR — degraded"     # status moved on: retired
+
+
+def test_society_by_membership():
+    from conf_abstracts.infer_society_missing import by_membership as m
+    assert m("HL|SSAR", 2015) == "HL"          # 2015 title page: AES, ASIH, HL
+    assert m("ASIH|NIA", 1997) == "ASIH"       # NIA absent from the labelled 1997 book
+    assert m("HL|SSAR", 1997) is None          # both met: content cannot decide
+    assert m("HL", 2001) == "ASIH"             # 2001 was ASIH/AES only
+    assert m("HL|SSAR", 2016) is None          # no membership fact for that year
+    assert m("HL|NIA", 2005) is None           # mixed hedge: not a fish/herp answer
