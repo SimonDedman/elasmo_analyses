@@ -36,6 +36,12 @@ FABLE_SKIP_KEYS = {
 # parse_eea.ingest_eea2026, and merge_fable_into_main must NOT delete them in
 # its "replace every EEA meeting with the Fable set" sweep (they are not in
 # the Fable DB, so a re-merge would silently drop them).
+# EEA 2026: the filed book is the FINAL c4 booklet (2026-10-08, md5 361744fc...)
+# since 2026-10-13; the first ingest used the 5 Oct booklet (kept as
+# EEA/2026/"EEA 2026 Abstract Booklet.pdf"). c4 moved 14 talk times, added
+# Egloff's 4 co-authors and a Day 3 panel, and wraps one speaker name around its
+# title; parse_eea handles all of that, and parse_eea._E26_AFFIL_FIXES holds the
+# 4 affiliation sets read by hand. A from-scratch rebuild reproduces the DB.
 EEA_STRUCTURED_FILES = {
     "2026_EEA_AbstractBook": dict(
         meeting="EEA", year=2026,

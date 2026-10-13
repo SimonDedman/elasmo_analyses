@@ -1197,6 +1197,10 @@ def guarded_save(wb, accept_losses=False, dry_run=False):
               f"Rebuild left at {proposed}.")
         return False
     import shutil
+    if not (lost or changed or added) and OUT_DB_COPY.exists():
+        proposed.unlink()           # nothing changed: a re-save would only churn git
+        print("no cell changed; workbook left as it was")
+        return True
     shutil.move(str(proposed), str(OUT))
     shutil.copyfile(OUT, OUT_DB_COPY)
     print(f"wrote {OUT}\n  and {OUT_DB_COPY} (identical)")

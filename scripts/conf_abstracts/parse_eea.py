@@ -331,9 +331,29 @@ def parse_eea2026_agenda(raw_text):
                     i += 1
                     times.append(paras[i])
                 rest = paras[i + 1:i + 3] + ["", ""]
+                speaker, title = rest[0], rest[1]
+                fused = rest[0].split("\n")
+                names_only = all(re.fullmatch(r"(?:[A-ZÀ-Þ][\w'’.-]*\s*){1,4},?", l.strip())
+                                 for l in fused if l.strip())
+                if (not title.strip() or _E26_TIME.match(title.strip())) and names_only:
+                    # a speaker list with no talk title (c4's Day 3 deep-water panel,
+                    # whose "Short presentations & panel discussion" heading sits
+                    # before the time column): not a talk, so no title, dropped below
+                    title = ""
+                elif (not title.strip() or _E26_TIME.match(title.strip())) and len(fused) >= 2:
+                    # c4 (2026-10-08) wraps a long speaker name AROUND the title, so
+                    # both land in one paragraph and the next "title" is a time:
+                    #   "Ángela / Unravelling ... in the / Palomino Gaviria northwestern
+                    #   Mediterranean". Speaker = first line + the capitalised words
+                    #   opening the last line; the rest is the title. Only the title's
+                    #   first 30 characters are used (to find the abstract page).
+                    m = re.match(r"((?:[A-ZÀ-Þ][\w'’-]*\s+){1,3})(.*)$", fused[-1])
+                    tail_name, tail_title = (m.group(1), m.group(2)) if m and len(fused) >= 3 else ("", fused[-1])
+                    speaker = fused[0] + " " + tail_name
+                    title = " ".join(fused[1:-1] + [tail_title])
                 rows.append(dict(day=day, time_uk=times[-1],
-                                 speaker=re.sub(r"\s+", " ", rest[0]).strip(),
-                                 title=re.sub(r"\s+", " ", re.sub(r"\s\d{1,2}(?=\s)", " ", rest[1])).strip()))
+                                 speaker=re.sub(r"\s+", " ", speaker).strip(),
+                                 title=re.sub(r"\s+", " ", re.sub(r"\s\d{1,2}(?=\s)", " ", title)).strip()))
             i += 1
     for k, r in enumerate(rows):          # slot length = gap to the next row
         if k + 1 < len(rows) and rows[k + 1]["day"] == r["day"]:
@@ -520,6 +540,48 @@ def _e26_tokens(name):
     return {t for t in re.split(r"[\s.\-]+", n) if len(t) >= 3}
 
 
+# Affiliations read by hand from the c4 booklet (2026-10-13), one entry per
+# author in order ('' = no superscript printed). The parser leaves these blank
+# (two-column affiliation blocks) or, for Shark Oracle, swaps them; this table
+# makes a from-scratch rebuild match the corrected DB exactly.
+_E26_AFFIL_FIXES = {
+    "Shark Oracle: a Comprehensive": [
+        "Florida International University",
+        "MacAlister Elliott & Partners Ltd"
+    ],
+    "Improving the management of fish maw": [
+        "James Cook University"
+    ],
+    "Living Together: the LIFE": [
+        "MedSharks",
+        "Stazione Zoologica Anton Dohrn",
+        "Acquario di Livorno",
+        "Università di Firenze",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+    ],
+    "Raja radula Delaroche, 1809": [
+        "",
+        "Insititut Mediterrani d'Estudis Avançats, IMEDEA (CSIC-UIB), Esporles, Spain; Associació CAYUME, Palma, Spain",
+        "Department of Functional Biology, Genetics, University of Oviedo, Oviedo, Spain; Association for the Study and Conservation of Elasmobranchs and its Ecosystems (Catsharks), Barcelona, Spain",
+        "Department of Life and Environmental Sciences, University of Cagliari, Cagliari, Italy; National Interuniversity Consortium for Marine Science (CoNISMa), Rome, Italy",
+        "Department of Integrative Marine Ecology, Genoa Marine Centre, Anton Dohrn Zoological Station, Genoa, Italy",
+        "Department of Life and Environmental Sciences, University of Cagliari, Cagliari, Italy",
+        "Fundación Azul Marino de la Comunitat Valenciana, Castellón, Spain; Associació LAMNA, Valencia, Spain",
+        "SZN Sicily Marine Centre, Anton Dohrn Zoological Station, Palermo, Italy",
+        "Department of Life and Environmental Sciences, University of Cagliari, Cagliari, Italy",
+        "Spatial Marine Lab, Instituto Cavanilles de Biodiversidad y Biología Evolutiva, Universitat de València, Paterna, Spain; Association for the Study and Conservation of Elasmobranchs and Its Ecosystems (Catsharks), Barcelona, Spain",
+        "SZN Sicily Marine Centre, Anton Dohrn Zoological Station, Palermo, Italy",
+        "Department of Life and Environmental Sciences, University of Cagliari, Cagliari, Italy"
+    ]
+}
+
+
 def ingest_eea2026(con, layout_text, raw_text, meeting_meta):
     """Load the EEA 2026 booklet. Presenters come from the agenda's speaker
     column (a talk with two named speakers, e.g. Dedman & Tiktak, flags both);
@@ -563,6 +625,10 @@ def ingest_eea2026(con, layout_text, raw_text, meeting_meta):
                                 is_presenter=int(k - 1 in pres),
                                 presenter_inferred=int(inferred and k - 1 in pres),
                                 affiliation=aff, raw_author_string=b["author_raw"]))
+        for pre, affl in _E26_AFFIL_FIXES.items():
+            if b["title"].startswith(pre) and len(affl) == len(authors):
+                for a, aff in zip(authors, affl):
+                    a["affiliation"] = aff or None
         key = re.sub(r"\W+", "", b["abstract_text"].lower())[:400]
         dup_body = key in bodies
         bodies.setdefault(key, b["title"])
