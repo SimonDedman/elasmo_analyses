@@ -40,7 +40,13 @@ def main():
     # herpetology societies and content cannot say whose session a talk was in.
     # Ordering by needs_review puts the answerable rows first, so a run that is
     # cut short has done the useful part.
-    total = len(rows); done = fail = 0; t0 = time.time()
+    # "unresolved" used to lump two different things: the model HEDGED (an
+    # honest "HL|SSAR") and the CALL FAILED (ollama_json returns {} on any
+    # error). On 2026-10-13 a whole run of 286 reported "286 unresolved" and
+    # wrote nothing; the counts below keep them apart. A run that is mostly
+    # errors stops early rather than burning through the queue.
+    total = len(rows); done = fail = errors = 0; t0 = time.time()
+    answers = {}
     with open(LOG, "a") as fh:
         fh.write(f"START {time.strftime('%F %T')} {total} rows\n")
         for aid, title, body, is_el in rows:
@@ -49,7 +55,15 @@ def main():
             else:
                 out = llm.infer_society(title or "", body or "")
                 soc = out.get("society"); conf = out.get("confidence")
-                if soc not in ("ASIH", "HL", "SSAR", "NIA"):
+                answers[soc] = answers.get(soc, 0) + 1
+                if not out:
+                    errors += 1; soc = None
+                    if errors >= 20 and errors > 0.5 * done:
+                        fh.write(f"STOPPED {time.strftime('%F %T')}: {errors} model-call errors in {done + 1} rows\n")
+                        print(f"STOPPED: {errors} model-call errors in {done + 1} rows; is Ollama up at {C.OLLAMA_HOST}?")
+                        con.commit()
+                        return 3
+                elif soc not in ("ASIH", "HL", "SSAR", "NIA"):
                     fail += 1; soc = None
             if soc:
                 con.execute("UPDATE abstracts SET society=?, society_inferred=?, society_basis='content', confidence=COALESCE(confidence,?) WHERE abstract_id=?",
@@ -59,10 +73,12 @@ def main():
                 con.commit()
                 rate = done / (time.time() - t0)
                 eta = (total - done) / rate if rate else 0
-                fh.write(f"{time.strftime('%T')} {done}/{total} done, {fail} unresolved, eta {eta/60:.0f} min ({time.strftime('%H:%M', time.localtime(time.time()+eta))})\n"); fh.flush()
+                fh.write(f"{time.strftime('%T')} {done}/{total} done, {fail} hedged, {errors} call errors, eta {eta/60:.0f} min ({time.strftime('%H:%M', time.localtime(time.time()+eta))})\n"); fh.flush()
         con.commit()
-        fh.write(f"DONE {time.strftime('%F %T')} {done}/{total}, {fail} unresolved\n")
-    print(f"done {done}/{total}, unresolved {fail}")
+        fh.write(f"DONE {time.strftime('%F %T')} {done}/{total}, {fail} hedged, {errors} call errors; answers {answers}\n")
+    print(f"done {done}/{total}: {done - fail - errors} resolved, {fail} hedged, {errors} call errors")
+    print(f"answers: {answers}")
+    return 3 if errors else 0
 
 if __name__ == "__main__":
     sys.exit(main() or 0)
