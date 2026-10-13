@@ -13,6 +13,7 @@ ID-first formats):
 Segmentation is prose-gap based: each abstract = a short header block followed
 by a prose body. All EEA records are elasmo (meeting=EEA).
 """
+import collections
 import re
 
 from conf_abstracts.segment import _title_like, _AFFIL_KW
@@ -657,6 +658,187 @@ def eea2026_texts(pdf):
     raw = subprocess.run(["pdftotext", str(pdf), "-"], capture_output=True,
                          text=True, check=True).stdout
     return lay, raw
+
+
+# --- EEA 2026 posters -------------------------------------------------------
+# The poster booklet (Canva, 58 pp.) gives each poster a text page followed by
+# an image of the poster itself. Roles are set by type, so the text page is
+# read by font rather than by layout: title 13 pt bold; authors 10.5 pt in the
+# accent colour (superscripts are separate ~6 pt spans or Unicode ¹²³);
+# affiliations 8 pt (marker spans ~5 pt); body 9 pt; keywords the closing
+# 9 pt semibold line; the presenter's name 8.5 pt bold WHITE on a badge.
+_P26_WHITE = 0xFFFFFF
+
+
+def _p26_lines(page):
+    """[(role, y, text)] in reading order. Superscripts are separate small
+    spans laid into gaps left in the main span, so lines are rebuilt from
+    characters sorted by x; superscript digits come back wrapped as <n>."""
+    spans = [s for b in page.get_text("rawdict")["blocks"] for l in b.get("lines", [])
+             for s in l["spans"] if "".join(c["c"] for c in s["chars"]).strip()]
+
+    def role_of(s):
+        size, font = s["size"], s["font"]
+        if s["color"] == _P26_WHITE:
+            return "presenter"
+        if size >= 12:
+            return "title"
+        if size >= 10:
+            return "author"
+        if size >= 8.6:
+            return "keywords" if "SemiB" in font else "body"
+        return "affil" if size >= 7.5 else "sup"
+
+    lines = []
+    for s in sorted(spans, key=lambda s: s["bbox"][1]):
+        r = role_of(s)
+        if r == "sup":
+            continue
+        for ln in lines:
+            if ln["role"] == r and abs(ln["y"] - s["bbox"][1]) < 3:
+                ln["chars"] += [(c["bbox"][0], c["c"], False) for c in s["chars"]]
+                break
+        else:
+            lines.append(dict(role=r, y=s["bbox"][1],
+                              chars=[(c["bbox"][0], c["c"], False) for c in s["chars"]]))
+    for s in spans:                      # each superscript joins the nearest line
+        if role_of(s) != "sup":
+            continue
+        cands = [ln for ln in lines if ln["role"] in ("author", "affil")
+                 and abs(ln["y"] - s["bbox"][1]) < 4]
+        if cands:
+            ln = min(cands, key=lambda ln: abs(ln["y"] - s["bbox"][1]))
+            ln["chars"] += [(c["bbox"][0], c["c"], True) for c in s["chars"]]
+    out = []
+    for ln in sorted(lines, key=lambda l: l["y"]):
+        txt, in_sup = "", False
+        for _x, c, sup in sorted(ln["chars"], key=lambda t: t[0]):
+            if sup != in_sup:
+                txt += "<" if sup else ">"
+                in_sup = sup
+            txt += c
+        txt += ">" if in_sup else ""
+        out.append((ln["role"], ln["y"], re.sub(r"\s+", " ", txt).strip()))
+    return out
+
+
+def _p26_join(lines):
+    out = ""
+    for l in lines:
+        out = out + l if out.endswith("-") or not out else out + " " + l
+    return out.strip()
+
+
+def parse_eea2026_posters(pdf):
+    """One dict per poster text page."""
+    import pymupdf
+    recs = []
+    for pno, page in enumerate(pymupdf.open(str(pdf)), start=1):
+        lines = _p26_lines(page)
+        if not any(r == "title" for r, *_ in lines):
+            continue
+        by = collections.defaultdict(list)
+        body, prev_y = [], None
+        for role, y, t in lines:
+            if role == "body":
+                if prev_y is not None and y - prev_y > 14:   # paragraph gap
+                    body.append("\n")
+                body.append(t)
+                prev_y = y
+            else:
+                by[role].append(t)
+        araw = _p26_join(by["author"])
+        # a marker printed BEFORE the first name (p. 28: "¹Judit Nieto Martín")
+        araw = re.sub(r"^<([^>]*)>\s*([^,;<]+)", r"\2<\1>", araw)
+        author_raw = re.sub(r"\s*<([^>]*)>", r"\1", araw)
+        authors = _e26_split_authors(author_raw)
+        affs, cur = {}, None
+        by["affil"] = [re.sub(r"^([¹²³⁴⁵⁶⁷⁸⁹⁰]+)", lambda m: "<" + m.group(1).translate(_SUP_MAP) + ">", a)
+                       for a in by["affil"]]           # Unicode markers, as on p. 2
+        marked = any(a.startswith("<") for a in by["affil"])
+        unnum = []
+        for a in by["affil"]:
+            m = re.match(r"^<([^>]*)>\s*(.+)", a)
+            if marked and m:
+                cur = m.group(1).strip()
+                affs[cur] = m.group(2)
+            elif marked and cur:
+                affs[cur] += " " + a
+            elif unnum and (re.search(r"(?:,|\b(?:de|of|and|the|di|für|del|do|da))$", unnum[-1])
+                            or a[:1].islower()):
+                unnum[-1] += " " + a            # one institution wrapped
+            else:
+                unnum.append(a)
+        if not marked:
+            affs = {"0": unnum[0]} if len(unnum) == 1 else (
+                {"raw": "; ".join(unnum)} if unnum else {})
+        affs = {k: re.sub(r"<[^>]*>", "", v).strip(" ;,") for k, v in affs.items()}
+        paras, cur_p = [], []
+        for t in body:
+            if t == "\n":
+                paras.append(_p26_join(cur_p))
+                cur_p = []
+            else:
+                cur_p.append(t)
+        paras.append(_p26_join(cur_p))
+        recs.append(dict(
+            title=_p26_join(by["title"]), author_raw=author_raw, authors=authors,
+            affiliations=affs, presenter=" ".join(by["presenter"]),
+            abstract_text="\n".join(p for p in paras if p),
+            keywords="; ".join(k.strip() for k in re.split(r",\s*", _p26_join(by["keywords"]))
+                               if k.strip()) or None,
+            page=pno))
+    return recs
+
+
+def ingest_eea2026_posters(con, pdf, meeting_meta):
+    """Load the EEA 2026 poster booklet as its own meeting row (as 2023's
+    oral and poster books are). Idempotent: the meeting's rows are replaced.
+    Returns (n_inserted, records)."""
+    from conf_abstracts import load, tag, names
+    meta = dict(meeting_meta)
+    meta.setdefault("meeting", "EEA")
+    meta.setdefault("doc_type", "abstract_book")
+    meta.setdefault("parse_status", "ok")
+    mid = load.upsert_meeting(con, meta)
+    con.execute("DELETE FROM authors WHERE abstract_id IN "
+                "(SELECT abstract_id FROM abstracts WHERE meeting_id=?)", (mid,))
+    con.execute("DELETE FROM abstracts WHERE meeting_id=?", (mid,))
+    recs = parse_eea2026_posters(pdf)
+    n = 0
+    for b in recs:
+        affs = b["affiliations"]
+        st = _e26_tokens(b["presenter"])
+        pres = {k for k, a in enumerate(b["authors"])
+                if st and len(st & _e26_tokens(a[0])) >= min(2, len(st))}
+        inferred = not pres
+        if inferred and b["authors"]:
+            pres = {0}
+        authors = []
+        for k, (name, nums, _semi) in enumerate(b["authors"], start=1):
+            if "raw" in affs:
+                aff = None              # several institutions, no superscripts
+            elif nums:
+                aff = "; ".join(affs[x] for x in nums if affs.get(x)) or None
+            else:
+                aff = affs.get("0") if len(affs) == 1 else None
+            authors.append(dict(full_name=names.normalise(name), position=k,
+                                is_presenter=int(k - 1 in pres),
+                                presenter_inferred=int(inferred and k - 1 in pres),
+                                affiliation=aff, raw_author_string=b["author_raw"]))
+        rec = dict(title=b["title"], presentation_type="poster", session_name="Posters",
+                   session_datetime=None, abstract_text=b["abstract_text"],
+                   keywords=b["keywords"], authors=authors, society="AES",
+                   society_basis="meeting", societies_explicit=None,
+                   source_page=b["page"], needs_review=int(not b["authors"]))
+        rec = tag.resolve(rec, "EEA", 2026)
+        rec.update(society="AES", society_basis="meeting")
+        if load.insert_abstract(con, mid, rec):
+            n += 1
+    con.execute("UPDATE meetings SET n_abstracts=(SELECT COUNT(*) FROM abstracts "
+                "WHERE meeting_id=?) WHERE meeting_id=?", (mid, mid))
+    con.commit()
+    return n, recs
 
 
 if __name__ == "__main__":

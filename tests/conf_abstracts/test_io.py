@@ -537,3 +537,29 @@ def test_eea2026_agenda_anchored_parse():
         "SELECT u.full_name FROM authors u JOIN abstracts a USING(abstract_id) "
         "WHERE a.title LIKE 'Shark Oracle%' AND u.is_presenter=1")}
     assert pres == {"Simon Dedman", "Guuske Tiktak"}
+
+
+def test_eea2026_posters_by_font():
+    """EEA 2026 poster booklet: 29 posters, each on a text page read by font.
+    Superscripts are separate spans laid into gaps in the name line, a marker
+    can precede the first name (p. 28), and affiliation markers can be
+    Unicode (p. 2). Skipped when the library PDF is not mounted."""
+    from conf_abstracts import parse_eea, config as C
+    pdf = C.CONFERENCES / "2026" / "2026_EEA_AbstractBook_poster.pdf"
+    if not pdf.exists():
+        return
+    recs = parse_eea.parse_eea2026_posters(pdf)
+    assert len(recs) == 29 and all(r["title"] and r["abstract_text"] and r["keywords"] for r in recs)
+    by = {r["page"]: r for r in recs}
+    assert [(a[0], a[1]) for a in by[30]["authors"]] == [("Agathe Moreau", ["1", "2"]),
+                                                         ("Johanna K. Kohler", ["1"])]
+    assert by[28]["authors"][0][:2] == ["Judit Nieto Martín", ["1"]]
+    assert by[2]["affiliations"] == {"1": "Shark Trust, Plymouth, UK"}
+    assert by[6]["presenter"] == "Tobias Capel"
+    con = schema.create_db(":memory:")
+    n, _ = parse_eea.ingest_eea2026_posters(con, pdf, dict(C.EEA_POSTER_FILES[pdf.name], source_pdf=str(pdf)))
+    assert n == 29
+    assert con.execute("SELECT COUNT(*) FROM abstracts WHERE presentation_type='poster' "
+                       "AND is_elasmo=1").fetchone()[0] == 29
+    assert con.execute("SELECT affiliation FROM authors WHERE full_name='Tobias Capel' "
+                       "AND is_presenter=1").fetchone()[0] == "Zoological Society of London"

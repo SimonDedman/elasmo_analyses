@@ -49,6 +49,16 @@ EEA_STRUCTURED_FILES = {
         location="online", dates="6-8 October 2026", doc_type="abstract_book",
         page_count=56, is_ocr=0, parse_status="ok"),
 }
+# The EEA 2026 poster booklet (Canva, 58 pp.; filed from EEA/2026/"EEA Posters.pdf")
+# is its own meeting row, as 2023's oral and poster books are. Exact filename:
+# "2026_EEA_AbstractBook" is a prefix of it.
+EEA_POSTER_FILES = {
+    "2026_EEA_AbstractBook_poster.pdf": dict(
+        meeting="EEA", year=2026,
+        name="European Elasmobranch Association Annual Scientific Conference 2026 (online): posters",
+        location="online", dates="6-8 October 2026", doc_type="abstract_book",
+        page_count=58, is_ocr=0, parse_status="ok"),
+}
 
 # General-ichthyology volumes where Fable reads only the elasmobranch pages.
 # The two IPFC books were 20 of the 47 queued OCS/IPFC chunks and are mostly

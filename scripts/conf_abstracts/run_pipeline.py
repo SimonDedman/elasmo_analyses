@@ -132,6 +132,13 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a5_parser",
                         blocks=n, inserted=n, status="ok")
 
+    if path.name in config.EEA_POSTER_FILES:
+        from conf_abstracts import parse_eea
+        emeta = config.EEA_POSTER_FILES[path.name]
+        n, _ = parse_eea.ingest_eea2026_posters(con, path, dict(emeta, source_pdf=str(path)))
+        return dict(pdf=path.name, meeting=emeta["meeting"], year=emeta["year"],
+                    doc_type="eea_posters", blocks=n, inserted=n, status="ok")
+
     # EEA books with a deterministic parser (EEA 2026: anchored on its agenda).
     for frag, emeta in config.EEA_STRUCTURED_FILES.items():
         if frag in path.name:
