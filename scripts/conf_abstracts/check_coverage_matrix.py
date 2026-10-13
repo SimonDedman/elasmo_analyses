@@ -30,8 +30,16 @@ REL = "outputs/conference_coverage_matrix.xlsx"
 REL_DB = "database/conference_coverage_matrix.xlsx"
 CUR = REPO / REL
 
-STATUSES = {"Missing", "Hardcopy", "Programme", "Digital", "Extracted", "OCR",
-            "Schedule", "Ingested", "Pending", "NA"}
+# One definition: the builder's colour map. A hand-kept copy here drifted and
+# missed "Partial" (IPFC, added 2026-09-08) for a month.
+try:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from conf_abstracts.build_coverage_matrix import FILL as _FILL
+    STATUSES = set(_FILL)
+except Exception as _e:                                       # noqa: BLE001
+    print(f"(could not import the builder's statuses: {_e}; using a fallback list)")
+    STATUSES = {"Missing", "Hardcopy", "Programme", "Digital", "Extracted", "OCR",
+                "Schedule", "Ingested", "Pending", "Partial", "NA"}
 
 
 def baseline_copy():
@@ -70,12 +78,17 @@ FIRST_EXTRA_COL = "G"
 def parse_status(text, col=None):
     """Return the status token from a Coverage cell, or None if it fits neither
     shape."""
-    if col and len(col) == 1 and col >= FIRST_EXTRA_COL:
-        return text.split("—")[0].strip().split()[0] if text.strip() else None
-    if ";" not in text:
-        return None
-    tail = text.split(";", 1)[1].strip()
-    return tail.split("—")[0].strip().split()[0] if tail else None
+    # Shape is "Location; Status — note" anywhere, or a bare "Status — note" in
+    # the extra-series columns (G onward). Decide by whether the part before the
+    # first dash holds a ";", never by column alone: extra-series cells use both
+    # shapes, and a location may contain commas ("Vancouver, Canada"), which the
+    # old column-only rule read as the status (75 false alarms on 2026-10-13).
+    head = text.split("—")[0]
+    if ";" in head:
+        tail = head.split(";", 1)[1].strip()
+        return tail.split()[0] if tail else None
+    extra = bool(col) and (len(col) > 1 or col >= FIRST_EXTRA_COL)
+    return head.strip().split()[0] if extra and head.strip() else None
 
 
 def main():

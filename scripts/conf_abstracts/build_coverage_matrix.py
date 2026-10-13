@@ -28,6 +28,19 @@ from openpyxl.utils import get_column_letter
 REPO = Path(__file__).resolve().parents[2]
 DB = REPO / "database" / "conference_abstracts.db"
 OUT = REPO / "outputs" / "conference_coverage_matrix.xlsx"
+# The second copy, kept byte-identical to OUT (check_coverage_matrix.py reports
+# any divergence). Both are git-tracked; outputs/ is the one the NAS syncs.
+OUT_DB_COPY = REPO / "database" / "conference_coverage_matrix.xlsx"
+# Hand-made content the DB cannot regenerate (extra series, frozen counts,
+# provenance notes). Merged on every run. On 2026-10-13 a rebuild dropped the
+# SVP/SICB/SIBM row+column and seven provenance notes, because they had been
+# typed into the xlsx on 2026-09-17 and existed nowhere else.
+MANUAL_STORE = REPO / "data" / "matrix_manual.json"
+MANUAL = (json.loads(MANUAL_STORE.read_text(encoding="utf-8"))
+          if MANUAL_STORE.exists() else {})
+MANUAL_CONFS = (MANUAL.get("conferences") or {}).get("rows", [])
+MANUAL_COLS = (MANUAL.get("columns") or {}).get("cols", [])
+MANUAL_NOTES = (MANUAL.get("cell_notes") or {}).get("notes", [])
 ASIH_CSV = REPO / "database" / "asih_meetings.csv"
 CONFERENCES = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/Conferences")
 # mirrors config.SKIP_NAME_FRAGMENTS; this module is standalone and does not
@@ -466,6 +479,9 @@ def _conferences_sheet(wb):
             n = needed.get(m["lead_key"], 0)
         ws.append([m["series"], m["year_from"], m["year_to"] or "ongoing",
                    m["frequency"], n, m["organisers"], m["website"], m["contact"]])
+    for m in MANUAL_CONFS:                       # data/matrix_manual.json
+        ws.append([m["series"], m["year_from"], m["year_to"] or "ongoing",
+                   m["frequency"], m["n_needed"], m["organisers"], m["website"], m["contact"]])
     ws.freeze_panes = "B2"
     ws.auto_filter.ref = f"A1:{get_column_letter(len(cols))}{ws.max_row}"
     for letter, width in zip("ABCDEFGH", (46, 10, 10, 11, 10, 62, 58, 40)):
@@ -869,17 +885,23 @@ def db_meeting_status():
     # LEFT JOIN so a held-but-unparsed book (e.g. a degraded scan that yielded
     # 0 records) still surfaces; body count makes the status content-aware
     # (a 520-page "programme" whose records carry bodies IS an abstract book).
-    for yr, meeting, doc, isocr, src, n, el, bodies in con.execute(
+    for yr, meeting, doc, isocr, src, n, el, bodies, review in con.execute(
         """select m.year,m.meeting,m.doc_type,m.is_ocr,m.source_pdf,
                   count(a.abstract_id) n, sum(a.is_elasmo) el,
-                  sum(case when length(a.abstract_text) > 50 then 1 else 0 end) bodies
+                  sum(case when length(a.abstract_text) > 50 then 1 else 0 end) bodies,
+                  sum(a.needs_review) review
            from meetings m left join abstracts a on a.meeting_id=m.meeting_id
            where m.meeting in ('JMIH','ASIH') group by m.meeting_id"""):
         d = out.setdefault(yr, dict(abstract=False, schedule=False, ocr=False,
-                                    ocr_failed=False, structured=False, elasmo=0))
+                                    ocr_failed=False, structured=False, elasmo=0,
+                                    n=0, review=0))
         has_bodies = (bodies or 0) >= max(2, 0.5 * n)
         if n > 1 and (doc == "abstract_book" or has_bodies):
-            d.update(abstract=True, ocr=bool(isocr))
+            # "OCR" on the ramp means a DEGRADED scan. A flatbed rescan is OCR'd
+            # too (is_ocr=1) but parses clean; judge it by its review flags.
+            d.update(abstract=True, ocr=bool(isocr) and (review or 0) > 0.5 * n)
+            d["n"] += n
+            d["review"] += review or 0
             # An Oxford Abstracts export is born-digital and already structured:
             # there is nothing for Fable to extract, so it is done on arrival.
             if str(src or "").lower().endswith(".xlsx"):
@@ -1034,6 +1056,18 @@ def fable_state(meeting, year):
 # (location, note). The location is where AES actually met, and the cell schema
 # is "Location; Status — note", so a note must contain no semicolon of its own:
 # check_coverage_matrix.py reads whatever follows one as a status.
+def JMIH_CLEAN_OCR(year):
+    """A clean OCR'd book parsed by rules (config.CAPS_FILES): ingested, though
+    no Fable cache exists for it, so fable_state() would call it unextracted."""
+    try:
+        import sys
+        sys.path.insert(0, str(REPO / "scripts"))
+        from conf_abstracts import config as _C
+        return ("JMIH", year) in set(_C.CAPS_FILES.values())
+    except Exception:                                          # noqa: BLE001
+        return False
+
+
 AES_NOT_AT_JMIH = {
     2018: ("Joao Pessoa (at SI)",
            "no AES meeting at JMIH — AES met at Sharks International instead, "
@@ -1048,6 +1082,8 @@ def meeting_cell(year, db):
     if d and d["abstract"]:
         if d["ocr"]:
             return loc, "OCR", "degraded scan (needs_review) — flatbed re-scan planned", d["elasmo"]
+        if JMIH_CLEAN_OCR(year):
+            return loc, "Ingested", f"{d['n']} abstracts", d["elasmo"]
         if d.get("structured"):
             return loc, "Ingested", "Oxford Abstracts export (born-digital)", d["elasmo"]
         state, n_fable = fable_state("JMIH", year)
@@ -1100,7 +1136,74 @@ def meeting_cell(year, db):
     return loc, "Missing", "", 0
 
 
-def build():
+def _apply_cell_notes(ws, cols):
+    """Prepend each data/matrix_manual.json provenance note to its cell, while
+    the cell still carries the status the note was written for."""
+    rows = {ws.cell(row=r, column=1).value: r for r in range(2, ws.max_row + 1)}
+    for n in MANUAL_NOTES:
+        if n["column"] not in cols or n["year"] not in rows:
+            print(f"  cell note skipped (no such cell): {n['column']} {n['year']}")
+            continue
+        cell = ws.cell(row=rows[n["year"]], column=cols.index(n["column"]) + 1)
+        text = cell.value or ""
+        m = re.match(r"([^;]*;\s*)([A-Za-z]+)(.*)$", text)
+        if not m or m.group(2) != n["status"]:
+            print(f"  cell note retired ({n['column']} {n['year']} is no longer {n['status']}): {n['note']}")
+            continue
+        if n["note"] in text:
+            continue
+        rest = m.group(3)
+        rest = (f" — {n['note']}, {rest[3:]}" if rest.startswith(" — ") else f" — {n['note']}{rest}")
+        cell.value = m.group(1) + m.group(2) + rest
+
+
+def _cells(path):
+    """{(sheet, coordinate): value} for every non-empty cell."""
+    wb = load_workbook(path)
+    return {(ws.title, c.coordinate): c.value for ws in wb for row in ws.iter_rows()
+            for c in row if c.value not in (None, "")}
+
+
+def guarded_save(wb, accept_losses=False, dry_run=False):
+    """Save, unless the rebuild would EMPTY a cell the live workbook fills.
+
+    The builder regenerates the whole workbook, so anything it cannot derive is
+    lost silently. A cell that goes from filled to empty is the signature of
+    that loss (on 2026-10-13: 3 Conferences rows and 3 Coverage columns). In
+    that case nothing is overwritten: the rebuild goes to *.proposed.xlsx with a
+    report, and only --accept-losses lets it through. Changed cells are listed
+    either way so the diff can be read before committing."""
+    proposed = OUT.with_name(OUT.stem + ".proposed.xlsx")
+    wb.save(proposed)
+    old = _cells(OUT) if OUT.exists() else {}
+    new = _cells(proposed)
+    lost = sorted(k for k in old if k not in new)
+    changed = sorted(k for k in old if k in new and old[k] != new[k])
+    added = sorted(k for k in new if k not in old)
+    report = OUT.with_name(OUT.stem + ".rebuild_diff.txt")
+    lines = [f"rebuild diff vs {OUT.name}: {len(lost)} emptied, {len(changed)} changed, {len(added)} added"]
+    for tag, keys in (("EMPTIED", lost), ("CHANGED", changed), ("ADDED", added)):
+        for k in keys:
+            lines.append(f"{tag} {k[0]}!{k[1]}: {str(old.get(k))[:140]!r} -> {str(new.get(k))[:140]!r}")
+    report.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(lines[0] + f"  (full list: {report})")
+    if dry_run:
+        print(f"dry run: rebuild left at {proposed}; nothing overwritten")
+        return False
+    if lost and not accept_losses:
+        print(f"REFUSED: {len(lost)} filled cell(s) would be emptied, e.g. "
+              f"{lost[0][0]}!{lost[0][1]} {str(old[lost[0]])[:60]!r}. Put that content in "
+              f"{MANUAL_STORE.name} (or rerun with --accept-losses if the loss is intended). "
+              f"Rebuild left at {proposed}.")
+        return False
+    import shutil
+    shutil.move(str(proposed), str(OUT))
+    shutil.copyfile(OUT, OUT_DB_COPY)
+    print(f"wrote {OUT}\n  and {OUT_DB_COPY} (identical)")
+    return True
+
+
+def build(accept_losses=False, dry_run=False):
     db = db_meeting_status()
     yr_soc = db_year_society()
     aes_web = db_aes_web()
@@ -1159,7 +1262,8 @@ def build():
     # ---- Coverage ----
     ws = wb.create_sheet("Coverage")
     cols = (["Year", "ASIH/JMIH", "AES", "EEA", "OCS", "SI"]
-            + [short for _, short, _, _ in EXTRA_COLUMNS])
+            + [short for _, short, _, _ in EXTRA_COLUMNS]
+            + [mc["heading"] for mc in MANUAL_COLS])
     ws.append(cols)
     for c in ws[1]:
         c.font = Font(bold=True, color="FFFFFF")
@@ -1272,11 +1376,19 @@ def build():
                 track(series, status)
             else:
                 put(r, 7 + i, "", "NA")
+        for j, mc in enumerate(MANUAL_COLS):      # frozen, from data/matrix_manual.json
+            text = mc["cells"].get(str(year), "")
+            m_st = re.match(r"[^;]*;\s*([A-Za-z]+)", text)
+            status = m_st.group(1) if m_st else ("NA" if not text else None)
+            put(r, 7 + len(EXTRA_COLUMNS) + j, text, status)
+            if text:
+                track(mc["heading"], status)
         r += 1
+    _apply_cell_notes(ws, cols)
     ws.column_dimensions["A"].width = 6
     for col in "BCDEF":
         ws.column_dimensions[col].width = 44
-    for i in range(len(EXTRA_COLUMNS)):
+    for i in range(len(EXTRA_COLUMNS) + len(MANUAL_COLS)):
         ws.column_dimensions[get_column_letter(7 + i)].width = 30
     ws.freeze_panes = "B2"
 
@@ -1366,16 +1478,20 @@ def build():
     wb._sheets.insert(1, conf)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    wb.save(OUT)
-    print(f"wrote {OUT}  (sheets: {wb.sheetnames})")
+    return guarded_save(wb, accept_losses, dry_run)
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--reset-legend", action="store_true",
                     help="discard preserved legend wording and re-emit the code defaults")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="build to *.proposed.xlsx and write the diff report only")
+    ap.add_argument("--accept-losses", action="store_true",
+                    help="overwrite even if filled cells would be emptied")
     a = ap.parse_args()
     if a.reset_legend and LEGEND_STORE.exists():
         LEGEND_STORE.unlink()
         print("legend store cleared; code wording will be used")
-    build()
+    ok = build(a.accept_losses, a.dry_run)
+    raise SystemExit(0 if ok or a.dry_run else 2)

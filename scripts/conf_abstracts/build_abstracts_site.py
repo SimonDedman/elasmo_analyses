@@ -106,7 +106,7 @@ def main():
     manifest = {}
     for fld in "tab":
         by_key = defaultdict(dict)
-        for w, ids in postings[fld].items():
+        for w, ids in sorted(postings[fld].items()):   # sets above iterate in hash order; sort or every build churns
             if len(w) < 2 or (fld == "b" and len(ids) > 0.3 * n):
                 continue
             prev, out = 0, []
