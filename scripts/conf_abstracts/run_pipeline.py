@@ -106,6 +106,21 @@ def process_pdf(con, path, is_ocr, use_llm, do_reocr):
             return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="a3_parser",
                         blocks=n, inserted=n, status="ok")
 
+    # Flatbed rescans of the 1997-2004 books (two-page spreads, CAPS authors).
+    for frag, (mtg, yr) in config.CAPS_FILES.items():
+        if path.name == frag:
+            from conf_abstracts import flatbed_ocr, parse_jmih_caps
+            book = parse_jmih_caps.BOOKS[(mtg, yr)]
+            smeta = dict(meta)
+            smeta["meeting"], smeta["year"] = mtg, yr
+            smeta["source_pdf"] = str(path)
+            smeta["location"] = book["location_city"]
+            txt = flatbed_ocr.ocr_book(path, book["first_book_page"])   # cached per page
+            n, _ = parse_jmih_caps.ingest_jmih_caps(
+                con, txt.read_text(encoding="utf-8"), smeta, path)
+            return dict(pdf=path.name, meeting=mtg, year=yr, doc_type="caps_parser",
+                        blocks=n, inserted=n, status="ok")
+
     # A5-format born-digital abstract books (submission-system export).
     for frag, (mtg, yr) in config.A5_FILES.items():
         if frag in path.name:

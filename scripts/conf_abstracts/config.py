@@ -137,6 +137,14 @@ A3_FILES = {
     "2005_JMIH_AbstractBook": ("JMIH", 2005),
 }
 
+# Carylanne's flatbed rescans of the 1997-2004 books, scanned as two-page
+# spreads: OCR'd by flatbed_ocr (split at the gutter, deskewed, tesseract) and
+# parsed by parse_jmih_caps, whose BOOKS table holds each book's page ranges,
+# session headers and hand repairs. Filename fragment -> (meeting, year).
+CAPS_FILES = {
+    "2001_JMIH_AbstractBook.pdf": ("JMIH", 2001),     # received 2026-10-12
+}
+
 # Born-digital JMIH abstract books exported straight from the submission system
 # ("presenting author / authors / <type> ** <keywords> / N.N: Title / [id] body").
 # The richest JMIH source there is, and no LLM needed. See parse_jmih_a5.py.
