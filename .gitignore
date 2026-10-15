@@ -218,3 +218,4 @@ outputs/altmetric_refresh_*/
 # the public conference-abstracts browser ships its own data shards (2026-10-07)
 !docs/abstracts/
 !docs/abstracts/**
+secrets/
