@@ -25,11 +25,6 @@
     "CL": 42,
     "IE": 38
   },
-  "by_gender": {
-    "F": 1782,
-    "M": 3651,
-    "Unknown": 2
-  },
   "min_papers": 3,
   "year_min": 1950,
   "year_max": 2026

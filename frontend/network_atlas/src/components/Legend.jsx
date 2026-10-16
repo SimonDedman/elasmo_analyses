@@ -4,7 +4,6 @@ export default function Legend({ colorBy, palettes, muted }) {
   if (entries.length === 0) return null;
 
   const label = {
-    gender: 'Gender',
     country: 'Country',
     disc_main: 'Main discipline',
   }[colorBy];

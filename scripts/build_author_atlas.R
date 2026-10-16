@@ -453,10 +453,8 @@ authors_geo <- nodes_focal |>
     region = inst_region,
     country = country_final,
     papers = paper_count,
-    gender = gender_final,
-    origin_country = namsor_origin_country,
-    origin_region  = namsor_origin_region,
-    ethnicity      = namsor_ethnicity,
+    # PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published
+    # (gender, origin_country, origin_region, ethnicity are deliberately NOT emitted here).
     year_min = year_min,
     year_max = year_max,
     disc_main, dt, tt, st, bs, sc, dc, fs, ls, nc, dx, tx, sx,
@@ -542,7 +540,7 @@ stats <- list(
   total_edges      = nrow(edges_out),
   by_country = as.list(authors_geo |> count(country, sort = TRUE) |>
                        head(20) |> deframe()),
-  by_gender  = as.list(authors_geo |> count(gender) |> deframe()),
+  # PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published (no by_gender).
   min_papers = MIN_PAPERS,
   year_min = if (any(!is.na(authors_geo$year_min)))
     min(authors_geo$year_min, na.rm = TRUE) else NA,

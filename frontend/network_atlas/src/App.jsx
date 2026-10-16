@@ -4,14 +4,13 @@ import DeckGL from '@deck.gl/react';
 import { LineLayer, TextLayer, IconLayer, ScatterplotLayer } from '@deck.gl/layers';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { getIconAtlas, ICON_MAPPING, pickShape } from './lib/shapes.js';
-import { getClusterIcon, getCategoryClusterIcon } from './lib/clusterIcons.js';
+import { getCategoryClusterIcon } from './lib/clusterIcons.js';
 import Supercluster from 'supercluster';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import FilterPanel from './components/FilterPanel.jsx';
 import ProfileCard from './components/ProfileCard.jsx';
 import {
-  GENDER_PALETTE,
   buildCountryPalette, buildDisciplinePalette, pickColour,
 } from './lib/palettes.js';
 import {
@@ -92,7 +91,7 @@ function authorIconDiameter(papers) {
   return Math.min(AUTHOR_SIZE_MAX, Math.max(AUTHOR_SIZE_MIN, d));
 }
 
-// Cluster gender-pie bubble diameter in pixels — MUST mirror the 'clusters'
+// Cluster bubble diameter in pixels — MUST mirror the 'clusters'
 // IconLayer's own getSize/sizeMinPixels/sizeMaxPixels below exactly, since
 // this is also used to keep institution labels off the bubbles (see
 // clusterBubbleBoxes).
@@ -134,7 +133,7 @@ export default function App() {
 
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [filters, setFilters] = useState({
-    country: '', gender: '', minEdgeWeight: 2,
+    country: '', minEdgeWeight: 2,
     disc: [], tech: [], species: [], basin: [],   // multi-select research filters (labels)
     yearMin: null, yearMax: null,   // null = no filter (uses dataset range)
   });
@@ -240,7 +239,6 @@ export default function App() {
   }, [disciplinePalette, mutedKeys]);
 
   const palettes = useMemo(() => ({
-    gender:        GENDER_PALETTE,
     country:       countryPalette,
     disc_main:     discPaletteShown,
   }), [countryPalette, discPaletteShown]);
@@ -273,40 +271,9 @@ export default function App() {
   const filterSample = authors.filter(f => {
     const p = f.properties;
     if (filters.country       && p.country       !== filters.country) return false;
-    if (filters.gender        && p.gender        !== filters.gender) return false;
     if (!researchMatcher(p)) return false;
     return true;
   });
-  const genderCounts = useMemo(() => {
-    const c = { M: 0, F: 0, Unknown: 0 };
-    filterSample.forEach(f => {
-      const g = f.properties.gender ?? 'Unknown';
-      c[g] = (c[g] ?? 0) + 1;
-    });
-    return c;
-  }, [filterSample]);
-  // Shape-by matrix: count distinct categories for each attribute within
-  // the current filter. Fewer categories → better candidate for shape-by
-  // (currently only 'gender' is actually wired in shapes.js, but we show
-  // the matrix so the user can see which attribute would map cleanly).
-  const shapeByMatrix = useMemo(() => {
-    if (filterSample.length === 0) return [];
-    const attrs = ['gender', 'disc_main', 'country'];
-    return attrs.map(attr => {
-      const counts = {};
-      filterSample.forEach(f => {
-        const v = f.properties[attr] ?? '?';
-        counts[v] = (counts[v] ?? 0) + 1;
-      });
-      const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-      return {
-        attr,
-        n_categories: sorted.length,
-        top: sorted.slice(0, 3).map(([k, n]) => `${k}(${n})`),
-      };
-    }).sort((a, b) => a.n_categories - b.n_categories);
-  }, [filterSample]);
-
   // Sorted author-name list for the datalist autocomplete (unique, by papers).
   const authorNames = useMemo(() => {
     if (!authors.length) return [];
@@ -329,14 +296,13 @@ export default function App() {
   const filteredAuthors = useMemo(() => authors.filter(f => {
     const p = f.properties;
     if (filters.country       && p.country       !== filters.country) return false;
-    if (filters.gender        && p.gender        !== filters.gender) return false;
     if (!researchMatcher(p)) return false;
     // Year filter: keep if the author's active range overlaps the slider
     // window. (author.year_max >= filter.yearMin AND author.year_min <= filter.yearMax)
     if (filters.yearMin != null && p.year_max != null && p.year_max < filters.yearMin) return false;
     if (filters.yearMax != null && p.year_min != null && p.year_min > filters.yearMax) return false;
     return true;
-  }), [authors, filters.country, filters.gender, researchMatcher,
+  }), [authors, filters.country, researchMatcher,
        filters.yearMin, filters.yearMax]);
 
   const filteredIdSet = useMemo(
@@ -913,39 +879,29 @@ export default function App() {
     }));
 
     if (clusterPoints.length > 0 && clusterIndex) {
-      // Per-cluster gender tally, via supercluster.getLeaves — used for the
-      // M/U/F icon. (This used to also tally a dominant institution name for
-      // a purity-gated label; that's been replaced by the standalone
-      // decluttered institution-label layer below, built straight off
-      // institutions.geojson instead of cluster membership.)
+      // Per-cluster tally of the active colour-by category, via supercluster.getLeaves.
+      // (A standalone decluttered institution-label layer, built off institutions.geojson,
+      // supplies the labels.)
       const clusterStats = clusterPoints.map(c => {
         const leaves = clusterIndex.getLeaves(c.id, Infinity);
-        let m = 0, f = 0, u = 0;
         const cat = new Map();
         leaves.forEach(l => {
-          const g = l.properties.gender;
-          if (g === 'M') m++;
-          else if (g === 'F') f++;
-          else u++;
-          if (colorBy !== 'gender') {
-            const k = l.properties[colorBy] ?? 'Unknown';
-            cat.set(k, (cat.get(k) || 0) + 1);
-          }
+          const k = l.properties[colorBy] ?? 'Unknown';
+          cat.set(k, (cat.get(k) || 0) + 1);
         });
-        const parts = colorBy === 'gender' ? null
-          : Array.from(cat.entries()).map(([k, n]) => [pickColour({ [colorBy]: k }, colorBy, palettes), n]);
-        return { cluster: c, m, f, u, parts };
+        const parts = Array.from(cat.entries()).map(([k, n]) => [pickColour({ [colorBy]: k }, colorBy, palettes), n]);
+        return { cluster: c, parts };
       });
 
       // Signature of filter state — changes any time the cluster input
       // set could have shifted. Used as an updateTriggers value so deck.gl
       // re-runs icon / size / text accessors when filters change, even if
       // the cluster count stays the same (e.g. same 3 blobs, different
-      // M/F/U composition).
-      const filterSig = `${filters.country}|${filters.gender}|${researchSig}|${filters.yearMin}|${filters.yearMax}`;
+      // category composition).
+      const filterSig = `${filters.country}|${researchSig}|${filters.yearMin}|${filters.yearMax}`;
 
       // Single IconLayer. Each icon is a canvas-rendered circle with
-      // horizontal M | U | F bands proportional to count. Cached by
+      // vertical bands (one per colour-by category) proportional to count. Cached by
       // bucketed ratio so the canvas work happens once per unique split.
       layers.push(new IconLayer({
         id: 'clusters',
@@ -955,7 +911,7 @@ export default function App() {
         sizeMinPixels: 30,
         sizeMaxPixels: 92,
         getPosition: d => d.cluster.geometry.coordinates,
-        getIcon:     d => d.parts ? getCategoryClusterIcon(d.parts) : getClusterIcon(d.m, d.u, d.f),
+        getIcon:     d => getCategoryClusterIcon(d.parts),
         getSize:     d => clusterBubbleDiameter(d.cluster.properties.point_count),
         onClick: info => {
           if (!info.object || !clusterIndex) return;
@@ -1299,8 +1255,6 @@ export default function App() {
           vocab={vocab}
           palettes={palettes}
           authorNames={authorNames}
-          genderCounts={genderCounts}
-          shapeByMatrix={shapeByMatrix}
           zoomLevel={viewState.zoom}
           version={VERSION}
         />

@@ -36,7 +36,6 @@ EVIDENCE_PATH = OUTPUTS_DIR / "schema_extraction_evidence.csv"
 PAPER_AUTHORS_PATH = OUTPUTS_DIR / "openalex_paper_authors.csv"
 UNIQUE_AUTHORS_PATH = OUTPUTS_DIR / "openalex_unique_authors.csv"
 ALTMETRIC_PATH = OUTPUTS_DIR / "altmetric_scores.csv"
-NAMSOR_PATH = OUTPUTS_DIR / "namsor_enrichment.csv"
 LAST_INST_PATH = OUTPUTS_DIR / "openalex_authors_last_institution.csv"
 OA_PATH = OUTPUTS_DIR / "unpaywall_oa_by_doi.csv"
 
@@ -282,40 +281,8 @@ def load_last_institutions() -> dict[str, dict]:
     return result
 
 
-_GENDER_TO_DROPDOWN = {"male": "M", "female": "F", "non-binary": "Non-binary"}
-
-
-def _normalise_gender(raw: str) -> str:
-    # NamSor stores full words ("male"/"female"); the validation UI dropdown
-    # uses single-letter codes, so normalise here to avoid phantom
-    # female→F / male→M "corrections" on every author.
-    return _GENDER_TO_DROPDOWN.get(raw.strip().lower(), "")
-
-
-def load_namsor() -> dict[str, dict]:
-    """Load NamSor author enrichment keyed by OpenAlex author ID."""
-    print("Loading NamSor enrichment…")
-    if not NAMSOR_PATH.exists():
-        print("  No NamSor file found, skipping")
-        return {}
-    ns = pd.read_csv(NAMSOR_PATH)
-    # 'id' column is the OpenAlex author ID (bare, no URL prefix)
-    result = {}
-    for _, row in ns.iterrows():
-        aid = str(row.get("id", ""))
-        if not aid:
-            continue
-        aid = strip_openalex_prefix(aid)
-        raw_gender = str(row.get("namsor_gender", "")) if pd.notna(row.get("namsor_gender")) else ""
-        result[aid] = {
-            "gender": _normalise_gender(raw_gender),
-            "gender_probability": round(float(row.get("namsor_gender_probability", 0)), 2) if pd.notna(row.get("namsor_gender_probability")) else None,
-            "origin_country": str(row.get("namsor_origin_country", "")) if pd.notna(row.get("namsor_origin_country")) else "",
-            "origin_region": str(row.get("namsor_origin_region", "")) if pd.notna(row.get("namsor_origin_region")) else "",
-            "ethnicity": str(row.get("namsor_ethnicity", "")) if pd.notna(row.get("namsor_ethnicity")) else "",
-        }
-    print(f"  NamSor data loaded for {len(result)} authors.")
-    return result
+# PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published.
+# load_namsor() and the per-page "namsor" block (gender, origin, ethnicity) were removed.
 
 
 def load_oa_status(all_lit_ids: set[str]) -> dict[str, dict]:
@@ -795,8 +762,6 @@ def generate_pages(
     # --- Load OA status ---
     oa_status = load_oa_status(all_lit_ids)
 
-    # --- Load NamSor ---
-    namsor = load_namsor()
     last_institutions = load_last_institutions()
 
     # --- Set up Jinja2 (autoescape=False: page_data_json is raw JSON) ---
@@ -859,9 +824,8 @@ def generate_pages(
             today_str=today_str,
         )
 
-        # Add NamSor data at page level (author, not paper)
-        ns = namsor.get(primary_id, {})
-        page_data["namsor"] = ns
+        # PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published
+        # (no "namsor" block in page_data).
 
         # Add current institution (from OpenAlex last_known_institutions)
         li = last_institutions.get(primary_id, {})

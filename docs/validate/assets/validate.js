@@ -1757,125 +1757,8 @@
     _saveState();
   }
 
-  // ---------------------------------------------------------------------------
-  // Author enrichment rendering (editable NamSor fields)
-  // ---------------------------------------------------------------------------
-
-  // 2026-10-08: the institution / gender / origin / ethnicity bar is hidden on public pages while the
-  // diversity-data concern is open (inferred attributes on named individuals). Set to true to restore.
-  var SHOW_AUTHOR_ATTRIBUTES = false;
-
-  function _renderAuthorEnrichment(enrichEl, ns) {
-    if (!SHOW_AUTHOR_ATTRIBUTES) { enrichEl.innerHTML = ''; enrichEl.style.display = 'none'; return; }
-    var ac = _getAuthorCorrections();
-    var ci = _pageData.current_institution || {};
-    var ehtml = '<div class="namsor-fields" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;">';
-
-    // Current institution (editable text input, not a NamSor inference)
-    var instVal = (ac.institution && ac.institution.corrected) ? ac.institution.corrected : (ci.name || '');
-    var instOrig = ci.name || '';
-    var locParts = [ci.city, ci.region, ci.country].filter(function (x) { return x; });
-    var locStr = locParts.join(', ');
-    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;min-width:18rem;">';
-    ehtml += '<span title="Current institution from OpenAlex last_known_institutions"><strong>Institution</strong>';
-    if (locStr) { ehtml += ' <span style="font-weight:normal;color:#868e96;">(' + escapeHtml(locStr) + ')</span>'; }
-    ehtml += '</span>';
-    ehtml += '<input type="text" id="current-institution" class="namsor-edit" data-field="institution" data-original="' + escapeHtml(instOrig) + '"';
-    ehtml += ' value="' + escapeHtml(instVal) + '" placeholder="Current institution" style="width:100%;">';
-    if (ac.institution) {
-      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.institution.original) + ')</span>';
-    }
-    ehtml += '</label>';
-
-    // Gender select
-    var genderVal = (ac.gender && ac.gender.corrected) ? ac.gender.corrected : (ns.gender || '');
-    var genderOrig = ns.gender || '';
-    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
-    ehtml += '<span title="NamSor gender inference (probability: ' + escapeHtml(ns.gender_probability || '?') + ')"><strong>Gender*</strong></span>';
-    ehtml += '<select id="namsor-gender" class="namsor-edit" data-field="gender" data-original="' + escapeHtml(genderOrig) + '">';
-    var genderOptions = ['', 'M', 'F', 'Non-binary', 'Unknown'];
-    var genderLabels  = ['— select —', 'M (male)', 'F (female)', 'Non-binary', 'Unknown'];
-    for (var gi = 0; gi < genderOptions.length; gi++) {
-      var gSel = genderVal === genderOptions[gi] ? ' selected' : '';
-      ehtml += '<option value="' + escapeHtml(genderOptions[gi]) + '"' + gSel + '>' + escapeHtml(genderLabels[gi]) + '</option>';
-    }
-    ehtml += '</select>';
-    if (ac.gender) {
-      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.gender.original) + ')</span>';
-    }
-    ehtml += '</label>';
-
-    // Origin country input with ISO2 datalist
-    var originVal = (ac.origin_country && ac.origin_country.corrected) ? ac.origin_country.corrected : (ns.origin_country || '');
-    var originOrig = ns.origin_country || '';
-    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
-    ehtml += '<span title="NamSor inferred origin country"><strong>Origin country*</strong>';
-    if (ns.origin_region) { ehtml += ' <span style="font-weight:normal;color:#868e96;">(' + escapeHtml(ns.origin_region) + ')</span>'; }
-    ehtml += '</span>';
-    ehtml += '<input type="text" id="namsor-origin" class="namsor-edit" data-field="origin_country" data-original="' + escapeHtml(originOrig) + '"';
-    ehtml += ' list="origin-country-list" value="' + escapeHtml(originVal) + '" placeholder="ISO2 code" style="width:14rem;">';
-    if (ac.origin_country) {
-      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.origin_country.original) + ')</span>';
-    }
-    ehtml += '</label>';
-
-    // Ethnicity input with datalist
-    var ethVal = (ac.ethnicity && ac.ethnicity.corrected) ? ac.ethnicity.corrected : (ns.ethnicity || '');
-    var ethOrig = ns.ethnicity || '';
-    ehtml += '<label style="display:flex;flex-direction:column;gap:0.2rem;font-size:0.85rem;">';
-    ehtml += '<span title="NamSor inferred ethnicity/diaspora"><strong>Ethnicity / diaspora*</strong></span>';
-    ehtml += '<input type="text" id="namsor-ethnicity" class="namsor-edit" data-field="ethnicity" data-original="' + escapeHtml(ethOrig) + '"';
-    ehtml += ' list="ethnicity-list" value="' + escapeHtml(ethVal) + '" placeholder="start typing..." style="width:14rem;">';
-    if (ac.ethnicity) {
-      ehtml += '<span class="namsor-orig-note">(originally: ' + escapeHtml(ac.ethnicity.original) + ')</span>';
-    }
-    ehtml += '</label>';
-
-    ehtml += '</div>';
-    ehtml += '<p style="margin:0.4rem 0 0;color:#868e96;font-size:0.75rem;">Corrections welcome. Changes saved automatically. *NamSor inference from name &amp; country only.</p>';
-
-    // Datalists for autocomplete
-    ehtml += '<datalist id="origin-country-list">';
-    var isoCountries = ['AD','AE','AF','AG','AI','AL','AM','AO','AR','AS','AT','AU','AW','AX','AZ','BA','BB','BD','BE','BF','BG','BH','BI','BJ','BL','BM','BN','BO','BQ','BR','BS','BT','BV','BW','BY','BZ','CA','CC','CD','CF','CG','CH','CI','CK','CL','CM','CN','CO','CR','CU','CV','CW','CX','CY','CZ','DE','DJ','DK','DM','DO','DZ','EC','EE','EG','EH','ER','ES','ET','FI','FJ','FK','FM','FO','FR','GA','GB','GD','GE','GF','GG','GH','GI','GL','GM','GN','GP','GQ','GR','GS','GT','GU','GW','GY','HK','HM','HN','HR','HT','HU','ID','IE','IL','IM','IN','IO','IQ','IR','IS','IT','JE','JM','JO','JP','KE','KG','KH','KI','KM','KN','KP','KR','KW','KY','KZ','LA','LB','LC','LI','LK','LR','LS','LT','LU','LV','LY','MA','MC','MD','ME','MF','MG','MH','MK','ML','MM','MN','MO','MP','MQ','MR','MS','MT','MU','MV','MW','MX','MY','MZ','NA','NC','NE','NF','NG','NI','NL','NO','NP','NR','NU','NZ','OM','PA','PE','PF','PG','PH','PK','PL','PM','PN','PR','PS','PT','PW','PY','QA','RE','RO','RS','RU','RW','SA','SB','SC','SD','SE','SG','SH','SI','SJ','SK','SL','SM','SN','SO','SR','SS','ST','SV','SX','SY','SZ','TC','TD','TF','TG','TH','TJ','TK','TL','TM','TN','TO','TR','TT','TV','TW','TZ','UA','UG','UM','US','UY','UZ','VA','VC','VE','VG','VI','VN','VU','WF','WS','YE','YT','ZA','ZM','ZW'];
-    for (var i = 0; i < isoCountries.length; i++) {
-      ehtml += '<option value="' + isoCountries[i] + '">';
-    }
-    ehtml += '</datalist>';
-
-    ehtml += '<datalist id="ethnicity-list">';
-    var ethList = ['African','Anglo-Saxon','Arab','Armenian','Bengali','British','Burmese','Chinese','Dutch','Eastern-European','Filipino','French','German','Greek','Hispanic','Indian','Indo-Caribbean','Indonesian','Iranian','Irish','Italian','Japanese','Jewish','Korean','Lao-Thai','Malagasy','Malay','Mongolian','Nordic','Nubian','Pakistani','Persian','Polish','Polynesian','Portuguese','Russian','Scottish','Sikh','Somali','Sri-Lankan','Swedish','Swiss','Turkish','Ukrainian','Urdu','Uzbek','Vietnamese','Welsh'];
-    for (var j = 0; j < ethList.length; j++) {
-      ehtml += '<option value="' + ethList[j] + '">';
-    }
-    ehtml += '</datalist>';
-
-    enrichEl.innerHTML = ehtml;
-
-    // Attach change/input handlers
-    var editEls = enrichEl.querySelectorAll('.namsor-edit');
-    for (var ni = 0; ni < editEls.length; ni++) {
-      (function (el) {
-        var eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-        el.addEventListener(eventType, function () {
-          _setAuthorCorrection(el.dataset.field, el.dataset.original, el.value.trim());
-          // Update the "(originally: X)" note inline
-          var note = el.parentElement.querySelector('.namsor-orig-note');
-          var ac2  = _getAuthorCorrections();
-          var corr = ac2[el.dataset.field];
-          if (corr) {
-            if (!note) {
-              note = document.createElement('span');
-              note.className = 'namsor-orig-note';
-              el.parentElement.appendChild(note);
-            }
-            note.textContent = '(originally: ' + corr.original + ')';
-          } else {
-            if (note) { note.parentElement.removeChild(note); }
-          }
-        });
-      })(editEls[ni]);
-    }
-  }
+  // PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published.
+  // The editable gender / origin / ethnicity bar (NamSor) was removed; pages carry no such data.
 
   // ---------------------------------------------------------------------------
   // Public API
@@ -1892,14 +1775,8 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     _loadState();
-    // Render author enrichment (NamSor data) — editable fields
     var enrichEl = document.getElementById('author-enrichment');
-    var ns = _pageData.namsor || {};
-    if (enrichEl && (ns.gender || ns.origin_country || ns.ethnicity)) {
-      _renderAuthorEnrichment(enrichEl, ns);
-    } else if (enrichEl) {
-      enrichEl.style.display = 'none';
-    }
+    if (enrichEl) { enrichEl.style.display = 'none'; }
 
     // Load shared assets (options + rules) then render
     Promise.all([

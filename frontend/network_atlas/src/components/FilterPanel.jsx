@@ -19,8 +19,6 @@ export default function FilterPanel({
   institutionCount,
   vocab, palettes, mutedKeys,
   authorNames,
-  genderCounts,                   // {key: n, …}
-  shapeByMatrix,                  // [{attr, n_categories, top}, …]
   zoomLevel,
   version,
 }) {
@@ -109,17 +107,6 @@ export default function FilterPanel({
             ))}
           </select>
 
-          <label>Gender</label>
-          <select value={filters.gender} onChange={e => update('gender', e.target.value)}>
-            <option value="">All</option>
-            {sortedWithCounts(genderCounts ?? {}, ['M', 'F', 'Unknown'])
-              .map(([k, n]) => (
-                <option key={k} value={k}>
-                  {k === 'M' ? 'Male' : k === 'F' ? 'Female' : k} ({n.toLocaleString()})
-                </option>
-              ))}
-          </select>
-
           <MultiSelect label="Discipline" options={opts(vocab?.disciplines)}
                        selected={filters.disc} onChange={v => update('disc', v)} />
           <MultiSelect label="Technique" options={opts(vocab?.techniques)}
@@ -173,28 +160,8 @@ export default function FilterPanel({
           <label>Colour by</label>
           <select value={colorBy} onChange={e => setColorBy(e.target.value)}>
             <option value="disc_main">Main discipline</option>
-            <option value="gender">Gender</option>
             <option value="country">Country (top 20)</option>
           </select>
-
-          <label>Shape by</label>
-          <select value={shapeBy} onChange={e => setShapeBy(e.target.value)}>
-            <option value="none">None (all circles)</option>
-            <option value="gender">Gender (M=○ F=△ Unknown=□)</option>
-          </select>
-          {shapeByMatrix && shapeByMatrix.length > 0 && (
-            <div className="shape-suggest">
-              <span className="muted">Best shape-by attrs in current filter (fewest categories first):</span>
-              <ul>
-                {shapeByMatrix.map(row => (
-                  <li key={row.attr}>
-                    <strong>{row.attr}</strong>: {row.n_categories} categories
-                    {row.top.length > 0 && <> — top: {row.top.join(', ')}</>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
 
           <div className="toggles">
             <label>
@@ -221,7 +188,7 @@ export default function FilterPanel({
       <button
         className="reset"
         onClick={() => {
-          setFilters({ country: '', gender: '', minEdgeWeight: 2,
+          setFilters({ country: '', minEdgeWeight: 2,
                        disc: [], tech: [], species: [], basin: [],
                        yearMin: null, yearMax: null });
           setSearchQuery('');

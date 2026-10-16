@@ -69,17 +69,8 @@ export function getIconAtlas() {
   return _atlas;
 }
 
-// Shape mapping per attribute. Only `gender` is wired for now — see
-// docs/SubProjects/author_atlas_v2_open_questions.md for rationale.
-export const SHAPE_BY_GENDER = {
-  M: 'circle',
-  F: 'triangle',
-  Unknown: 'square',
-};
-
-export function pickShape(props, shapeBy) {
-  if (shapeBy === 'none') return 'circle';
-  if (shapeBy === 'gender') return SHAPE_BY_GENDER[props.gender] ?? 'square';
-  // origin_region: stub — would need an 11-way shape palette
+// PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published
+// Shape-by was gender-only and has been removed; every author is a circle.
+export function pickShape() {
   return 'circle';
 }

@@ -1,29 +1,8 @@
 // Palettes for colour-by modes. Each palette maps a categorical value to
 // an RGBA colour array. Keys missing from a palette fall through to grey.
 
-// Classic nursery-boy / nursery-girl pantones, saturated enough to read
-// on a light basemap:
-//   M — Pantone 284 C "Baby Blue"   ≈ #82B5DC  rgb(130, 181, 220)
-//   F — Pantone 183 C "Baby Pink"   ≈ #F28FB0  rgb(242, 143, 176)
-export const GENDER_PALETTE = {
-  M: [130, 181, 220, 230],
-  F: [242, 143, 176, 230],
-  Unknown: [150, 150, 150, 180],
-};
-
-export const REGION_PALETTE = {
-  'Europe':           [55, 126, 184, 220],
-  'North America':    [228, 26, 28, 220],
-  'South America':    [255, 127, 0, 220],
-  'Africa':           [77, 175, 74, 220],
-  'East Asia':        [152, 78, 163, 220],
-  'South Asia':       [141, 160, 203, 220],
-  'South-East Asia':  [166, 216, 84, 220],
-  'Muslim':           [102, 194, 165, 220],
-  'Central Asia':     [247, 129, 191, 220],
-  'Oceania':          [255, 215, 0, 220],
-  'Unknown':          [150, 150, 150, 180],
-};
+// PRIVACY 2026-10-16: inferred attributes kept local only (outputs/), never published
+// (The gender and origin-region palettes were removed with the attributes themselves.)
 
 // 20-colour country palette; applied to top-N by author count, rest grey.
 export const COUNTRY_PALETTE_COLOURS = [
