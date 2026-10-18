@@ -2773,26 +2773,6 @@
   "findspot_raw": "Valdivia, Fundación Oceanósfera, ISBN: 978-956-09395-3-1"
  },
  {
-  "id": 455,
-  "literature_id": "500373",
-  "year": 2021,
-  "authors": "Corral, J.C. (2021)",
-  "title": "Campanian sharks, rays and other fossils from a long-gone Basque-Cantabrian sea.",
-  "journal": "Publica",
-  "doi": "",
-  "priority_group": 1,
-  "last_status": "needs_library",
-  "notes": "",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "Publica",
-  "publisher": "Unknown publisher",
-  "cascade_stage": "needs_library",
-  "cascade_checked": true
- },
- {
   "id": 458,
   "literature_id": "30368",
   "year": 2021,
@@ -109936,7 +109916,8 @@
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "In W. Fischer & J.-C. Hureau (Eds.), FAO species identification sheets for fishery purposes. Southern Ocean. CCAMLR convention area, fishing areas 48, 58, and 88 (pp. 209–216), FAO, Rome"
+  "findspot_raw": "In W. Fischer & J.-C. Hureau (Eds.), FAO species identification sheets for fishery purposes. Southern Ocean. CCAMLR convention area, fishing areas 48, 58, and 88 (pp. 209–216), FAO, Rome",
+  "prior_false_dl": "a different paper was sent under this reference; check the title and authors"
  },
  {
   "id": 6744,
@@ -115997,7 +115978,8 @@
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
   "cascade_checked": true,
-  "findspot_raw": "In W. Fischer & J.-C. Hureau (Eds.), FAO species identification sheets for fishery purposes. Southern Ocean. CCAMLR convention area, fishing areas 48, 58, and 88 (pp. 209–216), FAO, Rome"
+  "findspot_raw": "In W. Fischer & J.-C. Hureau (Eds.), FAO species identification sheets for fishery purposes. Southern Ocean. CCAMLR convention area, fishing areas 48, 58, and 88 (pp. 209–216), FAO, Rome",
+  "prior_false_dl": "a different paper was sent under this reference; check the title and authors"
  },
  {
   "id": 7080,
