@@ -219,3 +219,7 @@ outputs/altmetric_refresh_*/
 !docs/abstracts/
 !docs/abstracts/**
 secrets/
+
+# Third-party PDFs stay local; the papers live in the PDF corpus (SharkPapers/2020/Shiffman.etal.2020...), drafts with their authors (2026-10-19)
+docs/schema_proposals/Schiffman_paper/
+docs/SubProjects/**/*.pdf
