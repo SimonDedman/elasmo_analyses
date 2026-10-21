@@ -19,6 +19,7 @@ import argparse
 import html
 import re
 import shutil
+import urllib.parse
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -100,7 +101,8 @@ def index_html(year, root, top, items, city):
         rows.append(f'<details open><summary><span class="f">{html.escape(str(folder))}</span>'
                     f' <span class="n">{len(lst)} abstracts{f", {e} shark/ray" if e else ""}</span></summary><ol>')
         for r, dst in lst:
-            href = "/".join(dst.relative_to(root).parts)
+            # percent-encoded so '#', '%', '&' or accents in a name cannot break the link
+            href = "/".join(urllib.parse.quote(p) for p in dst.relative_to(root).parts)
             auth = "; ".join(a["full_name"] for a in r["authors"])
             badge = '<span class="b">shark/ray</span> ' if r["is_elasmo"] else ""
             rows.append(f'<li data-s="{html.escape((r["title"] + " " + auth).lower())}">{badge}'
@@ -127,6 +129,8 @@ button{{font:inherit;margin:8px 8px 8px 0}}
 <p>{len(items)} abstracts copied from the meeting CD-ROM, {n_el} of them on sharks, rays, or chimaeras.
 Folders are by {how}. Each file is the CD's own PDF for one abstract, renamed
 'First author - Title'. The CD's original files are untouched beside this page.
+To keep a copy, keep this page and the '{top.name}' folder side by side in the same folder
+(the CD's other files are optional); the links are relative, so they work wherever the pair is saved.
 Built 21 Oct 2026 for Shark Oracle.</p>
 <input id="q" placeholder="Filter by title or author" oninput="f()">
 <button onclick="t(true)">Expand all</button><button onclick="t(false)">Collapse all</button>

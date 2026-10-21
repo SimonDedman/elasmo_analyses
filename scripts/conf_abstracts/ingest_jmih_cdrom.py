@@ -41,7 +41,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from conf_abstracts import config as C  # noqa: E402
-from conf_abstracts import lexicon, load, names, tag  # noqa: E402
+from conf_abstracts import lexicon, load, names, sentence_case, tag  # noqa: E402
 
 _WS = re.compile(r"\s+")
 # Affiliation code: "(CRA, JAG)" at the start of an affiliation.
@@ -433,7 +433,29 @@ def read_cd(year, cd):
             cov["not_on_index"] += 1
             if year == 2003:
                 r["session_name"] = "Not listed on the CD's area pages"
+    # 45 of the 2003 titles are typed in capitals (8 around a pasted species name); sentence case them, taking
+    # each word's capitalisation from the abstract body and the rest of the DB.
+    vocab = sentence_case.build_vocab(C.DB_PATH)
+    for r in recs:
+        if sentence_case.is_mostly_caps(r["title"]):
+            r["title"] = HAND_TITLES.get(r["title"]) or sentence_case.sentence_case(
+                r["title"], r["abstract_text"] or "", vocab)
+            cov["sentence_cased"] = cov.get("sentence_cased", 0) + 1
     return recs, cov
+
+
+# Where the evidence-based sentence casing gets a word wrong (an unseen place
+# name, a capital borrowed from a genus); checked by eye 2026-10-21.
+HAND_TITLES = {
+    "FEEDING AND REPRODUTIVE BIOLOGY OF THE ROMMY-NOSE TETRA, HEMIGRAMMUS BLEHERI (CHARACIDAE) OF IGARAPE ZAMULA, RIO NEGRO, AMAZONAS, BRAZIL.":
+        "Feeding and reprodutive biology of the rommy-nose tetra, Hemigrammus bleheri (Characidae) of Igarape Zamula, Rio Negro, Amazonas, Brazil.",
+    "AMPHISBAENIDAE OF THE COLLECTION OF AMPHIBIANS AND REPTILES OF THE INSTITUTO NACIONAL DE PESQUISAS DA AMAZONIA, INPA":
+        "Amphisbaenidae of the collection of amphibians and reptiles of the Instituto Nacional de Pesquisas da Amazonia, INPA",
+    "TROPHIC ECOLOGY OF NINE SPECIES OF FISHES OF THE TRES IRMAOS RESERVOIR, SAO PAULO, BRAZIL":
+        "Trophic ecology of nine species of fishes of the Tres Irmaos reservoir, Sao Paulo, Brazil",
+    "IBERIAN NASE REPRODUCTIVE MIGRATION IN THE GUADALETE RIVER (NATIONAL PARK OF GRAZALEMA).":
+        "Iberian nase reproductive migration in the Guadalete river (National Park of Grazalema).",
+}
 
 
 def _apply_meta(r, year, m, rel):
