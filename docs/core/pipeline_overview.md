@@ -30,7 +30,7 @@ rather than editing a number in place.
 | Techniques in taxonomy | 215 | `data/master_techniques.csv` (NOT the taxonomy DB, whose table is empty) |
 | Species columns | 1,308 | `sp_` prefix |
 | RAG index | 19,801 papers / 203,731 chunks | `outputs/rag/build_status.json` |
-| Conference abstracts | 23,408 | 7,784 chondrichthyan, 123 meetings |
+| Conference abstracts | 25,222 | 7,954 chondrichthyan, 127 meetings |
 
 Column families:
 

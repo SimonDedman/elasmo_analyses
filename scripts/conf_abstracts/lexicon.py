@@ -11,7 +11,8 @@ _COMMON = [
     r"elasmobranch", r"chondrichthy", r"selachi", r"batoid", r"neoselachi",
     r"\bshark", r"\bray\b", r"\brays\b", r"skate", r"sawfish", r"guitarfish",
     r"stingray", r"stingaree", r"eagle ray", r"manta", r"mobulid", r"devil ray",
-    r"electric ray", r"torpedo ray", r"numbfish", r"wedgefish", r"shovelnose",
+    r"electric ray", r"torpedo ray", r"numbfish", r"wedgefish",
+    r"shovelnose (?:ray|guitarfish|shark)",  # bare "shovelnose" flagged 18 sturgeon/salamander/catfish abstracts as elasmo (2026-10-21)
     r"chimaer", r"ratfish", r"rabbitfish", r"ghost shark", r"elephant fish",
     r"dogfish", r"catshark", r"houndshark", r"hammerhead", r"requiem shark",
     r"thresher", r"mako", r"wobbegong", r"angelshark", r"sawshark", r"lamnid",

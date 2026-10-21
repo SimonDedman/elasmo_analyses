@@ -1068,6 +1068,18 @@ def JMIH_CLEAN_OCR(year):
         return False
 
 
+def JMIH_CDROM(year):
+    """A JMIH year ingested from the meeting CD-ROM (config.CDROM_SOURCES):
+    no Fable cache exists for it, so fable_state() would call it unextracted."""
+    try:
+        import sys
+        sys.path.insert(0, str(REPO / "scripts"))
+        from conf_abstracts import config as _C
+        return ("JMIH", year) in _C.CDROM_SOURCES
+    except Exception:                                          # noqa: BLE001
+        return False
+
+
 AES_NOT_AT_JMIH = {
     2018: ("Joao Pessoa (at SI)",
            "no AES meeting at JMIH — AES met at Sharks International instead, "
@@ -1086,6 +1098,8 @@ def meeting_cell(year, db):
             return loc, "Ingested", f"{d['n']} abstracts", d["elasmo"]
         if d.get("structured"):
             return loc, "Ingested", "Oxford Abstracts export (born-digital)", d["elasmo"]
+        if JMIH_CDROM(year):
+            return loc, "Ingested", "meeting CD-ROM, one born-digital PDF per abstract (Carylanne)", d["elasmo"]
         state, n_fable = fable_state("JMIH", year)
         if state == "merged":
             return loc, "Ingested", "", d["elasmo"]

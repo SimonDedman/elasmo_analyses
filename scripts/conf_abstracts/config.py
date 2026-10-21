@@ -220,6 +220,15 @@ OA_MEETING_CITIES = {
     ("JMIH", 2025): "St. Paul, MN",   # matches the programme-book meeting row
 }
 
+# JMIH meeting CD-ROMs (one born-digital PDF per abstract plus the CD's own
+# index pages), copied whole by Carylanne Maier (AES) and delivered 2026-10-21.
+# Filed as folders, so the PDF sweep never segments them; ingested by
+# ingest_jmih_cdrom.py after the sweep. Value: (CD folder, host city).
+CDROM_SOURCES = {
+    ("JMIH", 2003): (str(CONFERENCES / "2003" / "2003_JMIH_CDROM"), "Manaus, Brazil"),
+    ("JMIH", 2004): (str(CONFERENCES / "2004" / "2004_JMIH_CDROM"), "Norman, OK"),
+}
+
 # Host city per (meeting, year) for series whose books do not carry the venue in
 # a parseable place. These come from the FILENAMES Brit supplied with the books
 # themselves ("2009_IPFC Fremantle Abstract Book.pdf"), which is the donor's own
