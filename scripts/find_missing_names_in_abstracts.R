@@ -17,9 +17,9 @@ cat("=== Searching Abstracts for Missing Names ===\n\n")
 # STEP 1: Get list of abstract files
 # ==============================================================================
 
-abstracts_dir <- "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/abstracts"
+abstracts_dir <- "/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/abstracts/EEA2025_submissions"  # oral/, poster/, unnumbered/ (organised 2026-10-19)
 
-docx_files <- list.files(abstracts_dir, pattern = "\\.docx$", full.names = TRUE)
+docx_files <- list.files(abstracts_dir, pattern = "\\.docx$", full.names = TRUE, recursive = TRUE)
 
 cat("Found", length(docx_files), "DOCX files\n\n")
 
