@@ -100,7 +100,10 @@ def looks_like_author_list(title):
     RAFAEL L.'): an OCR mis-parse, left as found so it stays visible."""
     t = title or ""
     initials = len(re.findall(r"\b[A-Z]\.\s*[,;]", t)) + len(re.findall(r",\s*[A-Z][a-z]*\.?\s*[,;]", t))
-    return ((bool(_AUTHOR_LIST.match(t)) and t.count(",") >= 2)
+    # 'SURNAME, GIVEN, ...' alone also matches titles that open with a list
+    # ('MOVEMENTS, DISTRIBUTION, FEEDING, AND GROWTH OF ...'): need an initial or ';' too
+    return ((bool(_AUTHOR_LIST.match(t)) and t.count(",") >= 2
+             and (re.search(r"\b[A-Z]\.", t) or ";" in t))
             or (t.lstrip()[:1] in "*\"'“‘" and t.count(",") >= 2)   # JMIH books mark presenters with '*'
             or (";" in t and initials >= 2))
 
