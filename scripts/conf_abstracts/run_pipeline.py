@@ -23,7 +23,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from conf_abstracts import (config, schema, classify, qa_ocr, segment,
                             extract, tag, load, export, ingest_si_xlsx,
-                            ingest_oa_xlsx)
+                            ingest_oa_xlsx, ingest_jmih_cdrom,
+                            sentence_case_titles)
 
 
 def log(msg):
@@ -270,6 +271,18 @@ def main():
         log(f"OK {Path(xlsx).name}: {len(recs)} abstracts; "
             f"{merged} programme-book duplicates superseded, {kept} kept")
 
+    # Meeting CD-ROMs are folders, so the PDF sweep never sees them either.
+    # The elasmo.org AES supersede (scrape_elasmo_org.py --dedup, --supersede)
+    # must run after, as for every JMIH year elasmo.org covers.
+    for (mtg, yr), (cd, _city) in config.CDROM_SOURCES.items():
+        if not Path(cd).is_dir():
+            log(f"SKIP {mtg} {yr} CD-ROM: {cd} not found")
+            continue
+        mid, recs, cov = ingest_jmih_cdrom.ingest(con, yr, mtg)
+        results.append(dict(pdf=Path(cd).name, meeting=mtg, year=yr, doc_type="cdrom",
+                            blocks=len(recs), inserted=cov["inserted"], status="ok"))
+        log(f"OK {Path(cd).name}: {cov['inserted']} abstracts from {cov['pdf_files']} PDFs")
+
     # Wherever a year has BOTH a programme book and an abstract source, the two
     # describe the same talks and the year is counted twice. Fold the schedule
     # into the abstract rows and drop the duplicates. This has to run on every
@@ -291,6 +304,12 @@ def main():
         if merged:
             log(f"OK {yr}: {merged} programme-book duplicates folded into meeting "
                 f"{mid}, {kept} schedule-only rows kept")
+
+    # Titles typed in capitals come back from every re-parse: sentence-case them
+    # on every pass (Simon, 2026-10-21), before the exports.
+    n_sc = len(sentence_case_titles.convert(con, apply=True))
+    log(f"OK sentence case: {n_sc} capitalised titles converted, "
+        f"{len(sentence_case_titles.convert.skipped)} author-list title fields left as found")
 
     total = sum(r["inserted"] for r in results)
     n_elasmo = con.execute("SELECT count(*) FROM abstracts WHERE is_elasmo=1").fetchone()[0]

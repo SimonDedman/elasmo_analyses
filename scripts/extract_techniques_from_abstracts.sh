@@ -6,7 +6,7 @@
 # Output: Detailed technique mentions with context
 # ==============================================================================
 
-ABSTRACTS_DIR="/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/abstracts"
+ABSTRACTS_DIR="/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/abstracts/EEA2025_submissions"  # oral/, poster/, unnumbered/ (folder organised 2026-10-19)
 OUTPUT_FILE="/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/outputs/techniques_from_abstracts_raw.txt"
 TEMP_DIR="/tmp/abstract_techniques_$$"
 
@@ -148,7 +148,7 @@ search_abstract() {
 
 echo "Processing DOCX files..."
 docx_count=0
-for file in "$ABSTRACTS_DIR"/*.docx; do
+for file in "$ABSTRACTS_DIR"/*/*.docx; do
     [ -f "$file" ] || continue
     search_abstract "$file"
     docx_count=$((docx_count + 1))
@@ -157,7 +157,7 @@ echo "  Processed $docx_count DOCX files"
 
 echo "Processing PDF files..."
 pdf_count=0
-for file in "$ABSTRACTS_DIR"/*.pdf; do
+for file in "$ABSTRACTS_DIR"/*/*.pdf; do
     [ -f "$file" ] || continue
     search_abstract "$file"
     pdf_count=$((pdf_count + 1))

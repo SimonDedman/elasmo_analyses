@@ -175,6 +175,9 @@ def merge(db_path=C.DB_PATH, fable_path=FABLE, finish_chain=True, only_books=Non
     S.dedup(0.6)
     S.supersede()
     main = sqlite3.connect(str(db_path))
+    # the merge replaces whole meetings, so capitalised titles return: re-run the pass
+    from conf_abstracts import sentence_case_titles
+    print(f"sentence case: {len(sentence_case_titles.convert(main, apply=True))} capitalised titles converted")
     tot = main.execute("SELECT COUNT(*), SUM(is_elasmo) FROM abstracts").fetchone()
     print(f"main DB now {tot[0]} abstracts / {tot[1]} elasmo")
     for base in (C.OUT, C.REPO / "database"):

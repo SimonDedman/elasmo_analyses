@@ -6,7 +6,7 @@
 # Extract and search the document.xml file
 # ==============================================================================
 
-ABSTRACTS_DIR="/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/abstracts"
+ABSTRACTS_DIR="/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel/abstracts/EEA2025_submissions"  # oral/, poster/, unnumbered/ (folder organised 2026-10-19)
 TEMP_DIR="/tmp/abstract_search_$$"
 
 mkdir -p "$TEMP_DIR"
@@ -25,7 +25,7 @@ search_name() {
 
     found=0
 
-    for file in "$ABSTRACTS_DIR"/*.docx; do
+    for file in "$ABSTRACTS_DIR"/*/*.docx; do
         if [ ! -f "$file" ]; then
             continue
         fi
@@ -68,7 +68,7 @@ search_name "shark trust"
 echo "=== Extracting Cat Gordon Shark Trust Abstract ==="
 echo
 
-CAT_FILE="$ABSTRACTS_DIR/O_28 EEA2025_abstract_form_Cat Gordon Shark Trust.docx"
+CAT_FILE="$ABSTRACTS_DIR/oral/O_28 EEA2025_abstract_form_Cat Gordon Shark Trust.docx"
 
 if [ -f "$CAT_FILE" ]; then
     unzip -q -o -d "$TEMP_DIR" "$CAT_FILE" "word/document.xml" 2>/dev/null
@@ -95,7 +95,7 @@ fi
 echo "=== Searching PDFs ==="
 echo
 
-for file in "$ABSTRACTS_DIR"/*.pdf; do
+for file in "$ABSTRACTS_DIR"/*/*.pdf; do
     if [ ! -f "$file" ]; then
         continue
     fi
