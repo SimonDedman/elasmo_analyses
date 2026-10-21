@@ -23,7 +23,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from conf_abstracts import (config, schema, classify, qa_ocr, segment,
                             extract, tag, load, export, ingest_si_xlsx,
-                            ingest_oa_xlsx, ingest_jmih_cdrom)
+                            ingest_oa_xlsx, ingest_jmih_cdrom,
+                            sentence_case_titles)
 
 
 def log(msg):
@@ -303,6 +304,12 @@ def main():
         if merged:
             log(f"OK {yr}: {merged} programme-book duplicates folded into meeting "
                 f"{mid}, {kept} schedule-only rows kept")
+
+    # Titles typed in capitals come back from every re-parse: sentence-case them
+    # on every pass (Simon, 2026-10-21), before the exports.
+    n_sc = len(sentence_case_titles.convert(con, apply=True))
+    log(f"OK sentence case: {n_sc} capitalised titles converted, "
+        f"{len(sentence_case_titles.convert.skipped)} author-list title fields left as found")
 
     total = sum(r["inserted"] for r in results)
     n_elasmo = con.execute("SELECT count(*) FROM abstracts WHERE is_elasmo=1").fetchone()[0]

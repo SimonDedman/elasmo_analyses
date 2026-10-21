@@ -45,19 +45,28 @@ def _mid_sentence_forms(text, into):
                 into[w.lower()][w] += 1
 
 
-def build_vocab(db_path):
+def build_vocab_con(con):
     """{lowercase word: Counter(written forms)} from every mixed-case title and body."""
     vocab = defaultdict(Counter)
-    con = sqlite3.connect(str(db_path))
     for title, body in con.execute("SELECT title, abstract_text FROM abstracts"):
-        if title and not is_all_caps(title):
+        if title and not is_mostly_caps(title):
             _mid_sentence_forms(title, vocab)
-        if body and not is_all_caps(body[:200]):
+        if body and not is_mostly_caps(body[:300]):
             _mid_sentence_forms(body, vocab)
-    con.close()
     return vocab
 
 
+def build_vocab(db_path):
+    con = sqlite3.connect(str(db_path))
+    try:
+        return build_vocab_con(con)
+    finally:
+        con.close()
+
+
+# Function words: always lowercase after the first word, whatever headings elsewhere say.
+_STOP = set("""a an and as at but by for from in into nor of off on onto or per than the to
+upon via vs with within without de del da do dos das la le les et y e""".split())
 _TAXON_SUFFIX = re.compile(r"(?:idae|inae|iformes|oidea|oidei)$", re.I)
 
 
@@ -66,6 +75,8 @@ def _choose(word, local, vocab):
     lw = word.lower()
     if word in _ROMAN:
         return word, True
+    if lw in _STOP:
+        return lw, True
     if _TAXON_SUFFIX.search(lw):            # family/order names, misspelt ones included
         return lw[:1].upper() + lw[1:], True
     for source, need in ((local, 1), (vocab, MIN_VOTES)):
@@ -81,6 +92,19 @@ def _choose(word, local, vocab):
     return lw, False
 
 
+_AUTHOR_LIST = re.compile(r"^[\W\d]*[A-Z][A-Za-z'\-]+,\s+[A-Z][A-Za-z.]*[ ,.;]")
+
+
+def looks_like_author_list(title):
+    """A title field that holds the author line ('*BURROWES, PATRICIA A.; JOGLAR,
+    RAFAEL L.'): an OCR mis-parse, left as found so it stays visible."""
+    t = title or ""
+    initials = len(re.findall(r"\b[A-Z]\.\s*[,;]", t)) + len(re.findall(r",\s*[A-Z][a-z]*\.?\s*[,;]", t))
+    return ((bool(_AUTHOR_LIST.match(t)) and t.count(",") >= 2)
+            or (t.lstrip()[:1] in "*\"'“‘" and t.count(",") >= 2)   # JMIH books mark presenters with '*'
+            or (";" in t and initials >= 2))
+
+
 def sentence_case(title, body="", vocab=None):
     """Sentence case for a title typed (mostly) in capitals; any other title is
     returned unchanged. Words already in mixed case are kept as typed."""
@@ -94,6 +118,10 @@ def sentence_case(title, body="", vocab=None):
              for m in toks]
     forms = [f for f, _ in picks]
     for k, (m, (f, known)) in enumerate(zip(toks, picks)):
+        # an initial ('PATRICIA A.', 'SMITH, J. W.') stays a capital
+        if len(m.group(0)) == 1 and title[m.end():m.end() + 1] == ".":
+            forms[k] = m.group(0)
+            continue
         # an authority ('BARNARD, 1923') is a surname
         if re.match(r"\s*,?\s*\d{4}", title[m.end():]):
             forms[k] = f[:1].upper() + f[1:]
