@@ -240,7 +240,7 @@ Non-urgent contributions (typo fixes, documentation improvements) are welcome ye
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the same terms as the project (CC BY 4.0 for documentation, MIT for code).
+By contributing, you agree that your contributions will be licensed under the same terms as the project: the Apache License 2.0 for code, and CC BY 4.0 for data, documentation, and figures. Before adding a field from a new third-party source, check its terms and add a row to [DATA_LICENSES.md](DATA_LICENSES.md).
 
 ---
 

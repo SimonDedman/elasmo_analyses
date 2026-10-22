@@ -6,7 +6,7 @@
 
 **A systematic review of the analytical techniques used across shark, ray, and chimaera research.**
 
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Code: Apache 2.0](https://img.shields.io/badge/Code-Apache%202.0-blue.svg)](LICENSE) [![Data and docs: CC BY 4.0](https://img.shields.io/badge/Data%20%26%20docs-CC%20BY%204.0-lightgrey.svg)](LICENSE-DATA)
 
 ---
 
@@ -165,7 +165,7 @@ Rotterdam, Netherlands. https://github.com/SimonDedman/elasmo_analyses
 
 ## Licence & acknowledgements
 
-Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Code is licensed under the [Apache License 2.0](LICENSE). The project's own data, documentation, and figures are licensed under [CC BY 4.0](LICENSE-DATA). Material from other sources keeps its own terms, and some of it is never redistributed (full texts, abstract text without permission, Altmetric scores, inferred personal attributes): see [DATA_LICENSES.md](DATA_LICENSES.md) for the field-by-field register.
 
 Builds on the work of thousands of researchers worldwide, the [Shark-References](https://shark-references.com/) literature repository, [Sharkipedia](https://sharkipedia.org/) trait data, and the EEA and AES conference communities.
 
