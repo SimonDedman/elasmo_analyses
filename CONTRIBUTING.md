@@ -1,4 +1,4 @@
-# Contributing to Elasmobranch Analytical Methods Review
+# Contributing to Shark Oracle
 
 Thank you for your interest in contributing to this project! This document provides guidelines for different types of contributions.
 

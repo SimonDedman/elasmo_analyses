@@ -2,7 +2,7 @@
 
 **Last updated:** 2026-07-21
 
-Documentation for the **Elasmobranch Analytical Methods Review**. New
+Documentation for **Shark Oracle**. New
 here? Read the [front-page README](../README.md) first, then the
 [pipeline overview](core/pipeline_overview.md).
 

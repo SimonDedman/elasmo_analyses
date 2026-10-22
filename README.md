@@ -2,7 +2,7 @@
   <img src="docs/assets/logo/shark_oracle_logo_stacked.png" alt="Shark Oracle logo: a brain shaped like a crystal ball, holding six sharks, rays, and a chimaera on fishing lines" width="260">
 </p>
 
-# Elasmobranch Analytical Methods Review
+# Shark Oracle
 
 **A systematic review of the analytical techniques used across shark, ray, and chimaera research.**
 
@@ -14,7 +14,7 @@
 
 Elasmobranch science (sharks, rays, and chimaeras) spans dozens of methods, from age-and-growth histology to acoustic telemetry to environmental DNA. No one has systematically mapped **which techniques are used, where, by whom, and how that has changed over 75 years**. This project does exactly that.
 
-We assembled a near-complete corpus of elasmobranch literature (~31,650 papers, 1950–present), acquired the full-text PDFs, and ran an automated pipeline that reads each paper and records what analytical approaches, ecosystems, pressures, gear, and study locations it involves. The result is a queryable database of the field's methodological history, plus author, geography, and citation-impact enrichment layered on top.
+We assembled a near-complete corpus of elasmobranch literature (over 34,000 papers), acquired the full-text PDFs, and ran an automated pipeline that reads each paper and records what analytical approaches, ecosystems, pressures, gear, and study locations it involves. The result is a queryable database of the field's methodological history, plus author, geography, and citation-impact enrichment layered on top.
 
 The work began as a panel session at the **European Elasmobranch Association (EEA) Conference 2025** in Rotterdam, and is intended to become a **living database**, updated annually.
 
@@ -147,7 +147,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 ## Citation
 
 ```
-Dedman, S., Tiktak, G., et al. (2025). Elasmobranch Analytical Methods Review:
+Dedman, S., Tiktak, G., et al. (2025). Shark Oracle:
 A systematic extraction of analytical techniques from the elasmobranch
 literature (1950–2025). European Elasmobranch Association Conference 2025,
 Rotterdam, Netherlands. https://github.com/SimonDedman/elasmo_analyses
