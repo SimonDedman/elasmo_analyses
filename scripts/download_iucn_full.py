@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-download_iucn_full_bypass.py
+download_iucn_full.py
 
-Download IUCN PDFs using undetected-chromedriver bypass for everything.
+Download IUCN PDFs: browser search for the species URL, then direct PDF fetch.
 
-Since both the API and PDF URLs are Cloudflare-protected, we use:
-1. Bypass to access search page and get species URL
+Both the API and PDF URLs are Cloudflare-protected. The steps are:
+1. Browser (Playwright) to access search page and get species URL
 2. Extract assessment ID from URL
 3. Construct PDF URL: /species/pdf/{assessmentid}
-4. Download PDF with bypass
+4. Download PDF with requests
+
+Ported to Playwright through scripts/lib/browser.py (21 Oct 2026, licence: undetected-chromedriver is GPL-3.0).
+Playwright must be installed first: pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated browsers (e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an approved route.
 
 Author: Simon Dedman / Claude
 Date: 2025-11-17
@@ -21,8 +25,10 @@ import time
 from tqdm import tqdm
 import logging
 import re
-import undetected_chromedriver as uc
 import requests
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import launch_driver
 
 # ============================================================================
 # CONFIGURATION
@@ -122,7 +128,7 @@ def download_pdf_via_bypass(assessmentid: str, literature_id: str, species_name:
             return {
                 'status': 'cloudflare_blocked',
                 'pdf_url': pdf_url,
-                'message': 'PDF download blocked by Cloudflare (would need selenium)'
+                'message': 'PDF download blocked by Cloudflare (browser fetch would be needed)'
             }
 
         if response.status_code == 200:
@@ -173,14 +179,14 @@ def download_pdf_via_bypass(assessmentid: str, literature_id: str, species_name:
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Download IUCN PDFs with Cloudflare bypass")
+    parser = argparse.ArgumentParser(description="Download IUCN PDFs (no Cloudflare evasion)")
     parser.add_argument('--test', action='store_true', help="Test mode: only process 10 species")
     parser.add_argument('--max-papers', type=int, help="Maximum papers to process")
     parser.add_argument('--headless', action='store_true', help="Run browser in headless mode")
     args = parser.parse_args()
 
     print("=" * 80)
-    print("IUCN RED LIST DOWNLOADER (CLOUDFLARE BYPASS)")
+    print("IUCN RED LIST DOWNLOADER")
     print("=" * 80)
     print(f"Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
@@ -226,10 +232,7 @@ def main():
 
     # Initialize browser
     print(f"\n🌐 Starting Chrome browser...")
-    options = uc.ChromeOptions()
-    if args.headless:
-        options.add_argument('--headless=new')
-    driver = uc.Chrome(options=options)
+    driver = launch_driver(headless=bool(args.headless))
 
     try:
         print("\n" + "=" * 80)

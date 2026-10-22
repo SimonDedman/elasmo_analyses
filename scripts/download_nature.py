@@ -14,7 +14,14 @@ Usage:
     ./venv/bin/python scripts/download_nature.py
     ./venv/bin/python scripts/download_nature.py --test 5
     ./venv/bin/python scripts/download_nature.py --email your@email.com
-    ./venv/bin/python scripts/download_nature.py --headless  # Use browser for Cloudflare
+    ./venv/bin/python scripts/download_nature.py --headless  # Use browser fallback
+
+Browser fallback: now uses Playwright through scripts/lib/browser.py (21 Oct 2026,
+licence: undetected-chromedriver is GPL-3.0). Playwright must be installed first:
+    pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated browsers
+(e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an
+approved route.
 
 Author: Simon Dedman / Claude
 Date: 2025-01-06
@@ -33,16 +40,12 @@ from typing import Optional, Tuple, Dict, Any
 from dataclasses import dataclass
 from urllib.parse import urljoin, urlparse
 
-# Try to import browser-based tools for Cloudflare bypass
-try:
-    import undetected_chromedriver as uc
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.common.exceptions import TimeoutException
-    SELENIUM_AVAILABLE = True
-except ImportError:
-    SELENIUM_AVAILABLE = False
+# Browser fallback (Playwright via the shared helper)
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, launch_driver, TimeoutException, playwright_available,
+                         INSTALL_HINT)
+SELENIUM_AVAILABLE = playwright_available()  # name kept; now means "Playwright importable"
 
 try:
     from bs4 import BeautifulSoup
@@ -610,12 +613,12 @@ def download_via_browser(
     driver: Any
 ) -> Tuple[bool, str]:
     """
-    Download PDF using browser to bypass Cloudflare.
+    Download PDF using a browser session (cookies are passed on to requests).
 
     Args:
         doi: Paper DOI
         dest_path: Destination file path
-        driver: Selenium WebDriver instance
+        driver: lib.browser Driver instance
 
     Returns:
         Tuple of (success, message)
@@ -628,9 +631,7 @@ def download_via_browser(
         time.sleep(4)
 
         # Wait for page to load
-        WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
+        driver.wait_for(By.TAG_NAME, "body", 30)
         time.sleep(3)
 
         current_url = driver.current_url
@@ -659,7 +660,7 @@ def download_via_browser(
 
         # Navigate to PDF URL to get cookies
         driver.get(pdf_url)
-        time.sleep(5)
+        driver.sleep(5)
 
         # Transfer cookies to requests session
         cookies = driver.get_cookies()
@@ -698,20 +699,11 @@ def download_via_browser(
 
 
 def setup_browser(headless: bool = False) -> Any:
-    """Setup undetected Chrome browser."""
+    """Set up a Playwright Chromium browser."""
     if not SELENIUM_AVAILABLE:
         return None
 
-    options = uc.ChromeOptions()
-    if headless:
-        options.add_argument("--headless=new")
-
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size=1920,1080")
-
-    driver = uc.Chrome(options=options, use_subprocess=True)
-    return driver
+    return launch_driver(headless=headless, window_size=(1920, 1080))
 
 
 # ============================================================================
@@ -731,13 +723,13 @@ def download_paper(
     1. Unpaywall API (legal OA sources)
     2. Direct Nature PDF URL
     3. Scrape article page for PDF link
-    4. Browser-based download (Cloudflare bypass)
+    4. Browser-based download (browser session)
 
     Args:
         paper: Paper metadata
         email: Email for Unpaywall API
         session: Requests session
-        driver: Optional browser driver for Cloudflare bypass
+        driver: Optional browser driver
 
     Returns:
         DownloadResult with success status and details
@@ -812,7 +804,7 @@ def download_paper(
             )
         logger.debug(f"Page scrape download failed: {msg}")
 
-    # Strategy 4: Browser-based download (Cloudflare bypass)
+    # Strategy 4: Browser-based download (browser session)
     if driver is not None:
         logger.debug(f"Trying browser download for {paper.doi}")
         time.sleep(DELAY_BETWEEN_REQUESTS)
@@ -868,7 +860,7 @@ def main() -> None:
     parser.add_argument(
         "--no-browser",
         action="store_true",
-        help="Disable browser-based Cloudflare bypass"
+        help="Disable browser-based download"
     )
     parser.add_argument(
         "--delay",
@@ -916,8 +908,8 @@ def main() -> None:
         logger.warning("Install with: pip install beautifulsoup4")
 
     if not SELENIUM_AVAILABLE and not args.no_browser:
-        logger.warning("undetected-chromedriver not installed - browser bypass disabled")
-        logger.warning("Install with: pip install undetected-chromedriver selenium")
+        logger.warning("Playwright not installed - browser fallback disabled")
+        logger.warning(INSTALL_HINT)
 
     # Get pending papers
     papers = get_pending_nature_papers()
@@ -934,7 +926,7 @@ def main() -> None:
     # Setup browser if available and not disabled
     driver = None
     if SELENIUM_AVAILABLE and not args.no_browser:
-        logger.info("Starting browser for Cloudflare bypass...")
+        logger.info("Starting browser...")
         driver = setup_browser(headless=args.headless)
         logger.info("Browser ready")
 

@@ -18,8 +18,8 @@ scripts/
 │       ├── __init__.py    orchestrator: extract_features(pdf_path)
 │       ├── hashes.py      SHA-256 + TLSH
 │       ├── structure.py   pikepdf page count + outline + XMP/Info
-│       ├── visual.py      pymupdf render + imagehash pHash/dHash
-│       ├── text.py        pymupdf text + datasketch MinHash + langdetect
+│       ├── visual.py      pdftoppm render (lib/pdf_backend.py) + imagehash pHash/dHash
+│       ├── text.py        pdftotext text (lib/pdf_backend.py) + datasketch MinHash + langdetect
 │       ├── ocr.py         ocrmypdf fallback for scanned PDFs
 │       └── doi.py         DOI regex + pdf2doi + CrossRef enrichment
 ├── build_features.py      corpus indexer (multi-process, incremental)
@@ -32,7 +32,8 @@ scripts/
 Dependencies (already installed via `pip --user --break-system-packages`):
 
 ```
-pikepdf pymupdf imagehash datasketch pdf2doi langdetect python-tlsh
+pikepdf pypdf imagehash datasketch pdf2doi langdetect python-tlsh
+poppler-utils (pdftotext, pdftoppm, pdfinfo; apt)
 ocrmypdf tesseract-ocr rapidfuzz pandas openpyxl
 ```
 

@@ -13,10 +13,15 @@ NOTE: Royal Society uses Cloudflare protection which blocks simple HTTP requests
 This script tries multiple strategies:
 1. Direct PDF URLs (often blocked by Cloudflare)
 2. Unpaywall API for alternative OA locations (repositories, PubMed Central, etc.)
-3. Optional: Selenium browser automation (--use-browser flag)
+3. Optional: Playwright browser automation (--use-browser flag)
 
-For best results with Cloudflare-protected sites, use --use-browser mode
-which requires: pip install selenium undetected-chromedriver
+Browser: since 21 Oct 2026 (licence change to Apache-2.0) --use-browser uses
+Playwright through scripts/lib/browser.py instead of undetected-chromedriver
+and Selenium. Playwright must be installed first:
+    pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by
+hand or through an approved route.
 
 Usage:
     ./venv/bin/python scripts/download_royal_society.py
@@ -41,15 +46,12 @@ from typing import Optional
 
 import requests
 
-# Optional imports for browser-based downloading
-try:
-    import undetected_chromedriver as uc
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    SELENIUM_AVAILABLE = True
-except ImportError:
-    SELENIUM_AVAILABLE = False
+# Browser helper (Playwright via scripts/lib/browser.py)
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import launch_driver, playwright_available, INSTALL_HINT
+
+SELENIUM_AVAILABLE = playwright_available()  # name kept; now means "Playwright available"
 
 # ============================================================================
 # CONFIGURATION
@@ -383,36 +385,18 @@ def query_unpaywall(doi: str, email: str, logger: logging.Logger) -> dict:
 
 def setup_browser(download_dir: Path, logger: logging.Logger) -> Optional[object]:
     """
-    Set up undetected Chrome browser for downloading PDFs.
+    Set up a Playwright browser for downloading PDFs.
 
     Returns browser instance or None if setup fails.
     """
     if not SELENIUM_AVAILABLE:
-        logger.error("Selenium not available. Install: pip install selenium undetected-chromedriver")
+        logger.error(f"Playwright not available. {INSTALL_HINT}")
         return None
 
     try:
-        # Configure Chrome options
-        options = uc.ChromeOptions()
-        options.add_argument("--headless=new")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--window-size=1920,1080")
-
-        # Set download preferences
-        prefs = {
-            "download.default_directory": str(download_dir),
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "plugins.always_open_pdf_externally": True,
-            "profile.default_content_settings.popups": 0,
-        }
-        options.add_experimental_option("prefs", prefs)
-
-        # Create browser
-        driver = uc.Chrome(options=options, version_main=None)
-        driver.set_page_load_timeout(60)
+        # Downloads (and PDFs opened in the viewer) are saved into download_dir
+        driver = launch_driver(headless=True, window_size=(1920, 1080),
+                               download_dir=download_dir, page_load_timeout=60)
 
         logger.info("Browser initialized successfully")
         return driver
@@ -429,7 +413,7 @@ def download_with_browser(
     logger: logging.Logger,
 ) -> dict:
     """
-    Download PDF using browser automation to bypass Cloudflare.
+    Download PDF using browser automation (no bot-detection evasion).
 
     Returns dict with status and details.
     """
@@ -444,17 +428,14 @@ def download_with_browser(
             f.unlink()
 
         # Update download directory
-        driver.execute_cdp_cmd("Page.setDownloadBehavior", {
-            "behavior": "allow",
-            "downloadPath": str(temp_dir),
-        })
+        driver.set_download_dir(temp_dir)
 
         # Navigate to PDF URL
         logger.debug(f"Browser navigating to: {pdf_url}")
         driver.get(pdf_url)
 
-        # Wait for potential Cloudflare challenge
-        time.sleep(5)
+        # Wait for the page / any Cloudflare challenge to resolve (a download may arrive)
+        driver.sleep(5)
 
         # Check if we got a PDF or if we're on an error page
         current_url = driver.current_url
@@ -474,7 +455,7 @@ def download_with_browser(
                     downloaded_file = pdf_files[0]
                     break
 
-                time.sleep(1)
+                driver.sleep(1)
                 wait_time += 1
 
             if downloaded_file and downloaded_file.exists():
@@ -565,7 +546,7 @@ def download_paper(
     # Track all attempts for error reporting
     attempts_log = []
 
-    # Strategy 1: Browser-based download (best for Cloudflare-protected sites)
+    # Strategy 1: Browser-based download (for JavaScript-rendered pages; Cloudflare challenges will still block it)
     if driver is not None:
         result = download_with_browser(doi, output_path, driver, logger)
         attempts_log.append(f"browser: {result.get('message', result['status'])}")
@@ -645,7 +626,7 @@ def main():
     parser.add_argument(
         "--use-browser",
         action="store_true",
-        help="Use browser automation to bypass Cloudflare (requires selenium)",
+        help="Use browser automation (requires Playwright; does not evade Cloudflare)",
     )
     parser.add_argument(
         "--proxy",
@@ -700,8 +681,7 @@ def main():
     if args.use_browser:
         if not SELENIUM_AVAILABLE:
             logger.error(
-                "Browser mode requested but selenium not installed. "
-                "Install with: pip install selenium undetected-chromedriver"
+                f"Browser mode requested but Playwright not installed. {INSTALL_HINT}"
             )
             return
         driver = setup_browser(SHARKPAPERS, logger)

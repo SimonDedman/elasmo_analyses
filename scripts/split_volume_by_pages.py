@@ -32,10 +32,9 @@ import sys
 import unicodedata
 from pathlib import Path
 
-import pymupdf
-
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
+from lib import pdf_backend  # noqa: E402  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
 from fetch_free_sources import (  # noqa: E402
     compile_patterns, first_surname, load_papers, outstanding_scope, title_tokens,
 )
@@ -85,7 +84,10 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
-    doc = pymupdf.open(args.volume)
+    n_volume_pages = pdf_backend.page_count(args.volume)
+    page_text = pdf_backend.page_texts(args.volume)  # every page, one pdftotext call
+    if len(page_text) != n_volume_pages:
+        sys.exit(f"pdftotext returned {len(page_text)} pages for a {n_volume_pages}-page volume")
     staging = Path(args.staging_dir)
     staging.mkdir(parents=True, exist_ok=True)
     if not args.dry_run and any(staging.glob("*.pdf")):
@@ -108,11 +110,11 @@ def main():
             continue
         pdf_pages = [p + args.offset for a, b in ranges for p in range(a, b + 1)]
         rec["printed_pages"] = ", ".join(f"{a}-{b}" for a, b in ranges)
-        if min(pdf_pages) < 1 or max(pdf_pages) > len(doc):
+        if min(pdf_pages) < 1 or max(pdf_pages) > n_volume_pages:
             cov["failed"]["pages_outside_volume"] += 1
             rec["status"] = "pages_outside_volume"
             continue
-        text = _ascii(" ".join(doc[p - 1].get_text() for p in pdf_pages))
+        text = _ascii(" ".join(page_text[p - 1] for p in pdf_pages))
         taxa = taxa_in_title(r.get("title"))
         if taxa:
             found = [t for t in taxa if _ascii(t) in text or _ascii(t.split()[-1]) in text]
@@ -120,7 +122,7 @@ def main():
             detail = f"taxa {len(found)}/{len(taxa)}"
         else:
             want = title_tokens(re.sub(r"^\s*chapter\s+\d+\s*[.:]\s*", "", r.get("title") or "", flags=re.I))
-            first = title_tokens(_ascii(" ".join(doc[p - 1].get_text() for p in pdf_pages[:2])))
+            first = title_tokens(_ascii(" ".join(page_text[p - 1] for p in pdf_pages[:2])))
             hit = len({_ascii(w) for w in want} & first)
             title_ok = bool(want) and hit / len(want) >= args.min_coverage
             detail = f"title {hit}/{len(want)} on first 2 pages"
@@ -132,11 +134,8 @@ def main():
             rec["status"] = "would_stage" if ok else "would_hold"
             cov["staged" if ok else "not_attempted"] += 1
             continue
-        out = pymupdf.open()
-        for p in pdf_pages:
-            out.insert_pdf(doc, from_page=p - 1, to_page=p - 1)
         dest = staging / (f"{lid}.pdf" if ok else f"{lid}.pdf.held")
-        out.save(dest)
+        pdf_backend.extract_pages(args.volume, [p - 1 for p in pdf_pages], dest)
         if ok:
             cov["staged"] += 1
             rec["status"] = "staged"

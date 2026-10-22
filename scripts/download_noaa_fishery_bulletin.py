@@ -12,6 +12,14 @@ Strategy:
 
 Note: NOAA Fishery Bulletin PDFs are in the public domain.
 
+Browser: since 21 Oct 2026 (licence change to Apache-2.0) this script uses
+Playwright through scripts/lib/browser.py instead of undetected-chromedriver
+and Selenium. Playwright must be installed first:
+    pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by
+hand or through an approved route.
+
 Author: Simon Dedman / Claude
 Date: 2025-11-17
 """
@@ -23,8 +31,9 @@ import time
 from tqdm import tqdm
 import logging
 import re
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import By, launch_driver
 
 # ============================================================================
 # CONFIGURATION
@@ -58,21 +67,8 @@ def create_browser(headless: bool = False):
     """Create browser with PDF download configuration."""
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-    options = uc.ChromeOptions()
-
-    if headless:
-        options.add_argument('--headless=new')
-
-    # Configure automatic PDF downloads
-    options.add_experimental_option('prefs', {
-        'download.default_directory': str(DOWNLOAD_DIR.absolute()),
-        'download.prompt_for_download': False,
-        'download.directory_upgrade': True,
-        'plugins.always_open_pdf_externally': True,
-        'plugins.plugins_disabled': ['Chrome PDF Viewer']
-    })
-
-    driver = uc.Chrome(options=options)
+    # PDFs are saved into DOWNLOAD_DIR (also when opened in the viewer)
+    driver = launch_driver(headless=headless, download_dir=DOWNLOAD_DIR.absolute())
     return driver
 
 
@@ -190,7 +186,7 @@ def download_pdf_with_browser(driver, pdf_url: str, literature_id: str,
         # Wait for download to complete
         download_complete = False
         for _ in range(timeout):
-            time.sleep(1)
+            driver.sleep(1)
 
             # Check for downloaded PDF
             pdf_files = list(DOWNLOAD_DIR.glob('*.pdf'))
@@ -200,7 +196,7 @@ def download_pdf_with_browser(driver, pdf_url: str, literature_id: str,
 
                 # Check if download is complete (file size stable)
                 size1 = downloaded_file.stat().st_size
-                time.sleep(0.5)
+                driver.sleep(0.5)
                 size2 = downloaded_file.stat().st_size
 
                 if size1 == size2 and size1 > 0:

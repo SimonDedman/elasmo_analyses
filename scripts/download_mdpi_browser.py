@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 """
-Download MDPI papers using undetected-chromedriver to bypass Cloudflare.
+Download MDPI papers through a Playwright browser, then fetch the PDF with requests.
+
+Renamed from download_mdpi_undetected.py on 22 Oct 2026 (no callers). The "mdpi_undetected"
+source tag written to the database is kept, because existing rows use it.
+
+Browser layer (21 Oct 2026, licence): this script now uses Playwright through
+scripts/lib/browser.py instead of undetected-chromedriver (GPL-3.0). Playwright must
+be installed first (pip install playwright; python -m playwright install chromium).
+It no longer attempts to evade bot detection. Sites that block automated browsers
+(e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an
+approved route.
 """
 
 import os
@@ -12,12 +22,11 @@ import logging
 import argparse
 from pathlib import Path
 from datetime import datetime
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
 import requests
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, launch_driver, TimeoutException,
+                         playwright_available, INSTALL_HINT)
 
 # Setup
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -134,20 +143,10 @@ def mark_failed(db_path: Path, paper_id: int, error: str):
 
 
 def setup_driver(headless: bool = False):
-    """Setup undetected Chrome WebDriver."""
-    options = uc.ChromeOptions()
-
-    if headless:
-        options.add_argument('--headless=new')
-
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--window-size=1920,1080')
-
-    # Create driver with undetected-chromedriver
-    driver = uc.Chrome(options=options, use_subprocess=True)
-
-    return driver
+    """Set up a Playwright browser driver (via lib.browser)."""
+    if not playwright_available():
+        raise RuntimeError(INSTALL_HINT)
+    return launch_driver(headless=headless, window_size=(1920, 1080))
 
 
 def download_pdf_via_browser(driver, doi: str, dest_path: Path, timeout: int = 45) -> bool:
@@ -159,14 +158,12 @@ def download_pdf_via_browser(driver, doi: str, dest_path: Path, timeout: int = 4
     try:
         # Navigate to article page via DOI redirect
         driver.get(article_url)
-        time.sleep(4)  # Wait for redirect and any Cloudflare challenge
+        time.sleep(4)  # Wait for redirect
 
         # Wait for page to load
-        WebDriverWait(driver, timeout).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
+        driver.wait_for(By.TAG_NAME, "body", timeout)
 
-        # Give time for any JavaScript challenges to complete
+        # Give time for any JavaScript on the page to settle
         time.sleep(3)
 
         # Get the final URL after redirect
@@ -226,14 +223,14 @@ def download_pdf_via_browser(driver, doi: str, dest_path: Path, timeout: int = 4
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Download MDPI papers via undetected-chromedriver")
+    parser = argparse.ArgumentParser(description="Download MDPI papers via a Playwright browser")
     parser.add_argument('--test', type=int, default=0, help="Test mode: download only N papers")
     parser.add_argument('--headless', action='store_true', help="Run browser in headless mode")
     parser.add_argument('--delay', type=float, default=8.0, help="Delay between downloads (seconds)")
     args = parser.parse_args()
 
     logger.info("=" * 60)
-    logger.info("MDPI UNDETECTED DOWNLOADER")
+    logger.info("MDPI BROWSER DOWNLOADER")
     logger.info("=" * 60)
 
     papers = get_pending_mdpi_papers(DB_PATH)
@@ -247,7 +244,7 @@ def main():
         logger.info("No papers to download")
         return
 
-    logger.info("Starting undetected Chrome browser...")
+    logger.info("Starting Playwright browser...")
     driver = setup_driver(headless=args.headless)
 
     stats = {'downloaded': 0, 'failed': 0, 'existed': 0}

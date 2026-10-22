@@ -10,7 +10,11 @@ from dataclasses import dataclass, field, fields, asdict
 from typing import Optional
 
 
-EXTRACTOR_VERSION = 1
+# 2 (21 Oct 2026): text and page renders now come from Poppler via
+# scripts/lib/pdf_backend.py instead of PyMuPDF (licence). full_text_hash and
+# MinHash are not comparable across the two backends; pHash/dHash differ by
+# 0-6 bits. Every cached row is re-extracted on the next build_features run.
+EXTRACTOR_VERSION = 2
 
 SCHEMA_SQL = """
 CREATE TABLE IF NOT EXISTS pdf_features (

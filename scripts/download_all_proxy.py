@@ -20,12 +20,20 @@ Usage:
 
 Author: Simon Dedman / Claude
 Date: 2026-01-07
+
+Browser layer (21 Oct 2026, licence): this script now uses Playwright through
+scripts/lib/browser.py instead of undetected-chromedriver (GPL-3.0). Playwright must
+be installed first (pip install playwright; python -m playwright install chromium).
+It no longer attempts to evade bot detection. Sites that block automated browsers
+(e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an
+approved route.
 """
 
 import argparse
 import logging
 import re
 import sqlite3
+import sys
 import time
 import unicodedata
 from datetime import datetime
@@ -35,15 +43,11 @@ from dataclasses import dataclass
 
 import requests
 
-try:
-    import undetected_chromedriver as uc
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.common.exceptions import TimeoutException, WebDriverException
-    SELENIUM_AVAILABLE = True
-except ImportError:
-    SELENIUM_AVAILABLE = False
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, launch_driver, TimeoutException, WebDriverException,
+                         playwright_available, INSTALL_HINT)
+
+SELENIUM_AVAILABLE = playwright_available()
 
 
 # ============================================================================
@@ -377,31 +381,26 @@ def download_pdf_direct(url: str, logger: logging.Logger, session: Optional[requ
 
 
 # ============================================================================
-# SELENIUM BROWSER
+# BROWSER (Playwright via lib.browser)
 # ============================================================================
 
-def setup_browser(headless: bool = False) -> 'uc.Chrome':
+def setup_browser(headless: bool = False):
     if not SELENIUM_AVAILABLE:
-        raise RuntimeError("Selenium not available")
+        raise RuntimeError(INSTALL_HINT)
 
     # Create persistent profile directory
     CHROME_PROFILE_DIR.mkdir(parents=True, exist_ok=True)
 
-    options = uc.ChromeOptions()
-    if headless:
-        options.add_argument('--headless=new')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--window-size=1920,1080')
-
     # Use persistent profile to remember device/session (avoids 2FA each time)
-    options.add_argument(f'--user-data-dir={CHROME_PROFILE_DIR}')
-
-    return uc.Chrome(options=options, use_subprocess=True)
+    return launch_driver(
+        headless=headless,
+        window_size=(1920, 1080),
+        user_data_dir=CHROME_PROFILE_DIR,
+    )
 
 
 def get_pdf_via_browser(
-    driver: 'uc.Chrome',
+    driver,
     paper: Paper,
     publisher_config: dict,
     logger: logging.Logger
@@ -421,9 +420,7 @@ def get_pdf_via_browser(
         driver.get(proxy_doi_url)
         time.sleep(4)  # Longer wait for proxy redirect
 
-        WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
+        driver.wait_for(By.TAG_NAME, "body", 30)
 
         current_url = driver.current_url
         logger.debug(f"Current URL: {current_url}")
@@ -668,7 +665,7 @@ def download_paper(
     paper: Paper,
     publisher_key: str,
     publisher_config: dict,
-    driver: 'uc.Chrome',
+    driver,
     logger: logging.Logger,
     stats: PublisherStats
 ) -> bool:
@@ -729,7 +726,7 @@ def download_paper(
 def process_publisher(
     publisher_key: str,
     publisher_config: dict,
-    driver: 'uc.Chrome',
+    driver,
     logger: logging.Logger,
     test_limit: int = 0,
     retry_unavailable: bool = False,
@@ -818,7 +815,7 @@ def main():
     logger.info("")
 
     if not SELENIUM_AVAILABLE:
-        logger.error("Selenium not available. Install with: pip install undetected-chromedriver selenium")
+        logger.error(INSTALL_HINT)
         return
 
     # Setup browser

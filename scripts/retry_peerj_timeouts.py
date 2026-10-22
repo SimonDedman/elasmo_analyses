@@ -7,6 +7,15 @@ Retry PeerJ papers that timed out with:
 2. Better download detection
 3. Multiple retry attempts
 
+Since 21 Oct 2026 (licence change to Apache-2.0) this uses Playwright through
+scripts/lib/browser.py instead of undetected-chromedriver and Selenium.
+Playwright must be installed first: pip install playwright;
+python -m playwright install chromium
+
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by hand
+or through an approved route.
+
 Author: Simon Dedman / Claude
 Date: 2025-11-20
 """
@@ -17,10 +26,10 @@ from datetime import datetime
 import time
 from tqdm import tqdm
 import logging
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import By, launch_driver, playwright_available, INSTALL_HINT
 
 # Configuration
 BASE_DIR = Path(__file__).parent.parent
@@ -48,28 +57,21 @@ def create_browser(headless: bool = False):
     """Create browser with PDF download configuration."""
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-    options = uc.ChromeOptions()
+    if not playwright_available():
+        raise SystemExit(INSTALL_HINT)
 
-    if headless:
-        options.add_argument('--headless=new')
-
-    # Configure automatic PDF downloads
-    options.add_experimental_option('prefs', {
-        'download.default_directory': str(DOWNLOAD_DIR.absolute()),
-        'download.prompt_for_download': False,
-        'download.directory_upgrade': True,
-        'plugins.always_open_pdf_externally': True,
-        'plugins.plugins_disabled': ['Chrome PDF Viewer']
-    })
-
-    driver = uc.Chrome(options=options)
+    # Viewer PDFs and downloads are saved into download_dir by the helper
+    driver = launch_driver(headless=bool(headless), download_dir=DOWNLOAD_DIR.absolute())
     return driver
 
 
-def wait_for_download(download_dir: Path, timeout: int = 120, poll_interval: int = 5) -> Path:
+def wait_for_download(download_dir: Path, timeout: int = 120, poll_interval: int = 5, driver=None) -> Path:
     """
     Wait for a file to appear in download directory.
     Poll filesystem every poll_interval seconds.
+
+    Pass the driver so the wait uses driver.sleep(): Playwright only processes
+    download events while it is running, so time.sleep would never see the file.
     """
     start_time = time.time()
 
@@ -85,7 +87,10 @@ def wait_for_download(download_dir: Path, timeout: int = 120, poll_interval: int
             latest_pdf = max(complete_pdfs, key=lambda f: f.stat().st_mtime)
             return latest_pdf
 
-        time.sleep(poll_interval)
+        if driver is not None:
+            driver.sleep(poll_interval)
+        else:
+            time.sleep(poll_interval)
 
     return None
 
@@ -128,9 +133,7 @@ def download_peerj_pdf_retry(driver, doi: str, literature_id: str, max_attempts:
 
             # Strategy 1: Direct PDF download button
             try:
-                pdf_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.CSS_SELECTOR, 'a[href*=".pdf"]'))
-                )
+                pdf_button = driver.wait_for(By.CSS_SELECTOR, 'a[href*=".pdf"]', 10, clickable=True)
                 driver.execute_script("arguments[0].click();", pdf_button)
                 logging.info("Clicked PDF download button (Strategy 1)")
                 download_clicked = True
@@ -142,7 +145,7 @@ def download_peerj_pdf_retry(driver, doi: str, literature_id: str, max_attempts:
                 try:
                     download_link = driver.find_element(By.LINK_TEXT, "Download")
                     driver.execute_script("arguments[0].click();", download_link)
-                    time.sleep(2)
+                    driver.sleep(2)
 
                     pdf_option = driver.find_element(By.LINK_TEXT, "PDF")
                     driver.execute_script("arguments[0].click();", pdf_option)
@@ -171,7 +174,7 @@ def download_peerj_pdf_retry(driver, doi: str, literature_id: str, max_attempts:
 
             # Wait for download with polling
             logging.info(f"Waiting up to {PDF_DOWNLOAD_WAIT}s for download...")
-            downloaded_file = wait_for_download(DOWNLOAD_DIR, timeout=PDF_DOWNLOAD_WAIT, poll_interval=POLL_INTERVAL)
+            downloaded_file = wait_for_download(DOWNLOAD_DIR, timeout=PDF_DOWNLOAD_WAIT, poll_interval=POLL_INTERVAL, driver=driver)
 
             if downloaded_file and downloaded_file.exists():
                 file_size = downloaded_file.stat().st_size

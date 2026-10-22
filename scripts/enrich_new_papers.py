@@ -61,7 +61,7 @@ STEPS = [
 # heavier, occasionally-run pass. enrich_authors_openalex.py --resume regenerates
 # openalex_paper_authors.csv from raw API records and DROPS the inferred `gender`
 # column those post-processors add, so build_first_author_namsor.py deliberately
-# reads its gender-guesser fallback from openalex_unique_authors_cleaned.csv
+# reads its cached gender fallback from openalex_unique_authors_cleaned.csv
 # (which persists across resume runs) rather than paper_authors. Run the full
 # post-processor chain separately if the atlas/institution figures need refreshed
 # institution-fill or name-dedup.

@@ -6,7 +6,7 @@ Download PDFs from ResearchGate for papers that couldn't be obtained elsewhere.
 
 This script:
 1. Queries the database for papers marked as 'unavailable'
-2. Uses undetected_chromedriver to bypass bot detection
+2. Drives Chromium through Playwright (scripts/lib/browser.py)
 3. Searches ResearchGate for each paper by title
 4. Downloads publicly available PDFs (not requiring author request)
 5. Saves to /media/simon/data/Documents/Si Work/Papers & Books/SharkPapers/{YEAR}/
@@ -29,6 +29,13 @@ Usage:
 
 Author: Simon Dedman / Claude
 Date: 2026-01-06
+
+Browser layer (21 Oct 2026, licence): this script now uses Playwright through
+scripts/lib/browser.py instead of undetected-chromedriver (GPL-3.0). Playwright must
+be installed first (pip install playwright; python -m playwright install chromium).
+It no longer attempts to evade bot detection. Sites that block automated browsers
+(e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an
+approved route.
 """
 
 import argparse
@@ -37,6 +44,7 @@ import os
 import re
 import shutil
 import sqlite3
+import sys
 import time
 import unicodedata
 from datetime import datetime
@@ -45,17 +53,25 @@ from pathlib import Path
 from typing import Optional, Tuple
 from urllib.parse import quote_plus, urljoin
 
-try:
-    import undetected_chromedriver as uc
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.common.exceptions import TimeoutException, WebDriverException
-    SELENIUM_AVAILABLE = True
-except ImportError:
-    SELENIUM_AVAILABLE = False
-    print("ERROR: Selenium not installed. Run: pip install selenium undetected-chromedriver")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, launch_driver, TimeoutException, WebDriverException,
+                         playwright_available, INSTALL_HINT)
+
+SELENIUM_AVAILABLE = playwright_available()
+if not SELENIUM_AVAILABLE:
+    print(f"ERROR: {INSTALL_HINT}")
     exit(1)
+
+# Live browser driver, so download-polling loops can pump Playwright's download events
+_ACTIVE_DRIVER = None
+
+
+def _pump_sleep(seconds: float) -> None:
+    """Sleep via the browser driver when one exists (downloads arrive as events)."""
+    if _ACTIVE_DRIVER is not None:
+        _ACTIVE_DRIVER.sleep(seconds)
+    else:
+        time.sleep(seconds)
 
 # ============================================================================
 # CONFIGURATION
@@ -233,52 +249,32 @@ def update_status(paper_id: int, status: str, source: str, notes: str = "") -> N
 # ============================================================================
 
 
-def setup_browser(logger: logging.Logger, headless: bool = False) -> Optional[uc.Chrome]:
+def setup_browser(logger: logging.Logger, headless: bool = False) -> Optional[object]:
     """
     Set up Chrome browser with persistent profile for cookie storage.
 
-    Uses undetected_chromedriver to avoid ResearchGate bot detection.
+    Uses Playwright (via lib.browser); it makes no attempt to evade bot detection.
     """
     try:
         profile_dir = COOKIE_DIR / "chrome_profile_researchgate"
         profile_dir.mkdir(parents=True, exist_ok=True)
 
-        options = uc.ChromeOptions()
-
-        if headless:
-            options.add_argument("--headless=new")
-
-        options.add_argument(f"--user-data-dir={profile_dir}")
-        options.add_argument("--profile-directory=ResearchGate")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--window-size=1400,900")
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_argument("--remote-debugging-port=0")
-
         # Create temp download directory
         temp_download_dir = COOKIE_DIR / "downloads_researchgate"
         temp_download_dir.mkdir(parents=True, exist_ok=True)
 
-        # Download preferences
-        prefs = {
-            "download.default_directory": str(temp_download_dir),
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing.enabled": True,
-            "plugins.always_open_pdf_externally": True,
-            "plugins.always_open_pdf_internally": False,
-            "profile.default_content_settings.popups": 0,
-            "download.extensions_to_open": "",
-            "profile.default_content_setting_values.automatic_downloads": 1,
-        }
-        options.add_experimental_option("prefs", prefs)
-        options.add_argument("--disable-pdf-viewer")
-
         logger.info("Starting Chrome for ResearchGate...")
-        driver = uc.Chrome(options=options, version_main=None)
-        driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
+        # Playwright saves downloads (and PDFs that would open in the viewer) into download_dir
+        driver = launch_driver(
+            headless=headless,
+            window_size=(1400, 900),
+            download_dir=temp_download_dir,
+            user_data_dir=profile_dir,
+            profile_directory="ResearchGate",
+            page_load_timeout=PAGE_LOAD_TIMEOUT,
+        )
+        global _ACTIVE_DRIVER
+        _ACTIVE_DRIVER = driver
 
         # Set global download directory
         global BROWSER_DOWNLOAD_DIR
@@ -292,7 +288,7 @@ def setup_browser(logger: logging.Logger, headless: bool = False) -> Optional[uc
         return None
 
 
-def login_to_researchgate(driver: uc.Chrome, username: str, password: str, logger: logging.Logger) -> bool:
+def login_to_researchgate(driver, username: str, password: str, logger: logging.Logger) -> bool:
     """
     Login to ResearchGate and maintain session.
 
@@ -353,7 +349,7 @@ def login_to_researchgate(driver: uc.Chrome, username: str, password: str, logge
 
 
 def search_researchgate(
-    driver: uc.Chrome,
+    driver,
     title: str,
     logger: logging.Logger,
     authors: str = None,
@@ -471,7 +467,7 @@ def search_researchgate(
 
 
 def search_only_researchgate(
-    driver: uc.Chrome,
+    driver,
     paper: tuple,
     logger: logging.Logger,
     stats: dict,
@@ -545,7 +541,7 @@ def search_only_researchgate(
 
 
 def download_from_researchgate(
-    driver: uc.Chrome,
+    driver,
     paper: tuple,
     logger: logging.Logger,
     stats: dict,
@@ -641,7 +637,7 @@ def download_from_researchgate(
                     else:
                         elem.click()
 
-                    time.sleep(3)
+                    _pump_sleep(3)
                     pdf_downloaded = wait_for_download(temp_dir, logger)
                     if not pdf_downloaded:
                         pdf_downloaded = check_browser_downloads(output_path, logger, timeout=5)
@@ -658,7 +654,7 @@ def download_from_researchgate(
                     for elem in elements:
                         try:
                             elem.click()
-                            time.sleep(3)
+                            _pump_sleep(3)
                             pdf_downloaded = wait_for_download(temp_dir, logger)
                             if not pdf_downloaded:
                                 pdf_downloaded = check_browser_downloads(output_path, logger, timeout=5)
@@ -729,10 +725,10 @@ def wait_for_download(temp_dir: Path, logger: logging.Logger, timeout: int = DOW
             return True
 
         if partial_files:
-            time.sleep(1)
+            _pump_sleep(1)
             continue
 
-        time.sleep(0.5)
+        _pump_sleep(0.5)
 
     return False
 
@@ -750,7 +746,7 @@ def check_browser_downloads(output_path: Path, logger: logging.Logger, timeout: 
     while time.time() - start < timeout:
         partial_files = list(browser_download_dir.glob("*.crdownload"))
         if partial_files:
-            time.sleep(0.5)
+            _pump_sleep(0.5)
             continue
 
         pdf_files = sorted(browser_download_dir.glob("*.pdf"), key=lambda p: p.stat().st_mtime, reverse=True)
@@ -764,7 +760,7 @@ def check_browser_downloads(output_path: Path, logger: logging.Logger, timeout: 
                     return True
             newest_pdf.unlink()
 
-        time.sleep(0.5)
+        _pump_sleep(0.5)
 
     return False
 

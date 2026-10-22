@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
-"""Test if we can access actual species pages and find PDFs."""
+"""Test if we can access actual species pages and find PDFs.
 
-import undetected_chromedriver as uc
+Ported to Playwright through scripts/lib/browser.py (21 Oct 2026, licence: undetected-chromedriver is GPL-3.0).
+Playwright must be installed first: pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated browsers (e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an approved route.
+"""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import launch_driver
 import time
 import re
 
@@ -20,7 +28,7 @@ def test_pdf_access():
     print("TESTING PDF ACCESS ON ACTUAL SPECIES PAGES")
     print("=" * 80)
 
-    driver = uc.Chrome()
+    driver = launch_driver(headless=False)
 
     try:
         for common_name, url in test_urls:
@@ -76,7 +84,7 @@ def test_pdf_access():
     print("\n" + "=" * 80)
     print("CONCLUSION")
     print("=" * 80)
-    print("\nCloudflare bypass: ✅ Working!")
+    print("\nNote: pages blocked by Cloudflare are reported above, not bypassed.")
     print("URL pattern: Species pages use /species/{taxonid}/{assessmentid}")
     print("\nNext steps:")
     print("  1. Search for each species to get taxon ID")

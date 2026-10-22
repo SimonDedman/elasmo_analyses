@@ -29,6 +29,10 @@ import unicodedata
 from datetime import datetime
 from pathlib import Path
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib import pdf_backend  # noqa: E402  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
@@ -1511,8 +1515,7 @@ def whole_volume_reason(pdf_path, row: dict) -> str | None:
     if not want:
         return None
     try:
-        import pymupdf as _mu
-        have = _mu.open(str(pdf_path)).page_count
+        have = pdf_backend.page_count(pdf_path)
     except Exception:  # noqa: BLE001
         return None
     if have > 2 * want + 6:

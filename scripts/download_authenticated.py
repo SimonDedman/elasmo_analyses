@@ -34,6 +34,13 @@ Usage:
     # Skip login prompt (if already authenticated in a previous session)
     ./venv/bin/python scripts/download_authenticated.py --skip-login
 
+Browser control: Playwright through scripts/lib/browser.py (21 Oct 2026, licence:
+undetected-chromedriver is GPL-3.0). Playwright must be installed first:
+    pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated browsers
+(e.g. Cloudflare challenges, as MDPI does) will block it; fetch those papers by hand
+or through an approved route.
+
 Author: Simon Dedman / Claude
 Date: 2026-01-06
 """
@@ -51,16 +58,14 @@ from pathlib import Path
 from typing import Optional
 from urllib.parse import urlparse
 
-try:
-    import undetected_chromedriver as uc
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.common.exceptions import TimeoutException, WebDriverException
-    SELENIUM_AVAILABLE = True
-except ImportError:
-    SELENIUM_AVAILABLE = False
-    print("ERROR: Selenium not installed. Run: pip install selenium undetected-chromedriver")
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, Driver, launch_driver, TimeoutException, WebDriverException,
+                         playwright_available, INSTALL_HINT)
+
+SELENIUM_AVAILABLE = playwright_available()  # name kept; now means "Playwright importable"
+if not SELENIUM_AVAILABLE:
+    print(f"ERROR: {INSTALL_HINT}")
     exit(1)
 
 # ============================================================================
@@ -75,6 +80,18 @@ COOKIE_DIR = BASE_DIR / "browser_data"  # Persist cookies between sessions
 
 # Current browser download directory (set by setup_browser, used by check_browser_downloads)
 BROWSER_DOWNLOAD_DIR: Optional[Path] = None
+
+# Live browser driver (set by setup_browser). Playwright only processes download events
+# while it is running, so every wait that may span a download goes through _sleep().
+_DRIVER: Optional[Driver] = None
+
+
+def _sleep(seconds: float) -> None:
+    """time.sleep that lets Playwright deliver downloads while waiting."""
+    if _DRIVER is not None:
+        _DRIVER.sleep(seconds)
+    else:
+        time.sleep(seconds)
 
 # Publisher configurations
 PUBLISHERS = {
@@ -132,7 +149,7 @@ PUBLISHERS = {
     "mdpi": {
         "name": "MDPI",
         "doi_prefix": "10.3390/%",
-        "login_url": "https://www.mdpi.com/",  # No login needed - just Cloudflare bypass
+        "login_url": "https://www.mdpi.com/",  # No login needed; a Cloudflare challenge may block automated browsers
         "article_url": "https://doi.org/{doi}",
         "note": "Open Access but Cloudflare protected - manual challenge may be needed",
     },
@@ -387,11 +404,10 @@ def get_publisher_stats() -> dict:
 # ============================================================================
 
 
-def setup_browser(logger: logging.Logger, headless: bool = False, publisher_key: str = "default") -> Optional[uc.Chrome]:
+def setup_browser(logger: logging.Logger, headless: bool = False, publisher_key: str = "default") -> Optional[Driver]:
     """
-    Set up Chrome browser with persistent profile for cookie storage.
+    Set up a Playwright browser with persistent profile for cookie storage.
 
-    Uses undetected_chromedriver to avoid bot detection.
     Uses a publisher-specific Chrome profile to allow parallel downloads.
     """
     try:
@@ -399,58 +415,23 @@ def setup_browser(logger: logging.Logger, headless: bool = False, publisher_key:
         profile_dir = COOKIE_DIR / f"chrome_profile_{publisher_key}"
         profile_dir.mkdir(parents=True, exist_ok=True)
 
-        options = uc.ChromeOptions()
-
-        if headless:
-            options.add_argument("--headless=new")
-
-        # Use completely separate user data directory (avoids conflicts with main Chrome)
-        options.add_argument(f"--user-data-dir={profile_dir}")
-        options.add_argument(f"--profile-directory=PaperDownloader_{publisher_key}")
-
-        # Standard options
-        options.add_argument("--disable-gpu")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--window-size=1400,900")
-        options.add_argument("--disable-blink-features=AutomationControlled")
-
-        # Use a different remote debugging port to avoid conflicts
-        options.add_argument("--remote-debugging-port=0")  # Auto-select available port
-
         # Create a publisher-specific temp download directory for browser
         temp_download_dir = COOKIE_DIR / f"downloads_{publisher_key}"
         temp_download_dir.mkdir(parents=True, exist_ok=True)
 
-        # Download preferences - FORCE PDF download instead of viewing
-        prefs = {
-            # Download settings
-            "download.default_directory": str(temp_download_dir),
-            "download.prompt_for_download": False,
-            "download.directory_upgrade": True,
-            "safebrowsing.enabled": True,
-
-            # PDF settings - force download, never view
-            "plugins.always_open_pdf_externally": True,
-            "plugins.always_open_pdf_internally": False,
-            "plugins.plugins_disabled": ["Chrome PDF Viewer"],
-
-            # Allow automatic downloads
-            "profile.default_content_settings.popups": 0,
-            "download.extensions_to_open": "",
-            "profile.default_content_setting_values.automatic_downloads": 1,
-
-            # Disable PDF plugin extension
-            "plugins.plugins_list": [{"enabled": False, "name": "Chrome PDF Viewer"}],
-        }
-        options.add_experimental_option("prefs", prefs)
-
-        # Disable Chrome's PDF viewer completely via command line
-        options.add_argument("--disable-pdf-viewer")
-
-        logger.info("Starting Chrome with separate profile (won't conflict with your browser)...")
-        driver = uc.Chrome(options=options, version_main=None)
-        driver.set_page_load_timeout(PAGE_LOAD_TIMEOUT)
+        # Separate user data directory (avoids conflicts with main Chrome). Playwright saves
+        # every download (and PDFs that would open in the viewer) into download_dir.
+        logger.info("Starting browser with separate profile (won't conflict with your browser)...")
+        driver = launch_driver(
+            headless=headless,
+            window_size=(1400, 900),
+            download_dir=temp_download_dir,
+            user_data_dir=profile_dir,
+            profile_directory=f"PaperDownloader_{publisher_key}",
+            page_load_timeout=PAGE_LOAD_TIMEOUT,
+        )
+        global _DRIVER
+        _DRIVER = driver
 
         # Set global download directory for check_browser_downloads function
         global BROWSER_DOWNLOAD_DIR
@@ -466,7 +447,7 @@ def setup_browser(logger: logging.Logger, headless: bool = False, publisher_key:
         return None
 
 
-def wait_for_login(driver: uc.Chrome, logger: logging.Logger, publisher_key: str) -> bool:
+def wait_for_login(driver: Driver, logger: logging.Logger, publisher_key: str) -> bool:
     """
     Navigate to publisher login and wait for user to complete FIU authentication.
 
@@ -532,7 +513,7 @@ def wait_for_login(driver: uc.Chrome, logger: logging.Logger, publisher_key: str
 
 
 def download_paper_authenticated(
-    driver: uc.Chrome,
+    driver: Driver,
     paper: tuple,
     logger: logging.Logger,
     stats: dict,
@@ -592,18 +573,15 @@ def download_paper_authenticated(
 
     # Set download directory
     try:
-        driver.execute_cdp_cmd("Page.setDownloadBehavior", {
-            "behavior": "allow",
-            "downloadPath": str(temp_dir),
-        })
+        driver.set_download_dir(temp_dir)
     except:
-        pass  # May fail in some Chrome versions
+        pass
 
     try:
         # Navigate to DOI
         doi_url = f"https://doi.org/{doi}"
         driver.get(doi_url)
-        time.sleep(3)
+        _sleep(3)
 
         # Get current URL after redirect
         current_url = driver.current_url
@@ -680,7 +658,7 @@ def download_paper_authenticated(
                     logger.info(f"    Found PDF text link: {text} -> {href[:60] if href else 'click'}...")
                     try:
                         elem.click()
-                        time.sleep(3)
+                        _sleep(3)
                         close_extra_tabs(driver, logger)  # Clean up tabs after each click
                         pdf_downloaded = wait_for_download(temp_dir, logger)
                         if not pdf_downloaded:
@@ -692,7 +670,7 @@ def download_paper_authenticated(
                     except:
                         if href:
                             driver.get(href)
-                            time.sleep(3)
+                            _sleep(3)
                             close_extra_tabs(driver, logger)  # Clean up tabs after navigation
                             pdf_downloaded = wait_for_download(temp_dir, logger)
                             if not pdf_downloaded:
@@ -719,7 +697,7 @@ def download_paper_authenticated(
                             logger.info(f"    Found download button: {tag} title='{title}'")
                             try:
                                 elem.click()
-                                time.sleep(3)
+                                _sleep(3)
                                 close_extra_tabs(driver, logger)  # Clean up tabs after click
                                 # Check temp dir OR browser auto-download
                                 pdf_downloaded = wait_for_download(temp_dir, logger)
@@ -736,11 +714,11 @@ def download_paper_authenticated(
                             logger.debug(f"    Found PDF link: {href[:80]}...")
                             try:
                                 elem.click()
-                                time.sleep(2)
+                                _sleep(2)
                                 close_extra_tabs(driver, logger)  # Clean up tabs after click
                             except:
                                 driver.get(href)
-                                time.sleep(2)
+                                _sleep(2)
                                 close_extra_tabs(driver, logger)  # Clean up tabs after navigation
                             # Check temp dir OR browser auto-download
                             pdf_downloaded = wait_for_download(temp_dir, logger)
@@ -817,7 +795,7 @@ def download_paper_authenticated(
                 try:
                     logger.debug(f"    Trying constructed URL: {pdf_url[:80]}...")
                     driver.get(pdf_url)
-                    time.sleep(3)
+                    _sleep(3)
 
                     pdf_downloaded = wait_for_download(temp_dir, logger)
                     if pdf_downloaded:
@@ -890,15 +868,15 @@ def wait_for_download(temp_dir: Path, logger: logging.Logger, timeout: int = DOW
 
         if partial_files:
             # Download in progress
-            time.sleep(1)
+            _sleep(1)
             continue
 
-        time.sleep(0.5)
+        _sleep(0.5)
 
     return False
 
 
-def check_page_is_pdf(driver: uc.Chrome, temp_dir: Path, output_path: Path, logger: logging.Logger) -> bool:
+def check_page_is_pdf(driver: Driver, temp_dir: Path, output_path: Path, logger: logging.Logger) -> bool:
     """Check if current page is a PDF and save it if so."""
     import requests
 
@@ -972,7 +950,7 @@ def check_browser_downloads(output_path: Path, logger: logging.Logger, timeout: 
         # Check for .crdownload files (download in progress)
         partial_files = list(browser_download_dir.glob("*.crdownload"))
         if partial_files:
-            time.sleep(0.5)
+            _sleep(0.5)
             continue
 
         # Look for PDF files
@@ -990,7 +968,7 @@ def check_browser_downloads(output_path: Path, logger: logging.Logger, timeout: 
             # Not a valid PDF
             newest_pdf.unlink()
 
-        time.sleep(0.5)
+        _sleep(0.5)
 
     return False
 
@@ -1013,7 +991,7 @@ def clear_browser_downloads(logger: logging.Logger) -> None:
                 pass
 
 
-def close_extra_tabs(driver: uc.Chrome, logger: logging.Logger) -> None:
+def close_extra_tabs(driver: Driver, logger: logging.Logger) -> None:
     """Close all tabs except the first one to prevent tab accumulation."""
     try:
         handles = driver.window_handles
@@ -1159,7 +1137,7 @@ def main():
 
             # Handle login/Cloudflare based on publisher
             if pub_key == "mdpi":
-                # MDPI doesn't need login - just Cloudflare bypass
+                # MDPI needs no login; a Cloudflare challenge may need doing by hand
                 if not args.skip_login:
                     print("\n" + "=" * 70)
                     print("MDPI - CLOUDFLARE BYPASS")
@@ -1173,7 +1151,7 @@ def main():
 
                     try:
                         driver.get("https://www.mdpi.com/")
-                        time.sleep(3)
+                        _sleep(3)
                         input("Complete any Cloudflare challenge, then press Enter...")
                     except Exception as e:
                         logger.warning(f"Error loading MDPI: {e}")
@@ -1190,7 +1168,7 @@ def main():
                 download_paper_authenticated(driver, paper, logger, stats, temp_dir)
 
                 # Rate limiting
-                time.sleep(DELAY_BETWEEN_PAPERS)
+                _sleep(DELAY_BETWEEN_PAPERS)
 
                 # Progress report
                 if i % 10 == 0:

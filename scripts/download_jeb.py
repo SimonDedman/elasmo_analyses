@@ -16,8 +16,18 @@ This script:
 1. Queries database for JEB papers (10.1242/%) not yet downloaded
 2. Checks Unpaywall API for open access versions
 3. Attempts direct PDF extraction from JEB pages
-4. Uses Selenium for JavaScript-rendered content when needed
+4. Uses a browser (Playwright) for JavaScript-rendered content when needed
 5. Supports university library proxy (FIU OpenAthens) for authenticated access
+
+Browser: since 21 Oct 2026 (licence change to Apache-2.0) this script uses
+Playwright through scripts/lib/browser.py instead of undetected-chromedriver
+and Selenium. Playwright must be installed first:
+    pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by
+hand or through an approved route.
+With --use-profile the real Google Chrome profile is used (channel="chrome"),
+so Chrome must not be open on that profile at the time.
 
 Usage:
     ./venv/bin/python scripts/download_jeb.py
@@ -32,6 +42,7 @@ import argparse
 import logging
 import re
 import sqlite3
+import sys
 import time
 import unicodedata
 from datetime import datetime
@@ -40,16 +51,12 @@ from typing import Optional, Tuple
 
 import requests
 
-# Try to import browser-based tools
-try:
-    import undetected_chromedriver as uc
-    from selenium.webdriver.common.by import By
-    from selenium.webdriver.support.ui import WebDriverWait
-    from selenium.webdriver.support import expected_conditions as EC
-    from selenium.common.exceptions import TimeoutException, WebDriverException
-    SELENIUM_AVAILABLE = True
-except ImportError:
-    SELENIUM_AVAILABLE = False
+# Browser helper (Playwright via scripts/lib/browser.py)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, Driver, launch_driver, TimeoutException, WebDriverException,
+                         playwright_available, INSTALL_HINT)
+
+SELENIUM_AVAILABLE = playwright_available()  # name kept; now means "Playwright available"
 
 
 # ============================================================================
@@ -469,30 +476,21 @@ def download_pdf_direct(
 # SELENIUM BROWSER AUTOMATION
 # ============================================================================
 
-def setup_selenium_driver(headless: bool = True, use_profile: bool = False) -> 'uc.Chrome':
-    """Setup undetected Chrome WebDriver."""
+def setup_selenium_driver(headless: bool = True, use_profile: bool = False) -> 'Driver':
+    """Set up a Playwright browser (name kept from the Selenium version)."""
     if not SELENIUM_AVAILABLE:
         return None
 
-    options = uc.ChromeOptions()
-
-    if headless:
-        options.add_argument('--headless=new')
-
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--window-size=1920,1080')
-
     if use_profile:
-        options.add_argument('--user-data-dir=/home/simon/.config/google-chrome')
-        options.add_argument('--profile-directory=Default')
-
-    driver = uc.Chrome(options=options, use_subprocess=True)
-    return driver
+        # Real Chrome profile: Chrome must not be open on it at the time.
+        return launch_driver(headless=headless, window_size=(1920, 1080),
+                             user_data_dir='/home/simon/.config/google-chrome',
+                             profile_directory='Default', channel='chrome')
+    return launch_driver(headless=headless, window_size=(1920, 1080))
 
 
 def download_via_selenium(
-    driver: 'uc.Chrome',
+    driver: 'Driver',
     doi: str,
     logger: logging.Logger
 ) -> Tuple[bool, Optional[bytes], str]:
@@ -505,9 +503,7 @@ def download_via_selenium(
         time.sleep(3)
 
         # Wait for page to load
-        WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
+        driver.wait_for(By.TAG_NAME, "body", 30)
 
         current_url = driver.current_url
         logger.debug(f"Redirected to: {current_url}")
@@ -594,7 +590,7 @@ def download_via_selenium(
 
 def download_paper(
     paper: tuple,
-    driver: Optional['uc.Chrome'],
+    driver: Optional['Driver'],
     logger: logging.Logger,
     stats: dict,
     unpaywall_email: str = UNPAYWALL_EMAIL
@@ -791,8 +787,8 @@ def main() -> None:
             logger.warning("Continuing with Unpaywall only")
 
     elif not SELENIUM_AVAILABLE and not args.no_selenium:
-        logger.warning("undetected-chromedriver not installed - browser bypass disabled")
-        logger.warning("Install with: pip install undetected-chromedriver selenium")
+        logger.warning("Playwright not installed - browser fallback disabled")
+        logger.warning(INSTALL_HINT)
 
     # Statistics
     stats = {

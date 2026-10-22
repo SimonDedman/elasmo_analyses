@@ -3,6 +3,11 @@
 MinHash is over word-shingles of length 7 for corpus-scale Jaccard
 similarity via datasketch LSH. Falls back to OCR for scanned PDFs
 when `ocr_if_needed` and extracted word count < 100.
+
+Text comes from Poppler's pdftotext (-raw) through scripts/lib/pdf_backend.py
+(PyMuPDF until 21 Oct 2026). It is close to PyMuPDF's text but not identical,
+so full_text_hash and MinHash values are only comparable within one backend:
+schema.EXTRACTOR_VERSION was bumped to 2 so cached rows are re-extracted.
 """
 from __future__ import annotations
 
@@ -11,11 +16,18 @@ import pathlib
 import re
 from typing import Optional
 
-import fitz
 import numpy as np
 from datasketch import MinHash
 
 from . import ocr as _ocr
+
+import sys as _sys
+from pathlib import Path as _Path
+
+_SCRIPTS = str(_Path(__file__).resolve().parents[2])
+if _SCRIPTS not in _sys.path:
+    _sys.path.insert(0, _SCRIPTS)
+from lib import pdf_backend  # noqa: E402  pypdf + Poppler; PyMuPDF removed 21 Oct 2026 (AGPL)
 
 
 _SHINGLE_N = 7
@@ -38,18 +50,10 @@ def _default_result() -> dict:
     }
 
 
-def _extract_pages(doc: "fitz.Document") -> tuple[str, Optional[str]]:
-    """Return (full_text, first_page_text)."""
-    parts: list[str] = []
-    first_page: Optional[str] = None
-    for i in range(doc.page_count):
-        try:
-            t = doc.load_page(i).get_text("text")
-        except Exception:
-            t = ""
-        if i == 0:
-            first_page = t
-        parts.append(t)
+def _extract_pages(pdf_path: pathlib.Path) -> tuple[str, Optional[str]]:
+    """Return (full_text, first_page_text). Raises if the PDF cannot be read."""
+    parts = pdf_backend.page_texts(pdf_path)
+    first_page: Optional[str] = parts[0] if parts else None
     return "\n\f\n".join(parts), first_page
 
 
@@ -92,17 +96,9 @@ def compute(pdf_path: pathlib.Path, ocr_if_needed: bool = True) -> dict:
     out = _default_result()
     try:
         try:
-            doc = fitz.open(pdf_path)
+            full_text, first_page_text = _extract_pages(pdf_path)
         except Exception:
             return out
-
-        try:
-            full_text, first_page_text = _extract_pages(doc)
-        finally:
-            try:
-                doc.close()
-            except Exception:
-                pass
 
         word_count = len(full_text.split())
 

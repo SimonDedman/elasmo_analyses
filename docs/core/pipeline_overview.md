@@ -160,7 +160,7 @@ false-positive patterns:
 | Layer | Script | Source |
 |-------|--------|--------|
 | Authors + institutions | `enrich_authors_openalex.py` | OpenAlex (batch DOI) |
-| Gender / origin / diaspora | `enrich_namsor.py`, `infer_author_gender.py`, `genderize_daily.py` | NamSor, gender-guesser, Genderize.io |
+| Gender / origin / diaspora | `enrich_namsor.py`, `genderize_daily.py` | NamSor, Genderize.io (the gender-guesser step, `infer_author_gender.py`, was retired 21 Oct 2026 for licence reasons) |
 | Citation impact | `enrich_altmetric.py` | Altmetric |
 | Journal quality | `lookup_scimago_journals.py` | SCImago |
 | Incremental (new papers) | `enrich_new_papers.py` | chains the above for freshly-ingested papers |

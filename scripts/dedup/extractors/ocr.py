@@ -8,7 +8,13 @@ import subprocess
 import tempfile
 from typing import Optional
 
-import fitz
+import sys as _sys
+from pathlib import Path as _Path
+
+_SCRIPTS = str(_Path(__file__).resolve().parents[2])
+if _SCRIPTS not in _sys.path:
+    _sys.path.insert(0, _SCRIPTS)
+from lib import pdf_backend  # noqa: E402  pypdf + Poppler; PyMuPDF removed 21 Oct 2026 (AGPL)
 
 
 def run_ocr(pdf_path: pathlib.Path, timeout_sec: int = 300) -> Optional[str]:
@@ -46,22 +52,10 @@ def run_ocr(pdf_path: pathlib.Path, timeout_sec: int = 300) -> Optional[str]:
             return None
 
         try:
-            doc = fitz.open(tmp_path)
+            parts = pdf_backend.page_texts(tmp_path)
         except Exception:
             return None
-        try:
-            parts = []
-            for i in range(doc.page_count):
-                try:
-                    parts.append(doc.load_page(i).get_text("text"))
-                except Exception:
-                    parts.append("")
-            return "\n\f\n".join(parts)
-        finally:
-            try:
-                doc.close()
-            except Exception:
-                pass
+        return "\n\f\n".join(parts)
     except Exception:
         return None
     finally:

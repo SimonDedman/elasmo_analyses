@@ -36,6 +36,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib import pdf_backend  # noqa: E402,F401  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
 import audit_drop_folder as adf  # noqa: E402
 import ingest_pdfs as ing  # noqa: E402
 
@@ -114,9 +115,9 @@ def stage(rows, folder: Path, person: str) -> None:
                         f"match by {r['match']}, DOI in text: {r['doi_in_text']}; "
                         f"page one: {r['first_line'][:120]}",
             "source": str(src)}, indent=1))
-        import pymupdf
+        from lib import pdf_backend
         manifest.append({"person": person, "src": str(src), "lid": lid, "staged": str(dst),
-                         "sha256": r["sha256"], "pages": pymupdf.open(str(dst)).page_count,
+                         "sha256": r["sha256"], "pages": pdf_backend.page_count(dst),
                          "prepared": r.get("source_override", "")})
     (wd / "manifest.json").write_text(json.dumps(manifest, indent=1))
     print(f"staged {len(manifest)} files in {wd}")

@@ -18,8 +18,10 @@ Output columns (matching the legacy file rebuild_viz_data.py expects):
     ethnicity_alt_first, gender_probability_first
 
 `gender_first_author_improved` = NamSor gender (title-cased Male/Female),
-falling back to the OpenAlex/gender-guesser `gender` column when NamSor has no
-verdict — hence "improved".
+falling back to the cached `gender` column of openalex_unique_authors_cleaned.csv
+when NamSor has no verdict — hence "improved". That column was written by
+gender-guesser before the library was removed (21 Oct 2026, licence); it is
+read as a local cache only and is no longer refreshed.
 
 Usage:  python scripts/build_first_author_namsor.py
 """
@@ -32,7 +34,7 @@ import pandas as pd
 BASE = Path("/media/simon/data/Documents/Si Work/PostDoc Work/EEA/2025/Data Panel")
 PAPER_AUTHORS = BASE / "outputs/openalex_paper_authors.csv"
 NAMSOR = BASE / "outputs/namsor_enrichment.csv"
-# gender_guesser fallback lives here (per-author). Used when NamSor has no
+# Cached gender fallback lives here (per-author; written by gender-guesser before 21 Oct 2026). Used when NamSor has no
 # verdict — the openalex_paper_authors.csv `gender` column is unreliable because
 # enrich_authors_openalex.py --resume regenerates that file from raw API records
 # and drops the inferred `gender` column, so we read the cleaned unique-authors
@@ -61,15 +63,16 @@ def main() -> int:
     # Join NamSor per-author enrichment onto the first author
     merged = first.merge(ns, left_on="openalex_author_id", right_on="id", how="left")
 
-    # gender_guesser fallback from the cleaned unique-authors table (keyed by
+    # Cached gender fallback from the cleaned unique-authors table (keyed by
     # openalex_author_id), joined on so it survives the paper_authors gender drop.
+    # Written by gender-guesser before 21 Oct 2026; read-only cache since then.
     cleaned = pd.read_csv(UNIQUE_CLEANED, dtype=str, low_memory=False)[["openalex_author_id", "gender"]]
-    cleaned = cleaned.rename(columns={"gender": "gender_guesser"}).drop_duplicates("openalex_author_id")
+    cleaned = cleaned.rename(columns={"gender": "gender_cached"}).drop_duplicates("openalex_author_id")
     merged = merged.merge(cleaned, on="openalex_author_id", how="left")
 
-    # NamSor gender (title-cased) with fallback to the gender-guesser verdict.
+    # NamSor gender (title-cased) with fallback to the cached verdict.
     ns_gender = _titlecase_gender(merged.get("namsor_gender", pd.Series(index=merged.index, dtype=str)))
-    oa_gender = _titlecase_gender(merged.get("gender_guesser", pd.Series(index=merged.index, dtype=str)))
+    oa_gender = _titlecase_gender(merged.get("gender_cached", pd.Series(index=merged.index, dtype=str)))
     gender = ns_gender.fillna(oa_gender)
 
     out = pd.DataFrame({

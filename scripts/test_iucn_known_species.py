@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
-"""Test bypass with well-known species."""
+"""Test whether IUCN species pages load for well-known species.
 
-import undetected_chromedriver as uc
+Ported to Playwright through scripts/lib/browser.py (21 Oct 2026, licence: undetected-chromedriver is GPL-3.0).
+Playwright must be installed first: pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated browsers (e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an approved route.
+"""
+
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import launch_driver
 import time
 import re
 
@@ -21,7 +29,7 @@ def test_known_species():
     print("TESTING KNOWN SPECIES")
     print("=" * 80)
 
-    driver = uc.Chrome()
+    driver = launch_driver(headless=False)
 
     try:
         for genus, species, common_name in test_species:

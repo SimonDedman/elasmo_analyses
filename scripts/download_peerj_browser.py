@@ -3,7 +3,16 @@
 Download PeerJ papers using browser automation.
 
 PeerJ requires browser interaction to download PDFs.
-Uses undetected-chromedriver to navigate to article page and click download.
+Navigates to the article page and clicks download.
+
+Since 21 Oct 2026 (licence change to Apache-2.0) this uses Playwright through
+scripts/lib/browser.py instead of undetected-chromedriver and Selenium.
+Playwright must be installed first: pip install playwright;
+python -m playwright install chromium
+
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by hand
+or through an approved route.
 """
 
 import pandas as pd
@@ -12,10 +21,10 @@ from datetime import datetime
 import time
 from tqdm import tqdm
 import logging
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import By, launch_driver, playwright_available, INSTALL_HINT
 
 # Configuration
 BASE_DIR = Path(__file__).parent.parent
@@ -42,21 +51,11 @@ def create_browser(headless: bool = False):
     """Create browser with PDF download configuration."""
     DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-    options = uc.ChromeOptions()
+    if not playwright_available():
+        raise SystemExit(INSTALL_HINT)
 
-    if headless:
-        options.add_argument('--headless=new')
-
-    # Configure automatic PDF downloads
-    options.add_experimental_option('prefs', {
-        'download.default_directory': str(DOWNLOAD_DIR.absolute()),
-        'download.prompt_for_download': False,
-        'download.directory_upgrade': True,
-        'plugins.always_open_pdf_externally': True,
-        'plugins.plugins_disabled': ['Chrome PDF Viewer']
-    })
-
-    driver = uc.Chrome(options=options)
+    # Viewer PDFs and downloads are saved into download_dir by the helper
+    driver = launch_driver(headless=bool(headless), download_dir=DOWNLOAD_DIR.absolute())
     return driver
 
 
@@ -179,13 +178,12 @@ def download_peerj_pdf(driver, doi: str, literature_id: str, timeout: int = 30) 
 
                 # Method 2: Wait for clickability then click
                 try:
-                    wait = WebDriverWait(driver, 5)
-                    clickable = wait.until(EC.element_to_be_clickable(pdf_link))
-                    clickable.click()
+                    # Element.click() waits for the element to be actionable
+                    pdf_link.click()
                     click_success = True
-                    logging.info("Clicked PDF link with WebDriverWait")
+                    logging.info("Clicked PDF link with native click")
                 except Exception as e2:
-                    logging.debug(f"WebDriverWait click failed: {e2}")
+                    logging.debug(f"Native click failed: {e2}")
 
                     # Method 3: Direct navigation if we have URL
                     if pdf_url and pdf_url.startswith('http'):
@@ -214,7 +212,7 @@ def download_peerj_pdf(driver, doi: str, literature_id: str, timeout: int = 30) 
         # Wait for download to complete
         download_complete = False
         for _ in range(timeout):
-            time.sleep(1)
+            driver.sleep(1)  # keeps Playwright processing download events
 
             # Check for downloaded PDF
             pdf_files = list(DOWNLOAD_DIR.glob('*.pdf'))
@@ -224,7 +222,7 @@ def download_peerj_pdf(driver, doi: str, literature_id: str, timeout: int = 30) 
 
                 # Check if download complete (file size stable)
                 size1 = downloaded_file.stat().st_size
-                time.sleep(0.5)
+                driver.sleep(0.5)
                 size2 = downloaded_file.stat().st_size
 
                 if size1 == size2 and size1 > 0:

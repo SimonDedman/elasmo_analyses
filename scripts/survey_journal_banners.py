@@ -15,8 +15,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-import fitz
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib import pdf_backend  # noqa: E402  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
 
 PROJECT = Path(__file__).resolve().parent.parent
 LIB = Path("/media/simon/data/Documents/Si Work/Papers & Books/SharkPapers")
@@ -102,11 +104,9 @@ def locate_pdf(authors: str, year, title: str, idx: dict) -> Path | None:
 
 def extract_banner(pdf_path: Path) -> str:
     try:
-        doc = fitz.open(pdf_path)
-        if len(doc) == 0:
+        if pdf_backend.page_count(pdf_path) == 0:
             return ""
-        text = doc[0].get_text()
-        doc.close()
+        text = pdf_backend.page_text(pdf_path, 0)
     except Exception as exc:
         return f"<error: {exc}>"
     # Collapse whitespace; take first BANNER_CHARS

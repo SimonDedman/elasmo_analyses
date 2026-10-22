@@ -58,14 +58,9 @@ def test_expected_page_length_reads_the_last_range():
 
 
 def test_whole_volume_is_held_and_an_article_is_not(tmp_path):
-    import pymupdf
+    from lib import pdf_backend
     def make(n):
-        d = pymupdf.open()
-        for _ in range(n):
-            d.new_page()
-        f = tmp_path / f"{n}.pdf"
-        d.save(f)
-        return f
+        return pdf_backend.write_blank_pdf(tmp_path / f"{n}.pdf", n)
     row = {"findspot_raw": "Copeia, 1950(3), 165\u2013175"}          # 11 printed pages
     assert whole_volume_reason(make(101), row)                        # whole issue
     assert whole_volume_reason(make(14), row) is None                 # article + plates

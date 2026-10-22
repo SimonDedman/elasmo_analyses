@@ -8,8 +8,16 @@ Supports: Marine Ecology Progress Series (MEPS), Endangered Species Research (ES
 
 Strategy:
 1. Query CrossRef API to get the exact PDF URL for each paper
-2. Use undetected_chromedriver to bypass bot protection
+2. Drive a normal Playwright browser (via scripts/lib/browser.py)
 3. Download PDFs with browser session cookies
+
+Since 21 Oct 2026 (licence change to Apache-2.0) this uses Playwright instead of
+undetected-chromedriver and Selenium. Playwright must be installed first:
+pip install playwright; python -m playwright install chromium
+
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by hand
+or through an approved route.
 
 Usage:
     ./venv/bin/python scripts/download_inter_research.py
@@ -31,11 +39,11 @@ from pathlib import Path
 from typing import Optional, Tuple
 
 import requests
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
+
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import (By, Driver, launch_driver, TimeoutException,
+                         playwright_available, INSTALL_HINT)
 
 
 # ============================================================================
@@ -312,35 +320,32 @@ def construct_pdf_url(doi: str, year: Optional[int]) -> Optional[str]:
 # BROWSER AUTOMATION
 # ============================================================================
 
-def setup_driver(headless: bool = False, max_retries: int = 3, use_profile: bool = False) -> uc.Chrome:
-    """Setup undetected Chrome WebDriver with retry logic.
+def setup_driver(headless: bool = False, max_retries: int = 3, use_profile: bool = False) -> Driver:
+    """Set up a Playwright browser (via lib.browser) with retry logic.
 
     Args:
         headless: Run browser in headless mode
         max_retries: Number of retry attempts
-        use_profile: Use existing Chrome profile (preserves university login cookies)
+        use_profile: Use existing Google Chrome profile (preserves university login
+            cookies). Needs the real Chrome installed, and that profile must NOT be
+            open in Chrome at the time.
     """
-    options = uc.ChromeOptions()
+    if not playwright_available():
+        raise RuntimeError(INSTALL_HINT)
 
-    if headless:
-        options.add_argument("--headless=new")
+    launch_kwargs = {"headless": bool(headless), "window_size": (1920, 1080)}
 
     # Use existing Chrome profile for university authentication
     if use_profile:
         chrome_profile = Path.home() / ".config/google-chrome"
         if chrome_profile.exists():
-            options.add_argument(f"--user-data-dir={chrome_profile}")
-            options.add_argument("--profile-directory=Default")
-
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--disable-gpu")
+            launch_kwargs.update(channel="chrome", user_data_dir=chrome_profile,
+                                 profile_directory="Default")
 
     last_error = None
     for attempt in range(max_retries):
         try:
-            driver = uc.Chrome(options=options, use_subprocess=True)
+            driver = launch_driver(**launch_kwargs)
             return driver
         except Exception as e:
             last_error = e
@@ -351,27 +356,25 @@ def setup_driver(headless: bool = False, max_retries: int = 3, use_profile: bool
 
 
 def download_pdf_with_browser(
-    driver: uc.Chrome,
+    driver: Driver,
     pdf_url: str,
     dest_path: Path,
     logger: logging.Logger,
     timeout: int = PDF_DOWNLOAD_TIMEOUT
 ) -> Tuple[bool, str]:
     """
-    Download PDF using browser to bypass bot protection.
+    Download PDF using the browser session cookies.
 
     Returns (success, message).
     """
     try:
         # Navigate to PDF URL
         driver.get(pdf_url)
-        time.sleep(3)  # Wait for bot check/redirect
+        driver.sleep(3)  # Wait for redirect (a PDF may download meanwhile)
 
         # Wait for page to load
         try:
-            WebDriverWait(driver, PAGE_LOAD_TIMEOUT).until(
-                EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
+            driver.wait_for(By.TAG_NAME, "body", PAGE_LOAD_TIMEOUT)
         except TimeoutException:
             return False, "Page load timeout"
 
@@ -430,7 +433,7 @@ def download_pdf_with_browser(
 
 
 def try_alternative_urls(
-    driver: uc.Chrome,
+    driver: Driver,
     doi: str,
     dest_path: Path,
     logger: logging.Logger
@@ -448,9 +451,7 @@ def try_alternative_urls(
 
         # Wait for page load
         try:
-            WebDriverWait(driver, PAGE_LOAD_TIMEOUT).until(
-                EC.presence_of_element_located((By.TAG_NAME, "body"))
-            )
+            driver.wait_for(By.TAG_NAME, "body", PAGE_LOAD_TIMEOUT)
         except TimeoutException:
             return False, "DOI redirect timeout"
 
@@ -494,7 +495,7 @@ def try_alternative_urls(
 # ============================================================================
 
 def download_paper(
-    driver: uc.Chrome,
+    driver: Driver,
     paper_id: int,
     doi: str,
     title: Optional[str],

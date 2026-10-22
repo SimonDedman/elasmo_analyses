@@ -1,5 +1,7 @@
 # IUCN Red List Cloudflare Blocking Issue
 
+> **Update, 22 Oct 2026.** This note is historical. `undetected-chromedriver` was removed on 21 Oct 2026 for licence reasons (GPL-3.0; the code is Apache-2.0), and the browser scripts now use Playwright through `scripts/lib/browser.py` without trying to evade bot detection. Sites behind a Cloudflare challenge will block them; fetch those items by hand or through an approved route. The IUCN scripts are `scripts/download_iucn_full.py` (was `download_iucn_full_bypass.py`) and `scripts/test_iucn_access.py` (was `test_iucn_bypass.py`).
+
 **Discovered:** 2025-11-17
 **Status:** Blocking automated scraping
 **Impact:** Cannot scrape 1,098 IUCN species assessments via Selenium

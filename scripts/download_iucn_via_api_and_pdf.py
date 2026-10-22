@@ -7,7 +7,8 @@ Download IUCN Red List assessment PDFs using API + direct PDF URL pattern.
 Strategy:
 1. Use IUCN API to get species assessment IDs
 2. Construct PDF URLs: https://www.iucnredlist.org/species/pdf/{assessmentid}
-3. Download PDFs with requests (or undetected-chromedriver if Cloudflare blocks)
+3. Download PDFs with requests (Cloudflare-blocked PDFs must be fetched by hand
+   or through an approved route)
 
 Author: Simon Dedman / Claude
 Date: 2025-11-17
@@ -168,7 +169,7 @@ def download_pdf_direct(assessment_id: str, literature_id: str, species_name: st
             }
 
         elif response.status_code == 403:
-            # Cloudflare blocking - need undetected-chromedriver
+            # Cloudflare blocking - fetch by hand or through an approved route
             return {
                 'status': 'cloudflare_blocked',
                 'pdf_url': pdf_url,
@@ -341,7 +342,7 @@ def main():
 
     if cloudflare > 0:
         print(f"\n⚠️  {cloudflare} PDFs blocked by Cloudflare")
-        print("   These would need undetected-chromedriver to download")
+        print("   These must be fetched by hand or through an approved route")
 
     if not_found_api > 0:
         print(f"\n⚠️  {not_found_api} species not found in IUCN API")

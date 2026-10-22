@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """
-test_iucn_bypass.py
+test_iucn_access.py
 
-Test Cloudflare bypass using undetected-chromedriver on IUCN Red List.
+Test whether the IUCN Red List site can be reached by an automated browser.
 
-This script tests whether undetected-chromedriver can bypass Cloudflare
-protection on the IUCN website by attempting to access 10 species pages.
+This script attempts to load 10 IUCN species pages with a Playwright browser and
+counts how many are served normally and how many hit a Cloudflare challenge page.
+
+Browser layer (21 Oct 2026, licence): it now uses Playwright through
+scripts/lib/browser.py instead of undetected-chromedriver (GPL-3.0). Playwright must
+be installed first (pip install playwright; python -m playwright install chromium).
+It no longer attempts to evade bot detection. Sites that block automated browsers
+(e.g. Cloudflare challenges) will block it; fetch those papers by hand or through an
+approved route. The file name is kept for existing references.
 
 Author: Simon Dedman / Claude
 Date: 2025-11-17
@@ -15,21 +22,21 @@ import pandas as pd
 from pathlib import Path
 import time
 import re
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import launch_driver, playwright_available, INSTALL_HINT
 
 BASE_DIR = Path(__file__).parent.parent
 INPUT_FILE = BASE_DIR / "outputs/iucn_species_cleaned.csv"
 
 def test_cloudflare_bypass():
-    """Test if we can bypass Cloudflare on IUCN website."""
+    """Test whether an automated browser is served normally by the IUCN website."""
 
     print("=" * 80)
-    print("IUCN CLOUDFLARE BYPASS TEST")
+    print("IUCN AUTOMATED-BROWSER ACCESS TEST")
     print("=" * 80)
-    print("\nTesting undetected-chromedriver on IUCN Red List website...")
+    print("\nTesting a Playwright browser on IUCN Red List website...")
 
     # Load test species
     df = pd.read_csv(INPUT_FILE)
@@ -39,16 +46,16 @@ def test_cloudflare_bypass():
     for idx, row in test_species.iterrows():
         print(f"  {idx+1}. {row['species_name']} ({row['year']})")
 
-    # Initialize undetected Chrome
+    # Initialise Playwright browser
     print("\n" + "-" * 80)
-    print("Initializing undetected Chrome browser...")
+    print("Initialising Playwright browser...")
     print("-" * 80)
 
-    options = uc.ChromeOptions()
-    # Don't use headless for first test - easier to debug
-    # options.add_argument('--headless=new')
+    if not playwright_available():
+        raise RuntimeError(INSTALL_HINT)
 
-    driver = uc.Chrome(options=options)
+    # Don't use headless for first test - easier to debug
+    driver = launch_driver(headless=False)
 
     results = []
 
@@ -67,7 +74,7 @@ def test_cloudflare_bypass():
 
             try:
                 driver.get(url)
-                time.sleep(5)  # Wait for page load and Cloudflare challenge
+                time.sleep(5)  # Wait for page load
 
                 # Check page title
                 title = driver.title
@@ -96,7 +103,7 @@ def test_cloudflare_bypass():
                     continue
 
                 # Success! Check for PDF
-                print("✅ SUCCESS: Bypassed Cloudflare!")
+                print("✅ SUCCESS: Page served normally (no Cloudflare challenge)")
 
                 # Look for PDF links
                 page_source = driver.page_source
@@ -156,7 +163,7 @@ def test_cloudflare_bypass():
     total_success = success_with_pdf + success_no_pdf
 
     print(f"\nTotal tested: {len(results_df)}")
-    print(f"\n✅ Bypassed Cloudflare: {total_success}/{len(results_df)}")
+    print(f"\n✅ Served normally: {total_success}/{len(results_df)}")
     print(f"   • With PDF links: {success_with_pdf}")
     print(f"   • Without PDF links: {success_no_pdf}")
     print(f"\n❌ Blocked by Cloudflare: {blocked}/{len(results_df)}")
@@ -168,22 +175,22 @@ def test_cloudflare_bypass():
     print("VERDICT")
     print("=" * 80)
 
-    bypass_rate = (total_success / len(results_df)) * 100 if len(results_df) > 0 else 0
+    access_rate = (total_success / len(results_df)) * 100 if len(results_df) > 0 else 0
 
-    if bypass_rate >= 80:
-        print(f"\n🎉 SUCCESS! Bypass rate: {bypass_rate:.1f}%")
-        print("\n✅ Recommendation: Run full scraper with undetected-chromedriver")
-        print(f"   Expected yield: {int(1098 * bypass_rate / 100)} PDFs")
-    elif bypass_rate >= 50:
-        print(f"\n⚠️  PARTIAL SUCCESS! Bypass rate: {bypass_rate:.1f}%")
+    if access_rate >= 80:
+        print(f"\n🎉 SUCCESS! Access rate: {access_rate:.1f}%")
+        print("\n✅ Recommendation: pages are being served; a full scraper run may be worthwhile")
+        print(f"   Expected yield: {int(1098 * access_rate / 100)} PDFs")
+    elif access_rate >= 50:
+        print(f"\n⚠️  PARTIAL SUCCESS! Access rate: {access_rate:.1f}%")
         print("\n   May be worth running full scraper, but results will be incomplete")
-        print(f"   Expected yield: {int(1098 * bypass_rate / 100)} PDFs")
-    elif bypass_rate > 0:
-        print(f"\n❌ LOW SUCCESS! Bypass rate: {bypass_rate:.1f}%")
+        print(f"   Expected yield: {int(1098 * access_rate / 100)} PDFs")
+    elif access_rate > 0:
+        print(f"\n❌ LOW SUCCESS! Access rate: {access_rate:.1f}%")
         print("\n   Not recommended to run full scraper")
         print("   Consider alternative approaches (Google Scholar, API metadata)")
     else:
-        print(f"\n❌ FAILED! Bypass rate: 0%")
+        print(f"\n❌ FAILED! Access rate: 0%")
         print("\n   Cloudflare blocking is too strong")
         print("   Recommend: Defer IUCN individual assessments")
         print("   Already have: 62 regional reports from SSG website")

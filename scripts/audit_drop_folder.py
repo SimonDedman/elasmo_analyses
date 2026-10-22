@@ -27,6 +27,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib import pdf_backend  # noqa: E402  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
 import ingest_pdfs as ing  # noqa: E402
 
 PROJECT = ing.PROJECT
@@ -153,10 +154,9 @@ def sha256(p: Path) -> str:
 
 
 def page_text(p: Path, n: int = 3) -> tuple[str, int]:
-    import pymupdf
-    doc = pymupdf.open(str(p))
-    txt = "\n".join(doc[i].get_text() for i in range(min(n, doc.page_count)))
-    return ing._strip_zero_width(txt), doc.page_count
+    count = pdf_backend.page_count(p)
+    txt = "\n".join(pdf_backend.page_texts(p, 0, min(n, count) - 1)) if count else ""
+    return ing._strip_zero_width(txt), count
 
 
 def surname_present(text: str, authors: str, fuzzy: bool = False) -> bool:

@@ -33,6 +33,7 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from lib import pdf_backend  # noqa: E402,F401  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
 
 import ingest_pdfs  # noqa: E402
 from ingest_pdfs import (  # noqa: E402
@@ -143,8 +144,8 @@ def is_conference_book(pdf: Path) -> bool:
     if not _BOOK_NAME.search(pdf.stem):
         return False
     try:
-        import pymupdf
-        return pymupdf.open(str(pdf)).page_count >= 30 or pdf.stat().st_size == 0
+        from lib import pdf_backend
+        return pdf_backend.page_count(pdf) >= 30 or pdf.stat().st_size == 0
     except Exception:  # noqa: BLE001 - an unreadable "abstract book" is still not a paper
         return True
 
@@ -165,10 +166,10 @@ def conference_copy(pdf: Path) -> Path | None:
     m = re.match(r"(\d{4})", pdf.name)
     if m and (CONFERENCES / m.group(1)).is_dir():
         try:
-            import pymupdf
-            n = pymupdf.open(str(pdf)).page_count
+            from lib import pdf_backend
+            n = pdf_backend.page_count(pdf)
             for c in (CONFERENCES / m.group(1)).glob("*.pdf"):
-                if n and pymupdf.open(str(c)).page_count == n:
+                if n and pdf_backend.page_count(c) == n:
                     return c
         except Exception:  # noqa: BLE001
             return None

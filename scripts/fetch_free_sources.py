@@ -20,7 +20,7 @@ Each channel:
   1. Reads the outstanding pool from docs/papers_data.json READ-ONLY
      (last_status in needs_library / needs_pdf / sr_sync_new).
   2. Finds a candidate PDF (or, for springer, JATS full text).
-  3. Verifies it (pymupdf text + title/author match).
+  3. Verifies it (pdftotext text via scripts/lib/pdf_backend.py + title/author match).
   4. Stages a verified PDF as outputs/oa_downloads/<literature_id>.pdf
      (or, for springer JATS, outputs/oa_downloads_text/<literature_id>.xml)
      -- skip if the destination already exists.
@@ -62,12 +62,13 @@ from pathlib import Path
 
 import requests
 
-try:
-    import pymupdf  # PyMuPDF
-except ImportError:  # pragma: no cover
-    pymupdf = None
-
 BASE = Path(__file__).resolve().parent.parent
+if str(BASE / "scripts") not in sys.path:
+    sys.path.insert(0, str(BASE / "scripts"))
+try:
+    from lib import pdf_backend  # PyMuPDF removed 21 Oct 2026 (AGPL); pypdf + Poppler
+except ImportError:  # pragma: no cover
+    pdf_backend = None
 PAPERS_JSON = BASE / "docs" / "papers_data.json"
 ENV_FILE = BASE / ".env"
 DEFAULT_STAGING_DIR = BASE / "outputs" / "oa_downloads"
@@ -329,17 +330,13 @@ def verify_pdf(path: Path, title: str = None, surname: str = None,
         return False, f"unreadable: {e}"
     if not head.startswith(b"%PDF") or size < min_bytes:
         return False, f"not a valid pdf or too small ({size}B)"
-    if pymupdf is None:
-        return "scan", "pymupdf not installed; cannot verify text"
+    if pdf_backend is None:
+        return "scan", "pdf backend not importable; cannot verify text"
     try:
-        doc = pymupdf.open(str(path))
-    except Exception as e:  # noqa: BLE001 - pymupdf raises various types
-        return False, f"pymupdf open failed: {e}"
-    try:
-        n = min(pages, doc.page_count)
-        text = "".join(doc[i].get_text() for i in range(n))
-    finally:
-        doc.close()
+        n = min(pages, pdf_backend.page_count(path))
+        text = "".join(pdf_backend.page_texts(path, 0, n - 1)) if n > 0 else ""
+    except Exception as e:  # noqa: BLE001 - pypdf / poppler raise various types
+        return False, f"pdf open failed: {e}"
     got = title_tokens(text)
     if len(got) < 20:
         return "scan", "no extractable text layer (scanned)"

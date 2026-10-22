@@ -32,11 +32,20 @@ Usage:
     python scripts/stage_orphan_pdfs.py file1.pdf file2.pdf
     python scripts/stage_orphan_pdfs.py --check /path/to/orphans/
     python scripts/stage_orphan_pdfs.py --no-network /path/to/orphans/  # offline test
+    python scripts/stage_orphan_pdfs.py --metadata-csv rows.csv [--check]
+
+--metadata-csv (added 22 Oct 2026 for the ICES Library reports, whose DOIs are
+DataCite DOIs that Crossref doesn't know) takes the metadata from a CSV instead
+of Crossref: one row per paper with columns pdf, year, authors, title,
+findspot, doi, citation, abstract, pdf_url. A DOI already in the database is
+skipped, and a library filename that already exists stops the paper rather than
+being treated as its PDF.
 """
 
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import csv
 import re
 import shutil
@@ -575,12 +584,75 @@ def load_existing_orphan_ids() -> set[int]:
     return used
 
 
+def stage_from_metadata(csv_path: Path, check: bool) -> int:
+    """Stage papers whose metadata is supplied in a CSV (see --metadata-csv)."""
+    meta = pd.read_csv(csv_path, dtype=str).fillna("")
+    need = {"pdf", "year", "authors", "title", "findspot", "doi", "citation"}
+    missing = need - set(meta.columns)
+    if missing:
+        raise SystemExit(f"{csv_path} lacks columns {sorted(missing)}")
+    all_rows, doi_lookup, _ = load_database()
+    doi_lookup = _with_master_url_dois(all_rows, doi_lookup)
+    existing_orphan_ids = load_existing_orphan_ids()
+    # Allocate above every id ever staged, never into a gap: 600014 was staged twice and dropped
+    # by the master-CSV dedupe, yet still appears in author-enrichment outputs (found 22 Oct 2026).
+    if LOG_FILE.exists():
+        existing_orphan_ids |= {int(x) for x in re.findall(r"id=(6\d{5})\b", LOG_FILE.read_text())}
+    existing_orphan_ids |= set(range(ORPHAN_ID_BASE, max(existing_orphan_ids, default=ORPHAN_ID_BASE - 1) + 1))
+    print(f"{len(meta)} rows in {csv_path.name}; {len(doi_lookup):,} DOIs in the database; "
+          f"{len(existing_orphan_ids)} ids already >= {ORPHAN_ID_BASE} ({'CHECK' if check else 'LIVE'})")
+    staged, log_lines = [], []
+    counts = Counter()
+    for m in meta.to_dict("records"):
+        pdf = Path(m["pdf"])
+        if not pdf.is_file():
+            raise SystemExit(f"missing PDF: {pdf}")
+        if not m["year"].isdigit() or not m["title"]:
+            raise SystemExit(f"row without year or title: {m}")
+        if normalise_doi(m["doi"]) in doi_lookup:
+            counts["doi already in database"] += 1
+            print(f"  SKIP in DB: {m['doi']} {m['title'][:60]}")
+            continue
+        new_id = next_orphan_id(existing_orphan_ids)
+        existing_orphan_ids.add(new_id)
+        row = {c: "" for c in MASTER_COLUMNS}
+        row.update({k: m.get(k, "") for k in ("year", "authors", "citation", "findspot",
+                                              "doi", "title", "abstract", "pdf_url")})
+        row["doi"] = normalise_doi(row["doi"])
+        row["full_text"] = row["citation"]
+        row["literature_id"] = str(new_id)
+        target = PDF_BASE / row["year"] / build_filename(row)
+        if target.exists():
+            counts["library filename taken"] += 1
+            print(f"  STOP name taken: {target.name} (id {new_id} not used)")
+            continue
+        counts["staged"] += 1
+        print(f"  {'WOULD STAGE' if check else 'STAGE'} id={new_id} | {row['year']} | {row['title'][:70]}")
+        if check:
+            continue
+        if file_pdf(pdf, row) != target:
+            raise SystemExit(f"filing failed for {pdf}")
+        staged.append(row)
+        log_lines.append(f"STAGED: {pdf.name} -> id={new_id} DOI={row['doi']} title={row['title'][:80]}")
+    print(dict(counts))
+    if check or not staged:
+        return 0
+    append_to_master_csv(staged, log_lines)
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(f"\n{'=' * 70}\nStage Orphan PDFs Log (--metadata-csv)\n"
+                f"Date: {datetime.now():%Y-%m-%d %H:%M:%S}\nInput: {csv_path}\nStaged: {len(staged)}\n\n")
+        f.writelines(line + "\n" for line in log_lines)
+    print(f"Staged {len(staged)} rows; ids {staged[0]['literature_id']}-{staged[-1]['literature_id']}. Log: {LOG_FILE}")
+    print("Next: python3 scripts/backfill_corpus_rows.py (dry run), then --apply, to give them corpus rows and extract them.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Stage orphan PDFs (not yet in Shark References) into "
                     "the master CSV via Crossref metadata lookup.",
     )
-    parser.add_argument("paths", nargs="+",
+    parser.add_argument("paths", nargs="*",
                         help="PDF files or directories of PDFs to stage")
     parser.add_argument("--check", action="store_true",
                         help="Dry run: report what would be staged, do not "
@@ -588,7 +660,15 @@ def main() -> int:
     parser.add_argument("--no-network", action="store_true",
                         help="Skip Crossref calls (offline test of "
                         "DOI extraction and existing-DB matching only)")
+    parser.add_argument("--metadata-csv", type=Path,
+                        help="Take metadata from this CSV instead of Crossref "
+                        "(columns: pdf, year, authors, title, findspot, doi, "
+                        "citation, abstract, pdf_url)")
     args = parser.parse_args()
+    if args.metadata_csv:
+        return stage_from_metadata(args.metadata_csv, args.check)
+    if not args.paths:
+        parser.error("give PDF paths or --metadata-csv")
 
     pdfs = collect_pdfs(args.paths)
     if not pdfs:

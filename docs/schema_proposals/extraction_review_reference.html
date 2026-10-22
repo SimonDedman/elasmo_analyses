@@ -437,13 +437,14 @@ author≠study country → parachute_research=True</td>
 <tr>
 <td><strong>GI</strong></td>
 <td>Gender inference</td>
-<td>First name matched against offline gender-guesser library, with
-fallback to Genderize.io API for unresolved names. Strategies: direct
-lookup → accent stripping → initial-skipping → API.</td>
-<td>"María" → female (gender-guesser); "Xiang" → unknown
-(gender-guesser) → male (Genderize.io API, p=0.92)</td>
+<td>First name looked up in the Genderize.io API (cached). Until 21 Oct
+2026 the offline gender-guesser library was tried first; it was removed
+for licence reasons, and the values it wrote remain in the caches.
+Strategies: direct lookup → accent stripping → initial-skipping.</td>
+<td>"Xiang" → male (Genderize.io API, p=0.92)</td>
 <td>gender column in author CSVs</td>
-<td>Script: <code>infer_author_gender.py</code></td>
+<td>Script: <code>genderize_daily.py</code>
+(<code>infer_author_gender.py</code> until 21 Oct 2026)</td>
 </tr>
 </tbody>
 </table>
@@ -3074,7 +3075,7 @@ href="../../outputs/openalex_unique_authors.csv"><code>outputs/openalex_unique_a
 (3 MB, deduplicated by OpenAlex author ID) <strong>Gender
 inference:</strong> <a
 href="https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/infer_author_gender.py"><code>scripts/infer_author_gender.py</code></a>
-(offline gender-guesser) + <a
+(offline gender-guesser; retired 21 Oct 2026, licence) + <a
 href="https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/genderize_daily.py"><code>scripts/genderize_daily.py</code></a>
 (daily cron via <a href="https://genderize.io/">Genderize.io</a> API,
 1,000 names/day free tier). Results written back to both author CSVs
@@ -3154,10 +3155,10 @@ href="https://openalex.org/A5023888391">https://openalex.org/A5023888391</a>")</
 <td>GI</td>
 <td>"male", "female", or "unknown". Inferred by <a
 href="https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/infer_author_gender.py"><code>infer_author_gender.py</code></a>
-using offline gender-guesser library, with daily <a
-href="https://genderize.io/">Genderize.io</a> API fallback (1,000
-names/day free tier). Results written back to both author CSVs
-above.</td>
+using the offline gender-guesser library until 21 Oct 2026 (retired,
+licence), with daily <a href="https://genderize.io/">Genderize.io</a>
+API lookups (1,000 names/day free tier). Results written back to both
+author CSVs above.</td>
 <td></td>
 </tr>
 <tr>

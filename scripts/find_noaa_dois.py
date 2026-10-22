@@ -9,6 +9,15 @@ Strategy:
 2. Extract DOI from search results or article page
 3. Save DOIs to CSV for use by downloader
 
+Browser: since 21 Oct 2026 (licence change to Apache-2.0) this script uses
+Playwright through scripts/lib/browser.py instead of undetected-chromedriver
+and Selenium. Playwright must be installed first:
+    pip install playwright; python -m playwright install chromium
+It no longer attempts to evade bot detection. Sites that block automated
+browsers (e.g. Cloudflare challenges) will block it; fetch those papers by
+hand or through an approved route. A Cloudflare challenge is recorded as
+'cloudflare_blocked'.
+
 Author: Simon Dedman / Claude
 Date: 2025-11-17
 """
@@ -20,10 +29,9 @@ import time
 from tqdm import tqdm
 import logging
 import re
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.browser import By, launch_driver
 
 # ============================================================================
 # CONFIGURATION
@@ -66,12 +74,7 @@ def extract_first_author(authors_str: str) -> str:
 
 def create_browser(headless: bool = True):
     """Create browser for searching."""
-    options = uc.ChromeOptions()
-
-    if headless:
-        options.add_argument('--headless=new')
-
-    driver = uc.Chrome(options=options)
+    driver = launch_driver(headless=headless)
     return driver
 
 

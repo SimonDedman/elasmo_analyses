@@ -670,12 +670,14 @@ def eea2026_texts(pdf):
 _P26_WHITE = 0xFFFFFF
 
 
-def _p26_lines(page):
+def _p26_lines(page_spans):
     """[(role, y, text)] in reading order. Superscripts are separate small
     spans laid into gaps left in the main span, so lines are rebuilt from
-    characters sorted by x; superscript digits come back wrapped as <n>."""
-    spans = [s for b in page.get_text("rawdict")["blocks"] for l in b.get("lines", [])
-             for s in l["spans"] if "".join(c["c"] for c in s["chars"]).strip()]
+    characters sorted by x; superscript digits come back wrapped as <n>.
+
+    ``page_spans`` is one page from lib.pdf_backend.iter_page_spans (pdfminer.six,
+    in PyMuPDF rawdict span shape); PyMuPDF itself was removed 21 Oct 2026 (AGPL)."""
+    spans = [s for s in page_spans if "".join(c["c"] for c in s["chars"]).strip()]
 
     def role_of(s):
         size, font = s["size"], s["font"]
@@ -731,10 +733,15 @@ def _p26_join(lines):
 
 def parse_eea2026_posters(pdf):
     """One dict per poster text page."""
-    import pymupdf
+    import sys
+    from pathlib import Path
+    scripts = str(Path(__file__).resolve().parents[1])
+    if scripts not in sys.path:
+        sys.path.insert(0, scripts)
+    from lib import pdf_backend
     recs = []
-    for pno, page in enumerate(pymupdf.open(str(pdf)), start=1):
-        lines = _p26_lines(page)
+    for pno, page_spans in enumerate(pdf_backend.iter_page_spans(pdf), start=1):
+        lines = _p26_lines(page_spans)
         if not any(r == "title" for r, *_ in lines):
             continue
         by = collections.defaultdict(list)

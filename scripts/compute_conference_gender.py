@@ -8,11 +8,19 @@ AES2026
 -------
 Parses the AES-only subset of the JMIH 2026 (New Orleans) agenda,
 extracting every "Speaker:" line (the presenting author of each talk
-or poster; moderators are excluded). Gender is inferred per first name
-using, in order:
-  1. The project's genderize.io cache (``outputs/.genderize_cache.json``).
-  2. ``scripts/infer_author_gender.py``'s ``infer_gender()`` helper
-     (gender_guesser, with hyphen/multi-word fallback).
+or poster; moderators are excluded). Gender is read per first name from
+the project's local genderize.io cache (``outputs/.genderize_cache.json``),
+trying the literal and the accent-stripped spelling, each as given and in
+lower case; a name not in the cache is counted as unknown.
+
+Until 21 Oct 2026 a second layer guessed names missing from the cache with
+the ``gender-guesser`` library (via ``infer_author_gender.infer_gender``).
+That library is GPL-3.0 and was removed for licence reasons (the code is
+Apache-2.0), so names only it could resolve are now unknown. Measured on the
+inputs present on 21 Oct 2026 (counts only): AES2026 unknowns rose from 16 to
+125 of 221 speakers, EEA2026 from 1 to 50 of 87 presenters (after overrides).
+The resulting female percentages rest on far fewer names and should not be
+compared with figures made before that date.
 Nicknames given in parentheses (e.g. "Mary E. (Beth) Bowers") are
 preferred over the literal first token; leading initials are skipped.
 
@@ -70,10 +78,6 @@ OVERRIDES_CSV = PROJECT_BASE / "outputs/conference_gender_overrides.csv"
 GENDERIZE_CACHE = PROJECT_BASE / "outputs/.genderize_cache.json"
 OUT_CSV = PROJECT_BASE / "outputs/conference_gender.csv"
 
-sys.path.insert(0, str(PROJECT_BASE / "scripts"))
-from infer_author_gender import infer_gender  # noqa: E402
-import gender_guesser.detector as gender_detector  # noqa: E402
-
 _INITIAL_RE = re.compile(r"^[A-Za-z]\.?$")
 _NICKNAME_RE = re.compile(r"\(([A-Za-z]+)\)")
 
@@ -105,26 +109,27 @@ def extract_first_name(full_name: str) -> str | None:
     return None
 
 
-def infer_gender_layered(
-    first_name: str, cache: dict, detector: gender_detector.Detector
-) -> str:
-    """genderize cache -> infer_author_gender.infer_gender (gender_guesser),
-    trying both the literal and accent-stripped spelling at each step."""
+def infer_gender_layered(first_name: str, cache: dict) -> str:
+    """Gender from the local genderize cache, trying the literal and the
+    accent-stripped spelling; "unknown" when neither is cached as male/female.
+    (The gender-guesser fallback was removed on 21 Oct 2026, licence.)"""
     candidates = [first_name]
     stripped = strip_accents(first_name)
     if stripped != first_name:
         candidates.append(stripped)
 
+    # The cache holds two shapes (measured 21 Oct 2026: 1,556 keys): 68 entries
+    # "Name" -> "male"/"female", and 1,488 genderize.io responses keyed in lower
+    # case, "name" -> {"gender": ..., "probability": ...}. Before 21 Oct only the
+    # first shape was read (gender-guesser then filled the gap); both are read now,
+    # as build_author_atlas.R already does.
     for cand in candidates:
-        if cand in cache:
-            g = cache[cand]
+        for key in (cand, cand.lower()):
+            g = cache.get(key)
+            if isinstance(g, dict):
+                g = g.get("gender")
             if g in ("male", "female"):
                 return g
-
-    for cand in candidates:
-        g = infer_gender(cand, detector)
-        if g != "unknown":
-            return g
 
     return "unknown"
 
@@ -135,12 +140,11 @@ def compute_aes2026() -> pd.DataFrame:
     print(f"AES2026: extracted {len(speakers)} 'Speaker:' presentation entries")
 
     cache = json.loads(GENDERIZE_CACHE.read_text(encoding="utf-8"))
-    detector = gender_detector.Detector()
 
     rows = []
     for full_name in speakers:
         first = extract_first_name(full_name)
-        gender = infer_gender_layered(first, cache, detector) if first else "unknown"
+        gender = infer_gender_layered(first, cache) if first else "unknown"
         rows.append({"full_name": full_name, "first_name": first, "gender": gender})
 
     df = pd.DataFrame(rows)
@@ -160,12 +164,11 @@ def compute_eea2026() -> pd.DataFrame:
     print(f"EEA2026: {len(talks)} talk / speed-talk slots in the draft schedule")
 
     cache = json.loads(GENDERIZE_CACHE.read_text(encoding="utf-8"))
-    detector = gender_detector.Detector()
 
     rows = []
     for full_name in talks["speaker"]:
         first = extract_first_name(full_name)
-        gender = infer_gender_layered(first, cache, detector) if first else "unknown"
+        gender = infer_gender_layered(first, cache) if first else "unknown"
         rows.append({"full_name": full_name, "first_name": first, "gender": gender})
     df = pd.DataFrame(rows)
     print("  inferred:", df["gender"].value_counts(dropna=False).to_dict())

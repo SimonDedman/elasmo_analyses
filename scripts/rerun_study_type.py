@@ -19,7 +19,6 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-import fitz
 import pandas as pd
 
 PROJECT = Path(__file__).resolve().parent.parent
@@ -28,6 +27,7 @@ PARQUET = PROJECT / "outputs" / "literature_review_enriched.parquet"
 
 sys.path.insert(0, str(PROJECT / "scripts"))
 from extract_schema_columns import classify_study_type  # noqa: E402
+from lib import pdf_backend  # noqa: E402  PDF access via scripts/lib/pdf_backend.py (pypdf + Poppler); PyMuPDF removed 21 Oct 2026 (AGPL).
 
 
 # --------------------------------------------------------------------------
@@ -94,10 +94,8 @@ def _classify_row(args):
     full_text = ""
     if pdf:
         try:
-            doc = fitz.open(pdf)
-            if len(doc):
-                full_text = doc[0].get_text()
-            doc.close()
+            if pdf_backend.page_count(pdf):
+                full_text = pdf_backend.page_text(pdf, 0)
         except Exception:
             pass
     label, signal, snippet = classify_study_type(

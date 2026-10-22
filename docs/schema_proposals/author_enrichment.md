@@ -65,7 +65,7 @@ Link each paper's author list to external author identity databases to recover i
 
 ## Gender Resolution Summary
 
-Gender inference draws on three sources applied in priority order: offline gender-guesser library (`scripts/infer_author_gender.py`), the Genderize.io API (100 lookups/day free tier), and NamSor. Combined resolved rate as of 2026-04-13:
+Gender inference drew on three sources applied in priority order: the offline gender-guesser library (`scripts/infer_author_gender.py`), the Genderize.io API (100 lookups/day free tier), and NamSor. gender-guesser was removed on 21 Oct 2026 for licence reasons (GPL-3.0; the code is Apache-2.0); values it wrote before then remain in the caches, and new names now come from Genderize.io and NamSor only. Combined resolved rate as of 2026-04-13:
 
 | Category | Proportion |
 |----------|-----------|
@@ -83,7 +83,7 @@ Resolution strategies in `scripts/infer_author_gender.py`: direct forename looku
 2. **Genderize.io rate limit:** Free tier is 100 names per day (not 1,000). Do not confuse with the batched API rate (10 names per request × 10 requests = 100/day).
 3. **NamSor credits:** The institutional grant provides 2 M free credits. Each name lookup consumes credits; see `memory/reference_namsor_api.md` for per-endpoint costs.
 4. **Name cleaning:** Pre-NamSor cleaning (`scripts/clean_authors_for_namsor.py`) handles 14 issue types including surname leaks, encoding errors, honorifics, and non-name strings. A review XLSX is generated for spot-checking.
-5. **OpenAlex gender field:** OpenAlex's own gender field has sparse coverage; NamSor and gender-guesser are the primary sources.
+5. **OpenAlex gender field:** OpenAlex's own gender field has sparse coverage; NamSor and Genderize.io are now the primary sources.
 
 ## Validation
 

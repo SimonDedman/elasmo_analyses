@@ -37,7 +37,7 @@ Every column uses one or more of the following techniques. Codes are referenced 
 | **SA** | Sentiment analysis | Counts positive vs negative cue words near impact terms. Classifies overall direction based on relative frequency of cues. | `imp_direction`: counts "decline", "decrease", "loss" (negative) vs "increase", "recover", "improve" (positive) → returns "negative", "positive", "mixed", or "not stated" | imp_direction (1 col) | [extraction_logic.md #impact-direction-and-quantification](extraction_logic.md#impact-direction-and-quantification) |
 | **API** | External API lookup | Queries an external web API using a key column (typically DOI or journal name) and retrieves structured metadata. Results stored in separate CSV files, joined to main database on `literature_id` or `doi`. | OpenAlex: DOI → author names, institutions, countries. Altmetric: DOI → attention score, tweet count. Unpaywall: DOI → OA status, licence. | Author enrichment (OpenAlex), Altmetric scores, Open access (Unpaywall), Journal quality (Scimago) | Scripts: `enrich_authors_openalex.py`, `enrich_altmetric.py`, `lookup_unpaywall_oa.py`, `lookup_scimago_journals.py` |
 | **GEO** | Geographic extraction | Institution names parsed from PDF front matter; country and region assigned via lookup tables. Study locations extracted from text. Parachute research flag derived by comparing author country to study country. | First author at "University of Miami" → country=US, region=North America; study mentions "Mozambique Channel" → study_country=Mozambique; author≠study country → parachute_research=True | paper_geography table (23 fields), ob_ columns (9) | [docs/geographic/](../geographic/) |
-| **GI** | Gender inference | First name matched against offline gender-guesser library, with fallback to Genderize.io API for unresolved names. Strategies: direct lookup → accent stripping → initial-skipping → API. | "María" → female (gender-guesser); "Xiang" → unknown (gender-guesser) → male (Genderize.io API, p=0.92) | gender column in author CSVs | Script: `infer_author_gender.py` |
+| **GI** | Gender inference | First name looked up in the Genderize.io API (cached). Until 21 Oct 2026 the offline gender-guesser library was tried first; it was removed for licence reasons, and the values it wrote remain in the caches. Strategies: direct lookup → accent stripping → initial-skipping. | "Xiang" → male (Genderize.io API, p=0.92) | gender column in author CSVs | Script: `genderize_daily.py` (`infer_author_gender.py` until 21 Oct 2026) |
 
 ### Proposed new techniques (not yet implemented)
 
@@ -451,7 +451,7 @@ Forty-three named seas and regional sub-basins, one column each, matched the sam
 **Output files:**
 - [`outputs/openalex_paper_authors.csv`](../../outputs/openalex_paper_authors.csv) (11 MB, one row per author per paper)
 - [`outputs/openalex_unique_authors.csv`](../../outputs/openalex_unique_authors.csv) (3 MB, deduplicated by OpenAlex author ID)
-**Gender inference:** [`scripts/infer_author_gender.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/infer_author_gender.py) (offline gender-guesser) + [`scripts/genderize_daily.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/genderize_daily.py) (daily cron via [Genderize.io](https://genderize.io/) API, 1,000 names/day free tier). Results written back to both author CSVs above.
+**Gender inference:** [`scripts/infer_author_gender.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/infer_author_gender.py) (offline gender-guesser; retired 21 Oct 2026, licence) + [`scripts/genderize_daily.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/genderize_daily.py) (daily cron via [Genderize.io](https://genderize.io/) API, 1,000 names/day free tier). Results written back to both author CSVs above.
 
 | Field | Label | Techniques | Description | Notes |
 |-------|-------|------------|-------------|-------|
@@ -463,7 +463,7 @@ Forty-three named seas and regional sub-basins, one column each, matched the sam
 | `institution_name` | Institution | API | Primary institutional affiliation | |
 | `institution_country` | Institution country | API | ISO country code | |
 | `institution_type` | Institution type | API | "education", "healthcare", "government", etc. | |
-| `gender` | Inferred gender | GI | "male", "female", or "unknown". Inferred by [`infer_author_gender.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/infer_author_gender.py) using offline gender-guesser library, with daily [Genderize.io](https://genderize.io/) API fallback (1,000 names/day free tier). Results written back to both author CSVs above. | |
+| `gender` | Inferred gender | GI | "male", "female", or "unknown". Inferred by [`infer_author_gender.py`](https://github.com/SimonDedman/elasmo_analyses/blob/main/scripts/infer_author_gender.py) using the offline gender-guesser library until 21 Oct 2026 (retired, licence), with daily [Genderize.io](https://genderize.io/) API lookups (1,000 names/day free tier). Results written back to both author CSVs above. | |
 | `paper_count` | Paper count | DRV | Number of papers in corpus by this author (unique authors CSV only) | |
 
 ---

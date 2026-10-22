@@ -1,25 +1,33 @@
-"""Visual perceptual hashing of first/last PDF pages for deduplication."""
+"""Visual perceptual hashing of first/last PDF pages for deduplication.
+
+Pages are rendered by Poppler's pdftoppm through scripts/lib/pdf_backend.py
+(PyMuPDF until 21 Oct 2026). Measured on 60 corpus PDFs: identical pixel
+dimensions, pHash distance 0-6 bits from the PyMuPDF render (median 0).
+"""
 from __future__ import annotations
 
 import pathlib
 from typing import Optional
 
-import fitz
 import imagehash
 from PIL import Image
+
+import sys as _sys
+from pathlib import Path as _Path
+
+_SCRIPTS = str(_Path(__file__).resolve().parents[2])
+if _SCRIPTS not in _sys.path:
+    _sys.path.insert(0, _SCRIPTS)
+from lib import pdf_backend  # noqa: E402  pypdf + Poppler; PyMuPDF removed 21 Oct 2026 (AGPL)
 
 _DPI = 150
 _MAX_W = 1200
 _MAX_H = 1600
 
 
-def _render_page(page: "fitz.Page") -> Optional[Image.Image]:
+def _render_page(pdf_path: pathlib.Path, pno: int) -> Optional[Image.Image]:
     try:
-        zoom = _DPI / 72.0
-        matrix = fitz.Matrix(zoom, zoom)
-        pix = page.get_pixmap(matrix=matrix, alpha=False)
-        mode = "RGB" if pix.n >= 3 else "L"
-        img = Image.frombytes(mode, (pix.width, pix.height), pix.samples)
+        img = pdf_backend.render_page(pdf_path, pno, dpi=_DPI)
         if img.width > _MAX_W or img.height > _MAX_H:
             scale = min(_MAX_W / img.width, _MAX_H / img.height)
             new_size = (max(1, int(img.width * scale)), max(1, int(img.height * scale)))
@@ -52,33 +60,21 @@ def _phash_only(img: Optional[Image.Image]) -> Optional[str]:
 def compute(pdf_path: pathlib.Path) -> dict:
     result = {"phash_p1": None, "dhash_p1": None, "phash_last": None}
     try:
-        doc = fitz.open(pdf_path)
+        n = pdf_backend.page_count(pdf_path)
     except Exception:
         return result
 
     try:
-        n = doc.page_count
         if n < 1:
             return result
 
-        try:
-            first_img = _render_page(doc.load_page(0))
-        except Exception:
-            first_img = None
+        first_img = _render_page(pdf_path, 0)
         result["phash_p1"], result["dhash_p1"] = _hash_pair(first_img)
 
         if n >= 2:
-            try:
-                last_img = _render_page(doc.load_page(n - 1))
-            except Exception:
-                last_img = None
+            last_img = _render_page(pdf_path, n - 1)
             result["phash_last"] = _phash_only(last_img)
 
         return result
     except Exception:
         return result
-    finally:
-        try:
-            doc.close()
-        except Exception:
-            pass

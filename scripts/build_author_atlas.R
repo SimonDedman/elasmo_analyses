@@ -140,8 +140,8 @@ if (file.exists(ns_ov_path)) {
 # NamSor gender comes first in the case_when below, so an absent fallback is harmless.
 if (!"gender" %in% names(authors)) authors$gender <- NA_character_
 
-# Last-resort gender: the Genderize/gender-guesser cache, keyed on the exact first_name string
-# ("Demian D.", "M. B."), which recovers names gender_guesser alone cannot parse.
+# Last-resort gender: the local Genderize cache (read only), keyed on the exact first_name string
+# ("Demian D.", "M. B."). No Python inference library is called; gender-guesser was removed 21 Oct 2026.
 gz_path <- "outputs/.genderize_cache.json"
 gz <- if (file.exists(gz_path)) {
   raw <- jsonlite::fromJSON(gz_path, simplifyVector = FALSE)
