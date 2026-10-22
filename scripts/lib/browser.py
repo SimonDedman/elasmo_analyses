@@ -226,7 +226,9 @@ class Driver:
 
     # --- internals ---------------------------------------------------------
     def _watch(self, page) -> None:
-        page.on("download", self._pending.append)
+        # A plain function, not list.append: Playwright tags its handlers with an attribute, which a
+        # built-in method can't carry (AttributeError on the first live run, 22 Oct 2026).
+        page.on("download", lambda d: self._pending.append(d))
 
     def _handle_of(self, page) -> str:
         return self._handles.setdefault(id(page), f"pw-{len(self._handles)}")
