@@ -45,7 +45,6 @@ outputs/*
 !outputs/abstract_reviews/
 !outputs/figures/*.png
 !outputs/author_location_overrides.csv
-!outputs/namsor_overrides.csv
 # 2026-04-20: extraction-run audit trail. Keep the small JSON summaries in git
 # so the rule-state and per-column firing counts are versioned alongside the
 # code, but ignore the per-paper binary snapshots (parquet) which are large
@@ -223,3 +222,10 @@ secrets/
 # Third-party PDFs stay local; the papers live in the PDF corpus (SharkPapers/2020/Shiffman.etal.2020...), drafts with their authors (2026-10-19)
 docs/schema_proposals/Schiffman_paper/
 docs/SubProjects/**/*.pdf
+
+# PRIVACY 2026-10-21 (Simon): inferred gender, origin, and ethnicity stay offline. These local build outputs carry
+# them per named person; they were force-added in the past, so they are named here too. Never `git add -f` them.
+outputs/author_atlas/authors.geojson
+outputs/analysis/author_network_nodes.csv
+outputs/namsor_overrides.csv
+outputs/namsor_enrichment.csv
