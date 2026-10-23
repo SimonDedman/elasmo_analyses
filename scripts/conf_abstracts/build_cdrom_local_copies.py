@@ -1,4 +1,4 @@
-"""Browsable local copies of a JMIH meeting CD-ROM for the person who supplied it.
+"""Browsable copies of a JMIH meeting CD-ROM, sorted by session, with an index page.
 
 Carylanne Maier asked (via Simon, 2026-10-21) for the CD abstracts sorted into
 plain folders she can keep, with an index page saying what each folder holds.
@@ -7,6 +7,9 @@ structure:
   2003  By session/<NN Subject area>/<Fish|Herps>/  and
         By session/00 Symposia/<Society symposium>/
   2004  By author/Authors <A-B ... S-Z>/  (the CD's own author-letter pages)
+Written beside the filed CD (config.CDROM_SOURCES, in SharkPapers/Conferences/<year>/).
+First built in Carylanne's inbox for her to download (2026-10-21); she took them
+on 2026-10-22 and the inbox copy was retired.
 Each abstract is copied (never moved or linked: the folder is Synology-synced)
 as '<First author> [et al] - <Title>.pdf', and an index page beside the CD's
 own files ('Abstracts index.html') lists every folder and abstract, with shark/ray/chimaera talks marked.
@@ -77,7 +80,9 @@ def plan(year, recs, root):
         # Windows (the laptop, Carylanne's machine) stops at 260 characters, and
         # the synced root is already ~120 deep: cap each path below the year
         # folder at REL_MAX, shortening the title to fit.
-        rel_dir = len(str(Path(top.name).joinpath(*parts))) + len(root.name) + 2
+        # measured as if under '<year>\\' (the first build's layout) so names stay
+        # stable wherever the copies live; the library path on the laptop is shorter
+        rel_dir = len(str(Path(top.name).joinpath(*parts))) + len(str(year)) + 2
         room = max(30, REL_MAX - rel_dir - len(".pdf") - 5)
         name = safe(f"{safe(lead, 30)} - {safe(r['title'])}", room)
         dst = top.joinpath(*parts) / f"{name}.pdf"
@@ -152,7 +157,9 @@ def main():
     for r in recs:
         I._elasmo(r, "JMIH", a.year)
         r["_cd"] = cd
-    root = C.UNDIGITISED / str(a.year)          # Carylanne's own copy of the CD
+    # Beside the filed CD in the conference library (moved from Carylanne's inbox
+    # copy 2026-10-22, once she had downloaded hers), so the links stay relative.
+    root = Path(cd)
     top, items = plan(a.year, recs, root)
     clash = [d for _, _, d in items if d.exists()]
     folders = {d.parent for _, _, d in items}
