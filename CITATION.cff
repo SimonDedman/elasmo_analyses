@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use Shark Oracle, please cite it as below."
+type: software
+title: "Shark Oracle: an evidence-linked database of the global literature on sharks, rays, and chimaeras"
+abstract: >-
+  Shark Oracle is an AI-assisted, evidence-linked index of the research literature on sharks,
+  rays, and chimaeras (elasmobranchs and holocephalans). It catalogues more than 31,000
+  publications and a conference-abstract archive, records the species, places, threats,
+  fishing gears, and analytical methods each study covers, and ties every label to the
+  sentence that supports it. The code is released under Apache 2.0; data and documentation
+  under CC BY 4.0.
+authors:
+  - family-names: Dedman
+    given-names: Simon
+    orcid: "https://orcid.org/0000-0002-9108-972X"
+    affiliation: "Florida International University"
+  - family-names: Tiktak
+    given-names: Guuske
+    orcid: "https://orcid.org/0000-0002-9258-5733"
+repository-code: "https://github.com/SimonDedman/elasmo_analyses"
+url: "https://simondedman.github.io/elasmo_analyses/"
+license: Apache-2.0
+date-released: "2026-10-27"
+keywords:
+  - elasmobranchs
+  - sharks
+  - rays
+  - chimaeras
+  - systematic review
+  - literature database
+  - AI-ready data
