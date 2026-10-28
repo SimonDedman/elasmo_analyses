@@ -1,0 +1,325 @@
+{
+  "author_name": "Atlantine Boggio‐Pasqua",
+  "openalex_id": "A5046683515",
+  "page_version": "2026-04-18",
+  "papers": {
+    "31222": {
+      "a_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    },
+    "34200": {
+      "a_": {
+        "added": [
+          "a_phylogenetics",
+          "a_morphometrics"
+        ],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "b_": {
+        "added": [
+          "b_south_atlantic",
+          "b_north_atlantic"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "d_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "depth_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "eco_": {
+        "added": [],
+        "changes_count": 1,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "eco_freshwater"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "gear_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "imp_": {
+        "added": [
+          "imp_genetic"
+        ],
+        "changes_count": 4,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [
+          "imp_direction",
+          "imp_quantified",
+          "imp_confidence"
+        ],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "ob_": {
+        "added": [
+          "ob_north_atlantic_ocean",
+          "ob_south_atlantic_ocean"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "pr_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": null,
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sb_": {
+        "added": [
+          "sb_gulf_of_guinea",
+          "sb_gulf_of_mexico"
+        ],
+        "changes_count": 2,
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "partially_correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      },
+      "sp_": {
+        "added": [],
+        "depth_max_m": null,
+        "depth_min_m": null,
+        "notes": "",
+        "rating": "correct",
+        "removed": [],
+        "rule_suggestions": {
+          "add_terms": [],
+          "remove_terms": [],
+          "threshold": null
+        }
+      }
+    }
+  },
+  "papers_reviewed": 1,
+  "papers_total": 0,
+  "timestamp": "2026-10-28T19:37:06.269Z"
+}
