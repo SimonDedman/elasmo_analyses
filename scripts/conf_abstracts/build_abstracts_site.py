@@ -34,6 +34,24 @@ def norm(s):
     return "".join(c for c in s if not unicodedata.combining(c)).lower()
 
 
+# Author e-mail addresses printed in the books (441 affiliations, 10 bodies, 3
+# mis-parsed names on 2026-10-28) are not republished: Simon, 2026-10-28, "yes
+# to masking email addresses". Masked here, at publication; the DB keeps the
+# text as printed.
+_EMAIL = re.compile(r"(?:\b(?:e-?mail|email|correo)\s*[:\-]?\s*)?[\w.+-]+@[\w-]+(?:\.[\w-]+)+", re.I)
+
+
+def unmail(s, repl):
+    if not s or "@" not in s:
+        return s
+    s = _EMAIL.sub(repl, s)
+    if not repl:   # an affiliation or name: tidy the separators the address leaves
+        s = re.sub(r"\s*([,;])(?:\s*[,;])+", r"\1", s)
+        s = re.sub(r"\(\s*\)|\s+(?=[,;.)])", "", s)
+        s = re.sub(r"\s{2,}", " ", s).strip(" ,;")
+    return s
+
+
 def words(s):
     return re.findall(r"[a-z0-9]+", norm(s))
 
@@ -53,8 +71,14 @@ def main():
     mid_to_i = {m["meeting_id"]: i for i, m in enumerate(meetings)}
     authors = defaultdict(list)
     for r in con.execute("select * from authors order by abstract_id, position"):
-        authors[r["abstract_id"]].append(r)
+        a = dict(r)
+        for f in ("full_name", "affiliation"):
+            a[f] = unmail(a[f], "")
+        authors[r["abstract_id"]].append(a)
     rows = [dict(r) for r in con.execute("select * from abstracts")]
+    for r in rows:
+        for f in ("title", "title_en", "abstract_text", "abstract_text_en", "session_name"):
+            r[f] = unmail(r.get(f), "[e-mail]")
     # newest first, then meeting, then programme number
     def pn(r):
         m = re.search(r"\d+", str(r["program_number"] or ""))
