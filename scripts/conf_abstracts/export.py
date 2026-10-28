@@ -22,11 +22,16 @@ def _authors_by_abstract(con):
 def to_parquet_elasmo(con, path) -> int:
     """Elasmo-only rows, columns aligned to literature_review_enriched.parquet
     (title, year, authors, abstract, plus provenance). Returns row count."""
+    # translations of non-English abstracts (EBI, 2026-10-28); the Fable DB
+    # has no such columns, so they are added only where they exist
+    have = {r[1] for r in con.execute("PRAGMA table_info(abstracts)")}
+    extra = "".join(f", a.{c}" + (" AS abstract_en" if c == "abstract_text_en" else "")
+                    for c in ("language", "title_en", "abstract_text_en") if c in have)
     df = pd.read_sql_query(
-        """SELECT a.abstract_id, m.meeting, m.year, a.title,
+        f"""SELECT a.abstract_id, m.meeting, m.year, a.title,
                   a.abstract_text AS abstract, a.keywords, a.presentation_type,
                   a.society, a.society_basis, a.elasmo_basis, a.award,
-                  a.session_name, a.confidence, a.needs_review, m.source_pdf
+                  a.session_name, a.confidence, a.needs_review, m.source_pdf{extra}
            FROM abstracts a JOIN meetings m ON a.meeting_id=m.meeting_id
            WHERE a.is_elasmo=1""", con)
     auth = _authors_by_abstract(con)

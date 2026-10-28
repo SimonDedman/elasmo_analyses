@@ -73,10 +73,12 @@ def main():
         pres = next((a["full_name"] for a in au if a["is_presenter"]), "")
         mi = mid_to_i[r["meeting_id"]]
         index.append([idx, r["abstract_id"], mi, meetings[mi]["year"], r["title"] or "", first, pres, len(au),
-                      1 if r["is_elasmo"] else 0, pt_i[(r["presentation_type"] or "").strip() or "unspecified"]])
-        for t in set(words(r["title"])):
+                      1 if r["is_elasmo"] else 0, pt_i[(r["presentation_type"] or "").strip() or "unspecified"],
+                      r.get("title_en") or ""])     # [10] English title of a non-English abstract
+        # a translated abstract is findable by its English words too
+        for t in set(words(r["title"])) | set(words(r.get("title_en"))):
             postings["t"][t].append(idx)
-        for t in set(words(r["abstract_text"])):
+        for t in set(words(r["abstract_text"])) | set(words(r.get("abstract_text_en"))):
             postings["b"][t].append(idx)
         for t in {w for a in au for w in words(a["full_name"])}:
             postings["a"][t].append(idx)
@@ -91,7 +93,8 @@ def main():
             d[idx] = [r["abstract_text"] or "", r["session_name"] or "", str(r["program_number"] or ""),
                       r["session_datetime"] or "", r["elasmo_basis"] or "",
                       [[a["full_name"], a["affiliation"] or "", a["affiliation_country"] or "", 1 if a["is_presenter"] else 0]
-                       for a in authors.get(r["abstract_id"], [])]]
+                       for a in authors.get(r["abstract_id"], [])],
+                      r.get("abstract_text_en") or "", r.get("translation_by") or ""]
         sizes[f"abs_{s}.json"] = dump(DATA / f"abs_{s}.json", d)
 
     index_files = []

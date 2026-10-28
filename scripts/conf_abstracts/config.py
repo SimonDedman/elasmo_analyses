@@ -84,7 +84,7 @@ LOG = REPO / "logs" / "conf_abstracts.log"
 OUT = REPO / "outputs"
 
 # Societies. AES is the elasmobranch one.
-SOCIETIES = {"AES", "ASIH", "HL", "SSAR", "NIA", "SI", "EEA"}
+SOCIETIES = {"AES", "ASIH", "HL", "SSAR", "NIA", "SI", "EEA", "SBI"}
 ELASMO_SOCIETIES = {"AES"}
 # meetings that are wholly elasmo regardless of session
 # OCS is the Oceania Chondrichthyan Society: every talk is elasmo, so the
@@ -227,6 +227,15 @@ OA_MEETING_CITIES = {
 CDROM_SOURCES = {
     ("JMIH", 2003): (str(CONFERENCES / "2003" / "2003_JMIH_CDROM"), "Manaus, Brazil"),
     ("JMIH", 2004): (str(CONFERENCES / "2004" / "2004_JMIH_CDROM"), "Norman, OK"),
+}
+
+# Encontro Brasileiro de Ictiologia (Sociedade Brasileira de Ictiologia): the
+# two editions whose proceedings are published openly on the web, harvested by
+# fetch_ebi.py on 2026-10-28 and ingested by ingest_ebi.py. Filed as folders of
+# HTML, so the PDF sweep never sees them. Value: (cache folder, host city).
+EBI_SOURCES = {
+    ("EBI", 2015): (str(CONFERENCES / "2015" / "2015_EBI_Anais_web"), "Olinda, PE, Brazil"),
+    ("EBI", 2025): (str(CONFERENCES / "2025" / "2025_EBI_Anais_web"), "Palmas, TO, Brazil"),
 }
 
 # Host city per (meeting, year) for series whose books do not carry the venue in
