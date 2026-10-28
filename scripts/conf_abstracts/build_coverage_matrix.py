@@ -332,12 +332,48 @@ CONFERENCE_META = [
          contact="squalus@germanm1.sg-host.com (from the site; verify before using)"),
     dict(series="Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)",
          lead_key="Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)",
-         year_from=1997, year_to=None, frequency=2,
-         organisers="SBEEL. The X Reuniao was held in 2018 inside the Sharks International "
-                    "book, so at least nine earlier meetings exist. The corpus cites only "
-                    "the II, which is why n_needed is 1 — that number is a floor and badly "
-                    "understates this series.",
-         website="", contact=""),
+         # frequency 0: roughly biennial but IRREGULAR (2000, 2011, 2014), so no
+         # formula places an ordinal. `editions` maps each Roman-numbered Reuniao
+         # to its meeting year instead. SOURCE for editions, states and sizes:
+         # Soares & Petean 2023, Neotrop. Ichthyol. 21(2):e230027, Table 1
+         # (doi:10.1590/1982-0224-2023-0027), who read all ten abstract books;
+         # their Tab. S1 (CC BY 4.0) lists every abstract title, saved as
+         # Conferences/_series_sources/SBEEL/Soares_Petean_2023_TabS1.csv (kept
+         # OUT of the repo: it carries inferred first/last-author gender).
+         # Host cities cross-checked against the citations noted in
+         # _EXTRA_LOCATIONS (2026-10-28).
+         year_from=1997, year_to=None, frequency=0,
+         editions={1: 1997, 2: 2000, 3: 2002, 4: 2004, 5: 2006, 6: 2008,
+                   7: 2011, 8: 2014, 9: 2016, 10: 2018},
+         # abstracts per book (Table 1; all are chondrichthyan by construction)
+         edition_sizes={1997: 74, 2000: 98, 2002: 71, 2004: 97, 2006: 88,
+                        2008: 96, 2011: 87, 2014: 72, 2016: 107},
+         # 2018 (X Reuniao, 461 abstracts) is the joint SI/AES/SBEEL/ECC book
+         edition_held_in={2018: "SI"},
+         organisers="SBEEL (Sociedade Brasileira para o Estudo de Elasmobranquios), founded "
+                    "1 Aug 1997 at the I Reuniao (Ilheus, BA) from the Grupo de Trabalho sobre "
+                    "Pesca e Pesquisa de Tubaroes e Raias (formed as a society at Rio Grande, "
+                    "RS, 1995). TEN meetings, 1997-2018 (also called 'Encontro'): I 1997 "
+                    "Ilheus BA (74 abstracts), II 2000 Santos SP (98), III 2002 Joao Pessoa PB "
+                    "(71), IV 2004 Recife PE (97), V 2006 Itajai SC (88), VI 2008 Fortaleza CE "
+                    "(96), VII 2011 Rio Grande RS (87), VIII 2014 Recife PE, UFRPE (72), IX 2016 "
+                    "Penedo AL, UFAL, 24-28 Apr (107), X 2018 Joao Pessoa PB, 3-8 Jun, joint "
+                    "with Sharks International (461; HELD as the SI 2018 book). No XI found "
+                    "(searched 2026-10-28). Soares & Petean 2023 (Neotrop. Ichthyol. "
+                    "21(2):e230027) analysed all ten books: 1,248 SBEEL abstracts; their Tab. "
+                    "S1 (CC BY 4.0) gives every title, first-author institution, and taxa, but "
+                    "NO bodies. Books are print 'Livro/Caderno de Resumos' (V: Itajai, Nova "
+                    "Letra, 123 pp); none found online. Board on the 2021 site: Otto B. F. "
+                    "Gadig (president, UNESP), Ricardo S. Rosa (treasurer, UFPB), Rodrigo R. "
+                    "Barreto (secretary, CEPSUL/ICMBio). Marcela Alvarenga (SciLifeLab, ex-UFRJ) "
+                    "is asking SBEEL for the books (28 Oct 2026). Sister series not yet a "
+                    "column: EBI (Encontro Brasileiro de Ictiologia, SBI, biennial, 326 "
+                    "chondrichthyan abstracts 1991-2019 in the same Tab. S1).",
+         website="sbeel.org.br is DEAD (NXDOMAIN 2026-10-28; spam-hijacked by 2023); "
+                 "Wayback copies 2017-2022 hold history and board only, no abstract books",
+         contact="Via Marcela Alvarenga (asking SBEEL, reply ~6 Nov 2026); else Karla D. A. "
+                 "Soares (UFRJ) and Flavia F. Petean, who located all ten books, or Otto "
+                 "Gadig (UNESP). Addresses: Gmail/Contacts, not stored here"),
     dict(series="Simposio Nacional de Tiburones y Rayas (SOMEPEC, Mexico)",
          lead_key="Simposio Nacional de Tiburones y Rayas (Mexico)",
          year_from=2004, year_to=None, frequency=2,
@@ -614,6 +650,20 @@ def _ordinal_of(venue):
     return total if seen and total else None
 
 
+def _roman_ordinal(venue):
+    """A leading Roman numeral before a meeting noun ("II Reuniao da ..."), as an
+    int, or None. Used only for series with an `editions` table: a bare "I" is
+    too common to trust anywhere else."""
+    m = re.match(r"\s*([IVXL]{1,6})\s+(?:Reuni\w+|Encontro|Simp\w+|Congress\w*)\b", venue)
+    if not m:
+        return None
+    vals = {"I": 1, "V": 5, "X": 10, "L": 50}
+    s = m.group(1)
+    total = sum(-vals[c] if i + 1 < len(s) and vals[c] < vals[s[i + 1]] else vals[c]
+                for i, c in enumerate(s))
+    return total or None
+
+
 def _deducible_series(rows, meta_by_series):
     """{series: (year_from, frequency)} for series whose ordinal->year formula
     reproduces EVERY anchor the corpus provides. Anchors are rows citing both an
@@ -692,6 +742,12 @@ def _lead_year_counts():
         venues = defaultdict(lambda: defaultdict(set))
         for row in rows:
             y = row["venue_year"]
+            eds = (meta_by_series.get(row["series"]) or {}).get("editions")
+            if not y and eds:
+                # irregular series with a known edition table (SBEEL: the corpus
+                # cites "II Reuniao", printed 2002, held 2000)
+                y = eds.get(_ordinal_of(row["venue"] or "")
+                            or _roman_ordinal(row["venue"] or ""))
             if not y and row["series"] in deducible:
                 n = _ordinal_of(row["venue"] or "")
                 if n:
@@ -806,7 +862,24 @@ _EXTRA_LOCATIONS = {
     ("AFS", 2007): "?",
     ("AFS", 2012): "?",
     ("AFS", 2014): "?",
-    ("SBEEL", 2002): "?",
+    # SBEEL: the STATE of every edition is in Soares & Petean 2023 Table 1, and
+    # each city below falls in that state (two channels). [web] cities from
+    # citations in theses and CVs found 2026-10-28: "I Reuniao ... 1997,
+    # Ilheus"; "Resumos da II Reuniao (Santos, 2000)"; "III ... Joao Pessoa,
+    # 2002"; "IV ... Recife, 2004"; "V ... Itajai: Nova Letra, 2006"; "6., 2008,
+    # Fortaleza"; "VII Encontro ... 2011, Rio Grande"; VIII at UFRPE, Recife
+    # (regional blog, 31 Mar-4 Apr); IX at UFAL Penedo, 24-28 Apr 2016
+    # (boainformacao.com.br, seashepherd.org.br); X with SI 2018 (we hold it).
+    ("SBEEL", 1997): "Ilheus, BA, Brazil",
+    ("SBEEL", 2000): "Santos, SP, Brazil",
+    ("SBEEL", 2002): "Joao Pessoa, PB, Brazil",
+    ("SBEEL", 2004): "Recife, PE, Brazil",
+    ("SBEEL", 2006): "Itajai, SC, Brazil",
+    ("SBEEL", 2008): "Fortaleza, CE, Brazil",
+    ("SBEEL", 2011): "Rio Grande, RS, Brazil",
+    ("SBEEL", 2014): "Recife, PE, Brazil (UFRPE)",
+    ("SBEEL", 2016): "Penedo, AL, Brazil (UFAL)",
+    ("SBEEL", 2018): "Joao Pessoa, PB, Brazil",
     ("ISC Shark WG", 2013): "?",
     ("Age Det Wksp", 1983): "?",
     ("ECC", 2014): "?",
@@ -853,10 +926,22 @@ def _extra_cell(lead_key, code, year, counts, db_years, short=None,
         if code and (CONFERENCES / str(year)).is_dir() else []
     if book:
         return (f"{pre}Digital — {len(book)} PDF held — extraction pending", "Digital")
+    meta = next((m for m in CONFERENCE_META if m.get("lead_key") == lead_key), {})
+    held_in = (meta.get("edition_held_in") or {}).get(year)
+    if held_in:
+        return (f"{pre}Ingested — joint meeting, held as the {held_in} {year} book "
+                f"(see the {held_in} column)", "Ingested")
     n = (counts or {}).get(lead_key, {}).get(year)
+    size = (meta.get("edition_sizes") or {}).get(year)
+    book = f" of {size} in the book (Soares & Petean 2023)" if size else ""
     if n:
         return (f"{pre}Missing — {n} abstract{'s' if n != 1 else ''} cited by the corpus"
-                + _year_note(lead_key, year, pub, venues), "Missing")
+                + book + _year_note(lead_key, year, pub, venues), "Missing")
+    if size:
+        # A published edition table is evidence the meeting was held, so the
+        # cell is written even where the corpus cites nothing from it.
+        return (f"{pre}Missing — {size} abstracts in the book (Soares & Petean 2023 "
+                f"Table 1), titles only in their Tab. S1", "Missing")
     return None, None
 
 
