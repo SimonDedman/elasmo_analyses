@@ -39,8 +39,34 @@ _GENERA = [
     "Zapteryx", "Trygonorrhina", "Aptychotrema", "Narke", "Potamotrygon",
 ]
 
+# Portuguese and Spanish names, added for the EBI proceedings (2026-10-28).
+# Case matters for two of them: "Tubarão" is also a river and city in Santa
+# Catarina (3 JMIH catfish abstracts) and "Tiburon" a place in California and
+# Mexico, so the capitalised singular only counts in a hyphenated compound
+# (TUBARÃO-MARTELO) and the plain singular only in lower case.
+_IBERIAN = [
+    r"(?i:tubar(?:ões|oes)\b)", r"(?i:tubarão-)", r"tubarão\b",
+    r"(?i:tibur(?:ón|ones)\b)", r"tiburon\b",
+    r"(?i:\barraias?\b)", r"(?i:\braias?\b)", r"(?i:\bcaç(?:ão|ões)\b)",
+    r"(?i:elasmobr[aâ]nqu)", r"(?i:condr[ií]ct)", r"(?i:peixes?-serra)", r"(?i:\bquimeras?\b)",
+]
+
+# Family and order stems, and Neotropical genera missing above. Soares & Petean
+# 2023 (Tab. S1) titles name taxa this way ("CHONDRICHTHYES, RHINOBATIDAE").
+# "squaliformes" is whole-word: Squaliforma is a loricariid catfish genus.
+_TAXA = [
+    r"holoceph", r"rhinobat", r"dasyat", r"potamotrygon", r"myliobat", r"sphyrnid",
+    r"scyliorhin", r"rajiform", r"\brajidae", r"lamniform", r"squaliformes\b", r"carcharhin",
+    r"torpedinif", r"rhinopristi", r"pristiform", r"\bpristidae", r"orectolob",
+    r"heterodont(?:us|idae|iform)", r"hexanch", r"squatin", r"urotrygon", r"gymnurid",
+    r"narcinid", r"arhynchobat", r"triakid", r"etmopter", r"centrophor", r"pteroplatytrygon",
+    r"gurgesiella", r"rioraja", r"atlantoraja", r"sympterygia", r"psammobatis", r"paratrygon",
+    r"plesiotrygon", r"heliotrygon", r"styracura", r"fontitrygon",
+]
+
 _COMMON_RE = re.compile("|".join(_COMMON), re.I)
 _GENERA_RE = re.compile(r"\b(" + "|".join(_GENERA) + r")\b")
+_EXTRA_RE = re.compile("|".join(_IBERIAN + ["(?i:%s)" % t for t in _TAXA]))
 
 # "ray" is the one term in _COMMON that is not diagnostic on its own: the
 # ichthyology and herpetology literature is full of ray-finned fishes, fin ray
@@ -59,10 +85,13 @@ _RAY_NOISE = re.compile(
   | \b rays? \s+ (?:and|or) \s+ spines? \b
   | \b spines? \s+ (?:and|or) \s+ rays? \b
   | \b synchrotron \b | \b radiograph \w* \b
+  | \b \d+ \s+ rays? \b                                        # "17 to 30 rays" (2026-10-28, EBI)
+  | \b scheirer [\s-]+ ray [\s-]+ hare \b                      # a rank test, not a batoid
+  | \b mantas? \s+ (?:ou|e) \s+ postas? \b | \b mantas? \s+ de \s+ pirarucu \b  # salted fillet (pt)
     """)
 
 
 def is_elasmo_text(title: str, abstract: str = "") -> bool:
     """True if title/abstract mentions an elasmobranch/chondrichthyan."""
     text = _RAY_NOISE.sub(" ", f"{title or ''} {abstract or ''}")
-    return bool(_COMMON_RE.search(text) or _GENERA_RE.search(text))
+    return bool(_COMMON_RE.search(text) or _GENERA_RE.search(text) or _EXTRA_RE.search(text))

@@ -398,15 +398,18 @@ CONFERENCE_META = [
          organisers="Sociedade Brasileira de Ictiologia (SBI); official biennial meeting, "
                     "annual 1983-1992 then biennial from 1993-95. Editions: IX 1991 Maringa "
                     "PR (UEM/Nupelia), X 1993 Sao Paulo (USP), XI 1995 Campinas (PUCCAMP), "
-                    "XII 1997 Sao Paulo (IO-USP, 24-28 Feb), XIII 1999 SP (city not "
-                    "established), XIV 2001 Sao Leopoldo RS (UNISINOS), XV 2003 Sao Paulo, "
+                    "XII 1997 Sao Paulo (IO-USP, 24-28 Feb), XIII 1999 Sao Paulo SP, "
+                    "XIV 2001 Sao Leopoldo RS (UNISINOS), XV 2003 Sao Paulo, "
                     "XVI 2005 Joao Pessoa PB, XVII 2007 Itajai SC (Univali), XVIII 2009 "
                     "Cuiaba MT (UFMT), XIX 2011 Manaus AM, XX 2013 Maringa PR, XXI 2015 "
                     "Olinda PE (UFRPE), XXII 2017 Porto Seguro BA (UFSB), XXIII 2019 Belem "
                     "PA, XXIV 2022 Gramado RS, XXV 2025 Palmas TO (UFT, 26-31 Jan). "
                     "Chondrichthyans are 1.4-6.6% of each book (326 abstracts 1991-2019, "
                     "Soares & Petean 2023), so this column counts elasmo abstracts, not the "
-                    "whole book. No corpus record cites EBI yet (2026-10-28).",
+                    "whole book. No corpus record cites EBI yet (2026-10-28). 2015 (1,169) and "
+                    "2025 (770) proceedings HARVESTED 2026-10-28 (fetch_ebi.py, ingest_ebi.py): "
+                    "every abstract, Portuguese kept verbatim, English titles and elasmo "
+                    "abstracts translated (translate_abstracts.py).",
          website="https://www.sbi.bio.br/ (Boletim SBI archive). Online proceedings: 2015 "
                  "CD at automacaodeeventos.com.br/ebi2015/cd/ ; 2025 Anais at "
                  "editorarealize.com.br (ISBN 978-65-5222-033-2)",
@@ -930,7 +933,7 @@ _EXTRA_LOCATIONS = {
     ("EBI", 1993): "Sao Paulo, SP, Brazil",
     ("EBI", 1995): "Campinas, SP, Brazil",
     ("EBI", 1997): "Sao Paulo, SP, Brazil",
-    ("EBI", 1999): "?",
+    ("EBI", 1999): "Sao Paulo, SP, Brazil",  # state SP per Soares & Petean 2023; city label per Simon 2026-10-28
     ("EBI", 2001): "Sao Leopoldo, RS, Brazil",
     ("EBI", 2003): "Sao Paulo, SP, Brazil",
     ("EBI", 2005): "Joao Pessoa, PB, Brazil",
@@ -964,6 +967,10 @@ _EXTRA_LOCATIONS = {
 }
 
 
+# elasmo records per (meeting code, year), filled beside extra_db in main()
+_EXTRA_DB_ELASMO = defaultdict(dict)
+
+
 def _extra_cell(lead_key, code, year, counts, db_years, short=None,
                 pub=None, venues=None):
     """(text, status) for one extra-series cell, or (None, None) to leave blank.
@@ -984,6 +991,15 @@ def _extra_cell(lead_key, code, year, counts, db_years, short=None,
             # volumes is NOT captured. Saying "Ingested" would overstate it.
             return (f"{pre}Partial — {held} abstracts, elasmo-targeted pages only "
                     f"(teleost content not captured)", "Partial")
+        meta = next((m for m in CONFERENCE_META if m.get("lead_key") == lead_key), {})
+        sizes = meta.get("edition_sizes") or {}
+        if any(isinstance(v, tuple) for v in sizes.values()):
+            # general-ichthyology book (sizes are (all, elasmo)): say the elasmo share
+            el = _EXTRA_DB_ELASMO.get(code, {}).get(year, 0)
+            sp = (f" ({sizes[year][1]} per Soares & Petean 2023)"
+                  if isinstance(sizes.get(year), tuple) else "")
+            return (f"{pre}Ingested — {held} abstracts, {el} chondrichthyan by our lexicon{sp}",
+                    "Ingested")
         return f"{pre}Ingested — {held} abstracts", "Ingested"
     book = sorted((CONFERENCES / str(year)).glob(f"{year}_{code}_*.pdf")) \
         if code and (CONFERENCES / str(year)).is_dir() else []
@@ -1460,11 +1476,12 @@ def build(accept_losses=False, dry_run=False):
     extra_counts, extra_pub, extra_venues = _lead_year_counts()
     extra_db = defaultdict(dict)
     _con = sqlite3.connect(str(DB))
-    for _m, _y, _n in _con.execute(
-            "SELECT m.meeting, m.year, COUNT(a.abstract_id) FROM meetings m "
+    for _m, _y, _n, _el in _con.execute(
+            "SELECT m.meeting, m.year, COUNT(a.abstract_id), SUM(a.is_elasmo) FROM meetings m "
             "LEFT JOIN abstracts a ON a.meeting_id=m.meeting_id GROUP BY m.meeting_id"):
         if _n:
             extra_db[_m][_y] = extra_db[_m].get(_y, 0) + _n
+            _EXTRA_DB_ELASMO[_m][_y] = _EXTRA_DB_ELASMO[_m].get(_y, 0) + (_el or 0)
     _con.close()
 
     cover = defaultdict(lambda: {"ingested": 0, "known": 0})

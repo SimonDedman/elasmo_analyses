@@ -25,6 +25,9 @@ def _meeting(name: str) -> str:
         return "IPFC"
     if "SQERF" in up:
         return "SQERF"
+    # Encontro Brasileiro de Ictiologia (ingested from HTML by ingest_ebi.py)
+    if re.search(r"(^|[_ ])EBI([_ ]|$)", up):
+        return "EBI"
     # The fallback below is a REAL hazard, not a tidy default: an unrecognised
     # conference is silently filed as JMIH. It exists because the Carylanne
     # inbox is JMIH-dominant and its filenames are inconsistent. Anything
