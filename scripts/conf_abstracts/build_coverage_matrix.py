@@ -374,6 +374,44 @@ CONFERENCE_META = [
          contact="Via Marcela Alvarenga (asking SBEEL, reply ~6 Nov 2026); else Karla D. A. "
                  "Soares (UFRJ) and Flavia F. Petean, who located all ten books, or Otto "
                  "Gadig (UNESP). Addresses: Gmail/Contacts, not stored here"),
+    dict(series="Encontro Brasileiro de Ictiologia (EBI)",
+         lead_key="Encontro Brasileiro de Ictiologia (EBI)",
+         # GENERAL ichthyology: sizes are (all abstracts, chondrichthyan ones),
+         # from Soares & Petean 2023 Table 1 (same source as SBEEL above). The
+         # chondrichthyan titles are in the same Tab. S1 (326 rows, 1991-2019).
+         # I-VIII (1983-1990, reportedly annual from Belo Horizonte 1983) are
+         # NOT listed: no source gives their years one by one.
+         year_from=1983, year_to=None, frequency=0,
+         editions={9: 1991, 10: 1993, 11: 1995, 12: 1997, 13: 1999, 14: 2001,
+                   15: 2003, 16: 2005, 17: 2007, 18: 2009, 19: 2011, 20: 2013,
+                   21: 2015, 22: 2017, 23: 2019, 24: 2022, 25: 2025},
+         edition_sizes={1991: (196, 12), 1993: (241, 12), 1995: (318, 16),
+                        1997: (399, 7), 1999: (610, 40), 2001: (577, 13),
+                        2003: (520, 7), 2005: (780, 35), 2007: (1037, 34),
+                        2009: (527, 15), 2011: (786, 27), 2013: (1033, 28),
+                        2015: (1169, 32), 2017: (765, 24), 2019: (1010, 29)},
+         # proceedings browsable online (checked 2026-10-28); not harvested yet
+         edition_online={
+             2015: "http://www.automacaodeeventos.com.br/ebi2015/cd/index.htm",
+             2025: "https://editorarealize.com.br/edicao/detalhes/"
+                   "anais-do-ebi---encontro-brasileiro-de-ictiologia (770 papers)"},
+         organisers="Sociedade Brasileira de Ictiologia (SBI); official biennial meeting, "
+                    "annual 1983-1992 then biennial from 1993-95. Editions: IX 1991 Maringa "
+                    "PR (UEM/Nupelia), X 1993 Sao Paulo (USP), XI 1995 Campinas (PUCCAMP), "
+                    "XII 1997 Sao Paulo (IO-USP, 24-28 Feb), XIII 1999 SP (city not "
+                    "established), XIV 2001 Sao Leopoldo RS (UNISINOS), XV 2003 Sao Paulo, "
+                    "XVI 2005 Joao Pessoa PB, XVII 2007 Itajai SC (Univali), XVIII 2009 "
+                    "Cuiaba MT (UFMT), XIX 2011 Manaus AM, XX 2013 Maringa PR, XXI 2015 "
+                    "Olinda PE (UFRPE), XXII 2017 Porto Seguro BA (UFSB), XXIII 2019 Belem "
+                    "PA, XXIV 2022 Gramado RS, XXV 2025 Palmas TO (UFT, 26-31 Jan). "
+                    "Chondrichthyans are 1.4-6.6% of each book (326 abstracts 1991-2019, "
+                    "Soares & Petean 2023), so this column counts elasmo abstracts, not the "
+                    "whole book. No corpus record cites EBI yet (2026-10-28).",
+         website="https://www.sbi.bio.br/ (Boletim SBI archive). Online proceedings: 2015 "
+                 "CD at automacaodeeventos.com.br/ebi2015/cd/ ; 2025 Anais at "
+                 "editorarealize.com.br (ISBN 978-65-5222-033-2)",
+         contact="SBI board via sbi.bio.br; or Karla D. A. Soares (UFRJ) and Flavia F. "
+                 "Petean, who located the 1991-2019 books. Addresses: Gmail/Contacts"),
     dict(series="Simposio Nacional de Tiburones y Rayas (SOMEPEC, Mexico)",
          lead_key="Simposio Nacional de Tiburones y Rayas (Mexico)",
          year_from=2004, year_to=None, frequency=2,
@@ -550,6 +588,7 @@ def _conferences_sheet(wb):
 _EXTRA = [
     ("Encuentro Colombiano sobre Condrictios (ECC)", "ECC", "ECC"),
     ("Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)", "SBEEL", "SBEEL"),
+    ("Encontro Brasileiro de Ictiologia (EBI)", "EBI", "EBI"),
     ("Simposio Nacional de Tiburones y Rayas (SOMEPEC, Mexico)", "SOMEPEC", "SOMEPEC"),
     ("Colloque international requins en Afrique de l'Ouest", "W Africa", None),
     ("Gulf and Caribbean Fisheries Institute (GCFI)", "GCFI", None),
@@ -880,6 +919,30 @@ _EXTRA_LOCATIONS = {
     ("SBEEL", 2014): "Recife, PE, Brazil (UFRPE)",
     ("SBEEL", 2016): "Penedo, AL, Brazil (UFAL)",
     ("SBEEL", 2018): "Joao Pessoa, PB, Brazil",
+    # EBI: state per edition from Soares & Petean 2023 Table 1; each city
+    # below falls in it. [web] 2026-10-28: 1991 "Resumos do IX EBI ...
+    # Universidade Estadual de Maringa"; 1993 "Resumos do X EBI, USP, Sao
+    # Paulo"; 1995 "11, 1995, Campinas ... PUCCAMP/SBI"; 1997 IO-USP; 2001
+    # UNISINOS (XXIV EBI site); 2005-2009, 2015, 2019 FAPESP Agencia notices
+    # and the 2015 CD; 2011 SBI technical report; 2013 SBI bulletin + UEM news;
+    # 2017 UFSB; 2022 ebi2021.com.br; 2025 Realize Anais front page.
+    ("EBI", 1991): "Maringa, PR, Brazil",
+    ("EBI", 1993): "Sao Paulo, SP, Brazil",
+    ("EBI", 1995): "Campinas, SP, Brazil",
+    ("EBI", 1997): "Sao Paulo, SP, Brazil",
+    ("EBI", 1999): "?",
+    ("EBI", 2001): "Sao Leopoldo, RS, Brazil",
+    ("EBI", 2003): "Sao Paulo, SP, Brazil",
+    ("EBI", 2005): "Joao Pessoa, PB, Brazil",
+    ("EBI", 2007): "Itajai, SC, Brazil",
+    ("EBI", 2009): "Cuiaba, MT, Brazil",
+    ("EBI", 2011): "Manaus, AM, Brazil",
+    ("EBI", 2013): "Maringa, PR, Brazil",
+    ("EBI", 2015): "Olinda, PE, Brazil",
+    ("EBI", 2017): "Porto Seguro, BA, Brazil",
+    ("EBI", 2019): "Belem, PA, Brazil",
+    ("EBI", 2022): "Gramado, RS, Brazil",
+    ("EBI", 2025): "Palmas, TO, Brazil",
     ("ISC Shark WG", 2013): "?",
     ("Age Det Wksp", 1983): "?",
     ("ECC", 2014): "?",
@@ -933,6 +996,10 @@ def _extra_cell(lead_key, code, year, counts, db_years, short=None,
                 f"(see the {held_in} column)", "Ingested")
     n = (counts or {}).get(lead_key, {}).get(year)
     size = (meta.get("edition_sizes") or {}).get(year)
+    if isinstance(size, tuple):          # general-ichthyology book: (all, elasmo)
+        size = f"{size[1]} chondrichthyan (of {size[0]})"
+    online = (meta.get("edition_online") or {}).get(year)
+    web = f" [online, not harvested: {online}]" if online else ""
     book = f" of {size} in the book (Soares & Petean 2023)" if size else ""
     if n:
         return (f"{pre}Missing — {n} abstract{'s' if n != 1 else ''} cited by the corpus"
@@ -941,7 +1008,10 @@ def _extra_cell(lead_key, code, year, counts, db_years, short=None,
         # A published edition table is evidence the meeting was held, so the
         # cell is written even where the corpus cites nothing from it.
         return (f"{pre}Missing — {size} abstracts in the book (Soares & Petean 2023 "
-                f"Table 1), titles only in their Tab. S1", "Missing")
+                f"Table 1), titles only in their Tab. S1{web}", "Missing")
+    if year in (meta.get("editions") or {}).values():
+        # held, per the edition table, but nothing sized or cited yet
+        return (f"{pre}Missing — meeting held, abstract count unknown{web}", "Missing")
     return None, None
 
 

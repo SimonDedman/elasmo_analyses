@@ -85,6 +85,10 @@ _SERIES = [
                 r"Reuni[ãa]o.*Elasmobr", re.I),
      "Sociedade Brasileira para o Estudo de Elasmobranquios (SBEEL)",
      "SBEEL", "Brazil", False),
+    (re.compile(r"Encontro\s+Brasileiro\s+de\s+Ictiolog|"
+                r"Brazilian\s+Meeting\s+(?:of|on)\s+Ichthyology", re.I),
+     "Encontro Brasileiro de Ictiologia (EBI)", "Sociedade Brasileira de Ictiologia (SBI)",
+     "Brazil", False),
     (re.compile(r"Reuni[oó]n.*Tiburones|Tiburones y Rayas", re.I),
      "Latin American shark meetings (other)", "regional organisers", "Latin America", False),
     (re.compile(r"Gulf and Caribbean Fisheries Institute|\bGCFI\b", re.I),
