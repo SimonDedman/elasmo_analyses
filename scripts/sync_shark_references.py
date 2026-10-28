@@ -238,9 +238,15 @@ def fetch_with_retry(session, url, method="get", max_retries=None, **kwargs):
 # ---------------------------------------------------------------------------
 # Phase 1: Crawl A-Z pages
 # ---------------------------------------------------------------------------
+# Letters whose page failed in the last crawl_all_letters() call: a crawl
+# missing a letter must not be read as "these records left Shark-References".
+LAST_CRAWL_FAILED: list = []
+
+
 def crawl_all_letters(session, log) -> list[dict]:
     """Crawl all 26 letter pages, extract every paper's basic info."""
     all_papers = []
+    LAST_CRAWL_FAILED.clear()
 
     for i, letter in enumerate(LETTERS):
         url = BASE_URL.format(letter=letter)
@@ -253,6 +259,7 @@ def crawl_all_letters(session, log) -> list[dict]:
             log.info(f"  {letter}: {len(papers)} papers")
         except Exception as e:
             log.error(f"  FAILED on letter {letter}: {e}")
+            LAST_CRAWL_FAILED.append(letter)
 
         if i < len(LETTERS) - 1:
             time.sleep(REQUEST_DELAY)
@@ -577,11 +584,24 @@ def _same_paper(title_a, year_a, title_b, year_b) -> bool:
     return ya is None or yb is None or abs(ya - yb) <= TITLE_AGREE_YEAR_TOL
 
 
+DOI_SHAPE = re.compile(r"^10\.\d{4,9}/\S+$")
+LAST_CROSSREF_UNCHECKED: set = set()   # DOIs whose lookup failed (not a 404), from the last call
+
+
 def _crossref_lookup(session, dois: list, log) -> dict:
-    """Batch-fetch Crossref metadata. Maps lowercased DOI -> dict or None."""
+    """Batch-fetch Crossref metadata. Maps lowercased DOI -> dict or None.
+
+    None means "not in Crossref" only if the DOI is absent from LAST_CROSSREF_UNCHECKED;
+    a DOI there could not be checked (HTTP error, timeout). Strings that are not
+    DOI-shaped are never sent: one of them makes Crossref reject the whole batch
+    with HTTP 400 (2026-10-28: SR listing markup parsed as a DOI blanked a report)."""
     found = {}
-    for i in range(0, len(dois), CROSSREF_BATCH):
-        batch = dois[i:i + CROSSREF_BATCH]
+    LAST_CROSSREF_UNCHECKED.clear()
+    valid = [d for d in dois if DOI_SHAPE.match(d)]
+    if len(valid) < len(dois):
+        log.warning(f"  Crossref: skipped {len(dois) - len(valid)} string(s) that are not DOIs")
+    for i in range(0, len(valid), CROSSREF_BATCH):
+        batch = valid[i:i + CROSSREF_BATCH]
         params = {
             "rows": 100,
             "select": "DOI,title,container-title,issued",
@@ -590,7 +610,9 @@ def _crossref_lookup(session, dois: list, log) -> dict:
         }
         try:
             resp = session.get(CROSSREF_API, params=params, timeout=60)
-            items = resp.json()["message"]["items"] if resp.ok else []
+            if not resp.ok:
+                raise RuntimeError(f"HTTP {resp.status_code}")
+            items = resp.json()["message"]["items"]
         except Exception as e:
             # A failed batch must not masquerade as "not in Crossref" — that
             # would quarantine perfectly good DOIs. Retry each one singly.
@@ -601,8 +623,10 @@ def _crossref_lookup(session, dois: list, log) -> dict:
                     r = session.get(f"{CROSSREF_API}/{d}", timeout=45)
                     if r.ok:
                         items.append(r.json()["message"])
+                    elif r.status_code != 404:
+                        LAST_CROSSREF_UNCHECKED.add(d)
                 except Exception:
-                    pass
+                    LAST_CROSSREF_UNCHECKED.add(d)
                 time.sleep(CROSSREF_DELAY)
         for it in items:
             issued = (it.get("issued", {}).get("date-parts") or [[None]])[0]
@@ -1798,6 +1822,22 @@ def main():
 
         sr_papers = crawl_all_letters(session, log)
         stats["sr_total"] = len(sr_papers)
+
+        # --- Phase 1b: snapshot + change report (2026-10-28) ---
+        # The listing carries every record's authors, title, findspot and DOI;
+        # keep it, and report Shark-References' edits to records we already
+        # hold (review workbook only; nothing is applied here). Never fatal.
+        try:
+            import sr_change_report as SCR
+            snap = SCR.save_snapshot(sr_papers, LAST_CRAWL_FAILED, log)
+            if not args.dry_run:
+                rows, cov = SCR.compare(snap)
+                SCR.crossref_verdicts(rows)
+                out = SCR.write_report(rows, cov)
+                stats["sr_changes_outstanding"] = len(rows)
+                log.info(f"  SR change report: {len(rows)} outstanding rows {cov['by_field']}, {cov['id_mismatch']} id mismatches -> {out.name}")
+        except Exception as e:
+            log.warning(f"  SR change report FAILED (sync continues): {e}")
 
         # --- Phase 2: Diff ---
         log.info("")
