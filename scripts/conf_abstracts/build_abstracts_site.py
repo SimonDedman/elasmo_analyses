@@ -5,7 +5,7 @@ Reads database/conference_abstracts.db (read-only), outputs/conference_coverage_
 Data layout (all under docs/abstracts/data/):
   meta.json        counts, meetings, series, presentation types, index file list, search manifest
   index_N.json     compact rows: [idx, abstract_id, meeting_idx, year, title, first_author, presenter, n_authors, is_elasmo, ptype_idx]
-  abs_N.json       full text + authors for rows idx//SHARD == N
+  abs_N.json       session, authors (and full text only if PUBLISH_ABSTRACT_TEXT) for rows idx//SHARD == N
   s_<f><N>.json    inverted index shards per field f in t(itle)/a(uthors)/b(abstract): {word: "delta,coded,idx"}
   coverage.json    society x year grid
 """
@@ -50,6 +50,12 @@ def unmail(s, repl):
         s = re.sub(r"\(\s*\)|\s+(?=[,;.)])", "", s)
         s = re.sub(r"\s{2,}", " ", s).strip(" ,;")
     return s
+
+
+# Abstract text is NOT published until the societies grant permission (Simon, 2026-10-28: "take public abstract
+# text off github for now"; PD 3.6 says conference-abstract text is published only where the society grants it).
+# Titles, authors, sessions, and the word-level search index stay public; set True per society once permission lands.
+PUBLISH_ABSTRACT_TEXT = False
 
 
 def words(s):
@@ -114,11 +120,13 @@ def main():
         d = {}
         for idx in range(s * SHARD, min(len(rows), (s + 1) * SHARD)):
             r = rows[idx]
-            d[idx] = [r["abstract_text"] or "", r["session_name"] or "", str(r["program_number"] or ""),
+            pub = PUBLISH_ABSTRACT_TEXT
+            d[idx] = [(r["abstract_text"] or "") if pub else "", r["session_name"] or "", str(r["program_number"] or ""),
                       r["session_datetime"] or "", r["elasmo_basis"] or "",
                       [[a["full_name"], a["affiliation"] or "", a["affiliation_country"] or "", 1 if a["is_presenter"] else 0]
                        for a in authors.get(r["abstract_id"], [])],
-                      r.get("abstract_text_en") or "", r.get("translation_by") or ""]
+                      (r.get("abstract_text_en") or "") if pub else "", (r.get("translation_by") or "") if pub else "",
+                      0 if pub or not (r["abstract_text"] or "").strip() else 1]   # [8] 1 = text held back
         sizes[f"abs_{s}.json"] = dump(DATA / f"abs_{s}.json", d)
 
     index_files = []
@@ -215,7 +223,7 @@ def main():
                    "authors": len({norm(a["full_name"]) for v in authors.values() for a in v}), "author_rows": n_auth_total},
         "meetings": [[m["meeting"], m["year"], m["name"] or "", m["location"] or "", m["n_abstracts"] or 0, m["meeting_id"]] for m in meetings],
         "series": sorted(series), "ptypes": ptypes, "years": [min(m["year"] for m in meetings), max(m["year"] for m in meetings)],
-        "index_files": index_files, "shard": SHARD, "search": manifest,
+        "index_files": index_files, "shard": SHARD, "search": manifest, "text_withheld": not PUBLISH_ABSTRACT_TEXT,
     }
     sizes["meta.json"] = dump(DATA / "meta.json", meta)
     (OUT / "index.html").write_text(HTML, encoding="utf-8")

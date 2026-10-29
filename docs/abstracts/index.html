@@ -299,12 +299,12 @@ async function fill(d, r) {
   const sh = Math.floor(r[0] / META.shard);
   let data;
   try { data = await cached(shardCache, sh, () => getJSON('abs_' + sh + '.json')); } catch (e) { d.querySelector('.body').textContent = 'Could not load this abstract.'; return; }
-  const [text, session, prog, dt, basis, au, textEn, trBy] = data[r[0]];
+  const [text, session, prog, dt, basis, au, textEn, trBy, withheld] = data[r[0]];
   const mt = META.meetings[r[2]];
   d.querySelector('.body').innerHTML =
     `<h4>Meeting</h4><div>${esc(mt[0])} ${mt[1]}${mt[2] ? ' · ' + esc(mt[2]) : ''}${mt[3] ? ' · ' + esc(mt[3]) : ''}${session ? '<br>Session: ' + esc(session) : ''}${prog ? ' · programme no. ' + esc(prog) : ''}${dt ? ' · ' + esc(dt) : ''}</div>
     <h4>Authors</h4>${au.length ? '<ol class="au">' + au.map(a => `<li><span class="${a[3] ? 'pr' : ''}">${hl(a[0], 'au')}</span>${a[1] ? ', ' + esc(a[1]) : ''}${a[2] && !(a[1] || '').includes(a[2]) ? ' (' + esc(a[2]) + ')' : ''}${a[3] ? ' <span class="chip">presenter</span>' : ''}</li>`).join('') + '</ol>' : '<div class="small">No authors recorded.</div>'}
-    ${textEn ? `<h4>Abstract in English</h4><div class="abs">${hl(textEn, 'ab')}</div>${trBy ? `<div class="small">${esc(trBy)}</div>` : ''}<h4>Abstract as published</h4>` : '<h4>Abstract</h4>'}${text ? `<div class="abs">${hl(text, 'ab')}</div>` : '<div class="small">No abstract text: this meeting is held as a programme (titles and authors only).</div>'}
+    ${textEn ? `<h4>Abstract in English</h4><div class="abs">${hl(textEn, 'ab')}</div>${trBy ? `<div class="small">${esc(trBy)}</div>` : ''}<h4>Abstract as published</h4>` : '<h4>Abstract</h4>'}${text ? `<div class="abs">${hl(text, 'ab')}</div>` : (withheld ? '<div class="small">Abstract text is held back until the society that published it gives permission to republish it; the title, authors, and session are shown.</div>' : '<div class="small">No abstract text: this meeting is held as a programme (titles and authors only).</div>')}
     <div class="small" style="margin-top:8px">Abstract ID ${esc(r[1])}</div>`;
 }
 
