@@ -229,3 +229,7 @@ outputs/author_atlas/authors.geojson
 outputs/analysis/author_network_nodes.csv
 outputs/namsor_overrides.csv
 outputs/namsor_enrichment.csv
+
+# Conference-abstract full text stays local until the societies grant permission (Simon, 2026-10-28)
+database/conference_abstracts_fable.json
+database/conference_abstracts_fable.parquet
