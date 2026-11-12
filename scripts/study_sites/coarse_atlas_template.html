@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Species Atlas</title>
+<link rel="icon" href="../assets/logo/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+<style>
+/* Template for scripts/study_sites/build_coarse_atlas.py. Layout: lede, one filter row (view switch, species, years), map with legend, paper list for the selected country or basin, table view. */
+:root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.10);--seq:#2a78d6;--warn:#eda100;--land:#eceae4;--sea:#f9f9f7;
+--c1:#cde2fb;--c2:#86b6ef;--c3:#3987e5;--c4:#1c5cab;--c5:#0d366b;--sel:#0b0b0b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--land:#262624;--sea:#0d0d0d;
+--c1:#0d366b;--c2:#1c5cab;--c3:#3987e5;--c4:#86b6ef;--c5:#cde2fb;--sel:#fff}}
+:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--land:#262624;--sea:#0d0d0d;
+--c1:#0d366b;--c2:#1c5cab;--c3:#3987e5;--c4:#86b6ef;--c5:#cde2fb;--sel:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:26px;margin:0 0 2px;text-wrap:balance}
+h2{font-size:17px;margin:0;display:inline}
+p{margin:8px 0}.lede{color:var(--ink2);max-width:860px}
+a{color:var(--seq)}
+.badge{display:inline-block;font-size:12.5px;border:1px solid var(--warn);color:var(--warn);border-radius:10px;padding:1px 9px;margin-bottom:8px}
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin:14px 0 8px;font-size:13px;color:var(--ink2)}
+.filters label,.filters .grp{display:flex;flex-direction:column;gap:2px}
+input,button{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--axis);border-radius:6px;background:var(--surface);color:var(--ink)}
+#sp{width:min(320px,80vw)}input[type=number]{width:86px}
+button{cursor:pointer}
+.seg{display:flex}.seg button{border-radius:0}.seg button:first-child{border-radius:6px 0 0 6px}.seg button:last-child{border-radius:0 6px 6px 0;border-left:0}
+.seg button[aria-pressed="true"]{border-color:var(--seq);box-shadow:inset 0 0 0 1px var(--seq);font-weight:600}
+#status{margin:6px 2px;color:var(--ink2);font-size:14px}
+#mapbox{position:relative;background:var(--sea);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+svg{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
+.bas{fill:var(--sea);stroke:var(--sea);stroke-width:.6;vector-effect:non-scaling-stroke}
+.cty{fill:var(--land);stroke:var(--page);stroke-width:.6;vector-effect:non-scaling-stroke}
+.has{cursor:pointer}
+.cty.sel,.bas.sel{stroke:var(--sel);stroke-width:2}
+.dot{stroke:var(--page);stroke-width:1.5;vector-effect:non-scaling-stroke;cursor:pointer}
+.dot.sel{stroke:var(--sel);stroke-width:2.5}
+.b1{fill:var(--c1)}.b2{fill:var(--c2)}.b3{fill:var(--c3)}.b4{fill:var(--c4)}.b5{fill:var(--c5)}
+.blab{font-size:5px;fill:var(--ink);paint-order:stroke;stroke:var(--page);stroke-width:1.2px;text-anchor:middle;pointer-events:none;font-weight:600}
+#tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.15);display:none;white-space:nowrap}
+#zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px}
+#zoom button{width:32px;height:32px;padding:0;font-size:18px;line-height:1}
+.legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--ink2);margin:8px 2px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:16px;height:12px;border-radius:3px;display:inline-block;border:1px solid var(--border)}
+details{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:14px 0}
+summary{cursor:pointer}
+.r{border-top:1px solid var(--grid);padding:8px 2px}
+.r .t{font-weight:600}.r .m{font-size:13px;color:var(--ink2)}.r .s{font-size:12.5px;color:var(--muted);font-style:italic}
+table{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+th,td{text-align:left;padding:5px 8px;border-top:1px solid var(--grid)}th{font-size:12.5px;color:var(--ink2);border-top:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+td button{border:0;background:none;color:var(--seq);padding:0;text-decoration:underline}
+.note{font-size:13.5px;color:var(--ink2)}
+</style>
+</head>
+<body><div class="wrap">
+<span class="badge">First version: country and ocean-basin level</span>
+<h1>Species Atlas</h1>
+<p class="lede">Where chondrichthyan research has been done, by species. Pick a species to see the countries or ocean basins where it has been studied, then select one for the papers. <span id="cov"></span></p>
+
+<div class="filters">
+<div class="grp">Map by<div class="seg" role="group" aria-label="Map by"><button type="button" id="vC" aria-pressed="true">Countries</button><button type="button" id="vB" aria-pressed="false">Ocean basins</button></div></div>
+<label>Species<input id="sp" list="splist" placeholder="All species: type a scientific name" autocomplete="off"></label>
+<datalist id="splist"></datalist>
+<label>From year<input id="y0" type="number" inputmode="numeric"></label>
+<label>To year<input id="y1" type="number" inputmode="numeric"></label>
+<button id="reset" type="button">Reset</button>
+</div>
+<div id="status" role="status"></div>
+
+<div id="mapbox">
+<svg id="map" viewBox="-180 -90 360 180" role="img" aria-label="World map shaded by number of papers per study country or ocean basin; the same figures are in the table below"></svg>
+<div id="zoom"><button type="button" id="zin" aria-label="Zoom in">+</button><button type="button" id="zout" aria-label="Zoom out">&minus;</button><button type="button" id="zhome" aria-label="Reset view">&#8962;</button></div>
+<div id="tip"></div>
+</div>
+<div class="legend" id="legend"></div>
+
+<details open id="listbox"><summary><h2 id="listh"></h2></summary><div id="list"></div></details>
+<details id="tablebox"><summary><h2 id="tableh"></h2></summary><div id="table"></div></details>
+
+<details><summary><h2>What this version covers</h2></summary>
+<p id="covlong"></p>
+<p>Each paper is placed in the country or countries where its data were collected, and in the ocean basin of the sea it names as its study region, both as read from the full text by a language model. The readings have not been checked by hand. A paper that worked in several countries or basins appears in each. A paper that names no sea has no basin, and a high-seas study may have a basin and no country.</p>
+<p>The nine basins follow Shark Oracle's basin columns: the Gulf of Mexico and the Bahamas sit with the Caribbean, and the Black Sea with the Mediterranean.</p>
+<p>Species and places are joined at the level of the paper. A paper that covers several species and several countries links every one of its species to every one of its countries, so a species can appear in a place where that paper did not study it; reviews and multi-country studies cause most of this.</p>
+<p>Species are those Shark Oracle's classification links to each paper. Study sites within a country, sea areas, and distances to port will follow as site-level extraction is added.</p>
+</details>
+<p class="note"><a href="../regions/">What is planned next: study sites and regional summaries</a> &middot; <a href="../">Back to Shark Oracle</a></p>
+</div>
+<script>
+const D=/*DATA*/null, GEO=/*GEO*/null, BAS=/*BAS*/null;
+const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// one configuration per view: which field of a paper holds the keys, their names, and the colour bins (lower bounds)
+const VIEWS={
+  country:{idx:5,name:D.a3name,one:'country',many:'countries',head:'Country',bins:[1,2,6,21,61],lab:['1','2 to 5','6 to 20','21 to 60','61 or more']},
+  basin:{idx:7,name:D.basinname,one:'ocean basin',many:'ocean basins',head:'Ocean basin',bins:[1,26,76,151,226],lab:['1 to 25','26 to 75','76 to 150','151 to 225','226 or more']}};
+let view='country', V=VIEWS[view];
+const bin=n=>{let b=0;for(let i=0;i<V.bins.length;i++)if(n>=V.bins[i])b=i+1;return b};
+const spIdx=new Map(D.species.map((s,i)=>[s.toLowerCase(),i]));
+const years=D.papers.map(p=>p[3]).filter(Boolean), YMIN=Math.min(...years), YMAX=Math.max(...years);
+let sel=null, counts=new Map(), shown=[];
+
+// ---- map geometry (plate carree: x = longitude, y = -latitude); basins under countries under dots ----
+const svg=$('map'), gB=document.createElementNS(NS,'g'), gC=document.createElementNS(NS,'g'), gD=document.createElementNS(NS,'g'), gL=document.createElementNS(NS,'g');
+svg.append(gB,gC,gD,gL);
+const ring=r=>'M'+r.map(([x,y])=>x+' '+(-y)).join('L')+'Z';
+const pathOf=g=>(g.type==='Polygon'?[g.coordinates]:g.coordinates).map(pl=>pl.map(ring).join('')).join('');
+const elC=new Map(), elD=new Map(), elB=new Map(), elL=new Map();
+const BLAB={north_atlantic:[-40,-33],south_atlantic:[-15,25],north_pacific:[-160,-28],south_pacific:[-125,28],indian_ocean:[78,22],southern_ocean:[-140,66],arctic_ocean:[0,-82],mediterranean:[18,-35.5],caribbean:[-78,-16]};
+for(const f of BAS.features){
+  const k=f.properties.basin, p=document.createElementNS(NS,'path');
+  p.setAttribute('d',pathOf(f.geometry)); p.setAttribute('class','bas'); p.dataset.k=k; p.dataset.v='basin'; gB.append(p); elB.set(k,p);
+  const t=document.createElementNS(NS,'text'); t.setAttribute('x',BLAB[k][0]); t.setAttribute('y',BLAB[k][1]); t.setAttribute('class','blab'); gL.append(t); elL.set(k,t);
+}
+for(const f of GEO.features){
+  const a3=f.properties.adm0_a3; if(!f.geometry) continue;
+  const p=document.createElementNS(NS,'path');
+  p.setAttribute('d',pathOf(f.geometry)); p.setAttribute('class','cty'); p.dataset.k=a3; p.dataset.v='country'; gC.append(p); elC.set(a3,p);
+  const c=document.createElementNS(NS,'circle'); c.setAttribute('cx',f.properties.label_x); c.setAttribute('cy',-f.properties.label_y);
+  c.dataset.k=a3; c.dataset.v='country'; c.style.display='none'; gD.append(c); elD.set(a3,c);
+}
+// ---- pan and zoom on the viewBox ----
+let vb=[-180,-90,360,180];
+const setVB=()=>{const w=Math.min(360,Math.max(8,vb[2])), h=w/2; vb[2]=w; vb[3]=h;
+  vb[0]=Math.min(180-w,Math.max(-180,vb[0])); vb[1]=Math.min(90-h,Math.max(-90,vb[1]));
+  svg.setAttribute('viewBox',vb.join(' ')); sizeMarks()};
+const zoomAt=(k,px=.5,py=.5)=>{const w=vb[2]*k, h=vb[3]*k; if(w>360||w<8) {if(w>360){vb=[-180,-90,360,180];setVB()} return}
+  vb[0]+= (vb[2]-w)*px; vb[1]+=(vb[3]-h)*py; vb[2]=w; vb[3]=h; setVB()};
+svg.addEventListener('wheel',e=>{e.preventDefault(); const r=svg.getBoundingClientRect(); zoomAt(e.deltaY<0?.8:1.25,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height)},{passive:false});
+let drag=null, moved=false;
+svg.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY,vb[0],vb[1]]; moved=false});
+window.addEventListener('pointermove',e=>{if(!drag) return; const r=svg.getBoundingClientRect(), dx=e.clientX-drag[0], dy=e.clientY-drag[1];
+  if(Math.abs(dx)+Math.abs(dy)>4) moved=true; vb[0]=drag[2]-dx*vb[2]/r.width; vb[1]=drag[3]-dy*vb[3]/r.height; setVB()});
+window.addEventListener('pointerup',()=>{drag=null});
+$('zin').onclick=()=>zoomAt(.6); $('zout').onclick=()=>zoomAt(1/.6); $('zhome').onclick=()=>{vb=[-180,-90,360,180];setVB()};
+function sizeMarks(){const k=vb[2]/360;
+  // constant screen size: the fill carries the count, the dot only keeps small islands visible
+  for(const [a3,c] of elD) c.setAttribute('r',1.5*Math.max(k,.1));
+  for(const t of elL.values()) t.style.fontSize=(5*Math.max(k,.25))+'px'}
+
+// ---- filter, colour, list ----
+function compute(){
+  const q=$('sp').value.trim().toLowerCase(), si=q?spIdx.get(q):null;
+  const y0=+$('y0').value||YMIN, y1=+$('y1').value||YMAX;
+  const partial=q&&si===undefined? D.species.map((s,i)=>s.toLowerCase().includes(q)?i:-1).filter(i=>i>=0):null;
+  shown=D.papers.filter(p=>{
+    if(!p[V.idx].length) return false;
+    if(p[3]&&(p[3]<y0||p[3]>y1)) return false;
+    if(!q) return true;
+    return si!==undefined&&si!==null? p[6].includes(si) : p[6].some(i=>partial.includes(i));
+  });
+  counts=new Map(); for(const p of shown) for(const a of p[V.idx]) counts.set(a,(counts.get(a)||0)+1);
+  const isC=view==='country';
+  for(const [a3,el] of elC){const n=isC?(counts.get(a3)||0):0, b=bin(n);
+    el.setAttribute('class','cty'+(n?' has b'+b:'')+(isC&&a3===sel?' sel':''));
+    const c=elD.get(a3); c.style.display=n?'':'none'; c.setAttribute('class','dot b'+b+(isC&&a3===sel?' sel':''))}
+  for(const [k,el] of elB){const n=isC?0:(counts.get(k)||0);
+    el.setAttribute('class','bas'+(n?' has b'+bin(n):'')+(!isC&&k===sel?' sel':''));
+    elL.get(k).textContent=isC?'':(n?n.toLocaleString():'')}
+  sizeMarks();
+  const what=q?(si!==undefined&&si!==null?'<i>'+esc(D.species[si])+'</i>':(partial.length+' species matching "'+esc($('sp').value.trim())+'"')):'all species';
+  $('status').innerHTML=shown.length.toLocaleString()+' papers in '+counts.size+' '+V.many+', '+what+', '+y0+' to '+y1+'.'+(q&&!shown.length?' No mapped papers for that name yet.':'');
+  renderLegend(); renderTable(); renderList();
+}
+function setView(v){view=v; V=VIEWS[v]; sel=null; $('vC').setAttribute('aria-pressed',v==='country'); $('vB').setAttribute('aria-pressed',v==='basin'); compute()}
+function pick(k){sel=(sel===k?null:k); compute(); if(sel) $('listbox').open=true}
+function renderList(){
+  if(!sel){$('listh').textContent='Select '+(view==='country'?'a country':'an ocean basin');
+    $('list').innerHTML='<p class="note">Select a shaded '+V.one+(view==='country'?' or a dot':'')+' on the map, or a row in the table below.</p>'; return}
+  const ps=shown.filter(p=>p[V.idx].includes(sel)).sort((a,b)=>(b[3]||0)-(a[3]||0));
+  $('listh').textContent=V.name[sel]+': '+ps.length+' papers';
+  $('list').innerHTML=ps.length?ps.map(p=>{
+    const t=p[4]?'<a href="https://doi.org/'+esc(p[4])+'" target="_blank" rel="noopener">'+esc(p[1])+'</a>':esc(p[1]);
+    const places=[...p[5].filter(a=>!(view==='country'&&a===sel)).map(a=>D.a3name[a]),...p[7].filter(b=>!(view==='basin'&&b===sel)).map(b=>D.basinname[b])];
+    return '<div class="r"><div class="t">'+t+'</div><div class="m">'+esc(p[2])+(p[3]?' ('+p[3]+')':'')+(places.length?' &middot; also '+esc(places.join(', ')):'')+'</div>'+
+      (p[6].length?'<div class="s">'+esc(p[6].map(i=>D.species[i]).join(', '))+'</div>':'')+'</div>'}).join(''):'<p class="note">No papers here with the current filters.</p>';
+}
+function renderTable(){
+  const rows=[...counts].sort((a,b)=>b[1]-a[1]||V.name[a[0]].localeCompare(V.name[b[0]]));
+  $('tableh').textContent=(view==='country'?'Countries':'Ocean basins')+' by number of papers';
+  $('table').innerHTML='<table><thead><tr><th>'+V.head+'</th><th class="n">Papers</th></tr></thead><tbody>'+
+    rows.map(([a,n])=>'<tr><td><button type="button" data-k="'+a+'">'+esc(V.name[a])+'</button></td><td class="n">'+n+'</td></tr>').join('')+'</tbody></table>';
+}
+function renderLegend(){
+  $('legend').innerHTML='<span>Papers per '+V.one+':</span>'+V.lab.map((l,i)=>'<span><i style="background:var(--c'+(i+1)+')"></i>'+l+'</span>').join('')+
+    (view==='country'?'<span><i style="background:var(--land)"></i>none mapped yet</span><span>Dots mark every country with papers, so small islands stay visible.</span>':'<span>Numbers on the map are papers per basin.</span>');
+}
+$('table').addEventListener('click',e=>{const a=e.target.dataset.k; if(a){pick(a); $('mapbox').scrollIntoView({behavior:'smooth',block:'nearest'})}});
+const hit=e=>{const d=e.target.dataset; return d&&d.k&&d.v===view?d.k:null};
+svg.addEventListener('click',e=>{if(moved) return; const a=hit(e); if(a&&counts.get(a)) pick(a)});
+const tip=$('tip');
+svg.addEventListener('pointermove',e=>{const a=hit(e); if(!a||drag){tip.style.display='none';return}
+  const n=counts.get(a)||0, r=$('mapbox').getBoundingClientRect();
+  tip.innerHTML='<b>'+esc(V.name[a])+'</b>: '+(n?n.toLocaleString()+' paper'+(n>1?'s':''):'no mapped papers');
+  tip.style.display='block'; tip.style.left=Math.min(e.clientX-r.left+12,r.width-tip.offsetWidth-6)+'px'; tip.style.top=(e.clientY-r.top+12)+'px'});
+svg.addEventListener('pointerleave',()=>{tip.style.display='none'});
+
+// ---- static text ----
+$('splist').innerHTML=D.species.slice().sort().map(s=>'<option value="'+esc(s)+'">').join('');
+$('y0').placeholder=YMIN; $('y1').placeholder=YMAX; $('y0').min=$('y1').min=YMIN; $('y0').max=$('y1').max=YMAX;
+const pct=(100*D.n_mapped/D.n_corpus).toFixed(0);
+$('cov').textContent='This first version maps '+D.n_mapped.toLocaleString()+' papers: '+D.n_country.toLocaleString()+' by country and '+D.n_basin.toLocaleString()+' by ocean basin.';
+$('covlong').textContent='The map holds '+D.n_mapped.toLocaleString()+' of the '+D.n_corpus.toLocaleString()+' papers in the corpus ('+pct+'%): those whose full text has been read for study location so far, which are mostly recent papers. '+D.n_country.toLocaleString()+' have a study country and '+D.n_basin.toLocaleString()+' name a sea that places them in an ocean basin. An unshaded country or basin has no mapped papers yet, which is not the same as no research. Built '+D.built+'.';
+// deep links: ?species=Mobula%20alfredi&country=MDV&from=2000&to=2025, or ?view=basin&basin=indian_ocean
+const Q=new URLSearchParams(location.search);
+if(Q.get('species')) $('sp').value=Q.get('species');
+if(Q.get('from')) $('y0').value=Q.get('from');
+if(Q.get('to')) $('y1').value=Q.get('to');
+if(Q.get('view')==='basin'||Q.get('basin')){view='basin'; V=VIEWS.basin; $('vC').setAttribute('aria-pressed',false); $('vB').setAttribute('aria-pressed',true);
+  if(Q.get('basin')&&D.basinname[Q.get('basin')]) sel=Q.get('basin')}
+else if(Q.get('country')&&D.a3name[Q.get('country').toUpperCase()]) sel=Q.get('country').toUpperCase();
+for(const id of ['sp','y0','y1']) $(id).addEventListener('input',compute);
+$('vC').onclick=()=>setView('country'); $('vB').onclick=()=>setView('basin');
+$('reset').onclick=()=>{$('sp').value='';$('y0').value='';$('y1').value='';sel=null;compute()};
+compute();
+</script>
+</body></html>
