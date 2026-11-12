@@ -30,6 +30,7 @@ button{cursor:pointer}
 .seg{display:flex}.seg button{border-radius:0}.seg button:first-child{border-radius:6px 0 0 6px}.seg button:last-child{border-radius:0 6px 6px 0;border-left:0}
 .seg button[aria-pressed="true"]{border-color:var(--seq);box-shadow:inset 0 0 0 1px var(--seq);font-weight:600}
 #status{margin:6px 2px;color:var(--ink2);font-size:14px}
+#covnote{margin:10px 2px 2px;padding:6px 10px;border-left:3px solid var(--warn,#eda100);background:var(--surface);color:var(--ink);font-size:14px;border-radius:0 8px 8px 0}
 #mapbox{position:relative;background:var(--sea);border:1px solid var(--border);border-radius:12px;overflow:hidden}
 svg{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
 .bas{fill:var(--sea);stroke:var(--sea);stroke-width:.6;vector-effect:non-scaling-stroke}
@@ -70,6 +71,7 @@ td button{border:0;background:none;color:var(--seq);padding:0;text-decoration:un
 <label>To year<input id="y1" type="number" inputmode="numeric"></label>
 <button id="reset" type="button">Reset</button>
 </div>
+<div id="covnote"></div>
 <div id="status" role="status"></div>
 
 <div id="mapbox">
@@ -204,6 +206,8 @@ svg.addEventListener('pointerleave',()=>{tip.style.display='none'});
 $('splist').innerHTML=D.species.slice().sort().map(s=>'<option value="'+esc(s)+'">').join('');
 $('y0').placeholder=YMIN; $('y1').placeholder=YMAX; $('y0').min=$('y1').min=YMIN; $('y0').max=$('y1').max=YMAX;
 const pct=(100*D.n_mapped/D.n_corpus).toFixed(0);
+const yrs=D.papers.map(p=>p[3]).filter(y=>y).sort((x,y)=>x-y), ymed=yrs[Math.floor(yrs.length/2)];
+$('covnote').textContent='Coverage so far: '+D.n_mapped.toLocaleString()+' of '+D.n_corpus.toLocaleString()+' papers in the corpus ('+pct+'%), '+yrs.filter(y=>y>=ymed).length.toLocaleString()+' of them published in '+ymed+' or later. Counts are a minimum: a place with few or no papers here may have much more research.';
 $('cov').textContent='This first version maps '+D.n_mapped.toLocaleString()+' papers: '+D.n_country.toLocaleString()+' by country and '+D.n_basin.toLocaleString()+' by ocean basin.';
 $('covlong').textContent='The map holds '+D.n_mapped.toLocaleString()+' of the '+D.n_corpus.toLocaleString()+' papers in the corpus ('+pct+'%): those whose full text has been read for study location so far, which are mostly recent papers. '+D.n_country.toLocaleString()+' have a study country and '+D.n_basin.toLocaleString()+' name a sea that places them in an ocean basin. An unshaded country or basin has no mapped papers yet, which is not the same as no research. Built '+D.built+'.';
 // deep links: ?species=Mobula%20alfredi&country=MDV&from=2000&to=2025, or ?view=basin&basin=indian_ocean
