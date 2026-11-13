@@ -14,6 +14,13 @@ reported in the coverage file. Basin polygons: docs/species_atlas/basins.json
 Species come from the sp_* columns of the corpus parquet. Country polygons:
 docs/species_atlas/countries.json (scripts/study_sites/export_countries_geojson.R).
 
+Added 2026-11-12 (spec section 11, G1 to G5; Guy Stevens's second email):
+- order and family per species from data/sharkipedia/Sharkipedia-Taxonomy-v1.0-22-01-25.csv, by exact
+  name, else by genus when the genus sits in one family; anything else is "Unplaced", never guessed;
+- research themes from the d_* discipline columns, labels from scripts/topic_review_topics.py;
+- authors as printed in the corpus `authors` string (surname and initials, so two people who share
+  both are one entry).
+
   python3 scripts/study_sites/build_coarse_atlas.py
 The page is self-contained (data inlined) so it opens from disk. Linked from the landing page and published 2026-11-12.
 """
@@ -31,10 +38,15 @@ import pyarrow.parquet as pq
 sys.path.insert(0, str(Path(__file__).parent))
 import check_basin_columns as C  # noqa: E402
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import topic_review_topics as T  # noqa: E402  (single definition of theme ids, labels, and order)
+
 ROOT = Path(__file__).resolve().parents[2]
 PARQUET = ROOT / "outputs/literature_review_enriched.parquet"
 OUT = ROOT / "docs/species_atlas"
 COVER = ROOT / "outputs/study_sites/coarse_atlas_coverage.json"
+TAXONOMY = ROOT / "data/sharkipedia/Sharkipedia-Taxonomy-v1.0-22-01-25.csv"
+UNPLACED = "Unplaced"
 
 ALIAS = {  # model-read name (lower case) -> Natural Earth admin name
     "usa": "United States of America", "us": "United States of America", "united states": "United States of America",
@@ -79,8 +91,45 @@ def model_countries():
     return out
 
 
-def main():
-    geo = json.loads((OUT / "countries.json").read_text())
+def taxonomy(species):
+    """species name -> (order, family, how); how is exact, genus, or unplaced."""
+    t = pd.read_csv(TAXONOMY, encoding="utf-8-sig")
+    need = {"Order", "Family", "Sharkipedia Scientific name"}
+    if not need <= set(t.columns):
+        sys.exit(f"FAIL: taxonomy table lacks {need - set(t.columns)}")
+    t["k"] = t["Sharkipedia Scientific name"].str.strip().str.lower()
+    exact = {r.k: (r.Order, r.Family) for r in t.itertuples()}
+    by_genus = {}
+    for g, grp in t.assign(g=t.k.str.split().str[0]).groupby("g"):
+        pairs = set(zip(grp.Order, grp.Family))
+        if len(pairs) == 1:   # a genus split across families places nothing
+            by_genus[g] = pairs.pop()
+    out = {}
+    for s in species:
+        k = s.strip().lower()
+        if k in exact:
+            out[s] = (*exact[k], "exact")
+        elif k.split()[0] in by_genus:
+            out[s] = (*by_genus[k.split()[0]], "genus")
+        else:
+            out[s] = (UNPLACED, UNPLACED, "unplaced")
+    return out
+
+
+def author_list(s):
+    """'Surname, I. & Surname, I. (2024)' -> ['Surname, I.', ...]; drops suffix fragments such as 'III'."""
+    s = re.sub(r"\s*\(\d{4}[a-z]?\)\s*$", "", str(s or ""))
+    out = []
+    for a in s.split(" & "):
+        a = re.sub(r"^(?:III|II|IV|Jr\.?|Sr\.?),\s*", "", a.strip())
+        if a and a not in out:
+            out.append(a)
+    return out
+
+
+def country_lookup(geo):
+    """(to_a3, a3name) for a Natural Earth countries GeoJSON. to_a3(name) -> (adm0_a3 or None, status).
+    Shared with gazetteer_pilot.py: the one place a model-read country name becomes a country code."""
     ne = {}
     for f in geo["features"]:
         p = f["properties"]
@@ -96,10 +145,21 @@ def main():
         if k in ALIAS:
             k = ALIAS[k].lower()
         return (ne[k], "ok") if k in ne else (None, "unmapped")
+    return to_a3, a3name
+
+
+def main():
+    geo = json.loads((OUT / "countries.json").read_text())
+    to_a3, a3name = country_lookup(geo)
 
     names = pq.ParquetFile(PARQUET).schema.names
     sp_cols = [n for n in names if n.startswith("sp_")]
-    d = pd.read_parquet(PARQUET, columns=["literature_id", "title", "authors", "year", "doi"] + sp_cols)
+    themes = [(tid, title, col) for tid in T.ORDER for (i, title, col, _) in T.TOPICS if i == tid and col.startswith("d_")]
+    missing = [c for _, _, c in themes if c not in names]
+    if missing or not themes:
+        sys.exit(f"FAIL: theme columns missing from the parquet: {missing}")
+    th_cols = [c for _, _, c in themes]
+    d = pd.read_parquet(PARQUET, columns=["literature_id", "title", "authors", "year", "doi"] + sp_cols + th_cols)
     d["literature_id"] = d["literature_id"].astype(str).str.replace(r"\.0$", "", regex=True)
     d = d.drop_duplicates("literature_id").set_index("literature_id")
     sp_name = {c: c[3:].replace("_", " ").capitalize() for c in sp_cols}
@@ -116,7 +176,7 @@ def main():
     bd = pd.read_parquet(ROOT / "outputs/study_sites/dominant_basins.parquet").set_index("literature_id")
     n = Counter()
     unmapped = Counter()
-    papers, sp_used = [], {}
+    papers, sp_used, au_used = [], {}, {}
     for lit, (src, cs) in sorted(mc.items()):
         n["model_read"] += 1
         if lit not in d.index:
@@ -150,7 +210,11 @@ def main():
         au_short = (first + (" et al." if len(au) > len(first) + 3 else "")) if first else ""
         yr = int(r["year"]) if r["year"] == r["year"] else None
         doi = str(r["doi"]) if isinstance(r["doi"], str) and r["doi"].startswith("10.") else ""
-        papers.append([lit, str(r["title"] or "")[:220], au_short[:60], yr, doi, codes, idx, basins])
+        th = [j for j, c in enumerate(th_cols) if not pd.isna(r[c]) and float(r[c]) > 0]
+        aus = [au_used.setdefault(a, len(au_used)) for a in author_list(au)]
+        papers.append([lit, str(r["title"] or "")[:220], au_short[:60], yr, doi, codes, idx, basins, th, aus])
+        n["mapped_with_theme"] += bool(th)
+        n["mapped_with_authors"] += bool(aus)
         n["mapped"] += 1
         n["mapped_with_country"] += bool(codes)
         n["mapped_with_basin"] += bool(basins)
@@ -159,18 +223,35 @@ def main():
     if not papers:
         sys.exit("FAIL: no papers mapped")
     species = [s for s, _ in sorted(sp_used.items(), key=lambda kv: kv[1])]
+    authors = [a for a, _ in sorted(au_used.items(), key=lambda kv: kv[1])]
+    tax = taxonomy(species)
+    how = Counter(v[2] for v in tax.values())
+    orders = sorted({v[0] for v in tax.values()} - {UNPLACED}) + ([UNPLACED] if how["unplaced"] else [])
+    fams = sorted({(v[1], v[0]) for v in tax.values()} - {(UNPLACED, UNPLACED)}) + ([(UNPLACED, UNPLACED)] if how["unplaced"] else [])
+    fam_i = {f: i for i, (f, _) in enumerate(fams)}
+    if len(fam_i) != len(fams):
+        sys.exit("FAIL: a family name sits in two orders in the taxonomy table")
+    n["species_placed_exact"], n["species_placed_by_genus"], n["species_unplaced"] = how["exact"], how["genus"], how["unplaced"]
+    n["authors_distinct"] = len(authors)
     cov = {"built": time.strftime("%Y-%m-%d"), "corpus_records": len(d), **n,
            "countries_with_papers": len({c for p in papers for c in p[5]}),
+           "unplaced_species": sorted(s for s, v in tax.items() if v[2] == "unplaced"),
+           "taxonomy_source": str(TAXONOMY.relative_to(ROOT)),
            "unmapped_names": dict(unmapped.most_common()), "country_source": "model-read only; geo_study_country not used (63% agreement, MEASURED 2026-11-11)"}
     COVER.write_text(json.dumps(cov, indent=1, ensure_ascii=False))
     data = {"built": cov["built"], "n_corpus": len(d), "n_mapped": len(papers), "species": species, "a3name": a3name, "basinname": basin_name, "papers": papers,
+            "authors": authors, "themes": [[tid, title] for tid, title, _ in themes],
+            "orders": orders, "fams": [f for f, _ in fams], "famord": [orders.index(o) for _, o in fams],
+            "spfam": [fam_i[tax[s][1]] for s in species],
+            "tax": {"exact": how["exact"], "genus": how["genus"], "unplaced": how["unplaced"]},
             "n_country": n["mapped_with_country"], "n_basin": n["mapped_with_basin"]}
     html = (Path(__file__).parent / "coarse_atlas_template.html").read_text()
     html = html.replace("/*DATA*/null", json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
     html = html.replace("/*GEO*/null", json.dumps(geo, separators=(",", ":")))
     html = html.replace("/*BAS*/null", json.dumps(basins_geo, separators=(",", ":")))
     (OUT / "index.html").write_text(html)
-    print("OK", json.dumps({k: v for k, v in cov.items() if k != "unmapped_names"}))
+    print("OK", json.dumps({k: v for k, v in cov.items() if k not in ("unmapped_names", "unplaced_species")}))
+    print("unplaced species:", cov["unplaced_species"])
     print("unmapped country names (count):", dict(unmapped.most_common()))
     print(f"wrote {OUT / 'index.html'} ({(OUT / 'index.html').stat().st_size // 1024} KB), coverage {COVER}")
     print("next: commit and publish docs/species_atlas/ if the data changed")

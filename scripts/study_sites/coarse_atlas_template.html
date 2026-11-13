@@ -7,13 +7,13 @@
 <link rel="icon" href="../assets/logo/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
 <style>
-/* Template for scripts/study_sites/build_coarse_atlas.py. Layout: lede, one filter row (view switch, species, years), map with legend, paper list for the selected country or basin, table view. */
+/* Template for scripts/study_sites/build_coarse_atlas.py. Layout: lede, filter row (view switch, colour-by switch, species, order or family, theme, author, years), year-slider row, map with legend, paper list for the selected country or basin, table view. */
 :root{--page:#f9f9f7;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#898781;--grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.10);--seq:#2a78d6;--warn:#eda100;--land:#eceae4;--sea:#f9f9f7;
 --c1:#cde2fb;--c2:#86b6ef;--c3:#3987e5;--c4:#1c5cab;--c5:#0d366b;--sel:#0b0b0b}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--land:#262624;--sea:#0d0d0d;
---c1:#0d366b;--c2:#1c5cab;--c3:#3987e5;--c4:#86b6ef;--c5:#cde2fb;--sel:#fff}}
-:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--land:#262624;--sea:#0d0d0d;
---c1:#0d366b;--c2:#1c5cab;--c3:#3987e5;--c4:#86b6ef;--c5:#cde2fb;--sel:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--land:#3d3d3a;--sea:#0d0d0d;
+--c1:#cde2fb;--c2:#86b6ef;--c3:#3987e5;--c4:#1f66bd;--c5:#174f96;--sel:#fff}}
+:root[data-theme="dark"]{--page:#0d0d0d;--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#898781;--grid:#2c2c2a;--axis:#383835;--border:rgba(255,255,255,.10);--seq:#3987e5;--land:#3d3d3a;--sea:#0d0d0d;
+--c1:#cde2fb;--c2:#86b6ef;--c3:#3987e5;--c4:#1f66bd;--c5:#174f96;--sel:#fff}
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 60px}
@@ -24,8 +24,10 @@ a{color:var(--seq)}
 .badge{display:inline-block;font-size:12.5px;border:1px solid var(--warn);color:var(--warn);border-radius:10px;padding:1px 9px;margin-bottom:8px}
 .filters{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin:14px 0 8px;font-size:13px;color:var(--ink2)}
 .filters label,.filters .grp{display:flex;flex-direction:column;gap:2px}
-input,button{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--axis);border-radius:6px;background:var(--surface);color:var(--ink)}
-#sp{width:min(320px,80vw)}input[type=number]{width:86px}
+input,button,select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--axis);border-radius:6px;background:var(--surface);color:var(--ink)}
+#sp{width:min(260px,80vw)}#au{width:min(190px,80vw)}select{max-width:min(290px,80vw)}#ys{width:100%;padding:0}.grow{flex:1 1 300px}
+.on{border-color:var(--warn);box-shadow:inset 0 0 0 1px var(--warn)}#link{width:100%;font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}.chips button{font-size:13px;padding:2px 8px;border-radius:12px}.chips i{font-style:italic}.sub{font-size:13px;color:var(--ink2);margin:8px 0 2px}input[type=number]{width:86px}
 button{cursor:pointer}
 .seg{display:flex}.seg button{border-radius:0}.seg button:first-child{border-radius:6px 0 0 6px}.seg button:last-child{border-radius:0 6px 6px 0;border-left:0}
 .seg button[aria-pressed="true"]{border-color:var(--seq);box-shadow:inset 0 0 0 1px var(--seq);font-weight:600}
@@ -39,7 +41,7 @@ svg{display:block;width:100%;height:auto;touch-action:none;cursor:grab}
 .cty.sel,.bas.sel{stroke:var(--sel);stroke-width:2}
 .dot{stroke:var(--page);stroke-width:1.5;vector-effect:non-scaling-stroke;cursor:pointer}
 .dot.sel{stroke:var(--sel);stroke-width:2.5}
-.b1{fill:var(--c1)}.b2{fill:var(--c2)}.b3{fill:var(--c3)}.b4{fill:var(--c4)}.b5{fill:var(--c5)}
+.dot.b0{fill:var(--axis)}.b1{fill:var(--c1)}.b2{fill:var(--c2)}.b3{fill:var(--c3)}.b4{fill:var(--c4)}.b5{fill:var(--c5)}
 .blab{font-size:5px;fill:var(--ink);paint-order:stroke;stroke:var(--page);stroke-width:1.2px;text-anchor:middle;pointer-events:none;font-weight:600}
 #tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.15);display:none;white-space:nowrap}
 #zoom{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:4px}
@@ -61,16 +63,27 @@ td button{border:0;background:none;color:var(--seq);padding:0;text-decoration:un
 <body><div class="wrap">
 <span class="badge">First version: country and ocean-basin level</span>
 <h1>Species Atlas</h1>
-<p class="lede">Where chondrichthyan research has been done, by species. Pick a species to see the countries or ocean basins where it has been studied, then select one for the papers. <span id="cov"></span></p>
+<p class="lede">Where chondrichthyan research has been done, by species. Filter by species, order or family, research theme, author, or year to see the countries or ocean basins where the work was done, then select one for its papers, most frequent authors, and most studied species. Colour the map by number of papers or by number of species studied. <span id="cov"></span></p>
 
 <div class="filters">
 <div class="grp">Map by<div class="seg" role="group" aria-label="Map by"><button type="button" id="vC" aria-pressed="true">Countries</button><button type="button" id="vB" aria-pressed="false">Ocean basins</button></div></div>
+<div class="grp">Colour by<div class="seg" role="group" aria-label="Colour by"><button type="button" id="mP" aria-pressed="true">Papers</button><button type="button" id="mS" aria-pressed="false">Species</button></div></div>
 <label>Species<input id="sp" list="splist" placeholder="All species: type a scientific name" autocomplete="off"></label>
 <datalist id="splist"></datalist>
+<label>Order or family<select id="grp"><option value="">All orders and families</option></select></label>
+<label>Research theme<select id="th"><option value="">All themes</option></select></label>
+<label>Author<input id="au" list="aulist" placeholder="Surname" autocomplete="off"></label>
+<datalist id="aulist"></datalist>
 <label>From year<input id="y0" type="number" inputmode="numeric"></label>
 <label>To year<input id="y1" type="number" inputmode="numeric"></label>
 <button id="reset" type="button">Reset</button>
 </div>
+<div class="filters">
+<label class="grow"><span>Year slider: <b id="yslab"></b></span><input id="ys" type="range" step="1"></label>
+<button type="button" id="play">Play</button>
+<label>Show<select id="win"><option value="0">all years up to the slider</option><option value="5">the five years ending at the slider</option></select></label>
+</div>
+<p class="note" id="timenote"></p>
 <div id="covnote"></div>
 <div id="status" role="status"></div>
 
@@ -80,6 +93,11 @@ td button{border:0;background:none;color:var(--seq);padding:0;text-decoration:un
 <div id="tip"></div>
 </div>
 <div class="legend" id="legend"></div>
+<div class="filters">
+<label class="grow">Link to this view<input id="link" readonly aria-describedby="linknote"></label>
+<button type="button" id="copy">Copy link</button>
+</div>
+<p class="note" id="linknote">The link carries the current filters, colouring, and selected place, so it reopens this exact view: copy it to share. Example: <a href="?group=Mobulidae&amp;colour=species&amp;country=MDV">manta and devil rays (Mobulidae) in the Maldives, coloured by species</a>. Filters in use are outlined in orange.</p>
 
 <details open id="listbox"><summary><h2 id="listh"></h2></summary><div id="list"></div></details>
 <details id="tablebox"><summary><h2 id="tableh"></h2></summary><div id="table"></div></details>
@@ -89,6 +107,9 @@ td button{border:0;background:none;color:var(--seq);padding:0;text-decoration:un
 <p>Each paper is placed in the country or countries where its data were collected, and in the ocean basin of the sea it names as its study region, both as read from the full text by a language model. The readings have not been checked by hand. A paper that worked in several countries or basins appears in each. A paper that names no sea has no basin, and a high-seas study may have a basin and no country.</p>
 <p>The nine basins follow Shark Oracle's basin columns: the Gulf of Mexico and the Bahamas sit with the Caribbean, and the Black Sea with the Mediterranean.</p>
 <p>Species and places are joined at the level of the paper. A paper that covers several species and several countries links every one of its species to every one of its countries, so a species can appear in a place where that paper did not study it; reviews and multi-country studies cause most of this.</p>
+<p id="taxnote"></p>
+<p>Research themes are Shark Oracle's discipline classes; a paper can sit in several. Authors are matched on the name as printed in the reference (surname and initials), so two people who share both count as one author, and one person printed two ways counts as two.</p>
+<p>Colouring by species counts the distinct species linked to the papers in each place, within the current filters. Because of the paper-level join described above, treat it as an upper limit.</p>
 <p>Species are those Shark Oracle's classification links to each paper. Study sites within a country, sea areas, and distances to port will follow as site-level extraction is added.</p>
 </details>
 <p class="note"><a href="../regions/">What is planned next: study sites and regional summaries</a> &middot; <a href="../">Back to Shark Oracle</a></p>
@@ -99,13 +120,17 @@ const $=id=>document.getElementById(id), NS='http://www.w3.org/2000/svg';
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 // one configuration per view: which field of a paper holds the keys, their names, and the colour bins (lower bounds)
 const VIEWS={
-  country:{idx:5,name:D.a3name,one:'country',many:'countries',head:'Country',bins:[1,2,6,21,61],lab:['1','2 to 5','6 to 20','21 to 60','61 or more']},
-  basin:{idx:7,name:D.basinname,one:'ocean basin',many:'ocean basins',head:'Ocean basin',bins:[1,26,76,151,226],lab:['1 to 25','26 to 75','76 to 150','151 to 225','226 or more']}};
-let view='country', V=VIEWS[view];
-const bin=n=>{let b=0;for(let i=0;i<V.bins.length;i++)if(n>=V.bins[i])b=i+1;return b};
-const spIdx=new Map(D.species.map((s,i)=>[s.toLowerCase(),i]));
+  country:{idx:5,name:D.a3name,one:'country',many:'countries',head:'Country',bins:[1,2,6,21,61],lab:['1','2 to 5','6 to 20','21 to 60','61 or more'],sbins:[1,6,21,61,151],slab:['1 to 5','6 to 20','21 to 60','61 to 150','151 or more']},
+  basin:{idx:7,name:D.basinname,one:'ocean basin',many:'ocean basins',head:'Ocean basin',bins:[1,26,76,151,226],lab:['1 to 25','26 to 75','76 to 150','151 to 225','226 or more'],sbins:[1,51,151,301,451],slab:['1 to 50','51 to 150','151 to 300','301 to 450','451 or more']}};
+let view='country', V=VIEWS[view], metric='papers';
+const bin=n=>{const B=metric==='species'?V.sbins:V.bins; let b=0;for(let i=0;i<B.length;i++)if(n>=B[i])b=i+1;return b};
+const spIdx=new Map(D.species.map((s,i)=>[s.toLowerCase(),i])), auIdx=new Map(D.authors.map((a,i)=>[a.toLowerCase(),i]));
 const years=D.papers.map(p=>p[3]).filter(Boolean), YMIN=Math.min(...years), YMAX=Math.max(...years);
-let sel=null, counts=new Map(), shown=[];
+let sel=null, counts=new Map(), spc=new Map(), shown=[], spOK=null;
+// the value that colours a place: papers, or distinct species within the current filters
+const val=k=>metric==='species'?(spc.has(k)?spc.get(k).size:0):(counts.get(k)||0);
+const spOf=p=>spOK?p[6].filter(i=>spOK.has(i)):p[6];
+const grpName=g=>g[0]==='o'?D.orders[+g.slice(1)]:D.fams[+g.slice(1)];
 
 // ---- map geometry (plate carree: x = longitude, y = -latitude); basins under countries under dots ----
 const svg=$('map'), gB=document.createElementNS(NS,'g'), gC=document.createElementNS(NS,'g'), gD=document.createElementNS(NS,'g'), gL=document.createElementNS(NS,'g');
@@ -147,80 +172,155 @@ function sizeMarks(){const k=vb[2]/360;
 
 // ---- filter, colour, list ----
 function compute(){
-  const q=$('sp').value.trim().toLowerCase(), si=q?spIdx.get(q):null;
+  const q=$('sp').value.trim().toLowerCase(), si=q?spIdx.get(q):null, g=$('grp').value;
   const y0=+$('y0').value||YMIN, y1=+$('y1').value||YMAX;
-  const partial=q&&si===undefined? D.species.map((s,i)=>s.toLowerCase().includes(q)?i:-1).filter(i=>i>=0):null;
+  spOK=null;
+  if(q) spOK=new Set(si!==undefined?[si]:D.species.map((s,i)=>s.toLowerCase().includes(q)?i:-1).filter(i=>i>=0));
+  if(g){const k=+g.slice(1), inG=i=>g[0]==='o'?D.famord[D.spfam[i]]===k:D.spfam[i]===k;
+    spOK=new Set((spOK?[...spOK]:D.species.map((s,i)=>i)).filter(inG))}
+  const ti=$('th').value===''?null:+$('th').value;
+  const aq=$('au').value.trim().toLowerCase(); let auOK=null;
+  if(aq){const ex=auIdx.get(aq); auOK=new Set(ex!==undefined?[ex]:D.authors.map((a,i)=>a.toLowerCase().includes(aq)?i:-1).filter(i=>i>=0))}
   shown=D.papers.filter(p=>{
     if(!p[V.idx].length) return false;
     if(p[3]&&(p[3]<y0||p[3]>y1)) return false;
-    if(!q) return true;
-    return si!==undefined&&si!==null? p[6].includes(si) : p[6].some(i=>partial.includes(i));
+    if(spOK&&!p[6].some(i=>spOK.has(i))) return false;
+    if(ti!==null&&!p[8].includes(ti)) return false;
+    if(auOK&&!p[9].some(i=>auOK.has(i))) return false;
+    return true;
   });
-  counts=new Map(); for(const p of shown) for(const a of p[V.idx]) counts.set(a,(counts.get(a)||0)+1);
+  counts=new Map(); spc=new Map(); const allSp=new Set();
+  for(const p of shown){const sps=spOf(p); for(const i of sps) allSp.add(i);
+    for(const a of p[V.idx]){counts.set(a,(counts.get(a)||0)+1); let t=spc.get(a); if(!t) spc.set(a,t=new Set()); for(const i of sps) t.add(i)}}
   const isC=view==='country';
-  for(const [a3,el] of elC){const n=isC?(counts.get(a3)||0):0, b=bin(n);
-    el.setAttribute('class','cty'+(n?' has b'+b:'')+(isC&&a3===sel?' sel':''));
+  for(const [a3,el] of elC){const n=isC?(counts.get(a3)||0):0, v=isC?val(a3):0, b=bin(v);
+    el.setAttribute('class','cty'+(n?' has':'')+(v?' b'+b:'')+(isC&&a3===sel?' sel':''));
     const c=elD.get(a3); c.style.display=n?'':'none'; c.setAttribute('class','dot b'+b+(isC&&a3===sel?' sel':''))}
-  for(const [k,el] of elB){const n=isC?0:(counts.get(k)||0);
-    el.setAttribute('class','bas'+(n?' has b'+bin(n):'')+(!isC&&k===sel?' sel':''));
-    elL.get(k).textContent=isC?'':(n?n.toLocaleString():'')}
+  for(const [k,el] of elB){const n=isC?0:(counts.get(k)||0), v=isC?0:val(k);
+    el.setAttribute('class','bas'+(n?' has':'')+(v?' b'+bin(v):'')+(!isC&&k===sel?' sel':''));
+    elL.get(k).textContent=isC?'':(n?v.toLocaleString():'')}
   sizeMarks();
-  const what=q?(si!==undefined&&si!==null?'<i>'+esc(D.species[si])+'</i>':(partial.length+' species matching "'+esc($('sp').value.trim())+'"')):'all species';
-  $('status').innerHTML=shown.length.toLocaleString()+' papers in '+counts.size+' '+V.many+', '+what+', '+y0+' to '+y1+'.'+(q&&!shown.length?' No mapped papers for that name yet.':'');
+  const bits=[];
+  bits.push(q?(si!==undefined?'<i>'+esc(D.species[si])+'</i>':(spOK.size+' species matching "'+esc($('sp').value.trim())+'"')):(g?'':'all species'));
+  if(g) bits.push(esc(grpName(g))+(q?'':' ('+spOK.size+' species)'));
+  if(ti!==null) bits.push(esc(D.themes[ti][1]));
+  if(aq) bits.push(auOK.size===1?esc(D.authors[[...auOK][0]]):auOK.size+' authors matching "'+esc($('au').value.trim())+'"');
+  bits.push(y0+' to '+y1);
+  $('status').innerHTML=shown.length.toLocaleString()+' papers and '+allSp.size.toLocaleString()+' species in '+counts.size+' '+V.many+': '+bits.filter(Boolean).join(', ')+'.'+(!shown.length?' No mapped papers match yet.':'');
+  for(const id of ['sp','grp','th','au','y0','y1']) $(id).classList.toggle('on',$(id).value!==''&&!(id==='y1'&&+$(id).value===YMAX));
+  $('win').classList.toggle('on',$('win').value!=='0');
+  const L=linkQuery(); $('link').value=BASE+(L?'?'+L:''); try{history.replaceState(null,'',L?'?'+L:location.pathname)}catch(e){}
   renderLegend(); renderTable(); renderList();
 }
+// ---- shareable link: the same parameters the deep-link reader below accepts ----
+const BASE=location.protocol==='file:'?'https://simondedman.github.io/elasmo_analyses/species_atlas/':location.origin+location.pathname;
+function linkQuery(){const q=new URLSearchParams(), g=$('grp').value, y1=$('y1').value;
+  if(view==='basin') q.set('view','basin');
+  if(metric==='species') q.set('colour','species');
+  if($('sp').value.trim()) q.set('species',$('sp').value.trim());
+  if(g) q.set('group',grpName(g));
+  if($('th').value!=='') q.set('theme',D.themes[+$('th').value][0]);
+  if($('au').value.trim()) q.set('author',$('au').value.trim());
+  if($('y0').value) q.set('from',$('y0').value);
+  if(y1&&+y1!==YMAX) q.set('to',y1);
+  if(sel) q.set(view,sel);
+  return q.toString()}
+function setMetric(m){metric=m; $('mP').setAttribute('aria-pressed',m==='papers'); $('mS').setAttribute('aria-pressed',m==='species'); compute()}
 function setView(v){view=v; V=VIEWS[v]; sel=null; $('vC').setAttribute('aria-pressed',v==='country'); $('vB').setAttribute('aria-pressed',v==='basin'); compute()}
 function pick(k){sel=(sel===k?null:k); compute(); if(sel) $('listbox').open=true}
 function renderList(){
   if(!sel){$('listh').textContent='Select '+(view==='country'?'a country':'an ocean basin');
     $('list').innerHTML='<p class="note">Select a shaded '+V.one+(view==='country'?' or a dot':'')+' on the map, or a row in the table below.</p>'; return}
   const ps=shown.filter(p=>p[V.idx].includes(sel)).sort((a,b)=>(b[3]||0)-(a[3]||0));
-  $('listh').textContent=V.name[sel]+': '+ps.length+' papers';
-  $('list').innerHTML=ps.length?ps.map(p=>{
+  const nsp=spc.has(sel)?spc.get(sel).size:0;
+  $('listh').textContent=V.name[sel]+': '+ps.length+' papers, '+nsp+' species';
+  const top=(items,name)=>{const c=new Map(); for(const p of ps) for(const i of items(p)) c.set(i,(c.get(i)||0)+1);
+    return [...c].sort((a,b)=>b[1]-a[1]||name(a[0]).localeCompare(name(b[0]))).slice(0,10)};
+  const ta=top(p=>p[9],i=>D.authors[i]), ts=top(spOf,i=>D.species[i]);
+  const head=(ta.length?'<div class="sub">Most frequent authors here (select one to filter):</div><div class="chips">'+ta.map(([i,n])=>'<button type="button" data-au="'+esc(D.authors[i])+'">'+esc(D.authors[i])+' ('+n+')</button>').join('')+'</div>':'')+
+    (ts.length?'<div class="sub">Most studied species here (select one to filter):</div><div class="chips">'+ts.map(([i,n])=>'<button type="button" data-sp="'+esc(D.species[i])+'"><i>'+esc(D.species[i])+'</i> ('+n+')</button>').join('')+'</div>':'');
+  $('list').innerHTML=ps.length?head+ps.map(p=>{
     const t=p[4]?'<a href="https://doi.org/'+esc(p[4])+'" target="_blank" rel="noopener">'+esc(p[1])+'</a>':esc(p[1]);
     const places=[...p[5].filter(a=>!(view==='country'&&a===sel)).map(a=>D.a3name[a]),...p[7].filter(b=>!(view==='basin'&&b===sel)).map(b=>D.basinname[b])];
     return '<div class="r"><div class="t">'+t+'</div><div class="m">'+esc(p[2])+(p[3]?' ('+p[3]+')':'')+(places.length?' &middot; also '+esc(places.join(', ')):'')+'</div>'+
       (p[6].length?'<div class="s">'+esc(p[6].map(i=>D.species[i]).join(', '))+'</div>':'')+'</div>'}).join(''):'<p class="note">No papers here with the current filters.</p>';
 }
 function renderTable(){
-  const rows=[...counts].sort((a,b)=>b[1]-a[1]||V.name[a[0]].localeCompare(V.name[b[0]]));
-  $('tableh').textContent=(view==='country'?'Countries':'Ocean basins')+' by number of papers';
-  $('table').innerHTML='<table><thead><tr><th>'+V.head+'</th><th class="n">Papers</th></tr></thead><tbody>'+
-    rows.map(([a,n])=>'<tr><td><button type="button" data-k="'+a+'">'+esc(V.name[a])+'</button></td><td class="n">'+n+'</td></tr>').join('')+'</tbody></table>';
+  const rows=[...counts.keys()].map(k=>[k,counts.get(k),spc.get(k).size]).sort((a,b)=>(metric==='species'?b[2]-a[2]:0)||b[1]-a[1]||V.name[a[0]].localeCompare(V.name[b[0]]));
+  $('tableh').textContent=(view==='country'?'Countries':'Ocean basins')+' by number of '+(metric==='species'?'species studied':'papers');
+  $('table').innerHTML='<table><thead><tr><th>'+V.head+'</th><th class="n">Papers</th><th class="n">Species</th></tr></thead><tbody>'+
+    rows.map(([a,n,m])=>'<tr><td><button type="button" data-k="'+a+'">'+esc(V.name[a])+'</button></td><td class="n">'+n+'</td><td class="n">'+m+'</td></tr>').join('')+'</tbody></table>';
 }
 function renderLegend(){
-  $('legend').innerHTML='<span>Papers per '+V.one+':</span>'+V.lab.map((l,i)=>'<span><i style="background:var(--c'+(i+1)+')"></i>'+l+'</span>').join('')+
-    (view==='country'?'<span><i style="background:var(--land)"></i>none mapped yet</span><span>Dots mark every country with papers, so small islands stay visible.</span>':'<span>Numbers on the map are papers per basin.</span>');
+  const sp=metric==='species';
+  $('legend').innerHTML='<span>'+(sp?'Species studied':'Papers')+' per '+V.one+':</span>'+(sp?V.slab:V.lab).map((l,i)=>'<span><i style="background:var(--c'+(i+1)+')"></i>'+l+'</span>').join('')+
+    (view==='country'?'<span><i style="background:var(--land)"></i>none mapped yet</span><span>Dots mark every country with papers, so small islands stay visible.</span>':'<span>Numbers on the map are '+(sp?'species':'papers')+' per basin.</span>');
 }
+$('list').addEventListener('click',e=>{const d=e.target.closest('button'); if(!d) return;
+  if(d.dataset.au){$('au').value=d.dataset.au; compute()} else if(d.dataset.sp){$('sp').value=d.dataset.sp; compute()}});
 $('table').addEventListener('click',e=>{const a=e.target.dataset.k; if(a){pick(a); $('mapbox').scrollIntoView({behavior:'smooth',block:'nearest'})}});
 const hit=e=>{const d=e.target.dataset; return d&&d.k&&d.v===view?d.k:null};
 svg.addEventListener('click',e=>{if(moved) return; const a=hit(e); if(a&&counts.get(a)) pick(a)});
 const tip=$('tip');
 svg.addEventListener('pointermove',e=>{const a=hit(e); if(!a||drag){tip.style.display='none';return}
   const n=counts.get(a)||0, r=$('mapbox').getBoundingClientRect();
-  tip.innerHTML='<b>'+esc(V.name[a])+'</b>: '+(n?n.toLocaleString()+' paper'+(n>1?'s':''):'no mapped papers');
+  const m=spc.has(a)?spc.get(a).size:0;
+  tip.innerHTML='<b>'+esc(V.name[a])+'</b>: '+(n?n.toLocaleString()+' paper'+(n>1?'s':'')+', '+m.toLocaleString()+' species':'no mapped papers');
   tip.style.display='block'; tip.style.left=Math.min(e.clientX-r.left+12,r.width-tip.offsetWidth-6)+'px'; tip.style.top=(e.clientY-r.top+12)+'px'});
 svg.addEventListener('pointerleave',()=>{tip.style.display='none'});
 
 // ---- static text ----
 $('splist').innerHTML=D.species.slice().sort().map(s=>'<option value="'+esc(s)+'">').join('');
+$('aulist').innerHTML=D.authors.slice().sort((a,b)=>a.localeCompare(b)).map(a=>'<option value="'+esc(a)+'">').join('');
+{const nO=D.orders.map(()=>0), nF=D.fams.map(()=>0); D.spfam.forEach(f=>{nF[f]++; nO[D.famord[f]]++});
+  $('grp').innerHTML='<option value="">All orders and families</option><optgroup label="Orders">'+D.orders.map((o,i)=>'<option value="o'+i+'">'+esc(o)+' ('+nO[i]+' species)</option>').join('')+
+    '</optgroup><optgroup label="Families">'+D.fams.map((f,i)=>'<option value="f'+i+'">'+esc(f)+(f===D.orders[D.famord[i]]?'':', '+esc(D.orders[D.famord[i]]))+' ('+nF[i]+')</option>').join('')+'</optgroup>';
+  $('th').innerHTML='<option value="">All themes</option>'+D.themes.map((t,i)=>'<option value="'+i+'">'+esc(t[1])+'</option>').join('');
+  $('taxnote').textContent='Orders and families follow the Sharkipedia taxonomy (version 1.0): '+D.tax.exact.toLocaleString()+' of the '+D.species.length.toLocaleString()+' species here were placed by exact name, '+D.tax.genus+' by genus, and '+D.tax.unplaced+' newly described or renamed species are listed as Unplaced.'}
+// ---- year slider: drives the To year box (and the From year box when a five-year window is chosen) ----
+const ys=$('ys'), SMIN=Math.max(YMIN,1950); ys.min=SMIN; ys.max=YMAX; ys.value=YMAX;
+let timer=null;
+const slab=()=>{const y=+ys.value, w=+$('win').value; $('yslab').textContent=w?(y-w+1)+' to '+y:'up to '+y};
+function fromSlider(){const y=+ys.value, w=+$('win').value; $('y1').value=y; if(w) $('y0').value=y-w+1; slab(); compute()}
+function stopPlay(){if(timer){clearInterval(timer); timer=null} $('play').textContent='Play'}
+ys.addEventListener('input',fromSlider);
+$('win').addEventListener('change',()=>{if(!+$('win').value) $('y0').value=''; fromSlider()});
+$('play').onclick=()=>{if(timer) return stopPlay();
+  if(+ys.value>=YMAX) ys.value=Math.max(SMIN,Math.min(+$('y0').value||SMIN,YMAX-1)); fromSlider(); $('play').textContent='Pause';
+  timer=setInterval(()=>{if(+ys.value>=YMAX) return stopPlay(); ys.value=+ys.value+1; fromSlider()},450)};
+{const dec=Math.floor(YMAX/10)*10, nd=D.papers.filter(p=>p[3]>=dec).length;
+  $('timenote').textContent=nd.toLocaleString()+' of the '+D.n_mapped.toLocaleString()+' mapped papers were published in '+dec+' or later, because recent papers were read first. The slider shows what has been mapped so far for each period; it is not yet a record of how research focus moved.'}
 $('y0').placeholder=YMIN; $('y1').placeholder=YMAX; $('y0').min=$('y1').min=YMIN; $('y0').max=$('y1').max=YMAX;
 const pct=(100*D.n_mapped/D.n_corpus).toFixed(0);
 const yrs=D.papers.map(p=>p[3]).filter(y=>y).sort((x,y)=>x-y), ymed=yrs[Math.floor(yrs.length/2)];
 $('covnote').textContent='Coverage so far: '+D.n_mapped.toLocaleString()+' of '+D.n_corpus.toLocaleString()+' papers in the corpus ('+pct+'%), '+yrs.filter(y=>y>=ymed).length.toLocaleString()+' of them published in '+ymed+' or later. Counts are a minimum: a place with few or no papers here may have much more research.';
 $('cov').textContent='This first version maps '+D.n_mapped.toLocaleString()+' papers: '+D.n_country.toLocaleString()+' by country and '+D.n_basin.toLocaleString()+' by ocean basin.';
 $('covlong').textContent='The map holds '+D.n_mapped.toLocaleString()+' of the '+D.n_corpus.toLocaleString()+' papers in the corpus ('+pct+'%): those whose full text has been read for study location so far, which are mostly recent papers. '+D.n_country.toLocaleString()+' have a study country and '+D.n_basin.toLocaleString()+' name a sea that places them in an ocean basin. An unshaded country or basin has no mapped papers yet, which is not the same as no research. Built '+D.built+'.';
-// deep links: ?species=Mobula%20alfredi&country=MDV&from=2000&to=2025, or ?view=basin&basin=indian_ocean
+// deep links: ?species=Mobula%20alfredi&country=MDV&from=2000&to=2025, or ?view=basin&basin=indian_ocean;
+// also ?group=Mobulidae (an order or family name), ?theme=movement, ?author=Stevens, ?colour=species
 const Q=new URLSearchParams(location.search);
 if(Q.get('species')) $('sp').value=Q.get('species');
 if(Q.get('from')) $('y0').value=Q.get('from');
-if(Q.get('to')) $('y1').value=Q.get('to');
+if(Q.get('to')){$('y1').value=Q.get('to'); ys.value=Math.min(YMAX,Math.max(SMIN,+Q.get('to')||YMAX))}
+if(Q.get('author')) $('au').value=Q.get('author');
+if(Q.get('group')){const n=Q.get('group').toLowerCase(), o=D.orders.findIndex(x=>x.toLowerCase()===n), f=D.fams.findIndex(x=>x.toLowerCase()===n);
+  if(o>=0) $('grp').value='o'+o; else if(f>=0) $('grp').value='f'+f}
+if(Q.get('theme')){const t=D.themes.findIndex(x=>x[0]===Q.get('theme')); if(t>=0) $('th').value=t}
+if(Q.get('from')&&Q.get('to')&&+Q.get('to')-+Q.get('from')===4) $('win').value='5';
+if(Q.get('colour')==='species'){metric='species'; $('mP').setAttribute('aria-pressed',false); $('mS').setAttribute('aria-pressed',true)}
+slab();
 if(Q.get('view')==='basin'||Q.get('basin')){view='basin'; V=VIEWS.basin; $('vC').setAttribute('aria-pressed',false); $('vB').setAttribute('aria-pressed',true);
   if(Q.get('basin')&&D.basinname[Q.get('basin')]) sel=Q.get('basin')}
 else if(Q.get('country')&&D.a3name[Q.get('country').toUpperCase()]) sel=Q.get('country').toUpperCase();
-for(const id of ['sp','y0','y1']) $(id).addEventListener('input',compute);
+for(const id of ['sp','au','y0','y1']) $(id).addEventListener('input',compute);
+for(const id of ['grp','th']) $(id).addEventListener('change',compute);
+$('y1').addEventListener('input',()=>{const y=+$('y1').value; if(y>=SMIN&&y<=YMAX){ys.value=y; slab()}});
+$('mP').onclick=()=>setMetric('papers'); $('mS').onclick=()=>setMetric('species');
 $('vC').onclick=()=>setView('country'); $('vB').onclick=()=>setView('basin');
-$('reset').onclick=()=>{$('sp').value='';$('y0').value='';$('y1').value='';sel=null;compute()};
+$('copy').onclick=()=>{const t=$('link').value, done=()=>{$('copy').textContent='Copied'; setTimeout(()=>{$('copy').textContent='Copy link'},1500)};
+  const fall=()=>{$('link').focus(); $('link').select(); try{document.execCommand('copy'); done()}catch(e){}};
+  if(navigator.clipboard&&window.isSecureContext) navigator.clipboard.writeText(t).then(done,fall); else fall()};
+$('reset').onclick=()=>{stopPlay(); for(const id of ['sp','au','y0','y1','grp','th']) $(id).value=''; $('win').value='0'; ys.value=YMAX; slab(); sel=null; compute()};
 compute();
 </script>
 </body></html>
