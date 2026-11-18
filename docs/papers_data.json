@@ -90553,7 +90553,8 @@
   "journal_clean": "W. Fischer",
   "publisher": "Unknown publisher",
   "cascade_stage": "needs_library",
-  "cascade_checked": true
+  "cascade_checked": true,
+  "prior_false_dl": "a different paper was sent under this reference; check the title and authors"
  },
  {
   "id": 5569,
@@ -196029,24 +196030,6 @@
   "publisher": ""
  },
  {
-  "id": 12307,
-  "literature_id": "361",
-  "year": 1993,
-  "authors": "Cappetta, H. & Duffin, C.J. & Zidek, J. (1993)",
-  "title": "Chondrichthyes.",
-  "journal": "In The Fossil Record",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "needs_pdf",
-  "notes": "Reopened 2026-11-13: in the corpus with no PDF and was not on the list.",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
   "id": 12308,
   "literature_id": "364",
   "year": 1981,
@@ -197997,24 +197980,6 @@
   "authors": "Wetherbee, B.M. & Kajiura, S.M. (2000)",
   "title": "Occurrence of a Rare Squaloid Shark, Trigonognathus kabeyai, from the Hawaiian Islands.",
   "journal": "Pacific Science",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "needs_pdf",
-  "notes": "Reopened 2026-11-13: in the corpus with no PDF and was not on the list.",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
-  "id": 12419,
-  "literature_id": "2539",
-  "year": 2006,
-  "authors": "White, W.T. & Last, P.R. & Stevens, J.D. & Yearsley, G.K. & Fahmi, D. & Dharmadi (2006)",
-  "title": "Economically important sharks and rays of Indonesia.",
-  "journal": "ACIAR Monograph series",
   "doi": "",
   "priority_group": 3,
   "last_status": "needs_pdf",
@@ -215451,24 +215416,6 @@
   "publisher": "Taylor & Francis"
  },
  {
-  "id": 13416,
-  "literature_id": "24860",
-  "year": 2016,
-  "authors": "Last, P.R. & de Carvalho, M.R. & Naylor, G.J.P. & Séret, B. & Stehmann, M.F.W. & White, W.T. (2016)",
-  "title": "Introduction.",
-  "journal": "In Last",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "needs_pdf",
-  "notes": "Reopened 2026-11-13: in the corpus with no PDF and was not on the list.",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
   "id": 13417,
   "literature_id": "24862",
   "year": 2016,
@@ -223062,7 +223009,8 @@
   "oa_host_type": "",
   "oa_license": "",
   "journal_clean": "",
-  "publisher": "IUCN SSC Shark Specialist Group"
+  "publisher": "IUCN SSC Shark Specialist Group",
+  "prior_false_dl": "the supplementary material was sent; we need the article itself"
  },
  {
   "id": 13850,
@@ -224235,24 +224183,6 @@
   "publisher": ""
  },
  {
-  "id": 11012,
-  "literature_id": "36607",
-  "year": 2013,
-  "authors": "Arocha, F. & Silva, J. & Marcano, L.A. (2013)",
-  "title": "Shortfin mako shark (Isurus oxyrinchus) in the catch from the Venezuelan pelagic longline fleet in the Caribbean Sea and adjacent waters: Period 1994-2011.",
-  "journal": "ICCAT, Collective Volume of Scientific Papers, 69(4), 1571-1577",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "sr_sync_new",
-  "notes": "Added by SR sync. PDF URL: https://www.iccat.int/Documents/CVSP/CV069_2013/colvol69.html",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
   "id": 11013,
   "literature_id": "36621",
   "year": 2005,
@@ -224991,24 +224921,6 @@
   "publisher": ""
  },
  {
-  "id": 11054,
-  "literature_id": "36518",
-  "year": 2000,
-  "authors": "Cramer, J. (2000)",
-  "title": "Large pelagic logbook catch rates for sharks.",
-  "journal": "ICCAT, Collective Volume of Scientific Papers, 51(6), 1842–1848",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "sr_sync_new",
-  "notes": "Added by SR sync. PDF URL: https://www.iccat.int/Documents/CVSP/CV051_2000/colvol51.html#",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
   "id": 11055,
   "literature_id": "36517",
   "year": 2000,
@@ -225024,7 +224936,8 @@
   "oa_host_type": "",
   "oa_license": "",
   "journal_clean": "",
-  "publisher": ""
+  "publisher": "",
+  "prior_false_dl": "a different paper was sent under this reference; check the title and authors"
  },
  {
   "id": 11056,
@@ -226881,24 +226794,6 @@
   "publisher": ""
  },
  {
-  "id": 11159,
-  "literature_id": "36618",
-  "year": 2013,
-  "authors": "Ngom Sow, F. (2013)",
-  "title": "Données de requins capturés par la pêche artisanale de 1990 à 2011 au Sénégal.",
-  "journal": "ICCAT, Collective Volume of Scientific Papers, 69(4), 1699-1701",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "sr_sync_new",
-  "notes": "Added by SR sync. PDF URL: https://www.iccat.int/Documents/CVSP/CV069_2013/colvol69.html",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
   "id": 11160,
   "literature_id": "36259",
   "year": 2026,
@@ -227557,24 +227452,6 @@
   "priority_group": 3,
   "last_status": "sr_sync_new",
   "notes": "Added by SR sync. PDF URL: https://www.iccat.int/Documents/CVSP/CV069_2013/colvol69.html",
-  "oa_status": "unknown",
-  "oa_url": "",
-  "oa_host_type": "",
-  "oa_license": "",
-  "journal_clean": "",
-  "publisher": ""
- },
- {
-  "id": 11197,
-  "literature_id": "36631",
-  "year": 2005,
-  "authors": "Senba, Y. & Nakano. H. (2005)",
-  "title": "Summary of species composition and nominal CPUE of pelagic sharks based on observer data from the Japanese longline fishery in the Atlantic Ocean from 1995 to 2003.",
-  "journal": "ICCAT, Collective Volume of Scientific Papers, 58(3), 1106-1117",
-  "doi": "",
-  "priority_group": 3,
-  "last_status": "sr_sync_new",
-  "notes": "Added by SR sync. PDF URL: https://www.iccat.int/Documents/CVSP/CV058_2005/colvol58.html",
   "oa_status": "unknown",
   "oa_url": "",
   "oa_host_type": "",
